@@ -37,3 +37,13 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 ## Odkazy
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+Co hledat:
+
+* [https://cs.wikipedia.org/wiki/Hlavn%C3%AD_strana](stránku na Wikipedii)
+* oficiální stránku programu
+* oficiální dokumentaci
+* [http://manpages.ubuntu.com/](manuálovou stránku)
+* [https://packages.ubuntu.com/](balíček Bionic)
+* online referenční příručky
+* různé další praktické stránky, recenze, videa, blogy, ...

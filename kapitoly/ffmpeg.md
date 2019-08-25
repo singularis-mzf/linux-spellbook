@@ -96,8 +96,37 @@ https://creativecommons.org/licenses/by-sa/4.0/
 *# vložit MKV titulky do obrazu (tzv. zapéci)(??)*<br>
 ** subtitles={soubor-s-titulky.mkv} [vo] **
 
+*# zakrýt/odstranit logo nebo jiný rušivý element z obrazu*<br>
+**[vi] delogo=x=**{*posun-x-zleva*}**:y=**{*posun-y-shora*}**:w=**{*šířka*}**:h=**{*výška*} **[vo]**
+
+*# vykreslit do obrazu obdelník**<br>
+*// invert=invertující rámeček; fill=vyplněný obdelník*<br>
+**[vi] drawbox=**{*posun-x-zleva*}**:**{*posun-y-shora*}**:**{*šířka*}**:**{*výška*}**:**{*barva-nebo-invert*}[**@**{*krytí-0-až-1*}][**:**{*tloušťka-nebo-fill*}]
+
 *# odstranit prokládání*<br>
 **[vi] yadif [vo]**
+
+*# nastavit kontrast, jas, saturaci a gama korekci*<br>
+*// při eval=frame se hodnoty počítají pro každý snímek zvlášť*<br>
+**[vi] eq=**[**contrast=**{*-2.0..2.0;def=1.0*}]
+[**:brightness=**{*-1.0..1.0;def=0.0*}]
+[**:saturation=**{*0.0..3.0;def=1.0*}]
+[**:gamma=**{*0.1..10.0;def=1.0*}]
+[**:eval=frame**] **[vo]**
+
+*# vložit roztmívačku/zatmívačku*<br>
+*// všechny snímky před začátkem roztmívačky a za koncem zatmívačky budou nastaveny na uvedenou barvu* <!-- [ ] OVĚŘIT! -->
+**[vi] fade=t=in:st=**{*začátek*}**:d=**{*trvání*}[**:c=**{*barva*}][**:alpha=1**] **[vo]**<br>
+**[vi] fade=t=out:st=**{*začátek*}**:d=**{*trvání*}[**:c=**{*barva*}][**:alpha=1**] **[vo]**
+
+*# rozmazat obraz*<br>
+*// výchozí sigma=0.5*<br>
+**[vi] gblur**[**=**{*sigma*}] **[vo]**
+
+<!--
+[ ] POKRAČOVAT OD:
+https://ffmpeg.org/ffmpeg-filters.html#geq
+-->
 
 ### Úprava zvuku
 
@@ -213,5 +242,6 @@ Pro zvuk (**-c:a**): **aac**, **libmp3lame**.
 ## Odkazy
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+* [manuálová stránka](http://manpages.ubuntu.com/manpages/bionic/en/man1/ffmpeg.1.html) (anglicky)
 * [oficiální stránky](https://ffmpeg.org/) (anglicky)
 * [dokumentace k filtrům](https://ffmpeg.org/ffmpeg-filters.html) (anglicky)
