@@ -36,6 +36,24 @@ function ZpracujZnaky(text,     VSTUP, VYSTUP, ZNAK) {
         if (ZNAK == "\\" && length(VSTUP) > 1) {
             VYSTUP = VYSTUP ZpracujZnak(substr(VSTUP, 2, 1));
             VSTUP = substr(VSTUP, 3);
+        } else if (substr(VSTUP, 1, 4) == "&lt;") {
+            VYSTUP = VYSTUP ZpracujZnak("<");
+            VSTUP = substr(VSTUP, 5);
+        } else if (substr(VSTUP, 1, 4) == "&gt;") {
+            VYSTUP = VYSTUP ZpracujZnak(">");
+            VSTUP = substr(VSTUP, 5);
+        } else if (substr(VSTUP, 1, 5) == "&amp;") {
+            VYSTUP = VYSTUP ZpracujZnak("&");
+            VSTUP = substr(VSTUP, 6);
+        } else if (substr(VSTUP, 1, 5) == "&apo;") {
+            VYSTUP = VYSTUP ZpracujZnak("'");
+            VSTUP = substr(VSTUP, 6);
+        } else if (substr(VSTUP, 1, 6) == "&nbsp;") {
+            VYSTUP = VYSTUP ZpracujZnak(" ");
+            VSTUP = substr(VSTUP, 7);
+        } else if (substr(VSTUP, 1, 6) == "&quot;") {
+            VYSTUP = VYSTUP ZpracujZnak("\"");
+            VSTUP = substr(VSTUP, 7);
         } else if (JeBilyZnak(ZNAK)) {
             VYSTUP = VYSTUP ZpracujBilyZnak(ZNAK, 0);
             while (VSTUP != "" && JeBilyZnak(C = substr(VSTUP = substr(VSTUP, 2), 1, 1))) {
@@ -60,11 +78,49 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, C) {
     VYSTUP = "";
     VyprazdnitZasobnik("format");
     while (VSTUP != "") {
-        # <br> (4 znaky)
-        if (substr(VSTUP, 1, 4) == "<br>") {
-            VYSTUP = VYSTUP KonecRadku();
-            VSTUP = substr(VSTUP, 5);
-            continue;
+        # 6 znaků
+        switch (C = substr(VSTUP, 1, 6)) {
+            case "&nbsp;":
+                # nezlomitelná mezera se v této verzi nepovažuje za bílý znak
+                VYSTUP = VYSTUP ZpracujZnak(" ");
+                VSTUP = substr(VSTUP, 7);
+                continue;
+            case "&quot;":
+                VYSTUP = VYSTUP ZpracujZnak("\"");
+                VSTUP = substr(VSTUP, 7);
+                continue;
+            default:
+                break;
+        }
+        # 5 znaků
+        switch (C = substr(VSTUP, 1, 5)) {
+            case "&amp;":
+                VYSTUP = VYSTUP ZpracujZnak("&");
+                VSTUP = substr(VSTUP, 6);
+                continue;
+            case "&apo;":
+                VYSTUP = VYSTUP ZpracujZnak("'");
+                VSTUP = substr(VSTUP, 6);
+                continue;
+            default:
+                break;
+        }
+        # 4 znaky
+        switch (C = substr(VSTUP, 1, 4)) {
+            case "<br>":
+                VYSTUP = VYSTUP KonecRadku();
+                VSTUP = substr(VSTUP, 5);
+                continue;
+            case "&lt;":
+                VYSTUP = VYSTUP ZpracujZnak("<");
+                VSTUP = substr(VSTUP, 5);
+                continue;
+            case "&gt;":
+                VYSTUP = VYSTUP ZpracujZnak(">");
+                VSTUP = substr(VSTUP, 5);
+                continue;
+            default:
+                break;
         }
         # 2 znaky
         switch (C = substr(VSTUP, 1, 2)) {
@@ -106,7 +162,7 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, C) {
             case "[":
                 if (match(VSTUP, /\[[^\]]+\][(][^)]+[)]/)) {
                     i = index(VSTUP, "](");
-                    VYSTUP = VYSTUP HypertextovyOdkaz(substr(VSTUP, i + 2, RLENGTH - i - 2), substr(VSTUP, 2, i - 2));
+                    VYSTUP = VYSTUP HypertextovyOdkaz(ZpracujZnaky(substr(VSTUP, i + 2, RLENGTH - i - 2)), ZpracujZnaky(substr(VSTUP, 2, i - 2)));
                     VSTUP = substr(VSTUP, RLENGTH + 1);
                     continue;
                 }

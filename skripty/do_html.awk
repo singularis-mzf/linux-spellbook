@@ -28,8 +28,15 @@
 # Pro bílé znaky se volá jedině tehdy, jsou-li escapovány.
 function ZpracujZnak(znak) {
     switch (znak) {
+        case "<":
+            return "&lt;";
+        case ">":
+            return "&gt;";
+        case "&":
+            return "&amp;";
         case "\"":
             return "&quot;";
+
         default:
             return znak;
     }

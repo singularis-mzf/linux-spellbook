@@ -14,7 +14,7 @@ html: $(VYSTUP_PREKLADU)/html/index.htm
 
 # 1. kapitoly/{kapitola}.md => soubory_prekladu/html/{kapitola}
 # ============================================================================
-$(addprefix $(SOUBORY_PREKLADU)/html/,$(VSECHNY_KAPITOLY)): $(SOUBORY_PREKLADU)/html/%: kapitoly/%.md
+$(addprefix $(SOUBORY_PREKLADU)/html/,$(VSECHNY_KAPITOLY)): $(SOUBORY_PREKLADU)/html/%: kapitoly/%.md skripty/do_html.awk skripty/hlavni.awk skripty/utility.awk
 	mkdir -pv $(SOUBORY_PREKLADU)/html
 	$(AWK) -f skripty/do_html.awk $< > $@
 
