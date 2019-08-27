@@ -1,0 +1,183 @@
+<!--
+
+Linux Kniha kouzel, kapitola GAWK
+Copyright (c) 2019 Singularis <singularis@volny.cz>
+
+Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
+podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
+vydané neziskovou organizací Creative Commons. Text licence je přiložený
+k tomuto projektu nebo ho můžete najít na webové adrese:
+
+https://creativecommons.org/licenses/by-sa/4.0/
+
+-->
+
+# GAWK
+
+## Úvod
+![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+## Definice
+![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+## Zaklínadla
+![ve výstavbě](../obrazky/ve-vystavbe.png)
+### Vzorky
+
+*# vykonat jednou před prvním řádkem*<br>
+**BEGIN** {*blok*}
+
+*# vykonat po zpracování posledního řádku*<br>
+**END** {*blok*}
+
+*# vykonat pro každý řádek obsahující podřetězec vyhovující regulárnímu výrazu*<br>
+**/**{*regulární výraz*}**/** {*blok*}
+
+*# vykonat pro každý řádek neobsahující podřetězec vyhovující regulárnímu výrazu*<br>
+**!/**{*regulární výraz*}**/** {*blok*}
+
+*# zapínané vykonávání*<br>
+*// zapnout před řádkem s podřetězcem vyhovujícím regulárnímu výrazu 1, vypnout za řádkem(...) výrazu 2*<br>
+**/**{*reg-výraz-zapnout*}**/,/**{*reg-výraz-vypnout*}**/** {*blok*}
+
+*# podmíněné vykonávání*<br>
+{*podmínka*} {*blok*}
+
+*# podmíněné vykonávání (příklad)*<br>
+**PROMENNA == 1 && /^X/ { print "Podmínka je splněna." }**
+
+*# vypnout automatické vypsání řádku*<br>
+**{}**
+
+### Práce s proměnnými
+
+*# získat hodnotu proměnné*<br>
+{*název-proměnné*}
+
+*# přiřadit hodnotu proměnné*<br>
+{*název-proměnné*} **=** {*hodnota*}
+
+*# získat hodnotu proměnné prostředí*<br>
+**ENVIRON[**{*název-proměnné*}**]**
+
+*# získat jméno vstupního souboru*<br>
+**FILENAME**
+
+*# získat číslo právě zpracovávaného řádku (číslováno od nuly!)*<br>
+**FNR**
+
+*# získat počet „sloupců“ aktuálního řádku (dostupných jako $1, $2 atd.)*<br>
+**NF**
+
+*# nepřímý přístup k proměnné (příklad)*<br>
+**PROMENNA = "hodnota";**<br>
+**UKAZATEL = "PROMENNA";**<br>
+**print SYMTAB[UKAZATEL];**<br>
+**SYMTAB[UKAZATEL] = "nova hodnota"**
+
+
+
+### Řetězcové funkce
+
+*# získat podřetězec (pozice se číslují od 1!)*<br>
+**substr(**{*řetězec*}**,** {*počáteční-pozice*}[**,** {*maximální-délka*}]**)**
+
+*# nahradit všechny výskyty regulárního výrazu/starého řetězce v textu proměnné novým textem*<br>
+*// výsledek přepíš původní hodnotu proměnné*<br>
+**gsub(/**{*regulární výraz*}**/,** {*nový-řetězec*}[, {*proměnná*}]**)**<br>
+**gsub(escape(**{*starý-řetězec*}**),** {*nový řetězec*}[, {*proměnná*}]**)**
+
+*# nahradit N-tý výskyt (počítáno od 1) regulárního výrazu/starého řetězce v textu proměnné novým textem*<br>
+{*proměnná*} **= gensub(/**{*regulární-výraz*}**/,** {*nový-řetězec*}**,** {*kolikátý-výskyt*}**,** {*proměnná*}**)**<br>
+{*proměnná*} **= gensub(escape(**{*starý-řetězec*}**),** {*nový-řetězec*}**,** {*kolikátý-výskyt*}**,** {*proměnná*}**)**
+
+*# zjistit délku řetězce*<br>
+**length(**{*řetězec*}**)**
+
+*# zjistit, zda řetězec obsahuje podřetězec vyhovující regulárnímu výrazu*<br>
+{*řetězec*} **~ /**{*regulární-výraz*}**/**
+
+*# načíst první podřetězec vyhovující regulárnímu výrazu (nejdelší možný); není-li takový, vrátit "NENALEZENO"*<br>
+**vysledek = (match(**{*zkoumaný-řetězec*}**, /**{*regulární-výraz*}**/) != 0) ? substr(RSTART, RLENGTH) : "NENALEZENO";**
+
+*# opakované výskyty určitého znaku nahradit jeho jedním výskytem*<br>
+?
+
+*# všechna písmena konvertovat na velká/malá*<br>
+**toupper(**{*řetězec*}**)**<br>
+**tolower(**{*řetězec*}**)**
+
+<!--
+
+index(retezec, podretezec) => první pozice podřetězce v řetězci (0, pokud není)
+length(retezec) => délka řetězce
+
+
+-->
+
+### Práce s poli
+
+*# vytisknout hodnotu prvku pole*<br>
+**print** {*pole*}**[**{*index*}**];**
+
+*# přiřadit hodnotu prvku pole*<br>
+{*pole*} **=** {*hodnota*}**;**
+
+*# zjistit, zda prvek pole existuje*<br>
+{*index*} **in** {*pole*}
+
+*# projít a vytisknout všechny prvky pole (v nedefinovaném pořadí!)*<br>
+**for (** {*iterační-proměnná*} **in** {*pole*} **) {**<br>
+**print** {*pole*}**[**{*iterační-proměnná*}**];**<br>
+**}**
+
+*# vytisknout počet prvků pole*<br>
+**print length(**{*pole*}**);**
+
+*# odstranit z pole jeden prvek/všechny prvky*<br>
+**delete** {*pole*}**[**{*index*}**];**
+**delete** {*pole*}**;**
+
+*# zjistit, zda je proměnná pole*<br>
+**isarray(**{*proměnná*}**)**
+
+### Uživatelsky definované funkce
+
+*# definovat funkci (volitelně s lokálními proměnnými)*<br>
+**function** {*název funkce*}**(**[{*první-parametr*}[**,**{*další-parametry*}]...][[{*bílé znaky navíc*}{*lokální proměnná*}**,**...]]**)** TODO: Dodělat...
+
+
+## Parametry příkazů
+![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+* **-F** {*řetězec*} \-\- nastaví oddělovač vstupních polí (k rozdělení řádků na $1, $2 atd.)
+
+
+
+## Jak získat nápovědu
+![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+## Tipy a zkušenosti
+![ve výstavbě](../obrazky/ve-vystavbe.png)
+* Pole jsou asociativní a indexy v polích jsou vždy řetězce; při indexování číslem se číslo nejprve převede na řetězec.
+* Neexistující prvky.
+
+### Funkce escape()
+![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+## Instalace na Ubuntu
+**sudo apt-get install gawk**
+
+## Odkazy
+![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+Co hledat:
+
+* [https://cs.wikipedia.org/wiki/Hlavn%C3%AD_strana](stránku na Wikipedii)
+* oficiální stránku programu
+* oficiální dokumentaci
+* [http://manpages.ubuntu.com/](manuálovou stránku)
+* [https://packages.ubuntu.com/](balíček Bionic)
+* online referenční příručky
+* různé další praktické stránky, recenze, videa, blogy, ...
+* [https://www.gnu.org/software/gawk/manual/](oficiální manuál od GNU) (anglicky)
