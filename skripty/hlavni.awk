@@ -125,7 +125,7 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, C) {
         # 2 znaky
         switch (C = substr(VSTUP, 1, 2)) {
             case "**":
-                if (Top("format") != "**") {
+                if (Vrchol("format") != "**") {
                     VYSTUP = VYSTUP FormatTucne(1);
                     Push("format", "**");
                 } else {
@@ -159,6 +159,19 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, C) {
                 VYSTUP = VYSTUP ZpracujZnak(substr(VSTUP, 2, 1));
                 VSTUP = substr(VSTUP, 3);
                 continue;
+            case "<":
+                ShoditFatalniVyjimku("Nepovolený znak '<'. Musí být zakódován jako &lt;.");
+                continue;
+            case ">":
+                ShoditFatalniVyjimku("Nepovolený znak '>'. Musí být zakódován jako &gt;.");
+                continue;
+            case "&":
+                if (match(VSTUP, /^&[0-9a-zA-Z#]{1,64};/)) {
+                    ShoditFatalniVyjimku("Nepovolená entita na řádku: '" substr($0, RSTART, RLENGTH) "'.");
+                } else {
+                    ShoditFatalniVyjimku("Nepovolený znak '&'. Musí být zakódován jako &amp;.");
+                }
+                continue;
             case "[":
                 if (match(VSTUP, /\[[^\]]+\][(][^)]+[)]/)) {
                     i = index(VSTUP, "](");
@@ -168,7 +181,7 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, C) {
                 }
                 break;
             case "*":
-                if (Top("format") != "*") {
+                if (Vrchol("format") != "*") {
                     VYSTUP = VYSTUP FormatKurziva(1);
                     Push("format", "*");
                 } else {
@@ -193,7 +206,7 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, C) {
     }
     
     if (VelikostZasobniku("format") > 0) {
-        ShoditFatalniVyjimku("Formátovací značka neuzavřena do konce řádku: " Top("format") "\nVstup: <" text ">\nVýstup: <" VYSTUP ">\n\n");
+        ShoditFatalniVyjimku("Formátovací značka neuzavřena do konce řádku: " Vrchol("format") "\nVstup: <" text ">\nVýstup: <" VYSTUP ">\n\n");
     }
     return VYSTUP;
 }

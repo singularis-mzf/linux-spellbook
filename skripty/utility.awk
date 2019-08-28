@@ -67,6 +67,17 @@ function DuplikovatZasobnik(zasobnik_odkud, zasobnik_kam,   i, pocet) {
     return pocet;
 }
 
+function ObratitZasobnik(zasobnik,   i, pocet) {
+    pocet = VelikostZasobniku(zasobnik);
+    for (i = 0; i < pocet / 2; ++i) {
+        ZASOBNIKY[zasobnik]["tmp"] = ZASOBNIKY[zasobnik][i];
+        ZASOBNIKY[zasobnik][i] = ZASOBNIKY[zasobnik][pocet - i - 1];
+        ZASOBNIKY[zasobnik][pocet - i - 1] = ZASOBNIKY[zasobnik]["tmp"];
+    }
+    delete ZASOBNIKY[zasobnik]["tmp"];
+    return pocet;
+}
+
 function Push(zasobnik, hodnota) {
     return ZASOBNIKY[zasobnik][ZASOBNIKY_VRCHOLY[zasobnik]++] = hodnota;
 }
@@ -79,7 +90,7 @@ function Pop(zasobnik) {
     }
 }
 
-function Top(zasobnik) {
+function Vrchol(zasobnik) {
     if (VelikostZasobniku(zasobnik) > 0) {
         return ZASOBNIKY[zasobnik][ZASOBNIKY_VRCHOLY[zasobnik] - 1];
     } else {

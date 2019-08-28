@@ -20,6 +20,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 ## Definice
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+* **Vzorek** je...
+
 ## Zaklínadla
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 ### Vzorky
@@ -146,6 +148,35 @@ length(retezec) => délka řetězce
 *# definovat funkci (volitelně s lokálními proměnnými)*<br>
 **function** {*název funkce*}**(**[{*první-parametr*}[**,**{*další-parametry*}]...][[{*bílé znaky navíc*}{*lokální proměnná*}**,**...]]**)** TODO: Dodělat...
 
+### Řízení zpracování
+
+*# opustit cyklus (for, while, do) nebo přepínač (switch)*<br>
+**break;**
+
+*# skočit na podmínku nejvnitřnějšího cyklu (for, while, do)*<br>
+**continue;**
+
+*# přejít na zpracování dalšího řádku (přeskočit zbytek zpracování tohoto)*<br>
+**next;**
+
+*# přejít na zpracování dalšího souboru z příkazové řádky awk (přeskočit zbytek tohoto)*<br>
+**nextfile;**
+
+*# přeskočit všechno zbylé zpracování; vykonat průchod END a ukončit program*<br>
+**exit** [{*návratová-hodnota*}]**;**
+
+*# vypsat chybovou zprávu a skončit s chybou*<br>
+**print** {*chybová-zpráva-řetězec*} **| "cat &gt;&amp;2"**<br>
+**exit 1;**
+
+### Pokročilejší funkce
+
+*# implementovat načítání řádků rozdělených znakem \\ před znakem konce řádku (tento kód vložit na začátek skriptu)*<br>
+{*proměnná*} **!= "" {$0 =** {*proměnná*}**;** {*proměnná*} **= "";}**<br>
+**/(^|[^\\\\])(\\\\\\\\)\*\\\\$/ {**{*proměnná*} **= substr($0, 1, length($0) - 1); next;}**
+<!--
+TODO: lepší název
+-->
 
 ## Parametry příkazů
 ![ve výstavbě](../obrazky/ve-vystavbe.png)

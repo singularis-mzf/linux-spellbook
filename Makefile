@@ -14,7 +14,7 @@ html: $(VYSTUP_PREKLADU)/html/index.htm
 
 # 1. kapitoly/{kapitola}.md => soubory_prekladu/html/{kapitola}
 # ============================================================================
-$(addprefix $(SOUBORY_PREKLADU)/html/,$(VSECHNY_KAPITOLY)): $(SOUBORY_PREKLADU)/html/%: kapitoly/%.md skripty/do_html.awk skripty/hlavni.awk skripty/utility.awk
+$(addprefix $(SOUBORY_PREKLADU)/html/,$(VSECHNY_KAPITOLY)): $(SOUBORY_PREKLADU)/html/%: kapitoly/%.md skripty/do_html.awk skripty/hlavni.awk skripty/utility.awk formaty/html
 	mkdir -pv $(SOUBORY_PREKLADU)/html
 	$(AWK) -f skripty/do_html.awk $< > $@
 
@@ -27,9 +27,11 @@ $(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY))): $(V
 
 # 3. vystup_prekladu/html/{kapitola}.htm => vystup_prekladu/html/index.htm
 # ============================================================================
-$(VYSTUP_PREKLADU)/html/index.htm: skripty/kniha.awk kapitoly.lst $(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY)))
+$(VYSTUP_PREKLADU)/html/index.htm: skripty/kniha.awk kapitoly.lst $(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY))) $(VYSTUP_PREKLADU)/html/lkk.css
 	SEZNAMKAPITOL=/dev/null $(AWK) -f skripty/kniha.awk formaty/html > $@
 
+$(VYSTUP_PREKLADU)/html/lkk.css: formaty/html.css
+	cat formaty/html.css > $(VYSTUP_PREKLADU)/html/lkk.css
 
 kapitoly.lst:
 	echo '# Seznam kapitol k vygenerování' > kapitoly.lst

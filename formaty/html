@@ -27,7 +27,7 @@
 <html lang="cs">
 <head>
 <title>Linux: Kniha kouzel</title>
-<style src="lkk.css"></style>
+<link rel="stylesheet" type="text/css" href="lkk.css">
 </head>
 <body>
 {{ZAČÁTEK KAPITOLY}}
@@ -35,7 +35,7 @@
 <html lang="cs">
 <head>
 <title>{{NÁZEV KAPITOLY}} − Linux: Kniha kouzel</title>
-<style src="lkk.css"></style>
+<link rel="stylesheet" type="text/css" href="lkk.css">
 </head>
 <body>
 {{TĚLO KAPITOLY}}
