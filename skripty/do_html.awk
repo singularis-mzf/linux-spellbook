@@ -47,7 +47,7 @@ function ZpracujBilyZnak(znak, opakovany) {
     return (opakovany) ? "" : znak;
 }
 
-function ZacatekKapitoly(kapitola) {
+function ZacatekKapitoly(kapitola, cisloKapitoly) {
     return "<h1>" kapitola "</h1>\n";
 }
 
@@ -63,16 +63,16 @@ function KonecKapitoly(kapitola, cislaPoznamek, textyPoznamek,   i, vysledek) {
     return vysledek;
 }
 
-function ZacatekSekce(kapitola, sekce) {
-    return "\n<h2>" sekce "</h2>\n";
+function ZacatekSekce(kapitola, sekce, cisloKapitoly, cisloSekce) {
+    return "\n<h2 id=\"kap" cisloSekce "\"><span class=\"cislo\">" cisloSekce ".</span> " sekce "</h2>\n";
 }
 
 function KonecSekce(kapitola, sekce) {
     return "";
 }
 
-function ZacatekPodsekce(kapitola, sekce, podsekce) {
-    return "\n<h3>" podsekce "</h3>\n";
+function ZacatekPodsekce(kapitola, sekce, podsekce, cisloKapitoly, cisloSekce, cisloPodsekce) {
+    return "\n<h3 id=\"kap" cisloSekce "x" cisloPodsekce "\"><span class=\"cislo\">" cisloSekce "." cisloPodsekce "</span> " podsekce "</h3>\n";
 }
 
 function KonecPodsekce(kapitola, sekce, podsekce) {
@@ -115,21 +115,28 @@ function ZacatekPrikladu(textPrikladu, cislaPoznamek, textyPoznamek,   prvni) {
     if (!isarray(cislaPoznamek) || !isarray(textyPoznamek)) {
         ShoditFatalniVyjimku("ZacatekPrikladu(): Očekáváno pole!");
     }
-    vysledek = "<div class=\"priklad\"><div class=\"zahlavi\">" textPrikladu;
-    prvni = 1;
-    if (length(cislaPoznamek) > 0) {
-        vysledek = vysledek "<sup>";
-        for (i in cislaPoznamek) {
-            if (prvni) {
-                prvni = 0;
-            } else {
-                vysledek = vysledek ",&nbsp;";
-            }
-            vysledek = vysledek "<a href=\"#ppc" cislaPoznamek[i] "\">" cislaPoznamek[i] "</a>";
-        }
-        vysledek = vysledek "</sup>";
+    if (textPrikladu == "" && length(cislaPoznamek) != 0) {
+        ShoditFatalniVyjimku("ZacatekPrikladu(): Příklady bez záhlaví, ale s poznámkami pod čarou nejsou podporovány!");
     }
-    vysledek = vysledek "</div>\n";
+    vysledek = "<div class=\"priklad\">";
+    if (textPrikladu != "") {
+        vysledek = vysledek "<div class=\"zahlavi\">" textPrikladu;
+        prvni = 1;
+        if (length(cislaPoznamek) > 0) {
+            vysledek = vysledek "<sup>";
+            for (i in cislaPoznamek) {
+                if (prvni) {
+                    prvni = 0;
+                } else {
+                    vysledek = vysledek ",&nbsp;";
+                }
+                vysledek = vysledek "<a href=\"#ppc" cislaPoznamek[i] "\">" cislaPoznamek[i] "</a>";
+            }
+            vysledek = vysledek "</sup>";
+        }
+        vysledek = vysledek "</div>";
+    }
+    vysledek = vysledek "<div class=\"radky\">\n";
     return vysledek;
 }
 
@@ -137,12 +144,8 @@ function RadekPrikladu(text) {
     return "<div class=\"radekprikladu\">" text "</div>\n";
 }
 
-#function Poznamka(text, jeVPrikladu) {
-#    return "<div class=\"poznamka\">" text "</div>\n";
-#}
-
 function KonecPrikladu() {
-    return "</div>\n";
+    return "</div></div>\n";
 }
 
 function FormatTucne(jeZacatek) {
@@ -155,6 +158,21 @@ function FormatKurziva(jeZacatek) {
 
 function FormatDopln(jeZacatek) {
     return jeZacatek ? "<i class=\"dopln\">" : "</i>";
+}
+
+function FormatVolitelny(jeZacatek) {
+    return "<span class=\"volznak\">" (jeZacatek ? "[" : "]") "</span>";
+}
+
+function TriTecky() {
+    return "<span class=\"tritecky\">...</span>";
+}
+
+function Obrazek(src, alt, rawAlt) {
+    if (src ~ /^\.\.\/obrazky\//) {
+        src = substr(src, 4);
+    }
+    return "<figure><img src=\"" src "\" alt=\"" alt "\"></figure>";
 }
 
 function ZnackaVeVystavbe() {

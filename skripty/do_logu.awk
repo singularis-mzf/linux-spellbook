@@ -33,7 +33,7 @@ function ZpracujBilyZnak(znak, opakovany) {
 #    return "ZpracujBilyZnak('" znak "', opakovany = " (opakovany ? "TRUE" : "FALSE") ");";
 }
 
-function ZacatekKapitoly(kapitola) {
+function ZacatekKapitoly(kapitola, cisloKapitoly) {
     return "ZacatekKapitoly(\"" kapitola "\");\n";
 }
 
@@ -58,7 +58,7 @@ function KonecKapitoly(kapitola, cislaPoznamek, textyPoznamek,   i, vysledek) {
     return vysledek;
 }
 
-function ZacatekSekce(kapitola, sekce) {
+function ZacatekSekce(kapitola, sekce, cisloKapitoly, cisloSekce) {
     return "ZacatekSekce(\"" kapitola "\", \"" sekce "\");\n";
 }
 
@@ -66,7 +66,7 @@ function KonecSekce(kapitola, sekce) {
     return "KonecSekce(\"" kapitola "\", \"" sekce "\");\n";
 }
 
-function ZacatekPodsekce(kapitola, sekce, podsekce) {
+function ZacatekPodsekce(kapitola, sekce, podsekce, cisloKapitoly, cisloSekce, cisloPodsekce) {
     return "ZacatekPodsekce(\"" kapitola "\", \"" sekce "\", \"" podsekce "\");\n";
 }
 
@@ -110,7 +110,7 @@ function ZacatekPrikladu(textPrikladu, cislaPoznamek, textyPoznamek,   vysledek)
     if (!isarray(cislaPoznamek) || !isarray(textyPoznamek)) {
         ShoditFatalniVyjimku("ZacatekPrikladu(): Očekáváno pole!");
     }
-    
+
     vysledek = "ZacatekPrikladu(\"" textPrikladu "\", {";
     for (i = 0; i < length(cislaPoznamek); ++i) {
         if (!(i in cislaPoznamek)) {
@@ -147,6 +147,18 @@ function FormatKurziva(jeZacatek) {
 
 function FormatDopln(jeZacatek) {
     return "FormatDopln[" (jeZacatek ? "zacatek" : "konec") "]";
+}
+
+function FormatVolitelny(jeZacatek) {
+    return "FormatVolitelny[" (jeZacatek ? "zacatek" : "konec") "]";
+}
+
+function TriTecky() {
+    return "TriTecky[]";
+}
+
+function Obrazek(src, alt, rawAlt) {
+    return "Obrazek(src=" src ",alt=" alt ",rawAlt=" rawAlt ");\n";
 }
 
 function ZnackaVeVystavbe() {

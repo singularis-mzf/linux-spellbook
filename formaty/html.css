@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*
  * Linux Kniha kouzel, šablona CSS
  * Copyright (c) 2019 Singularis <singularis@volny.cz>
@@ -24,4 +25,155 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-html {background:red;}
+/* CSS reset */
+*{background:none;border:none;border-collapse:inherit;bottom:auto;
+caption-side:inherit;clear:none;clip:auto;color:inherit;
+empty-cells:inherit;left:auto;letter-spacing:inherit;
+line-height:inherit;list-style:inherit;margin:0;
+max-height:none;max-width:none;min-height:0;overflow:visible;
+padding:0;position:static;right:auto;table-layout:auto;
+text-decoration:none;text-indent:0;text-transform:inherit;
+top:auto;visibility:inherit;white-space:inherit;word-spacing:inherit;
+z-index:auto;font:inherit;}
+
+/* Blokové prvky */
+html {
+    background-color:#f0f0f0;
+    color:#333333;
+    font:62.5%/1.2 sans-serif;
+    padding:1rem 2% 5rem;
+}
+
+body {
+    font-size:133%;
+}
+
+h1 {
+    font:bold 175%/1.2 "DejaVu Sans", sans-serif;
+    margin:0.5em 0;
+}
+
+h2 {
+    font:150%/1.2 "DejaVu Sans", sans-serif;
+    margin:1.5em 0 0.5em;
+}
+
+h3 {
+    font:125%/1.2 "DejaVu Sans", sans-serif;
+    margin:1.5em 0 0.25em;
+    /*background-color:rgb(210,210,210);*/
+    padding:0.5rem 0;
+    text-align:center;
+    page-break-after:avoid; /* možná není podporována v současných prohlížečích */
+}
+
+p, ul {
+    font-family: "DejaVu Serif", serif;
+    margin:0.75em 0;
+    max-width:50em;
+}
+
+p {
+    line-height:1.5;
+}
+
+ul {
+    margin-left:7rem;
+    line-height:1.5;
+}
+
+ul > li + li {
+    margin-top:0.5em;
+}
+
+figure {
+    margin:2rem 0;
+    text-align:center;
+}
+
+/* Inline prvky */
+a:link {color:red;}
+a:visited {color:#4971f2;}
+a[href]::before {content:" [" attr(href) "]("}
+a[href]::after {content:")";}
+a:hover {text-decoration:underline;}
+b {font-weight:bold;}
+i {font-style:italic;}
+
+
+/* Formátování příkladů */
+.priklad {
+    font-family: "DejaVu Sans Mono", monospace;
+    font-size:115%;
+    page-break-inside:avoid;
+}
+
+.priklad + .priklad {
+    /* mezera mezi příklady */
+    margin-top:1.25em;
+}
+
+.priklad .zahlavi {
+    font-family: "Noto Mono", "DejaVu Serif", serif;
+    font-size:90%;
+    line-height:1.3;
+    margin-left:1.8rem;
+    position:relative;
+}
+
+.priklad .zahlavi::before {
+    content: "#";
+    display:inline-block;
+    font:bold 1.6rem/1 "DejaVu Sans Mono", serif;
+    text-align:left;
+    position:absolute;
+    left:auto;right:100%;top:0.2rem;bottom:auto;
+    width:1.8rem;
+}
+
+.priklad .radky {
+    box-shadow:0 0 5pt 0 rgb(200,200,200), -5pt 0 5pt 5pt rgb(200,200,200), 5pt 0 5pt 0 rgb(200,200,200);
+    font-size:80%;
+    line-height:1.8;
+    margin:3pt 5pt 3pt 7rem;
+    padding:1pt 5pt;
+}
+
+/* zobrazení znaku ↲ na konci každého řádku příkladu kromě posledního */
+.priklad .radekprikladu::after {content:"↲";margin-left:0.5em;color:rgb(120,120,120);}
+.priklad .radekprikladu:last-child::after {display:none;}
+
+
+.priklad .dopln {
+    text-decoration:underline;
+    margin-left:0.25em;
+    margin-right:0.25em;
+}
+.priklad .dopln:first-child {
+    margin-left:0;
+}
+
+.priklad .volznak {
+    display:inline-block;
+    color:rgb(127,127,127);
+    margin:0 -0.2em;
+    transform:scaleY(1.75);
+}
+
+/* zbytek */
+.tritecky {
+    color:rgb(127,127,127);
+    letter-spacing:-0.3em;
+}
+
+h3 .cislo {
+    display:inline-block;
+    /*margin:0 0.5rem 0 0;*/
+    margin-right:0.5rem;
+    min-width:2em;
+    text-align:right;
+}
+
+@media print {
+    html {padding:0;}
+}

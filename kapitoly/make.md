@@ -220,12 +220,14 @@ jemuž se bude věnovat většina této kapitoly.
 * Na začátku Makefile se doporučuje explicitně uvést **SHELL := /bin/sh**, případně uvést jako prerekvizitu kompilace bash a uvést **SHELL := /bin/bash**.
 
 ## Ukázka
+*# *<br>
 **\# Komentář**<br>
 **SHELL := /bin/sh**
 
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 ## Instalace na Ubuntu
+*# *<br>
 **sudo apt-get install make**
 
 ## Odkazy

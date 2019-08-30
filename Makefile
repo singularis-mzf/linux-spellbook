@@ -33,6 +33,7 @@ $(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY))): $(V
 # ============================================================================
 $(VYSTUP_PREKLADU)/html/index.htm: skripty/kniha.awk kapitoly.lst $(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY))) $(VYSTUP_PREKLADU)/html/lkk.css kapitoly.lst
 	SEZNAMKAPITOL=kapitoly.lst VSTUPPREFIX=$(VYSTUP_PREKLADU)/html/ VSTUPSUFFIX=.htm $(AWK) -f skripty/kniha.awk formaty/html > $@
+	cp -Rv obrazky $(VYSTUP_PREKLADU)/html/
 
 # 4. formaty/html.css => vystup_prekladu/html/lkk.css
 # ============================================================================
