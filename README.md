@@ -37,6 +37,7 @@ Zatím nejsou.
 * [Soubory](kapitoly/soubory.md)
 
 ### Plánované
+* Správa balíčků (apt/dpkg)
 * Bash
 * /etc/fstab
 * Git

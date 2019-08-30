@@ -1,4 +1,4 @@
-# Linux Kniha kouzel, skript kapitola.awk
+# Linux Kniha kouzel, šablona LOG
 # Copyright (c) 2019 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -22,41 +22,14 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-@include "skripty/utility.awk"
-
-BEGIN {
-    if (ENVIRON["IDKAPITOLY"] == "") {
-        ShoditFatalniVyjimku("Vyžadovaná proměnná IDKAPITOLY není nastavena!");
-    }
-    if (ENVIRON["NAZEVKAPITOLY"] == "") {
-        ShoditFatalniVyjimku("Vyžadovaná proměnná NAZEVKAPITOLY není nastavena!");
-    }
-    if (ENVIRON["TELOKAPITOLY"] == "") {
-        ShoditFatalniVyjimku("Vyžadovaná proměnná TELOKAPITOLY není nastavena!");
-    }
-}
-# 
-{
-    JE_RIDICI_RADEK = $0 ~ /^\{\{[^{}]+\}\}$/;
-    VYTISKNOUT = 0;
-}
-
-/^\{\{ZAČÁTEK KAPITOLY\}\}$/,/^\{\{KONEC KAPITOLY\}\}$/ {
-    VYTISKNOUT =  !JE_RIDICI_RADEK;
-    switch ($0) {
-        case "{{TĚLO KAPITOLY}}":
-            system("cat '" ENVIRON["TELOKAPITOLY"] "'");
-            break;
-    }
-}
-
-VYTISKNOUT {
-    gsub(/\{\{NÁZEV KAPITOLY\}\}/, ENVIRON["NAZEVKAPITOLY"], $0);
-    print $0;
-}
-
-END {
-    if (FATALNI_VYJIMKA) {
-        exit FATALNI_VYJIMKA;
-    }
-}
+{{ZAČÁTEK KNIHY}}
+(ZAČÁTEK KNIHY)
+{{ZAČÁTEK KAPITOLY}}
+(ZAČÁTEK KAPITOLY {{NÁZEV KAPITOLY}})
+{{TĚLO KAPITOLY}}
+----
+{{POZNÁMKY POD ČAROU}}
+(KONEC KAPITOLY)
+{{KONEC KAPITOLY}}
+(KONEC KNIHY)
+{{KONEC KNIHY}}

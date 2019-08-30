@@ -24,10 +24,37 @@
 
 @include "skripty/utility.awk"
 
+function ExistujeKapitola(idkapitoly) {
+    return system("test -r '" VstupniSoubor(idkapitoly) "'") == 0;
+}
+
+function VstupniSoubor(idkapitoly) {
+    return VSTUPPREFIX idkapitoly VSTUPSUFFIX;
+}
+
 BEGIN {
     if (ENVIRON["SEZNAMKAPITOL"] == "") {
         ShoditFatalniVyjimku("Vyžadovaná proměnná SEZNAMKAPITOL není nastavena!");
     }
+    if (ENVIRON["VSTUPPREFIX"] == "") {
+        ShoditFatalniVyjimku("Vyžadovaná proměnná VSTUPPREFIX není nastavena!");
+    }
+    # ENVIRON["VSTUPSUFFIX"] je nepovinná
+
+    VSTUPPREFIX = ENVIRON["VSTUPPREFIX"];
+    VSTUPSUFFIX = ENVIRON["VSTUPSUFFIX"];
+    split("", KAPITOLY);
+
+    while ((getline < (ENVIRON["SEZNAMKAPITOL"])) == 1) {
+        if (!($0 ~ /^(#| *$)/)) {
+            if (!ExistujeKapitola($0)) {
+                ShoditFatalniVyjimku("Kapitola s id \"" $0 "\" neexistuje, není dostupná nebo nebyla řádně přeložena!");
+            }
+            KAPITOLY[length(KAPITOLY) + 1] = $0;
+        }
+    }
+
+    close(ENVIRON["SEZNAMKAPITOL"]);
 }
 
 {
@@ -41,6 +68,16 @@ BEGIN {
 
 /^\{\{KONEC KAPITOLY\}\}$/,/^\{\{KONEC KNIHY\}\}$/ {
     VYTISKNOUT =  !JE_RIDICI_RADEK;
+    if ($0 == "{{KONEC KAPITOLY}}") {
+        prikaz = "cat";
+        for (i = 1; i <= length(KAPITOLY); ++i) {
+            prikaz = prikaz " " VstupniSoubor(KAPITOLY[i]);
+        }
+        vysledek = system(prikaz);
+        if (vysledek != 0) {
+            exit vysledek;
+        }
+    }
 }
 
 VYTISKNOUT {

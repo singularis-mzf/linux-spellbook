@@ -25,7 +25,7 @@
 @include "skripty/utility.awk"
 
 function ZpracujZnak(znak) {
-    return "('" znak "')";
+    return "_" znak;
 }
 
 function ZpracujBilyZnak(znak, opakovany) {
@@ -37,8 +37,25 @@ function ZacatekKapitoly(kapitola) {
     return "ZacatekKapitoly(\"" kapitola "\");\n";
 }
 
-function KonecKapitoly(kapitola) {
-    return "KonecKapitoly(\"" kapitola "\");\n";
+function KonecKapitoly(kapitola, cislaPoznamek, textyPoznamek,   i, vysledek) {
+    if (!isarray(cislaPoznamek) || !isarray(textyPoznamek)) {
+        ShoditFatalniVyjimku("KonecKapitoly(): Očekáváno pole!");
+    }
+    if (length(cislaPoznamek) > 0) {
+        vysledek = "PoznamkyPodCarou[{\n"
+        for (i = 0; i < length(cislaPoznamek); ++i) {
+            if (!(i in cislaPoznamek)) {
+                ShoditFatalniVyjimku("Vnitřní chyba: v poli cislaPoznamek[] chybí index [" i "]!");
+            }
+            if (!(cislaPoznamek[i] in textyPoznamek)) {
+                ShoditFatalniVyjimku("Vnitřní chyba: v poli textyPoznamek[] chybí index [" cislaPoznamek[i] "] vyžadovaný prvkem cislaPoznamek[" i "]!");
+            }
+            vysledek = vysledek "  " cislaPoznamek[i] " = (" textyPoznamek[cislaPoznamek[i]] "),\n";
+        }
+        vysledek = vysledek "}];\n";
+    }
+    vysledek = vysledek "KonecKapitoly(\"" kapitola "\");\n";
+    return vysledek;
 }
 
 function ZacatekSekce(kapitola, sekce) {
@@ -89,20 +106,35 @@ function KonecSeznamu(uroven) {
     return "KonecSeznamu(" uroven ");\n";;
 }
 
-function ZacatekPrikladu(textPrikladu) {
-    return "  ZacatekPrikladu(\"" textPrikladu "\");\n";
+function ZacatekPrikladu(textPrikladu, cislaPoznamek, textyPoznamek,   vysledek) {
+    if (!isarray(cislaPoznamek) || !isarray(textyPoznamek)) {
+        ShoditFatalniVyjimku("ZacatekPrikladu(): Očekáváno pole!");
+    }
+    
+    vysledek = "ZacatekPrikladu(\"" textPrikladu "\", {";
+    for (i = 0; i < length(cislaPoznamek); ++i) {
+        if (!(i in cislaPoznamek)) {
+            ShoditFatalniVyjimku("Vnitřní chyba: v poli cislaPoznamek očekáván index [" i "]!");
+        }
+        vysledek = vysledek cislaPoznamek[i] ", ";
+    }
+    vysledek = vysledek "}[" length(cislaPoznamek) "], {";
+    for (i = 0; i < length(cislaPoznamek); ++i) {
+        if (!(cislaPoznamek[i] in textyPoznamek)) {
+            ShoditFatalniVyjimku("Vnitřní chyba: v poli textyPoznamek očekáván index [" cislaPoznamek[i] "] pole cislaPoznamek[" i "]!");
+        }
+        vysledek = vysledek "\"" textyPoznamek[cislaPoznamek[i]] "\", ";
+    }
+    vysledek = vysledek "}[" length(cislaPoznamek) "]);\n";
+    return vysledek;
 }
 
 function RadekPrikladu(text) {
     return "    RadekPrikladu(\"" text "\")\n";
 }
 
-function Poznamka(text, jeVPrikladu) {
-    return (jeVPrikladu ? "    " : "") "Poznamka(\"" text "\", jeVPrikladu = " (jeVPrikladu ? "TRUE" : "FALSE") ");\n";
-}
-
 function KonecPrikladu() {
-    return "  KonecPrikladu();\n";
+    return "KonecPrikladu();\n";
 }
 
 function FormatTucne(jeZacatek) {

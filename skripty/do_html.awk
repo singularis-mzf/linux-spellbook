@@ -51,8 +51,16 @@ function ZacatekKapitoly(kapitola) {
     return "<h1>" kapitola "</h1>\n";
 }
 
-function KonecKapitoly(kapitola) {
-    return "";
+function KonecKapitoly(kapitola, cislaPoznamek, textyPoznamek,   i, vysledek) {
+    vysledek = "";
+    if (length(cislaPoznamek) > 0) {
+        vysledek = "<div class=\"ppc\">";
+        for (i = 0; i < length(cislaPoznamek); ++i) {
+            vysledek = vysledek "<div id=\"ppc" cislaPoznamek[i] "\"><sup>" cislaPoznamek[i] "</sup>&nbsp;" textyPoznamek[cislaPoznamek[i]] "</div>\n";
+        }
+        vysledek = vysledek "</div>\n";
+    }
+    return vysledek;
 }
 
 function ZacatekSekce(kapitola, sekce) {
@@ -103,17 +111,35 @@ function KonecSeznamu(uroven) {
     return "</ul>";
 }
 
-function ZacatekPrikladu(textPrikladu) {
-    return "<div class=\"priklad\"><div class=\"zahlavi\">" textPrikladu "</div>\n";
+function ZacatekPrikladu(textPrikladu, cislaPoznamek, textyPoznamek,   prvni) {
+    if (!isarray(cislaPoznamek) || !isarray(textyPoznamek)) {
+        ShoditFatalniVyjimku("ZacatekPrikladu(): Očekáváno pole!");
+    }
+    vysledek = "<div class=\"priklad\"><div class=\"zahlavi\">" textPrikladu;
+    prvni = 1;
+    if (length(cislaPoznamek) > 0) {
+        vysledek = vysledek "<sup>";
+        for (i in cislaPoznamek) {
+            if (prvni) {
+                prvni = 0;
+            } else {
+                vysledek = vysledek ",&nbsp;";
+            }
+            vysledek = vysledek "<a href=\"#ppc" cislaPoznamek[i] "\">" cislaPoznamek[i] "</a>";
+        }
+        vysledek = vysledek "</sup>";
+    }
+    vysledek = vysledek "</div>\n";
+    return vysledek;
 }
 
 function RadekPrikladu(text) {
     return "<div class=\"radekprikladu\">" text "</div>\n";
 }
 
-function Poznamka(text, jeVPrikladu) {
-    return "<div class=\"poznamka\">" text "</div>\n";
-}
+#function Poznamka(text, jeVPrikladu) {
+#    return "<div class=\"poznamka\">" text "</div>\n";
+#}
 
 function KonecPrikladu() {
     return "</div>\n";
@@ -134,5 +160,18 @@ function FormatDopln(jeZacatek) {
 function ZnackaVeVystavbe() {
     return "<div>(VE VÝSTAVBĚ)</div>\n";
 }
+
+# dostává text poznámek v cílovém formátu
+#function OdkazyNaPoznamkyPodCarou(cisla, texty,   i, vysledek) {
+#    if (!isarray(cisla) || !isarray(texty)) {
+#        ShoditFatalniVyjimku("OdkazyNaPoznamkyPodCarou(): Očekáváno pole!");
+#    }
+#    vysledek = "";
+#    for (i in cisla) {
+#        vysledek = vysledek "<sup><a href=\"#ppc" i "\">" i "</a></sup>";
+#    }
+#    return vysledek;
+#}
+
 
 @include "skripty/hlavni.awk"

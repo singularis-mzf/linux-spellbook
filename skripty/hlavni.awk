@@ -30,7 +30,7 @@
 function ZpracujZnaky(text,     VSTUP, VYSTUP, ZNAK) {
     VSTUP = text;
     VYSTUP = "";
-    
+
     while (VSTUP != "") {
         ZNAK = substr(VSTUP, 1, 1);
         if (ZNAK == "\\" && length(VSTUP) > 1) {
@@ -64,7 +64,7 @@ function ZpracujZnaky(text,     VSTUP, VYSTUP, ZNAK) {
             VSTUP = substr(VSTUP, 2);
         }
     }
-    
+
     return VYSTUP;
 }
 
@@ -204,7 +204,7 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, C) {
         VYSTUP = VYSTUP ZpracujZnak(C);
         VSTUP = substr(VSTUP, 2);
     }
-    
+
     if (VelikostZasobniku("format") > 0) {
         ShoditFatalniVyjimku("Formátovací značka neuzavřena do konce řádku: " Vrchol("format") "\nVstup: <" text ">\nVýstup: <" VYSTUP ">\n\n");
     }
@@ -223,6 +223,9 @@ function ZacitTypRadku() {
                 printf("%s", ZacatekPolozkySeznamu(1));
             }
             break;
+        case "PRIKLAD":
+            delete ppc;
+            delete ppt;
         default:
             break;
     }
@@ -242,13 +245,20 @@ function UkoncitPredchoziTypRadku() {
                 printf("%s", KonecSeznamu(1));
             }
             return "";
-            
+
         case "POKRACOVANI_POLOZKY_SEZNAMU":
             printf("%s", KonecPolozkySeznamu(1));
             if (TYP_RADKU != "POLOZKA_SEZNAMU") {
                 printf("%s", KonecSeznamu(1));
             } else {
                 printf("%s", ZacatekPolozkySeznamu(1));
+            }
+            return "";
+
+        case "POZNAMKA":
+        case "PRIKLAD":
+            if (TEXT_PRIKLADU != "" && TYP_RADKU != "POZNAMKA" && TYP_RADKU != "RADEK_PRIKLADU") {
+                VypsatZahlaviPrikladu();
             }
             return "";
 
@@ -262,13 +272,28 @@ function UkoncitPredchoziTypRadku() {
     }
 }
 
+function VypsatZahlaviPrikladu(   i, maPoznamky) {
+    if (TEXT_PRIKLADU != "") {
+        printf("%s", ZacatekPrikladu(TEXT_PRIKLADU, ppc, ppt));
+        TEXT_PRIKLADU = "";
+        delete ppc;
+        delete ppt;
+    }
+    return 0;
+}
+
 BEGIN {
     KAPITOLA = "";
     SEKCE = "";
     PODSEKCE = "";
+    DALSI_POZNAMKA_POD_CAROU = 1;
     FATALNI_VYJIMKA = 0;
     TYP_RADKU = "PRAZDNY";
     JE_UVNITR_PRIKLADU = 0;
+    split("", ppc);
+    split("", ppt);
+    split("", ppcall);
+    split("", pptall);
 }
 
 {
@@ -300,14 +325,14 @@ BEGIN {
 }
 
 # vypustit z řádku inline komentáře (popř. je zpracovat)
-/<!--.*-->/ { 
+/<!--.*-->/ {
     while ((i = index($0, "<!--")) && (j = 4 + index(substr($0, i + 4), "-->"))) {
 #        text_komentare = substr($0, i + 4, j - 5);
 #        print "DEBUG: inline komentář <!--" text_komentare "-->.";
 
         $0 = substr($0, 1, i - 1) substr($0, i + j + 2);
     }
-}       
+}
 
 # určit typ řádku, nebyl-li již určen
 {
@@ -332,7 +357,7 @@ BEGIN {
     } else {
         TYP_RADKU = "NORMALNI";
     }
-    
+
     # DEBUG:
     #printf("\n<TYP=%s>%s>", PREDCHOZI_TYP_RADKU, TYP_RADKU);
 }
@@ -352,18 +377,20 @@ TYP_RADKU == "NADPIS" {
     if (SEKCE != "" && $0 ~ /^##? /)
         printf("%s", KonecSekce(KAPITOLA, SEKCE));
     if (KAPITOLA != "" && $0 ~ /^# /)
-        printf("%s", KonecKapitoly(KAPITOLA));
+        printf("%s", KonecKapitoly(KAPITOLA, ppcall, pptall));
     if ($0 ~ /^# /) {
-        KAPITOLA = substr($0, 3);
+        KAPITOLA = ZpracujZnaky(substr($0, 3));
         SEKCE = "";
         PODSEKCE = "";
+        delete ppcall;
+        delete pptall;
         printf("%s", ZacatekKapitoly(KAPITOLA));
     } else if ($0 ~ /^## /) {
-        SEKCE = substr($0, 4);
+        SEKCE = ZpracujZnaky(substr($0, 4));
         PODSEKCE = "";
         printf("%s", ZacatekSekce(KAPITOLA, SEKCE));
     } else {
-        PODSEKCE = substr($0, 5);
+        PODSEKCE = ZpracujZnaky(substr($0, 5));
         printf("%s", ZacatekPodsekce(KAPITOLA, SEKCE, PODSEKCE));
     }
     next;
@@ -395,11 +422,14 @@ TYP_RADKU == "POKRACOVANI_POLOZKY_SEZNAMU" {
 }
 
 TYP_RADKU == "PRIKLAD" {
+    if (PREDCHOZI_TYP_RADKU == "PRIKLAD") {
+        ShoditFatalniVyjimku("Příklad nesmí následovat bezprostředně po předchozím příkladu. Vložte před něj prázdný řádek.");
+    }
     if ($0 ~ /<br>$/) {
         $0 = substr($0, 1, length($0) - 4);
     }
-    $0 = substr($0, 4, length($0) - 4);
-    printf("%s", ZacatekPrikladu(FormatovatRadek($0)));
+    TEXT_PRIKLADU = FormatovatRadek(substr($0, 4, length($0) - 4));
+#    printf("%s", ZacatekPrikladu(FormatovatRadek($0)));
     next;
 }
 
@@ -407,7 +437,18 @@ TYP_RADKU == "POZNAMKA" {
     if ($0 ~ /<br>$/) {
         $0 = substr($0, 1, length($0) - 4);
     }
-    printf("%s", Poznamka(FormatovatRadek(substr($0, 5, length($0) - 6)), JE_UVNITR_PRIKLADU));
+    if (!JE_UVNITR_PRIKLADU) {
+        ShoditFatalniVyjimku("Poznámky jsou v této verzi podporovány pouze uvnitř příkladů.");
+        #printf("%s", Poznamka(FormatovatRadek(substr($0, 5, length($0) - 5)), JE_UVNITR_PRIKLADU));
+    } else {
+        INDEX_POZNAMKY_POD_CAROU = length(ppcall);
+        CISLO_POZNAMKY_POD_CAROU = INDEX_POZNAMKY_POD_CAROU + 1;
+        TEXT_POZNAMKY_POD_CAROU = FormatovatRadek(substr($0, 5, length($0) - 5));
+        ppc[length(ppc)] = CISLO_POZNAMKY_POD_CAROU;
+        ppt[CISLO_POZNAMKY_POD_CAROU] = TEXT_POZNAMKY_POD_CAROU;
+        ppcall[INDEX_POZNAMKY_POD_CAROU] = CISLO_POZNAMKY_POD_CAROU;
+        pptall[CISLO_POZNAMKY_POD_CAROU] = TEXT_POZNAMKY_POD_CAROU;
+    }
     next;
 }
 
@@ -415,6 +456,7 @@ TYP_RADKU == "RADEK_PRIKLADU" {
     if ($0 ~ /<br>$/) {
         $0 = substr($0, 1, length($0) - 4);
     }
+    VypsatZahlaviPrikladu();
     printf("%s", RadekPrikladu(FormatovatRadek($0)));
     next;
 }
@@ -438,19 +480,19 @@ END {
     if (FATALNI_VYJIMKA) {
         exit FATALNI_VYJIMKA;
     }
-    
+
     # Řádně ukončit poslední otevřený typ řádku.
     if (TYP_RADKU != "") {
         PREDCHOZI_TYP_RADKU = TYP_RADKU;
         TYP_RADKU = "PRAZDNY";
         UkoncitPredchoziTypRadku();
     }
-    
+
     # Řádně ukončit kapitolu, je-li otevřena.
     if (PODSEKCE != "")
         printf("%s", KonecPodsekce(KAPITOLA, SEKCE, PODSEKCE));
     if (SEKCE != "")
         printf("%s", KonecSekce(KAPITOLA, SEKCE));
     if (KAPITOLA != "")
-        printf("%s", KonecKapitoly(KAPITOLA));
+        printf("%s", KonecKapitoly(KAPITOLA, ppcall, pptall));
 }
