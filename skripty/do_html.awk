@@ -130,7 +130,7 @@ function ZacatekPrikladu(textPrikladu, cislaPoznamek, textyPoznamek,   prvni) {
                 } else {
                     vysledek = vysledek ",&nbsp;";
                 }
-                vysledek = vysledek "<a href=\"#ppc" cislaPoznamek[i] "\">" cislaPoznamek[i] "</a>";
+                vysledek = vysledek "<a href=\"#ppc" cislaPoznamek[i] "\">(" cislaPoznamek[i] ")</a>";
             }
             vysledek = vysledek "</sup>";
         }

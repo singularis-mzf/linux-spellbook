@@ -46,7 +46,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 {*podmínka*} {*blok*}
 
 *# podmíněné vykonávání (příklad)*<br>
-**PROMENNA == 1 && /^X/ { print "Podmínka je splněna." }**
+**PROMENNA == 1 &amp;&amp; /^X/ { print "Podmínka je splněna." }**
 
 *# vypnout automatické vypsání řádku*<br>
 **{}**
@@ -174,9 +174,6 @@ length(retezec) => délka řetězce
 *# implementovat načítání řádků rozdělených znakem \\ před znakem konce řádku (tento kód vložit na začátek skriptu)*<br>
 {*proměnná*} **!= "" {$0 =** {*proměnná*}**;** {*proměnná*} **= "";}**<br>
 **/(^|[^\\\\])(\\\\\\\\)\*\\\\$/ {**{*proměnná*} **= substr($0, 1, length($0) - 1); next;}**
-<!--
-TODO: lepší název
--->
 
 ## Parametry příkazů
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
@@ -204,11 +201,11 @@ TODO: lepší název
 
 Co hledat:
 
-* [https://cs.wikipedia.org/wiki/Hlavn%C3%AD_strana](stránku na Wikipedii)
+* [stránku na Wikipedii](https://cs.wikipedia.org/wiki/Hlavn%C3%AD_strana)
 * oficiální stránku programu
 * oficiální dokumentaci
-* [http://manpages.ubuntu.com/](manuálovou stránku)
-* [https://packages.ubuntu.com/](balíček Bionic)
+* [manuálovou stránku](http://manpages.ubuntu.com/)
+* [balíček Bionic](https://packages.ubuntu.com/)
 * online referenční příručky
 * různé další praktické stránky, recenze, videa, blogy, ...
-* [https://www.gnu.org/software/gawk/manual/](oficiální manuál od GNU) (anglicky)
+* [oficiální manuál od GNU](https://www.gnu.org/software/gawk/manual/) (anglicky)

@@ -1,4 +1,4 @@
-VSECHNY_KAPITOLY := _ukazka docker make
+VSECHNY_KAPITOLY := _ukazka docker make gawk
 SOUBORY_PREKLADU := soubory_prekladu
 VYSTUP_PREKLADU := vystup_prekladu
 AWK := gawk
