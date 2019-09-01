@@ -144,7 +144,8 @@ i {font-style:italic;}
 .priklad .radekprikladu:last-child::after {display:none;}
 
 
-.priklad .dopln {
+.dopln {
+    font: 100%/1.2 "DejaVu Sans Mono", monospace;
     text-decoration:underline;
     margin-left:0.25em;
     margin-right:0.25em;

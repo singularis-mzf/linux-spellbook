@@ -25,17 +25,19 @@
 {{ZAČÁTEK KNIHY}}
 <!doctype html>
 <html lang="cs">
-<head>
+<head profile="http://www.w3.org/2005/10/profile">
 <title>Linux: Kniha kouzel</title>
 <link rel="stylesheet" type="text/css" href="lkk.css">
+<link rel="icon" type="image/png" href="obrazky/favicon.png">
 </head>
 <body>
 {{ZAČÁTEK KAPITOLY}}
 <!doctype html>
 <html lang="cs">
-<head>
+<head profile="http://www.w3.org/2005/10/profile">
 <title>{{NÁZEV KAPITOLY}} − Linux: Kniha kouzel</title>
 <link rel="stylesheet" type="text/css" href="lkk.css">
+<link rel="icon" type="image/png" href="obrazky/favicon.png">
 </head>
 <body>
 {{TĚLO KAPITOLY}}

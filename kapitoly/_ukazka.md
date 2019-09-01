@@ -18,10 +18,12 @@ https://creativecommons.org/licenses/by-sa/4.0/
 Tato kapitola je jen ukázka dovoleného formátování. Je zatím poměrně omezené.
 Běžné odstavce mohou pokračovat na dalším řádku.
 Mohou také obsahovat vynucený<br>konec řádku a omezené formátování:
-**tučně**, *kurzívou*.
+**tučně**, *kurzívou*, nebo {*doplň*}, do **tučného textu lze vnořit *kurzívu*,**
+a do *kurzívy lze vnořit **tučný text**,* ale doplň s nimi nelze kombinovat.
+Dovolený je i [hypertextový odkaz](http://www.seznam.cz/).
 
 * Takto vypadají seznamy.
-Položka seznamu může pokračovat na dalším řádku a obsahovat text **tučně** nebo *kurzívou*.
+Položka seznamu může pokračovat na dalším řádku a obsahovat text **tučně**, *kurzívou*, nebo {*na doplnění*}.
 * Další položka seznamu. Může obsahovat také [hypertextový odkaz](http://www.seznam.cz/) a vynucený<br>konec řádku.
 
 ### Příklady
@@ -46,4 +48,3 @@ Položka seznamu může pokračovat na dalším řádku a obsahovat text **tuč
 Lze zadat nejrůznější zvláštní znaky: \\, \*, +, -, &lt;, &amp;, &gt;, ", ', &nbsp;.
 
 ## Poznámky pod čarou
-{*POZNÁMKY-POD-ČAROU*}

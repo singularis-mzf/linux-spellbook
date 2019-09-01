@@ -56,6 +56,25 @@ License: GPL-2+
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 Files: obrazky/ve-vystavbe.png
-Copyright: 2010, Sarang ( https://commons.wikimedia.org/wiki/User:Sarang )
+Copyright: 2010, Sarang <https://de.wikipedia.org/wiki/Benutzer:Sarang>
 License: PD (volné dílo podle německých zákonů)
 Source: https://commons.wikimedia.org/wiki/File:UnderCon_icon.svg
+
+Files: obrazky/favicon.png
+Files: zdroje_obrazku/favicon/*
+Copyright: Larry Ewing <http://www.isc.tamu.edu/~lewing/>
+Copyright: Garrett LaSage <https://github.com/garrett/Tux>
+Copyright: 2019, Singularis
+License: CC0
+Source: https://github.com/garrett/Tux (file "tux-large.png")
+ Original Tux illustration by Larry Ewing, at: http://isc.tamu.edu/~lewing/linux/
+ .
+ Redrawn in Inkscape by Garrett LeSage: https://github.com/garrett/Tux
+ .
+ Modified and extended by Singularis <singularis@volny.cz>
+ .
+ Public domain http://creativecommons.org/publicdomain/zero/1.0/
+ ...but, if anyone asks:
+ Tux was originally made by Larry Ewing in the Gimp and re-illustrated in vector by Garrett LeSage, using Inkscape.
+ .
+ The copyright holder of this file allows anyone to use it for any purpose, provided that the copyright holder is properly attributed. Redistribution, derivative work, commercial use, and all other use is permitted. (https://commons.wikimedia.org/wiki/File:Tux.svg)
