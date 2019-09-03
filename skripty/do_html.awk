@@ -47,6 +47,14 @@ function ZpracujBilyZnak(znak, opakovany) {
     return (opakovany) ? "" : znak;
 }
 
+function Tabulator(delka,  i, vysledek) {
+    vysledek = "<span class=\"tab\">»";
+    for (i = 1; i < delka; ++i) {
+        vysledek = vysledek "&nbsp;";
+    }
+    return vysledek "</span>";
+}
+
 function ZacatekKapitoly(kapitola, cisloKapitoly) {
     return "<h1>" kapitola "</h1>\n";
 }
@@ -56,9 +64,9 @@ function KonecKapitoly(kapitola, cislaPoznamek, textyPoznamek,   i, vysledek) {
     if (length(cislaPoznamek) > 0) {
         vysledek = "<div class=\"ppc\">";
         for (i = 0; i < length(cislaPoznamek); ++i) {
-            vysledek = vysledek "<div id=\"ppc" cislaPoznamek[i] "\"><sup>" cislaPoznamek[i] "</sup>&nbsp;" textyPoznamek[cislaPoznamek[i]] "</div>\n";
+            vysledek = vysledek "<div id=\"ppc" cislaPoznamek[i] "\"><a href=\"#ppcr" cislaPoznamek[i] "\" class=\"cislopozn\">" cislaPoznamek[i] "</a>&nbsp;" textyPoznamek[cislaPoznamek[i]] "</div>\n";
         }
-        vysledek = vysledek "</div>\n";
+        vysledek = vysledek "<div class=\"zrusitzvyrazneni\" id=\"zzv\"><a href=\"#zzv\">zrušit zvýraznění poznámky pod čarou</a></div></div>\n";
     }
     return vysledek;
 }
@@ -130,7 +138,7 @@ function ZacatekPrikladu(textPrikladu, cislaPoznamek, textyPoznamek,   prvni) {
                 } else {
                     vysledek = vysledek ",&nbsp;";
                 }
-                vysledek = vysledek "<a href=\"#ppc" cislaPoznamek[i] "\">(" cislaPoznamek[i] ")</a>";
+                vysledek = vysledek "<a href=\"#ppc" cislaPoznamek[i] "\" id=\"ppcr" cislaPoznamek[i] "\">(" cislaPoznamek[i] ")</a>";
             }
             vysledek = vysledek "</sup>";
         }

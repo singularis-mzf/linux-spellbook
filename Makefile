@@ -1,7 +1,33 @@
+# Linux Kniha kouzel, Makefile
+# Copyright (c) 2019 Singularis <singularis@volny.cz>
+#
+# Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
+# podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
+# vydané neziskovou organizací Creative Commons. Text licence je přiložený
+# k tomuto projektu nebo ho můžete najít na webové adrese:
+#
+# https://creativecommons.org/licenses/by-sa/4.0/
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+SHELL := /bin/sh
+AWK := gawk
+
 VSECHNY_KAPITOLY := _ukazka docker make gawk
 SOUBORY_PREKLADU := soubory_prekladu
 VYSTUP_PREKLADU := vystup_prekladu
-AWK := gawk
 
 .PHONY: all clean
 
@@ -18,7 +44,7 @@ log: $(VYSTUP_PREKLADU)/log/index.log
 
 # 1. kapitoly/{kapitola}.md => soubory_prekladu/html/{kapitola}
 # ============================================================================
-$(addprefix $(SOUBORY_PREKLADU)/html/,$(VSECHNY_KAPITOLY)): $(SOUBORY_PREKLADU)/html/%: kapitoly/%.md skripty/do_html.awk skripty/hlavni.awk skripty/utility.awk formaty/html
+$(addprefix $(SOUBORY_PREKLADU)/html/,$(VSECHNY_KAPITOLY)): $(SOUBORY_PREKLADU)/html/%: kapitoly/%.md skripty/do_html.awk skripty/hlavni.awk skripty/utility.awk formaty/html/sablona_kapitoly
 	mkdir -pv $(SOUBORY_PREKLADU)/html
 	$(AWK) -f skripty/do_html.awk $< > $@
 
@@ -26,26 +52,26 @@ $(addprefix $(SOUBORY_PREKLADU)/html/,$(VSECHNY_KAPITOLY)): $(SOUBORY_PREKLADU)/
 # ============================================================================
 $(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY))): $(VYSTUP_PREKLADU)/%.htm: $(SOUBORY_PREKLADU)/% skripty/kapitola.awk
 	mkdir -pv $(VYSTUP_PREKLADU)/html
-	IDKAPITOLY=$(basename $(notdir $@)) NAZEVKAPITOLY="$(shell $(AWK) 'BEGIN {N = "Bez názvu";} /^# .+/ {N = substr($$0, 3);} END {print N;}' kapitoly/$(basename $(notdir $@)).md)" TELOKAPITOLY=$< $(AWK) -f skripty/kapitola.awk formaty/html > $@
+	IDKAPITOLY=$(basename $(notdir $@)) NAZEVKAPITOLY="$(shell $(AWK) 'BEGIN {N = "Bez názvu";} /^# .+/ {N = substr($$0, 3);} END {print N;}' kapitoly/$(basename $(notdir $@)).md)" TELOKAPITOLY=$< $(AWK) -f skripty/kapitola.awk formaty/html/sablona_kapitoly > $@
 
 
 # 3. vystup_prekladu/html/{kapitola}.htm => vystup_prekladu/html/index.htm (provizorní)
 # ============================================================================
 $(VYSTUP_PREKLADU)/html/index.htm: skripty/kniha.awk kapitoly.lst $(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY))) $(VYSTUP_PREKLADU)/html/lkk.css kapitoly.lst
-	SEZNAMKAPITOL=kapitoly.lst VSTUPPREFIX=$(VYSTUP_PREKLADU)/html/ VSTUPSUFFIX=.htm $(AWK) -f skripty/kniha.awk formaty/html > $@
+	SEZNAMKAPITOL=kapitoly.lst VSTUPPREFIX=$(VYSTUP_PREKLADU)/html/ VSTUPSUFFIX=.htm $(AWK) -f skripty/kniha.awk formaty/html/sablona_kapitoly > $@
 	cp -Rv obrazky $(VYSTUP_PREKLADU)/html/
 
-# 4. formaty/html.css => vystup_prekladu/html/lkk.css
+# 4. formaty/html/sablona.css => vystup_prekladu/html/lkk.css
 # ============================================================================
-$(VYSTUP_PREKLADU)/html/lkk.css: formaty/html.css
-	cat formaty/html.css > $(VYSTUP_PREKLADU)/html/lkk.css
+$(VYSTUP_PREKLADU)/html/lkk.css: formaty/html/sablona.css
+	cat $< > $@
 
 
 # LOG:
 
 # 1. kapitoly/{kapitola}.md => soubory_prekladu/log/{kapitola}
 # ============================================================================
-$(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_KAPITOLY)): $(SOUBORY_PREKLADU)/log/%: kapitoly/%.md skripty/do_logu.awk skripty/hlavni.awk skripty/utility.awk formaty/log
+$(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_KAPITOLY)): $(SOUBORY_PREKLADU)/log/%: kapitoly/%.md skripty/do_logu.awk skripty/hlavni.awk skripty/utility.awk formaty/log/sablona_kapitoly
 	mkdir -pv $(SOUBORY_PREKLADU)/log
 	$(AWK) -f skripty/do_logu.awk $< > $@
 
@@ -53,13 +79,13 @@ $(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_KAPITOLY)): $(SOUBORY_PREKLADU)/l
 # ============================================================================
 $(addsuffix .kap,$(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_KAPITOLY))): %.kap: % skripty/kapitola.awk
 	mkdir -pv $(SOUBORY_PREKLADU)/log
-	IDKAPITOLY=$(basename $(notdir $@)) NAZEVKAPITOLY="$(shell $(AWK) 'BEGIN {N = "Bez názvu";} /^# .+/ {N = substr($$0, 3);} END {print N;}' kapitoly/$(basename $(notdir $@)).md)" TELOKAPITOLY=$< $(AWK) -f skripty/kapitola.awk formaty/log > $@
+	IDKAPITOLY=$(basename $(notdir $@)) NAZEVKAPITOLY="$(shell $(AWK) 'BEGIN {N = "Bez názvu";} /^# .+/ {N = substr($$0, 3);} END {print N;}' kapitoly/$(basename $(notdir $@)).md)" TELOKAPITOLY=$< $(AWK) -f skripty/kapitola.awk formaty/log/sablona_kapitoly > $@
 
 # 3. soubory_prekladu/log/{kapitola}.kap => vystup_prekladu/log/index.log
 # ============================================================================
 $(VYSTUP_PREKLADU)/log/index.log: $(addsuffix .kap,$(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_KAPITOLY))) kapitoly.lst
 	mkdir -pv $(VYSTUP_PREKLADU)/log
-	SEZNAMKAPITOL=kapitoly.lst VSTUPPREFIX=$(SOUBORY_PREKLADU)/log/ VSTUPSUFFIX=.kap $(AWK) -f skripty/kniha.awk formaty/log > $@
+	SEZNAMKAPITOL=kapitoly.lst VSTUPPREFIX=$(SOUBORY_PREKLADU)/log/ VSTUPSUFFIX=.kap $(AWK) -f skripty/kniha.awk formaty/log/sablona_kapitoly > $@
 #	cat $(addsuffix .kap,$(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_KAPITOLY))) > $@
 
 

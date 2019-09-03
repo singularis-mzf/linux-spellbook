@@ -92,8 +92,8 @@ figure {
 }
 
 /* Inline prvky */
-a:link {color:red;}
-a:visited {color:#4971f2;}
+a:link {color:#1644d9;}
+a:visited {color:#1338b3;}
 a[href^="http://"]::before, a[href^="https://"]::before {content:" [" attr(href) "]("}
 a[href^="http://"]::after, a[href^="https://"]::after {content:")";}
 a:hover {text-decoration:underline;}
@@ -142,6 +142,7 @@ i {font-style:italic;}
 /* zobrazení znaku ↲ na konci každého řádku příkladu kromě posledního */
 .priklad .radekprikladu::after {content:"↲";margin-left:0.5em;color:rgb(120,120,120);}
 .priklad .radekprikladu:last-child::after {display:none;}
+.priklad .radekprikladu:empty::after {margin-left:0;}
 
 
 .dopln {
@@ -161,7 +162,39 @@ i {font-style:italic;}
     transform:scaleY(1.75);
 }
 
+/* Formátování poznámek pod čarou */
+.ppc {
+    margin-top:10pt;
+    border-top:1pt solid;
+    padding-top:5pt;
+    font:90%/1.4 "DejaVu Serif", serif;
+}
+.ppc a.cislopozn {
+    display:inline-block;
+    margin-right:0.5em;
+    width:3rem;
+    text-align:right;
+}
+.ppc .zrusitzvyrazneni {
+    display:block;
+    text-align:center;
+    font-style:italic;
+}
+.ppc .zrusitzvyrazneni::before {content:"(";}
+.ppc .zrusitzvyrazneni::after {content:")";}
+.ppc :target {
+    background:#f2a7e2;
+    padding-top:1.5rem;
+    padding-bottom:1.5rem;
+}
+.ppc .zrusitzvyrazneni:target {
+    background:none;
+    padding-top:0;
+    padding-bottom:0;
+}
+
 /* zbytek */
+.tab {color:rgb(120,120,120);}
 .tritecky {
     color:rgb(127,127,127);
     letter-spacing:-0.3em;
@@ -176,5 +209,13 @@ h3 .cislo {
 }
 
 @media print {
-    html {padding:0;}
+    html, body {
+        background:none !important;
+        padding:0;
+        color:#000000;
+    }
+    .ppc .zrusitzvyrazneni
+    {
+        display:none;
+    }
 }

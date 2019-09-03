@@ -89,6 +89,38 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, C) {
                 VYSTUP = VYSTUP ZpracujZnak("\"");
                 VSTUP = substr(VSTUP, 7);
                 continue;
+            case "<tab1>":
+                VYSTUP = VYSTUP Tabulator(1);
+                VSTUP = substr(VSTUP, 7);
+                continue;
+            case "<tab2>":
+                VYSTUP = VYSTUP Tabulator(2);
+                VSTUP = substr(VSTUP, 7);
+                continue;
+            case "<tab3>":
+                VYSTUP = VYSTUP Tabulator(3);
+                VSTUP = substr(VSTUP, 7);
+                continue;
+            case "<tab4>":
+                VYSTUP = VYSTUP Tabulator(4);
+                VSTUP = substr(VSTUP, 7);
+                continue;
+            case "<tab5>":
+                VYSTUP = VYSTUP Tabulator(5);
+                VSTUP = substr(VSTUP, 7);
+                continue;
+            case "<tab6>":
+                VYSTUP = VYSTUP Tabulator(6);
+                VSTUP = substr(VSTUP, 7);
+                continue;
+            case "<tab7>":
+                VYSTUP = VYSTUP Tabulator(7);
+                VSTUP = substr(VSTUP, 7);
+                continue;
+            case "<tab8>":
+                VYSTUP = VYSTUP Tabulator(8);
+                VSTUP = substr(VSTUP, 7);
+                continue;
             default:
                 break;
         }
@@ -100,6 +132,10 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, C) {
                 continue;
             case "&apo;":
                 VYSTUP = VYSTUP ZpracujZnak("'");
+                VSTUP = substr(VSTUP, 6);
+                continue;
+            case "<tab>":
+                VYSTUP = VYSTUP Tabulator(8);
                 VSTUP = substr(VSTUP, 6);
                 continue;
             default:
@@ -162,6 +198,9 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, C) {
                 VYSTUP = VYSTUP FormatDopln(0);
                 VSTUP = substr(VSTUP, 3);
                 continue;
+            case "$$":
+                ShoditFatalniVyjimku("Funkce $$ není v této verzi podporována. Při opakování znaku $ musí být tyto znaky escapovány zpětným lomítkem.");
+                break;
             default:
                 break;
         }
@@ -215,6 +254,10 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, C) {
                     VYSTUP = VYSTUP FormatKurziva(0);
                     Pop("format");
                 }
+                VSTUP = substr(VSTUP, 2);
+                continue;
+            case "⫽":
+                VYSTUP = VYSTUP ZpracujZnak("/") ZpracujZnak("/");
                 VSTUP = substr(VSTUP, 2);
                 continue;
             default:
@@ -300,6 +343,9 @@ function UkoncitPredchoziTypRadku() {
 }
 
 function VypsatZahlaviPrikladu(   i, maPoznamky) {
+    if (TYP_RADKU != "RADEK_PRIKLADU") {
+        ShoditFatalniVyjimku("Příklad musí mít alespoň jeden řádek!");
+    }
     if (TEXT_PRIKLADU != NULL_STRING) {
         printf("%s", ZacatekPrikladu(TEXT_PRIKLADU, ppc, ppt));
         TEXT_PRIKLADU = NULL_STRING;
@@ -320,11 +366,19 @@ BEGIN {
     FATALNI_VYJIMKA = 0;
     TYP_RADKU = "PRAZDNY";
     JE_UVNITR_PRIKLADU = 0;
+    JE_UVNITR_KOMENTARE = 0;
     TEXT_PRIKLADU = NULL_STRING;
     split("", ppc);
     split("", ppt);
     split("", ppcall);
     split("", pptall);
+}
+
+# komentář započatý na samostatném řádku kompletně ignorovat
+# (není to ideální řešení, ale dokonalejší řešení jsou problematická)
+/^<!--$/,/^-->$/ {
+    JE_UVNITR_KOMENTARE = ($0 != "-->");
+    next;
 }
 
 {
@@ -336,12 +390,6 @@ BEGIN {
 # zaznamenat prázdný řádek
 /^$/ {
     TYP_RADKU = "PRAZDNY";
-}
-
-# komentář se jako prázdný řádek nebere + uvnitř komentáře nic nezpracovávat
-/^<!--$/,/^-->$/ {
-    TYP_RADKU = "NEPRAZDNY";
-    next;
 }
 
 # vyloučit nepovolené bílé znaky na začátku/konci řádku
@@ -515,6 +563,11 @@ END {
     # Končíme-li s fatální výjimkou, skončit hned.
     if (FATALNI_VYJIMKA) {
         exit FATALNI_VYJIMKA;
+    }
+
+    # Neukončený komentář?
+    if (JE_UVNITR_KOMENTARE) {
+        ShoditFatalniVyjimku("Komentář otevřený samostatným řádkem \"<!--\" musí být ukončený v rámci téhož zdrojového souboru samostatným řádkem \"-->\".");
     }
 
     # Řádně ukončit poslední otevřený typ řádku.

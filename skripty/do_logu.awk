@@ -33,6 +33,10 @@ function ZpracujBilyZnak(znak, opakovany) {
 #    return "ZpracujBilyZnak('" znak "', opakovany = " (opakovany ? "TRUE" : "FALSE") ");";
 }
 
+function Tabulator(delka) {
+    return "Tabulator(" delka ")";
+}
+
 function ZacatekKapitoly(kapitola, cisloKapitoly) {
     return "ZacatekKapitoly(\"" kapitola "\");\n";
 }

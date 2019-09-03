@@ -34,17 +34,28 @@ Položka seznamu může pokračovat na dalším řádku a obsahovat text **tuč
 **příklad může mít i víc řádků**
 
 *# druhý příklad, který...*<br>
-*// má dvě poznámky pod čarou*<br>
+*// má dvě poznámky pod čarou, z toho první je velmi velmi dlouhá, aby se ukázalo, jak se bude v okně prohlížeče, na papíře nebo v jiném výstupním formátu zalamovat do více řádků; pro tento účel by se hodil text Lorem Ipsum, ale tento text je také dost dobrý*<br>
 *// a toto je ta druhá*<br>
 {*doplnit*} **a musí mít i nějaký řádek**
 
 *# třetí příklad má:*<br>
 *// jednu*<br>
 *// druhou*<br>
-*// třetí poznámku pod čarou*
+*// třetí poznámku pod čarou*<br>
+**<tab>řádek začínající tabulátorem**<br>
+**<tab><tab>a řádek začínající dvěma tabulátory**<br>
+**&nbsp;řádek odsazený jednou mezerou**<br>
+**&nbsp;&nbsp;..dvěma mezerami**
 
 ## Zvláštní znaky
 
-Lze zadat nejrůznější zvláštní znaky: \\, \*, +, -, &lt;, &amp;, &gt;, ", ', &nbsp;.
+Lze zadat nejrůznější zvláštní znaky.
 
-## Poznámky pod čarou
+* Znaky &lt;, &amp; a &gt; vždy nahraďte odpovídajícími entitami &amp;lt;, &amp;amp; a &amp;gt;.
+* Znaky \\, \`, \*, \_, \^ a \~ vždy escapujte zpětným lomítkem.
+* Znaky #, $, +, -, : a | escapujte zpětným lomítkem, jsou-li zdvojeny nebo před prvním alfanumerickým znakem na řádku. \#\#, \+\+, \-\-, \$\$, \:\:, \|\|.
+* Znaky !, ", %, ', (, ), ,, ., /, ;, =, ?, @, [ zadávejte přímo, bez escapování, a to i v případě, že jsou zdvojeny: !!, "", %%, '', ((, )), ,,, .., //, ;;, ==, ??, @@, [[.
+* Znak ] escapujte zpětným lomítkem, pokud bezprostředně za ním ve zdrojovém kódu následuje otevírací kulatá závorka. \](
+* Znak { escapujte zpětným lomítkem, pokud bezprostředně za ním ve zdrojovém kódu následuje neescapovaná \*. (\{*kurzívou*)
+* Potřebujete-li zapsat URL adresu, která nemá být formátována jako odkaz, nahraďte v ní // speciálním znakem \⫽. Při jiném použití (což je nepravděpodobné) musíte tento znak rovněž escapovat zpětným lomítkem.
+* Nezlomitelnou mezeru můžete zadat buď přímo, nebo jako entitu &amp;nbsp;.

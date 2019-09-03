@@ -32,6 +32,18 @@ https://creativecommons.org/licenses/by-sa/4.0/
 ## Tipy a zkušenosti
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+## Ukázka
+![ve výstavbě](../obrazky/ve-vystavbe.png)
+<!--
+Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
+-->
+
+## Snímek obrazovky
+![ve výstavbě](../obrazky/ve-vystavbe.png)
+<!--
+Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
+-->
+
 ## Instalace na Ubuntu
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
@@ -40,10 +52,11 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 Co hledat:
 
-* [https://cs.wikipedia.org/wiki/Hlavn%C3%AD_strana](stránku na Wikipedii)
+* [stránku na Wikipedii](https://cs.wikipedia.org/wiki/Hlavn%C3%AD_strana)
 * oficiální stránku programu
 * oficiální dokumentaci
-* [http://manpages.ubuntu.com/](manuálovou stránku)
-* [https://packages.ubuntu.com/](balíček Bionic)
+* [manuálovou stránku](http://manpages.ubuntu.com/)
+* [balíček Bionic](https://packages.ubuntu.com/)
 * online referenční příručky
-* různé další praktické stránky, recenze, videa, blogy, ...
+* různé další praktické stránky, recenze, videa, tutorialy, blogy, ...
+* publikované knihy

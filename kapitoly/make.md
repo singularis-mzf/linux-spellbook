@@ -13,8 +13,6 @@ https://creativecommons.org/licenses/by-sa/4.0/
 -->
 # Make
 
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-
 ## Úvod
 GNU make je nástroj k automatizaci procesu kompilace. Vykonává podobnou úlohu jako např.
 skript napsaný v bashi, ale na rozdíl od něj umí:
@@ -26,30 +24,24 @@ Vztahy mezi soubory a kompilační příkazy jsou popsány v tzv. Makefilu,
 jemuž se bude věnovat většina této kapitoly.
 
 ## Definice
-* **pravidlo** je definice v Makefilu, která instruuje program make, na kterých dalších souborech určitý soubor závisí a jakými příkazy jej z nich vytvořit či aktualizovat.
-* **cíl** je název souboru k vytvoření či akce k vykonání.
-* **zdroj** (často nazýváný „závislost“) je název souboru, na kterém určitý cíl závisí. Příkazy stanovené pravidlem se vykonají jen tehdy, pokud cíl neexistuje nebo je alespoň jeden jeho z jeho zdrojů novější.
-* **slovo** je posloupnost nebílých znaků v řetězci. Jednotlivá slova v řetězci jsou od sebe oddělena bílými znaky, nejčastěji jednotlivou mezerou.
+* **Pravidlo** je definice v Makefilu, která instruuje program make, na kterých dalších souborech určitý soubor závisí a jakými příkazy jej z nich vytvořit či aktualizovat.
+* **Cíl** je název souboru k vytvoření či akce k vykonání.
+* **Zdroj** (často nazýváný „závislost“) je název souboru, na kterém určitý cíl závisí. Příkazy stanovené pravidlem se vykonají jen tehdy, pokud cíl neexistuje nebo je alespoň jeden jeho z jeho zdrojů novější. Zdrojem může být také název akce.
+* **Slovo** je posloupnost nebílých znaků v řetězci. Jednotlivá slova v řetězci jsou od sebe oddělena bílými znaky, nejčastěji jednotlivou mezerou.
+* **%-vzor** je řetězec sloužící k filtrování či záměně slov. Může obsahovat nejvýše jeden znak **%**, který slouží jako náhrada za libovolné množství znaků. (Např. %-vzoru **a%** odpovídají právě ta slova, která začínají malým písmenem **a**.) Slouží-li %-vzor k záměně, slova, která mu neodpovídají, projdou záměnou nezměněna. Pokud %-vzor neobsahuje znak %, odpovídají mu pouze slova, která se s ním přesně shodují.
 
 ## Zaklínadla (v souboru Makefile)
 ### Pravidla
 *# obecná syntaxe normálního pravidla*<br>
 {*cíle oddělené mezerami*}**:** [{*zdroje oddělené mezerami*}] [**;**{*příkaz*}]<br>
-[{*tabulátor*}[{*prefix-příkazu*}]{*příkaz*}{*konec řádku*}]...
+[<tab>[{*prefix-příkazu*}]{*příkaz*}]...
 
-*# obecná syntaxe pravidla se vzorkem*<br>
-{*cíle oddělené mezerami*}**:** {*vzorek-obsahující-znak-%*}: {*definice zdrojů obsahující %*}<br>
-[{*tabulátor*}[{*prefix-příkazu*}]{*příkaz*}{*konec řádku*}]...
+*# obecná syntaxe pravidla s %-vzorem*<br>
+{*cíle oddělené mezerami*}**:** {*%-vzor-pro-cíle*}: {*cesta-nebo-%-vzor-zdroje*}...<br>
+[<tab>[{*prefix-příkazu*}]{*příkaz*}]...
 
 *# označit, že určité cíle jsou akce, ne soubory*<br>
 **.PHONY:** [{*akce oddělené mezerami*}]
-
-### Příkazy v pravidlech
-*# vykonat příkaz bez vypsání*<br>
-{*tabulátor*}**@**{*příkaz*}
-
-*# vykonat příkaz a ignorovat návratovou hodnotu*<br>
-{*tabulátor*}**\-**{*příkaz*}
 
 ### Nastavení proměnných
 *# nastavit proměnnou (expandovat v místě definice)*<br>
@@ -65,7 +57,8 @@ jemuž se bude věnovat většina této kapitoly.
 *# připojit obsah na konec proměnné (expanze stejně jako v původní definici)*<br>
 {*NÁZEV\_PROMĚNNÉ*} **\+=** {*hodnota včetně mezer*}
 
-*# nastavit/připojit víceřádkový obsah (endef musí být na samostatném řádku; operátor může být =, := nebo +=)*<br>
+*# nastavit/připojit víceřádkový obsah*<br>
+*// "endef" musí být na samostatném řádku; operátor může být =, := nebo +=*<br>
 **define** {*NÁZEV\_PROMĚNNÉ*} [{*operátor*}]<br>
 {*víceřádkový obsah*}<br>
 **endef**
@@ -74,18 +67,25 @@ jemuž se bude věnovat většina této kapitoly.
 *# rozvinout proměnnou*<br>
 **$(**{*NÁZEV\_PROMĚNNÉ*}**)**
 
-*# rozvinout proměnnou, jejíž název je uložený v jiné proměnné*<br>
-**$($(**{*NÁZEV\_PROMĚNNÉ*}**))**
-
-*# při rozvinutí proměnné nahradit v každém slově (odděleném mezerou) prefix a suffix*<br>
+*# při rozvinutí proměnné nahradit v každém slově prefix/suffix/obojí*<br>
+*// Třetí uvedená varianta provede náhradu jen ve slovech, kde odpovídá prefix i suffix. Slova, u kterých odpovídá jen prefix nebo jen suffix, projdou bez náhrady.*<br>
+**$(**{*NÁZEV\_PROMĚNNÉ*}**:**[{*původní-prefix*}]**%=**[{*nový-prefix*}]**%)**<br>
+**$(**{*NÁZEV\_PROMĚNNÉ*}**:%**[{*původní-suffix*}]**=%**[{*nový-suffix*}]**)**<br>
 **$(**{*NÁZEV\_PROMĚNNÉ*}**:**[{*původní-prefix*}]**%**[{*původní-suffix*}]**=**[{*nový-prefix*}]**%**[{*nový-suffix*}]**)**
 
-*# vypíše: bbeceda.cpp hlavicka.h bbakus.cpp ostatni.cc*<br>
+*# rozvinout proměnnou prostředí (ne Makefilu) v shellu (varianta 1/varianta 2)*<br>
+**\$\$**{*NÁZEV\_PROMĚNNÉ*}<br>
+**\$\${**{*NÁZEV\_PROMĚNNÉ*}**}**
+
+*# rozvinout proměnnou, jejíž název je uložený v jiné proměnné*<br>
+**$($(**{*NÁZEV\_PROMĚNNÉ*}**))**
+
+*# příklad − vypíše: bbeceda.cpp hlavicka.h bbakus.cpp ostatni.cc*<br>
 **TEST := abeceda.cc hlavicka.h abakus.cc ostatni.cc**<br>
 **all:**<br>
-{*tabulátor*}**@echo $(TEST:a%.cc=b%.cpp)**
+<tab>**@echo $(TEST:a%.cc=b%.cpp)**
 
-### Automatické proměnné
+### Automatické a předdefinované proměnné
 *# cíl pravidla*<br>
 **$@**<br>
 **$(@)**
@@ -98,57 +98,72 @@ jemuž se bude věnovat většina této kapitoly.
 **$\^**<br>
 **$(\^)**
 
-*# ?*<br>
-**$\***<br>
-**$(\*)**
-
-### Předdefinované proměnné
+*# mazání souborů (typicky „rm -f“)*<br>
+**$(RM)**
 
 *# program make*<br>
 **$(MAKE)**
 
-*# mazání souborů (typicky „rm -f“)*<br>
-**$(RM)**
-
-### Analýza adresářových cest
-*# získat adresářovou cestu (z každého slova; neobsahuje-li slovo „/“, vrací „./“)*<br>
-**$(dir** {*řetězec slov*}**)**
-
-*# získat samotný název souboru včetně přípony/bez přípony (z každého slova)*<br>
-**$(notdir** {*řetězec slov*}**)**<br>
-**$(basename $(notdir** {*řetězec slov*}**))**
-
-*# získat příponu (z každého slova, které obsahuje „.“, po které nenásleduje „/“; ostatní slova jsou vynechána)*<br>
-**$(suffix** {*řetězec slov*}**)**
-
-*# získat adresářovou cestu (je-li uvedena) + název souboru bez přípony z každého slova v řetězci*<br>
-**$(basename** {*řetězec slov*}**)**
-
-*# získat úplnou kanonickou cestu existujících souborů a adresářů odkazovaných slovy řetězce*<br>
-**$(realpath** {*řetězec slov*}**)**
+*# ?*<br>
+**$\***<br>
+**$(\*)**
 
 ### Textové funkce
+*# připojit text před/za každé slovo v řetězci/v rozvoji proměnné*<br>
+*// Při použití poslední uvedené varianty nesmějí text-před a text-za obsahovat znak %.*<br>
+**$(addprefix** {*text-před*},{*řetězec slov*}**)**<br>
+**$(addsuffix** {*text-za*},{*řetězec slov*}**)**<br>
+**$(**{*proměnná*}**:%=**{*text-před*}**%**{*text-za*}**)**
+
+*# provést náhradu (záměnu) ve slovech pomocí %-vzoru*<br>
+**$(patsubst** {*co-nahradit-%-vzor*}**,**{*čím-nahradit-%-vzor*}**,**{*řetězec slov*}**)**
+
+*# vybrat slova odpovídající/neodpovídající kterémukoliv ze zadaných %-vzorů*<br>
+**$(filter** {*%-vzory oddělené mezerou*}...,{*řetězec slov*}**)**<br>
+**$(filter-out** {*%-vzory oddělené mezerou*}...,{*řetězec slov*}**)**
+
 *# nahradit všechny výskyty podřetězce*<br>
 **$(subst** {*co nahradit*}**,**{*čím nahradit*}**,**{*původní text*}**)**
-
-*# připojit text před/za každé slovo v řetězci*<br>
-**$(addprefix** {*text*},{*řetězec slov*}**)**<br>
-**$(addsuffix** {*text*},{*řetězec slov*}**)**
 
 *# normalizovat bílé znaky (posloupnosti nahradit jednou mezerou, na začátku a konci odstranit)*<br>
 **$(strip** {*řetězec*}**)**
 
-*# vybrat slova odpovídající/neodpovídající kterémukoliv ze zadaných %-vzorů*<br>
-**$(filter** {*vzory oddělené mezerou*}...,{*řetězec slov*}**)**
-**$(filter-out** {*vzory oddělené mezerou*}...,{*řetězec slov*}**)**
+*# seřadit slova a odstranit duplicity*<br>
+**$(sort** {*řetězec*}**)**
 
-*# seřadit slova a odstranit duplicity*<br>
-**$(sort** ${*řetězec*}**)**
+*# získat počet slov v řetězci*<br>
+**$(words** {*řetězec*}**)**
 
-*# první/poslední/n-té slovo z řetězce (pro první slovo n = 1)*<br>
+*# první/poslední/n-té/předposlední slovo z řetězce*<br>
 **$(firstword** {*řetězec*}**)**<br>
 **$(lastword** {*řetězec*}**)**<br>
 **$(word** {*n*}**,**{*řetězec*}**)**
+
+*# předposlední/před-předposlední slovo z řetězce*<br>
+**$(if $(word 2,**{*řetězec*}**),$(word $(shell expr $(words** {*řetězec*} **) - 1),**{*řetězec*}**),)**<br>
+**$(if $(word 3,**{*řetězec*}**),$(word $(shell expr $(words** {*řetězec*} **) - 2),**{*řetězec*}**),)**
+
+*# obrátit pořadí slov v řetězci*<br>
+**$(shell printf "%s\n" $(strip** {*řetězec slov*}**) | tac)**
+
+### Analýza adresářových cest (pro každé slovo zvlášť)
+*# získat adresářovou cestu (např. „../a/“)*<br>
+*// Neobsahuje-li slovo žádné „/“, vrací pro něj $(dir) „./“.*<br>
+**$(dir** {*řetězec slov*}**)**
+
+*# získat samotný název souboru včetně přípony/bez přípony (např. „b.o“, resp. „b“)*<br>
+**$(notdir** {*řetězec slov*}**)**<br>
+**$(basename $(notdir** {*řetězec slov*}**))**
+
+*# získat příponu souboru (např. „.o“)*<br>
+*// Pozor! Slova, která takovou příponu neobsahují, budou touto funkcí vynechána bez náhrady, což sníží počet slov ve výsledném řetězci.*<br>
+**$(suffix** {*řetězec slov*}**)**
+
+*# získat adresářovou cestu (je-li uvedena) + název souboru bez přípony (např. „../a/b“)*<br>
+**$(basename** {*řetězec slov*}**)**
+
+*# získat úplnou kanonickou cestu existujících souborů a adresářů (např. „/home/elli/test/a/b.o“)*<br>
+**$(realpath** {*řetězec slov*}**)**
 
 ### Logické funkce
 
@@ -164,12 +179,23 @@ jemuž se bude věnovat většina této kapitoly.
 *# pro každé slovo ze seznamu toto slovo nastavit do proměnné a rozvinout podvýraz*<br>
 **$(foreach** {*proměnná*}**,**{*seznam*}**,**{*podvýraz*}**)**
 
+*# vrátí podřetězec, pokud se vyskytuje v řetězci; jinak vrátí prázdný řetězec*<br>
+**$(findstring** {*podřetězec*}**,**{*řetězec*}**)**
+
 *# vrátí: aa bb cc cc bb aa*<br>
 **$(foreach PROM,a b c c b a,$(PROM)$(PROM))**
 
+### Příkazy v pravidlech
+*# vykonat příkaz bez vypsání*<br>
+<tab>**@**{*příkaz*}
+
+*# vykonat příkaz a ignorovat návratovou hodnotu*<br>
+<tab>**\-**{*příkaz*}
+
 ### Řízení načítání Makefile
 
-*# podmíněný překlad (vybrat první z alternativ, kde jsou si uvedené výrazy po rozvinutí rovny)*<br>
+*# podmíněný překlad*<br>
+*// Vybere první z alternativ, kde jsou si uvedené výrazy po rozvinutí rovny. Doporučuji alternativy v Makefilu odsadit, ale není to vyžadováno.*<br>
 **ifeq "**{*výraz 1*}**" "**{*výraz 2*}**"**<br>
 {*první alternativa*}<br>
 [**else ifeq "**{*výraz 1*}**" "**{*výraz 2*}**"**<br>
@@ -186,10 +212,12 @@ jemuž se bude věnovat většina této kapitoly.
 *# vykonat příkaz v aktuálním shellu (typicky bash) a rozvinout se na jeho výstup; konce řádků se nahradí mezerami*<br>
 **$(shell** {*příkaz shellu*}**)**
 
-*# vyvolat chybu a ukončit zpracování Makefile (popis chyby může obsahovat proměnné a další funkce)*<br>
+*# vyvolat chybu a ukončit zpracování Makefile*<br>
+*// Tip: Popis chyby v parametru funkce $(error) může obsahovat rozvoj proměnných a další funkce.*<br>
 **$(error** {*popis chyby*}**)**
 
-*# vypsat varování/zprávu (výsledkem expanze těchto funkcí je prázdný řetězec)*<br>
+*# vypsat varování/zprávu*<br>
+*// Výsledkem expanze funkcí $(warning) a $(info) je prázdný řetězec.*<br>
 **$(warning** {*popis varování*}**)**<br>
 **$(info** {*zpráva*}**)**
 
@@ -205,32 +233,69 @@ jemuž se bude věnovat většina této kapitoly.
 * Není-li cíl zadán, použije se první cíl v Makefile (tradičně akce „all“).
 
 ## Jak získat nápovědu
-* online GNU manuál (viz sekce Odkazy) (anglicky)
 * **make --help**
-* **man make**
+* online GNU manuál (viz sekce Odkazy) (anglicky)
+* **man make** (anglicky)
 
 ## Tipy a zkušenosti
-* Program make ignoruje konec řádku, pokud ho escapujete zpětným lomítkem. To umožňuje bezpečně rozdělit dlouhé řádky.
-* Nebojte se definovat více cílů v jednom pravidle. Funguje to stejně jako definovat stejné pravidlo pro každý uvedený cíl zvlášť. Pravděpodobně budete muset použít něco jako **$(@:%.c=out/%.o)**.
-* Pro jeden cíl můžete definovat více pravidel, pokud nejvýše jedno z nich bude deklarovat příkazy; v takovém případě se sloučí zdroje ze všech odpovídajících pravidel.
-* Program make v příkazech pravidel interpretuje znak $. Má-li se předat shellu, je třeba jej zdvojit, např. *$$PATH* nebo *$$$$*.
+* Dlouhé řádky můžete rozdělit, pokud před každý konec řádku, který má make ignorovat, vložíte zpětné lomítko. Rozdělíte-li řádek s příkazem, make toto rozdělení předá volanému shellu, což však u běžně používaných sh a bash nezpůsobí problémy.
+* Nebojte se definovat více cílů v jednom pravidle. Funguje to stejně jako definovat stejné pravidlo pro každý uvedený cíl zvlášť a ušetří vám to spoustu práce s údržbou.
+* Pro jeden cíl můžete definovat více pravidel, pokud nejvýše jedno z nich bude deklarovat příkazy; v takovém případě se automaticky sloučí zdroje ze všech odpovídajících pravidel.
+* Program make v příkazech pravidel interpretuje znak $. Má-li se předat shellu, je třeba jej zdvojit, např. **\$\$PATH** nebo **\$\$\$\$**.
 * Některé textové editory mohou v závislosti na svém nastavení nahrazovat tabulátory mezerami či naopak. Pokud takovým editorem upravíte Makefile, přestane fungovat, protože na začátku každého příkazu v pravidle musí být tabulátor, ne posloupnost mezer.
 * Obvyklé názvy akcí jsou např.: all, clean, install.
 * Každý příkaz pravidla se při kompilaci spouští ve vlastním shellu!
-* Na začátku Makefile se doporučuje explicitně uvést **SHELL := /bin/sh**, případně uvést jako prerekvizitu kompilace bash a uvést **SHELL := /bin/bash**.
+* Použitý shell v příkazech a volání funkce $(shell) určuje proměnná **SHELL**. Kvůli přenositelnosti se doporučuje ji na začátku Makefile výslovně nastavit: **SHELL := /bin/sh** nebo **SHELL := /bin/bash**.
 
 ## Ukázka
-*# *<br>
+*# /home/elli/test/Makefile:*<br>
 **\# Komentář**<br>
-**SHELL := /bin/sh**
+**SHELL := /bin/sh**<br>
+**CXX := g++**<br>
+**CXXFLAGS := -Wall \\**<br>
+**&nbsp;&nbsp;-pedantic -DHOME=\\"\$\$HOME\\"**<br>
+**OBJS := main.o second.o**<br>
+**OBJS += hello.o**<br>
+**SOURCES := $(OBJS:%.o=%.cc)**<br>
+**.PHONY: all clean**<br>
+<br>
+**all: main**<br>
+**clean:**<br>
+**<tab>$(MAKE) -C lib clean**<br>
+**<tab>$(RM) main.o second.o hello.o**<br>
+**main: $(OBJS)**<br>
+**<tab>@echo "Koncové sestavení:"**<br>
+**<tab>$(CXX) $(CXXFLAGS) -o $@ $\^**<br>
+**main.o second.o: %.o: %.cc lib/hello.h**<br>
+**<tab>$(CXX) $(CXXFLAGS) -c -o $@ $&lt;**<br>
+**hello.o:**<br>
+**<tab>$(MAKE) -C lib hello.o**<br>
+**<tab>cp lib/hello.o $@**
 
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+*# /home/elli/test/lib/Makefile:*<br>
+**.PHONY: clean**<br>
+**hello.o: hello.cc hello.h**<br>
+**<tab>g++ -o $@ -c -Wall -pedantic hello.cc**<br>
+**clean:**<br>
+**<tab>$(RM) hello.o**
+
+## Snímek obrazovky
+
+![(snímek obrazovky)](../obrazky/make.png)
 
 ## Instalace na Ubuntu
 *# *<br>
 **sudo apt-get install make**
 
 ## Odkazy
+### Česky
 * [Makefile na sallyx.org](https://www.sallyx.org/sally/c/linux/makefile)
+* [stránka na Wikipedii](https://cs.wikipedia.org/wiki/Make)
+* [Rychlo-školička pro Makefile](http://www.linux.cz/noviny/1999-0304/clanek12.html)
+* [Správa projektů pomocí programu Make](http://www.fit.vutbr.cz/~martinek/clang/make.html)
+
+### Anglicky
 * [oficiální manuál GNU make](https://www.gnu.org/software/make/manual/make.html) (anglicky)
-* [balíček Ubuntu](https://packages.ubuntu.com/bionic/make) (anglicky)
+* [manuálová stránka](http://manpages.ubuntu.com/manpages/bionic/en/man1/make.1.html) (anglicky)
+* [balíček Ubuntu Bionic Beaver](https://packages.ubuntu.com/bionic/make) (anglicky)
+* [oficiální stránka](https://www.gnu.org/software/make/) (anglicky)
