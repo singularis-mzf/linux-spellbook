@@ -212,6 +212,12 @@ pozor na PTS!
 **(for X in** {*vstupní-soubor*}... **; do echo "file '$X'"; done) &gt;** {*dočasný-soubor.txt*}<br>
 **ffmpeg -f concat -safe 0 -i** {*dočasný-soubor.txt*} **-c copy** {*výstup*}
 
+## Zaklínadla (příkazy)
+
+*# vypnout úvodní banner s verzí a konfigurací pro ffmpeg/ffprobe*<br>
+**ffmpeg() { $(which ffmpeg) -hide\_banner "$@";}**<br>
+**ffprobe() { $(which ffprobe) -hide\_banner "$@";}**
+
 ## Parametry příkazů
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 

@@ -43,9 +43,17 @@ jemuž se bude věnovat většina této kapitoly.
 *# označit, že určité cíle jsou akce, ne soubory*<br>
 **.PHONY:** [{*akce oddělené mezerami*}]
 
+*# přeložit všechny soubory s příponou .cc z adresáře kod uvedené v proměnné ZDROJE na stejnojmenné objektové soubory do adresáře obj*<br>
+*// Uvedený příklad předpokládá předdefinované proměnné CXX a CXXFLAGS, které GNU make předdefinovává, takže je nemusíte sami nastavovat.*<br>
+**$(patsubst kod/%.cc,obj/%.o,$(filter kod/%.cc,$(ZDROJE))): obj/%.o: kod/%.cc**<br>
+**<tab>$(CXX) $(CXXFLAGS) -c -o $@ $&lt;**
+
 ### Nastavení proměnných
 *# nastavit proměnnou (expandovat v místě definice)*<br>
 {*NÁZEV\_PROMĚNNÉ*} **:=** {*hodnota včetně mezer*}
+
+*# připojit obsah na konec proměnné (expanze stejně jako v původní definici)*<br>
+{*NÁZEV\_PROMĚNNÉ*} **\+=** {*hodnota včetně mezer*}
 
 *# nastavit proměnnou (expandovat v místě použití)*<br>
 {*NÁZEV\_PROMĚNNÉ*} **=** {*hodnota včetně mezer*}
@@ -53,9 +61,6 @@ jemuž se bude věnovat většina této kapitoly.
 *# přiřadit do proměnné mezeru (trik)*<br>
 **EMPTY :=**<br>
 {*NÁZEV\_PROMĚNNÉ*} **:= $(EMPTY) $(EMPTY)**
-
-*# připojit obsah na konec proměnné (expanze stejně jako v původní definici)*<br>
-{*NÁZEV\_PROMĚNNÉ*} **\+=** {*hodnota včetně mezer*}
 
 *# nastavit/připojit víceřádkový obsah*<br>
 *// "endef" musí být na samostatném řádku; operátor může být =, := nebo +=*<br>
@@ -144,7 +149,7 @@ jemuž se bude věnovat většina této kapitoly.
 **$(if $(word 3,**{*řetězec*}**),$(word $(shell expr $(words** {*řetězec*} **) - 2),**{*řetězec*}**),)**
 
 *# obrátit pořadí slov v řetězci*<br>
-**$(shell printf "%s\n" $(strip** {*řetězec slov*}**) | tac)**
+**$(shell printf "%s\\n" $(strip** {*řetězec slov*}**) | tac)**
 
 ### Analýza adresářových cest (pro každé slovo zvlášť)
 *# získat adresářovou cestu (např. „../a/“)*<br>
@@ -164,6 +169,10 @@ jemuž se bude věnovat většina této kapitoly.
 
 *# získat úplnou kanonickou cestu existujících souborů a adresářů (např. „/home/elli/test/a/b.o“)*<br>
 **$(realpath** {*řetězec slov*}**)**
+
+*# získat seznam existujících souborů a adresářů odpovídajících vzorku shellu*<br>
+*// Vzorek shellu může obsahovat znaky ? a \* s významem obvyklým v bashi. Pokud vzorku neodpovídá žádný soubor ani adresář, vzorek se potichu přeskočí. Toho je možno použít k vynechání neexistujících souborů z proměnné.*<br>
+**$(wildcard** {*vzorek*}...**)**
 
 ### Logické funkce
 
