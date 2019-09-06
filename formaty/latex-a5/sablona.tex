@@ -1,0 +1,108 @@
+% Linux Kniha kouzel, šablona formátu LaTeX A5
+% Copyright (c) 2019 Singularis <singularis@volny.cz>
+%
+% Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
+% podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
+% vydané neziskovou organizací Creative Commons. Text licence je přiložený
+% k tomuto projektu nebo ho můžete najít na webové adrese:
+%
+% https://creativecommons.org/licenses/by-sa/4.0/
+%
+% This program is free software; you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation; either version 2 of the License, or
+% (at your option) any later version.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with this program; if not, write to the Free Software
+% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+%
+{{ZAČÁTEK KNIHY}}
+\documentclass[10pt]{book}
+% 1. skupina balíčků:
+\usepackage[utf8]{inputenc}
+\usepackage[czech]{babel}
+\usepackage[dvipdfm,a5paper,inner=1.5cm,outer=1cm,top=2.5cm,bottom=1.5cm]{geometry} % + showframe pro ladění
+%\usepackage[B1,LY1,T1]{fontenc}
+\usepackage[T1]{fontenc}
+% 2. skupina balíčků:
+\usepackage[arrows]{boisik} % kvůli znaku $\carriagereturn$
+\usepackage{fancyhdr}       % formátování záhlaví a zápatí
+\usepackage{titlesec}       % formátování nadpisů kapitol
+\usepackage{verbatim}
+\usepackage{xcolor}
+
+% {fancyhdr}:
+\fancypagestyle{normalni}{%
+    \fancyhead{}\fancyfoot{}%
+    \fancyhead[LE,RO]{\thepage}%
+}
+
+% {titlesec}:
+\titleformat{\chapter}[hang]{\normalfont\LARGE\bfseries}{\makebox[35pt][l]{\thechapter}}{5pt}{}\relax
+\titlespacing*{\chapter}{0pt}{-1ex}{1ex plus1ex minus0.5ex}\relax
+
+\titleformat{\section}[hang]{\normalfont\Large\bfseries}{\makebox[35pt][l]{\thesection}}{5pt}{}\relax
+\titlespacing*{\section}{0pt}{1ex plus2ex minus0.5ex}{0.5ex plus0.25ex minus0.5ex}\relax
+
+\titleformat{\subsection}[hang]{\normalfont\large}{}{0pt}{\filcenter\arabic{subsection}~}\relax
+\titlespacing*{\subsection}{0pt}{1ex plus4ex minus0pt}{4pt}\relax
+
+\assignpagestyle{\chapter}{normalni}
+
+% {xcolor}:
+\definecolor{seda}{gray}{0.5}
+
+% \begin{priklad}{#2 = Záhlaví příkladu}{#3 = \footnote{}\footnote{}...}
+%   \radekprikladu{text-řádku}
+%   \radekprikladu{text-řádku}
+% \end{priklad}
+\newenvironment*{priklad}[3][]{%
+    \newcommand*{\radekprikladu}[1]{\nepoprve{{%
+            \fontfamily{bsk}\fontseries{m}\fontshape{n}\selectfont%
+            \textcolor{seda}{\ensuremath{\carriagereturn}%
+        }}}\item{##1}}%
+    \fontfamily{qcr}\fontseries{m}\fontshape{n}\selectfont\raggedright%
+    \begin{flushleft}\#~{#2}#3\end{flushleft}%
+    \budepoprve%
+    \vspace{-3ex}%
+    \begin{list}{}{%
+        \setlength{\itemsep}{0pt plus1ex}%
+        \setlength{\parsep}{0pt}%
+        \setlength{\topsep}{0pt}%
+}}{%
+    \end{list}%
+}
+
+% qcr = TeX Gyre Cursor
+
+\newcommand*{\kapitola}[2][]{\chapter{#2}}
+\newcommand*{\sekce}[2][]{\section{#2}}
+\newcommand*{\podsekce}[2][]{\subsection{#2}}
+
+\newcommand*{\budepoprve}{%
+    \renewcommand{\nepoprve}[1]{%
+        \renewcommand{\nepoprve}[1]{####1}%
+    }%
+}
+\newcommand*{\dopln}[1]{{\fontfamily{qcr}\fontseries{m}\fontshape{it}\selectfont\underline{{#1}}}}%
+\newcommand{\nepoprve}[1]{#1}
+\newcommand*{\tritecky}{{\fontfamily{cmss}\fontseries{m}\fontshape{n}\selectfont\normalsize\mbox{...}}}%
+% {} \big \Big \bigg \Bigg
+\newcommand*{\volitelnyzacatek}{\textcolor{seda}{\ensuremath{\big[}}}%
+\newcommand*{\volitelnykonec}{\textcolor{seda}{\ensuremath{\big]}}}%
+
+\renewcommand*{\rmdefault}{cmr}
+
+\begin{document}%
+\pagestyle{normalni}%
+{{ZAČÁTEK KAPITOLY}}
+{{TĚLO KAPITOLY}}
+{{KONEC KAPITOLY}}
+\end{document}
+{{KONEC KNIHY}}

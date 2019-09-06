@@ -40,6 +40,15 @@ function ShoditFatalniVyjimku(popis, cislo) {
     exit FATALNI_VYJIMKA;
 }
 
+function Zopakovat(text, kolikrat,  vysledek) {
+    vysledek = "";
+    while (kolikrat > 0) {
+        vysledek = vysledek text;
+        --kolikrat;
+    }
+    return vysledek;
+}
+
 #
 # PRÁCE SE ZÁSOBNÍKY
 # ============================================================================
