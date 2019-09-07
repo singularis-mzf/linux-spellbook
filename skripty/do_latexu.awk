@@ -45,7 +45,9 @@ function ZpracujZnak(znak) {
         case "*":
         case "+":
         case ",":
+            return znak;
         case "-":
+            return "{-}";
         case ".":
         case "/":
         case "0":
@@ -181,7 +183,7 @@ function ZpracujBilyZnak(znak, opakovany) {
 }
 
 function Tabulator(delka,  i, vysledek) {
-    return "\\guillemotright{" Zopakovat("~", max(0, delka - 1)) "}";
+    return "\\textcolor{seda}{\\guillemotright}{" Zopakovat("~", max(0, delka - 1)) "}";
 }
 
 function ZacatekKapitoly(kapitola, cisloKapitoly) {
@@ -193,7 +195,12 @@ function KonecKapitoly(kapitola, cislaPoznamek, textyPoznamek) {
 }
 
 function ZacatekSekce(kapitola, sekce, cisloKapitoly, cisloSekce) {
-    return "\\sekce{" sekce "}%\n";
+    switch (sekce) {
+        case "Ukázka":
+            return "\\clearpage\\sekce{" sekce "}%\n";
+        default:
+            return "\\sekce{" sekce "}%\n";
+    }
 }
 
 function KonecSekce(kapitola, sekce) {
@@ -249,6 +256,8 @@ function ZacatekPrikladu(textPrikladu, cislaPoznamek, textyPoznamek,   i, tmp) {
 }
 
 function RadekPrikladu(text) {
+    # TODO: Lepší analýza řádku vylučující možné chyby.
+    gsub(/=/, "={\\moznyzlom}", text);
     return "%\n\\radekprikladu{" text "}";
 }
 

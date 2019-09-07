@@ -47,6 +47,10 @@ Položka seznamu může pokračovat na dalším řádku a obsahovat text **tuč
 **&nbsp;řádek odsazený jednou mezerou**<br>
 **&nbsp;&nbsp;..dvěma mezerami**
 
+*# *<br>
+*pro samostatné ukázky kódu je také podporován příklad bez záhlaví*<br>
+*takový příklad nemůže mít poznámky pod čarou*
+
 ## Zvláštní znaky
 
 Lze zadat nejrůznější zvláštní znaky.

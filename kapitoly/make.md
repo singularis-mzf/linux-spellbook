@@ -28,22 +28,22 @@ jemuž se bude věnovat většina této kapitoly.
 * **Cíl** je název souboru k vytvoření či akce k vykonání.
 * **Zdroj** (často nazýváný „závislost“) je název souboru, na kterém určitý cíl závisí. Příkazy stanovené pravidlem se vykonají jen tehdy, pokud cíl neexistuje nebo je alespoň jeden jeho z jeho zdrojů novější. Zdrojem může být také název akce.
 * **Slovo** je posloupnost nebílých znaků v řetězci. Jednotlivá slova v řetězci jsou od sebe oddělena bílými znaky, nejčastěji jednotlivou mezerou.
-* **%-vzor** je řetězec sloužící k filtrování či záměně slov. Může obsahovat nejvýše jeden znak **%**, který slouží jako náhrada za libovolné množství znaků. (Např. %-vzoru **a%** odpovídají právě ta slova, která začínají malým písmenem **a**.) Slouží-li %-vzor k záměně, slova, která mu neodpovídají, projdou záměnou nezměněna. Pokud %-vzor neobsahuje znak %, odpovídají mu pouze slova, která se s ním přesně shodují.
+* **%-vzor** je řetězec sloužící k filtrování slov a také k přidání, záměně nebo odebrání jejich předpony či přípony. Jde tedy o velice praktickou věc. Může obsahovat nejvýše jeden znak **%**, který slouží jako náhrada za libovolné množství znaků. (Např. %-vzoru **a%** odpovídají právě ta slova, která začínají malým písmenem **a**.) Slouží-li %-vzor k záměně, slova, která mu neodpovídají, projdou záměnou nezměněna. %-vzor nemusí obsahovat znak %; v takovém případě mu odpovídají pouze slova, která se s ním přesně shodují.
 
 ## Zaklínadla (v souboru Makefile)
 ### Pravidla
-*# obecná syntaxe normálního pravidla*<br>
+*# normální pravidlo*<br>
 {*cíle oddělené mezerami*}**:** [{*zdroje oddělené mezerami*}] [**;**{*příkaz*}]<br>
 [<tab>[{*prefix-příkazu*}]{*příkaz*}]...
 
-*# obecná syntaxe pravidla s %-vzorem*<br>
+*# částečně obecné pravidlo s %-vzorem (zdroje lze odvodit od cíle)*<br>
 {*cíle oddělené mezerami*}**:** {*%-vzor-pro-cíle*}: {*cesta-nebo-%-vzor-zdroje*}...<br>
 [<tab>[{*prefix-příkazu*}]{*příkaz*}]...
 
 *# označit, že určité cíle jsou akce, ne soubory*<br>
 **.PHONY:** [{*akce oddělené mezerami*}]
 
-*# přeložit všechny soubory s příponou .cc z adresáře kod uvedené v proměnné ZDROJE na stejnojmenné objektové soubory do adresáře obj*<br>
+*# přeložit soubory uvedené v proměnné ZDROJE, které se nacházejí v adresáři „kod“ a jeho podadresářích a mají příponu „.cc“, na objektové soubory do adresáře obj*<br>
 *// Uvedený příklad předpokládá předdefinované proměnné CXX a CXXFLAGS, které GNU make předdefinovává, takže je nemusíte sami nastavovat.*<br>
 **$(patsubst kod/%.cc,obj/%.o,$(filter kod/%.cc,$(ZDROJE))): obj/%.o: kod/%.cc**<br>
 **<tab>$(CXX) $(CXXFLAGS) -c -o $@ $&lt;**
@@ -52,7 +52,7 @@ jemuž se bude věnovat většina této kapitoly.
 *# nastavit proměnnou (expandovat v místě definice)*<br>
 {*NÁZEV\_PROMĚNNÉ*} **:=** {*hodnota včetně mezer*}
 
-*# připojit obsah na konec proměnné (expanze stejně jako v původní definici)*<br>
+*# připojit obsah na konec proměnné (expanze stejně jako v původní definici)*<br>
 {*NÁZEV\_PROMĚNNÉ*} **\+=** {*hodnota včetně mezer*}
 
 *# nastavit proměnnou (expandovat v místě použití)*<br>
@@ -133,13 +133,10 @@ jemuž se bude věnovat většina této kapitoly.
 *# normalizovat bílé znaky (posloupnosti nahradit jednou mezerou, na začátku a konci odstranit)*<br>
 **$(strip** {*řetězec*}**)**
 
-*# seřadit slova a odstranit duplicity*<br>
-**$(sort** {*řetězec*}**)**
-
 *# získat počet slov v řetězci*<br>
 **$(words** {*řetězec*}**)**
 
-*# první/poslední/n-té/předposlední slovo z řetězce*<br>
+*# první/poslední/n-té slovo z řetězce*<br>
 **$(firstword** {*řetězec*}**)**<br>
 **$(lastword** {*řetězec*}**)**<br>
 **$(word** {*n*}**,**{*řetězec*}**)**
@@ -147,6 +144,9 @@ jemuž se bude věnovat většina této kapitoly.
 *# předposlední/před-předposlední slovo z řetězce*<br>
 **$(if $(word 2,**{*řetězec*}**),$(word $(shell expr $(words** {*řetězec*} **) - 1),**{*řetězec*}**),)**<br>
 **$(if $(word 3,**{*řetězec*}**),$(word $(shell expr $(words** {*řetězec*} **) - 2),**{*řetězec*}**),)**
+
+*# seřadit slova a odstranit duplicity*<br>
+**$(sort** {*řetězec*}**)**
 
 *# obrátit pořadí slov v řetězci*<br>
 **$(shell printf "%s\\n" $(strip** {*řetězec slov*}**) | tac)**
@@ -201,7 +201,7 @@ jemuž se bude věnovat většina této kapitoly.
 *# vykonat příkaz a ignorovat návratovou hodnotu*<br>
 <tab>**\-**{*příkaz*}
 
-### Řízení načítání Makefile
+### Podmíněný překlad a include
 
 *# podmíněný překlad*<br>
 *// Vybere první z alternativ, kde jsou si uvedené výrazy po rozvinutí rovny. Doporučuji alternativy v Makefilu odsadit, ale není to vyžadováno.*<br>
@@ -222,7 +222,7 @@ jemuž se bude věnovat většina této kapitoly.
 **$(shell** {*příkaz shellu*}**)**
 
 *# vyvolat chybu a ukončit zpracování Makefile*<br>
-*// Tip: Popis chyby v parametru funkce $(error) může obsahovat rozvoj proměnných a další funkce.*<br>
+*// Tip: Popis chyby v parametru funkce $(error) může obsahovat rozvoj proměnných a volání funkcí.*<br>
 **$(error** {*popis chyby*}**)**
 
 *# vypsat varování/zprávu*<br>
@@ -231,14 +231,14 @@ jemuž se bude věnovat většina této kapitoly.
 **$(info** {*zpráva*}**)**
 
 ## Parametry příkazů
-### make
+*# make*<br>
 **make** [{*parametry*}] [{*cíl*}]<br>
 **$(MAKE)** [{*parametry*}] [{*cíl*}]
 
-* **\-j** {*počet*} :: umožní paralelní běh více úloh najednou
-* **\-C** {*adresář*} :: před děláním čehokoliv vstoupí do zadaného adresáře
-* **\-n** :: nespouští příkazy, pouze je vypíše
-* **\-s** :: nevypisuje příkazy, pouze je spouští
+* **\-j** {*počet*} \:\: umožní paralelní běh více úloh najednou
+* **\-C** {*adresář*} \:\: před děláním čehokoliv vstoupí do zadaného adresáře
+* **\-n** \:\: nespouští příkazy, pouze je vypíše
+* **\-s** \:\: nevypisuje příkazy, pouze je spouští
 * Není-li cíl zadán, použije se první cíl v Makefile (tradičně akce „all“).
 
 ## Jak získat nápovědu
@@ -248,9 +248,9 @@ jemuž se bude věnovat většina této kapitoly.
 
 ## Tipy a zkušenosti
 * Dlouhé řádky můžete rozdělit, pokud před každý konec řádku, který má make ignorovat, vložíte zpětné lomítko. Rozdělíte-li řádek s příkazem, make toto rozdělení předá volanému shellu, což však u běžně používaných sh a bash nezpůsobí problémy.
-* Nebojte se definovat více cílů v jednom pravidle. Funguje to stejně jako definovat stejné pravidlo pro každý uvedený cíl zvlášť a ušetří vám to spoustu práce s údržbou.
+* Nebojte se definovat více cílů v jednom pravidle. Funguje to stejně jako definovat stejné pravidlo pro každý uvedený cíl zvlášť a ušetří vám to spoustu práce s údržbou. Ze stejného důvodu se vyplatí naučit se syntaxi pravidla s %-vzorem.
 * Pro jeden cíl můžete definovat více pravidel, pokud nejvýše jedno z nich bude deklarovat příkazy; v takovém případě se automaticky sloučí zdroje ze všech odpovídajících pravidel.
-* Program make v příkazech pravidel interpretuje znak $. Má-li se předat shellu, je třeba jej zdvojit, např. **\$\$PATH** nebo **\$\$\$\$**.
+* Program make v příkazech pravidel interpretuje znak $. Má-li se předat shellu, je třeba jej zdvojit, např. **\$\$PATH** nebo **\$\$\$\$**. To platí i při uzavření do apostrofů.
 * Některé textové editory mohou v závislosti na svém nastavení nahrazovat tabulátory mezerami či naopak. Pokud takovým editorem upravíte Makefile, přestane fungovat, protože na začátku každého příkazu v pravidle musí být tabulátor, ne posloupnost mezer.
 * Obvyklé názvy akcí jsou např.: all, clean, install.
 * Každý příkaz pravidla se při kompilaci spouští ve vlastním shellu!

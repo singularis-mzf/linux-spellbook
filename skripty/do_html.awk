@@ -128,7 +128,7 @@ function ZacatekPrikladu(textPrikladu, cislaPoznamek, textyPoznamek,   prvni) {
     }
     vysledek = "<div class=\"priklad\">";
     if (textPrikladu != "") {
-        vysledek = vysledek "<div class=\"zahlavi\">" textPrikladu;
+        vysledek = vysledek "<hr><div class=\"zahlavi\">" textPrikladu;
         prvni = 1;
         if (length(cislaPoznamek) > 0) {
             vysledek = vysledek "<sup>";

@@ -108,6 +108,14 @@ i {font-style:italic;}
     page-break-inside:avoid;
 }
 
+.priklad>hr {
+    /* orientační čára nad každým příkladem */
+    display:block;
+    border-top:1px solid;
+    margin:0 auto 0.5pt 0;
+    max-width:15em;
+}
+
 .priklad + .priklad {
     /* mezera mezi příklady */
     margin-top:1.25em;
@@ -117,26 +125,28 @@ i {font-style:italic;}
     font-family: "Noto Mono", "DejaVu Serif", serif;
     font-size:90%;
     line-height:1.3;
-    margin-left:1.8rem;
+    margin-left:1.6rem;
     position:relative;
 }
 
 .priklad .zahlavi::before {
     content: "#";
     display:inline-block;
-    font:bold 1.6rem/1 "DejaVu Sans Mono", serif;
+    /*font:bold 1.6rem/1 "DejaVu Sans Mono", serif;*/
     text-align:left;
     position:absolute;
-    left:auto;right:100%;top:0.2rem;bottom:auto;
-    width:1.8rem;
+    left:auto;right:100%;top:0;bottom:auto;
+    width:1.6rem;
 }
 
 .priklad .radky {
-    box-shadow:0 0 5pt 0 rgb(200,200,200), -5pt 0 5pt 5pt rgb(200,200,200), 5pt 0 5pt 0 rgb(200,200,200);
+/*    box-shadow:0 0 5pt 0 rgb(200,200,200), -5pt 0 5pt 5pt rgb(200,200,200), 5pt 0 5pt 0 rgb(200,200,200);*/
+    /*box-shadow:0 0 5pt 1pt rgb(200,200,200);*/
     font-size:80%;
     line-height:1.8;
     margin:3pt 5pt 3pt 7rem;
-    padding:1pt 5pt;
+    border:1pt dotted #999999;
+    padding:2pt 5pt;
 }
 
 /* zobrazení znaku ↲ na konci každého řádku příkladu kromě posledního */
