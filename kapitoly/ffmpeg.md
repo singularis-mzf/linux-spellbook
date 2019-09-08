@@ -63,7 +63,9 @@ https://creativecommons.org/licenses/by-sa/4.0/
 **[vi] trim=**{*začátek*}**:**{*konec*}**,setpts=PTS-STARTPTS,loop=-1:32767,trim=0:**{*cílový-počet-sekund*}** [vo]**<br>
 **[ai] atrim=**{*začátek*}**:**{*konec*}**,asetpts=PTS-STARTPTS,aloop=-1:2147483647,atrim=0:**{*cílový-počet-sekund*}** [ao]**
 
-
+*# obrátit video*<br>
+*// Pozor! Filtr reverse musí celé video nekomprimované uložit do paměti. Pro zpracování dlouhého videa tedy doporučuji dočasně zapnout opravdu velký swapovací soubor, nebo video obracet po částech.*<br>
+**[vi] reverse [vo]**
 
 
 
@@ -72,6 +74,15 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 *# změna rozlišení (roztažení, smrsknutí, škálování)(pro většinu kodeků musejí být hodnoty šířka a výška sudé!)*<br>
 **[vi] scale=**{*šířka*}**:**{*výška*} **[vo]**
+
+*# změnit šířku i výšku na polovinu a zajistit, aby oba rozměry byly sudé*<br>
+**[vi] scale=2\*trunc(iw/4):2\*trunc(ih/4) [vo]**
+
+*# zvětšit šířku i výšku s interpolací pro pixel-art na dvojnásobek/dvojnásobek/trojnásobek/čtyřnásobek*<br>
+**[vi] super2xsai [vo]**<br>
+**[vi] xbr=2 [vo]**<br>
+**[vi] xbr=3 [vo]**<br>
+**[vi] xbr=4 [vo]**
 
 *# nadstavení obrazu (padding)(barva=#RRGGBB[AA] jako v HTML) *<br>
 **[vi] pad=**{*šířka*}**:**{*výška*}**:**{*posun-x-zleva*}**:**{*posun-y-shora*}[**:**{*barva*}] **[vo]**
@@ -92,9 +103,21 @@ https://creativecommons.org/licenses/by-sa/4.0/
 *# otočit obraz o -90° (o 90° po směru hodinových ručiček)*<br>
 **[vi] transpose=1 [vo]**
 
+*# otočit obraz o obecný úhel (ve stupních) proti/po směru hodinových ručiček*<br>
+**[vi] rotate=**{*úhel*}**\*(-PI/180)**[**:**{*výsl-šířka*}**:**{*výsl-výška*}][**:c=**{*barva-pozadí-nebo-none*}] **[vo]**<br>
+**[vi] rotate=**{*úhel*}**\*(PI/180)**[**:**{*výsl-šířka*}**:**{*výsl-výška*}][**:c=**{*barva-pozadí-nebo-none*}] **[vo]**
 
-*# vložit MKV titulky do obrazu (tzv. zapéci)(??)*<br>
-** subtitles={soubor-s-titulky.mkv} [vo] **
+*# otočit obraz o obecný úhel (ve stupních) proti směru hodinových ručiček a zvětšit rozlišení na obdelník opsaný otočenému snímku; nevyplněné rohy ponechat průhledné*<br>
+**[vi] rotate=**{*úhel*}**\*(-PI/180):rotw(**{*úhel*}**\*(-PI/180)):roth(**{*úhel*}**\*(-PI/180)):c=none [vo]**
+
+*# zapéci titulky do obrazu (normálně/podtrženým červeným písmem Arial velikosti 48)*<br>
+*// Nastavení stylu jsou ve formátu ASS, přičemž znaky = a , musíte escapovat kvůli ffmpegu.*<br>
+**[vi] subtitles=**{*soubor-s-titulky*}[**:force_style=**{*nastavení-stylu*}] **[vo]**<br>
+**[vi] subtitles=**{*soubor-s-titulky*}**:force_style=FontName\\=Arial\\,Fontsize\\=48\\,PrimaryColour\\=&amp;H000000FF\\,Underline\\=1 [vo]**
+
+<!--
+Barvy se zadávají ve formátu AABBGGRR, kde AA=FF je úplná průhlednost a AA=00 úplná neprůhlednost.
+-->
 
 *# zakrýt/odstranit logo nebo jiný rušivý element z obrazu*<br>
 **[vi] delogo=x=**{*posun-x-zleva*}**:y=**{*posun-y-shora*}**:w=**{*šířka*}**:h=**{*výška*} **[vo]**
@@ -115,7 +138,9 @@ https://creativecommons.org/licenses/by-sa/4.0/
 [**:eval=frame**] **[vo]**
 
 *# vložit roztmívačku/zatmívačku*<br>
-*// všechny snímky před začátkem roztmívačky a za koncem zatmívačky budou nastaveny na uvedenou barvu* <!-- [ ] OVĚŘIT! -->
+*// všechny snímky před začátkem roztmívačky a za koncem zatmívačky budou nastaveny na uvedenou barvu* <!--
+[ ] OVĚŘIT!
+-->
 **[vi] fade=t=in:st=**{*začátek*}**:d=**{*trvání*}[**:c=**{*barva*}][**:alpha=1**] **[vo]**<br>
 **[vi] fade=t=out:st=**{*začátek*}**:d=**{*trvání*}[**:c=**{*barva*}][**:alpha=1**] **[vo]**
 
@@ -123,10 +148,108 @@ https://creativecommons.org/licenses/by-sa/4.0/
 *// výchozí sigma=0.5*<br>
 **[vi] gblur**[**=**{*sigma*}] **[vo]**
 
+*# aplikovat výraz po pixelech*<br>
+*// Ve výrazu můžete použít proměnné: čas snímku v sekundách (T), sekvenční číslo snímku (N), souřadnice výstupního pixelu (X, Y), rozměry snímku (W, H); a funkce r(), g(), b() a a(), které přijímají parametry (x, y) a načtou odpovídající složku z pixelu původního snímku na uvedených souřadnicích. Pro souřadnice mimo rozsah vrací 0.*<br>
+**[vi] geq=r=**{*výraz-red*}**:g=**{*výraz-green*}**:b=**{*výraz-blue*}[**:a=**{*výraz-alfa*}] **[vo]**
+
+<!--
+TODO: [ ] Vyzkoušet rozsah složky A. (Ostatní: 0..255.)
+-->
+
+*# sestavit každý nový snímek z pixelů původního*<br>
+*// Souřadnice mimo rozsah (?)*<br>
+**[vi] geq=p(**{*výraz-x*}**\\,**{*výraz-y*}**) [vo]**
+
 <!--
 [ ] POKRAČOVAT OD:
 https://ffmpeg.org/ffmpeg-filters.html#geq
 -->
+
+**# naskládat videa stejné výšky vedle sebe/videa stejné šířky pod sebe**<br>
+*// Všechny použité vstupy musejí mít kromě stejné výšky/šířky také stejný formát pixelu (pixel-format).*<br>
+**[vi]**... **hstack=inputs=**{*počet-vstupů*}[**:shortest=1**] **[vo]**
+**[vi]**... **vstack=inputs=**{*počet-vstupů*}[**:shortest=1**] **[vo]**
+
+*# odbarvit obrázek na stupně šedi*<br>
+**[vi] hue=s=0 [vo]**
+
+*# roztmívačka saturace*<br>
+*// Čas začátku a trvání efektu jsou v sekundách.*<br>
+**[vi] hue=s=max(0\,min(1\,(t - **{*čas-začátku*}**)/**{*trvání-efektu*}**)) [vo]**
+
+*# zatmívačka saturace*<br>
+*// Čas začátku a trvání efektu jsou v sekundách.*<br>
+**[vi] hue=s=max(0\,min(1\,(**{*čas-začátku*} **- t)/**{*trvání-efektu*}**)) [vo]**
+
+*# invertovat barvy*<br>
+?
+
+*# proložit obraz (sníží framerate na polovinu)*<br>
+**[vi] interlace [vo]**
+
+*# oříznout hodnoty složek obrazu*<br>
+*// TODO: Nevím, zda se aplikuje i na alfa-kanál.*<br>
+**[vi] limiter=**[**min=**{*minimum*}][**:max=**{*maximum*}] **[vo]**
+
+*# zvýšit fps s inteligentní interpolací pohybů*<br>
+*// Poznámka: tento filtr může být velmi pomalý. Před aplikací na delší video ho raději vyzkoušejte na kratším úseku.*<br>
+**[vi] minterpolate=fps=**{*nové-fps*} **[vo]**<br>
+**[vi] minterpolate=fps=**{*nové-fps*}**:mi_mode=blend [vo]**<br>
+**[vi] minterpolate=fps=**{*nové-fps*}**:mi_mode=dup [vo]**
+
+*# prolnout několik vstupů stejných rozměrů*<br>
+**[vi]**... **mix=nb_inputs=**{*počet-vstupů*}**:weights=**{*váhy oddělené mezerami*}[**:duration=**{*longest-shortest-nebo-first*}] **[vo]**
+
+*# negovat složky snímku bez alfa kanálu/včetně alfa kanálu*<br>
+**[vi] negate [vo]**<br>
+**[vi] negate=negate_alpha=1 [vo]**
+
+*# zašumět obraz proměnným RGB-šumem*<br>
+*// Přípustné hodnoty parametry allf jsou a, p, t, u a jejich kombinace operátorem +; při letmém vyzkoušení se mi jevily použitelné jen varianty „t“ a „t+u“ (jemnější).*<br>
+**[vi] noise=alls=**{*síla-šumu-0-az-100*}**:allf=t**
+
+*# překrýt jeden videovstup druhým; po skončení překryvného vstupu: ho skrýt/ukončit výstup/zamrznout překryvný vstup na jeho posledním snímku*<br>
+*// Hodnoty posunu jsou výrazy s výsledkem v pixelech. Mohou používat: rozměry hlavního videa (W, H), rozměry překryvného videa (w, h), čas v sekundách (t) a sekvenční číslo snímku (n). Poznámka: výstup filtru overlay není nikdy delší než délka jeho hlavního (prvního) vstupu.*<br>
+**[vi][vi] overlay=x=**{*posun-x*}**:y=**{*posun-y*}**:eof_action=pass [vo]**<br>
+**[vi][vi] overlay=x=**{*posun-x*}**:y=**{*posun-y*}**:eof_action=endall [vo]**<br>
+**[vi][vi] overlay=x=**{*posun-x*}**:y=**{*posun-y*}**:eof_action=repeat [vo]**
+
+*# opravit perspektivu ze zadaných souřadnic (vLevo, vpRavo, Nahoře, Dole)*<br>
+**[vi] perspective=**{*LNx*}**:**{*LNy*}**:**{*RNx*}**:**{*RNy*}**:**{*LDx*}**:**{*LDy*}**:**{*RDx*}**:**{*RDy*}[**:sense=destination**][**:interpolation=cubic**] **[vo]**
+
+*# prohazovat a zahazovat snímky podle zadaného klíče*<br>
+*// Filtr načte do vstupního bufferu tolik snímků ze vstupu, kolik jste zadali indexů. Následně na výstup vybírá snímky z bufferu podle indexů, které jste uvedli. Indexy se mohou opakovat a lze uvést speciální index -1, který způsobí vynechání snímku na výstupu (zahození).**<br>
+**[vi] shuffleframes=**{*indexy dělené mezerami*} **[vo]**
+
+*# náhodně prohazovat snímky v čase (snímky se do bufferu vkládají sekvenčně a vybírají v náhodném pořadí)*<br>
+*// Velikost bufferu musí být v rozmezí 2 až 512 (výchozí hodnota je 30); snímky se do bufferu vkládají sekvenčně a vybírají se v náhodném pořadí.*<br>
+**[vi] random=**{*velikost-bufferu*}
+
+*# z každé dávky snímků vybrat ten nejreprezentativnější a ten roztáhnout na celou délku dávky*<br>
+*// Má velké paměťové nároky, nepoužívat pro velký počet snímků; rozumný je tak maximálně 1000.*<br>
+**[vi] thumbnail=**{*počet-snímků-na-dávku*} **[vo]**
+
+*# zneviditelnit předmět na určité pozici*<br>
+*// Mapa by měla mít stejný rozměr jako video a musí obsahovat bílé pixely na pozicích, kde je na videu předmět k odstranění, a černé pixely na místech, která se nemají změnit.*<br>
+**[vi] removelogo=**{*obrázek-s-mapou.png*} [vo]**
+
+*# aplikovat na obraz Sobelův operátor detekce hran*<br>
+**[vi] sobel [vo]**
+
+*# vyměnit dvě obdelníkové oblasti ve videu*<br>
+*// Všechny hodnoty mohou používat rozměry snímku (w, h), čas v sekundách (t) a sekvenční číslo snímku (n).*<br>
+**[vi] swaprect=**{*šířka-oblastí*}**:**{*výška-oblastí*}**:**{*x1*}**:**{*y1*}**:**{*x2*}**:**{*y2*} **[vo]**
+
+*# rozdělit snímky po dávkách a každou dávku vykreslit po řádcích do mřížky daných rozměrů*<br>
+**[vi] tile=**{*počet-sloupců-mřížky*}**x**{*počet-řádků-mřížky*}[**:margin=**{*šířka-okraje*}][**:padding=**{*rozestup-mřížky*}][**:color=**{*barva-pozadí*}][**:nb_frames=**{*velikost-dávky*}] **[vo]**
+
+*# ztmavit/zesvětlit okraje snímku (efekt vignette)*<br>
+*// Úhel čočky je v rozsahu 0 (žádný účinek) až PI/2 (maximální účinek). Pro vyhodnocování výrazů pro každý snímek musíte přidat parametr „eval=frame“. Mód *<br>
+**[vi] vignette=a=**{*úhel-čočky*}[**:x0=**{*x-středu*}**:y0=**{*y-středu*}][**:eval=frame**] **[vo]**<br>
+**[vi] vignette=mode=backward:a=**{*úhel-čočky*}[**:x0=**{*x-středu*}**:y0=**{*y-středu*}][**:eval=frame**] **[vo]**
+
+
+
 
 ### Úprava zvuku
 
@@ -134,6 +257,13 @@ https://ffmpeg.org/ffmpeg-filters.html#geq
 **[ai] volume=0.1 [ao]**<br>
 **[ai] volume=5.0 [ao]**
 
+### Generátory obrazu
+
+*# černý obraz (nekonečný)*<br>
+**nullsrc=s=**{*šířka*}**x**{*výška*}**,geq=r=0:g=0:b=0 [vo]**
+
+*# poloprůhledný zelený obraz (???)*<br>
+**nullsrc=s=**{*šířka*}**x**{*výška*}**,geq=r=0:g=255:b=0:a=128 [vo]**
 
 
 ### Rozdělování a spojování
@@ -161,12 +291,20 @@ pozor na PTS!
 **[vi] loop=**{*počet*}**:32767 [vo] ; [ai] aloop=**{*počet*}**:2147483647 [ao]**<br>
 **[vi] loop=-1:32767 [vo] ; [ai] aloop=-1:2147483647 [ao]**
 
+*# naklonovat videovstup/audiovstup na více shodných výstupů*<br>
+**[vi] split=**{*počet výstupů*} **[vo]**...<br>
+**[ai] asplit=**{*počet výstupů*} **[ao]**...
+
 
 ### Ostatní filtry
 
 *# ponechat obraz/zvuk beze změny*<br>
 **[vi] copy [vo]**<br>
 **[ai] acopy [ao]**
+
+*# pohltit video/zvuk bez výstupu*<br>
+**[vi] nullsink**<br>
+**[ai] anullsink**
 
 ## Zaklínadla (příkaz ffmpeg)
 
@@ -251,3 +389,10 @@ Pro zvuk (**-c:a**): **aac**, **libmp3lame**.
 * [manuálová stránka](http://manpages.ubuntu.com/manpages/bionic/en/man1/ffmpeg.1.html) (anglicky)
 * [oficiální stránky](https://ffmpeg.org/) (anglicky)
 * [dokumentace k filtrům](https://ffmpeg.org/ffmpeg-filters.html) (anglicky)
+
+<!--
+Poznámky:
+- filtr v360 (https://ffmpeg.org/ffmpeg-filters.html#toc-v360)
+- vidstabdetect, vidstabtransform
+- filtr zoompan
+-->

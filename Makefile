@@ -25,22 +25,21 @@
 SHELL := /bin/sh
 AWK := gawk
 
-VSECHNY_KAPITOLY := _ukazka docker make gawk
+VSECHNY_KAPITOLY := _ukazka docker gawk latex make
 SOUBORY_PREKLADU := soubory_prekladu
 VYSTUP_PREKLADU := vystup_prekladu
 
 .PHONY: all clean
 
-all: html log latexa5
+all: html log latex-a5
 
 clean:
 	$(RM) -R $(SOUBORY_PREKLADU) $(VYSTUP_PREKLADU)
 
+# Podporované formáty:
 html: $(VYSTUP_PREKLADU)/html/index.htm
-
 log: $(VYSTUP_PREKLADU)/log/index.log
-
-latexa5: $(VYSTUP_PREKLADU)/latex-a5/kniha.pdf
+latex-a5: $(VYSTUP_PREKLADU)/latex-a5/kniha.pdf
 
 # HTML:
 
@@ -89,25 +88,26 @@ $(VYSTUP_PREKLADU)/log/index.log: $(addsuffix .kap,$(addprefix $(SOUBORY_PREKLAD
 	mkdir -pv $(VYSTUP_PREKLADU)/log
 	SEZNAMKAPITOL=kapitoly.lst VSTUPPREFIX=$(SOUBORY_PREKLADU)/log/ VSTUPSUFFIX=.kap $(AWK) -f skripty/kniha.awk formaty/log/sablona_kapitoly > $@
 
+# LATEX (společná část):
 
-# LATEX A5:
-
-# 1. kapitoly/{kapitola}.md => soubory_prekladu/latex-a5/{kapitola}
+# 1. kapitoly/{kapitola}.md => soubory_prekladu/latex-spolecne/{kapitola}
 # ============================================================================
-$(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/latex-a5/%): $(SOUBORY_PREKLADU)/latex-a5/%: kapitoly/%.md skripty/do_latexu.awk
+$(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/latex-spolecne/%): $(SOUBORY_PREKLADU)/latex-spolecne/%: kapitoly/%.md skripty/do_latexu.awk
 	mkdir -pv $(dir $@)
 	$(AWK) -f skripty/do_latexu.awk $< > $@
 
-# 2. soubory_prekladu/latex-a5/{kapitola} => soubory_prekladu/latex-a5/{kapitola}.kap
+# 2. soubory_prekladu/latex-spolecne/{kapitola} => soubory_prekladu/spolecne/{kapitola}.kap
 # ============================================================================
-$(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/latex-a5/%.kap): %.kap: % skripty/zjistit_nazev.awk skripty/kapitola.awk formaty/latex-a5/sablona.tex
+$(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/latex-spolecne/%.kap): %.kap: % skripty/zjistit_nazev.awk skripty/kapitola.awk formaty/latex-a5/sablona.tex
 	IDKAPITOLY=$(notdir $(@:%.kap=%)) NAZEVKAPITOLY="$(shell $(AWK) -f skripty/zjistit_nazev.awk kapitoly/$(notdir $(@:%.kap=%.md)))" TELOKAPITOLY=$< $(AWK) -f skripty/kapitola.awk formaty/latex-a5/sablona.tex > $@
 
-# 3. soubory_prekladu/latex-a5/{kapitola}.kap => soubory_prekladu/latex-a5/kniha.tex
+# LATEX A5:
+
+# 3. soubory_prekladu/latex-spolecne/{kapitola}.kap => soubory_prekladu/latex-a5/kniha.tex
 # ============================================================================
-$(SOUBORY_PREKLADU)/latex-a5/kniha.tex: $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/latex-a5/%.kap) kapitoly.lst
+$(SOUBORY_PREKLADU)/latex-a5/kniha.tex: $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/latex-spolecne/%.kap) kapitoly.lst
 	mkdir -pv $(dir $@)
-	SEZNAMKAPITOL=kapitoly.lst VSTUPPREFIX=$(SOUBORY_PREKLADU)/latex-a5/ VSTUPSUFFIX=.kap $(AWK) -f skripty/kniha.awk formaty/latex-a5/sablona.tex >$@
+	SEZNAMKAPITOL=kapitoly.lst VSTUPPREFIX=$(SOUBORY_PREKLADU)/latex-spolecne/ VSTUPSUFFIX=.kap $(AWK) -f skripty/kniha.awk formaty/latex-a5/sablona.tex >$@
 
 # 4. soubory_prekladu/latex-a5/kniha.tex => soubory_prekladu/latex-a5/kniha.dvi
 # ============================================================================
@@ -126,5 +126,5 @@ $(VYSTUP_PREKLADU)/latex-a5/kniha.pdf: $(SOUBORY_PREKLADU)/latex-a5/kniha.dvi
 #
 kapitoly.lst:
 	echo '# Seznam kapitol k vygenerování' > kapitoly.lst
-	exec bash -c 'for X in $(VSECHNY_KAPITOLY); do echo "$$X" >> kapitoly.lst; done'
+	exec bash -c 'for X in $(sort $(VSECHNY_KAPITOLY)); do echo "$$X" >> kapitoly.lst; done'
 

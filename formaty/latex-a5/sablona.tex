@@ -32,9 +32,13 @@
 \usepackage[T1]{fontenc}
 
 % 2. skupina balíčků:
+\usepackage{textcomp}       % musí být načtený přednostně; vyžadovaný balíčkem {gensymb}
+
+% 3. skupina balíčků:
 \usepackage[arrows]{boisik} % jen kvůli znaku $\carriagereturn$ (pokud existuje stabilní náhrada, bylo by lepší ji použít)
 \usepackage{fancyhdr}       % formátování záhlaví a zápatí
 \usepackage[bottom]{footmisc}% aby se poznámky pod čarou správně umístily
+\usepackage{gensymb}        % symboly jako např. \degree
 \usepackage{ifthen}         % příkaz \ifthenelse a související konstrukce
 \usepackage{titlesec}       % formátování nadpisů kapitol
 \usepackage{verbatim}       % zejm. prostředí {comment}, ale také {verbatim}

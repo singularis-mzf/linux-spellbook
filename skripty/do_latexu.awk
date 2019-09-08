@@ -158,6 +158,8 @@ function ZpracujZnak(znak) {
         case "ž": case "Ž":
             return znak;
 # obvyklé UCS znaky
+        case "°":
+            return "\\degree{}";
         case "„":
             return "\\quotedblbase{}";
         case "“":
