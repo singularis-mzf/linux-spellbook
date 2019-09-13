@@ -11,13 +11,42 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
-# Název
+<!--
+TODO:
+
+Pochopit a zpracovat filtry:
+- chorus
+- equalizer
+- highpass
+- lowpass
+- pan
+- silenceremove
+- stereowiden
+- volume (dynamicky)
+
+Zpracovat filtry:
+- movie, amovie
+
+
+- Rozlišit parametry na globální, vstupní a výstupní.
+-->
+# FFmpeg
 
 ## Úvod
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 ## Definice
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+**Stopa** je složka multimediálního souboru určená ke spojení s ostatními stopami. Existují čtyři druhy stop − obrazová, zvuková, titulková a datová. Multimediální kontejner může obsahovat více stop a tyto stopy mohou být různé...
+
+**Kanál** je vrstva tvořící stopu. Na rozdíl od stop, kanály stopy trvají vždy stejně dlouho a tvoří každý snímek obrazu či vzorek zvuku společně.
+
+**Snímek** je základní kvantum obrazové stopy. Vzorkovací frekvence videa čili počet snímků za sekundu se nazývá **fps**. Hodnota fps se obvykle pohybuje v rozmezí 10 až 60.
+
+**Vzorek** je základní kvantum zvukové stopy. Obvyklá vzorkovací frekvence zvuku je 44100.
+
+
 
 ## Zaklínadla (filtry)
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
@@ -165,7 +194,7 @@ TODO: [ ] Vyzkoušet rozsah složky A. (Ostatní: 0..255.)
 https://ffmpeg.org/ffmpeg-filters.html#geq
 -->
 
-**# naskládat videa stejné výšky vedle sebe/videa stejné šířky pod sebe**<br>
+*# naskládat videa stejné výšky vedle sebe/videa stejné šířky pod sebe*<br>
 *// Všechny použité vstupy musejí mít kromě stejné výšky/šířky také stejný formát pixelu (pixel-format).*<br>
 **[vi]**... **hstack=inputs=**{*počet-vstupů*}[**:shortest=1**] **[vo]**
 **[vi]**... **vstack=inputs=**{*počet-vstupů*}[**:shortest=1**] **[vo]**
@@ -257,13 +286,97 @@ https://ffmpeg.org/ffmpeg-filters.html#geq
 **[ai] volume=0.1 [ao]**<br>
 **[ai] volume=5.0 [ao]**
 
+*# spojit za sebe dva vstupy a prolnout sedmisekundovou prolínačkou*<br>
+**[ai][ai] acrossfade=d=7:c1=exp:c2=exp [ao]**
+
+*# před každý zvukový kanál vložit určitý počet milisekund ticha*<br>
+**[ai] adelay=**{*ms-pro-pravý-kanál*}[**\|**{*ms-pro-levý-kanál*}] **[ao]**
+
+*# přidat ozvěnu*<br>
+*// Hlasitost ozvěny je v rozsahu 0 až 1.0 a nesmí být 0. Filtr mírně sníží hlasitost původních zvuků, je potřeba ji vyladit.*<br>
+**[ai] aecho=0.6:0.3:**{*ms-zpoždění*}**:**{*hlasitost-ozvěny*} **[ao]**
+
+*# přidat dvě a více ozvěn*<br>
+**[ai] aecho=0.6:0.3:**{*ms-zpoždění-1*}**\|**{*ms-další-zpoždění*}...**:**{*hlasitost-ozvěny-1*}**\|**{*hlasitost-další-ozvěny*}... **[ao]**
+
+*# aplikovat na zvukové vzorky obecný výraz*<br>
+*// Ve výrazu můžeme použít: hodnotu pravé/levé stopy (val(0)/val(1)), čas vzorku v sekundách (t), číslo vzorku (n), číslo kanálu (ch), původní počet kanálů (nb_in_channels), vzorkovací frekvenci (s).*<br>
+**[ai] aeval=**{*výraz*}[**|**{*výraz-pro-druhý-kanál*}]**:c=same [ao]**
+
+*# sloučit kanály stereo stopy do jedné daným výrazem*<br>
+*// Hodnota pravé stopy je „val(0)“ a hodnota levé „val(1)“.*<br>
+**[ai] aeval=**{*výraz*} **[ao]**
+
+*# aplikovat zvukovou zatmívačku/roztmívačku*<br>
+*// Podporované tvary jsou: tri, qsin, hsin, esin, log, ipar, qua, cub, squ, cbr, par, exp, iqsin, ihsin, dese. Poznámka: Veškerý zvuk po konci zatmívačky, resp. začátkem roztmívačky bude tímto filtrem nahrazen tichem.*<br>
+**[ai] afade=out:st=**{*čas-začátku*}**:d=**{*trvání-v-s*}**:curve=**{*tvar*} **[ao]**<br>
+**[ai] afade=in:st=**{*čas-začátku*}**:d=**{*trvání-v-s*}**:curve=**{*tvar*} **[ao]**
+
+*# spojit levý a pravý (v tomto pořadí) audio-vstup do jedné stereo-stopy*<br>
+**[ai][ai] amerge [ao]**
+
+*# rozdělit stereo-stopu na pravé a levé mono*<br>
+**[ai] channelsplit [ao][ao]**
+
+*# smíchat paralelní audiostopy*<br>
+**[ai]**... **amix=**{*počet-vstupů*}**:duration=**{*longest,shortest,nebo-first*}[**:weights=váhy vstupů**] **[ao]**
+
+*# vynásobit vzorky*<br>
+**[ai][ai] amultiply [ao]**
+
+*# přidat na konec zvukové stopy nekonečné ticho*<br>
+**[ai] apad [ao]**
+
+*# přidat na konec zvukové stopy několik sekund ticha*<br>
+?
+
+*# přidat na konec několik vzorků ticha*<br>
+**[ai] apad=pad_len=**{*počet-vzorků*} **[ao]**
+
+*# doplnit na konec ticho pro dosažení minimálního počtu vzorků*<br>
+**[ai] apad=whole_len=**{*min-počet-vzorků*} **[ao]**
+
+*# převzorkovat stopu na novou frekvenci*<br>
+**[ai] aresample=**{*nová-frekvence*} **[ao]**
+
+*# obrátit celou zvukovou stopu v čase*<br>
+**// Varování: Tento filtr potřebuje načíst celý zvuk najednou do paměti, což může pro delší soubory způsobit velké paměťové nároky.**<br>
+**[ai] areverse [ao]**
+
+*# nastavit novou vzorkovací frekvenci bez ovlivnění vzorků*<br>
+**[ai] asetrate=**{*nová-frekvence*} **[ao]**
+
+*# vylepšit zvuk pro poslech přes sluchátka*<br>
+**[ai] earwax [ao]**
+
+*# zvýraznit rozdíl mezi stereokanály*<br>
+**[ai] extrastereo**[**=**{*koeficient*}] **[ao]**
+
+*# rozkolísat amplitudu/fázi zvuku*<br>
+*// Frekvence je v rozsahu 0.1 až 20000; rozumně slyšitelné jsou hodnoty do 20 Hz. Síla je v rozsahu 0.0 až 1.0.*<br>
+**[ai] tremolo=f=**{*frekvence-Hz*}[**:d=**{*síla*} **[ao]**<br>
+**[ai] vibrato=f=**{*frekvence-Hz*}[**:d=**{*síla*} **[ao]**
+
+
+
 ### Generátory obrazu
 
-*# černý obraz (nekonečný)*<br>
-**nullsrc=s=**{*šířka*}**x**{*výška*}**,geq=r=0:g=0:b=0 [vo]**
+*# černý/modrý/poloprůhledný zelený/zcela průhledný obraz*<br>
+*// Nejsou-li zadány parametry „d“ a „r“, výstup generátoru bude nekonečný s fps 25.*<br>
+**color=c=#000000:s=**{*šířka*}**x**{*výška*}[**:r=**{*fps*}][**:d=**{*trvání-v-sekundách*}]<br>
+**color=c=#0000FF:s=**{*šířka*}**x**{*výška*}[**:r=**{*fps*}][**:d=**{*trvání-v-sekundách*}]<br>
+**color=c=#00FF0080:s=**{*šířka*}**x**{*výška*}[**:r=**{*fps*}][**:d=**{*trvání-v-sekundách*}]<br>
+**color=c=#00000000:s=**{*šířka*}**x**{*výška*}[**:r=**{*fps*}][**:d=**{*trvání-v-sekundách*}]
 
-*# poloprůhledný zelený obraz (???)*<br>
-**nullsrc=s=**{*šířka*}**x**{*výška*}**,geq=r=0:g=255:b=0:a=128 [vo]**
+### Generátory zvuku
+
+*# bílý šum*<br>
+*// Amplituda se uvádí v rozsahu 0 až 1. Místo white lze použít také pink, brown, blue a violet.*<br>
+**anoisesrc=c=white**[**:d=**{*trvání-v-s*}][**:a=**{*amplituda*}][**:r=**{*vzorkovací-frekvence*}] **[ao]**
+
+<!--
++ sine
+-->
 
 
 ### Rozdělování a spojování

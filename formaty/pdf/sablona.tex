@@ -27,7 +27,14 @@
 % 1. skupina balíčků:
 \usepackage[utf8]{inputenc}
 \usepackage[czech]{babel}
+%
+{{POKUD JE FORMÁT pdf-a4}}
+\usepackage[dvipdfm,a4paper,inner=1.5cm,outer=1cm,top=1.5cm,bottom=1.5cm]{geometry} % + showframe pro ladění
+{{KONEC POKUD}}
+{{POKUD JE FORMÁT pdf-a5}}
 \usepackage[dvipdfm,a5paper,inner=1.5cm,outer=1cm,top=1.5cm,bottom=1.5cm]{geometry} % + showframe pro ladění
+{{KONEC POKUD}}
+
 %\usepackage[B1,LY1,T1]{fontenc}
 \usepackage[T1]{fontenc}
 

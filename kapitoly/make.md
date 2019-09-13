@@ -28,16 +28,21 @@ jemuž se bude věnovat většina této kapitoly.
 * **Cíl** je název souboru k vytvoření či akce k vykonání.
 * **Zdroj** (často nazýváný „závislost“) je název souboru, na kterém určitý cíl závisí. Příkazy stanovené pravidlem se vykonají jen tehdy, pokud cíl neexistuje nebo je alespoň jeden jeho z jeho zdrojů novější. Zdrojem může být také název akce.
 * **Slovo** je posloupnost nebílých znaků v řetězci. Jednotlivá slova v řetězci jsou od sebe oddělena bílými znaky, nejčastěji jednotlivou mezerou.
-* **%-vzor** je řetězec sloužící k filtrování slov a také k přidání, záměně nebo odebrání jejich předpony či přípony. Jde tedy o velice praktickou věc. Může obsahovat nejvýše jeden znak **%**, který slouží jako náhrada za libovolné množství znaků. (Např. %-vzoru **a%** odpovídají právě ta slova, která začínají malým písmenem **a**.) Slouží-li %-vzor k záměně, slova, která mu neodpovídají, projdou záměnou nezměněna. %-vzor nemusí obsahovat znak %; v takovém případě mu odpovídají pouze slova, která se s ním přesně shodují.
+* **%-vzor** je řetězec sloužící k filtrování slov a také k přidání, záměně nebo odebrání jejich předpony či přípony. Jde tedy o velice praktickou věc. Může obsahovat nejvýše jeden znak **%**, který slouží jako náhrada za libovolné množství znaků (včetně lomítek oddělujících adresáře). (Např. %-vzoru **a%** odpovídají právě ta slova, která začínají malým písmenem **a**.) Slouží-li %-vzor k záměně, slova, která mu neodpovídají, projdou záměnou nezměněna. %-vzor nemusí obsahovat znak %; v takovém případě mu odpovídají pouze slova, která se s ním přesně shodují.
 
 ## Zaklínadla (v souboru Makefile)
 ### Pravidla
-*# normální pravidlo*<br>
+*# normální (pevné) pravidlo*<br>
 {*cíle oddělené mezerami*}**:** [{*zdroje oddělené mezerami*}] [**;**{*příkaz*}]<br>
 [<tab>[{*prefix-příkazu*}]{*příkaz*}]...
 
-*# částečně obecné pravidlo s %-vzorem (zdroje lze odvodit od cíle)*<br>
-{*cíle oddělené mezerami*}**:** {*%-vzor-pro-cíle*}: {*cesta-nebo-%-vzor-zdroje*}...<br>
+*# zobecněné (generované) pravidlo (zdroje lze odvodit od cíle)*<br>
+{*cíle oddělené mezerami*}**:** {*%-vzor-pro-cíle*}: {*cesta-nebo-%-vzor-zdroje*}... [**;**{*příkaz*}]<br>
+[<tab>[{*prefix-příkazu*}]{*příkaz*}]...
+
+*# obecné (implicitní) pravidlo (zdroje lze odvodit od cíle)*<br>
+*// Obecné pravidlo má nižší prioritu než všechna pevná a generovaná pravidla. Navíc je tiše ignorováno, pokud chybí nekterý ze zdrojů. Má-li uvedeno víc cílů, považují se po jeho provedení všechny uvedené cíle za vygenerované, a tedy se pravidlo nevolá pro překlad dalších zdrojů znovu.*<br>
+{*%-vzor cíle*}...**:** {*cesta-nebo-%-vzor-zdroje*}... [**;**{*příkaz*}]<br>
 [<tab>[{*prefix-příkazu*}]{*příkaz*}]...
 
 *# označit, že určité cíle jsou akce, ne soubory*<br>
@@ -109,7 +114,7 @@ jemuž se bude věnovat většina této kapitoly.
 *# program make*<br>
 **$(MAKE)**
 
-*# ?*<br>
+*# v generovaném a implicitním pravidle posloupnost znaků odpovídající znaku % v %-vzoru cíle*<br>
 **$\***<br>
 **$(\*)**
 

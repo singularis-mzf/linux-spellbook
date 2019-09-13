@@ -24,6 +24,7 @@
 
 SHELL := /bin/sh
 AWK := gawk
+PDFLATEX := pdflatex -halt-on-error
 
 VSECHNY_KAPITOLY := _ukazka docker gawk latex make
 SOUBORY_PREKLADU := soubory_prekladu
@@ -31,7 +32,7 @@ VYSTUP_PREKLADU := vystup_prekladu
 
 .PHONY: all clean
 
-all: html log latex-a5
+all: html log pdf-a4 pdf-a5
 
 clean:
 	$(RM) -R $(SOUBORY_PREKLADU) $(VYSTUP_PREKLADU)
@@ -39,7 +40,8 @@ clean:
 # Podporované formáty:
 html: $(VYSTUP_PREKLADU)/html/index.htm
 log: $(VYSTUP_PREKLADU)/log/index.log
-latex-a5: $(VYSTUP_PREKLADU)/latex-a5/kniha.pdf
+pdf-a4: $(VYSTUP_PREKLADU)/pdf-a4/kniha.pdf
+pdf-a5: $(VYSTUP_PREKLADU)/pdf-a5/kniha.pdf
 
 # HTML:
 
@@ -59,7 +61,7 @@ $(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY))): $(V
 # 3. vystup_prekladu/html/{kapitola}.htm => vystup_prekladu/html/index.htm (provizorní)
 # ============================================================================
 $(VYSTUP_PREKLADU)/html/index.htm: skripty/kniha.awk kapitoly.lst $(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY))) $(VYSTUP_PREKLADU)/html/lkk.css kapitoly.lst
-	SEZNAMKAPITOL=kapitoly.lst VSTUPPREFIX=$(VYSTUP_PREKLADU)/html/ VSTUPSUFFIX=.htm $(AWK) -f skripty/kniha.awk formaty/html/sablona_kapitoly > $@
+	SEZNAMKAPITOL=kapitoly.lst VSTUPPREFIX=$(VYSTUP_PREKLADU)/html/ IDFORMATU=html VSTUPSUFFIX=.htm $(AWK) -f skripty/kniha.awk formaty/html/sablona_kapitoly > $@
 	cp -Rv obrazky $(VYSTUP_PREKLADU)/html/
 
 # 4. formaty/html/sablona.css => vystup_prekladu/html/lkk.css
@@ -86,41 +88,55 @@ $(addsuffix .kap,$(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_KAPITOLY))): %.k
 # ============================================================================
 $(VYSTUP_PREKLADU)/log/index.log: $(addsuffix .kap,$(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_KAPITOLY))) kapitoly.lst
 	mkdir -pv $(VYSTUP_PREKLADU)/log
-	SEZNAMKAPITOL=kapitoly.lst VSTUPPREFIX=$(SOUBORY_PREKLADU)/log/ VSTUPSUFFIX=.kap $(AWK) -f skripty/kniha.awk formaty/log/sablona_kapitoly > $@
+	SEZNAMKAPITOL=kapitoly.lst VSTUPPREFIX=$(SOUBORY_PREKLADU)/log/ VSTUPSUFFIX=.kap IDFORMATU=log $(AWK) -f skripty/kniha.awk formaty/log/sablona_kapitoly > $@
 
-# LATEX (společná část):
+# PDF (společná část):
 
-# 1. kapitoly/{kapitola}.md => soubory_prekladu/latex-spolecne/{kapitola}
+# 1. kapitoly/{kapitola}.md => soubory_prekladu/pdf-spolecne/{kapitola}
 # ============================================================================
-$(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/latex-spolecne/%): $(SOUBORY_PREKLADU)/latex-spolecne/%: kapitoly/%.md skripty/do_latexu.awk
+$(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%): $(SOUBORY_PREKLADU)/pdf-spolecne/%: kapitoly/%.md skripty/do_latexu.awk
 	mkdir -pv $(dir $@)
 	$(AWK) -f skripty/do_latexu.awk $< > $@
 
-# 2. soubory_prekladu/latex-spolecne/{kapitola} => soubory_prekladu/spolecne/{kapitola}.kap
+# 2. soubory_prekladu/pdf-spolecne/{kapitola} => soubory_prekladu/pdf-spolecne/{kapitola}.kap
 # ============================================================================
-$(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/latex-spolecne/%.kap): %.kap: % skripty/zjistit_nazev.awk skripty/kapitola.awk formaty/latex-a5/sablona.tex
-	IDKAPITOLY=$(notdir $(@:%.kap=%)) NAZEVKAPITOLY="$(shell $(AWK) -f skripty/zjistit_nazev.awk kapitoly/$(notdir $(@:%.kap=%.md)))" TELOKAPITOLY=$< $(AWK) -f skripty/kapitola.awk formaty/latex-a5/sablona.tex > $@
+$(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap): %.kap: % skripty/zjistit_nazev.awk skripty/kapitola.awk formaty/pdf/sablona.tex
+	IDKAPITOLY=$(notdir $(@:%.kap=%)) NAZEVKAPITOLY="$(shell $(AWK) -f skripty/zjistit_nazev.awk kapitoly/$(notdir $(@:%.kap=%.md)))" TELOKAPITOLY=$< $(AWK) -f skripty/kapitola.awk formaty/pdf/sablona.tex > $@
 
-# LATEX A5:
+# PDF A5:
 
-# 3. soubory_prekladu/latex-spolecne/{kapitola}.kap => soubory_prekladu/latex-a5/kniha.tex
+# 3. soubory_prekladu/pdf-spolecne/{kapitola}.kap => soubory_prekladu/pdf-a5/kniha.tex
 # ============================================================================
-$(SOUBORY_PREKLADU)/latex-a5/kniha.tex: $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/latex-spolecne/%.kap) kapitoly.lst
+$(SOUBORY_PREKLADU)/pdf-a5/kniha.tex: $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap) kapitoly.lst
 	mkdir -pv $(dir $@)
-	SEZNAMKAPITOL=kapitoly.lst VSTUPPREFIX=$(SOUBORY_PREKLADU)/latex-spolecne/ VSTUPSUFFIX=.kap $(AWK) -f skripty/kniha.awk formaty/latex-a5/sablona.tex >$@
+	SEZNAMKAPITOL=kapitoly.lst VSTUPPREFIX=$(SOUBORY_PREKLADU)/pdf-spolecne/ VSTUPSUFFIX=.kap IDFORMATU=pdf-a5 $(AWK) -f skripty/kniha.awk formaty/pdf/sablona.tex >$@
 
-# 4. soubory_prekladu/latex-a5/kniha.tex => soubory_prekladu/latex-a5/kniha.dvi
+# 4. soubory_prekladu/pdf-a5/kniha.tex => vystup_prekladu/pdf-a5/kniha.pdf
 # ============================================================================
-$(SOUBORY_PREKLADU)/latex-a5/kniha.dvi: $(SOUBORY_PREKLADU)/latex-a5/kniha.tex
-	bash -c '(cd $(dir $<); exec latex $(notdir $(<:%.tex=%))) | $(AWK) -f skripty/prelozit_vystup_latexu.awk; exit $${PIPESTATUS[0]}'
-	bash -c '(cd $(dir $<); exec latex $(notdir $(<:%.tex=%))) | $(AWK) -f skripty/prelozit_vystup_latexu.awk; exit $${PIPESTATUS[0]}'
 # skript "prelozit_vystup_latexu.awk" je zde volán jen pro zpřehlednění výstupu; je možno ho bezpečně vynechat
-
-# 5. soubory_prekladu/latex-a5/kniha.tex => vystup_prekladu/latex-a5/kniha.pdf
-# ============================================================================
-$(VYSTUP_PREKLADU)/latex-a5/kniha.pdf: $(SOUBORY_PREKLADU)/latex-a5/kniha.dvi
+$(VYSTUP_PREKLADU)/pdf-a5/kniha.pdf: $(SOUBORY_PREKLADU)/pdf-a5/kniha.tex
 	mkdir -pv $(dir $@)
-	dvipdfm -o $@ $(<:%.dvi=%)
+	bash -e -c '(cd $(dir $<); exec $(PDFLATEX) $(notdir $<)) | $(AWK) -f skripty/prelozit_vystup_latexu.awk; exit $${PIPESTATUS[0]}'
+	bash -e -c '(cd $(dir $<); exec $(PDFLATEX) $(notdir $<)) | $(AWK) -f skripty/prelozit_vystup_latexu.awk; exit $${PIPESTATUS[0]}'
+	cat $(<:%.tex=%.pdf) > $@
+
+# PDF A4:
+
+# 3. soubory_prekladu/pdf-spolecne/{kapitola}.kap => soubory_prekladu/pdf-a4/kniha.tex
+# ============================================================================
+$(SOUBORY_PREKLADU)/pdf-a4/kniha.tex: $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap) kapitoly.lst
+	mkdir -pv $(dir $@)
+	SEZNAMKAPITOL=kapitoly.lst VSTUPPREFIX=$(SOUBORY_PREKLADU)/pdf-spolecne/ VSTUPSUFFIX=.kap IDFORMATU=pdf-a4 $(AWK) -f skripty/kniha.awk formaty/pdf/sablona.tex >$@
+
+# 4. soubory_prekladu/pdf-a4/kniha.tex => vystup_prekladu/pdf-a4/kniha.pdf
+# ============================================================================
+# skript "prelozit_vystup_latexu.awk" je zde volán jen pro zpřehlednění výstupu; je možno ho bezpečně vynechat
+$(VYSTUP_PREKLADU)/pdf-a4/kniha.pdf: $(SOUBORY_PREKLADU)/pdf-a4/kniha.tex
+	mkdir -pv $(dir $@)
+	bash -e -c '(cd $(dir $<); exec $(PDFLATEX) $(notdir $<)) | $(AWK) -f skripty/prelozit_vystup_latexu.awk; exit $${PIPESTATUS[0]}'
+	bash -e -c '(cd $(dir $<); exec $(PDFLATEX) $(notdir $<)) | $(AWK) -f skripty/prelozit_vystup_latexu.awk; exit $${PIPESTATUS[0]}'
+	cat $(<:%.tex=%.pdf) > $@
+
 
 
 #

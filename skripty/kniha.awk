@@ -34,15 +34,19 @@ function VstupniSoubor(idkapitoly) {
 
 BEGIN {
     if (ENVIRON["SEZNAMKAPITOL"] == "") {
-        ShoditFatalniVyjimku("Vyžadovaná proměnná SEZNAMKAPITOL není nastavena!");
+        ShoditFatalniVyjimku("Vyžadovaná proměnná prostředí SEZNAMKAPITOL není nastavena!");
     }
     if (ENVIRON["VSTUPPREFIX"] == "") {
-        ShoditFatalniVyjimku("Vyžadovaná proměnná VSTUPPREFIX není nastavena!");
+        ShoditFatalniVyjimku("Vyžadovaná proměnná prostředí VSTUPPREFIX není nastavena!");
+    }
+    if (ENVIRON["IDFORMATU"] == "") {
+        ShoditFatalniVyjimku("Vyžadovaná proměnná prostředí IDFORMATU není nastavena!");
     }
     # ENVIRON["VSTUPSUFFIX"] je nepovinná
 
     VSTUPPREFIX = ENVIRON["VSTUPPREFIX"];
     VSTUPSUFFIX = ENVIRON["VSTUPSUFFIX"];
+    IDFORMATU = ENVIRON["IDFORMATU"];
     split("", KAPITOLY);
 
     while ((getline < (ENVIRON["SEZNAMKAPITOL"])) == 1) {
@@ -55,8 +59,37 @@ BEGIN {
     }
 
     close(ENVIRON["SEZNAMKAPITOL"]);
+
+    STAV_PODMINENENO_PREKLADU = 0;
+    # 0 - mimo podmíněný blok
+    # 1 - v podmíněném bloku, ale tiskne se
+    # 2 - v podmíněném bloku, přeskakuje se
 }
 
+# Podmíněný překlad
+# ====================================================
+/^\{\{POKUD JE FORMÁT .+\}\}$/ {
+    if (STAV_PODMINENENO_PREKLADU != 0) {
+        ShoditFatalniVyjimku("Chyba syntaxe: {{POKUD JE FORMÁT ...}} bez ukončení předchozího podmíněného bloku!");
+    }
+    STAV_PODMINENENO_PREKLADU = (substr($0, 19, length($0) - 20) == IDFORMATU) ? 1 : 2;
+}
+
+/^\{\{KONEC POKUD\}\}$/ {
+    if (STAV_PODMINENENO_PREKLADU != 0) {
+        STAV_PODMINENENO_PREKLADU = 0;
+        next;
+    } else {
+        ShoditFatalniVyjimku("{{KONEC POKUD}} bez odpovídajícího začátku");
+    }
+}
+
+STAV_PODMINENENO_PREKLADU == 2 {
+    next;
+}
+
+# Zbytek zpracování
+# ====================================================
 {
     JE_RIDICI_RADEK = $0 ~ /^\{\{[^{}]+\}\}$/;
     VYTISKNOUT = 0;
