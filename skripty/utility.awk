@@ -49,6 +49,10 @@ function Zopakovat(text, kolikrat,  vysledek) {
     return vysledek;
 }
 
+function SubstrZprava(text, maxDelka) {
+    return length(text) >= maxDelka ? substr(text, 1 + length(text) - maxDelka) : "";
+}
+
 #
 # PRÁCE SE ZÁSOBNÍKY
 # ============================================================================

@@ -257,14 +257,66 @@ function ZacatekPrikladu(textPrikladu, cislaPoznamek, textyPoznamek,   i, tmp) {
     return "%\n\\begin{priklad}{" textPrikladu "}{" tmp "}{}";
 }
 
+
+# Pomocná funkce pro RadekPrikladu(text).
+# Toto je jednoduchá a rychlá implementace vkládání příkazu {\moznyzlom} pro umožnění zalomení
+# delších řádků mimo mezery. Na vstup má již přeložený text v LaTeXu, takže je třeba
+# k němu přistupovat opatrně.
+function ZalomitRadekPrikladu(text,   c, i, slzav, hrzav, lastzlom) {
+    split("", zlomy);
+    slzav = 0;
+    hrzav = 0;
+    lastzlom = 1;
+
+    for (i = 1; i <= length(text); ++i) {
+        switch (c = substr(text, i, 1)) {
+            # Výčet znaků, za kterými je možno řádek zalomit:
+            case ",":
+            case ";":
+            case "=":
+            case "|":
+                if (!(substr(text, i >= 6 ? i - 5 : 1, 10) ~ / /)) {
+                    if ((slzav == 0 || (slzav == 1 && substr(text, i - 1, 1) == "{" && substr(text, i + 1, 1) == "}")) && hrzav == 0 && i - lastzlom >= 5) {
+                        zlomy[length(zlomy) + 1] = i;
+                        lastzlom = i;
+                    }
+                }
+                continue;
+            case "{":
+                ++slzav;
+                continue;
+            case "}":
+                --slzav;
+                continue;
+            case "[":
+                ++hrzav;
+                continue;
+            case "]":
+                --hrzav;
+                continue;
+            case "\\":
+                ++i;
+                continue;
+            default:
+                continue;
+        }
+    }
+
+    for (i = length(zlomy); i > 0; --i) {
+        text = substr(text, 1, zlomy[i]) "{\\moznyzlom}" substr(text, zlomy[i] + 1);
+    }
+    delete zlomy;
+    return text;
+}
+
+
 function RadekPrikladu(text) {
-    # TODO: Lepší analýza řádku vylučující možné chyby.
-    gsub(/=/, "={\\moznyzlom}", text);
-    return "%\n\\radekprikladu{" text "}";
+#    gsub(/=/, "={\\moznyzlom}", text);
+    return "%\n\\radekprikladu{" ZalomitRadekPrikladu(text) "}";
 }
 
 function KonecPrikladu() {
-    return "\\end{priklad}";
+    return "%\n\\end{priklad}";
 }
 
 function FormatTucne(jeZacatek) {
@@ -284,7 +336,7 @@ function FormatVolitelny(jeZacatek) {
 }
 
 function TriTecky() {
-    return "\\hspace{-0.1em}\\tritecky{}";
+    return "\\textcolor{seda}{\\tritecky}";
 }
 
 function Obrazek(src, alt, rawAlt) {
