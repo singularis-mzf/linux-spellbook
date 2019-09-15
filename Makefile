@@ -26,7 +26,8 @@ SHELL := /bin/sh
 AWK := gawk
 PDFLATEX := pdflatex -halt-on-error
 
-VSECHNY_KAPITOLY := _ukazka docker gawk latex make
+VSECHNY_DODATKY := predmluva
+VSECHNY_KAPITOLY := _ukazka docker gawk latex make obrazky
 SOUBORY_PREKLADU := soubory_prekladu
 VYSTUP_PREKLADU := vystup_prekladu
 
