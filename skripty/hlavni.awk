@@ -347,7 +347,11 @@ function VypsatZahlaviPrikladu(   i, maPoznamky) {
         ShoditFatalniVyjimku("Příklad musí mít alespoň jeden řádek!");
     }
     if (TEXT_PRIKLADU != NULL_STRING) {
-        printf("%s", ZacatekPrikladu(TEXT_PRIKLADU, ppc, ppt));
+        if (TEXT_PRIKLADU != "") {
+            printf("%s", ZacatekPrikladu(++C_PRIKLADU, TEXT_PRIKLADU, ppc, ppt));
+        } else {
+            printf("%s", ZacatekPrikladu(0, "", ppc, ppt));
+        }
         TEXT_PRIKLADU = NULL_STRING;
         delete ppc;
         delete ppt;
@@ -363,6 +367,7 @@ BEGIN {
     C_KAPITOLY = 0;
     C_SEKCE = 0;
     C_PODSEKCE = 0;
+    C_PRIKLADU = 0;
     FATALNI_VYJIMKA = 0;
     TYP_RADKU = "PRAZDNY";
     JE_UVNITR_PRIKLADU = 0;
@@ -457,6 +462,7 @@ TYP_RADKU == "NADPIS" {
         printf("%s", KonecSekce(KAPITOLA, SEKCE));
     if (KAPITOLA != "" && $0 ~ /^# /)
         printf("%s", KonecKapitoly(KAPITOLA, ppcall, pptall));
+    C_PRIKLADU = 0;
     if ($0 ~ /^# /) {
         KAPITOLA = ZpracujZnaky(substr($0, 3));
         SEKCE = "";
@@ -513,7 +519,6 @@ TYP_RADKU == "PRIKLAD" {
         $0 = substr($0, 1, length($0) - 4);
     }
     TEXT_PRIKLADU = FormatovatRadek(substr($0, 4, length($0) - 4));
-#    printf("%s", ZacatekPrikladu(FormatovatRadek($0)));
     next;
 }
 

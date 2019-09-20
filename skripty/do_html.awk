@@ -119,7 +119,7 @@ function KonecSeznamu(uroven) {
     return "</ul>";
 }
 
-function ZacatekPrikladu(textPrikladu, cislaPoznamek, textyPoznamek,   prvni) {
+function ZacatekPrikladu(cisloPrikladu, textPrikladu, cislaPoznamek, textyPoznamek,   prvni) {
     if (!isarray(cislaPoznamek) || !isarray(textyPoznamek)) {
         ShoditFatalniVyjimku("ZacatekPrikladu(): Očekáváno pole!");
     }
@@ -128,7 +128,7 @@ function ZacatekPrikladu(textPrikladu, cislaPoznamek, textyPoznamek,   prvni) {
     }
     vysledek = "<div class=\"priklad\">";
     if (textPrikladu != "") {
-        vysledek = vysledek "<hr><div class=\"zahlavi\">" textPrikladu;
+        vysledek = vysledek "<hr><div class=\"zahlavi\">" cisloPrikladu "&nbsp;" textPrikladu;
         prvni = 1;
         if (length(cislaPoznamek) > 0) {
             vysledek = vysledek "<sup>";

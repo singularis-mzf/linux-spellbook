@@ -249,10 +249,13 @@ function KonecSeznamu(uroven) {
     return "\\end{itemize}";
 }
 
-function ZacatekPrikladu(textPrikladu, cislaPoznamek, textyPoznamek,   i, tmp) {
+function ZacatekPrikladu(cisloPrikladu, textPrikladu, cislaPoznamek, textyPoznamek,   i, tmp) {
     tmp = "";
     for (i = 0; i < length(cislaPoznamek); ++i) {
         tmp = tmp "\\footnote{" textyPoznamek[cislaPoznamek[i]] "}"
+    }
+    if (textPrikladu != "") {
+        textPrikladu = "\\hspace{-0.25em}" cisloPrikladu "~" textPrikladu;
     }
     return "%\n\\begin{priklad}{" textPrikladu "}{" tmp "}{}";
 }

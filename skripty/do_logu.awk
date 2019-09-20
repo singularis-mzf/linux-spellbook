@@ -110,12 +110,12 @@ function KonecSeznamu(uroven) {
     return "KonecSeznamu(" uroven ");\n";;
 }
 
-function ZacatekPrikladu(textPrikladu, cislaPoznamek, textyPoznamek,   vysledek) {
+function ZacatekPrikladu(cisloPrikladu, textPrikladu, cislaPoznamek, textyPoznamek,   vysledek) {
     if (!isarray(cislaPoznamek) || !isarray(textyPoznamek)) {
         ShoditFatalniVyjimku("ZacatekPrikladu(): Očekáváno pole!");
     }
 
-    vysledek = "ZacatekPrikladu(\"" textPrikladu "\", {";
+    vysledek = "ZacatekPrikladu(" cisloPrikladu ", \"" textPrikladu "\", {";
     for (i = 0; i < length(cislaPoznamek); ++i) {
         if (!(i in cislaPoznamek)) {
             ShoditFatalniVyjimku("Vnitřní chyba: v poli cislaPoznamek očekáván index [" i "]!");

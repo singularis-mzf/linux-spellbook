@@ -28,7 +28,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 **\-resize** {*šířka*}<br>
 **\-resize x**{*výška*}
 
-*# vynutit oba rozměry (FORCE) − jediná varianta, která v případě potřeby změní poměr stran obrázku*<br>
+*# vynutit oba rozměry (FORCE) − jediná varianta, která v případě potřeby změní poměr stran obrázku*<br>
 **\-resize** {*šířka*}**x**{*výška*}**\\!**
 
 *# vyplnit (CONTAIN)/a doplnit pozadím na přesný rozměr*<br>
@@ -82,7 +82,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 **convert** {*vstupní-soubor*} [**-define png:compression-level=**{*úroveň-komprese-1-až-9*}] {*výstupní-název*}**.png**<br>
 **convert vstup.jpg -define png:compression-level=9 vystup.png**
 
-*# konvertovat na PNG-8 s optimální paletou*<br>
+*# konvertovat na PNG-8 s optimální paletou*<br>
 ?
 
 *# konvertovat na JPEG (obecně/příklad)*<br>
@@ -122,7 +122,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 **\-delete 0\-\-3,\-1**<br>
 **\-delete** {*první-index-nebo-rozsah*}[**,**{*další-index-nebo-rozsah*}]...
 
-*# vykonat sekvenci příkazů s novým, odděleným seznamem (prázdným/sestaveným z kopií obrázků na indexech 3, 3 a 5 původního seznamu/sestaveným jako kopie původního seznamu/sestaveným jen z posledního obrázku původního seznamu) a ten pak připojit na konec původního seznamu*<br>
+*# vykonat sekvenci příkazů s novým, odděleným seznamem (prázdným/sestaveným z kopií obrázků na indexech 3, 3 a 5 původního seznamu/sestaveným jako kopie původního seznamu/sestaveným jen z posledního obrázku původního seznamu) a ten pak připojit na konec původního seznamu*<br>
 **\\(** {*sekvence příkazů*} **\\)**<br>
 **\\( -clone 3,3,5** {*sekvence příkazů*} **\\)**<br>
 **\\( -clone 0--1** {*sekvence příkazů*} **\\)**<br>
@@ -159,7 +159,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 **\-append**
 
 *# zploštit obrázek*<br>
-*// Vytvořit plátno barvy pozadí („-background“) a postupně na něj překrýt všechny obrázky v seznamu a zpracované obrázky ze seznamu odstranit.*<br>
+*// Vytvořit plátno barvy pozadí („-background“) a postupně na něj překrýt všechny obrázky v seznamu a zpracované obrázky ze seznamu odstranit.*<br>
 **\-flatten**
 
 <!--
@@ -193,7 +193,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 ?
 
 
-### Operace s barvami a průhledností
+### Operace s barvami a průhledností
 *# převést barevný obrázek na černobílý (varianta A/B)*<br>
 **\-colorspace Gray**<br>
 **\-modulate 100,0**
@@ -203,7 +203,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 **\-negate**
 
 *# změnit jas, sytost a odstín*<br>
-*// Hodnoty jsou v rozsahu 0 až 200, kde 100 odpovídá původní hodnotě.*<br>
+*// Hodnoty jsou v rozsahu 0 až 200, kde 100 odpovídá původní hodnotě.*<br>
 **\-modulate** {*jas*}[**,**{*sytost*}[**,**{*odstín*}]]
 
 *# nahradit všechny pixely jednou barvou*<br>
