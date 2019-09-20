@@ -29,6 +29,7 @@ Zpracovat filtry:
 
 
 - Rozlišit parametry na globální, vstupní a výstupní.
+- Popsat vestavěné funkce, viz .
 -->
 # FFmpeg
 
@@ -242,6 +243,10 @@ https://ffmpeg.org/ffmpeg-filters.html#geq
 **[vi][vi] overlay=x=**{*posun-x*}**:y=**{*posun-y*}**:eof_action=pass [vo]**<br>
 **[vi][vi] overlay=x=**{*posun-x*}**:y=**{*posun-y*}**:eof_action=endall [vo]**<br>
 **[vi][vi] overlay=x=**{*posun-x*}**:y=**{*posun-y*}**:eof_action=repeat [vo]**
+
+*# sloučit jeden a druhý videovstup (obecně/)*<br>
+*// Ve výrazu můžete použít hodnoty: sekvenční číslo snímku (N), souřadnice pixelu ((X/SW), (Y/SW)), šířka a výška ((W/SW), (H/SW)), čas v sekundách (T) a především hodnotu složky prvního vstupu (A) a druhého vstupu (B).*<br>
+**[vi][vi] blend=all_expr=**{*výraz*}[**:eof_action=**]{*repeat-endall-nebo-shortest*} **[vo]**
 
 *# opravit perspektivu ze zadaných souřadnic (vLevo, vpRavo, Nahoře, Dole)*<br>
 **[vi] perspective=**{*LNx*}**:**{*LNy*}**:**{*RNx*}**:**{*RNy*}**:**{*LDx*}**:**{*LDy*}**:**{*RDx*}**:**{*RDy*}[**:sense=destination**][**:interpolation=cubic**] **[vo]**

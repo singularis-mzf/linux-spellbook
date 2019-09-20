@@ -193,12 +193,13 @@ https://creativecommons.org/licenses/by-sa/4.0/
 ?
 
 
-### Operace s barvami
+### Operace s barvami a průhledností
 *# převést barevný obrázek na černobílý (varianta A/B)*<br>
 **\-colorspace Gray**<br>
 **\-modulate 100,0**
 
 *# invertovat barvy*<br>
+*// Invertuje kanály R, G a B; kanál A ponechá beze změny.*<br>
 **\-negate**
 
 *# změnit jas, sytost a odstín*<br>
@@ -217,18 +218,17 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 ### Generátory obrázků
 *# jednobarevný obrázek/bílý obrázek/transparentní obrázek/poloprůhledný červený obrázek*<br>
-**\-size** {*šířka*}**x**{*výška*} **xc:#**{*RRGGBB*}[{*AA*}]<br>
+**\-size** {*šířka*}**x**{*výška*} **xc:#**{*barva*}<br>
 **\-size** {*šířka*}**x**{*výška*} **xc:**<br>
 **\-size** {*šířka*}**x**{*výška*} **xc:none**<br>
 **\-size** {*šířka*}**x**{*výška*} **xc:#FF000080**
 
 *# vertikální/kruhový barevný gradient*<br>
-*// Místo specifikace barvy „#RRGGBB“ lze u gradientů použít klíčové slovo „none“, které značí transparentní barvu.*<br>
-**\-size** {*šířka*}**x**{*výška*} **gradient:#**{*RRGGBB*}**-#**{*RRGGBB*}
-**\-size** {*šířka*}**x**{*výška*} **radial-gradient:#**{*RRGGBB*}**-#**{*RRGGBB*}
+**\-size** {*šířka*}**x**{*výška*} **gradient:**{*barva-nahoře*}**-**{*barva-dole*}
+**\-size** {*šířka*}**x**{*výška*} **radial-gradient:**{*barva-středu*}**-**{*barva-okraje*}
 
 *# plazma-gradient (náhodný)*<br>
-**\-size** {*šířka*}**x**{*výška*} **plasma:**[**#**{*RRGGBB*}**-#**{*RRGGBB*}]<br>
+**\-size** {*šířka*}**x**{*výška*} **plasma:**[{*barva-1*}**-**{*barva-2*}]<br>
 **\-size** {*šířka*}**x**{*výška*} **plasma:fractal**
 
 *# obrázek z náhodně vygenerovaných pixelů*<br>
@@ -286,6 +286,7 @@ Jediným zdrojem, který se mi osvědčil, je web „Examples of ImageMagick Usa
 
 ## Tipy a zkušenosti
 * Některé operátory (např. „-crop“ či „-resize“) se chovají výrazně odlišně od toho, co by začátečník očekával.
+* ImageMagick podporuje i typy .pdf, .ps, .eps, .xps, ale je nutno je zapnout v globálním konfiguračním souboru „/etc/ImageMagick-6/policy.xml“: Najděte prvek &lt;policy&gt; s atributem „pattern“ obsahujícím např. PDF a atribut „rights“ změňte z hodnoty **"none"** na hodnotu **"read\|write"**. Účinek změny je okamžitý. Důvodem, proč je zpracování těchto formátů ve výchozím nastavení vypnuto, jsou bezpečnostní díry; podrobný popis na [webové stránce](https://cromwell-intl.com/open-source/pdf-not-authorized.html).
 
 ## Ukázka
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
