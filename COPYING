@@ -62,6 +62,7 @@ License: PD (volné dílo podle německých zákonů)
 Source: https://commons.wikimedia.org/wiki/File:UnderCon_icon.svg
 
 Files: obrazky/favicon.png
+Files: obrazky/logo-knihy-velke.png
 Files: zdroje_obrazku/favicon/*
 Copyright: Larry Ewing <http://www.isc.tamu.edu/~lewing/>
 Copyright: Garrett LaSage <https://github.com/garrett/Tux>
@@ -81,5 +82,9 @@ Source: https://github.com/garrett/Tux (file "tux-large.png")
  The copyright holder of this file allows anyone to use it for any purpose, provided that the copyright holder is properly attributed. Redistribution, derivative work, commercial use, and all other use is permitted. (https://commons.wikimedia.org/wiki/File:Tux.svg)
 
 Files: obrazky/make.png
+Copyright: 2019, Singularis
+License: CC0
+
+Files: konfig.ini
 Copyright: 2019, Singularis
 License: CC0

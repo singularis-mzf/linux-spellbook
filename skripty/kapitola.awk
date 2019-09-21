@@ -25,17 +25,23 @@
 @include "skripty/utility.awk"
 
 BEGIN {
-    if (ENVIRON["IDKAPITOLY"] == "") {
-        ShoditFatalniVyjimku("Vyžadovaná proměnná IDKAPITOLY není nastavena!");
+    if (IDKAPITOLY == "") {
+        ShoditFatalniVyjimku("Vyžadovaná proměnná IDKAPITOLY není nastavena pomocí parametru -v!");
     }
-    if (ENVIRON["NAZEVKAPITOLY"] == "") {
-        ShoditFatalniVyjimku("Vyžadovaná proměnná NAZEVKAPITOLY není nastavena!");
+    if (TELOKAPITOLY == "") {
+        ShoditFatalniVyjimku("Vyžadovaná proměnná TELOKAPITOLY není nastavena pomocí parametru -v!");
     }
-    if (ENVIRON["TELOKAPITOLY"] == "") {
-        ShoditFatalniVyjimku("Vyžadovaná proměnná TELOKAPITOLY není nastavena!");
+    prikaz = "egrep '^[^\t]*\t" IDKAPITOLY "\t' soubory_prekladu/fragmenty.tsv";
+    prikaz | getline zaznam;
+    close(prikaz);
+
+    if (zaznam == "") {
+        ShoditFatalniVyjimku("Nepodařilo se najít záznam o kapitole či dodatku " IDKAPITOLY ".md pomocí příkazu: {" prikaz "}!");
     }
+    split(zaznam, zaznam2, "\t");
+    NAZEVKAPITOLY = zaznam2[3];
 }
-# 
+#
 {
     JE_RIDICI_RADEK = $0 ~ /^\{\{[^{}]+\}\}$/;
     VYTISKNOUT = 0;
@@ -45,13 +51,13 @@ BEGIN {
     VYTISKNOUT =  !JE_RIDICI_RADEK;
     switch ($0) {
         case "{{TĚLO KAPITOLY}}":
-            system("cat '" ENVIRON["TELOKAPITOLY"] "'");
+            system("cat '" TELOKAPITOLY "'");
             break;
     }
 }
 
 VYTISKNOUT {
-    gsub(/\{\{NÁZEV KAPITOLY\}\}/, ENVIRON["NAZEVKAPITOLY"], $0);
+    gsub(/\{\{NÁZEV KAPITOLY\}\}/, NAZEVKAPITOLY, $0);
     print $0;
 }
 

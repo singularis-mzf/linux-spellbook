@@ -24,41 +24,35 @@
 
 @include "skripty/utility.awk"
 
-function ExistujeKapitola(idkapitoly) {
-    return system("test -r '" VstupniSoubor(idkapitoly) "'") == 0;
-}
-
 function VstupniSoubor(idkapitoly) {
     return VSTUPPREFIX idkapitoly VSTUPSUFFIX;
 }
 
 BEGIN {
-    if (ENVIRON["SEZNAMKAPITOL"] == "") {
-        ShoditFatalniVyjimku("Vyžadovaná proměnná prostředí SEZNAMKAPITOL není nastavena!");
+    FRAGMENTY_TSV = "soubory_prekladu/fragmenty.tsv";
+    if (system("test -r " FRAGMENTY_TSV) != 0) {
+        ShoditFatalniVyjimku("Nemohu číst ze souboru " FRAGMENTY_TSV "!");
     }
-    if (ENVIRON["VSTUPPREFIX"] == "") {
-        ShoditFatalniVyjimku("Vyžadovaná proměnná prostředí VSTUPPREFIX není nastavena!");
+    if (VSTUPPREFIX == "") {
+        ShoditFatalniVyjimku("Vyžadovaná proměnná VSTUPPREFIX není nastavena pomocí parametru -v!");
     }
-    if (ENVIRON["IDFORMATU"] == "") {
-        ShoditFatalniVyjimku("Vyžadovaná proměnná prostředí IDFORMATU není nastavena!");
+    if (IDFORMATU == "") {
+        ShoditFatalniVyjimku("Vyžadovaná proměnná IDFORMATU není nastavena pomocí parametru -v!");
     }
-    # ENVIRON["VSTUPSUFFIX"] je nepovinná
+    # Proměnná VSTUPSUFFIX je nepovinná
 
-    VSTUPPREFIX = ENVIRON["VSTUPPREFIX"];
-    VSTUPSUFFIX = ENVIRON["VSTUPSUFFIX"];
-    IDFORMATU = ENVIRON["IDFORMATU"];
     split("", KAPITOLY);
 
-    while ((getline < (ENVIRON["SEZNAMKAPITOL"])) == 1) {
-        if (!($0 ~ /^(#| *$)/)) {
-            if (!ExistujeKapitola($0)) {
-                ShoditFatalniVyjimku("Kapitola s id \"" $0 "\" neexistuje, není dostupná nebo nebyla řádně přeložena!");
-            }
-            KAPITOLY[length(KAPITOLY) + 1] = $0;
-        }
-    }
+#    while ((getline < (ENVIRON["SEZNAMKAPITOL"])) == 1) {
+#        if (!($0 ~ /^(#| *$)/)) {
+#            if (!ExistujeKapitola($0)) {
+#                ShoditFatalniVyjimku("Kapitola s id \"" $0 "\" neexistuje, není dostupná nebo nebyla řádně přeložena!");
+#            }
+#            KAPITOLY[length(KAPITOLY) + 1] = $0;
+#        }
+#    }
 
-    close(ENVIRON["SEZNAMKAPITOL"]);
+#    close(ENVIRON["SEZNAMKAPITOL"]);
 
     STAV_PODMINENENO_PREKLADU = 0;
     # 0 - mimo podmíněný blok
@@ -103,8 +97,12 @@ STAV_PODMINENENO_PREKLADU == 2 {
     VYTISKNOUT =  !JE_RIDICI_RADEK;
     if ($0 == "{{KONEC KAPITOLY}}") {
         prikaz = "cat";
-        for (i = 1; i <= length(KAPITOLY); ++i) {
-            prikaz = prikaz " " VstupniSoubor(KAPITOLY[i]);
+        while (getline < FRAGMENTY_TSV) {
+            split($0, sloupce, "\t");
+            prikaz = prikaz " " VSTUPPREFIX sloupce[2] VSTUPSUFFIX;
+        }
+        if (prikaz == "cat") {
+            ShoditFatalniVyjimku("Žádné kapitoly ani dodatky ke zpracování!");
         }
         vysledek = system(prikaz);
         if (vysledek != 0) {

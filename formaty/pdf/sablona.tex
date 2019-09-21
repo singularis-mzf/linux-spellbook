@@ -75,6 +75,8 @@
 % {xcolor}:
 \definecolor{seda}{gray}{0.5}
 
+\newenvironment*{blok}{}{}
+
 % \begin{priklad}{#2 = Záhlaví příkladu}{#3 = \footnote{}\footnote{}...}
 %   \radekprikladu{text-řádku}
 %   \radekprikladu{text-řádku}
@@ -91,11 +93,6 @@
             \setlength{\labelwidth}{0pt}%
             \setlength{\labelsep}{\leftmargin}%
         }\raggedright\item\relax%
-        %%\makebox[0pt][l]{\rule[2ex]{5cm}{0.5pt}}%
-        %\vspace*{-1.5ex}\rule[-3pt]{5cm}{0.5pt}\\[0pt]%
-        %
-        %\setlength{\unitlength}{1ex}%
-        %\begin{picture}(0,0)\put(0,2){\line(1,0){20}}\end{picture}%
         {#2}#3%
     \end{list}\vspace{-3ex}}%
     \budepoprve%
@@ -132,8 +129,54 @@
 
 \begin{document}%
 %
+% TITULNÍ STRANA
+%
+\pagestyle{empty}%
+\vspace*{0.05\textheight}%
+\begin{center}\fontfamily{cmss}\selectfont\bfseries\Huge\scalebox{1.5}{LINUX}\\[0.01\textheight]\Large Kniha kouzel\end{center}%
+\vspace{1cm}%
+\begin{blok}%
+    \setlength{\unitlength}{0.5\textwidth}%
+    \begin{picture}(2,1.4)%
+        \put(0,0){\includegraphics[width=0.5\textwidth]{../../obrazky/logo-knihy-velke.png}}%
+        \put(1,1.4){\parbox[t][0.7\textwidth][c]{0.5\textwidth}{\centering\itshape%
+            Praktická sbírka řešených příkladů\\[0.02\textwidth]%
+            Veškerá moc příkazové řádky/příkazového řádku přehledně,
+            pro~začátečníky i pokročilé}}%
+    \end{picture}%
+\end{blok}%
+\par\vfill%
+\begin{center}\textcopyright\,2019 Singularis a ostatní přispěvatelé\end{center}%
+\clearpage%
+%
+% DRUHÁ STRANA
+%
+\pagestyle{empty}%
+{\noindent\Huge Linux --- Kniha kouzel\par}%
+\vspace{2ex}\noindent%
+\textcopyright~2019 Singularis a ostatní přispěvatelé%
+
+\vspace{2ex}\noindent%
+Toto dílo \quotedblbase Linux: Kniha kouzel\textquotedblleft{} podléhá licenci
+Creative Commons Attribution-ShareAlike 4.0 International. Úplný text licence
+je přiložen. Pro jeho zobrazení na počítači navštivte:
+\begin{center}\fontfamily{qcr}\selectfont%
+http://creativecommons.org/licenses/by-sa/4.0/
+\end{center}
+
+\noindent\textbf{Použitá díla jiných autorů:}
+\begin{itemize}%
+\item obrazky/ve-vystavbe.png \textcopyright~2010, Sarang (volné dílo podle německých zákonů)
+\item tučňák Tux \textcopyright~Larry Ewing; \textcopyright~Garrett LaSage (licence CC0, upraveno)
+\end{itemize}%
+\vfill%
+\clearpage%
+%
 % Nastavit styl záhlaví a zápatí
 \pagestyle{normalni}%
+% Vysázet obsah
+\renewcommand*{\contentsname}{OBSAH}%
+\tableofcontents%
 %
 % Nastavit znak pro „dělení slov“ v kódu na zpětné lomítko
 {%
@@ -146,6 +189,7 @@
     \fontseries{bx}\selectfont\hyphenchar\font=`\\%
 }%
 %
+\clearpage%
 \raggedbottom%
 {{ZAČÁTEK KAPITOLY}}
 {{TĚLO KAPITOLY}}
