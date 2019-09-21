@@ -23,16 +23,16 @@
 % Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 %
 {{ZAČÁTEK KNIHY}}
-\documentclass[10pt,draft]{book}
+\documentclass[10pt,final]{book}
 % 1. skupina balíčků:
 \usepackage[utf8]{inputenc}
 \usepackage[czech]{babel}
 %
 {{POKUD JE FORMÁT pdf-a4}}
-\usepackage[dvipdfm,a4paper,inner=1.5cm,outer=1cm,top=1.5cm,bottom=1.5cm]{geometry} % + showframe pro ladění
+\usepackage[pdftex,a4paper,inner=1.5cm,outer=1cm,top=1.5cm,bottom=1.5cm]{geometry} % + showframe pro ladění
 {{KONEC POKUD}}
 {{POKUD JE FORMÁT pdf-a5}}
-\usepackage[dvipdfm,a5paper,inner=1.5cm,outer=1cm,top=1.5cm,bottom=1.5cm]{geometry} % + showframe pro ladění
+\usepackage[pdftex,a5paper,inner=1.5cm,outer=1cm,top=1.5cm,bottom=1.5cm]{geometry} % + showframe pro ladění
 {{KONEC POKUD}}
 
 %\usepackage[B1,LY1,T1]{fontenc}
@@ -40,16 +40,17 @@
 
 % 2. skupina balíčků:
 \usepackage{textcomp}       % musí být načtený přednostně; vyžadovaný balíčkem {gensymb}
+\usepackage[pdftex]{xcolor} % barevné písmo
 
 % 3. skupina balíčků:
 \usepackage[arrows]{boisik} % jen kvůli znaku $\carriagereturn$ (pokud existuje stabilní náhrada, bylo by lepší ji použít)
 \usepackage{fancyhdr}       % formátování záhlaví a zápatí
 \usepackage[bottom]{footmisc}% aby se poznámky pod čarou správně umístily
 \usepackage{gensymb}        % symboly jako např. \degree
+\usepackage[pdftex]{graphicx}% vkládání obrázků
 \usepackage{ifthen}         % příkaz \ifthenelse a související konstrukce
 \usepackage{titlesec}       % formátování nadpisů kapitol
 \usepackage{verbatim}       % zejm. prostředí {comment}, ale také {verbatim}
-\usepackage{xcolor}         % barevné písmo
 
 % {fancyhdr}:
 \fancypagestyle{normalni}{%

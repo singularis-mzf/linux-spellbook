@@ -161,8 +161,8 @@ function TriTecky() {
     return "TriTecky[]";
 }
 
-function Obrazek(src, alt, rawAlt) {
-    return "Obrazek(src=" src ",alt=" alt ",rawAlt=" rawAlt ");\n";
+function Obrazek(src, alt, rawSrc, rawAlt) {
+    return "Obrazek(src=" src ",alt=" alt ",rawSrc=" rawSrc ",rawAlt=" rawAlt ");\n";
 }
 
 function ZnackaVeVystavbe() {

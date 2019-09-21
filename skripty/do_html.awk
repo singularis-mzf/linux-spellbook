@@ -176,7 +176,7 @@ function TriTecky() {
     return "<span class=\"tritecky\">...</span>";
 }
 
-function Obrazek(src, alt, rawAlt) {
+function Obrazek(src, alt, rawSrc, rawAlt) {
     if (src ~ /^\.\.\/obrazky\//) {
         src = substr(src, 4);
     }

@@ -342,8 +342,13 @@ function TriTecky() {
     return "\\textcolor{seda}{\\tritecky}";
 }
 
-function Obrazek(src, alt, rawAlt) {
-    return "(obrázek -- zatím není podporován)";
+function Obrazek(src, alt, rawSrc, rawAlt,   sirka) {
+    src = (rawSrc ~ /^\.\.\// ? "../" rawSrc : rawSrc);
+    sirka = PrecistKonfig("Obrázky", rawSrc);
+    if (sirka != "") {
+        sirka = "[width=" sirka "]";
+    }
+    return "\\begin{center}\\includegraphics" sirka "{" src "}\\end{center}";
 }
 
 function ZnackaVeVystavbe() {

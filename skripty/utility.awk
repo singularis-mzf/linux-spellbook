@@ -53,6 +53,18 @@ function SubstrZprava(text, maxDelka) {
     return length(text) >= maxDelka ? substr(text, 1 + length(text) - maxDelka) : "";
 }
 
+function PrecistKonfig(sekce, klic, vychoziHodnota,   prikaz, vysledek) {
+    if (klic == "") {
+        ShoditFatalniVyjimku("Nemohu číst prázdný klíč!");
+    }
+    prikaz = "bash skripty/precist_konfig.sh \"" sekce "\" \"" klic "\" \"" vychoziHodnota "\" < konfig.ini";
+    vysledek = "";
+    prikaz | getline vysledek;
+    close(prikaz);
+    print "DEBUG: precteno [" sekce "]/\"" klic "\" = \"" vysledek "\"." | "cat >>~/ram/debug.txt";
+    return vysledek;
+}
+
 #
 # PRÁCE SE ZÁSOBNÍKY
 # ============================================================================

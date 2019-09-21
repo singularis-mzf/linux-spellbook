@@ -51,6 +51,12 @@ Položka seznamu může pokračovat na dalším řádku a obsahovat text **tuč
 *pro samostatné ukázky kódu je také podporován příklad bez záhlaví*<br>
 *takový příklad nemůže mít poznámky pod čarou*
 
+## Obrázky
+
+Obrázky je dovoleno vkládat pouze jako samostatné odstavce:
+
+![alternativní text](../obrazky/ve-vystavbe.png)
+
 ## Zvláštní znaky
 
 Lze zadat nejrůznější zvláštní znaky.

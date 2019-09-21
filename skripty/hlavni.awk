@@ -488,7 +488,7 @@ TYP_RADKU == "OBRAZEK" {
     match($0, /\]\(/);
     alt = substr($0, 3, RSTART - 3);
     src = substr($0, RSTART + 2, length($0) - RSTART - 2);
-    printf("%s", Obrazek(ZpracujZnaky(src), ZpracujZnaky(alt), alt));
+    printf("%s", Obrazek(ZpracujZnaky(src), ZpracujZnaky(alt), src, alt));
     next;
 }
 
