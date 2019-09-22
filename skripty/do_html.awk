@@ -148,8 +148,8 @@ function ZacatekPrikladu(cisloPrikladu, textPrikladu, cislaPoznamek, textyPoznam
     return vysledek;
 }
 
-function RadekPrikladu(text) {
-    return "<div class=\"radekprikladu\">" text "</div>\n";
+function RadekPrikladu(text, jeAkce) {
+    return "<div class=\"radekprikladu" (jeAkce ? " akce" : "") "\">" text "</div>\n";
 }
 
 function KonecPrikladu() {

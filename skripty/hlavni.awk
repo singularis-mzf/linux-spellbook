@@ -546,7 +546,12 @@ TYP_RADKU == "RADEK_PRIKLADU" {
         $0 = substr($0, 1, length($0) - 4);
     }
     VypsatZahlaviPrikladu();
-    printf("%s", RadekPrikladu(FormatovatRadek($0)));
+    jeAkce = (match($0, /^!: ?/) != 0);
+    if (!jeAkce) {
+        printf("%s", RadekPrikladu(FormatovatRadek($0), 0));
+    } else {
+        printf("%s", RadekPrikladu(FormatovatRadek(substr($0, RLENGTH + 1)), 1));
+    }
     next;
 }
 

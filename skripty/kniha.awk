@@ -42,18 +42,6 @@ BEGIN {
     # Proměnná VSTUPSUFFIX je nepovinná
 
     split("", KAPITOLY);
-
-#    while ((getline < (ENVIRON["SEZNAMKAPITOL"])) == 1) {
-#        if (!($0 ~ /^(#| *$)/)) {
-#            if (!ExistujeKapitola($0)) {
-#                ShoditFatalniVyjimku("Kapitola s id \"" $0 "\" neexistuje, není dostupná nebo nebyla řádně přeložena!");
-#            }
-#            KAPITOLY[length(KAPITOLY) + 1] = $0;
-#        }
-#    }
-
-#    close(ENVIRON["SEZNAMKAPITOL"]);
-
     STAV_PODMINENENO_PREKLADU = 0;
     # 0 - mimo podmíněný blok
     # 1 - v podmíněném bloku, ale tiskne se
@@ -67,6 +55,14 @@ BEGIN {
         ShoditFatalniVyjimku("Chyba syntaxe: {{POKUD JE FORMÁT ...}} bez ukončení předchozího podmíněného bloku!");
     }
     STAV_PODMINENENO_PREKLADU = (substr($0, 19, length($0) - 20) == IDFORMATU) ? 1 : 2;
+}
+
+# správně zpracovat neznámé direktivy „{{POKUD}}“
+/^\{\{POKUD .*\}\}$/ {
+    if (STAV_PODMINENENO_PREKLADU == 0) {
+        STAV_PODMINENENO_PREKLADU = 1;
+        next;
+    }
 }
 
 /^\{\{KONEC POKUD\}\}$/ {

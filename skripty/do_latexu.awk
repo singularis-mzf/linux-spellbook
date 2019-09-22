@@ -313,9 +313,9 @@ function ZalomitRadekPrikladu(text,   c, i, slzav, hrzav, lastzlom) {
 }
 
 
-function RadekPrikladu(text) {
+function RadekPrikladu(text, jeAkce) {
 #    gsub(/=/, "={\\moznyzlom}", text);
-    return "%\n\\radekprikladu{" ZalomitRadekPrikladu(text) "}";
+    return "%\n\\" (jeAkce ? "akceprikladu" : "radekprikladu") "{" ZalomitRadekPrikladu(text) "}";
 }
 
 function KonecPrikladu() {
@@ -343,7 +343,7 @@ function TriTecky() {
 }
 
 function Obrazek(src, alt, rawSrc, rawAlt,   sirka) {
-    src = (rawSrc ~ /^\.\.\// ? "../" rawSrc : rawSrc);
+    src = (rawSrc ~ /^\.\.\// ? "../pdf-spolecne/_" substr(rawSrc, 4) : rawSrc);
     sirka = PrecistKonfig("Obrázky", rawSrc);
     if (sirka != "") {
         sirka = "[width=" sirka "]";

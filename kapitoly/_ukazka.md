@@ -45,7 +45,8 @@ Položka seznamu může pokračovat na dalším řádku a obsahovat text **tuč
 **<tab>řádek začínající tabulátorem**<br>
 **<tab><tab>a řádek začínající dvěma tabulátory**<br>
 **&nbsp;řádek odsazený jednou mezerou**<br>
-**&nbsp;&nbsp;..dvěma mezerami**
+**&nbsp;&nbsp;..dvěma mezerami**<br>
+!: Akce (tzn. popis, co udělat − musí být na jednom řádku).
 
 *# *<br>
 *pro samostatné ukázky kódu je také podporován příklad bez záhlaví*<br>

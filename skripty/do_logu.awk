@@ -133,8 +133,8 @@ function ZacatekPrikladu(cisloPrikladu, textPrikladu, cislaPoznamek, textyPoznam
     return vysledek;
 }
 
-function RadekPrikladu(text) {
-    return "    RadekPrikladu(\"" text "\")\n";
+function RadekPrikladu(text, jeAkce) {
+    return "    RadekPrikladu(\"" text "\", jeAkce=" (jeAkce ? "ANO" : "NE") ")\n";
 }
 
 function KonecPrikladu() {
