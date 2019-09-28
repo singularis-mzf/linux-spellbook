@@ -168,6 +168,8 @@ function ZpracujZnak(znak) {
             return "\\textendash{}";
         case " ":
             return "~";
+        case "×":
+            return "\\ensuremath{\\times}";
 # speciality
         case "⫽":
             return "//";

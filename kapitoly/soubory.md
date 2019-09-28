@@ -57,7 +57,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 *# vypsat ty ze souborů, které neobsahují řádek s podřetězcem vyhovujícím danému regulárnímu výrazu*<br>
 **grep -L** [**-e**]  **'**{*regulární-výraz*}**'** {*soubor*}...
 
-*# seřadit řádky souboru**<br>
+*# seřadit řádky souboru*<br>
 **sort** [{*soubor*}]...<br>
 **LC_ALL=C sort** [{*soubor*}]...
 
@@ -93,7 +93,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 **split -d -a** {*počet-číslic*} **-b** {*velikost-dílu*} [**--additional-suffix='**{*suffix-výstupních-souborů*}**'**] {*vstupní-soubor*} {*prefix-výstupních-souborů*}
 
 *# zapsat vstup do více souborů*<br>
-**tee** [**-a**] {*soubor*}... [**>/dev/null**]
+**tee** [**-a**] {*soubor*}... [**&gt;/dev/null**]
 
 *# zakódovat vstup algoritmem UUENCODE*<br>
 ?

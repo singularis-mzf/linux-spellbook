@@ -36,7 +36,8 @@ function ZpracujZnak(znak) {
             return "&amp;";
         case "\"":
             return "&quot;";
-
+        case "×":
+            return "&times;";
         default:
             return znak;
     }

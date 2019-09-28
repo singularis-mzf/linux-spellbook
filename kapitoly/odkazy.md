@@ -63,16 +63,28 @@ https://creativecommons.org/licenses/by-sa/4.0/
 ### Kopírování
 
 *# kopírovat: zachovat symbolické odkazy doslovně*<br>
+?
+
 *# kopírovat: opravit symbolické odkazy (zachovat jejich smysl)*<br>
+?
+
 *# kopírovat: následovat symbolické odkazy (chovat se, jako by byly pevné)*<br>
+?
+
 *# kopírovat: vynechat symbolické odkazy*<br>
+?
+
 *# kopírovat: symbolické odkazy nahradit prázdnými soubory*<br>
+?
 
 *# kopírovat adresáře; na soubory místo toho vytvořit v cíli pevné odkazy*<br>
+?
+
 *# kopírovat adresářovou strukturu bez souborů*<br>
+?
 
 *# najít duplicitní soubory v adresářové struktuře a sloučit je pomocí pevných odkazů*<br>
-X
+?
 
 ## Parametry příkazů
 ![ve výstavbě](../obrazky/ve-vystavbe.png)

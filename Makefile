@@ -28,7 +28,7 @@ CONVERT := convert
 PDFLATEX := pdflatex -halt-on-error
 
 VSECHNY_DODATKY := predmluva test
-VSECHNY_KAPITOLY := _ukazka docker gawk latex make obrazky
+VSECHNY_KAPITOLY := _ukazka docker ffmpeg firefox gawk git hledani-souboru latex make markdown obrazky odkazy ostatni soubory
 OBRAZKY := logo-knihy-velke.png make.png ve-vystavbe.png
 
 SOUBORY_PREKLADU := soubory_prekladu

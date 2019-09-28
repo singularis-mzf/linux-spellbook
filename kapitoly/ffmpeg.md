@@ -63,7 +63,7 @@ Zpracovat filtry:
 *# zrychlení 5×*<br>
 **[vi] setpts=0.2\*PTS [vo] ; [ai] atempo=2.0,atempo=2.0,atempo=1.25 [ao]**
 
-*# zrychlení 16×<br>
+*# zrychlení 16×*<br>
 **[vi] setpts=0.0625\*PTS [vo] ; [ai] atempo=2.0,atempo=2.0,atempo=2.0,atempo=2.0 [ao]**
 
 *# zpomalení 2×*<br>
@@ -152,7 +152,7 @@ Barvy se zadávají ve formátu AABBGGRR, kde AA=FF je úplná průhlednost a A
 *# zakrýt/odstranit logo nebo jiný rušivý element z obrazu*<br>
 **[vi] delogo=x=**{*posun-x-zleva*}**:y=**{*posun-y-shora*}**:w=**{*šířka*}**:h=**{*výška*} **[vo]**
 
-*# vykreslit do obrazu obdelník**<br>
+*# vykreslit do obrazu obdelník*<br>
 *// invert=invertující rámeček; fill=vyplněný obdelník*<br>
 **[vi] drawbox=**{*posun-x-zleva*}**:**{*posun-y-shora*}**:**{*šířka*}**:**{*výška*}**:**{*barva-nebo-invert*}[**@**{*krytí-0-až-1*}][**:**{*tloušťka-nebo-fill*}]
 
@@ -168,7 +168,8 @@ Barvy se zadávají ve formátu AABBGGRR, kde AA=FF je úplná průhlednost a A
 [**:eval=frame**] **[vo]**
 
 *# vložit roztmívačku/zatmívačku*<br>
-*// všechny snímky před začátkem roztmívačky a za koncem zatmívačky budou nastaveny na uvedenou barvu* <!--
+*// všechny snímky před začátkem roztmívačky a za koncem zatmívačky budou nastaveny na uvedenou barvu*
+<!--
 [ ] OVĚŘIT!
 -->
 **[vi] fade=t=in:st=**{*začátek*}**:d=**{*trvání*}[**:c=**{*barva*}][**:alpha=1**] **[vo]**<br>
@@ -252,7 +253,7 @@ https://ffmpeg.org/ffmpeg-filters.html#geq
 **[vi] perspective=**{*LNx*}**:**{*LNy*}**:**{*RNx*}**:**{*RNy*}**:**{*LDx*}**:**{*LDy*}**:**{*RDx*}**:**{*RDy*}[**:sense=destination**][**:interpolation=cubic**] **[vo]**
 
 *# prohazovat a zahazovat snímky podle zadaného klíče*<br>
-*// Filtr načte do vstupního bufferu tolik snímků ze vstupu, kolik jste zadali indexů. Následně na výstup vybírá snímky z bufferu podle indexů, které jste uvedli. Indexy se mohou opakovat a lze uvést speciální index -1, který způsobí vynechání snímku na výstupu (zahození).**<br>
+*// Filtr načte do vstupního bufferu tolik snímků ze vstupu, kolik jste zadali indexů. Následně na výstup vybírá snímky z bufferu podle indexů, které jste uvedli. Indexy se mohou opakovat a lze uvést speciální index -1, který způsobí vynechání snímku na výstupu (zahození).*<br>
 **[vi] shuffleframes=**{*indexy dělené mezerami*} **[vo]**
 
 *# náhodně prohazovat snímky v čase (snímky se do bufferu vkládají sekvenčně a vybírají v náhodném pořadí)*<br>
@@ -265,7 +266,7 @@ https://ffmpeg.org/ffmpeg-filters.html#geq
 
 *# zneviditelnit předmět na určité pozici*<br>
 *// Mapa by měla mít stejný rozměr jako video a musí obsahovat bílé pixely na pozicích, kde je na videu předmět k odstranění, a černé pixely na místech, která se nemají změnit.*<br>
-**[vi] removelogo=**{*obrázek-s-mapou.png*} [vo]**
+**[vi] removelogo=**{*obrázek-s-mapou.png*} **[vo]**
 
 *# aplikovat na obraz Sobelův operátor detekce hran*<br>
 **[vi] sobel [vo]**

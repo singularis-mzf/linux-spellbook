@@ -184,5 +184,6 @@ Lze zadat nejrůznější zvláštní znaky.
 * ý, Ý
 * ž, Ž
 * −
+* ×
 * nezlomitelná mezera: "&nbsp;"
 * české uvozovky: „“
