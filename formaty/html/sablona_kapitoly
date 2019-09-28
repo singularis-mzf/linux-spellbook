@@ -36,6 +36,7 @@
 <!doctype html>
 <html lang="cs">
 <head profile="http://www.w3.org/2005/10/profile">
+<meta charset="UTF-8">
 <title>{{NÁZEV KAPITOLY}} − Linux: Kniha kouzel</title>
 <link rel="stylesheet" type="text/css" href="lkk.css">
 <link rel="icon" type="image/png" href="obrazky/favicon.png">

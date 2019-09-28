@@ -82,9 +82,14 @@ Source: https://github.com/garrett/Tux (file "tux-large.png")
  The copyright holder of this file allows anyone to use it for any purpose, provided that the copyright holder is properly attributed. Redistribution, derivative work, commercial use, and all other use is permitted. (https://commons.wikimedia.org/wiki/File:Tux.svg)
 
 Files: obrazky/make.png
+Files: zdroje_obrazku/tab.png
 Copyright: 2019, Singularis
 License: CC0
 
 Files: konfig.ini
 Copyright: 2019, Singularis
 License: CC0
+
+Files: zdroje_obrazku/vmezera.png
+License: PD
+ Public domain, because there is not originality in this file and it's nor photography nor computer program.

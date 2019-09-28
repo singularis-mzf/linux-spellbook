@@ -43,10 +43,26 @@ Položka seznamu může pokračovat na dalším řádku a obsahovat text **tuč
 *// druhou*<br>
 *// třetí poznámku pod čarou*<br>
 **<tab>řádek začínající tabulátorem**<br>
-**<tab><tab>a řádek začínající dvěma tabulátory**<br>
-**&nbsp;řádek odsazený jednou mezerou**<br>
-**&nbsp;&nbsp;..dvěma mezerami**<br>
-!: Akce (tzn. popis, co udělat − musí být na jednom řádku).
+**<tab8><tab8>a řádek začínající dvěma tabulátory**<br>
+!: Akce (tzn. popis, co udělat − musí být na jednom řádku).<br>
+**&blank;řádek odsazený jednou mezerou**<br>
+**&blank;&blank;..dvěma mezerami**<br>
+**&nbsp;řádek odsazený jednou nezlomitelnou mezerou**<br>
+**&nbsp;&nbsp;řádek odsazený dvěma nezlomitelnými mezerami**
+<!--
+Poznámka: ve Firefoxu se nezlomitelné mezery zkopírují do schránky jako obyčejné mezery.
+-->
+
+*# různé šířky tabulátoru*<br>
+**<tab8>8**<br>
+**0<tab7>7**<br>
+**01<tab6>6**<br>
+**012<tab5>5**<br>
+**0123<tab4>4**<br>
+**01234<tab3>3**<br>
+**012345<tab2>2**<br>
+**0123456<tab1>1**<br>
+**012345670**
 
 *# *<br>
 *pro samostatné ukázky kódu je také podporován příklad bez záhlaví*<br>
@@ -73,7 +89,7 @@ Lze zadat nejrůznější zvláštní znaky.
 
 ## Podporované znaky
 
-* ( ) (ASCII 0x20)
+* mezera ( ) (ASCII 0x20) a zvýrazněná mezera &amp;blank; (&blank;, lze zadat i přímo znakem:␣; lze zadat i opakovaně:␣␣␣␣)
 * ! (ASCII 0x21)
 * " (ASCII 0x22)
 * \# (ASCII 0x23)
@@ -89,16 +105,7 @@ Lze zadat nejrůznější zvláštní znaky.
 * \- (ASCII 0x2d)
 * . (ASCII 0x2e)
 * / (ASCII 0x2f)
-* 0 (ASCII 0x30)
-* 1 (ASCII 0x31)
-* 2 (ASCII 0x32)
-* 3 (ASCII 0x33)
-* 4 (ASCII 0x34)
-* 5 (ASCII 0x35)
-* 6 (ASCII 0x36)
-* 7 (ASCII 0x37)
-* 8 (ASCII 0x38)
-* 9 (ASCII 0x39)
+* 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 (ASCII 0x30 až 0x39)
 * \: (ASCII 0x3a)
 * ; (ASCII 0x3b)
 * &lt; (ASCII 0x3c)
@@ -106,64 +113,14 @@ Lze zadat nejrůznější zvláštní znaky.
 * &gt; (ASCII 0x3e)
 * ? (ASCII 0x3f)
 * @ (ASCII 0x40)
-* A (ASCII 0x41)
-* B (ASCII 0x42)
-* C (ASCII 0x43)
-* D (ASCII 0x44)
-* E (ASCII 0x45)
-* F (ASCII 0x46)
-* G (ASCII 0x47)
-* H (ASCII 0x48)
-* I (ASCII 0x49)
-* J (ASCII 0x4a)
-* K (ASCII 0x4b)
-* L (ASCII 0x4c)
-* M (ASCII 0x4d)
-* N (ASCII 0x4e)
-* O (ASCII 0x4f)
-* P (ASCII 0x50)
-* Q (ASCII 0x51)
-* R (ASCII 0x52)
-* S (ASCII 0x53)
-* T (ASCII 0x54)
-* U (ASCII 0x55)
-* V (ASCII 0x56)
-* W (ASCII 0x57)
-* X (ASCII 0x58)
-* Y (ASCII 0x59)
-* Z (ASCII 0x5a)
+* A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z (ASCII 0x41 až 0x5a)
 * [ (ASCII 0x5b)
 * \\ (ASCII 0x5c)
 * ] (ASCII 0x5d)
 * \^ (ASCII 0x5e)
 * \_ (ASCII 0x5f)
 * \` (ASCII 0x60)
-* a (ASCII 0x61)
-* b (ASCII 0x62)
-* c (ASCII 0x63)
-* d (ASCII 0x64)
-* e (ASCII 0x65)
-* f (ASCII 0x66)
-* g (ASCII 0x67)
-* h (ASCII 0x68)
-* i (ASCII 0x69)
-* j (ASCII 0x6a)
-* k (ASCII 0x6b)
-* l (ASCII 0x6c)
-* m (ASCII 0x6d)
-* n (ASCII 0x6e)
-* o (ASCII 0x6f)
-* p (ASCII 0x70)
-* q (ASCII 0x71)
-* r (ASCII 0x72)
-* s (ASCII 0x73)
-* t (ASCII 0x74)
-* u (ASCII 0x75)
-* v (ASCII 0x76)
-* w (ASCII 0x77)
-* x (ASCII 0x78)
-* y (ASCII 0x79)
-* z (ASCII 0x7a)
+* a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z (ASCII 0x61 až 0x7a)
 * { (ASCII 0x7b)
 * \| (ASCII 0x7c)
 * } (ASCII 0x7d)
@@ -185,5 +142,6 @@ Lze zadat nejrůznější zvláštní znaky.
 * ž, Ž
 * −
 * ×
+* °
 * nezlomitelná mezera: "&nbsp;"
 * české uvozovky: „“

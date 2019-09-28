@@ -38,6 +38,8 @@ function ZpracujZnak(znak) {
             return "&quot;";
         case "×":
             return "&times;";
+        case "␣":
+            return "<span class=\"viditelnamezera\">&nbsp;</span>";
         default:
             return znak;
     }
@@ -49,6 +51,8 @@ function ZpracujBilyZnak(znak, opakovany) {
 }
 
 function Tabulator(delka,  i, vysledek) {
+    return "<span class=\"tab\" style=\"width:" delka "ch\">&#9;</span>";
+# old:
     vysledek = "<span class=\"tab\">»";
     for (i = 1; i < delka; ++i) {
         vysledek = vysledek "&nbsp;";

@@ -174,6 +174,8 @@ function ZpracujZnak(znak) {
         case "⫽":
             return "//";
             # možná použít \sslash z balíčku {stix}
+        case "␣":
+            return "\\textvisiblespace{}";
 
         default:
             ShoditFatalniVyjimku("Nalezen nepodporovaný znak: '" znak "'");

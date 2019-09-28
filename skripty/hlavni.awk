@@ -36,6 +36,9 @@ function ZpracujZnaky(text,     VSTUP, VYSTUP, ZNAK) {
         if (ZNAK == "\\" && length(VSTUP) > 1) {
             VYSTUP = VYSTUP ZpracujZnak(substr(VSTUP, 2, 1));
             VSTUP = substr(VSTUP, 3);
+        } else if (substr(VSTUP, 1, 7) == "&blank;") {
+            VYSTUP = VYSTUP ZpracujZnak("␣");
+            VSTUP = substr(VSTUP, 8);
         } else if (substr(VSTUP, 1, 4) == "&lt;") {
             VYSTUP = VYSTUP ZpracujZnak("<");
             VSTUP = substr(VSTUP, 5);
@@ -78,6 +81,15 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, C) {
     VYSTUP = "";
     VyprazdnitZasobnik("format");
     while (VSTUP != "") {
+        # 7 znaků
+        switch (C = substr(VSTUP, 1, 7)) {
+            case "&blank;":
+                VYSTUP = VYSTUP ZpracujZnak("␣");
+                VSTUP = substr(VSTUP, 8);
+                continue;
+            default:
+                break;
+        }
         # 6 znaků
         switch (C = substr(VSTUP, 1, 6)) {
             case "&nbsp;":
