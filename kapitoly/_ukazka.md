@@ -81,9 +81,11 @@ Lze zadat nejrůznější zvláštní znaky.
 * Znaky &lt;, &amp; a &gt; vždy nahraďte odpovídajícími entitami &amp;lt;, &amp;amp; a &amp;gt;.
 * Znaky \\, \`, \*, \_, \^ a \~ vždy escapujte zpětným lomítkem.
 * Znaky #, $, +, -, : a | escapujte zpětným lomítkem, jsou-li zdvojeny nebo před prvním alfanumerickým znakem na řádku. \#\#, \+\+, \-\-, \$\$, \:\:, \|\|.
-* Znaky !, ", %, ', (, ), ,, ., /, ;, =, ?, @, [ zadávejte přímo, bez escapování, a to i v případě, že jsou zdvojeny: !!, "", %%, '', ((, )), ,,, .., //, ;;, ==, ??, @@, [[.
-* Znak ] escapujte zpětným lomítkem, pokud bezprostředně za ním ve zdrojovém kódu následuje otevírací kulatá závorka. \](
+* Znaky !, ", %, ', (, ), ,, /, ;, =, ?, @, zadávejte přímo, bez escapování, a to i v případě, že jsou zdvojeny: !!, "", %%, '', ((, )), ,,, //, ;;, ==, ??, @@.
+* Znak [ escapujte zpětným lomítkem, pokud je to první tisknutý (tzn. ne-řidící) znak na řádku. V ostatních případech ho zadávejte přímo, a to i v případě, že je zdvojený. [[
+* Znak ] escapujte zpětným lomítkem, pokud bezprostředně za ním ve zdrojovém kódu následuje znak „(“ nebo „[“. \]( \][
 * Znak { escapujte zpětným lomítkem, pokud bezprostředně za ním ve zdrojovém kódu následuje neescapovaná \*. (\{*kurzívou*)
+* Znak . escapujte zpětným lomítkem pouze za sekvencí desítkových číslic, které na řádku nepředchází žádné nebílé znaky, a to pouze v případě, že za danou tečkou následuje mezera. (Jinak by totiž tato sekvence utvořila číslovaný seznam.) V ostatních případech zadávejte tečku přímo, a to i tehdy, je-li zdvojená: ..
 * Potřebujete-li zapsat URL adresu, která nemá být formátována jako odkaz, nahraďte v ní // speciálním znakem \⫽. Při jiném použití (což je nepravděpodobné) musíte tento znak rovněž escapovat zpětným lomítkem.
 * Nezlomitelnou mezeru můžete zadat buď přímo, nebo jako entitu &amp;nbsp;.
 

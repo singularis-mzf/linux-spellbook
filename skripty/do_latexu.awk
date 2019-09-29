@@ -104,6 +104,7 @@ function ZpracujZnak(znak) {
         case "_":
             return "\\_";
         case "`":
+            return "{`}";
         case "a":
         case "b":
         case "c":

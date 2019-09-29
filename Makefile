@@ -29,7 +29,7 @@ PDFLATEX := pdflatex -halt-on-error
 
 VSECHNY_DODATKY := predmluva test
 VSECHNY_KAPITOLY := _ukazka docker ffmpeg firefox gawk git hledani-souboru latex make markdown obrazky odkazy ostatni soubory
-OBRAZKY := logo-knihy-velke.png make.png ve-vystavbe.png
+OBRAZKY := logo-knihy-velke.png make.png ve-vystavbe.png gpl/retext.png
 
 SOUBORY_PREKLADU := soubory_prekladu
 VYSTUP_PREKLADU := vystup_prekladu

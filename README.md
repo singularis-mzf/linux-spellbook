@@ -25,7 +25,9 @@ Zatím nejsou.
 * [GNU Make](kapitoly/make.md)
 
 ### 3. Fáze organizace
-Zatím nejsou.
+* [Git](kapitoly/git.md)
+* [Markdown](kapitoly/markdown.md)
+* [Zpracování obrázků](kapitoly/obrazky.md)
 
 ### 2. Fáze shromažďování (pokročilá)
 * [FFmpeg](kapitoly/ffmpeg.md)
@@ -35,6 +37,7 @@ Zatím nejsou.
 * [Docker](kapitoly/docker.md)
 * [Firefox](kapitoly/firefox.md)
 * [Hledání souboru](kapitoly/hledani-souboru.md)
+* [LaTeX](kapitoly/latex.md)
 * [Odkazy](kapitoly/odkazy.md)
 * [Soubory](kapitoly/soubory.md)
 
@@ -42,10 +45,8 @@ Zatím nejsou.
 * Správa balíčků (apt/dpkg)
 * Bash
 * /etc/fstab
-* Git
 * GRUB
 * Systém (služby, swap apod.)
 * Přehrávání videa, zvuku a obrázků
 * Vim
 * Záznam obrazovky (screenshooter, screencast, ...)
-* Zpracování a konverze obrázků (jpeg, png, ...)
