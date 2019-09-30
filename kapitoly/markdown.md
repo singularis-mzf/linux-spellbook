@@ -236,7 +236,9 @@ Existuje i modernější a propracovanější editor [Remarkable](https://rema
 
 ## Odkazy
 * [stránka na Wikipedii](https://cs.wikipedia.org/wiki/Markdown)
-* [Markdown Syntax](https://daringfireball.net/projects/markdown/syntax) (anglicky)
+* [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+* [oficiální stránky: Markdown Syntax](https://daringfireball.net/projects/markdown/syntax) (anglicky)
+* [GitHub Help: Basic writing and formatting syntax](https://help.github.com/en/articles/basic-writing-and-formatting-syntax)
 * [Markdown Extra Syntax](https://catalog.olemiss.edu/help/markdown/extra) (anglicky)
 * [video Markdown Syntax Cheat Sheet](https://www.youtube.com/watch?v=bpdvNwvEeSE) (anglicky)
 * [video Markdown Tutorial](https://www.youtube.com/watch?v=6A5EpqqDOdk) (anglicky)
@@ -246,3 +248,4 @@ Existuje i modernější a propracovanější editor [Remarkable](https://rema
 * [balíček markdown](https://packages.ubuntu.com/bionic/markdown) (anglicky)
 * [balíček retext](https://packages.ubuntu.com/bionic/retext) (anglicky)
 * [balíček Remarkable v ALUR](https://aur.archlinux.org/packages/remarkable/) (anglicky)
+* [specifikace GitHub Flavored Markdown](https://github.github.com/gfm/) (anglicky)
