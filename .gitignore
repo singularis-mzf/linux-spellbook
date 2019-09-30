@@ -240,3 +240,9 @@ TSWLatexianTemp*
 
 # generated if using elsarticle.cls
 *.spl
+
+# Specifická pravidla pro tento projekt:
+kapitoly.lst
+soubory_prekladu/
+vystup_prekladu/
+

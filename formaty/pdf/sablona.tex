@@ -1,0 +1,208 @@
+% Linux Kniha kouzel, šablona formátu LaTeX A5
+% Copyright (c) 2019 Singularis <singularis@volny.cz>
+%
+% Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
+% podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
+% vydané neziskovou organizací Creative Commons. Text licence je přiložený
+% k tomuto projektu nebo ho můžete najít na webové adrese:
+%
+% https://creativecommons.org/licenses/by-sa/4.0/
+%
+% This program is free software; you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation; either version 2 of the License, or
+% (at your option) any later version.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with this program; if not, write to the Free Software
+% Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+%
+{{ZAČÁTEK KNIHY}}
+\documentclass[10pt,final]{book}
+% 1. skupina balíčků:
+\usepackage[utf8]{inputenc}
+\usepackage[czech]{babel}
+%
+{{POKUD JE FORMÁT pdf-a4}}
+\usepackage[pdftex,a4paper,inner=1.5cm,outer=1cm,top=1.5cm,bottom=1.5cm]{geometry} % + showframe pro ladění
+{{KONEC POKUD}}
+{{POKUD JE FORMÁT pdf-a5}}
+\usepackage[pdftex,a5paper,inner=1.5cm,outer=1cm,top=1.5cm,bottom=1.5cm]{geometry} % + showframe pro ladění
+{{KONEC POKUD}}
+
+%\usepackage[B1,LY1,T1]{fontenc}
+\usepackage[T1]{fontenc}
+
+% 2. skupina balíčků:
+\usepackage{textcomp}       % musí být načtený přednostně; vyžadovaný balíčkem {gensymb}
+\usepackage[pdftex]{xcolor} % barevné písmo
+
+% 3. skupina balíčků:
+\usepackage[arrows]{boisik} % jen kvůli znaku $\carriagereturn$ (pokud existuje stabilní náhrada, bylo by lepší ji použít)
+\usepackage{fancyhdr}       % formátování záhlaví a zápatí
+\usepackage[bottom]{footmisc}% aby se poznámky pod čarou správně umístily
+\usepackage{gensymb}        % symboly jako např. \degree
+\usepackage[pdftex]{graphicx}% vkládání obrázků
+\usepackage{ifthen}         % příkaz \ifthenelse a související konstrukce
+\usepackage{titlesec}       % formátování nadpisů kapitol
+\usepackage{verbatim}       % zejm. prostředí {comment}, ale také {verbatim}
+
+% {fancyhdr}:
+\fancypagestyle{normalni}{%
+    \fancyhead{}\fancyfoot{}%
+    \fancyfoot[LE,RO]{\thepage}%
+    \renewcommand*{\headrulewidth}{0pt}%
+    \renewcommand*{\footrulewidth}{0pt}%
+}
+
+% {titlesec}:
+\titleformat{\chapter}[hang]{\normalfont\LARGE\bfseries}{\makebox[35pt][l]{\thechapter}}{5pt}{}\relax
+\titlespacing*{\chapter}{0pt}{-1ex}{1ex plus1ex minus0.5ex}\relax
+
+\titleformat{\section}[hang]{\normalfont\Large\bfseries}{\makebox[35pt][l]{\thesection}}{5pt}{}\relax
+\titlespacing*{\section}{0pt}{1ex plus2ex minus0.5ex}{0.5ex plus0.25ex minus0.5ex}\relax
+
+\titleformat{\subsection}[hang]{\normalfont\large}{}{0pt}{\filcenter\arabic{subsection}~}\relax
+\titlespacing*{\subsection}{0pt}{1ex plus4ex minus0pt}{4pt}\relax
+
+\assignpagestyle{\chapter}{normalni}
+
+% {xcolor}:
+\definecolor{seda}{gray}{0.5}
+
+\newenvironment*{blok}{}{}
+% \begin{priklad}{#2 = Záhlaví příkladu}{#3 = \footnote{}\footnote{}...}
+%   \radekprikladu{text-řádku}
+%   \radekprikladu{text-řádku}
+% \end{priklad}
+\newenvironment*{priklad}[3][]{%
+    \newcommand*{\radekprikladu}[1]{%
+        \nepoprve{{%
+            \fontfamily{bsk}\fontseries{m}\fontshape{n}\selectfont%
+            \textcolor{seda}{\ensuremath{\carriagereturn}}%
+        }}%
+        \item{##1}%
+    }%
+    \newcommand*{\akceprikladu}[1]{%
+        \nepoprve{{%
+            \fontfamily{bsk}\fontseries{m}\fontshape{n}\selectfont%
+            \textcolor{seda}{\ensuremath{\carriagereturn}}%
+        }}%
+        \item\ensuremath{\Rightarrow}~{\rmfamily{}##1}%
+    }%
+    \begin{samepage}
+    \fontfamily{qcr}\fontseries{m}\fontshape{n}\selectfont\raggedright%
+    \ifthenelse{\equal{#2}{}}{}{\begin{list}{\makebox[0pt][l]{\#}\makebox[0pt][l]{\rule[2ex]{5cm}{0.5pt}}}{%
+            \setlength{\leftmargin}{0.75em}%
+            \setlength{\labelwidth}{0pt}%
+            \setlength{\labelsep}{\leftmargin}%
+        }\raggedright\item\relax%
+        {#2}#3%
+    \end{list}\vspace{-3ex}}%
+    \budepoprve%
+    \begin{list}{}{%
+        \setlength{\itemsep}{0pt}%
+        \setlength{\parsep}{0pt}%
+        \setlength{\topsep}{1ex plus0.5ex minus0.5ex}%
+}}{%
+    \end{list}%
+    \end{samepage}%
+    \vspace{2mm plus2mm minus2mm}%
+}
+
+% qcr = TeX Gyre Cursor
+
+\newcommand*{\kapitola}[2][]{\chapter{#2}}
+\newcommand*{\sekce}[2][]{\section{#2}}
+\newcommand*{\podsekce}[2][]{\subsection{#2}}
+
+\newcommand*{\budepoprve}{%
+    \renewcommand{\nepoprve}[1]{%
+        \renewcommand{\nepoprve}[1]{####1}%
+    }%
+}
+\newcommand*{\dopln}[1]{{\fontfamily{qcr}\fontseries{m}\fontshape{it}\selectfont\underline{{#1}}}}%
+\newcommand*{\moznyzlom}{{\fontseries{m}\fontshape{n}\selectfont\textcolor{seda}{\-}}}%
+\newcommand{\nepoprve}[1]{#1}
+\newcommand*{\tritecky}{{\fontfamily{cmss}\fontseries{m}\fontshape{n}\selectfont\normalsize\mbox{...}}}%
+% {} \big \Big \bigg \Bigg
+\newcommand*{\volitelnyzacatek}{\textcolor{seda}{\ensuremath{\big[}}}%
+\newcommand*{\volitelnykonec}{\textcolor{seda}{\ensuremath{\big]}}}%
+
+\renewcommand*{\rmdefault}{cmr}
+
+\begin{document}%
+%
+% TITULNÍ STRANA
+%
+\pagestyle{empty}%
+\vspace*{0.05\textheight}%
+\begin{center}\fontfamily{cmss}\selectfont\bfseries\Huge\scalebox{1.5}{LINUX}\\[0.01\textheight]\Large Kniha kouzel\end{center}%
+\vspace{1cm}%
+\begin{blok}%
+    \setlength{\unitlength}{0.5\textwidth}%
+    \begin{picture}(2,1.4)%
+        \put(0,0){\includegraphics[width=0.5\textwidth]{../pdf-spolecne/_obrazky/logo-knihy-velke.png}}%
+        \put(1,1.4){\parbox[t][0.7\textwidth][c]{0.5\textwidth}{\centering\itshape%
+            Praktická sbírka řešených příkladů\\[0.02\textwidth]%
+            Veškerá moc příkazové řádky/příkazového řádku přehledně,
+            pro~začátečníky i pokročilé}}%
+    \end{picture}%
+\end{blok}%
+\par\vfill%
+\begin{center}\textcopyright\,2019 Singularis a ostatní přispěvatelé\end{center}%
+\clearpage%
+%
+% DRUHÁ STRANA
+%
+\pagestyle{empty}%
+{\noindent\Huge Linux --- Kniha kouzel\par}%
+\vspace{2ex}\noindent%
+\textcopyright~2019 Singularis a ostatní přispěvatelé%
+
+\vspace{2ex}\noindent%
+Toto dílo \quotedblbase Linux: Kniha kouzel\textquotedblleft{} podléhá licenci
+Creative Commons Attribution-ShareAlike 4.0 International. Úplný text licence
+je přiložen. Pro jeho zobrazení na počítači navštivte:
+\begin{center}\fontfamily{qcr}\selectfont%
+http://creativecommons.org/licenses/by-sa/4.0/
+\end{center}
+
+\noindent\textbf{Použitá díla jiných autorů:}
+\begin{itemize}%
+\item obrazky/ve-vystavbe.png \textcopyright~2010, Sarang (volné dílo podle německých zákonů)
+\item tučňák Tux \textcopyright~Larry Ewing; \textcopyright~Garrett LaSage (licence CC0, upraveno)
+\item ReText 7.0.1 (snímek obrazovky) \textcopyright~2011-2017 Dmitry Shachnev <mitya57@gmail.com> a přispěvatelé (licence GPL3), zobrazený text: \textcopyright~2019 Singularis (licence Creative Commons Attribution-ShareAlike 4.0 International; kompatibilní s GPL3)
+\end{itemize}%
+\vfill%
+\clearpage%
+%
+% Nastavit styl záhlaví a zápatí
+\pagestyle{normalni}%
+% Vysázet obsah
+\renewcommand*{\contentsname}{OBSAH}%
+\tableofcontents%
+%
+% Nastavit znak pro „dělení slov“ v kódu na zpětné lomítko
+{%
+    \fontfamily{qcr}%
+    \fontseries{m}\selectfont\hyphenchar\font=`\\%
+    \fontseries{b}\selectfont\hyphenchar\font=`\\%
+    \fontseries{bx}\selectfont\hyphenchar\font=`\\%
+    \fontshape{it}\fontseries{m}\selectfont\hyphenchar\font=`\\%
+    \fontseries{b}\selectfont\hyphenchar\font=`\\%
+    \fontseries{bx}\selectfont\hyphenchar\font=`\\%
+}%
+%
+\clearpage%
+\raggedbottom%
+{{ZAČÁTEK KAPITOLY}}
+{{TĚLO KAPITOLY}}
+{{KONEC KAPITOLY}}
+\end{document}
+{{KONEC KNIHY}}

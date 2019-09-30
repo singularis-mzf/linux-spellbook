@@ -1,0 +1,242 @@
+@charset "UTF-8";
+/*
+ * Linux Kniha kouzel, šablona CSS
+ * Copyright (c) 2019 Singularis <singularis@volny.cz>
+ *
+ * Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
+ * podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
+ * vydané neziskovou organizací Creative Commons. Text licence je přiložený
+ * k tomuto projektu nebo ho můžete najít na webové adrese:
+ *
+ * https://creativecommons.org/licenses/by-sa/4.0/
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+
+/* CSS reset */
+*{background:none;border:none;border-collapse:inherit;bottom:auto;
+caption-side:inherit;clear:none;clip:auto;color:inherit;
+empty-cells:inherit;left:auto;letter-spacing:inherit;
+line-height:inherit;list-style:inherit;margin:0;
+max-height:none;max-width:none;min-height:0;overflow:visible;
+padding:0;position:static;right:auto;table-layout:auto;
+text-decoration:none;text-indent:0;text-transform:inherit;
+top:auto;visibility:inherit;white-space:inherit;word-spacing:inherit;
+z-index:auto;font:inherit;}
+
+/* Blokové prvky */
+html {
+    background-color:#f0f0f0;
+    color:#333333;
+    font:62.5%/1.2 sans-serif;
+    padding:1rem 2% 5rem;
+}
+
+body {
+    font-size:133%;
+}
+
+h1 {
+    font:bold 175%/1.2 "DejaVu Sans", sans-serif;
+    margin:0.5em 0;
+}
+
+h2 {
+    font:150%/1.2 "DejaVu Sans", sans-serif;
+    margin:1.5em 0 0.5em;
+}
+
+h3 {
+    font:125%/1.2 "DejaVu Sans", sans-serif;
+    margin:1.5em 0 0.25em;
+    /*background-color:rgb(210,210,210);*/
+    padding:0.5rem 0;
+    text-align:center;
+    page-break-after:avoid; /* možná není podporována v současných prohlížečích */
+}
+
+p, ul {
+    font-family: "DejaVu Serif", serif;
+    margin:0.75em 0;
+    max-width:50em;
+}
+
+p {
+    line-height:1.5;
+}
+
+ul {
+    margin-left:7rem;
+    line-height:1.5;
+}
+
+ul > li + li {
+    margin-top:0.5em;
+}
+
+figure {
+    margin:2rem 0;
+    text-align:center;
+}
+
+/* Inline prvky */
+a:link {color:#1644d9;}
+a:visited {color:#1338b3;}
+a[href^="http://"]::before, a[href^="https://"]::before {content:" [" attr(href) "]("}
+a[href^="http://"]::after, a[href^="https://"]::after {content:")";}
+a:hover {text-decoration:underline;}
+b {font-weight:bold;}
+i {font-style:italic;}
+
+
+/* Formátování příkladů */
+.priklad {
+    font-family: "DejaVu Sans Mono", monospace;
+    font-size:115%;
+    page-break-inside:avoid;
+}
+
+.priklad>hr {
+    /* orientační čára nad každým příkladem */
+    display:block;
+    border-top:1px solid;
+    margin:0 auto 0.5pt 0;
+    max-width:15em;
+}
+
+.priklad + .priklad {
+    /* mezera mezi příklady */
+    margin-top:1.25em;
+}
+
+.priklad .zahlavi {
+    font-family: "Noto Mono", "DejaVu Serif", serif;
+    font-size:90%;
+    line-height:1.3;
+    margin-left:1.6rem;
+    position:relative;
+}
+
+.priklad .zahlavi::before {
+    content: "#";
+    display:inline-block;
+    /*font:bold 1.6rem/1 "DejaVu Sans Mono", serif;*/
+    text-align:left;
+    position:absolute;
+    left:auto;right:100%;top:0;bottom:auto;
+    width:1.6rem;
+}
+
+.priklad .radky {
+/*    box-shadow:0 0 5pt 0 rgb(200,200,200), -5pt 0 5pt 5pt rgb(200,200,200), 5pt 0 5pt 0 rgb(200,200,200);*/
+    /*box-shadow:0 0 5pt 1pt rgb(200,200,200);*/
+    font-size:80%;
+    line-height:1.8;
+    margin:3pt 5pt 3pt 7rem;
+    border:1pt dotted #999999;
+    padding:2pt 5pt;
+}
+
+/* zobrazení znaku ↲ na konci každého řádku příkladu kromě posledního */
+.priklad .radekprikladu::after {content:"↲";margin-left:0.5em;color:rgb(120,120,120);}
+.priklad .radekprikladu:last-child::after {display:none;}
+.priklad .radekprikladu:empty::after {margin-left:0;}
+
+
+.dopln {
+    font: 100%/1.2 "DejaVu Sans Mono", monospace;
+    text-decoration:underline;
+    margin-left:0.25em;
+    margin-right:0.25em;
+}
+.priklad .dopln:first-child {
+    margin-left:0;
+}
+
+.priklad .volznak {
+    display:inline-block;
+    color:rgb(127,127,127);
+    margin:0 -0.2em;
+    transform:scaleY(1.75);
+}
+
+/* Formátování poznámek pod čarou */
+.ppc {
+    margin-top:10pt;
+    border-top:1pt solid;
+    padding-top:5pt;
+    font:90%/1.4 "DejaVu Serif", serif;
+}
+.ppc a.cislopozn {
+    display:inline-block;
+    margin-right:0.5em;
+    width:3rem;
+    text-align:right;
+}
+.ppc .zrusitzvyrazneni {
+    display:block;
+    text-align:center;
+    font-style:italic;
+}
+.ppc .zrusitzvyrazneni::before {content:"(";}
+.ppc .zrusitzvyrazneni::after {content:")";}
+.ppc :target {
+    background:#f2a7e2;
+    padding-top:1.5rem;
+    padding-bottom:1.5rem;
+}
+.ppc .zrusitzvyrazneni:target {
+    background:none;
+    padding-top:0;
+    padding-bottom:0;
+}
+
+/* zbytek */
+.tab {
+/*    color:rgb(120,120,120);*/
+    background:transparent url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAUCAYAAACJfM0wAAAACXBIWXMAAAsTAAALEwEAmpwYAAABtklEQVQ4y7XUzUtVURQF8N9+vsxCoSYNGkQfNEmjoKTMiCLDSQQNkqA/sGmfgygnZjgpopAaRF+zDILQICt9u8m5cHt29T2oNbrn7rMXh7XW3pGZICLambmmARHRysyOHtGqfU9ExGREtBruHo2IqYgY7Jd4G85juqG5jdO4HBE7+yGGwAlcjYjhhp4juB4Ru/shrnAYMxGxp6G+FzciYl8vxM/wsat5JiL2l/NrvKrVd+FaRIz91ewqFcX5IVzE8SILfMeDzFyMiDbOYBIDpf4L81iop+YP4ipWOIVzxVBYx1xmPil3xjCNHaWeeIrZKrIbNM7MTmYu4BaWy+8BHKrSkJmLuIkvNdMPYmQr82CrYeigcaDaDVM2XjK9vSbFe6yW+iguYbgmxTusNJk3iAs4WTPvBx5l5vOi/wTOduvfbV67RjqCKzhQe/wy7mfm25KYKRzrSszDzHy5mRTjXaRLuJuZn8p5tMSwwlfcy8wPPWtc9LyTmSsN9SXczszPvZqXeFE0XW3oeVPk+bZZZOrE63iM+Ya9m2XsZzPz51bbLWqLfmiTV1aJWet12W8Y6X+Flv+E39XGp4/1pQSiAAAAAElFTkSuQmCC") 0% 100%/1ch auto no-repeat;
+    display:inline-block;
+    overflow:hidden;
+    width:1ch;height:1.8ch;
+    white-space:pre;
+}
+.viditelnamezera {
+    background:transparent url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAMCAYAAABm+U3GAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAJ0lEQVQ4y2NkQID/DKiAkYE4gFUfEwONwKjBowZjAhYS0udoGJMHAIgjAxkEpU0OAAAAAElFTkSuQmCC") 50% 100%/100% auto no-repeat;
+    white-space:pre;
+}
+.tritecky {
+    color:rgb(127,127,127);
+    letter-spacing:-0.3em;
+}
+
+h3 .cislo {
+    display:inline-block;
+    /*margin:0 0.5rem 0 0;*/
+    margin-right:0.5rem;
+    min-width:2em;
+    text-align:right;
+}
+
+@media print {
+    html, body {
+        background:none !important;
+        padding:0;
+        color:#000000;
+    }
+    .ppc .zrusitzvyrazneni
+    {
+        display:none;
+    }
+}
