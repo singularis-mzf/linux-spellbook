@@ -61,7 +61,6 @@ function PrecistKonfig(sekce, klic, vychoziHodnota,   prikaz, vysledek) {
     vysledek = "";
     prikaz | getline vysledek;
     close(prikaz);
-    print "DEBUG: precteno [" sekce "]/\"" klic "\" = \"" vysledek "\"." | "cat >>~/ram/debug.txt";
     return vysledek;
 }
 
