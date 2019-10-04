@@ -36,14 +36,16 @@
 {{KONEC POKUD}}
 
 %\usepackage[B1,LY1,T1]{fontenc}
-\usepackage[T1]{fontenc}
+%\usepackage[T1]{fontenc}
+\usepackage[IL2,T1]{fontenc}
 
 % 2. skupina balíčků:
+\usepackage{mathabx}        % symboly (zejména \dlsh)
 \usepackage{textcomp}       % musí být načtený přednostně; vyžadovaný balíčkem {gensymb}
 \usepackage[pdftex]{xcolor} % barevné písmo
 
 % 3. skupina balíčků:
-\usepackage[arrows]{boisik} % jen kvůli znaku $\carriagereturn$ (pokud existuje stabilní náhrada, bylo by lepší ji použít)
+\let\degree=\undefined      % nouzové řešení konfliktu (použít \degree z {gensymb}, ne z {mathabx})
 \usepackage{fancyhdr}       % formátování záhlaví a zápatí
 \usepackage[bottom]{footmisc}% aby se poznámky pod čarou správně umístily
 \usepackage{gensymb}        % symboly jako např. \degree
@@ -51,6 +53,7 @@
 \usepackage{ifthen}         % příkaz \ifthenelse a související konstrukce
 \usepackage{titlesec}       % formátování nadpisů kapitol
 \usepackage{verbatim}       % zejm. prostředí {comment}, ale také {verbatim}
+
 
 % {fancyhdr}:
 \fancypagestyle{normalni}{%
@@ -83,14 +86,12 @@
 \newenvironment*{priklad}[3][]{%
     \newcommand*{\radekprikladu}[1]{%
         \nepoprve{{%
-            \fontfamily{bsk}\fontseries{m}\fontshape{n}\selectfont%
             \textcolor{seda}{\ensuremath{\carriagereturn}}%
         }}%
         \item{##1}%
     }%
     \newcommand*{\akceprikladu}[1]{%
         \nepoprve{{%
-            \fontfamily{bsk}\fontseries{m}\fontshape{n}\selectfont%
             \textcolor{seda}{\ensuremath{\carriagereturn}}%
         }}%
         \item\ensuremath{\Rightarrow}~{\rmfamily{}##1}%
@@ -133,6 +134,7 @@
 % {} \big \Big \bigg \Bigg
 \newcommand*{\volitelnyzacatek}{\textcolor{seda}{\ensuremath{\big[}}}%
 \newcommand*{\volitelnykonec}{\textcolor{seda}{\ensuremath{\big]}}}%
+\newcommand*{\carriagereturn}{\mbox{}\dlsh}%
 
 \renewcommand*{\rmdefault}{cmr}
 

@@ -485,6 +485,7 @@ pozor na PTS!
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 - Pokud obraz či zvuk neupravujete a nekonvertujete, můžete jejich původní kvalitu a kodek zachovat pomocí parametru **-c:v copy** pro obraz, resp. **-c:a copy** pro zvuk. Zvuk můžete v takovém případě ořezávat pomocí parametrů **-ss**, **-to** a **-t**, u obrazu to silně nedoporučuji, protože typicky pak trpí výpadky na začátku a konci výsledného videa.
+- Výstupy filtrů **split** a **asplit** musejí být odebírány paralelně, jinak hrozí přetečení bufferu; je např. špatný nápad zapojit je do filtru **concat**, protože ten čte nejprve první vstup, a než se dostane ke druhému, buffer na něm přeteče, protože filtr **split** nedokáže posílat snímky nejprve na jeden výstup a až pak na druhý. Rychlým řešením je druhý výstup filtru **split** či **asplit** zapojit přes dvojici filtrů **reverse,reverse**, resp. **areverse,areverse**, protože ty dokážou zřídit v paměti buffer neomezené velikosti, ale správným řešením je výstup uložit do souboru a načítat pomocí více parametrů **-i** nebo generátorů **movie**, které mohou svoje načítání pozdržet, než budou snímky či zvuk filtrem **concat** požadovány.
 
 
 <!--
@@ -494,9 +495,12 @@ Podle https://superuser.com/questions/435941/which-codecs-are-most-suitable-for-
 
 ### Doporučené kodeky
 
-Pro obraz (**-c:v**): **h264** (synonymum **libx264**), mpeg4.
+Pro obraz (**-c:v**): **h264** (synonymum **libx264**), **mpeg4**, **rawvideo** (opatrně); další použitelné: **gif**; pro série obrázků: **png**, **tiff**, **mjpeg** (pokud generuje varování „deprecated pixel format used, make sure you did set range correctly“, toto můžete bezpečně ignorovat).
+<!--
+Zdroj: https://superuser.com/questions/1273920/deprecated-pixel-format-used-make-sure-you-did-set-range-correctly
+-->
 
-Pro zvuk (**-c:a**): **aac**, **libmp3lame**.
+Pro zvuk (**-c:a**): **aac**, **libmp3lame** (mp3), **pcm16_le** (wav), **libvorbis** (ogg), **flac** (flac).
 
 <!--
 - Používat -ab a -vb k nastavení bitrate.

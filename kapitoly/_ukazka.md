@@ -81,7 +81,7 @@ Lze zadat nejrůznější zvláštní znaky.
 * Znaky &lt;, &amp; a &gt; vždy nahraďte odpovídajícími entitami &amp;lt;, &amp;amp; a &amp;gt;.
 * Znaky \\, \`, \*, \_, \^ a \~ vždy escapujte zpětným lomítkem.
 * Znaky #, $, +, -, : a | escapujte zpětným lomítkem, jsou-li zdvojeny nebo před prvním alfanumerickým znakem na řádku. \#\#, \+\+, \-\-, \$\$, \:\:, \|\|.
-* Znaky !, ", %, ', (, ), ,, /, ;, =, ?, @, zadávejte přímo, bez escapování, a to i v případě, že jsou zdvojeny: !!, "", %%, '', ((, )), ,,, //, ;;, ==, ??, @@.
+* Znaky !, ", %, ', (, ), ,, /, ;, =, ? a @ zadávejte přímo, bez escapování, a to i v případě, že jsou zdvojeny: !!, "", %%, '', ((, )), ,,, //, ;;, ==, ??, @@.
 * Znak [ escapujte zpětným lomítkem, pokud je to první tisknutý (tzn. ne-řidící) znak na řádku. V ostatních případech ho zadávejte přímo, a to i v případě, že je zdvojený. [[
 * Znak ] escapujte zpětným lomítkem, pokud bezprostředně za ním ve zdrojovém kódu následuje znak „(“ nebo „[“. \]( \][
 * Znak { escapujte zpětným lomítkem, pokud bezprostředně za ním ve zdrojovém kódu následuje neescapovaná \*. (\{*kurzívou*)
