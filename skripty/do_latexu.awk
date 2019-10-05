@@ -248,8 +248,8 @@ function HypertextovyOdkaz(adresa, text,   cisloPoznamky) {
     return text "\\footnotemark[" cisloPoznamky "]\\footnotetext[" cisloPoznamky "]{" adresa "}";
 }
 
-function ZacatekSeznamu(uroven) {
-    return "\\begin{itemize}\\relax{}";
+function ZacatekSeznamu(uroven, zarovatDoBloku) {
+    return "{" (zarovatDoBloku ? "" : "\\raggedright") "\\begin{itemize}\\relax{}";
 }
 
 function ZacatekPolozkySeznamu(uroven) {
@@ -261,7 +261,7 @@ function KonecPolozkySeznamu(uroven) {
 }
 
 function KonecSeznamu(uroven) {
-    return "\\end{itemize}";
+    return "\\end{itemize}}";
 }
 
 function ZacatekPrikladu(cisloPrikladu, textPrikladu, cislaPoznamek, textyPoznamek,   i, ax, base) {
@@ -306,6 +306,7 @@ function ZalomitRadekPrikladu(text,   c, i, slzav, hrzav, lastzlom) {
         switch (c = substr(text, i, 1)) {
             # Výčet znaků, za kterými je možno řádek zalomit:
             case ",":
+            case ":":
             case ";":
             case "=":
             case "|":

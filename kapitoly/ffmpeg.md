@@ -39,15 +39,13 @@ Zpracovat filtry:
 ## Definice
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-**Stopa** je složka multimediálního souboru určená ke spojení s ostatními stopami. Existují čtyři druhy stop − obrazová, zvuková, titulková a datová. Multimediální kontejner může obsahovat více stop a tyto stopy mohou být různé...
+* **Stopa** je složka multimediálního souboru určená ke spojení s ostatními stopami. Existují čtyři druhy stop − obrazová, zvuková, titulková a datová. Multimediální kontejner může obsahovat více stop a tyto stopy mohou být různé...
 
-**Kanál** je vrstva tvořící stopu. Na rozdíl od stop, kanály stopy trvají vždy stejně dlouho a tvoří každý snímek obrazu či vzorek zvuku společně.
+* **Kanál** je vrstva tvořící stopu. Na rozdíl od stop, kanály stopy trvají vždy stejně dlouho a tvoří každý snímek obrazu či vzorek zvuku společně.
 
-**Snímek** je základní kvantum obrazové stopy. Vzorkovací frekvence videa čili počet snímků za sekundu se nazývá **fps**. Hodnota fps se obvykle pohybuje v rozmezí 10 až 60.
+* **Snímek** je základní kvantum obrazové stopy. Vzorkovací frekvence videa čili počet snímků za sekundu se nazývá **fps**. Hodnota fps se obvykle pohybuje v rozmezí 10 až 60.
 
-**Vzorek** je základní kvantum zvukové stopy. Obvyklá vzorkovací frekvence zvuku je 44100.
-
-
+* **Vzorek** je základní kvantum zvukové stopy. Obvyklá vzorkovací frekvence zvuku je 44100.
 
 ## Zaklínadla (filtry)
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
@@ -403,7 +401,7 @@ pozor na PTS!
 **[ai]**... **concat=n=**{*počet vstupů*}**:v=0:a=1 [ao]**
 
 *# spojit (za sebou) obrazové a zvukové vstupy*<br>
-**[vi][ai][vi][ai]**... **concat=n=**{*počet-n-tic vstupů*}**:v=1:a=1 [vo] [ao]**
+**[vi][ai][vi][ai]**... **concat=n=**{*počet-n-tic vstupů*}**:v=1:a=1 [vo][ao]**
 
 *# (nefunguje!!!!!!!!)přehrát úsek a opakovat ho ještě N-krát znovu (Je-li např. počet 2, úsek se celkem přehraje třikrát!)*<br>
 **[vi] loop=**{*počet*}**:{*maximální-počet-snímků*} [vo] ; [ai] aloop=**{*počet*}**:{*maximální-počet-vzorků*} [ao]**<br>

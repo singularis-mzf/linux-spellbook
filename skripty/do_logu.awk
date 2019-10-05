@@ -94,8 +94,8 @@ function HypertextovyOdkaz(adresa, text) {
     return "HypertextovyOdkaz(adresa = \"" adresa "\", text = \"" text "\");\n";
 }
 
-function ZacatekSeznamu(uroven) {
-    return "ZacatekSeznamu(" uroven ");\n";
+function ZacatekSeznamu(uroven, zarovnatDoBloku) {
+    return "ZacatekSeznamu(" uroven ", zarovnat=" (zarovnatDoBloku ? "DO_BLOKU" : "VLEVO") ");\n";
 }
 
 function ZacatekPolozkySeznamu(uroven) {

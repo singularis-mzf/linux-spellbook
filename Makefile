@@ -130,13 +130,13 @@ $(VYSTUP_PREKLADU)/log/index.log: $(addsuffix .kap,$(addprefix $(SOUBORY_PREKLAD
 
 # 1A. kapitoly/{kapitola}.md => soubory_prekladu/pdf-spolecne/{kapitola}
 # ============================================================================
-$(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%): $(SOUBORY_PREKLADU)/pdf-spolecne/%: kapitoly/%.md skripty/do_latexu.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
+$(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%): $(SOUBORY_PREKLADU)/pdf-spolecne/%: kapitoly/%.md skripty/do_latexu.awk skripty/hlavni.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(dir $@)
 	$(AWK) -f skripty/do_latexu.awk $< > $@
 
 # 1A. dodatky/{dodatek}.md => soubory_prekladu/pdf-spolecne/{dodatek}
 # ============================================================================
-$(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%): $(SOUBORY_PREKLADU)/pdf-spolecne/%: dodatky/%.md skripty/do_latexu.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
+$(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%): $(SOUBORY_PREKLADU)/pdf-spolecne/%: dodatky/%.md skripty/do_latexu.awk skripty/hlavni.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(dir $@)
 	$(AWK) -f skripty/do_latexu.awk $< > $@
 

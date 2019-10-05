@@ -28,10 +28,10 @@ vývoje, ale už je sestavitelná.
 ## Návod k sestavení
 
 K sestavení příručky ze zdrojového kódu budete potřebovat Git, GNU make,
-GNU awk a LaTeX (včetně extra-fontů a balíčku „boisik“). V minimální instalaci
+GNU awk, LaTeX (včetně extra-fontů) a ImageMagick. V minimální instalaci
 Ubuntu 18.04 LTS můžete tyto nástroje nainstalovat příkazem:
 
-> ``sudo apt-get install git make gawk texlive-latex-recommended texlive-fonts-extra texlive-lang-czechslovak``
+> ``sudo apt-get install git make gawk texlive-latex-recommended texlive-fonts-extra texlive-lang-czechslovak imagemagick``
 
 Pak budete potřebovat stáhnout si repozitář:
 
@@ -88,5 +88,6 @@ Zatím nejsou.
 * GRUB
 * Systém (služby, swap apod.)
 * Přehrávání videa, zvuku a obrázků
+* Regulární výrazy
 * Vim
 * Záznam obrazovky (screenshooter, screencast, ...)

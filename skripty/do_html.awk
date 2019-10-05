@@ -108,8 +108,8 @@ function HypertextovyOdkaz(adresa, text) {
     return "<a href=\"" adresa "\">" text "</a>";
 }
 
-function ZacatekSeznamu(uroven) {
-    return "<ul>";
+function ZacatekSeznamu(uroven, zarovatDoBloku) {
+    return "<ul style=\"text-align:" (zarovatDoBloku ? "justify" : "left") "\">";
 }
 
 function ZacatekPolozkySeznamu(uroven) {

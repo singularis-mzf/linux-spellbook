@@ -308,7 +308,7 @@ function ZacitTypRadku() {
             break;
         case "POLOZKA_SEZNAMU":
             if (PREDCHOZI_TYP_RADKU != "POKRACOVANI_POLOZKY_SEZNAMU") {
-                printf("%s", ZacatekSeznamu(1));
+                printf("%s", ZacatekSeznamu(1, tolower(SEKCE) ~ /^(tipy a.zkušenosti|definice)/));
                 printf("%s", ZacatekPolozkySeznamu(1));
             }
             break;

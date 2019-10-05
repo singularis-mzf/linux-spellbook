@@ -1,4 +1,4 @@
-% Linux Kniha kouzel, šablona formátu LaTeX A5
+% Linux Kniha kouzel, šablona formátu PDF
 % Copyright (c) 2019 Singularis <singularis@volny.cz>
 %
 % Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -29,10 +29,12 @@
 \usepackage[czech]{babel}
 %
 {{POKUD JE FORMÁT pdf-a4}}
-\usepackage[pdftex,a4paper,inner=1.5cm,outer=1cm,top=1.5cm,bottom=1.5cm]{geometry} % + showframe pro ladění
+\usepackage[pdftex,a4paper,inner=2cm,outer=1.5cm,top=1.5cm,bottom=2cm]{geometry} % + showframe pro ladění
+\newlength{\sirkakodu}\setlength{\sirkakodu}{0.9\textwidth}
 {{KONEC POKUD}}
 {{POKUD JE FORMÁT pdf-a5}}
 \usepackage[pdftex,a5paper,inner=1.5cm,outer=1cm,top=1.5cm,bottom=1.5cm]{geometry} % + showframe pro ladění
+\newlength{\sirkakodu}\setlength{\sirkakodu}{0.98\textwidth}
 {{KONEC POKUD}}
 
 %\usepackage[B1,LY1,T1]{fontenc}
@@ -93,10 +95,10 @@
 \definecolor{seda}{gray}{0.5}
 
 % Definice délek
-\newlength{\sirkacislaprikladu}\newlength{\sirkakodu}\newlength{\sirkazbytku}
+\newlength{\sirkacislaprikladu}\newlength{\sirkazbytku}
 
 \setlength{\sirkacislaprikladu}{23pt}
-\setlength{\sirkakodu}{0.9\textwidth}
+
 
 
 \newenvironment*{blok}{}{}
@@ -149,7 +151,7 @@
             \makebox[\sirkacislaprikladu][l]{\##2}%
             % Titulek příkladu:
             \parbox[t]{\sirkazbytku}{\raggedright{#3}}%
-            \par%
+            \par\vspace{1ex}%
         }\raggedleft%
         \dashbox{\parbox{\sirkakodu}{\raggedright%
             % Nastavit písmo pro řádky příkladu:
