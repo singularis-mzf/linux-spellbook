@@ -1,6 +1,6 @@
 <!--
 
-Linux Kniha kouzel, kapitola [DOPLNIT NÁZEV]
+Linux Kniha kouzel, kapitola Ostatní
 Copyright (c) 2019 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -12,54 +12,19 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
 
-# Název
+# Ostatní
 
 ## Úvod
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-
-## Definice
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+Tato kapitola slouží jako „skládka“ pro dosud nezařazené příklady.
+Neměla by být součástí výsledné knihy.
 
 ## Zaklínadla
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 *# vypočítat číslo pí na N desetinných míst*<br>
-**echo -e "scale = 1 +** {*počet-desetinných-míst*} **\\n4\*a(1)" \| bc -l \| tr -d '\\n\\\\' \| head -c -1**[**; echo**]
+**printf '%s\\n' 'scale = 1 +** {*počet-desetinných-míst*}**' '4\*a(1)' \| bc -l \| tr -d '\\n\\\\' \| head -c -1**[**; echo**]
 
 ## Parametry příkazů
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-
-## Jak získat nápovědu
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-
-## Tipy a zkušenosti
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-
-## Ukázka
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-<!--
-Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
--->
-
-## Snímek obrazovky
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-<!--
-Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
--->
-
-## Instalace na Ubuntu
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+...
 
 ## Odkazy
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-
-Co hledat:
-
-* [stránku na Wikipedii](https://cs.wikipedia.org/wiki/Hlavn%C3%AD_strana)
-* oficiální stránku programu
-* oficiální dokumentaci
-* [manuálovou stránku](http://manpages.ubuntu.com/)
-* [balíček Bionic](https://packages.ubuntu.com/)
-* online referenční příručky
-* různé další praktické stránky, recenze, videa, tutorialy, blogy, ...
-* publikované knihy
+...

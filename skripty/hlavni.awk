@@ -76,7 +76,7 @@ function ZpracujZnaky(text,     VSTUP, VYSTUP, ZNAK) {
 #
 # Může využívat globálních proměnných TYP_RADKU a PREDCHOZI_TYP_RADKU.
 # Lokálně používá zásobník "format".
-function FormatovatRadek(text,   VSTUP, VYSTUP, i, C) {
+function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C) {
     VSTUP = text;
     VYSTUP = "";
     VyprazdnitZasobnik("format");
@@ -186,10 +186,14 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, C) {
         switch (C = substr(VSTUP, 1, 2)) {
             case "**":
                 if (Vrchol("format") != "**") {
-                    VYSTUP = VYSTUP FormatTucne(1);
+                    if (TYP_RADKU != "RADEK_PRIKLADU") {
+                        VYSTUP = VYSTUP FormatTucne(1);
+                    }
                     Push("format", "**");
                 } else {
-                    VYSTUP = VYSTUP FormatTucne(0);
+                    if (TYP_RADKU != "RADEK_PRIKLADU") {
+                        VYSTUP = VYSTUP FormatTucne(0);
+                    }
                     Pop("format");
                 }
                 VSTUP = substr(VSTUP, 3);
@@ -240,10 +244,13 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, C) {
                 }
                 continue;
             case "[":
-                if (match(VSTUP, /\[[^\]]+\][(][^)]+[)]/)) {
-                    i = index(VSTUP, "](");
-                    VYSTUP = VYSTUP HypertextovyOdkaz(ZpracujZnaky(substr(VSTUP, i + 2, RLENGTH - i - 2)), ZpracujZnaky(substr(VSTUP, 2, i - 2)));
-                    VSTUP = substr(VSTUP, RLENGTH + 1);
+                if (match(VSTUP, /^\[([^\]\\]|\\.)+\]\(([^)\\]|\\.)+\)/)) {
+                    # j = délka celého výrazu; i = délka po dělící sekvenci „](“
+                    j = RLENGTH;
+                    match(VSTUP, /^\[([^\]\\]|\\.)+\]\(/);
+                    i = RLENGTH - 1;
+                    VYSTUP = VYSTUP HypertextovyOdkaz(ZpracujZnaky(substr(VSTUP, i + 2, j - i - 2)), ZpracujZnaky(substr(VSTUP, 2, i - 2)));
+                    VSTUP = substr(VSTUP, j + 1);
                     continue;
                 } else if (JE_UVNITR_PRIKLADU && VelikostZasobniku("format") == 0) {
                     VYSTUP = VYSTUP FormatVolitelny(1);

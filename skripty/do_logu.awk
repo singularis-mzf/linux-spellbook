@@ -165,8 +165,4 @@ function Obrazek(src, alt, rawSrc, rawAlt) {
     return "Obrazek(src=" src ",alt=" alt ",rawSrc=" rawSrc ",rawAlt=" rawAlt ");\n";
 }
 
-function ZnackaVeVystavbe() {
-    return "ZnackaVeVystavbe();\n";
-}
-
 @include "skripty/hlavni.awk"

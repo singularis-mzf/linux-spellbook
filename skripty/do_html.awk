@@ -188,10 +188,6 @@ function Obrazek(src, alt, rawSrc, rawAlt) {
     return "<figure><img src=\"" src "\" alt=\"" alt "\"></figure>";
 }
 
-function ZnackaVeVystavbe() {
-    return "<div>(VE VÝSTAVBĚ)</div>\n";
-}
-
 # dostává text poznámek v cílovém formátu
 #function OdkazyNaPoznamkyPodCarou(cisla, texty,   i, vysledek) {
 #    if (!isarray(cisla) || !isarray(texty)) {

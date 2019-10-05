@@ -19,7 +19,7 @@ Tato kapitola je jen ukázka dovoleného formátování. Je zatím poměrně ome
 Běžné odstavce mohou pokračovat na dalším řádku.
 Mohou také obsahovat vynucený<br>konec řádku a omezené formátování:
 **tučně**, *kurzívou*, nebo {*doplň*}, do **tučného textu lze vnořit *kurzívu*,**
-a do *kurzívy lze vnořit **tučný text**,* ale doplň s nimi nelze kombinovat.
+a do *kurzívy lze vnořit **tučný text**,* ale „doplň“ s nimi nelze kombinovat.
 Dovolený je i [hypertextový odkaz](http://www.seznam.cz/).
 
 * Takto vypadají seznamy.
@@ -74,76 +74,58 @@ Obrázky je dovoleno vkládat pouze jako samostatné odstavce:
 
 ![alternativní text](../obrazky/ve-vystavbe.png)
 
-## Zvláštní znaky
+## Zvláštní znaky a jejich escapování
 
-Lze zadat nejrůznější zvláštní znaky.
+„Escapování“ znamená zapsání speciálního znaku za dodatečné zpětné lomítko
+(nebo jiným alternativním způsobem). Jeho účelem je zbavit znak nechtěného
+speciální významu a nechat ho vypsat do výstupního formátu jako obyčejný znak.
+Pravidla escapování ve zdrojových kódech tohoto projektu jsou následující:
 
-* Znaky &lt;, &amp; a &gt; vždy nahraďte odpovídajícími entitami &amp;lt;, &amp;amp; a &amp;gt;.
-* Znaky \\, \`, \*, \_, \^ a \~ vždy escapujte zpětným lomítkem.
-* Znaky #, $, +, -, : a | escapujte zpětným lomítkem, jsou-li zdvojeny nebo před prvním alfanumerickým znakem na řádku. \#\#, \+\+, \-\-, \$\$, \:\:, \|\|.
-* Znaky !, ", %, ', (, ), ,, /, ;, =, ? a @ zadávejte přímo, bez escapování, a to i v případě, že jsou zdvojeny: !!, "", %%, '', ((, )), ,,, //, ;;, ==, ??, @@.
-* Znak [ escapujte zpětným lomítkem, pokud je to první tisknutý (tzn. ne-řidící) znak na řádku. V ostatních případech ho zadávejte přímo, a to i v případě, že je zdvojený. [[
-* Znak ] escapujte zpětným lomítkem, pokud bezprostředně za ním ve zdrojovém kódu následuje znak „(“ nebo „[“. \]( \][
-* Znak { escapujte zpětným lomítkem, pokud bezprostředně za ním ve zdrojovém kódu následuje neescapovaná \*. (\{*kurzívou*)
-* Znak . escapujte zpětným lomítkem pouze za sekvencí desítkových číslic, které na řádku nepředchází žádné nebílé znaky, a to pouze v případě, že za danou tečkou následuje mezera. (Jinak by totiž tato sekvence utvořila číslovaný seznam.) V ostatních případech zadávejte tečku přímo, a to i tehdy, je-li zdvojená: ..
-* Potřebujete-li zapsat URL adresu, která nemá být formátována jako odkaz, nahraďte v ní // speciálním znakem \⫽. Při jiném použití (což je nepravděpodobné) musíte tento znak rovněž escapovat zpětným lomítkem.
-* Nezlomitelnou mezeru můžete zadat buď přímo, nebo jako entitu &amp;nbsp;.
+* (&lt;), (&amp;), (&gt;)<br>se zadávají vždy jako odpovídající entity.
+* (\\), (\`), (\*), (\_), (\~)<br>se ve zdrojovém kódu escapují zpětným lomítkem vždy.
+* (\#), ($), (+), (-), (:), ([), (|)<br>se escapují před prvním alfanumerickým znakem na řádku nebo jsou-li zdvojeny. Příklad: \\#\\#, \\$\\$, \\+\\+, \\-\\-, \\:\\:, \\[\\[, \\|\\|.
+* (])<br>se escapuje, je-li zdvojena nebo má-li za ní stát „(“ nebo „[“.
+* ({), (})<br>se escapují, jen utvořily-li by nechtěnou formátovací sekvenci „\{\*“ či „\*\}“. Příklad: \\\{\*text kurzívou\*\\}
+* ())<br>se escapuje jen uvnitř adresy hypertextového odkazu. Příklad: [X\](http:⫽pism.cz/Pismeno\\\_(X\\))
+* (.)<br>se escapuje za sekvencí desítkových číslic, které na řádce zdrojového kódu nepředchází žádné bílé nebílé znaky, a to jen v případě, že za danou tečkou následuje mezera.
+* (!), ("), (%), ('), ((), (,), (/), (;), (=), (?), (@), (^)<br>se neescapují nikdy.
+* Nezlomitelnou mezeru lze zadat jak přímo, tak odpovídající entitou &amp;nbsp;.
+
+Potřebujete-li zapsat URL adresu, která nemá být nikde (ani na GitHubu) formátována jako odkaz,
+nahraďte v ní // speciálním znakem \⫽ (UCS operátor U+2AFD). Do výstupních formátů bude tento
+znak přeložen na obyčejnou sekvenci //.
+
+<!--
+Unicode Character 'DOUBLE SOLIDUS OPERATOR' (U+2AFD)
+https://www.fileformat.info/info/unicode/char/2afd/index.htm
+-->
 
 ## Podporované znaky
 
+Všechny tisknutelné znaky ASCII jsou podporovány a uvedeny v následujícím výčtu. Není podporován tabulátor
+(ve zdrojovém kódu je třeba jej zadat jednou ze značek &lt;tab1&gt; až &lt;tab8&gt;) a konec řádku má takový význam jako v HTML.
+(Explicitní konec řádku se zadává značkou &lt;br&gt;.)
+
 * mezera ( ) (ASCII 0x20) a zvýrazněná mezera &amp;blank; (&blank;, lze zadat i přímo znakem:␣; lze zadat i opakovaně:␣␣␣␣)
-* ! (ASCII 0x21)
-* " (ASCII 0x22)
-* \# (ASCII 0x23)
-* \$ (ASCII 0x24)
-* % (ASCII 0x25)
-* &amp; (ASCII 0x26)
-* ' (ASCII 0x27)
-* ( (ASCII 0x28)
-* ) (ASCII 0x29)
-* \* (ASCII 0x2a)
-* \+ (ASCII 0x2b)
-* , (ASCII 0x2c)
-* \- (ASCII 0x2d)
-* . (ASCII 0x2e)
-* / (ASCII 0x2f)
-* 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 (ASCII 0x30 až 0x39)
-* \: (ASCII 0x3a)
-* ; (ASCII 0x3b)
-* &lt; (ASCII 0x3c)
-* = (ASCII 0x3d)
-* &gt; (ASCII 0x3e)
-* ? (ASCII 0x3f)
-* @ (ASCII 0x40)
-* A, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z (ASCII 0x41 až 0x5a)
-* [ (ASCII 0x5b)
-* \\ (ASCII 0x5c)
-* ] (ASCII 0x5d)
-* \^ (ASCII 0x5e)
-* \_ (ASCII 0x5f)
-* \` (ASCII 0x60)
-* a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z (ASCII 0x61 až 0x7a)
-* { (ASCII 0x7b)
-* \| (ASCII 0x7c)
-* } (ASCII 0x7d)
-* ~ (ASCII 0x7e)
-* á, Á
-* č, Č
-* ď, Ď
-* é, É
-* ě, Ě
-* í, Í
-* ň, Ň
-* ó, Ó
-* ř, Ř
-* š, Š
-* ť, Ť
-* ú, Ú
-* ů, Ů
-* ý, Ý
-* ž, Ž
-* −
-* ×
-* °
-* nezlomitelná mezera: "&nbsp;"
-* české uvozovky: „“
+* (!), ("), (\#), (\$), (%), (&amp;), ('), ((), ()), (\*), (\+), (,), (\-), (.), (/) (ASCII 0x21 až 0x2f)
+* (0), (1), (2), (3), (4), (5), (6), (7), (8), (9) (ASCII 0x30 až 0x39)
+* (\:), (;), (&lt;), (=), (&gt;), (?), (@) (ASCII 0x3a až 0x40)
+* (A), (B), (C), (D), (E), F), (G), (H), (I), (J), (K), (L), (M), (N), (O), (P), (Q), (R), (S), (T), (U), (V), (W), (X), (Y), (Z) (ASCII 0x41 až 0x5a)
+* ([), (\\), (]), (^), (\_), (\`) (ASCII 0x5b až 0x60)
+* (a), (b), (c), (d), (e), (f), (g), (h), (i), (j), (k), (l), (m), (n), (o), (p), (q), (r), (s), (t), (u), (v), (w), (x), (y), (z) (ASCII 0x61 až 0x7a)
+* ({), (|), (}), (~) (ASCII 0x7b až 0x7e)
+* (á), (č), (ď), (é), (ě), (í), (ň), (ó), (ř), (š), (ť), (ú), (ů), (ý), (ž); příklad: „žluťoučký kůň příšerně úpěl ďábelské ódy“
+* (Á), (Č), (Ď), (É), (Ě), (Í), (Ň), (Ó), (Ř), (Š), (Ť), (Ú), (Ů), (Ý), (Ž); příklad: „ŽLUŤOUČKÝ KŮŇ PŘÍŠERNĚ ÚPĚL ĎÁBELSKÉ ÓDY“
+* „n-dash“ (−), „times“ (×), „degree“ (°)
+* „nezlomitelná mezera“ (&nbsp;)
+* „české uvozovky“ („) a (“)
+
+## Podporované HTML entity
+
+* &amp;amp; (&amp;)
+* &amp;apo; (&apo;) (Lze zadat i přímo: „'“)
+* &amp;blank; (&blank;)
+* &amp;gt; (&gt;)
+* &amp;lt; (&lt;)
+* &amp;nbsp; (&nbsp;) (Lze zadat i přímo: „ “.)
+* &amp;quot; (&quot;) (Lze zadat i přímo: „"“.)

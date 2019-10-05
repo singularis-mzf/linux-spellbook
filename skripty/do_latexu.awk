@@ -24,6 +24,15 @@
 
 @include "skripty/utility.awk"
 
+BEGIN {
+    DO_LATEXU_CISLO_POZN_POD_CAROU = 0;
+}
+
+# Pomocná funkce:
+function AlokovatPoznamkuPodCarou() {
+    return ++DO_LATEXU_CISLO_POZN_POD_CAROU;
+}
+
 # Převede odescapovaný znak vstupního formátu (Markdown) do výstupního formátu.
 # Pro bílé znaky se volá jedině tehdy, jsou-li escapovány.
 function ZpracujZnak(znak) {
@@ -234,8 +243,9 @@ function KonecRadku() {
     return "\\\\{}";
 }
 
-function HypertextovyOdkaz(adresa, text) {
-    return text "\\footnote{" adresa "}";
+function HypertextovyOdkaz(adresa, text,   cisloPoznamky) {
+    cisloPoznamky = AlokovatPoznamkuPodCarou();
+    return text "\\footnotemark[" cisloPoznamky "]\\footnotetext[" cisloPoznamky "]{" adresa "}";
 }
 
 function ZacatekSeznamu(uroven) {
@@ -254,15 +264,31 @@ function KonecSeznamu(uroven) {
     return "\\end{itemize}";
 }
 
-function ZacatekPrikladu(cisloPrikladu, textPrikladu, cislaPoznamek, textyPoznamek,   i, tmp) {
-    tmp = "";
-    for (i = 0; i < length(cislaPoznamek); ++i) {
-        tmp = tmp "\\footnote{" textyPoznamek[cislaPoznamek[i]] "}"
-    }
+function ZacatekPrikladu(cisloPrikladu, textPrikladu, cislaPoznamek, textyPoznamek,   i, ax, base) {
+    ax = "%\n\\priklad{";
+    # #2 = číslo příkladu
+    ax = ax cisloPrikladu "}{";
+    # #3 = text příkladu + \footnotemark
     if (textPrikladu != "") {
-        textPrikladu = "\\hspace{-0.25em}" cisloPrikladu "~" textPrikladu;
+        ax = ax textPrikladu;
+        if (length(cislaPoznamek) > 0) {
+            base = AlokovatPoznamkuPodCarou();
+            ax = ax "\\footnotemark[" base "]";
+            for (i = 1; i < length(cislaPoznamek); ++i) {
+                ax = ax "\\footnotemark[" AlokovatPoznamkuPodCarou() "]";
+            }
+        }
     }
-    return "%\n\\begin{priklad}{" textPrikladu "}{" tmp "}{}";
+    ax = ax "}%\n{";
+    # #4 = \footnotetext
+    if (textPrikladu != "") {
+        for (i = 0; i < length(cislaPoznamek); ++i) {
+            ax = ax "\\footnotetext[" (base + i) "]{" textyPoznamek[cislaPoznamek[i]] "}";
+        }
+    }
+    ax = ax "}{%\n";
+    # #5 = řádky příkladu
+    return ax;
 }
 
 
@@ -324,7 +350,7 @@ function RadekPrikladu(text, jeAkce) {
 }
 
 function KonecPrikladu() {
-    return "%\n\\end{priklad}";
+    return "%\n}";
 }
 
 function FormatTucne(jeZacatek) {
@@ -354,10 +380,6 @@ function Obrazek(src, alt, rawSrc, rawAlt,   sirka) {
         sirka = "[width=" sirka "]";
     }
     return "\\begin{center}\\includegraphics" sirka "{" src "}\\end{center}";
-}
-
-function ZnackaVeVystavbe() {
-    return "";
 }
 
 @include "skripty/hlavni.awk"

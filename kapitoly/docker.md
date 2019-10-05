@@ -36,8 +36,8 @@ Docker je nástroj pro odlehčenou virtualizaci formou takzvaných kontejnerů. 
 ## Tipy a zkušenosti
 
 ## Odkazy
-* [článek na Wikipedii](https://cs.wikipedia.org/wiki/Docker_(software))
+* [článek na Wikipedii](https://cs.wikipedia.org/wiki/Docker\_(software\))
 * [oficiální stránky](https://www.docker.com/) (anglicky)
 * [oficiální reference Dockerfilu](https://docs.docker.com/engine/reference/builder/) (anglicky)
-* [repozitář „ubuntu“ na Docker Hubu](https://hub.docker.com/_/ubuntu) (anglicky)
+* [repozitář „ubuntu“ na Docker Hubu](https://hub.docker.com/\_/ubuntu) (anglicky)
 * [balíček Ubuntu](https://packages.ubuntu.com/bionic/docker.io) (anglicky)

@@ -46,6 +46,7 @@
 
 % 3. skupina balíčků:
 \let\degree=\undefined      % nouzové řešení konfliktu (použít \degree z {gensymb}, ne z {mathabx})
+\usepackage{dashbox}        % příkazy \dbox{} a \dashbox{}
 \usepackage{fancyhdr}       % formátování záhlaví a zápatí
 \usepackage[bottom]{footmisc}% aby se poznámky pod čarou správně umístily
 \usepackage{gensymb}        % symboly jako např. \degree
@@ -65,58 +66,41 @@
 
 % {titlesec}:
 \titleformat{\chapter}[hang]{\normalfont\LARGE\bfseries}{\makebox[35pt][l]{\thechapter}}{5pt}{}\relax
-\titlespacing*{\chapter}{0pt}{-1ex}{1ex plus1ex minus0.5ex}\relax
+\titlespacing*{\chapter}{0pt}{-1ex}{1ex plus2ex minus0.5ex}\relax
 
 \titleformat{\section}[hang]{\normalfont\Large\bfseries}{\makebox[35pt][l]{\thesection}}{5pt}{}\relax
-\titlespacing*{\section}{0pt}{1ex plus2ex minus0.5ex}{0.5ex plus0.25ex minus0.5ex}\relax
+\titlespacing*{\section}{0pt}{2ex plus0.5ex minus0ex}{1ex}\relax
 
-\titleformat{\subsection}[hang]{\normalfont\large}{}{0pt}{\filcenter\arabic{subsection}~}\relax
-\titlespacing*{\subsection}{0pt}{1ex plus4ex minus0pt}{4pt}\relax
+\titleformat{\subsection}[hang]{\normalfont\large\bfseries}{}{0pt}{%
+%    \filcenter%
+    \begin{blok}%
+        \setlength{\unitlength}{1em}%
+        \begin{picture}(1.7,1)(0,0.16)\relax%
+            \put(0,-0.2){{\color{svetleseda}\rule{\textwidth}{1.4\unitlength}}}%
+            \put(0.2,0){\makebox(1,1){\arabic{subsection}}}%
+            \put(0.7,0.5){\circle{1.2}}%
+        \end{picture}%
+    \end{blok}%
+%    \filcenter\arabic{subsection}~%
+}\relax
+\titlespacing*{\subsection}{0pt}{4ex plus1ex minus0ex}{1ex}\relax
 
 \assignpagestyle{\chapter}{normalni}
 
 % {xcolor}:
+\definecolor{cervena}{rgb}{1,0,0}
+\definecolor{svetleseda}{gray}{0.9}
 \definecolor{seda}{gray}{0.5}
 
-\newenvironment*{blok}{}{}
-% \begin{priklad}{#2 = Záhlaví příkladu}{#3 = \footnote{}\footnote{}...}
-%   \radekprikladu{text-řádku}
-%   \radekprikladu{text-řádku}
-% \end{priklad}
-\newenvironment*{priklad}[3][]{%
-    \newcommand*{\radekprikladu}[1]{%
-        \nepoprve{{%
-            \textcolor{seda}{\ensuremath{\carriagereturn}}%
-        }}%
-        \item{##1}%
-    }%
-    \newcommand*{\akceprikladu}[1]{%
-        \nepoprve{{%
-            \textcolor{seda}{\ensuremath{\carriagereturn}}%
-        }}%
-        \item\ensuremath{\Rightarrow}~{\rmfamily{}##1}%
-    }%
-    \begin{samepage}
-    \fontfamily{qcr}\fontseries{m}\fontshape{n}\selectfont\raggedright%
-    \ifthenelse{\equal{#2}{}}{}{\begin{list}{\makebox[0pt][l]{\#}\makebox[0pt][l]{\rule[2ex]{5cm}{0.5pt}}}{%
-            \setlength{\leftmargin}{0.75em}%
-            \setlength{\labelwidth}{0pt}%
-            \setlength{\labelsep}{\leftmargin}%
-        }\raggedright\item\relax%
-        {#2}#3%
-    \end{list}\vspace{-3ex}}%
-    \budepoprve%
-    \begin{list}{}{%
-        \setlength{\itemsep}{0pt}%
-        \setlength{\parsep}{0pt}%
-        \setlength{\topsep}{1ex plus0.5ex minus0.5ex}%
-}}{%
-    \end{list}%
-    \end{samepage}%
-    \vspace{2mm plus2mm minus2mm}%
-}
+% Definice délek
+\newlength{\sirkacislaprikladu}\newlength{\sirkakodu}\newlength{\sirkazbytku}
 
-% qcr = TeX Gyre Cursor
+\setlength{\sirkacislaprikladu}{23pt}
+\setlength{\sirkakodu}{0.9\textwidth}
+
+
+\newenvironment*{blok}{}{}
+
 
 \newcommand*{\kapitola}[2][]{\chapter{#2}}
 \newcommand*{\sekce}[2][]{\section{#2}}
@@ -135,6 +119,46 @@
 \newcommand*{\volitelnyzacatek}{\textcolor{seda}{\ensuremath{\big[}}}%
 \newcommand*{\volitelnykonec}{\textcolor{seda}{\ensuremath{\big]}}}%
 \newcommand*{\carriagereturn}{\mbox{}\dlsh}%
+
+%
+% \priklad[#1=(rezervováno)]{#2=číslo příkladu}{#3=titulek (volitelný) + \footnotemark}{#4=\footnotetext...}{#5=řádky a akce příkladu}
+% ====================================
+\newcommand{\priklad}[5][]{{%
+    % Definovat \radekprikladu{text}:
+    \newcommand*{\radekprikladu}[1]{%
+        % Ukončit předchozí řádek:
+        \nepoprve{{%
+            \fontencoding{IL2}\fontfamily{bsk}\fontseries{m}\fontshape{n}\selectfont%
+            \textcolor{seda}{$\carriagereturn$}\\\relax%
+        }}%
+        % Vypsat samotný řádek příkladu:
+        {##1}%
+    }%
+    % Definovat \akceprikladu{text}
+    \newcommand*{\akceprikladu}[1]{\radekprikladu{\ensuremath{\Rightarrow}~\rmfamily{}##1}}%
+    \setlength{\sirkazbytku}{\textwidth}%
+    \addtolength{\sirkazbytku}{-\sirkacislaprikladu}%
+    \noindent%
+    \parbox{\textwidth}{\raggedright%
+        \ifthenelse{\equal{#2}{0}}{}{%
+            % Vygenerovat vodicí čáru nad příkladem:
+            \ifthenelse{\equal{#2}{1}}{}{%
+                \makebox[0pt][l]{\rule[2ex]{5cm}{0.5pt}}%
+            }%
+            % Vygenerovat číslo příkladu:
+            \makebox[\sirkacislaprikladu][l]{\##2}%
+            % Titulek příkladu:
+            \parbox[t]{\sirkazbytku}{\raggedright{#3}}%
+            \par%
+        }\raggedleft%
+        \dashbox{\parbox{\sirkakodu}{\raggedright%
+            % Nastavit písmo pro řádky příkladu:
+            \fontfamily{qcr}\fontseries{m}\fontshape{n}\selectfont\budepoprve%
+            #5%
+        }}%
+    }#4\par\vspace{2ex plus0.5ex minus0.25ex}%
+}}
+% qcr = TeX Gyre Cursor
 
 \renewcommand*{\rmdefault}{cmr}
 
