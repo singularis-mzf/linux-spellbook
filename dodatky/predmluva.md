@@ -14,56 +14,100 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 # Předmluva
 
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+„Linux: Kniha kouzel“ je sbírka velmi krátkých řešených příkladů pro operační systém Linux.
+Svým konceptem je určena začátečníkům a pokročilým uživatelům, přičemž každé z těchto skupin
+přináší něco jiného.
 
+Může být velice užitečná každému, kdo v současnosti začíná s Linuxem
+a troufne si na příkazový řádek/příkazovou řádku, v Linuxu zvaný/ou „terminál“, zadat „ls“
+a chtěl by toho víc, ale nemá představu, co mu může příkazová řádka/příkazový řádek
+nabídnout. Jste-li takovým uživatelem a dáte-li této knize šanci, bude se snažit vám
+doplnit dostupné referenční příručky, dokumentaci a různé online zdroje o to, co jim,
+dle mého názoru, většinou zoufale chybí − bude se snažit být stručná, přehledná a praktická.
+Jejím cílem je zpřístupnit vám tajuplnou moc terminálu a konfiguračních souborů
+s elegancí a přehledností běžnou pro menu, dialogová okna a jiná grafická uživatelská
+rozhraní, aniž byste museli studovat stovky stran dokumentace a pronikat do ezoterických
+a tajuplných zákonitostí systému, jejichž pochopení je výsadou takzvaných „power users“.
+Na druhou stranu vás ale nepovede jako běžné uživatelské příručky a určitou minimální míru
+důvtipu a nahlížení do manuálových stránek po vás její praktické využití zpravidla vyžadovat
+bude.
+
+Patříte-li k **začátečníkům**, bude od vás tato kniha vyžadovat přinejmenším znalosti základů
+programování (tzn. pojmy jako „proměnná“, „příkaz“ či „podprogram“) a zájem dozvědět se
+něco nového o tom, co a jak můžete dělat s programy nabízenými vám moderní distribucí Linuxu.
+Máte-li na počítači nainstalovaný Linux, máte na disku desítky gigabajtů nesmírně mocných
+nástrojů, které v sobě skrývají desítky let práce špičkových programátorů, a nemusíte
+nezbytně pochopit, jak fungují, abyste s nimi dokázali velké věci; musíte však znát postup,
+jak je použít; příliš troufalí uživatelé totiž skončí na prvním chybovém hlášení.
+V této knize chci s využitím svých zkušeností (a v mezích možností i zkušeností
+jiných pokročilých uživatelů) k tomu, abych vám ukázal/a reálně dosažitelné cíle a postupy,
+které vás k nim opravdu zavedou, rychle a v klidu.
+
+Patříte-li k **pokročilým uživatelům** systému GNU/Linux, tato kniha vám nabídne především
+rychlou nápovědu k příkazům a parametrům, které už jste pozapomněli, a programátorskou
+inspiraci. Svoje oblíbená řešení si můžete ve vlastním výtisku knihy barevně zvýraznit,
+zakroužkovat či dopsat. Především vám ale nabízí možnost svoje znalosti a zkušenosti
+sdílet nejen se sobě rovnými, ale také s uživateli méně zkušenými; takovými,
+jaký/á jste byl/a vy, než jste podstoupil/a roky experimentování, programování
+a studia dokumentace. Vaše příspěvky, zlepšovací návrhy a chybová hlášení jsou
+v repozitáři na GitHubu vítány, pokud budou v souladu s konceptem projektu. Pokud ne,
+bude vítána vaše odnož (fork), kterou si budete moci uzpůsobit přesně podle svých představ.
+(Veškerý obsah repozitáře je dostupný pod svobodnými licencemi, podrobněji viz níže.)
+
+Napadlo vás už někdy, že zadávání příkazů v terminálu se mnoha aspekty podobá
+**sesílání kouzel** ve fantasy světech? Tento příměr je o to děsivější, že zatímco
+fantasy kouzla ovlivňují jen životy smyšlených postav, vaše příkazy budou mít
+reálné důsledky va vašem vlastním počítači! Linux: Kniha kouzel je na tomto přirovnání
+založena, a proto se v ní všechny druhy příkladů nazývají „zaklínadla“.
+Představte si to, jako že jste začínající čaroděj ve fantasy světě a dostal/a jste
+do ruky lexikon kouzel pro pokročilé, s poznámkami, které si pro sebe poznačil váš
+zkušený předchůdce. Při sesílání kouzel přesahujících vaši kvalifikaci se sice můžete snadno
+„spálit“ (a to platí i u této příručky), přesto je to však v životě mnohem lepší
+než se omezit jen na to, co už bezpečně umíte. (Zamyslete se, jak by dopadl
+takový Harry Potter, kdyby se omezil jen na kouzla odpovídající jeho školnímu ročníku.)
+
+Tato verze knihy je zaměřena primárně na **Ubuntu 18.04, Bionic Beaver**, a jeho varianty
+Kubuntu, Lubuntu, Ubuntu Budgie, Ubuntu MATE, Ubuntu Studio a Xubuntu,
+ale většina uvedených zaklínadel bude fungovat bez větších problémů i na mnoha jiných
+linuxových distribucích, především na Linuxu Mint. (Začátečníkům nedoporučuji
+pokoušet Debian, kde může být jejich zprovoznění obtížnější.) U konkrétních zaklínadel
+může být uvedena jiná verze či distribuce, pro kterou jsou určena.
+
+Velmi podstatnou vlastností této knihy je její **organizace**. Zaklínadla jsou
+v kapitolách organizována do logických skupin a vždy jsou řazena od nejužitečnějších
+k nejméně užitečným, což znamená, že už přečtením několika prvních zaklínadel
+z několika prvních skupin získáte ty nejdůležitější znalosti. Ačkoliv jsou v knize
+i kapitoly zaměřené na konkrétní nástroje (např. GNU make), důraz kladu
+spíš na kapitoly tematické, které kombinují vždy ty nejvhodnější nástroje
+k dosažení daných cílů.
+
+Když jsem s Linuxem kdysi dávno začínal/a, nesmírně mi pomáhaly některé vynikající příručky;
+ve vědeckých knihovnách na ně sice lze stále narazit, ale vzhledem k prudkému vývoji Linuxu,
+GNU, KDE, Xfce a dalších linuxových projektů beznadějně zastarávají a dnešnímu uživateli
+již nedokážou přehledně a pravdivě představit úžasný systém, který na svém počítači má.
+A tak mě mrzelo, že od roku 2012 již žádná nová podobně hodnotná příručka pro uživatele
+nevyšla. Online zdroje jsou zdlouhavé, nepraktické, úzce specializované a z velké části
+v angličtině a je mi skoro až líto osob, které jsou na ně odkázány.
+Proto jsem se rozhodl/a začít tento projekt.
+
+## Licence
+
+Všechny zdrojové soubory tohoto projektu s výjimkou obrázků v adresáři
+„obrazky/gpl“ lze šířit pod podmínkami licence
+[Creative Commons Attribution-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/).
+Zmíněné obrázky pak podléhají různým verzím GNU General Public License
+a budou do knihy zařazeny pouze jako přílohy.
+
+<!--
 - kouzla
 - záhady
 - autorita
 - „zahrávat si s příkazy, kterým nerozumí“
 
-Napadlo vás už někdy, že zadávání příkazů na příkazovém řádku se určitými aspekty velice podobá sesílání kouzel ve fantasy světech? Linux: Kniha kouzel je sbírka jednoduchých řešených příkladů, která je na tomto přirovnání založena. Bude moci být velice užitečná každému, kdo začíná s Linuxem, protože mu pomůže poznávat a skutečně využívat nové oblasti, ve který si pravděpodobně myslí, že je nad jeho síly se orientovat. Jejím posláním je mýtit nedostatek znalostí a zkušeností, který činí začátečníky v Linuxu tak neschopnými, a zpřístupnit jim moc příkazové řádky, parametrů a konfiguračních souborů s elegancí a logikou běžnou pro menu, dialogová okna a jiná grafická rozhraní.
-
-
-
-
-
-<!--
-Opakování:
-Linux: Kniha kouzel je sbírka příkazů, parametrů, konfiguračních voleb a postupů, které byly sestaveny s podrobnou znalostí dané problematiky. Představte si to, jako když ve fantasy světě začínající čaroděj dostane do ruky lexikon kouzel pro pokročilé. Při používání kouzel přesahujících jeho kvalifikaci se sice může snadno „spálit“, ale přesto to bude mnohem lepší, než kdyby se omezil jen na těch pár začátečnických postupů, které už bezpečně zná. (Zamyslete se např. jak by dopadl Harry Potter, kdyby se omezil pouze na ta kouzla, která se naučil v běžné školní výuce.)
-
-Tato kniha tedy u začátečníků předpokládá zájem dozvědět se něco nového.
-
-Cílem je zpřístupnit tato řešení začátečníkům, kteří zatím nemají dostatečné zkušenosti k tomu, aby taková řešení s použitím referenčních příruček v angličtině sestavili a vyrovnali se se všemi chybami, omyly a zvláštnostmi, na které při tom narazí.
--->
-
-
-
 Stejně jako uživatelské příručky si klade za cíl ukázat začátečníkům, jaké možnosti jim jejich operační systém nabízí, a stejně jako referenční příručka jim má kvalitní organizací pomoci najít a použít funkce, které budou potřebovat.
 
+Netušíte-li například jak naplánovat vyskakovací oznámení na dnešních 15.30, jak začít
+psát v Markdownu, jak zmenšit všechny svoje obrázky nebo jak otočit svoje oblíbené video
+o 180° (popř. jak ho pustit pozpátku nebo s ním dělat jiné hlouposti), je toto kniha pro vás.
 
-
-
-
-Napadlo vás už někdy, že zadávání příkazů na příkazovém řádku se určitými aspekty velice podobá sesílání kouzel ve fantasy světech? Tento příměr je o to hrozivější, že zatímco fantasy kouzla ovlivňují jen životy smyšlených postav, příkazy příkazové řádky mají reálné důsledky ve vašem počítači. A ještě hrozivější je to, že je můžete zadávat vy.
-
-Tato kniha je určena začátečníkům a pokročilým.
-
-Linux: Kniha kouzel je sbírka jednoduchých řešených příkladů, která má za cíl částečně nahradit uživatelské a referenční příručky. Stejně jako uživatelská příručka vám dá přehled o tom, co můžete se svým operačním systémem dělat, a ukáže vám, jak na to. Na rozdíl od ní však tato kniha neobsahuje podrobná vysvětlení a nevede uživatele; pouze mu sdělí postup a...
-
-Tato kniha bude moci být velice užitečná každému, kdo začíná s Linuxem. Podle jeho zájmu mu bude otevírat nové oblasti, ve kterých si pravděpodobně myslí, že je nad jeho síly se orientovat. Jejím posláním je mýtit nedostatek znalostí a zkušeností, který činí začátečníky v Linuxu tak neschopnými, a zpřístupnit jim moc příkazové řádky, parametrů a konfiguračních souborů s elegancí a logikou běžnou pro menu, dialogová okna a jiná grafická rozhraní. S touto knihou budete schopni zřídit a udržovat repozitář gitu, ořezávat obrázky či videa, ovládat okna, přeskládat stránky PDF souborů, napsat dobře fungující Makefile (a vědět, k čemu je) apod.
-
-K psaní této knihy mě přivedla zkušenost, kdy jsem potřeboval/a otočit video o 180°. Po značném hledání jsem objevil/a referenční dokumentaci filtrů ffmpegu. „Prokousal/a“ jsem se seznamem zhruba stovky filtrů a konečně narazil/a na filtr „transpose“, který nabízel čtyři možnosti. Otočení o 180° mezi nimi ovšem nebylo. Tak jsem si s tím chvíli lámal/a hlavu a vyřešil/a problém zřetězením dvou otočení o 90°.
-
-Linux: Kniha kouzel je sbírka příkazů, parametrů, konfiguračních voleb a postupů, které byly sestaveny s podrobnou znalostí dané problematiky. Představte si to, jako když ve fantasy světě začínající čaroděj dostane do ruky lexikon kouzel pro pokročilé. Při používání kouzel přesahujících jeho kvalifikaci se sice může snadno „spálit“, ale přesto to bude mnohem lepší, než kdyby se omezil jen na těch pár začátečnických postupů, které už bezpečně zná. (Zamyslete se např. jak by dopadl Harry Potter, kdyby se omezil pouze na ta kouzla, která se naučil v běžné školní výuce.)
-
-Tato kniha tedy u začátečníků předpokládá zájem dozvědět se něco nového.
-
-Cílem je zpřístupnit tato řešení začátečníkům, kteří zatím nemají dostatečné zkušenosti k tomu, aby taková řešení s použitím referenčních příruček v angličtině sestavili a vyrovnali se se všemi chybami, omyly a zvláštnostmi, na které při tom narazí.
-
-Jsou lidé, kteří mají s příkazovým řádkem spojeny mnohé předsudky. Ve skutečnosti však pro to, abyste ho mohli použít, nemusíte rozumět počítači o nic víc, než potřebujete pro klikání myší. Příkazová řádka je jen dalším uživatelským rozhraním, které se liší způsobem, jakým uživatel zadává počítači svoje požadavky, ne však obsahem těchto požadavků.
-
-Pokročilým uživatelům tato kniha nabízí především rychlou nápovědu k příkazům, které už pozapomněli, protože je dlouho nepoužili, a také soukromou sbírku oblíbených příkazů (které si mohou ve vlastním výtisku knihy zakroužkovat, podtrhnout, barevně zvýraznit, případně dopsat, pokud v původním výtisku chybí). Posledním možným využitím je rychlý přechod od jednoho programátorského řešení k jinému − v tomto případě vám kniha pomůže rychle se v novém prostředí zorientovat a udělat si přehled, jaké funkce máte k dispozici a jak je vhodně použít.
-
-V začátcích práce s Linuxem (tehdy na vysoké škole) mi velmi pomohly některé vynikající příručky. To však už bylo dávno a od roku 2012 nevyšly na českém knižním trhu skoro žádné knihy, které by se zabývaly Linuxem z hlediska běžného uživatele. Starší knihy zase s vývojem Linuxu značně zastarávají.
-
-Co se týče distribuce, příklady (není-li u nich uvedeno jinak) mají být funkční a otestované na Ubuntu 18.04 LTS s výhledem na přechod na Ubuntu 20.04 LTS. Většina příkazů ale bude fungovat i na jiných distribucích, byť možná bude vyžadovat instalaci jiných balíčků.
+-->

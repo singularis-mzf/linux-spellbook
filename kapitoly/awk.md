@@ -17,6 +17,15 @@ https://creativecommons.org/licenses/by-sa/4.0/
 ## Úvod
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+GNU awk je univerzální, řádkově orientovaný nástroj pro jednoduché zpracování textových souborů.
+Pracuje tak, že pro každý řádek vstupních souborů prochází od začátku do konce skript,
+který se skládá z podmínek (tzv. vzorků) a jim příslušejících bloků příkazů.
+Přitom vykonává příkazy z těch bloků, jejichž podmínky jsou daným řádkem splněny.
+
+Z hlediska programování nabízí globální proměnné, lokální proměnné (pouze ve funkcích)
+a asociativní pole. Prakticky má pouze dva datové typy: řetězec a pole, přičemž s řetězcem
+se pracuje jako s číslem, kdykoliv se použije v číselném kontextu.
+
 ## Definice
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
@@ -148,6 +157,46 @@ length(retezec) => délka řetězce
 *# definovat funkci (volitelně s lokálními proměnnými)*<br>
 **function** {*název funkce*}**(**[{*první-parametr*}[**,**{*další-parametry*}]...][[{*bílé znaky navíc*}{*lokální proměnná*}**,**...]]**)** TODO: Dodělat...
 
+### Číselné funkce
+
+*# zaokrouhlit desetinné číslo na nejbližší celé číslo/k nule*<br>
+{*číslo*} &gt;= 0 ? int({*číslo*} + 0.4999999) : int({*číslo*} - 0.4999999)<br>
+**int(**{*hodnota*}**)**
+<!--
+TODO: Test.
+-->
+
+*# vygenerovat pseudonáhodné celé číslo 0 &lt;= y &lt; maximum*<br>
+*// Vhodné jen pro maxima do 16 777 215. Pro vyšší maximum bude množina vrácených hodnot pravidelně přerušovaná, což pro některé druhy využití nemusí vadit. Správným řešením je bitová kombinace více volání funkce „rand()“.*<br>
+**rand() \*** {*maximum*}
+
+*# vygenerovat pseudonáhodné celé číslo 0 &lt;= y &lt; 4 294 967 296*<br>
+**65356 \* int(65536 \* rand()) + int(65536 \* rand())**
+
+*# nastavit počáteční „semínko“ generátoru pseudonáhodných čísel (na hodnotu/podle času)*<br>
+**srand(**{*hodnota-semínka*}**)**<br>
+**srand()**
+
+*# vygenerovat pseudonáhodné desetinné číslo 0 &lt;= y &lt; 1*<br>
+**rand()**
+
+*# druhá odmocnina*<br>
+**sqrt(**{*x*}**)**
+
+*# arcus tangens y / x*<br>
+**atan2(**{*y*}**,** {*x*}**)**
+
+*# sinus/kosinus/tangens/contangens*<br>
+**sin(**{*x*}**)**<br>
+**cos(**{*x*}**)**<br>
+**sin(**{*x*}**) / cos(**{*x*}**)**<br>
+**cos(**{*x*}**) / sin(**{*x*}**)**
+
+*# přirozený logaritmus / e na x-tou*<br>
+**log(**{*x*}**)**<br>
+**exp(**{*x*}**)**
+
+
 ### Řízení zpracování
 
 *# opustit cyklus (for, while, do) nebo přepínač (switch)*<br>
@@ -188,7 +237,8 @@ length(retezec) => délka řetězce
 ## Tipy a zkušenosti
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 * Pole jsou asociativní a indexy v polích jsou vždy řetězce; při indexování číslem se číslo nejprve převede na řetězec.
-* Neexistující prvky.
+* Neexistující prvky...
+
 
 ### Funkce escape()
 ![ve výstavbě](../obrazky/ve-vystavbe.png)

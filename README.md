@@ -87,7 +87,9 @@ Zatím nejsou.
 * /etc/fstab
 * GRUB
 * Systém (služby, swap apod.)
+* Plánování úloh
 * Přehrávání videa, zvuku a obrázků
 * Regulární výrazy
+* Stahování videí z YouTube a podobných služeb
 * Vim
 * Záznam obrazovky (screenshooter, screencast, ...)

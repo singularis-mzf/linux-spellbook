@@ -34,56 +34,64 @@ Zpracovat filtry:
 # FFmpeg
 
 ## Úvod
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+FFmpeg je nástroj pro konverzi, zpracování a streamování videa, zvuku a titulků.
+Tato kapitola se bude věnovat především konverzi a zpracování, při nichž můžete využít
+značné množství filtrů a technik. Hlavní výhodou FFmpegu oproti videoeditorům
+s grafickým uživatelským rozhraním je modularita a opakovatelnost zpracování pro různé
+vstupní soubory.
+
+Základním nástrojem pro zpracování multimediálních souborů je tzv. filtr grafů (filtergraph),
+který definujete pomocí parametru **-filter\_complex**, případně pomocí parametrů
+**\-vf** a **-af**.
 
 ## Definice
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+* **Stopa** je časovaná složka multimediálního souboru proložená v čase s ostatními stopami
+téhož souboru. Stopy v jednom souboru mohou být různého typu (obrazová, zvuková,
+titulková či datová) a mohou mít různou délku.
 
-* **Stopa** je složka multimediálního souboru určená ke spojení s ostatními stopami. Existují čtyři druhy stop − obrazová, zvuková, titulková a datová. Multimediální kontejner může obsahovat více stop a tyto stopy mohou být různé...
+* **Kanál** (plane/channel) je datová vrstva tvořící stopu s ostatními kanály. Kanály stopy
+trvají vždy stejně dlouho a tvoří každý snímek obrazu či vzorek zvuku společně. Obrazová stopa
+se typicky dělí na kanály Y (svítivost), U a V (barva), případně ještě alfa (krytí); zvuková
+stopa mívá buď jeden kanál (mono), nebo pravý a levý kanál (stereo); titulková stopa má
+obvykle pouze jeden kanál. (Titulky v různých jazycích se řeší přidáním více titulkových stop.)
 
-* **Kanál** je vrstva tvořící stopu. Na rozdíl od stop, kanály stopy trvají vždy stejně dlouho a tvoří každý snímek obrazu či vzorek zvuku společně.
+* **Snímek** je základní kvantum obrazové stopy. Vzorkovací frekvence videa čili počet snímků
+za sekundu se nazývá **fps**. Hodnota fps se obvykle pohybuje v rozmezí 10 až 60.
 
-* **Snímek** je základní kvantum obrazové stopy. Vzorkovací frekvence videa čili počet snímků za sekundu se nazývá **fps**. Hodnota fps se obvykle pohybuje v rozmezí 10 až 60.
-
-* **Vzorek** je základní kvantum zvukové stopy. Obvyklá vzorkovací frekvence zvuku je 44100.
+* **Vzorek** je základní kvantum zvukové stopy. Obvyklá vzorkovací frekvence zvuku je 44 100
+vzorků za sekundu.
 
 ## Zaklínadla (filtry)
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-
 ### Úprava časové osy
 
-*# zrychlení 2×*<br>
-**[vi] setpts=0.5\*PTS [vo] ; [ai] atempo=2.0 [ao]**
+*# zrychlení 2×/4×/5×/16×*<br>
+*// Důvodem k rozdílné implementaci je, že filtr „atempo“ akceptuje parametr pouze v rozsahu 0.5 až 2.0; vyšších, resp. nižších hodnot je možno dosáhnout zřetězením více těchto filtrů.*<br>
+**[vi] setpts=PTS/2.0 [vo] ; [ai] atempo=2.0 [ao]**<br>
+**[vi] setpts=PTS/4.0 [vo] ; [ai] atempo=2.0,atempo=2.0 [ao]**<br>
+**[vi] setpts=PTS/5.0 [vo] ; [ai] atempo=2.0,atempo=2.0,atempo=1.25 [ao]**<br>
+**[vi] setpts=PTS/16.0 [vo] ; [ai] atempo=2.0,atempo=2.0,atempo=2.0,atempo=2.0 [ao]**
 
-*# zrychlení 4×*<br>
-**[vi] setpts=0.25\*PTS [vo] ; [ai] atempo=2.0,atempo=2.0 [ao]**
-
-*# zrychlení 5×*<br>
-**[vi] setpts=0.2\*PTS [vo] ; [ai] atempo=2.0,atempo=2.0,atempo=1.25 [ao]**
-
-*# zrychlení 16×*<br>
-**[vi] setpts=0.0625\*PTS [vo] ; [ai] atempo=2.0,atempo=2.0,atempo=2.0,atempo=2.0 [ao]**
-
-*# zpomalení 2×*<br>
-**[vi] setpts=2.0\*PTS [vo] ; [ai] atempo=0.5 [ao]**
-
-*# zpomalení 4×*<br>
-**[vi] setpts=4.0\*PTS [vo] ; [ai] atempo=0.5,atempo=0.5 [ao]**
-
-*# zpomalení 5×*<br>
-**[vi] setpts=5.0\*PTS [vo] ; [ai] atempo=0.5,atempo=0.5,atempo=0.8 [ao]**
-
-*# zpomalení 16×*<br>
+*# zpomalení 2×/4×/5×/16×*<br>
+**[vi] setpts=2.0\*PTS [vo] ; [ai] atempo=0.5 [ao]**<br>
+**[vi] setpts=4.0\*PTS [vo] ; [ai] atempo=0.5,atempo=0.5 [ao]**<br>
+**[vi] setpts=5.0\*PTS [vo] ; [ai] atempo=0.5,atempo=0.5,atempo=0.8 [ao]**<br>
 **[vi] setpts=16.0\*PTS [vo] ; [ai] atempo=0.5,atempo=0.5,atempo=0.5,atempo=0.5 [ao]**
 
-*# vyříznout časový úsek (údaje jsou v sekundách, např. 20.5)*<br>
+*# vyříznout časový úsek (údaje v sekundách)(alternativy)*<br>
 **[vi] trim=**{*začátek*}**:**{*konec*}**,setpts=PTS-STARTPTS [vo] ; [ai] atrim=**{*začátek*}**:**{*konec*}**,asetpts=PTS-STARTPTS [ao]**<br>
-**[vi] trim=start=**{*začátek*}**:duration=**{*trvání*} **[vo] ; [ai] atrim=start=**{*začátek*}**:duration=**{*trvání*}**,asetpts=PTS-STARTPTS [ao]**<br>
+**[vi] trim=start=**{*začátek*}**:duration=**{*trvání*} **[vo] ; [ai] atrim=start=**{*začátek*}**:duration=**{*trvání*}**,asetpts=PTS-STARTPTS [ao]**
+
+*# vyříznout časový úsek (údaje ve snímcích)(alternativy)*<br>
 **[vi] trim=start_frame=**{*index-prvního-zahrnutého-snímku*}**:**{*index-snímku-za-koncem*}**,setpts=PTS-STARTPTS [vo]**<br>
 **[ai] atrim=start_sample=**{*index-prvního-zahrnutého-vzorku*}**:**{*index-vzorku-za-koncem*}**,asetpts=PTS-STARTPTS [ao]**
 
-*# opakovat celý obrazový/zvukový vstup po zadaný počet sekund*<br>
-*// na vstupu vezme maximálně 32767 snímků a max. 2147483647 zvukových vzorků; snímky odpovídají cca 21,8 minuty při fps=25*<br>
+*# obrátit video/zvuk*<br>
+*// Pozor! Filtr reverse musí celé video nekomprimované uložit do paměti. Pro zpracování dlouhého videa tedy doporučuji dočasně zapnout opravdu velký swapovací soubor, nebo video obracet po částech.*<br>
+**[vi] reverse [vo]**<br>
+**[ai] areverse [ao]**
+
+*# opakovat celý (krátký) obrazový/zvukový vstup po zadaný počet sekund*<br>
+*// Na vstupu vezme maximálně 32 767 snímků a max. 2 147 483 647 zvukových vzorků, což obvykle odpovídá cca 21,8 minut obrazu a 13,5 hodině zvuku.*<br>
 **[vi] setpts=PTS-STARTPTS,loop=-1:32767,trim=0:**{*cílový-počet-sekund*}** [vo]**<br>
 **[ai] asetpts=PTS-STARTPTS,aloop=-1:2147483647,atrim=0:**{*cílový-počet-sekund*}** [ao]**
 
@@ -91,14 +99,10 @@ Zpracovat filtry:
 **[vi] trim=**{*začátek*}**:**{*konec*}**,setpts=PTS-STARTPTS,loop=-1:32767,trim=0:**{*cílový-počet-sekund*}** [vo]**<br>
 **[ai] atrim=**{*začátek*}**:**{*konec*}**,asetpts=PTS-STARTPTS,aloop=-1:2147483647,atrim=0:**{*cílový-počet-sekund*}** [ao]**
 
-*# obrátit video*<br>
-*// Pozor! Filtr reverse musí celé video nekomprimované uložit do paměti. Pro zpracování dlouhého videa tedy doporučuji dočasně zapnout opravdu velký swapovací soubor, nebo video obracet po částech.*<br>
-**[vi] reverse [vo]**
+*# zpomalení obrazové stopy 10× s interpolací pohybu*<br>
+**[vi] setpts=10.0\*PTS,minterpolate=fps=25 [vo]**
 
-
-
-
-### Úprava obrazu
+### Škálování (resize)
 
 *# změna rozlišení (roztažení, smrsknutí, škálování)(pro většinu kodeků musejí být hodnoty šířka a výška sudé!)*<br>
 **[vi] scale=**{*šířka*}**:**{*výška*} **[vo]**
@@ -111,6 +115,8 @@ Zpracovat filtry:
 **[vi] xbr=2 [vo]**<br>
 **[vi] xbr=3 [vo]**<br>
 **[vi] xbr=4 [vo]**
+
+### Transformace a oříznutí
 
 *# nadstavení obrazu (padding)(barva=#RRGGBB[AA] jako v HTML) *<br>
 **[vi] pad=**{*šířka*}**:**{*výška*}**:**{*posun-x-zleva*}**:**{*posun-y-shora*}[**:**{*barva*}] **[vo]**
@@ -138,14 +144,14 @@ Zpracovat filtry:
 *# otočit obraz o obecný úhel (ve stupních) proti směru hodinových ručiček a zvětšit rozlišení na obdelník opsaný otočenému snímku; nevyplněné rohy ponechat průhledné*<br>
 **[vi] rotate=**{*úhel*}**\*(-PI/180):rotw(**{*úhel*}**\*(-PI/180)):roth(**{*úhel*}**\*(-PI/180)):c=none [vo]**
 
-*# zapéci titulky do obrazu (normálně/podtrženým červeným písmem Arial velikosti 48)*<br>
-*// Nastavení stylu jsou ve formátu ASS, přičemž znaky = a , musíte escapovat kvůli ffmpegu.*<br>
-**[vi] subtitles=**{*soubor-s-titulky*}[**:force_style=**{*nastavení-stylu*}] **[vo]**<br>
-**[vi] subtitles=**{*soubor-s-titulky*}**:force_style=FontName\\=Arial\\,Fontsize\\=48\\,PrimaryColour\\=&amp;H000000FF\\,Underline\\=1 [vo]**
+### Roztmívačky a zatmívačky
 
-<!--
-Barvy se zadávají ve formátu AABBGGRR, kde AA=FF je úplná průhlednost a AA=00 úplná neprůhlednost.
--->
+
+
+### Úprava obrazu
+
+
+
 
 *# zakrýt/odstranit logo nebo jiný rušivý element z obrazu*<br>
 **[vi] delogo=x=**{*posun-x-zleva*}**:y=**{*posun-y-shora*}**:w=**{*šířka*}**:h=**{*výška*} **[vo]**
@@ -157,13 +163,21 @@ Barvy se zadávají ve formátu AABBGGRR, kde AA=FF je úplná průhlednost a A
 *# odstranit prokládání*<br>
 **[vi] yadif [vo]**
 
-*# nastavit kontrast, jas, saturaci a gama korekci*<br>
-*// při eval=frame se hodnoty počítají pro každý snímek zvlášť*<br>
-**[vi] eq=**[**contrast=**{*-2.0..2.0;def=1.0*}]
-[**:brightness=**{*-1.0..1.0;def=0.0*}]
-[**:saturation=**{*0.0..3.0;def=1.0*}]
-[**:gamma=**{*0.1..10.0;def=1.0*}]
-[**:eval=frame**] **[vo]**
+*# nastavit kontrast (rozsah -2.0 až 2.0; neutrální hodnota 1.0)*<br>
+*// Záporné hodnoty vyústí v inverzní obraz.*<br>
+**[vi] eq=contrast=**{*hodnota*}[**:eval=frame**] **[vo]**
+
+*# nastavit jas (rozsah -1.0 až 1.0; neutrální hodnota 0.0)*<br>
+**[vi] eq=brightness=**{*hodnota*}[**:eval=frame**] **[vo]**
+
+*# nastavit saturaci (rozsah 0.0 až 3.0; neutrální hodnota 1.0*<br>
+**[vi] eq=saturation=**{*hodnota*}[**:eval=frame**] **[vo]**
+
+*# nastavit gama-korekci (rozsah 0.1 až 10.; neutrální hodnota 1.0)*<br>
+**[vi] eq=gamma=**{*hodnota*}[**:eval=frame**] **[vo]**
+
+*# nastavit kontrast, jas, saturaci a gama korekci současně*<br>
+**[vi] eq=contrast=**{*kontrast*}**:brightness=**{*jas*}**:saturation=**{*saturace*}**:gamma=**{*gama*}[**:eval=frame**] **[vo]**
 
 *# vložit roztmívačku/zatmívačku*<br>
 *// všechny snímky před začátkem roztmívačky a za koncem zatmívačky budou nastaveny na uvedenou barvu*
@@ -173,9 +187,11 @@ Barvy se zadávají ve formátu AABBGGRR, kde AA=FF je úplná průhlednost a A
 **[vi] fade=t=in:st=**{*začátek*}**:d=**{*trvání*}[**:c=**{*barva*}][**:alpha=1**] **[vo]**<br>
 **[vi] fade=t=out:st=**{*začátek*}**:d=**{*trvání*}[**:c=**{*barva*}][**:alpha=1**] **[vo]**
 
-*# rozmazat obraz*<br>
-*// výchozí sigma=0.5*<br>
-**[vi] gblur**[**=**{*sigma*}] **[vo]**
+*# rozmazat obraz (normálně/maximálně/minimálně/obecně)*<br>
+**[vi] gblur=2 [vo]**<br>
+**[vi] gblur=1024 [vo]**<br>
+**[vi] gblur=0 [vo]**<br>
+**[vi] gblur=**{*sigma*} **[vo]**
 
 *# aplikovat výraz po pixelech*<br>
 *// Ve výrazu můžete použít proměnné: čas snímku v sekundách (T), sekvenční číslo snímku (N), souřadnice výstupního pixelu (X, Y), rozměry snímku (W, H); a funkce r(), g(), b() a a(), které přijímají parametry (x, y) a načtou odpovídající složku z pixelu původního snímku na uvedených souřadnicích. Pro souřadnice mimo rozsah vrací 0.*<br>
@@ -188,11 +204,6 @@ TODO: [ ] Vyzkoušet rozsah složky A. (Ostatní: 0..255.)
 *# sestavit každý nový snímek z pixelů původního*<br>
 *// Souřadnice mimo rozsah (?)*<br>
 **[vi] geq=p(**{*výraz-x*}**\\,**{*výraz-y*}**) [vo]**
-
-<!--
-[ ] POKRAČOVAT OD:
-https://ffmpeg.org/ffmpeg-filters.html#geq
--->
 
 *# naskládat videa stejné výšky vedle sebe/videa stejné šířky pod sebe*<br>
 *// Všechny použité vstupy musejí mít kromě stejné výšky/šířky také stejný formát pixelu (pixel-format).*<br>
@@ -281,6 +292,20 @@ https://ffmpeg.org/ffmpeg-filters.html#geq
 **[vi] vignette=a=**{*úhel-čočky*}[**:x0=**{*x-středu*}**:y0=**{*y-středu*}][**:eval=frame**] **[vo]**<br>
 **[vi] vignette=mode=backward:a=**{*úhel-čočky*}[**:x0=**{*x-středu*}**:y0=**{*y-středu*}][**:eval=frame**] **[vo]**
 
+### Titulky
+*# zapéci titulky do obrazu (normálně)*<br>
+**[vi] subtitles=**{*soubor-s-titulky*} **[vo]**
+
+*# zapéci titulky do obrazu (obecně/podtrženým červeným písmem Arial velikosti 48)*<br>
+*// Nastavení stylu jsou ve formátu ASS, přičemž znaky = a , musíte escapovat kvůli ffmpegu.*<br>
+**[vi] subtitles=**{*soubor-s-titulky*}[**:force_style=**{*nastavení-stylu*}] **[vo]**<br>
+**[vi] subtitles=**{*soubor-s-titulky*}**:force_style=FontName\\=Arial\\,Fontsize\\=48\\,PrimaryColour\\=&amp;H000000FF\\,Underline\\=1 [vo]**
+
+<!--
+Barvy se zadávají ve formátu AABBGGRR, kde AA=FF je úplná průhlednost a AA=00 úplná neprůhlednost.
+-->
+
+
 
 
 
@@ -293,8 +318,9 @@ https://ffmpeg.org/ffmpeg-filters.html#geq
 *# spojit za sebe dva vstupy a prolnout sedmisekundovou prolínačkou*<br>
 **[ai][ai] acrossfade=d=7:c1=exp:c2=exp [ao]**
 
-*# před každý zvukový kanál vložit určitý počet milisekund ticha*<br>
-**[ai] adelay=**{*ms-pro-pravý-kanál*}[**\|**{*ms-pro-levý-kanál*}] **[ao]**
+*# před/za každý zvukový kanál vložit určitý počet milisekund ticha*<br>
+**[ai] adelay=**{*ms-pro-pravý-kanál*}[**\|**{*ms-pro-levý-kanál*}] **[ao]**<br>
+?
 
 *# přidat ozvěnu*<br>
 *// Hlasitost ozvěny je v rozsahu 0 až 1.0 a nesmí být 0. Filtr mírně sníží hlasitost původních zvuků, je potřeba ji vyladit.*<br>
@@ -331,7 +357,7 @@ https://ffmpeg.org/ffmpeg-filters.html#geq
 *# přidat na konec zvukové stopy nekonečné ticho*<br>
 **[ai] apad [ao]**
 
-*# přidat na konec zvukové stopy několik sekund ticha*<br>
+*# přidat na konec zvukové stopy několik milisekund ticha*<br>
 ?
 
 *# přidat na konec několik vzorků ticha*<br>
@@ -342,10 +368,6 @@ https://ffmpeg.org/ffmpeg-filters.html#geq
 
 *# převzorkovat stopu na novou frekvenci*<br>
 **[ai] aresample=**{*nová-frekvence*} **[ao]**
-
-*# obrátit celou zvukovou stopu v čase*<br>
-**// Varování: Tento filtr potřebuje načíst celý zvuk najednou do paměti, což může pro delší soubory způsobit velké paměťové nároky.**<br>
-**[ai] areverse [ao]**
 
 *# nastavit novou vzorkovací frekvenci bez ovlivnění vzorků*<br>
 **[ai] asetrate=**{*nová-frekvence*} **[ao]**
@@ -403,10 +425,12 @@ pozor na PTS!
 *# spojit (za sebou) obrazové a zvukové vstupy*<br>
 **[vi][ai][vi][ai]**... **concat=n=**{*počet-n-tic vstupů*}**:v=1:a=1 [vo][ao]**
 
+<!--
 *# (nefunguje!!!!!!!!)přehrát úsek a opakovat ho ještě N-krát znovu (Je-li např. počet 2, úsek se celkem přehraje třikrát!)*<br>
 **[vi] loop=**{*počet*}**:{*maximální-počet-snímků*} [vo] ; [ai] aloop=**{*počet*}**:{*maximální-počet-vzorků*} [ao]**<br>
 **[vi] loop=**{*počet*}**:32767 [vo] ; [ai] aloop=**{*počet*}**:2147483647 [ao]**<br>
 **[vi] loop=-1:32767 [vo] ; [ai] aloop=-1:2147483647 [ao]**
+-->
 
 *# naklonovat videovstup/audiovstup na více shodných výstupů*<br>
 **[vi] split=**{*počet výstupů*} **[vo]**...<br>
@@ -426,20 +450,20 @@ pozor na PTS!
 ## Zaklínadla (příkaz ffmpeg)
 
 *# analyzovat soubor (ukáže streamy a jejich parametry)*<br>
-**ffprobe -hide_banner** {*vstupní-soubor*}
+**ffprobe** {*vstupní-soubor*}
 
 *# konvertovat video/zvuk z jednoho formátu na druhý*<br>
-**ffmpeg** [**-hide_banner**] **-i** {*vstupní-soubor.přípona*} **-qscale:0 0** [**-qscale:1 0**] {*výstupní soubor.přípona*}
+**ffmpeg -i** {*vstupní-soubor.přípona*} **-qscale:0 0** [**-qscale:1 0**] {*výstupní soubor.přípona*}
 
 *# konverze zvuku na stereo/na mono*<br>
-**ffmpeg** [**-hide_banner**] **-i** {*vstup*} **-ac 2** {*výstup*}<br>
-**ffmpeg** [**-hide_banner**] **-i** {*vstup*} **-ac 1** {*výstup*}
+**ffmpeg -i** {*vstup*} **-ac 2** {*výstup*}<br>
+**ffmpeg -i** {*vstup*} **-ac 1** {*výstup*}
 
 *# nastavit audiofrekvenci (v Hz, obvykle 44100, ale také 22050 či 48000)*<br>
-**ffmpeg** [**-hide_banner**] **-i** {*vstup*} **-ar** {*frekvence*} {*výstup*}
+**ffmpeg -i** {*vstup*} **-ar** {*frekvence*} {*výstup*}
 
 *# nastavit poměr stran videa při přehrávání (doporučené hodnoty: 4:3, 16:9, 1:1, 5:4, 16:10)*<br>
-**ffmpeg** [**-hide_banner**] **-i** {*vstup*} **-aspect** {*hodnota*} {*výstup*}
+**ffmpeg -i** {*vstup*} **-aspect** {*hodnota*} {*výstup*}
 
 *# rozložit video na obrázky ve formátu podle výstupní přípony: JPEG (jpg), PNG (png), BMP (bmp), TIFF (tif)*<br>
 **ffmpeg -i** {*video.přípona*} **-r** {*počet-snímků-za-sekundu*} **-f image2 -q:v 0** {*obrázek*}**-%05d.**{*výstupní-přípona*}
@@ -470,20 +494,35 @@ pozor na PTS!
 ## Zaklínadla (příkazy)
 
 *# vypnout úvodní banner s verzí a konfigurací pro ffmpeg/ffprobe*<br>
-**ffmpeg() { $(which ffmpeg) -hide\_banner "$@";}**<br>
-**ffprobe() { $(which ffprobe) -hide\_banner "$@";}**
+*// Toto vypnutí platí jen pro danou instanci bashe.*<br>
+**source &lt;(printf "ffmpeg() { '%s' -hide\_banner "\\$@";}\\n" "$(which ffmpeg)")**<br>
+**source &lt;(printf "ffprobe() { '%s' -hide\_banner "\\$@";}\\n" "$(which ffprobe)")**
 
 ## Parametry příkazů
+![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+Příkaz ffmpeg přijímá tři typy parametrů: globální, vstupní a výstupní.
+Globální parametry se zadávají jako první a platí pro danou instanci ffmpegu jako celek.
+Vstupní parametry se zadávají v sekvenci ukončené parametrem **-i** a platí pouze pro daný jeden vstup. Výstupní parametry se zadávají v sekvenci ukončené názvem výstupního souboru a platí pouze pro daný jeden výstup.
+
+### Globální parametry
+![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+### Vstupní parametry
+![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+### Výstupní parametry
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 ## Jak získat nápovědu
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 ## Tipy a zkušenosti
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-- Pokud obraz či zvuk neupravujete a nekonvertujete, můžete jejich původní kvalitu a kodek zachovat pomocí parametru **-c:v copy** pro obraz, resp. **-c:a copy** pro zvuk. Zvuk můžete v takovém případě ořezávat pomocí parametrů **-ss**, **-to** a **-t**, u obrazu to silně nedoporučuji, protože typicky pak trpí výpadky na začátku a konci výsledného videa.
-- Výstupy filtrů **split** a **asplit** musejí být odebírány paralelně, jinak hrozí přetečení bufferu; je např. špatný nápad zapojit je do filtru **concat**, protože ten čte nejprve první vstup, a než se dostane ke druhému, buffer na něm přeteče, protože filtr **split** nedokáže posílat snímky nejprve na jeden výstup a až pak na druhý. Rychlým řešením je druhý výstup filtru **split** či **asplit** zapojit přes dvojici filtrů **reverse,reverse**, resp. **areverse,areverse**, protože ty dokážou zřídit v paměti buffer neomezené velikosti, ale správným řešením je výstup uložit do souboru a načítat pomocí více parametrů **-i** nebo generátorů **movie**, které mohou svoje načítání pozdržet, než budou snímky či zvuk filtrem **concat** požadovány.
+* Pokud obraz či zvuk neupravujete a nekonvertujete, můžete jejich původní kvalitu a kodek zachovat pomocí parametru **-c:v copy** pro obraz, resp. **-c:a copy** pro zvuk. Zvuk můžete v takovém případě ořezávat pomocí parametrů **-ss**, **-to** a **-t**, u obrazu to silně nedoporučuji, protože typicky pak trpí výpadky na začátku a konci výsledného videa.
+* Většina kodeků odmítne zapsat video, jehož šířka či výška v pixelech je lichá; myslete na to při používání filtru **-scale**.
+* Výstupy filtrů **split** a **asplit** musejí být odebírány paralelně, jinak hrozí přetečení bufferu; je např. špatný nápad zapojit je do filtru **concat**, protože ten čte nejprve první vstup, a než se dostane ke druhému, buffer na něm přeteče, protože filtr **split** nedokáže posílat snímky nejprve na jeden výstup a až pak na druhý. Rychlým řešením je druhý výstup filtru **split** či **asplit** zapojit přes dvojici filtrů **reverse,reverse**, resp. **areverse,areverse**, protože ty dokážou zřídit v paměti buffer neomezené velikosti, ale správným řešením je výstup uložit do souboru a načítat pomocí více parametrů **-i** nebo generátorů **movie**, které mohou svoje načítání pozdržet, než budou snímky či zvuk filtrem **concat** požadovány.
+* Můžete-li téhož efektu dosáhnout pomocí filtru nebo pomocí výstupního parametru, preferujte parametr; dává jistější výsledky, možná i kvalitnější.
 
 
 <!--
