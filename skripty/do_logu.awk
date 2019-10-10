@@ -38,6 +38,7 @@ function Tabulator(delka) {
 }
 
 function ZacatekKapitoly(kapitola, cisloKapitoly) {
+    DO_LOGU_UROVEN_ODSTAVCE = 0;
     return "ZacatekKapitoly(\"" kapitola "\");\n";
 }
 
@@ -58,7 +59,10 @@ function KonecKapitoly(kapitola, cislaPoznamek, textyPoznamek,   i, vysledek) {
         }
         vysledek = vysledek "}];\n";
     }
-    vysledek = vysledek "KonecKapitoly(\"" kapitola "\");\n";
+    vysledek = vysledek "KonecKapitoly(\"" kapitola "\"); # Uroven odstavce: " DO_LOGU_UROVEN_ODSTAVCE "\n";
+    if (DO_LOGU_UROVEN_ODSTAVCE != 0) {
+        ShoditFatalniVyjimku("Kapitole " kapitola " skončila s úrovní odstavce " DO_LOGU_UROVEN_ODSTAVCE ", což pravděpodobně znamená interní chybu lexikálně syntaktického analyzátoru.");
+    }
     return vysledek;
 }
 
@@ -78,11 +82,26 @@ function KonecPodsekce(kapitola, sekce, podsekce) {
     return "KonecPodsekce(\"" kapitola "\", \"" sekce "\", \"" podsekce "\");\n";
 }
 
-function ZacatekOdstavce() {
-    return "ZacatekOdstavce();\n";
+function ZacatekOdstavcu(bylNadpis) {
+    if (DO_LOGU_UROVEN_ODSTAVCE != 0) {
+        ShoditFatalniVyjimku("Nečekaná úroveň odstavce na začátku odstavce: " DO_LOGU_UROVEN_ODSTAVCE);
+    }
+    ++DO_LOGU_UROVEN_ODSTAVCE;
+    return "ZacatekOdstavce(bylNadpis = " (bylNadpis ? "ANO" : "NE") ");\n";
 }
 
-function KonecOdstavce() {
+function PredelOdstavcu() {
+    if (DO_LOGU_UROVEN_ODSTAVCE != 1) {
+        ShoditFatalniVyjimku("Nečekaná úroveň odstavce v předělu: " DO_LOGU_UROVEN_ODSTAVCE);
+    }
+    return "PredelOdstavce();\n";
+}
+
+function KonecOdstavcu() {
+    if (DO_LOGU_UROVEN_ODSTAVCE != 1) {
+        ShoditFatalniVyjimku("Nečekaná úroveň odstavce na konci odstavce: " DO_LOGU_UROVEN_ODSTAVCE);
+    }
+    --DO_LOGU_UROVEN_ODSTAVCE;
     return "KonecOdstavce();\n";
 }
 

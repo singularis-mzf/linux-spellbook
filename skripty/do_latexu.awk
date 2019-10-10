@@ -231,12 +231,16 @@ function KonecPodsekce(kapitola, sekce, podsekce) {
     return "";
 }
 
-function ZacatekOdstavce() {
-    return "";
+function ZacatekOdstavcu(bylNadpis) {
+    return "\\begin{odstavce}" (bylNadpis ? "" : "\\hspace{\\parindent}");
 }
 
-function KonecOdstavce() {
+function PredelOdstavcu() {
     return "\n\n";
+}
+
+function KonecOdstavcu() {
+    return "\\end{odstavce}";
 }
 
 function KonecRadku() {

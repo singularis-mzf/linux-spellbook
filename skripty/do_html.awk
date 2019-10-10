@@ -92,11 +92,15 @@ function KonecPodsekce(kapitola, sekce, podsekce) {
     return "";
 }
 
-function ZacatekOdstavce() {
+function ZacatekOdstavcu(bylNadpis) {
     return "<p>\n";
 }
 
-function KonecOdstavce() {
+function PredelOdstavcu() {
+    return "</p><p>\n";
+}
+
+function KonecOdstavcu() {
     return "</p>\n";
 }
 

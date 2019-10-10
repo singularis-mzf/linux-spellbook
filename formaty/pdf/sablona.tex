@@ -31,12 +31,15 @@
 {{POKUD JE FORMÁT pdf-a4}}
 \usepackage[pdftex,a4paper,inner=2cm,outer=1.5cm,top=1.5cm,bottom=2cm]{geometry} % + showframe pro ladění
 \newlength{\sirkakodu}\setlength{\sirkakodu}{0.9\textwidth}
+\newenvironment{odstavce}{\begin{adjustwidth}{1.0cm}{1.0cm}}{\end{adjustwidth}}
 {{KONEC POKUD}}
+%
 {{POKUD JE FORMÁT pdf-a5}}
 \usepackage[pdftex,a5paper,inner=1.5cm,outer=1cm,top=1.5cm,bottom=1.5cm]{geometry} % + showframe pro ladění
 \newlength{\sirkakodu}\setlength{\sirkakodu}{0.98\textwidth}
+\newenvironment{odstavce}{\begin{adjustwidth}{}{}}{\end{adjustwidth}}
 {{KONEC POKUD}}
-
+%
 %\usepackage[B1,LY1,T1]{fontenc}
 %\usepackage[T1]{fontenc}
 \usepackage[IL2,T1]{fontenc}
@@ -48,6 +51,7 @@
 
 % 3. skupina balíčků:
 \let\degree=\undefined      % nouzové řešení konfliktu (použít \degree z {gensymb}, ne z {mathabx})
+\usepackage{changepage}     % prostředí {adjustwidth}
 \usepackage{dashbox}        % příkazy \dbox{} a \dashbox{}
 \usepackage{fancyhdr}       % formátování záhlaví a zápatí
 \usepackage[bottom]{footmisc}% aby se poznámky pod čarou správně umístily
@@ -57,7 +61,9 @@
 \usepackage{titlesec}       % formátování nadpisů kapitol
 \usepackage{verbatim}       % zejm. prostředí {comment}, ale také {verbatim}
 
-
+%
+% NASTAVENÍ BALÍČKŮ
+% ============================================================================
 % {fancyhdr}:
 \fancypagestyle{normalni}{%
     \fancyhead{}\fancyfoot{}%
@@ -68,7 +74,7 @@
 
 % {titlesec}:
 \titleformat{\chapter}[hang]{\normalfont\LARGE\bfseries}{\makebox[35pt][l]{\thechapter}}{5pt}{}\relax
-\titlespacing*{\chapter}{0pt}{-1ex}{1ex plus2ex minus0.5ex}\relax
+\titlespacing*{\chapter}{0pt}{-1ex}{2ex plus2ex minus0.5ex}\relax
 
 \titleformat{\section}[hang]{\normalfont\Large\bfseries}{\makebox[35pt][l]{\thesection}}{5pt}{}\relax
 \titlespacing*{\section}{0pt}{2ex plus0.5ex minus0ex}{1ex}\relax
@@ -94,15 +100,17 @@
 \definecolor{svetleseda}{gray}{0.9}
 \definecolor{seda}{gray}{0.5}
 
-% Definice délek
+%
+% DEFINICE DÉLKOVÝCH REGISTRŮ
+% ============================================================================
 \newlength{\sirkacislaprikladu}\newlength{\sirkazbytku}
 
 \setlength{\sirkacislaprikladu}{23pt}
 
-
-
+%
+% Další definice
+% ============================================================================
 \newenvironment*{blok}{}{}
-
 
 \newcommand*{\kapitola}[2][]{\chapter{#2}}
 \newcommand*{\sekce}[2][]{\section{#2}}
@@ -163,6 +171,8 @@
 % qcr = TeX Gyre Cursor
 
 \renewcommand*{\rmdefault}{cmr}
+\renewcommand*{\sfdefault}{cmss}
+\renewcommand*{\ttdefault}{qcr}
 
 \begin{document}%
 %
@@ -197,7 +207,7 @@
 Toto dílo \quotedblbase Linux: Kniha kouzel\textquotedblleft{} podléhá licenci
 Creative Commons Attribution-ShareAlike 4.0 International. Úplný text licence
 je přiložen. Pro jeho zobrazení na počítači navštivte:
-\begin{center}\fontfamily{qcr}\selectfont%
+\begin{center}\ttfamily%
 http://creativecommons.org/licenses/by-sa/4.0/
 \end{center}
 

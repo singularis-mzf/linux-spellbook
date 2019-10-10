@@ -301,10 +301,23 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C) {
 }
 
 # Tato funkce se volá pro první ze sekvence řádků určitého typu.
-function ZacitTypRadku() {
+function ZacitTypRadku(   bylPredel) {
+    bylPredel = 0;
+    if (TYP_RADKU != "PRAZDNY" && JE_ODSTAVEC_K_UKONCENI) {
+        if (TYP_RADKU != "NORMALNI") {
+            printf("%s", KonecOdstavcu());
+        } else {
+            printf("%s", PredelOdstavcu());
+            bylPredel = 1;
+        }
+        JE_ODSTAVEC_K_UKONCENI = 0;
+    }
+
     switch (TYP_RADKU) {
         case "NORMALNI":
-            printf("%s", ZacatekOdstavce());
+            if (!bylPredel) {
+                printf("%s", ZacatekOdstavcu(PREDCHOZI_NEPRAZDNY_TYP_RADKU == "NADPIS"));
+            }
             break;
         case "POLOZKA_SEZNAMU":
             if (PREDCHOZI_TYP_RADKU != "POKRACOVANI_POLOZKY_SEZNAMU") {
@@ -325,7 +338,7 @@ function ZacitTypRadku() {
 function UkoncitPredchoziTypRadku() {
     switch (PREDCHOZI_TYP_RADKU) {
         case "NORMALNI":
-            printf("%s", KonecOdstavce());
+            JE_ODSTAVEC_K_UKONCENI = 1;
             return "";
 
         case "POLOZKA_SEZNAMU":
@@ -388,9 +401,12 @@ BEGIN {
     C_PODSEKCE = 0;
     C_PRIKLADU = 0;
     FATALNI_VYJIMKA = 0;
+    PREDCHOZI_NEPRAZDNY_TYP_RADKU = "";
+    PREDCHOZI_TYP_RADKU = "PRAZDNY";
     TYP_RADKU = "PRAZDNY";
     JE_UVNITR_PRIKLADU = 0;
     JE_UVNITR_KOMENTARE = 0;
+    JE_ODSTAVEC_K_UKONCENI = 0;
     TEXT_PRIKLADU = NULL_STRING;
     split("", ppc);
     split("", ppt);
@@ -406,10 +422,17 @@ BEGIN {
 }
 
 {
+    if (TYP_RADKU != "PRAZDNY") {
+        PREDCHOZI_NEPRAZDNY_TYP_RADKU = TYP_RADKU;
+    }
     PREDCHOZI_TYP_RADKU = TYP_RADKU;
     TYP_RADKU = "";
     ZPRACOVANO = 0;
 }
+
+#
+# URČIT TYP ŘÁDKU (a zkontrolovat některé podmínky)
+# ============================================================================
 
 # zaznamenat prázdný řádek
 /^$/ {
@@ -437,7 +460,7 @@ BEGIN {
     }
 }
 
-# určit typ řádku, nebyl-li již určen
+# určit typ řádku, nebyl-li již určen jako prázdný
 {
     if (TYP_RADKU != "") {
         # typ řádku již byl určen
@@ -460,12 +483,14 @@ BEGIN {
     } else {
         TYP_RADKU = "NORMALNI";
     }
-
-    # DEBUG:
-    #printf("\n<TYP=%s>%s>", PREDCHOZI_TYP_RADKU, TYP_RADKU);
+#
+# DEBUG:
+#    printf("\n<TYP=%s>%s>", PREDCHOZI_TYP_RADKU, TYP_RADKU);
 }
 
-# pokud se typ řádku změnil, ukončit ten předchozí a zahájit nový
+#
+# Pokud se typ řádku změnil, ukončit ten předchozí a zahájit nový
+# ============================================================================
 PREDCHOZI_TYP_RADKU != TYP_RADKU {
     UkoncitPredchoziTypRadku();
     ZacitTypRadku();
@@ -604,6 +629,9 @@ END {
         PREDCHOZI_TYP_RADKU = TYP_RADKU;
         TYP_RADKU = "PRAZDNY";
         UkoncitPredchoziTypRadku();
+        if (JE_ODSTAVEC_K_UKONCENI) {
+            printf("%s", KonecOdstavcu());
+        }
     }
 
     # Řádně ukončit kapitolu, je-li otevřena.
