@@ -1,6 +1,6 @@
 <!--
 
-Linux Kniha kouzel, kapitola Make
+Linux Kniha kouzel, kapitola GNU make
 Copyright (c) 2019 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -11,7 +11,7 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
-# Make
+# GNU make
 
 ## Úvod
 GNU make je nástroj k automatizaci procesu kompilace. Vykonává podobnou úlohu jako např.
@@ -20,7 +20,7 @@ skript napsaný v bashi, ale na rozdíl od něj umí:
 * Kompilovat pouze ty části programu, které jsou potřeba (jejichž cílové soubory neexistují nebo se jejich zdrojové soubory změnily).
 * Spouštět kompilace paralelně, aniž by to narušilo definované závislosti.
 
-Vztahy mezi soubory a kompilační příkazy jsou popsány v tzv. Makefilu,
+Vztahy mezi soubory a kompilační příkazy jsou popsány v tzv. Makefilu (souboru jménem „Makefile“),
 jemuž se bude věnovat většina této kapitoly.
 
 ## Definice

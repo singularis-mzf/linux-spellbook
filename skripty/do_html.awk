@@ -77,7 +77,7 @@ function KonecKapitoly(kapitola, cislaPoznamek, textyPoznamek,   i, vysledek) {
 }
 
 function ZacatekSekce(kapitola, sekce, cisloKapitoly, cisloSekce) {
-    return "\n<h2 id=\"kap" cisloSekce "\"><span class=\"cislo\">" cisloSekce ".</span> " sekce "</h2>\n";
+    return "\n<h2 id=\"cast" cisloSekce "\"><span class=\"cislo\">" cisloSekce ".</span> " sekce "</h2>\n";
 }
 
 function KonecSekce(kapitola, sekce) {
@@ -85,7 +85,7 @@ function KonecSekce(kapitola, sekce) {
 }
 
 function ZacatekPodsekce(kapitola, sekce, podsekce, cisloKapitoly, cisloSekce, cisloPodsekce) {
-    return "\n<h3 id=\"kap" cisloSekce "x" cisloPodsekce "\"><span class=\"cislo\">" cisloSekce "." cisloPodsekce "</span> " podsekce "</h3>\n";
+    return "\n<h3 id=\"cast" cisloSekce "x" cisloPodsekce "\"><span class=\"cislo\">" cisloPodsekce "</span> " podsekce "</h3>\n";
 }
 
 function KonecPodsekce(kapitola, sekce, podsekce) {
@@ -128,16 +128,16 @@ function KonecSeznamu(uroven) {
     return "</ul>";
 }
 
-function ZacatekPrikladu(cisloPrikladu, textPrikladu, cislaPoznamek, textyPoznamek,   prvni) {
+function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, cislaPoznamek, textyPoznamek,   prvni) {
     if (!isarray(cislaPoznamek) || !isarray(textyPoznamek)) {
-        ShoditFatalniVyjimku("ZacatekPrikladu(): Očekáváno pole!");
+        ShoditFatalniVyjimku("ZacatekZaklinadla(): Očekáváno pole!");
     }
-    if (textPrikladu == "" && length(cislaPoznamek) != 0) {
-        ShoditFatalniVyjimku("ZacatekPrikladu(): Příklady bez záhlaví, ale s poznámkami pod čarou nejsou podporovány!");
+    if (textZaklinadla == "" && length(cislaPoznamek) != 0) {
+        ShoditFatalniVyjimku("ZacatekZaklinadla(): Zaklínadla bez záhlaví, ale s poznámkami pod čarou nejsou podporována!");
     }
-    vysledek = "<div class=\"priklad\">";
-    if (textPrikladu != "") {
-        vysledek = vysledek "<hr><div class=\"zahlavi\">" cisloPrikladu "&nbsp;" textPrikladu;
+    vysledek = "<div class=\"zaklinadlo\">";
+    if (textZaklinadla != "") {
+        vysledek = vysledek "<hr><div class=\"zahlavi\"><span class=\"cislo\">#" cisloZaklinadla " </span>" textZaklinadla;
         prvni = 1;
         if (length(cislaPoznamek) > 0) {
             vysledek = vysledek "<sup>";
@@ -157,11 +157,11 @@ function ZacatekPrikladu(cisloPrikladu, textPrikladu, cislaPoznamek, textyPoznam
     return vysledek;
 }
 
-function RadekPrikladu(text, jeAkce) {
-    return "<div class=\"radekprikladu" (jeAkce ? " akce" : "") "\">" text "</div>\n";
+function RadekZaklinadla(text, jeAkce) {
+    return "<div class=\"radekzaklinadla" (jeAkce ? " akce" : "") "\">" text "</div>\n";
 }
 
-function KonecPrikladu() {
+function KonecZaklinadla() {
     return "</div></div>\n";
 }
 

@@ -129,12 +129,12 @@ function KonecSeznamu(uroven) {
     return "KonecSeznamu(" uroven ");\n";;
 }
 
-function ZacatekPrikladu(cisloPrikladu, textPrikladu, cislaPoznamek, textyPoznamek,   vysledek) {
+function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, cislaPoznamek, textyPoznamek,   vysledek) {
     if (!isarray(cislaPoznamek) || !isarray(textyPoznamek)) {
-        ShoditFatalniVyjimku("ZacatekPrikladu(): Očekáváno pole!");
+        ShoditFatalniVyjimku("ZacatekZaklinadla(): Očekáváno pole!");
     }
 
-    vysledek = "ZacatekPrikladu(" cisloPrikladu ", \"" textPrikladu "\", {";
+    vysledek = "ZacatekZaklinadla(" cisloZaklinadla ", \"" textZaklinadla "\", {";
     for (i = 0; i < length(cislaPoznamek); ++i) {
         if (!(i in cislaPoznamek)) {
             ShoditFatalniVyjimku("Vnitřní chyba: v poli cislaPoznamek očekáván index [" i "]!");
@@ -152,12 +152,12 @@ function ZacatekPrikladu(cisloPrikladu, textPrikladu, cislaPoznamek, textyPoznam
     return vysledek;
 }
 
-function RadekPrikladu(text, jeAkce) {
-    return "    RadekPrikladu(\"" text "\", jeAkce=" (jeAkce ? "ANO" : "NE") ")\n";
+function RadekZaklinadla(text, jeAkce) {
+    return "    RadekZaklinadla(\"" text "\", jeAkce=" (jeAkce ? "ANO" : "NE") ")\n";
 }
 
-function KonecPrikladu() {
-    return "KonecPrikladu();\n";
+function KonecZaklinadla() {
+    return "KonecZaklinadla();\n";
 }
 
 function FormatTucne(jeZacatek) {

@@ -268,13 +268,13 @@ function KonecSeznamu(uroven) {
     return "\\end{itemize}}";
 }
 
-function ZacatekPrikladu(cisloPrikladu, textPrikladu, cislaPoznamek, textyPoznamek,   i, ax, base) {
-    ax = "%\n\\priklad{";
-    # #2 = číslo příkladu
-    ax = ax cisloPrikladu "}{";
-    # #3 = text příkladu + \footnotemark
-    if (textPrikladu != "") {
-        ax = ax textPrikladu;
+function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, cislaPoznamek, textyPoznamek,   i, ax, base) {
+    ax = "%\n\\zaklinadlo{";
+    # #2 = číslo zaklínadla
+    ax = ax cisloZaklinadla "}{";
+    # #3 = text zaklínadla + \footnotemark
+    if (textZaklinadla != "") {
+        ax = ax textZaklinadla;
         if (length(cislaPoznamek) > 0) {
             base = AlokovatPoznamkuPodCarou();
             ax = ax "\\footnotemark[" base "]";
@@ -285,22 +285,22 @@ function ZacatekPrikladu(cisloPrikladu, textPrikladu, cislaPoznamek, textyPoznam
     }
     ax = ax "}%\n{";
     # #4 = \footnotetext
-    if (textPrikladu != "") {
+    if (textZaklinadla != "") {
         for (i = 0; i < length(cislaPoznamek); ++i) {
             ax = ax "\\footnotetext[" (base + i) "]{" textyPoznamek[cislaPoznamek[i]] "}";
         }
     }
     ax = ax "}{%\n";
-    # #5 = řádky příkladu
+    # #5 = řádky zaklínadla
     return ax;
 }
 
 
-# Pomocná funkce pro RadekPrikladu(text).
+# Pomocná funkce pro RadekZaklinadla(text).
 # Toto je jednoduchá a rychlá implementace vkládání příkazu {\moznyzlom} pro umožnění zalomení
 # delších řádků mimo mezery. Na vstup má již přeložený text v LaTeXu, takže je třeba
 # k němu přistupovat opatrně.
-function ZalomitRadekPrikladu(text,   c, i, slzav, hrzav, lastzlom) {
+function ZalomitRadekZaklinadla(text,   c, i, slzav, hrzav, lastzlom) {
     split("", zlomy);
     slzav = 0;
     hrzav = 0;
@@ -349,12 +349,12 @@ function ZalomitRadekPrikladu(text,   c, i, slzav, hrzav, lastzlom) {
 }
 
 
-function RadekPrikladu(text, jeAkce) {
+function RadekZaklinadla(text, jeAkce) {
 #    gsub(/=/, "={\\moznyzlom}", text);
-    return "%\n\\" (jeAkce ? "akceprikladu" : "radekprikladu") "{" ZalomitRadekPrikladu(text) "}";
+    return "%\n\\" (jeAkce ? "akcezaklinadla" : "radekzaklinadla") "{" ZalomitRadekZaklinadla(text) "}";
 }
 
-function KonecPrikladu() {
+function KonecZaklinadla() {
     return "%\n}";
 }
 

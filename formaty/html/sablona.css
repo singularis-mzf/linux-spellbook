@@ -38,7 +38,7 @@ z-index:auto;font:inherit;}
 
 /* Blokové prvky */
 html {
-    background-color:#f0f0f0;
+    background-color:#caddc0;
     color:#333333;
     font:62.5%/1.2 sans-serif;
     padding:1rem 2% 5rem;
@@ -59,12 +59,22 @@ h2 {
 }
 
 h3 {
-    font:125%/1.2 "DejaVu Sans", sans-serif;
-    margin:1.5em 0 0.25em;
-    /*background-color:rgb(210,210,210);*/
-    padding:0.5rem 0;
-    text-align:center;
+    font:bold 125%/1.2 "DejaVu Sans", sans-serif;
+    margin:1.5em 0 0.75em;
+    background-color:rgba(53,34,63,0.05);
+    box-shadow:0.1rem 0.1rem 0.2rem 0 rgba(0,0,0,0.25);
+    padding:0.5rem 0.5rem;
     page-break-after:avoid; /* možná není podporována v současných prohlížečích */
+}
+
+h3 .cislo {
+    display:inline-block;
+    margin:-0.25em 0.5rem;
+    border:thin solid;
+    border-radius:50% 50%;
+    padding-top:0.2em;
+    text-align:center;
+    width:1.5em;height:1.5em;
 }
 
 p, ul {
@@ -101,45 +111,42 @@ b {font-weight:bold;}
 i {font-style:italic;}
 
 
-/* Formátování příkladů */
-.priklad {
+/* Formátování zaklínadel */
+.zaklinadlo {
     font-family: "DejaVu Sans Mono", monospace;
     font-size:115%;
     page-break-inside:avoid;
 }
 
-.priklad>hr {
-    /* orientační čára nad každým příkladem */
+.zaklinadlo>hr {
+    /* orientační čára nad každým zaklínadlem */
     display:block;
     border-top:1px solid;
     margin:0 auto 0.5pt 0;
     max-width:15em;
 }
+h2+.zaklinadlo>hr, h3+.zaklinadlo>hr {display:none;visibility:hidden;}
 
-.priklad + .priklad {
-    /* mezera mezi příklady */
+.zaklinadlo + .zaklinadlo {
+    /* mezera mezi zaklínadly */
     margin-top:1.25em;
 }
 
-.priklad .zahlavi {
+.zaklinadlo .zahlavi {
     font-family: "Noto Mono", "DejaVu Serif", serif;
     font-size:90%;
     line-height:1.3;
-    margin-left:1.6rem;
+    margin-left:3rem;
     position:relative;
 }
 
-.priklad .zahlavi::before {
-    content: "#";
-    display:inline-block;
-    /*font:bold 1.6rem/1 "DejaVu Sans Mono", serif;*/
-    text-align:left;
-    position:absolute;
-    left:auto;right:100%;top:0;bottom:auto;
-    width:1.6rem;
+
+.zaklinadlo .zahlavi>.cislo {
+    margin-left:-3rem;
+    width:3rem;
 }
 
-.priklad .radky {
+.zaklinadlo .radky {
 /*    box-shadow:0 0 5pt 0 rgb(200,200,200), -5pt 0 5pt 5pt rgb(200,200,200), 5pt 0 5pt 0 rgb(200,200,200);*/
     /*box-shadow:0 0 5pt 1pt rgb(200,200,200);*/
     font-size:80%;
@@ -149,10 +156,10 @@ i {font-style:italic;}
     padding:2pt 5pt;
 }
 
-/* zobrazení znaku ↲ na konci každého řádku příkladu kromě posledního */
-.priklad .radekprikladu::after {content:"↲";margin-left:0.5em;color:rgb(120,120,120);}
-.priklad .radekprikladu:last-child::after {display:none;}
-.priklad .radekprikladu:empty::after {margin-left:0;}
+/* zobrazení znaku ↲ na konci každého řádku zaklínadla kromě posledního */
+.zaklinadlo .radekzaklinadla::after {content:"↲";margin-left:0.5em;color:rgb(120,120,120);}
+.zaklinadlo .radekzaklinadla:last-child::after {display:none;}
+.zaklinadlo .radekzaklinadla:empty::after {margin-left:0;}
 
 
 .dopln {
@@ -161,11 +168,11 @@ i {font-style:italic;}
     margin-left:0.25em;
     margin-right:0.25em;
 }
-.priklad .dopln:first-child {
+.zaklinadlo .dopln:first-child {
     margin-left:0;
 }
 
-.priklad .volznak {
+.zaklinadlo .volznak {
     display:inline-block;
     color:rgb(127,127,127);
     margin:0 -0.2em;
@@ -219,14 +226,6 @@ i {font-style:italic;}
 .tritecky {
     color:rgb(127,127,127);
     letter-spacing:-0.3em;
-}
-
-h3 .cislo {
-    display:inline-block;
-    /*margin:0 0.5rem 0 0;*/
-    margin-right:0.5rem;
-    min-width:2em;
-    text-align:right;
 }
 
 @media print {

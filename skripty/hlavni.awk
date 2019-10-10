@@ -186,12 +186,12 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C) {
         switch (C = substr(VSTUP, 1, 2)) {
             case "**":
                 if (Vrchol("format") != "**") {
-                    if (TYP_RADKU != "RADEK_PRIKLADU") {
+                    if (TYP_RADKU != "RADEK_ZAKLINADLA") {
                         VYSTUP = VYSTUP FormatTucne(1);
                     }
                     Push("format", "**");
                 } else {
-                    if (TYP_RADKU != "RADEK_PRIKLADU") {
+                    if (TYP_RADKU != "RADEK_ZAKLINADLA") {
                         VYSTUP = VYSTUP FormatTucne(0);
                     }
                     Pop("format");
@@ -252,14 +252,14 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C) {
                     VYSTUP = VYSTUP HypertextovyOdkaz(ZpracujZnaky(substr(VSTUP, i + 2, j - i - 2)), ZpracujZnaky(substr(VSTUP, 2, i - 2)));
                     VSTUP = substr(VSTUP, j + 1);
                     continue;
-                } else if (JE_UVNITR_PRIKLADU && VelikostZasobniku("format") == 0) {
+                } else if (JE_UVNITR_ZAKLINADLA && VelikostZasobniku("format") == 0) {
                     VYSTUP = VYSTUP FormatVolitelny(1);
                     VSTUP = substr(VSTUP, 2);
                     continue;
                 }
                 break;
             case "]":
-                if (JE_UVNITR_PRIKLADU && VelikostZasobniku("format") == 0) {
+                if (JE_UVNITR_ZAKLINADLA && VelikostZasobniku("format") == 0) {
                     VYSTUP = VYSTUP FormatVolitelny(0);
                     VSTUP = substr(VSTUP, 2);
                     continue;
@@ -325,7 +325,7 @@ function ZacitTypRadku(   bylPredel) {
                 printf("%s", ZacatekPolozkySeznamu(1));
             }
             break;
-        case "PRIKLAD":
+        case "ZAKLINADLO":
             delete ppc;
             delete ppt;
         default:
@@ -358,15 +358,15 @@ function UkoncitPredchoziTypRadku() {
             return "";
 
         case "POZNAMKA":
-        case "PRIKLAD":
-            if (JE_UVNITR_PRIKLADU && TYP_RADKU != "POZNAMKA" && TYP_RADKU != "RADEK_PRIKLADU") {
-                VypsatZahlaviPrikladu();
+        case "ZAKLINADLO":
+            if (JE_UVNITR_ZAKLINADLA && TYP_RADKU != "POZNAMKA" && TYP_RADKU != "RADEK_ZAKLINADLA") {
+                VypsatZahlaviZaklinadla();
             }
             return "";
 
-        case "RADEK_PRIKLADU":
-            printf("%s", KonecPrikladu());
-            JE_UVNITR_PRIKLADU = 0;
+        case "RADEK_ZAKLINADLA":
+            printf("%s", KonecZaklinadla());
+            JE_UVNITR_ZAKLINADLA = 0;
             return "";
 
         default:
@@ -374,17 +374,17 @@ function UkoncitPredchoziTypRadku() {
     }
 }
 
-function VypsatZahlaviPrikladu(   i, maPoznamky) {
-    if (TYP_RADKU != "RADEK_PRIKLADU") {
-        ShoditFatalniVyjimku("Příklad musí mít alespoň jeden řádek!");
+function VypsatZahlaviZaklinadla(   i, maPoznamky) {
+    if (TYP_RADKU != "RADEK_ZAKLINADLA") {
+        ShoditFatalniVyjimku("Zaklínadlo musí mít alespoň jeden řádek!");
     }
-    if (TEXT_PRIKLADU != NULL_STRING) {
-        if (TEXT_PRIKLADU != "") {
-            printf("%s", ZacatekPrikladu(++C_PRIKLADU, TEXT_PRIKLADU, ppc, ppt));
+    if (TEXT_ZAKLINADLA != NULL_STRING) {
+        if (TEXT_ZAKLINADLA != "") {
+            printf("%s", ZacatekZaklinadla(++C_ZAKLINADLA, TEXT_ZAKLINADLA, ppc, ppt));
         } else {
-            printf("%s", ZacatekPrikladu(0, "", ppc, ppt));
+            printf("%s", ZacatekZaklinadla(0, "", ppc, ppt));
         }
-        TEXT_PRIKLADU = NULL_STRING;
+        TEXT_ZAKLINADLA = NULL_STRING;
         delete ppc;
         delete ppt;
     }
@@ -399,15 +399,15 @@ BEGIN {
     C_KAPITOLY = 0;
     C_SEKCE = 0;
     C_PODSEKCE = 0;
-    C_PRIKLADU = 0;
+    C_ZAKLINADLA = 0;
     FATALNI_VYJIMKA = 0;
     PREDCHOZI_NEPRAZDNY_TYP_RADKU = "";
     PREDCHOZI_TYP_RADKU = "PRAZDNY";
     TYP_RADKU = "PRAZDNY";
-    JE_UVNITR_PRIKLADU = 0;
+    JE_UVNITR_ZAKLINADLA = 0;
     JE_UVNITR_KOMENTARE = 0;
     JE_ODSTAVEC_K_UKONCENI = 0;
-    TEXT_PRIKLADU = NULL_STRING;
+    TEXT_ZAKLINADLA = NULL_STRING;
     split("", ppc);
     split("", ppt);
     split("", ppcall);
@@ -470,14 +470,14 @@ BEGIN {
         TYP_RADKU = "POLOZKA_SEZNAMU";
         $0 = substr($0, 3);
     } else if (PREDCHOZI_TYP_RADKU != "NORMALNI" && $0 ~ /^\*# .*\*<br>$/) {
-        TYP_RADKU = "PRIKLAD";
-        JE_UVNITR_PRIKLADU = 1;
+        TYP_RADKU = "ZAKLINADLO";
+        JE_UVNITR_ZAKLINADLA = 1;
     } else if (PREDCHOZI_TYP_RADKU != "NORMALNI" && $0 ~ /^\*\/\/ .+\*(<br>)?$/) {
         TYP_RADKU = "POZNAMKA";
     } else if (PREDCHOZI_TYP_RADKU != "NORMALNI" && $0 ~ /^!\[.+\]\(.+\)$/) {
         TYP_RADKU = "OBRAZEK";
-    } else if (JE_UVNITR_PRIKLADU) {
-        TYP_RADKU = "RADEK_PRIKLADU";
+    } else if (JE_UVNITR_ZAKLINADLA) {
+        TYP_RADKU = "RADEK_ZAKLINADLA";
     } else if (PREDCHOZI_TYP_RADKU == "POLOZKA_SEZNAMU" || PREDCHOZI_TYP_RADKU == "POKRACOVANI_POLOZKY_SEZNAMU") {
         TYP_RADKU = "POKRACOVANI_POLOZKY_SEZNAMU";
     } else {
@@ -506,7 +506,7 @@ TYP_RADKU == "NADPIS" {
         printf("%s", KonecSekce(KAPITOLA, SEKCE));
     if (KAPITOLA != "" && $0 ~ /^# /)
         printf("%s", KonecKapitoly(KAPITOLA, ppcall, pptall));
-    C_PRIKLADU = 0;
+    C_ZAKLINADLA = 0;
     if ($0 ~ /^# /) {
         KAPITOLA = ZpracujZnaky(substr($0, 3));
         SEKCE = "";
@@ -555,14 +555,14 @@ TYP_RADKU == "POKRACOVANI_POLOZKY_SEZNAMU" {
     next;
 }
 
-TYP_RADKU == "PRIKLAD" {
-    if (PREDCHOZI_TYP_RADKU == "PRIKLAD") {
-        ShoditFatalniVyjimku("Příklad nesmí následovat bezprostředně po předchozím příkladu. Vložte před něj prázdný řádek.");
+TYP_RADKU == "ZAKLINADLO" {
+    if (PREDCHOZI_TYP_RADKU == "ZAKLINADLO") {
+        ShoditFatalniVyjimku("Zaklínadlo nesmí následovat bezprostředně po předchozím zaklínadle. Vložte před něj prázdný řádek.");
     }
     if ($0 ~ /<br>$/) {
         $0 = substr($0, 1, length($0) - 4);
     }
-    TEXT_PRIKLADU = FormatovatRadek(substr($0, 4, length($0) - 4));
+    TEXT_ZAKLINADLA = FormatovatRadek(substr($0, 4, length($0) - 4));
     next;
 }
 
@@ -570,9 +570,9 @@ TYP_RADKU == "POZNAMKA" {
     if ($0 ~ /<br>$/) {
         $0 = substr($0, 1, length($0) - 4);
     }
-    if (!JE_UVNITR_PRIKLADU) {
-        ShoditFatalniVyjimku("Poznámky jsou v této verzi podporovány pouze uvnitř příkladů.");
-        #printf("%s", Poznamka(FormatovatRadek(substr($0, 5, length($0) - 5)), JE_UVNITR_PRIKLADU));
+    if (!JE_UVNITR_ZAKLINADLA) {
+        ShoditFatalniVyjimku("Poznámky jsou v této verzi podporovány pouze uvnitř zaklínadel.");
+        #printf("%s", Poznamka(FormatovatRadek(substr($0, 5, length($0) - 5)), JE_UVNITR_ZAKLINADLA));
     } else {
         INDEX_POZNAMKY_POD_CAROU = length(ppcall);
         CISLO_POZNAMKY_POD_CAROU = INDEX_POZNAMKY_POD_CAROU + 1;
@@ -585,16 +585,16 @@ TYP_RADKU == "POZNAMKA" {
     next;
 }
 
-TYP_RADKU == "RADEK_PRIKLADU" {
+TYP_RADKU == "RADEK_ZAKLINADLA" {
     if ($0 ~ /<br>$/) {
         $0 = substr($0, 1, length($0) - 4);
     }
-    VypsatZahlaviPrikladu();
+    VypsatZahlaviZaklinadla();
     jeAkce = (match($0, /^!: ?/) != 0);
     if (!jeAkce) {
-        printf("%s", RadekPrikladu(FormatovatRadek($0), 0));
+        printf("%s", RadekZaklinadla(FormatovatRadek($0), 0));
     } else {
-        printf("%s", RadekPrikladu(FormatovatRadek(substr($0, RLENGTH + 1)), 1));
+        printf("%s", RadekZaklinadla(FormatovatRadek(substr($0, RLENGTH + 1)), 1));
     }
     next;
 }

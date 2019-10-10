@@ -103,9 +103,9 @@
 %
 % DEFINICE DÉLKOVÝCH REGISTRŮ
 % ============================================================================
-\newlength{\sirkacislaprikladu}\newlength{\sirkazbytku}
+\newlength{\sirkacislazaklinadla}\newlength{\sirkazbytku}
 
-\setlength{\sirkacislaprikladu}{23pt}
+\setlength{\sirkacislazaklinadla}{23pt}
 
 %
 % Další definice
@@ -131,38 +131,37 @@
 \newcommand*{\carriagereturn}{\mbox{}\dlsh}%
 
 %
-% \priklad[#1=(rezervováno)]{#2=číslo příkladu}{#3=titulek (volitelný) + \footnotemark}{#4=\footnotetext...}{#5=řádky a akce příkladu}
+% \zaklinadlo[#1=(rezervováno)]{#2=číslo zaklínadla}{#3=titulek (volitelný) + \footnotemark}{#4=\footnotetext...}{#5=řádky a akce zaklínadla}
 % ====================================
-\newcommand{\priklad}[5][]{{%
-    % Definovat \radekprikladu{text}:
-    \newcommand*{\radekprikladu}[1]{%
+\newcommand{\zaklinadlo}[5][]{{%
+    % Definovat \radekzaklinadla{text}:
+    \newcommand*{\radekzaklinadla}[1]{%
         % Ukončit předchozí řádek:
         \nepoprve{{%
             \fontencoding{IL2}\fontfamily{bsk}\fontseries{m}\fontshape{n}\selectfont%
             \textcolor{seda}{$\carriagereturn$}\\\relax%
         }}%
-        % Vypsat samotný řádek příkladu:
+        % Vypsat samotný řádek zaklínadla:
         {##1}%
     }%
-    % Definovat \akceprikladu{text}
-    \newcommand*{\akceprikladu}[1]{\radekprikladu{\ensuremath{\Rightarrow}~\rmfamily{}##1}}%
+    % Definovat \akcezaklinadla{text}
+    \newcommand*{\akcezaklinadla}[1]{\radekzaklinadla{\ensuremath{\Rightarrow}~\rmfamily{}##1}}%
     \setlength{\sirkazbytku}{\textwidth}%
-    \addtolength{\sirkazbytku}{-\sirkacislaprikladu}%
+    \addtolength{\sirkazbytku}{-\sirkacislazaklinadla}%
     \noindent%
     \parbox{\textwidth}{\raggedright%
         \ifthenelse{\equal{#2}{0}}{}{%
-            % Vygenerovat vodicí čáru nad příkladem:
+            % Vygenerovat vodicí čáru nad zaklínadlem:
             \ifthenelse{\equal{#2}{1}}{}{%
                 \makebox[0pt][l]{\rule[2ex]{5cm}{0.5pt}}%
             }%
-            % Vygenerovat číslo příkladu:
-            \makebox[\sirkacislaprikladu][l]{\##2}%
-            % Titulek příkladu:
+            % Vygenerovat číslo zaklínadla:
+            \makebox[\sirkacislazaklinadla][l]{\##2}%
+            % Titulek zaklínadla:
             \parbox[t]{\sirkazbytku}{\raggedright{#3}}%
             \par\vspace{1ex}%
         }\raggedleft%
         \dashbox{\parbox{\sirkakodu}{\raggedright%
-            % Nastavit písmo pro řádky příkladu:
             \fontfamily{qcr}\fontseries{m}\fontshape{n}\selectfont\budepoprve%
             #5%
         }}%
