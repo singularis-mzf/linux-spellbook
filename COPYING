@@ -93,34 +93,3 @@ License: CC0
 Files: zdroje_obrazku/vmezera.png
 License: PD
  Public domain, because there is not originality in this file and it's nor photography nor computer program.
-
-Files: obrazky/gpl/retext.png
-Copyright: 2007, Nuno Pinheiro <nuno@oxygen-icons.org>
-           2007, David Vignoni <david@icon-king.com>
-           2007, David Miller <miller@oxygen-icons.org>
-           2007, Johann Ollivier Lapeyre <johann@oxygen-icons.org>
-           2007, Kenneth Wimer <kwwii@bootsplash.org>
-           2007, Riccardo Iaconelli <riccardo@oxygen-icons.org>
-           2011-2017, Dmitry Shachnev <mitya57@gmail.com>
-           2014, Lukas Holecek <hluk@email.cz>
-           2019, Singularis
-License: GPL-3
- This image is a screen shot of the GUI of the program ReText 7.0.1,
- that is a free software under GPL-2+ license (with GPL-3+ icons).
- It contains a text by Singularis released under CC-BY-SA-4.0.
- As a result the screenshot as a whole can be used under GPL-3
- license only.
-
-
-License: GPL-3
- This program is free software; you can redistribute it and/or modify it
- under the terms of the GNU General Public License as published by the Free
- Software Foundation; version 3 of the License only.
- .
- This program is distributed in the hope that it will be useful, but WITHOUT
- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- more details.
- .
- On Debian systems, the full text of the GNU General Public License
- version 3 can be found in the file `/usr/share/common-licenses/GPL-3'.

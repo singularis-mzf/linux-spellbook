@@ -222,9 +222,6 @@ Doporučuji prohledat online zdroje v sekci „Odkazy“ této kapitoly, nebo e
 
 Tato ukázka je funkční, ale zestručněná. Úplnou ukázku můžete najít v repozitáři na GitHubu v souboru „ukazka_markdownu.md“.
 
-## Snímek obrazovky
-![snímek obrazovky](../obrazky/gpl/retext.png)
-
 ## Instalace na Ubuntu
 *# příkaz...*<br>
 **sudo apt-get install markdown**

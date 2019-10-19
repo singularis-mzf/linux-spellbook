@@ -28,8 +28,8 @@ CONVERT := convert
 PDFLATEX := pdflatex -halt-on-error
 
 VSECHNY_DODATKY := predmluva test mechanismus-prekladu
-VSECHNY_KAPITOLY := _ukazka awk docker ffmpeg firefox git hledani-souboru latex make markdown obrazky odkazy ostatni soubory
-OBRAZKY := logo-knihy-velke.png make.png ve-vystavbe.png gpl/retext.png
+VSECHNY_KAPITOLY := _ukazka awk docker ffmpeg firefox git hledani-souboru latex make markdown obrazky odkazy ostatni planovani-uloh soubory
+OBRAZKY := logo-knihy-velke.png make.png ve-vystavbe.png
 
 SOUBORY_PREKLADU := soubory_prekladu
 VYSTUP_PREKLADU := vystup_prekladu

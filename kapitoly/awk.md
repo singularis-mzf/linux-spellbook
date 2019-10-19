@@ -68,14 +68,16 @@ se pracuje jako s číslem, kdykoliv se použije v číselném kontextu.
 *# přiřadit hodnotu proměnné*<br>
 {*název-proměnné*} **=** {*hodnota*}
 
-*# získat hodnotu proměnné prostředí*<br>
-**ENVIRON[**{*název-proměnné*}**]**
+*# získat hodnotu proměnné prostředí (přímý přístup/nepřímý přístup)*<br>
+**ENVIRON["**{*název-proměnné*}**"]**<br>
+**ENVIRON[**{*proměnná-s-názvem*}**]**
 
 *# získat jméno vstupního souboru*<br>
 **FILENAME**
 
-*# získat číslo právě zpracovávaného řádku (číslováno od nuly!)*<br>
-**FNR**
+*# získat číslo právě zpracovávaného řádku (v souboru/celkově)*<br>
+**FNR + 1**<br>
+**NR + 1**
 
 *# získat počet „sloupců“ aktuálního řádku (dostupných jako $1, $2 atd.)*<br>
 **NF**
@@ -90,11 +92,12 @@ se pracuje jako s číslem, kdykoliv se použije v číselném kontextu.
 
 ### Řetězcové funkce
 
-*# získat podřetězec (pozice se číslují od 1!)*<br>
+*# získat podřetězec*<br>
+*// Pozice v řetězci se v awk číslují od 1!*<br>
 **substr(**{*řetězec*}**,** {*počáteční-pozice*}[**,** {*maximální-délka*}]**)**
 
 *# nahradit všechny výskyty regulárního výrazu/starého řetězce v textu proměnné novým textem*<br>
-*// výsledek přepíš původní hodnotu proměnné*<br>
+*// Výsledek přepíše původní hodnotu proměnné.*<br>
 **gsub(/**{*regulární výraz*}**/,** {*nový-řetězec*}[, {*proměnná*}]**)**<br>
 **gsub(escape(**{*starý-řetězec*}**),** {*nový řetězec*}[, {*proměnná*}]**)**
 
@@ -111,7 +114,7 @@ se pracuje jako s číslem, kdykoliv se použije v číselném kontextu.
 *# načíst první podřetězec vyhovující regulárnímu výrazu (nejdelší možný); není-li takový, vrátit "NENALEZENO"*<br>
 **vysledek = (match(**{*zkoumaný-řetězec*}**, /**{*regulární-výraz*}**/) != 0) ? substr(RSTART, RLENGTH) : "NENALEZENO";**
 
-*# opakované výskyty určitého znaku nahradit jeho jedním výskytem*<br>
+*# sekvence více výskytů téhož znaku v řetězci nahradit jeho jedním výskytem*<br>
 ?
 
 *# všechna písmena konvertovat na velká/malá*<br>
@@ -244,6 +247,7 @@ TODO: Test.
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 ## Instalace na Ubuntu
+*# *<br>
 **sudo apt-get install gawk**
 
 ## Odkazy

@@ -38,12 +38,6 @@ https://creativecommons.org/licenses/by-sa/4.0/
 Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
 -->
 
-## Snímek obrazovky
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-<!--
-Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
--->
-
 ## Instalace na Ubuntu
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 

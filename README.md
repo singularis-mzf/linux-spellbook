@@ -17,21 +17,15 @@ zjednodušený a uživatelsky přívětivý přehled toho, co v Linuxu můžet
 s pomocí příkazové řádky/příkazového řádku a konfiguračních souborů.
 
 Příručka podléhá licenci
-[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/),
-s výjimkou některých snímků obrazovky v adresáři ``obrazky/gpl``,
-které samy o sobě podléhají [GPL v3](https://www.gnu.org/licenses/gpl-3.0.html)
-a jejich vkládání do příručky je otázka na delší právní diskusi.
-
-![ve výstavbě](obrazky/ve-vystavbe.png) Příručka je zatím v rané fázi
-vývoje, ale už je sestavitelná.
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 
 ## Návod k sestavení
 
 K sestavení příručky ze zdrojového kódu budete potřebovat Git, GNU make,
-GNU awk, LaTeX (včetně extra-fontů) a ImageMagick. V minimální instalaci
-Ubuntu 18.04 LTS můžete tyto nástroje nainstalovat příkazem:
+GNU awk, ImageMagick a LaTeX. V Ubuntu 18.04 LTS, Debianu 10 a Linuxu Mint 17.2
+můžete tyto nástroje nainstalovat příkazem:
 
-> ``sudo apt-get install git make gawk texlive-latex-recommended texlive-fonts-extra texlive-lang-czechslovak imagemagick``
+> ``sudo apt-get install git make gawk imagemagick texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra texlive-lang-czechslovak``
 
 Pak budete potřebovat stáhnout si repozitář:
 
@@ -42,7 +36,7 @@ A nakonec stačí spustit make:
 > ``make -C linux-spellbook``
 
 Výstup ve všech podporovaných formátech najdete v podadresářích
-adresáře ``linux-spellbook/vystup_prekladu``.
+adresáře ``linux-spellbook/vystup\_prekladu``.
 
 Pořadí a přítomnost kapitol a dodatků ve výstupu můžete ovlivnit v souboru
 „kapitoly.lst“, který se automaticky vygeneruje při prvním překladu.
@@ -51,10 +45,8 @@ Kapitoly ani dodatky se však nesmějí opakovat.
 Varování *„LaTeX Font Warning: Some font shapes were not available,
 defaults substituted“* je bohužel v pořádku, zatím se mi ho nepodařilo zbavit.
 
-Soubor ``vystup_prekladu/html/index.htm`` zatím bohužel není použitelný,
+Soubor ``vystup\_prekladu/html/index.htm`` zatím bohužel není použitelný,
 ale můžete si prohlédnout HTML soubory jednotlivých přeložených kapitol.
-
-
 
 ## Přehled kapitol podle stavu vývoje
 
@@ -68,10 +60,12 @@ Zatím nejsou.
 * [Git](kapitoly/git.md)
 * [Markdown](kapitoly/markdown.md)
 * [Zpracování obrázků](kapitoly/obrazky.md)
+* [Plánování úloh](kapitoly/planovani-uloh.md)
 
 ### 2. Fáze shromažďování (pokročilá)
 * [FFmpeg](kapitoly/ffmpeg.md)
-* [GAWK](kapitoly/gawk.md)
+* [GNU awk](kapitoly/awk.md)
+* [Regulární výrazy](kapitoly/regularni-vyrazy.md)
 
 ### 1. Fáze shromažďování (začátek)
 * [Docker](kapitoly/docker.md)
@@ -82,14 +76,12 @@ Zatím nejsou.
 * [Soubory](kapitoly/soubory.md)
 
 ### 0. Plánované
-* Správa balíčků (apt/dpkg)
+* Správce balíčků (apt/dpkg)
 * Bash
-* /etc/fstab
+* Diskové oddíly a /etc/fstab
 * GRUB
 * Systém (služby, swap apod.)
-* Plánování úloh
 * Přehrávání videa, zvuku a obrázků
-* Regulární výrazy
-* Stahování videí z YouTube a podobných služeb
+* Stahování videí z internetu (youtube-dl)
 * Vim
 * Záznam obrazovky (screenshooter, screencast, ...)

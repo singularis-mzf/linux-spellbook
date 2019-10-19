@@ -32,12 +32,14 @@
 \usepackage[pdftex,a4paper,inner=2cm,outer=1.5cm,top=1.5cm,bottom=2cm]{geometry} % + showframe pro ladění
 \newlength{\sirkakodu}\setlength{\sirkakodu}{0.9\textwidth}
 \newenvironment{odstavce}{\begin{adjustwidth}{1.0cm}{1.0cm}}{\end{adjustwidth}}
+\newenvironment{obsahdosloupcu}{\begin{multicols*}{2}}{\end{multicols*}}
 {{KONEC POKUD}}
 %
 {{POKUD JE FORMÁT pdf-a5}}
 \usepackage[pdftex,a5paper,inner=1.5cm,outer=1cm,top=1.5cm,bottom=1.5cm]{geometry} % + showframe pro ladění
 \newlength{\sirkakodu}\setlength{\sirkakodu}{0.98\textwidth}
 \newenvironment{odstavce}{\begin{adjustwidth}{}{}}{\end{adjustwidth}}
+\newenvironment{obsahdosloupcu}{\begin{blok}}{\end{blok}}
 {{KONEC POKUD}}
 %
 %\usepackage[B1,LY1,T1]{fontenc}
@@ -58,6 +60,7 @@
 \usepackage{gensymb}        % symboly jako např. \degree
 \usepackage[pdftex]{graphicx}% vkládání obrázků
 \usepackage{ifthen}         % příkaz \ifthenelse a související konstrukce
+\usepackage{multicol}       % prostředí {multicols} a {multicols*}
 \usepackage{titlesec}       % formátování nadpisů kapitol
 \usepackage{verbatim}       % zejm. prostředí {comment}, ale také {verbatim}
 
@@ -222,8 +225,46 @@ http://creativecommons.org/licenses/by-sa/4.0/
 % Nastavit styl záhlaví a zápatí
 \pagestyle{normalni}%
 % Vysázet obsah
+\begin{obsahdosloupcu}%
 \renewcommand*{\contentsname}{OBSAH}%
 \tableofcontents%
+\end{obsahdosloupcu}%
+%
+%
+\clearpage%
+\chapter*{Typografické konvence}%
+\noindent\begin{tabular}{|l|p{0.6\textwidth}|}%
+{\ttfamily sudo apt-get update}&%
+    Texty tištěné normálním neproporcionálním písmem máte přepsat
+    přesně tak, jak jsou napsány.\\%
+{\ttfamily\itshape\underline{jméno-souboru}}&%
+    Za skloněné podtržené části máte doplnit konkrétní hodnoty.\\%
+{\textcolor{seda}{\ensuremath{\dlsh}}}&%
+    Dělí-li se zaklínadlo na víc řádků či variant,
+    je každá z nich ukončena šedým symbolem odrádkování; není-li na konci řádku tento symbol,
+    jde jen o zalomení řádku v knize.\\%
+{\ttfamily ABC=\,\textcolor{seda}{{\fontfamily{qcr}\fontseries{m}\fontshape{n}\selectfont\char`\\}}}&%
+    Ve výjimečných případech, kdy bylo nutno řádek zalomit v místě,
+    kam napatří žádné bílé znaky, je tato skutečnost vyznačena šedým zpětným lomítkem.
+    Takový konec řádku zcela ignorujte.\\%
+\textcolor{seda}{$\big[$}{\ttfamily{-}{-}volitelny []}\textcolor{seda}{$\big]$}&%
+    Nepovinné a doplňkové části zaklínadla jsou uzavřeny do vysokých šedých
+    hranatých závorek, jasně odlišitelných od obyčejných hranatých závorek.\\%
+{\ttfamily\itshape\underline{další-soubor}}\textcolor{seda}{...}&%
+    Části zaklínadla, které se mohou libovolně opakovat, jsou vyznačeny šedou trojtečkou.\\%
+{\ttfamily.\textvisiblespace:}&%
+    Ke zdůraznění místa, kam je nutno zapsat právě jednu obyčejnou mezeru, se v zaklínadlech
+    používá symbol {\ttfamily\textvisiblespace}.\\%
+$\Rightarrow$ Klikněte.&%
+    Ve výjimečných případech, kdy je místo napsání něčeho, potřeba něco vykonat,
+    je tato instrukce vyjádřena šipkou a textem v obyčejném písmu.\\%
+\textcolor{seda}{\guillemotright}&%
+    Tímto šedým symbolem se vyznačuje, že na dané místo musíte zapsat tabulátor.\\%
+{\ttfamily?}&%
+    Není-li řešení dané úlohy autorovi při psaní známo, uvede místo řádku zaklínadla
+    pouhý otazník. To je podnět k tomu, aby bylo řešení nalezeno a doplněno.
+    Hojně se vyskytuje v rozpracovaných kapitolách.\\%
+\end{tabular}%
 %
 % Nastavit znak pro „dělení slov“ v kódu na zpětné lomítko
 {%

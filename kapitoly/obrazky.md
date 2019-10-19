@@ -294,12 +294,6 @@ Jediným zdrojem, který se mi osvědčil, je web „Examples of ImageMagick Usa
 Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
 -->
 
-## Snímek obrazovky
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-<!--
-Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
--->
-
 ## Instalace na Ubuntu
 
 *# *<br>

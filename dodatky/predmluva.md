@@ -35,7 +35,7 @@ bude.
 Patříte-li k **začátečníkům**, bude od vás tato kniha vyžadovat přinejmenším znalosti základů
 programování (tzn. pojmy jako „proměnná“, „příkaz“ či „podprogram“) a zájem dozvědět se
 něco nového o tom, co a jak můžete dělat s programy nabízenými vám moderní distribucí Linuxu.
-Máte-li na počítači nainstalovaný Linux, máte na disku desítky gigabajtů nesmírně mocných
+Máte-li na počítači nainstalovaný Linux, máte na disku gigabajty nesmírně mocných
 nástrojů, které v sobě skrývají desítky let práce špičkových programátorů, a nemusíte
 nezbytně pochopit, jak fungují, abyste s nimi dokázali velké věci; musíte však znát postup,
 jak je použít; příliš troufalí uživatelé totiž skončí na prvním chybovém hlášení.
