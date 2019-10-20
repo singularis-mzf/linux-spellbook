@@ -59,10 +59,10 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 *# seřadit řádky souboru*<br>
 **sort** [{*soubor*}]...<br>
-**LC_ALL=C sort** [{*soubor*}]...
+**LC\_ALL=C sort** [{*soubor*}]...
 
 *# seřadit a vyloučit duplicity*<br>
-**LC_ALL=C sort -u** [{*soubor*}]...
+**LC\_ALL=C sort -u** [{*soubor*}]...
 
 <!--
 -r : opačné pořadí
@@ -102,7 +102,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 ### Množinové operace nad řádky souborů
 
 *# množinové sjednocení (OR)*<br>
-**cat** {*soubor*}... **| LC_ALL=C sort | LC_ALL=C uniq**
+**cat** {*soubor*}... **\| LC\_ALL=C sort \| LC\_ALL=C uniq**
 
 *# množinový průnik (AND)*<br>
 ?

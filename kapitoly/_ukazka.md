@@ -82,8 +82,8 @@ speciální významu a nechat ho vypsat do výstupního formátu jako obyčejn�
 Pravidla escapování ve zdrojových kódech tohoto projektu jsou následující:
 
 * (&lt;), (&amp;), (&gt;)<br>se zadávají vždy jako odpovídající entity.
-* (\\), (\`), (\*), (\_), (\~)<br>se ve zdrojovém kódu escapují zpětným lomítkem vždy.
-* (\#), ($), (+), (-), (:), ([), (|)<br>se escapují před prvním alfanumerickým znakem na řádku nebo jsou-li zdvojeny. Příklad: \\#\\#, \\$\\$, \\+\\+, \\-\\-, \\:\\:, \\[\\[, \\|\\|.
+* (\\), (\`), (\*), (\_)<br>se ve zdrojovém kódu escapují zpětným lomítkem vždy.
+* (\#), ($), (+), (-), (:), ([), (|), (~)<br>se escapují před prvním alfanumerickým znakem na řádku nebo jsou-li zdvojeny. Příklad: \\#\\#, \\$\\$, \\+\\+, \\-\\-, \\:\\:, \\[\\[, \\|\\|, \\~\\~.
 * (])<br>se escapuje, je-li zdvojena nebo má-li za ní stát „(“ nebo „[“.
 * ({), (})<br>se escapují, jen utvořily-li by nechtěnou formátovací sekvenci „\{\*“ či „\*\}“. Příklad: \\\{\*text kurzívou\*\\}
 * ())<br>se escapuje jen uvnitř adresy hypertextového odkazu. Příklad: [X\](http:⫽pism.cz/Pismeno\\\_(X\\))

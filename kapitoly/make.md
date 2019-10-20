@@ -26,33 +26,11 @@ jemuž se bude věnovat většina této kapitoly.
 ## Definice
 * **Pravidlo** je definice v Makefilu, která instruuje program make, na kterých dalších souborech určitý soubor závisí a jakými příkazy jej z nich vytvořit či aktualizovat.
 * **Cíl** je název souboru k vytvoření či akce k vykonání.
-* **Zdroj** (často nazýváný „závislost“) je název souboru, na kterém určitý cíl závisí. Příkazy stanovené pravidlem se vykonají jen tehdy, pokud cíl neexistuje nebo je alespoň jeden jeho z jeho zdrojů novější. Zdrojem může být také název akce.
+* **Zdroj** (často nazýváný „závislost“) je název souboru, na kterém určitý cíl závisí. Příkazy stanovené pravidlem se vykonají jen tehdy, pokud cíl neexistuje nebo je alespoň jeden jeho z jeho zdrojů novější. (Vychází z času poslední změny souborů.) Zdrojem může být také název akce.
 * **Slovo** je posloupnost nebílých znaků v řetězci. Jednotlivá slova v řetězci jsou od sebe oddělena bílými znaky, nejčastěji jednotlivou mezerou.
 * **%-vzor** je řetězec sloužící k filtrování slov a také k přidání, záměně nebo odebrání jejich předpony či přípony. Jde tedy o velice praktickou věc. Může obsahovat nejvýše jeden znak **%**, který slouží jako náhrada za libovolné množství znaků (včetně lomítek oddělujících adresáře). (Např. %-vzoru **a%** odpovídají právě ta slova, která začínají malým písmenem **a**.) Slouží-li %-vzor k záměně, slova, která mu neodpovídají, projdou záměnou nezměněna. %-vzor nemusí obsahovat znak %; v takovém případě mu odpovídají pouze slova, která se s ním přesně shodují.
 
 ## Zaklínadla (v souboru Makefile)
-### Pravidla
-*# normální (pevné) pravidlo*<br>
-{*cíle oddělené mezerami*}**:** [{*zdroje oddělené mezerami*}] [**;**{*příkaz*}]<br>
-[<tab>[{*prefix-příkazu*}]{*příkaz*}]...
-
-*# zobecněné (generované) pravidlo (zdroje lze odvodit od cíle)*<br>
-{*cíle oddělené mezerami*}**:** {*%-vzor-pro-cíle*}: {*cesta-nebo-%-vzor-zdroje*}... [**;**{*příkaz*}]<br>
-[<tab>[{*prefix-příkazu*}]{*příkaz*}]...
-
-*# obecné (implicitní) pravidlo (zdroje lze odvodit od cíle)*<br>
-*// Obecné pravidlo má nižší prioritu než všechna pevná a generovaná pravidla. Navíc je tiše ignorováno, pokud chybí nekterý ze zdrojů. Má-li uvedeno víc cílů, považují se po jeho provedení všechny uvedené cíle za vygenerované, a tedy se pravidlo nevolá pro překlad dalších zdrojů znovu.*<br>
-{*%-vzor cíle*}...**:** {*cesta-nebo-%-vzor-zdroje*}... [**;**{*příkaz*}]<br>
-[<tab>[{*prefix-příkazu*}]{*příkaz*}]...
-
-*# označit, že určité cíle jsou akce, ne soubory*<br>
-**.PHONY:** [{*akce oddělené mezerami*}]
-
-*# přeložit soubory uvedené v proměnné ZDROJE, které se nacházejí v adresáři „kod“ a jeho podadresářích a mají příponu „.cc“, na objektové soubory do adresáře obj*<br>
-*// Uvedený příklad předpokládá předdefinované proměnné CXX a CXXFLAGS, které GNU make předdefinovává, takže je nemusíte sami nastavovat.*<br>
-**$(patsubst kod/%.cc,obj/%.o,$(filter kod/%.cc,$(ZDROJE))): obj/%.o: kod/%.cc**<br>
-**<tab>$(CXX) $(CXXFLAGS) -c -o $@ $&lt;**
-
 ### Nastavení proměnných
 *# nastavit proměnnou (expandovat v místě definice)*<br>
 {*NÁZEV\_PROMĚNNÉ*} **:=** {*hodnota včetně mezer*}
@@ -60,15 +38,15 @@ jemuž se bude věnovat většina této kapitoly.
 *# připojit obsah na konec proměnné (expanze stejně jako v původní definici)*<br>
 {*NÁZEV\_PROMĚNNÉ*} **\+=** {*hodnota včetně mezer*}
 
-*# nastavit proměnnou (expandovat v místě použití)*<br>
+*# nastavit proměnnou (expandovat v každém místě použití)*<br>
 {*NÁZEV\_PROMĚNNÉ*} **=** {*hodnota včetně mezer*}
 
 *# přiřadit do proměnné mezeru (trik)*<br>
-**EMPTY :=**<br>
-{*NÁZEV\_PROMĚNNÉ*} **:= $(EMPTY) $(EMPTY)**
+**PRAZDNA :=**<br>
+{*NÁZEV\_PROMĚNNÉ*} **:= $(PRAZDNA)&blank;$(PRAZDNA)**
 
 *# nastavit/připojit víceřádkový obsah*<br>
-*// "endef" musí být na samostatném řádku; operátor může být =, := nebo +=*<br>
+*// „endef“ musí být na samostatném řádku; operátor může být „=“, „:=“ nebo „+=“.*<br>
 **define** {*NÁZEV\_PROMĚNNÉ*} [{*operátor*}]<br>
 {*víceřádkový obsah*}<br>
 **endef**
@@ -83,7 +61,7 @@ jemuž se bude věnovat většina této kapitoly.
 **$(**{*NÁZEV\_PROMĚNNÉ*}**:%**[{*původní-suffix*}]**=%**[{*nový-suffix*}]**)**<br>
 **$(**{*NÁZEV\_PROMĚNNÉ*}**:**[{*původní-prefix*}]**%**[{*původní-suffix*}]**=**[{*nový-prefix*}]**%**[{*nový-suffix*}]**)**
 
-*# rozvinout proměnnou prostředí (ne Makefilu) v shellu (varianta 1/varianta 2)*<br>
+*# rozvinout proměnnou prostředí či příkazového interpretu (ne proměnnou Makefilu)(alternativy)*<br>
 **\$\$**{*NÁZEV\_PROMĚNNÉ*}<br>
 **\$\${**{*NÁZEV\_PROMĚNNÉ*}**}**
 
@@ -96,15 +74,15 @@ jemuž se bude věnovat většina této kapitoly.
 <tab>**@echo $(TEST:a%.cc=b%.cpp)**
 
 ### Automatické a předdefinované proměnné
-*# cíl pravidla*<br>
+*# cíl pravidla (alternativy)*<br>
 **$@**<br>
 **$(@)**
 
-*# první zdroj pravidla*<br>
+*# první zdroj pravidla (alternativy)*<br>
 **$&lt;**<br>
 **$(&lt;)**
 
-*# všechny zdroje*<br>
+*# všechny zdroje (alternativy)*<br>
 **$\^**<br>
 **$(\^)**
 
@@ -114,9 +92,31 @@ jemuž se bude věnovat většina této kapitoly.
 *# program make*<br>
 **$(MAKE)**
 
-*# v generovaném a implicitním pravidle posloupnost znaků odpovídající znaku % v %-vzoru cíle*<br>
+*# v generovaném a implicitním pravidle posloupnost znaků odpovídající znaku % v %-vzoru cíle (alternativy)*<br>
 **$\***<br>
 **$(\*)**
+
+### Obecný tvar pravidel
+*# normální (pevné) pravidlo*<br>
+{*cíle oddělené mezerami*}**:** [{*zdroje oddělené mezerami*}] [**;**{*příkaz*}]<br>
+[<tab>[{*prefix-příkazu*}]{*příkaz*}]...
+
+*# zobecněné (generované) pravidlo (zdroje lze odvodit od cíle)*<br>
+{*cíle oddělené mezerami*}**:** {*%-vzor-pro-cíle*}: {*cesta-nebo-%-vzor-zdroje*}... [**;**{*příkaz*}]<br>
+[<tab>[{*prefix-příkazu*}]{*příkaz*}]...
+
+*# obecné (implicitní) pravidlo (zdroje lze odvodit od cíle)*<br>
+*// Obecné pravidlo má nižší prioritu než všechna pevná a generovaná pravidla. Navíc je tiše ignorováno, pokud chybí nekterý ze zdrojů. Má-li uvedeno víc cílů, považují se po jeho provedení všechny uvedené cíle za vygenerované, a tedy se pravidlo nevolá pro překlad dalších zdrojů znovu.*<br>
+{*%-vzor cíle*}...**:** {*cesta-nebo-%-vzor-zdroje*}... [**;**{*příkaz*}]<br>
+[<tab>[{*prefix-příkazu*}]{*příkaz*}]...
+
+*# označit, že určité cíle jsou akce, ne soubory*<br>
+**.PHONY:** [{*akce oddělené mezerami*}]
+
+*# přeložit soubory uvedené v proměnné ZDROJE, které se nacházejí v adresáři „kod“ a jeho podadresářích a mají příponu „.cc“, na objektové soubory do adresáře obj*<br>
+*// Uvedený příklad předpokládá předdefinované proměnné CXX a CXXFLAGS, které GNU make předdefinovává, takže je nemusíte sami nastavovat.*<br>
+**$(patsubst kod/%.cc,obj/%.o,$(filter kod/%.cc,$(ZDROJE))): obj/%.o: kod/%.cc**<br>
+**<tab>$(CXX) $(CXXFLAGS) -c -o $@ $&lt;**
 
 ### Textové funkce
 *# připojit text před/za každé slovo v řetězci/v rozvoji proměnné*<br>
@@ -154,7 +154,7 @@ jemuž se bude věnovat většina této kapitoly.
 **$(sort** {*řetězec*}**)**
 
 *# obrátit pořadí slov v řetězci*<br>
-**$(shell printf "%s\\n" $(strip** {*řetězec slov*}**) | tac)**
+**$(shell printf %s\\n '$(strip** {*řetězec slov*}**)' \| tr '&blank;' \\n \| tac)**
 
 ### Analýza adresářových cest (pro každé slovo zvlášť)
 *# získat adresářovou cestu (např. „../a/“)*<br>
@@ -175,14 +175,14 @@ jemuž se bude věnovat většina této kapitoly.
 *# získat úplnou kanonickou cestu existujících souborů a adresářů (např. „/home/elli/test/a/b.o“)*<br>
 **$(realpath** {*řetězec slov*}**)**
 
-*# získat seznam existujících souborů a adresářů odpovídajících vzorku shellu*<br>
-*// Vzorek shellu může obsahovat znaky ? a \* s významem obvyklým v bashi. Pokud vzorku neodpovídá žádný soubor ani adresář, vzorek se potichu přeskočí. Toho je možno použít k vynechání neexistujících souborů z proměnné.*<br>
+*# získat seznam existujících souborů a adresářů odpovídajících vzorku interpretu*<br>
+*// Vzorek příkazového interpretu může obsahovat znaky ? a \* s významem obvyklým v bashi. Pokud vzorku neodpovídá žádný soubor ani adresář, vzorek se potichu přeskočí. Toho je možno použít k vynechání neexistujících souborů z proměnné.*<br>
 **$(wildcard** {*vzorek*}...**)**
 
 ### Logické funkce
 
 *# podmíněný výraz*<br>
-**$(if** {*podmínkový řetězec*}**,**{*výsledek pro neprázdný řetězec*}[**,**{*výsledek pro prázdný řetězec*}]**)**
+**$(if** {*podmínkový řetězec*}**,**{*je-li neprázdný*}[**,**{*jinak*}]**)**
 
 *# získat první neprázdný řetězec*<br>
 **$(or** {*řetězec*}[**,**{*další řetězec*}]...**)**
@@ -196,7 +196,7 @@ jemuž se bude věnovat většina této kapitoly.
 *# vrátí podřetězec, pokud se vyskytuje v řetězci; jinak vrátí prázdný řetězec*<br>
 **$(findstring** {*podřetězec*}**,**{*řetězec*}**)**
 
-*# vrátí: aa bb cc cc bb aa*<br>
+*# příklad − vrátí: aa bb cc cc bb aa*<br>
 **$(foreach PROM,a b c c b a,$(PROM)$(PROM))**
 
 ### Příkazy v pravidlech
@@ -237,29 +237,30 @@ jemuž se bude věnovat většina této kapitoly.
 
 ## Parametry příkazů
 *# make*<br>
-**make** [{*parametry*}] [{*cíl*}]<br>
-**$(MAKE)** [{*parametry*}] [{*cíl*}]
+**make** [{*parametry*}] [{*cíl*}]...<br>
+**$(MAKE)** [{*parametry*}] [{*cíl*}]...
 
 * **\-j** {*počet*} \:\: umožní paralelní běh více úloh najednou
-* **\-C** {*adresář*} \:\: před děláním čehokoliv vstoupí do zadaného adresáře
+* **\-C** {*adresář*} \:\: před děláním čehokoliv (dokonce i hledání Makefilu) vstoupí do zadaného adresáře
 * **\-n** \:\: nespouští příkazy, pouze je vypíše
 * **\-s** \:\: nevypisuje příkazy, pouze je spouští
 * Není-li cíl zadán, použije se první cíl v Makefile (tradičně akce „all“).
 
 ## Jak získat nápovědu
 * **make --help**
-* online GNU manuál (viz sekce Odkazy) (anglicky)
+* Online GNU manuál (viz sekce Odkazy) (anglicky)
 * **man make** (anglicky)
 
 ## Tipy a zkušenosti
-* Dlouhé řádky můžete rozdělit, pokud před každý konec řádku, který má make ignorovat, vložíte zpětné lomítko. Rozdělíte-li řádek s příkazem, make toto rozdělení předá volanému shellu, což však u běžně používaných sh a bash nezpůsobí problémy.
+* Dlouhé řádky Makefilu můžete rozdělit, pokud před každý konec řádku, který má make ignorovat, vložíte zpětné lomítko. Rozdělíte-li řádek s příkazem, make toto rozdělení předá volanému interpretu příkazové řádky, což však u běžně používaných „sh“ a „bash“ nezpůsobí problémy.
 * Nebojte se definovat více cílů v jednom pravidle. Funguje to stejně jako definovat stejné pravidlo pro každý uvedený cíl zvlášť a ušetří vám to spoustu práce s údržbou. Ze stejného důvodu se vyplatí naučit se syntaxi pravidla s %-vzorem.
 * Pro jeden cíl můžete definovat více pravidel, pokud nejvýše jedno z nich bude deklarovat příkazy; v takovém případě se automaticky sloučí zdroje ze všech odpovídajících pravidel.
 * Program make v příkazech pravidel interpretuje znak $. Má-li se předat shellu, je třeba jej zdvojit, např. **\$\$PATH** nebo **\$\$\$\$**. To platí i při uzavření do apostrofů.
 * Některé textové editory mohou v závislosti na svém nastavení nahrazovat tabulátory mezerami či naopak. Pokud takovým editorem upravíte Makefile, přestane fungovat, protože na začátku každého příkazu v pravidle musí být tabulátor, ne posloupnost mezer.
 * Obvyklé názvy akcí jsou např.: all, clean, install.
-* Každý příkaz pravidla se při kompilaci spouští ve vlastním shellu!
-* Použitý shell v příkazech a volání funkce $(shell) určuje proměnná **SHELL**. Kvůli přenositelnosti se doporučuje ji na začátku Makefile výslovně nastavit: **SHELL := /bin/sh** nebo **SHELL := /bin/bash**.
+* Každý příkaz pravidla se při kompilaci spouští ve vlastní instanci interpretu příkazové řádky!
+* Použitý interpret v příkazech a volání funkce $(shell) určuje proměnná **SHELL**. Kvůli přenositelnosti se doporučuje ji na začátku Makefile výslovně nastavit: **SHELL := /bin/sh** nebo **SHELL := /bin/bash**.
+* Akce může mít jako zdroje soubory a další akce; ty budou přeloženy před vykonáním vlastní akce.
 
 ## Ukázka
 *# /home/elli/test/Makefile:*<br>
@@ -276,7 +277,7 @@ jemuž se bude věnovat většina této kapitoly.
 **all: main**<br>
 **clean:**<br>
 **<tab>$(MAKE) -C lib clean**<br>
-**<tab>$(RM) main.o second.o hello.o**<br>
+**<tab>$(RM) $(OBJS)**<br>
 **main: $(OBJS)**<br>
 **<tab>@echo "Koncové sestavení:"**<br>
 **<tab>$(CXX) $(CXXFLAGS) -o $@ $\^**<br>
@@ -293,10 +294,6 @@ jemuž se bude věnovat většina této kapitoly.
 **clean:**<br>
 **<tab>$(RM) hello.o**
 
-## Snímek obrazovky
-
-![(snímek obrazovky)](../obrazky/make.png)
-
 ## Instalace na Ubuntu
 *# *<br>
 **sudo apt-get install make**
@@ -304,12 +301,16 @@ jemuž se bude věnovat většina této kapitoly.
 ## Odkazy
 ### Česky
 * [Makefile na sallyx.org](https://www.sallyx.org/sally/c/linux/makefile)
-* [stránka na Wikipedii](https://cs.wikipedia.org/wiki/Make)
+* [Stránka na Wikipedii](https://cs.wikipedia.org/wiki/Make)
 * [Rychlo-školička pro Makefile](http://www.linux.cz/noviny/1999-0304/clanek12.html)
 * [Správa projektů pomocí programu Make](http://www.fit.vutbr.cz/~martinek/clang/make.html)
 
 ### Anglicky
-* [oficiální manuál GNU make](https://www.gnu.org/software/make/manual/make.html) (anglicky)
-* [manuálová stránka](http://manpages.ubuntu.com/manpages/bionic/en/man1/make.1.html) (anglicky)
-* [balíček Ubuntu Bionic Beaver](https://packages.ubuntu.com/bionic/make) (anglicky)
-* [oficiální stránka](https://www.gnu.org/software/make/) (anglicky)
+* [Oficiální manuál GNU make](https://www.gnu.org/software/make/manual/make.html) (anglicky)
+* [Manuálová stránka](http://manpages.ubuntu.com/manpages/bionic/en/man1/make.1.html) (anglicky)
+* [Balíček Ubuntu Bionic Beaver](https://packages.ubuntu.com/bionic/make) (anglicky)
+* [Oficiální stránka GNU make](https://www.gnu.org/software/make/) (anglicky)
+
+## Snímek obrazovky
+
+![(snímek obrazovky)](../obrazky/make.png)

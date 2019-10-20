@@ -11,8 +11,12 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
+<!--
+ÚKOLY:
+[ ] Vysvětlit použití znaku & v druhém parametru gsub(); viz https://www.gnu.org/software/gawk/manual/html_node/Gory-Details.html.
+-->
 
-# GAWK
+# GNU awk
 
 ## Úvod
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
@@ -33,6 +37,13 @@ se pracuje jako s číslem, kdykoliv se použije v číselném kontextu.
 
 ## Zaklínadla
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
+### Pomocné funkce
+*# escapovat()*<br>
+**function escapovat(s) {gsub(/[\\\\\|.\*+?{}[\\]()\\/^$]/, "\\\\\\\\&amp;", s);return s;}**
+
+*# escapovatknahrade()*<br>
+**function escapovatknahrade(s) {gsub(/[\\\\&amp;]/, "\\\\\\\\&amp;", s);return s;}**
+
 ### Vzorky
 
 *# vykonat jednou před prvním řádkem*<br>
@@ -96,14 +107,14 @@ se pracuje jako s číslem, kdykoliv se použije v číselném kontextu.
 *// Pozice v řetězci se v awk číslují od 1!*<br>
 **substr(**{*řetězec*}**,** {*počáteční-pozice*}[**,** {*maximální-délka*}]**)**
 
-*# nahradit všechny výskyty regulárního výrazu/starého řetězce v textu proměnné novým textem*<br>
-*// Výsledek přepíše původní hodnotu proměnné.*<br>
-**gsub(/**{*regulární výraz*}**/,** {*nový-řetězec*}[, {*proměnná*}]**)**<br>
-**gsub(escape(**{*starý-řetězec*}**),** {*nový řetězec*}[, {*proměnná*}]**)**
+*# nahradit všechny výskyty regulárního výrazu/starého řetězce v textu proměnné novým řetězcem*<br>
+*// Výsledek přepíše původní hodnotu proměnné. V novém řetězci je nutno navíc escapovat znaky \\ a &amp;; neescapovaný znak &amp; se v něm nahradí nahrazovaným textem v řetězci.*<br>
+**gsub(/**{*regulární výraz*}**/, escapovatknahrade(**{*nový-řetězec*}**)**[, {*proměnná*}]**)**<br>
+**gsub(escapovat(**{*starý-řetězec*}**), escapovatknahrade(**{*nový řetězec*}**)**[, {*proměnná*}]**)**
 
 *# nahradit N-tý výskyt (počítáno od 1) regulárního výrazu/starého řetězce v textu proměnné novým textem*<br>
-{*proměnná*} **= gensub(/**{*regulární-výraz*}**/,** {*nový-řetězec*}**,** {*kolikátý-výskyt*}**,** {*proměnná*}**)**<br>
-{*proměnná*} **= gensub(escape(**{*starý-řetězec*}**),** {*nový-řetězec*}**,** {*kolikátý-výskyt*}**,** {*proměnná*}**)**
+{*proměnná*} **= gensub(/**{*regulární-výraz*}**/, escapovatknahrade(**{*nový-řetězec*}**),** {*kolikátý-výskyt*}**,** {*proměnná*}**)**<br>
+{*proměnná*} **= gensub(escapovat(**{*starý-řetězec*}**), escapovatknahrade(**{*nový-řetězec*}**),** {*kolikátý-výskyt*}**,** {*proměnná*}**)**
 
 *# zjistit délku řetězce*<br>
 **length(**{*řetězec*}**)**
@@ -242,9 +253,6 @@ TODO: Test.
 * Pole jsou asociativní a indexy v polích jsou vždy řetězce; při indexování číslem se číslo nejprve převede na řetězec.
 * Neexistující prvky...
 
-
-### Funkce escape()
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 ## Instalace na Ubuntu
 *# *<br>

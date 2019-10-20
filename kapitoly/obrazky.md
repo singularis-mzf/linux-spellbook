@@ -122,7 +122,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 **\-delete 0\-\-3,\-1**<br>
 **\-delete** {*první-index-nebo-rozsah*}[**,**{*další-index-nebo-rozsah*}]...
 
-*# vykonat sekvenci příkazů s novým, odděleným seznamem (prázdným/sestaveným z kopií obrázků na indexech 3, 3 a 5 původního seznamu/sestaveným jako kopie původního seznamu/sestaveným jen z posledního obrázku původního seznamu) a ten pak připojit na konec původního seznamu*<br>
+*# vykonat sekvenci příkazů s novým, odděleným seznamem (prázdným/sestaveným z kopií obrázků na indexech 3, 3 a 5 původního seznamu/sestaveným jako kopie původního seznamu/sestaveným jen z posledního obrázku původního seznamu) a ten pak připojit na konec původního seznamu*<br>
 **\\(** {*sekvence příkazů*} **\\)**<br>
 **\\( -clone 3,3,5** {*sekvence příkazů*} **\\)**<br>
 **\\( -clone 0--1** {*sekvence příkazů*} **\\)**<br>
@@ -149,7 +149,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 ### Překrývání a skládání obrázků (compose)
 
 *# překrýt dva obrázky ze seznamu*<br>
-*// Operace „-composite“ vezme předposlední obrázek ze seznamu (-2) a přes něj překryje poslední obrázek (-1); oba odstraní a výsledek překrytí přidá na konec seznamu.*<br>
+*// Operace „-composite“ vezme předposlední obrázek ze seznamu (-2) a přes něj překryje poslední obrázek (-1); oba odstraní a výsledek překrytí přidá na konec seznamu místo nich.*<br>
 **\-compose Over -geometry** {*posun-x*}**x**{*posun-y*} **-composite**
 
 *# naskládat obrázky vedle sebe (zleva)*<br>
@@ -194,7 +194,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 
 ### Operace s barvami a průhledností
-*# převést barevný obrázek na černobílý (varianta A/B)*<br>
+*# převést barevný obrázek na černobílý (alternativy)*<br>
 **\-colorspace Gray**<br>
 **\-modulate 100,0**
 
@@ -218,7 +218,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 ### Generátory obrázků
 *# jednobarevný obrázek/bílý obrázek/transparentní obrázek/poloprůhledný červený obrázek*<br>
-**\-size** {*šířka*}**x**{*výška*} **xc:#**{*barva*}<br>
+**\-size** {*šířka*}**x**{*výška*} **xc:**{*barva*}<br>
 **\-size** {*šířka*}**x**{*výška*} **xc:**<br>
 **\-size** {*šířka*}**x**{*výška*} **xc:none**<br>
 **\-size** {*šířka*}**x**{*výška*} **xc:#FF000080**
@@ -242,8 +242,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 ?
 
 ### Ostatní a speciální
-*# uložit poslední obrázek bokem*<br>
-**\\( +clone** [{*předzpracování*}] **-write** {*název-souboru*} **+delete \\)**
+*# uložit poslední obrázek do souboru*<br>
+**\\( +clone** [{*předzpracování*}] **-write** {*název-souboru*} **-delete 1\-\-1 \\)**
 
 *# vyříznout (vynechat) z obrázku vodorovný pruh/svislý pruh/vodorovný a svislý pruh*<br>
 **\+gravity -chop 0x**{*výška*}[**+0+**{*posun-y*}]<br>
@@ -263,7 +263,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 ?<br>
 ?
 
-*# text* <br>
+*# text*<br>
 ?
 
 

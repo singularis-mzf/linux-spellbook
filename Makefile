@@ -27,8 +27,10 @@ AWK := gawk
 CONVERT := convert
 PDFLATEX := pdflatex -halt-on-error
 
-VSECHNY_DODATKY := predmluva test mechanismus-prekladu
-VSECHNY_KAPITOLY := _ukazka awk docker ffmpeg firefox git hledani-souboru latex make markdown obrazky odkazy ostatni planovani-uloh soubory
+VSECHNY_DODATKY := predmluva koncepce-projektu plan-vyvoje test mechanismus-prekladu
+VSECHNY_KAPITOLY := _ukazka awk docker ffmpeg firefox git hledani-souboru
+VSECHNY_KAPITOLY += make markdown obrazky odkazy ostatni planovani-uloh
+VSECHNY_KAPITOLY += soubory stahovani-videi
 OBRAZKY := logo-knihy-velke.png make.png ve-vystavbe.png
 
 SOUBORY_PREKLADU := soubory_prekladu

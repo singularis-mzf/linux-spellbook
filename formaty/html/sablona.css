@@ -104,8 +104,8 @@ figure {
 /* Inline prvky */
 a:link {color:#1644d9;}
 a:visited {color:#1338b3;}
-a[href^="http://"]::before, a[href^="https://"]::before {content:" [" attr(href) "]("}
-a[href^="http://"]::after, a[href^="https://"]::after {content:")";}
+a[href^="http://"]::before, a[href^="https://"]::before {content:"[";color:#666666;}
+a[href^="http://"]::after, a[href^="https://"]::after {content:"]( " attr(href) " )";color:#666666;}
 a:hover {text-decoration:underline;}
 b {font-weight:bold;}
 i {font-style:italic;}

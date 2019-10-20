@@ -12,7 +12,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
 <!--
-TODO:
+ÚKOLY:
 
 Pochopit a zpracovat filtry:
 - chorus
@@ -25,6 +25,8 @@ Pochopit a zpracovat filtry:
 - volume (dynamicky)
 
 - Popsat vestavěné funkce.
+
+[ ] Stručně a pochopitelně vysvětlit PTS.
 -->
 # FFmpeg
 
@@ -79,8 +81,8 @@ vzorků za sekundu.
 **[vi] trim=start=**{*začátek*}**:duration=**{*trvání*} **[vo] ; [ai] atrim=start=**{*začátek*}**:duration=**{*trvání*}**,asetpts=PTS-STARTPTS [ao]**
 
 *# vyříznout časový úsek (údaje ve snímcích)(alternativy)*<br>
-**[vi] trim=start_frame=**{*index-prvního-zahrnutého-snímku*}**:**{*index-snímku-za-koncem*}**,setpts=PTS-STARTPTS [vo]**<br>
-**[ai] atrim=start_sample=**{*index-prvního-zahrnutého-vzorku*}**:**{*index-vzorku-za-koncem*}**,asetpts=PTS-STARTPTS [ao]**
+**[vi] trim=start\_frame=**{*index-prvního-zahrnutého-snímku*}**:**{*index-snímku-za-koncem*}**,setpts=PTS-STARTPTS [vo]**<br>
+**[ai] atrim=start\_sample=**{*index-prvního-zahrnutého-vzorku*}**:**{*index-vzorku-za-koncem*}**,asetpts=PTS-STARTPTS [ao]**
 
 *# obrátit celou stopu*<br>
 *// Pozor! Filtr reverse musí celé video nekomprimované uložit do paměti. Pro zpracování dlouhého videa tedy doporučuji dočasně zapnout opravdu velký swapovací soubor, nebo video obracet po částech.*<br>
@@ -98,7 +100,7 @@ vzorků za sekundu.
 *# zpomalit obraz 10× s interpolací pohybu/zpomalit zvuk 10×*<br>
 *// Poznámka: filtr „minterpolate“ je neparalelizovatelný a může být velmi pomalý.*<br>
 **[vi] setpts=10.0\*PTS,minterpolate=fps=25**[**:mi\_mode=**{*blend-nebo-dup*}] **[vo]**<br>
-**[ai] atempo=1/2,atempo=1/2,atempo=1/2,atempo=8/10 [ai]
+**[ai] atempo=1/2,atempo=1/2,atempo=1/2,atempo=8/10 [ai]**
 
 ### Škálování obrazu (resize)
 
@@ -119,8 +121,9 @@ vzorků za sekundu.
 *# nadstavení obrazu (padding)(barva=#RRGGBB[AA] jako v HTML) *<br>
 **[vi] pad=**{*šířka*}**:**{*výška*}**:**{*posun-x-zleva*}**:**{*posun-y-shora*}[**:**{*barva*}] **[vo]**
 
-*# oříznutí/vyříznutí obrazu (cropping)*<br>
-**[vi] crop=**{*šířka*}**:**{*výška*}**:**{*posun-x-zleva*}**:**{*posun-y-shora*} **[vo]**
+*# vyříznutí obrazu/oříznutí okrajů (cropping)*<br>
+**[vi] crop=**{*šířka*}**:**{*výška*}**:**{*posun-x-zleva*}**:**{*posun-y-shora*} **[vo]**<br>
+**[vi] crop=iw-**{*zleva*}**-**{*zprava*}**:ih-**{*shora*}**-**{*zespodu*}**:**{*zleva*}**:**{*shora*} **[vo]**
 
 *# převrátit obraz (horizontálně/vertikálně)*<br>
 **[vi] hflip [vo]**<br>
@@ -162,11 +165,11 @@ vzorků za sekundu.
 
 *# překrýt jeden videovstup druhým; po skončení překryvného vstupu: ho skrýt/ukončit výstup/zamrznout překryvný vstup na jeho posledním snímku*<br>
 *// Hodnoty posunu jsou výrazy s výsledkem v pixelech. Mohou používat: rozměry hlavního videa (W, H), rozměry překryvného videa (w, h), čas v sekundách (t) a sekvenční číslo snímku (n). Poznámka: výstup filtru overlay není nikdy delší než délka jeho hlavního (prvního) vstupu.*<br>
-**[vi][vi] overlay=x=**{*posun-x*}**:y=**{*posun-y*}**:eof_action=pass [vo]**<br>
-**[vi][vi] overlay=x=**{*posun-x*}**:y=**{*posun-y*}**:eof_action=endall [vo]**<br>
-**[vi][vi] overlay=x=**{*posun-x*}**:y=**{*posun-y*}**:eof_action=repeat [vo]**
+**[vi][vi] overlay=x=**{*posun-x*}**:y=**{*posun-y*}**:eof\_action=pass [vo]**<br>
+**[vi][vi] overlay=x=**{*posun-x*}**:y=**{*posun-y*}**:eof\_action=endall [vo]**<br>
+**[vi][vi] overlay=x=**{*posun-x*}**:y=**{*posun-y*}**:eof\_action=repeat [vo]**
 
-*# sloučit jeden a druhý videovstup (obecně/konkrétně)*<br>
+*# prolnout jeden a druhý videovstup (obecně/konkrétně)*<br>
 *// Ve výrazu můžete použít hodnoty: sekvenční číslo snímku (N), souřadnice pixelu ((X/SW), (Y/SW)), šířka a výška ((W/SW), (H/SW)), čas v sekundách (T) a především hodnotu složky prvního vstupu (A) a druhého vstupu (B).*<br>
 **[vi][vi] blend=all\_expr=**{*výraz*}[**:eof\_action=**]{*repeat-endall-nebo-pass*} **[vo]**<br>
 **[prvni][druhy] blend=all\_expr=if(eq(mod(Y\\,2)\\,0)\\,A\\,B):eof\_action=endall [vysledek]**
@@ -181,7 +184,7 @@ vzorků za sekundu.
 
 *# invertovat barvy/barvy a alfa-kanál*<br>
 **[vi] negate [vo]**<br>
-**[vi] negate=negate_alpha=1 [vo]**
+**[vi] negate=negate\_alpha=1 [vo]**
 
 *# efekt „sépie“*<br>
 ?
@@ -224,8 +227,8 @@ vzorků za sekundu.
 
 *# zapéci titulky do obrazu (obecně/podtrženým červeným písmem Arial velikosti 48)*<br>
 *// Nastavení stylu jsou ve formátu ASS, přičemž znaky = a , musíte escapovat kvůli ffmpegu.*<br>
-**[vi] subtitles=**{*soubor-s-titulky*}[**:force_style=**{*nastavení-stylu*}] **[vo]**<br>
-**[vi] subtitles=**{*soubor-s-titulky*}**:force_style=FontName\\=Arial\\,Fontsize\\=48\\,PrimaryColour\\=&amp;H000000FF\\,Underline\\=1 [vo]**
+**[vi] subtitles=**{*soubor-s-titulky*}[**:force\_style=**{*nastavení-stylu*}] **[vo]**<br>
+**[vi] subtitles=**{*soubor-s-titulky*}**:force\_style=FontName\\=Arial\\,Fontsize\\=48\\,PrimaryColour\\=&amp;H000000FF\\,Underline\\=1 [vo]**
 
 <!--
 Barvy se zadávají ve formátu AABBGGRR, kde AA=FF je úplná průhlednost a AA=00 úplná neprůhlednost.
@@ -240,8 +243,8 @@ Barvy se zadávají ve formátu AABBGGRR, kde AA=FF je úplná průhlednost a A
 
 *# roztmívačka/zatmívačka saturace*<br>
 *// Čas začátku a trvání efektu jsou v sekundách.*<br>
-**[vi] hue=s=max(0\,min(1\,(t - **{*čas-začátku*}**)/**{*trvání-efektu*}**)) [vo]**<br>
-**[vi] hue=s=max(0\,min(1\,(**{*čas-začátku*} **- t)/**{*trvání-efektu*}**)) [vo]**
+**[vi] hue=s=max(0\\,min(1\\,(t - **{*čas-začátku*}**)/**{*trvání-efektu*}**)) [vo]**<br>
+**[vi] hue=s=max(0\\,min(1\\,(**{*čas-začátku*} **- t)/**{*trvání-efektu*}**)) [vo]**
 
 *# spojit za sebe dva vstupy a prolnout sedmisekundovou prolínačkou (konkrétně/obecně)*<br>
 **[ai][ai] acrossfade=d=7:c1=exp:c2=exp [ao]**<br>
@@ -279,7 +282,7 @@ Barvy se zadávají ve formátu AABBGGRR, kde AA=FF je úplná průhlednost a A
 **[vi] sobel [vo]**
 
 *# rozdělit snímky po dávkách a každou dávku vykreslit po řádcích do mřížky daných rozměrů*<br>
-**[vi] tile=**{*počet-sloupců-mřížky*}**x**{*počet-řádků-mřížky*}[**:margin=**{*šířka-okraje*}][**:padding=**{*rozestup-mřížky*}][**:color=**{*barva-pozadí*}][**:nb_frames=**{*velikost-dávky*}] **[vo]**
+**[vi] tile=**{*počet-sloupců-mřížky*}**x**{*počet-řádků-mřížky*}[**:margin=**{*šířka-okraje*}][**:padding=**{*rozestup-mřížky*}][**:color=**{*barva-pozadí*}][**:nb\_frames=**{*velikost-dávky*}] **[vo]**
 
 ### Nízkoúrovňové manipulace
 *# aplikovat výraz po pixelech*<br>
@@ -300,7 +303,7 @@ TODO: [ ] Vyzkoušet rozsah složky A. (Ostatní: 0..255.)
 -->
 
 *# aplikovat na zvukové vzorky obecný výraz*<br>
-*// Ve výrazu můžeme použít: hodnotu pravé/levé stopy (val(0)/val(1)), čas vzorku v sekundách (t), číslo vzorku (n), číslo kanálu (ch), původní počet kanálů (nb_in_channels), vzorkovací frekvenci (s).*<br>
+*// Ve výrazu můžeme použít: hodnotu pravé/levé stopy (val(0)/val(1)), čas vzorku v sekundách (t), číslo vzorku (n), číslo kanálu (ch), původní počet kanálů (nb\_in\_channels), vzorkovací frekvenci (s).*<br>
 **[ai] aeval=**{*výraz*}[**|**{*výraz-pro-druhý-kanál*}]**:c=same [ao]**
 
 *# vynásobit vzorky dvou vstupů*<br>
@@ -561,7 +564,7 @@ Vstupní parametry se zadávají v sekvenci ukončené parametrem **-i** a pla
 **man ffmpeg**<br>
 **man ffmpeg-filters**
 
-Dalším dobrým zdrojem je oficiální dokumentace k filtrům, ale ta může být podstatně novější než vaše verze ffmpegu, protože váš ffmpeg nemusí podporovat vše, co je v online dokumentaci uvedeno.
+Dalším dobrým zdrojem je oficiální dokumentace k filtrům, ale ta může být podstatně novější než vaše verze ffmpegu; v takovém případě váš ffmpeg nemusí podporovat vše, co je v online dokumentaci uvedeno.
 
 ## Tipy a zkušenosti
 
@@ -583,7 +586,7 @@ Pro obraz (**-c:v**): **h264** (synonymum **libx264**), **mpeg4**, **rawvideo** 
 Zdroj: https://superuser.com/questions/1273920/deprecated-pixel-format-used-make-sure-you-did-set-range-correctly
 -->
 
-Pro zvuk (**-c:a**): **aac**, **libmp3lame** (mp3), **pcm16_le** (wav), **libvorbis** (ogg), **flac** (flac).
+Pro zvuk (**-c:a**): **aac** (mp4), **libmp3lame** (mp3), **pcm16\_le** (wav), **libvorbis** (ogg), **flac** (flac).
 
 <!--
 - Používat -ab a -vb k nastavení bitrate.
@@ -592,9 +595,9 @@ Pro zvuk (**-c:a**): **aac**, **libmp3lame** (mp3), **pcm16_le** (wav), **libvor
 ## Odkazy
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+* [Dokumentace k filtrům](https://ffmpeg.org/ffmpeg-filters.html) (anglicky)
 * [manuálová stránka](http://manpages.ubuntu.com/manpages/bionic/en/man1/ffmpeg.1.html) (anglicky)
 * [oficiální stránky](https://ffmpeg.org/) (anglicky)
-* [dokumentace k filtrům](https://ffmpeg.org/ffmpeg-filters.html) (anglicky)
 
 <!--
 Poznámky:

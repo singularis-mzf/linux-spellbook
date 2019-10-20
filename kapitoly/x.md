@@ -1,6 +1,6 @@
 <!--
 
-Linux Kniha kouzel, kapitola [DOPLNIT NÁZEV]
+Linux Kniha kouzel, kapitola X (Správce oken)
 Copyright (c) 2019 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -16,7 +16,7 @@ Poznámky:
 
 -->
 
-# Název
+# X (Správce oken)
 
 ## Úvod
 <!--
@@ -25,6 +25,15 @@ Poznámky:
 - Uveďte, co kapitola nepokrývá, ačkoliv by to čtenář mohl očekávat.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+Velké písmeno „X“ odpradávna označovalo cosi záhadného a tajuplného. Toho si pravděpodobně
+byli vědomi vývojáři, když v roce 1984 pojmenovali grafické rozhraní X Window System;
+pravděpodobně znali především příkazovou řádku a děrné štítky a grafické rozhraní jim
+bylo něčím novým, záhadným a tajuplným. Netušili, že o padesát let později na tom budou
+uživatelé-začátečníci přesně naopak.
+<!--
+Zdroj roku: https://en.wikipedia.org/wiki/X_Window_System#Release_history
+-->
 
 ## Definice
 <!--
@@ -69,7 +78,7 @@ Poznámky:
 
 ## Instalace na Ubuntu
 <!--
-- Jako zaklínadlo bez titulku uveďte příkazy (popř. i akce) nutné k instalaci a zprovoznění všech nástrojů požadovaných kterýmkoliv zaklínadlem uvedeným v kapitole. Po provedení těchto činností musí být nástroje plně zkonfigurované a připravené k práci.
+- Jako zaklínadlo bez titulku uveďte příkazy (popř. i akce) nutné k instalaci a zprovoznění všech nástrojů požadovaných kterýmkoliv zaklínadlem uvedeným v kapitole. Po provedení těchto činností musí být nástroje plně zkonfiguraované a připravené k práci.
 - Ve výčtu balíků k instalaci vycházejte z minimální instalace Ubuntu.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)

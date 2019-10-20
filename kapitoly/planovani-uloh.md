@@ -52,7 +52,7 @@ pokryty.
 ## Zaklínadla
 ### Pomocná funkce „pridat\_ulohu“
 
-*# funkce „pridat_ulohu“*<br>
+*# funkce „pridat\_ulohu“*<br>
 *// Vyžadovaná pro přidávání pravidelných úloh.*<br>
 *// Poznámka: Příkazy zadávané pomocí této funkce nesmějí obsahovat znak konce řádku. Vyžaduje-li vaše úloha více příkazů nebo komplikovanější konstrukce, zapište ji do skriptu a z úlohy spouštějte daný skript.*<br>
 **function pridat\_ulohu () \{**<br>
@@ -78,8 +78,8 @@ pokryty.
 ### Pravidelné úlohy (obecně)
 
 *# přidat nebo nahradit úlohu (spustit na pozadí/spustit v grafickém prostředí)*<br>
-**pridat_ulohu** {*id-úlohy*} **"**{*plán*}**"** **'**{*příkaz a parametry*}**'**<br>
-**pridat_ulohu** {*id-úlohy*} **"**{*plán*}**"** **'\~/bin/spustit-v-x** {*příkaz a parametry*}**'**
+**pridat\_ulohu** {*id-úlohy*} **"**{*plán*}**"** **'**{*příkaz a parametry*}**'**<br>
+**pridat\_ulohu** {*id-úlohy*} **"**{*plán*}**"** **'\~/bin/spustit-v-x** {*příkaz a parametry*}**'**
 
 *# vypsat seznam úloh (id je na konci řádku, za znakem „#“)/vypsat konkrétní úlohu*<br>
 *// Poznámka: Znaky „\\“ a „%“ jsou ve výpisu escapovány, protože mají pro crontab speciální význam.*<br>
@@ -109,45 +109,45 @@ pokryty.
 ### Pravidelné úlohy (plány)
 
 *# spouštět hned po startu systému/spouštět po přihlášení*<br>
-**pridat_ulohu** {*id-úlohy*} **@reboot '**{*příkaz*}**'**...
+**pridat\_ulohu** {*id-úlohy*} **@reboot '**{*příkaz*}**'**...
 
 *# spouštět každou minutu*<br>
-**pridat_ulohu** {*id-úlohy*} **"\* \* \* \* \*" '**{*příkaz*}**'**...
+**pridat\_ulohu** {*id-úlohy*} **"\* \* \* \* \*" '**{*příkaz*}**'**...
 
 *# spouštět každých pět minut (alternativy)*<br>
-**pridat_ulohu** {*id-úlohy*} **"\*/5 \* \* \* \*" '**{*příkaz*}**'**...<br>
-**pridat_ulohu** {*id-úlohy*} **"0,5,10,15,20,25,30,35,40,45,50,55 \* \* \* \*" '**{*příkaz*}**'**...
+**pridat\_ulohu** {*id-úlohy*} **"\*/5 \* \* \* \*" '**{*příkaz*}**'**...<br>
+**pridat\_ulohu** {*id-úlohy*} **"0,5,10,15,20,25,30,35,40,45,50,55 \* \* \* \*" '**{*příkaz*}**'**...
 
 *# spouštět každou hodinu*<br>
-**pridat_ulohu** {*id-úlohy*} **"**{*číslo-minuty*} **\* \* \* \*" '**{*příkaz*}**'**...
+**pridat\_ulohu** {*id-úlohy*} **"**{*číslo-minuty*} **\* \* \* \*" '**{*příkaz*}**'**...
 
 *# spouštět každou hodinu od 10.00 do 15.59*<br>
-**pridat_ulohu** {*id-úlohy*} **"**{*číslo-minuty*} **10-15 \* \* \*" '**{*příkaz*}**'**...
+**pridat\_ulohu** {*id-úlohy*} **"**{*číslo-minuty*} **10-15 \* \* \*" '**{*příkaz*}**'**...
 
 *# spouštět denně/denně, ale jen od pondělí do pátku*<br>
-**pridat_ulohu** {*id-úlohy*} **"**{*číslo-minuty*} {*číslo-hodiny*} **\* \* \*" '**{*příkaz*}**'**...<br>
-**pridat_ulohu** {*id-úlohy*} **"**{*číslo-minuty*} {*číslo-hodiny*} **\* \* 1-5" '**{*příkaz*}**'**...
+**pridat\_ulohu** {*id-úlohy*} **"**{*číslo-minuty*} {*číslo-hodiny*} **\* \* \*" '**{*příkaz*}**'**...<br>
+**pridat\_ulohu** {*id-úlohy*} **"**{*číslo-minuty*} {*číslo-hodiny*} **\* \* 1-5" '**{*příkaz*}**'**...
 
 *# spouštět týdně, každé pondělí/každou neděli*<br>
-**pridat_ulohu** {*id-úlohy*} **"**{*číslo-minuty*} {*číslo-hodiny*} **\* \* 1" '**{*příkaz*}**'**...<br>
-**pridat_ulohu** {*id-úlohy*} **"**{*číslo-minuty*} {*číslo-hodiny*} **\* \* 7" '**{*příkaz*}**'**...
+**pridat\_ulohu** {*id-úlohy*} **"**{*číslo-minuty*} {*číslo-hodiny*} **\* \* 1" '**{*příkaz*}**'**...<br>
+**pridat\_ulohu** {*id-úlohy*} **"**{*číslo-minuty*} {*číslo-hodiny*} **\* \* 7" '**{*příkaz*}**'**...
 
 *# spouštět měsíčně v N-tý den měsíce*<br>
-**pridat_ulohu** {*id-úlohy*} **"**{*číslo-minuty*} {*číslo-hodiny*} {*N*} **\* \*" '**{*příkaz*}**'**...
+**pridat\_ulohu** {*id-úlohy*} **"**{*číslo-minuty*} {*číslo-hodiny*} {*N*} **\* \*" '**{*příkaz*}**'**...
 
 *# spouštět v druhé a čtvrté pondělí od května do září včetně*<br>
 *// Rozsahy dnů pro N-tý den týdne v měsíci jsou: první: 1-7, druhý: 8-14, třetí: 15-21, čtvrtý: 22-28, pátý: 29-31.*<br>
-**pridat_ulohu** {*id-úlohy*} **"**{*číslo-minuty*} {*číslo-hodiny*} **8-14,22-28 5-9 \*" 'test $(date +%u) -eq 1 &amp;&amp;** {*příkaz*}**'**
+**pridat\_ulohu** {*id-úlohy*} **"**{*číslo-minuty*} {*číslo-hodiny*} **8-14,22-28 5-9 \*" 'test $(date +%u) -eq 1 &amp;&amp;** {*příkaz*}**'**
 
 *# spouštět jednou ročně v určitý den*<br>
-**pridat_ulohu** {*id-úlohy*} **"**{*číslo-minuty*} {*číslo-hodiny*} {*číslo-dne-v-měsíci*} {*číslo-měsíce*} **\*" '**{*příkaz*}**'**
+**pridat\_ulohu** {*id-úlohy*} **"**{*číslo-minuty*} {*číslo-hodiny*} {*číslo-dne-v-měsíci*} {*číslo-měsíce*} **\*" '**{*příkaz*}**'**
 
 *# spouštět v poledne 29. února každého přestupného roku*<br>
-**pridat_ulohu** {*id-úlohy*} **"0 12 29 2 \*" '**{*příkaz*}**'**
+**pridat\_ulohu** {*id-úlohy*} **"0 12 29 2 \*" '**{*příkaz*}**'**
 
 *# spouštět v poledne každou adventní neděli*<br>
 *// Uvedený příkaz využívá skutečnost, že adventní neděle se vyskytují pouze v období 27. listopadu až 24. prosince včetně.*<br>
-**pridat_ulohu** {*id-úlohy*} **"0 12 \* 11-12 7" 'test 1127 -le $(date +%m%d) -a $(date +%m%d) -le 1224 &amp;&amp;** {*příkaz*}**'**
+**pridat\_ulohu** {*id-úlohy*} **"0 12 \* 11-12 7" 'test 1127 -le $(date +%m%d) -a $(date +%m%d) -le 1224 &amp;&amp;** {*příkaz*}**'**
 
 ### Jednorázové úlohy (obecně)
 
@@ -227,14 +227,14 @@ pokryty.
 
 *# *<br>
 **mkdir -pv \~/moje\_ulohy**<br>
-**cd \~/moje\_ulohy**<br>
+**cd ~/moje\_ulohy**<br>
 **printf %s\\\\n 'cd' 'sleep 7' \\**<br>
 **'mplayer /usr/share/sounds/sound-icons/piano-3.wav &amp;' \\**<br>
 **'sleep 0.5' 'notify-send -i dialog-information "Další minuta uplynula."' &gt;uloha-minuta**<br>
 **function pridat\_ulohu () \{**<br>
 **(tmp="$2 %s #$1\\\\n"; crontab -l 2&gt;/dev/null \| egrep -v "#$1\\$"; shift 2; printf "$tmp" "$@" \| sed -e 's/\\\\/\\\\\\\\/g' -e 's/%/\\\\%/g') \| crontab -**<br>
 **\}**<br>
-**pridat_ulohu minuta "\* \* \* \* \*" "~/bin/spustit-v-x bash ~/moje\_ulohy/uloha-minuta"**
+**pridat\_ulohu minuta "\* \* \* \* \*" "~/bin/spustit-v-x bash ~/moje\_ulohy/uloha-minuta"**
 
 Poznámka: ukázka vyžaduje nainstalovaný balíček „mplayer“ a do domovského adresáře musíte umístit platný zvukový soubor „zvuk.wav“ (popř. jiný zvukový soubor a adekvátně upravit jméno souboru v ukázce).
 

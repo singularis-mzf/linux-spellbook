@@ -11,6 +11,12 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
+<!--
+ÚKOLY:
+
+[ ] Lépe zpracovat git rev-list.
+[ ] Nějak zpracovat řešení konfliktů při slučování větví.
+-->
 
 # Git
 
@@ -20,6 +26,8 @@ adresáři a jeho podadresářích. Každý takto zachycený stav se opatří d
 a popisem a později se k němu můžete vrátit, nebo ho exportovat do samostatného
 adresáře. Kromě toho umožňuje git synchronizaci a slučování změn v jinak oddělených
 kopiích daného adresáře a perfektní evidenci změn v textových souborech.
+
+Tato verze kapitoly nepokrývá dostatečně řešení konfliktů při slučování větví.
 
 ## Definice
 * **Pracovní adresář** je množina všech verzovaných souborů v gitem spravovaném uživatelském adresáři. Nikdy nezahrnuje obsah speciálního adresáře „.git“.
@@ -93,10 +101,17 @@ Každá revize je jednoznačně identifikována pomocí své MD5 hashe. Kromě t
 *// Výchozí revize je HEAD. Pozor, bez ptaní přepíše změny v pracovním adresáři!*<br>
 **git checkout** [{*revize*}] [**\-\-**] {*soubor-nebo-adresář*}...
 
+*# načíst HEAD do indexu/do indexu a pracovního adresáře (zrušit všechny změny)*<br>
+**git reset**<br>
+**git reset \-\-hard**
+
 *# načíst konkrétní soubory z revize v repozitáři do indexu*<br>
 *// Výchozí revize je HEAD.*<br>
 **git reset** [{*revize*}] [**\-\-**] {*soubor-nebo-adresář*}...
 
+*# načíst do pracovního adresáře i indexu revizi, která byla nejnovější k určitému datu/před 14 dny*<br>
+**git checkout $(git rev-list -n 1 \-\-first-parent "\-\-until=**{*datum-YYYY-MM-DD HH:mm:ss*}**" HEAD)**<br>
+**git checkout $(git rev-list -n 1 \-\-first-parent "\-\-until=$(date -d "14 days ago" "+%F %T")" HEAD)**
 
 *# smazat soubor z pracovního adresáře i indexu/jen z indexu*<br>
 **git rm** [**-f**] [**-r**] [[\-\-] {*soubor-či-adresář*}...]
@@ -105,10 +120,6 @@ Každá revize je jednoznačně identifikována pomocí své MD5 hashe. Kromě t
 *# přesunout či přejmenovat soubor/přesunout soubory v pracovním adresáři i indexu*<br>
 **git mv** {*původní-cesta*} {*nová-cesta*}<br>
 **git mv** {*zdroj*}... {*cílový-adresář*}
-
-*# načíst HEAD do indexu/do indexu a pracovního adresáře (zrušit všechny změny)*<br>
-**git reset**<br>
-**git reset \-\-hard**
 
 
 ### Práce se vzdáleným repozitářem (origin)
@@ -119,16 +130,16 @@ Každá revize je jednoznačně identifikována pomocí své MD5 hashe. Kromě t
 
 *# vytvořit novou větev z HEAD a odeslat ji do vzdáleného repozitáře*<br>
 **git checkout -b** {*nová-větev*}<br>
-**git push \-\-set-upstream origin** {*nová-větev*}
+**git push -u origin** {*nová-větev*}
 
 *# odeslat změny v aktuální větvi z lokálního repozitáře do vzdáleného (jednorázově/nastavit/větev už je nastavená)*<br>
 **git push origin** {*větev*}<br>
-**git push \-\-set-upstream origin** {*větev*}
+**git push -u origin** {*větev*}
 **git push**
 
 *# odeslat zadané větve (existující větve ve vzdáleném repozitáři budou přepsány)*<br>
 *// Poznámka: Příkaz „git push“ selže, pokud vzdálený repozitář není bare.*<br>
-**git push** [**\-\-set-upstream**] **origin** {*větev*}...
+**git push** [**-u**] **origin** {*větev*}...
 
 *# odeslat zadané tagy*<br>
 **git push origin** {*tag*}...
@@ -140,23 +151,23 @@ Každá revize je jednoznačně identifikována pomocí své MD5 hashe. Kromě t
 **git fetch**
 
 ### Jednoduchá práce s větvemi
-*# vytvořit novou větev z HEAD*<br>
-**git branch** {*nová-větev*}
-
 *# vytvořit novou větev z HEAD a přepnout se na ni (nezmění pracovní adresář ani index)*<br>
 **git checkout -b** {*nová-větev*}
 
-*# přejmenovat větev*<br>
-**git branch -m** {*starý-název*} {*nový-název*}
+*# vytvořit novou větev z HEAD*<br>
+**git branch** {*nová-větev*}
 
 *# smazat větev (jen sloučenou/kteroukoliv)*<br>
 **git branch -d** {*větev*}...<br>
 **git branch -D** {*větev*}...
 
+*# přejmenovat větev*<br>
+**git branch -m** {*starý-název*} {*nový-název*}
+
 *# ručně přiřadit větvi určitou revizi (i nesouvisející)*<br>
 **git reset \-\-soft** {*revize*}
 
-*# vytvořit novou odpojenou větev (orphan branch)(z revize/zcela prázdnou)*<br>
+*# vytvořit novou odpojenou větev (orphan branch)(z určité revize/zcela prázdnou)*<br>
 **git checkout \-\-orphan** [{*revize*}]
 **git checkout \-\-orphan &amp;&amp; git rm -rf .**
 
@@ -165,8 +176,9 @@ Každá revize je jednoznačně identifikována pomocí své MD5 hashe. Kromě t
 **git tag** {*název-tagu*} [{*revize*}]<br>
 **git tag -a -m** {*komentář*} [{*revize*}]
 
-*# vypsat seznam tagů*<br>
-**git tag** [**-l "**{*vzorek*}**"**]
+*# vypsat seznam tagů (všech/odpovídajících vzorku)*<br>
+**git tag**<br>
+**git tag -l "**{*vzorek*}**"**
 
 *# smazat tag*<br>
 *// Mazání a znovuvytvoření zcela lokálního tagu, který nemá obdobu ve vzdáleném repozitáři, je bezpečné. Všechny ostatní případy mohou mít nepříjemné nečekané důsledky.*<br>
@@ -207,7 +219,7 @@ Každá revize je jednoznačně identifikována pomocí své MD5 hashe. Kromě t
 *// Dojde-li při slučování ke konfliktu, můžeme je zrušit příkazem „git merge \-\-abort“.*<br>
 **git merge** {*revize*}...
 
-### Práce se změnami (pokročilá)
+### Práce se změnami z revizí (pokročilá)
 
 *# odvolat změny z určitých revizí/z určitého rozsahu revizí a odvolání commitnout*<br>
 *// Příkaz „git revert“ vyžaduje, aby v indexu ani pracovním adresáři nebyly žádné změny oproti HEAD.*<br>
@@ -221,7 +233,7 @@ Každá revize je jednoznačně identifikována pomocí své MD5 hashe. Kromě t
 *# zařadit změny provedené v jiné větvi před změny provedené v této větvi*<br>
 **git rebase** {*revize-jiná-větev*}
 
-### Konfigurace repozitáře
+### Konfigurace repozitáře (obecně)
 *# vypsat současnou hodnotu určitého klíče*<br>
 **git config** [**\-\-global**] **\-\-get** {*klíč*}
 
@@ -234,10 +246,24 @@ Každá revize je jednoznačně identifikována pomocí své MD5 hashe. Kromě t
 **git config -l**
 
 *# vypsat platné konfigurační dvojice klíč=hodnota*<br>
-**git config -l \| tac \| awk -F = '$0 \~ /=/ &amp;&amp; !($1 in A) {A[$1] = 1; print $0;}' \| LC_ALL=C sort**
+**git config -l \| tac \| awk -F = '$0 ~ /=/ &amp;&amp; !($1 in A) {A[$1] = 1; print $0;}' \| LC\_ALL=C sort**
 
 *# najít seznam podporovaných konfiguračních klíčů*<br>
 **git config \-\-help**
+
+### Konfigurace gitu či repozitáře (konkrétně)
+*# v logu zobrazovat datum ve formátu YYYY-MM-DD HH:MM:SS +ZZZZ (např. „1970-12-31 23:59:59 +0700“)*<br>
+**git config** [**\-\-global**] **log.date iso**
+
+*# po přihlášení (např. na GitHub) si nějakou dobu pamatovat přihlašovací údaje*<br>
+*// Vhodný počet sekund je např. 300 (5 minut), 86400 (24 hodin), 604800 (týden). Údaje se ukládat pouze v RAM, takže se ztratí restartem systému, možná i odhlášením.*<br>
+**git config** [**\-\-global**] **credential.helper "cache \-\-timeout=**{*počet-sekund*}**"**
+
+*# nastavit editor, který má být vyvolán pro editaci komentářů k revizím*<br>
+*// Vhodné jsou editory, které otevírají každý soubor v novém procesu, např. „nano“, „vim“, „emacs“, „mousepad“; předpokladem je, že daný editor musíte mít nainstalovaný.*<br>
+**git config** [**\-\-global**] **core.editor** {*příkaz*}
+
+
 
 ## Zaklínadla (.gitignore)
 
@@ -251,7 +277,11 @@ Každá revize je jednoznačně identifikována pomocí své MD5 hashe. Kromě t
 {*vzorek*}**/**
 
 ## Parametry příkazů
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+*# *<br>
+**git** [{*globální parametry*}] {*příkaz*} [{*parametry příkazu*}]
+
+* **-C** {*adresář*} \:\: (globální parametr) Před vykonáním příkazu vstoupí do zadaného adresáře.
 
 ## Jak získat nápovědu
 *# *<br>
@@ -259,16 +289,34 @@ Každá revize je jednoznačně identifikována pomocí své MD5 hashe. Kromě t
 **git** {*příkaz-gitu*} **\-\-help**
 
 Další dobrou možností je oficiální online referenční příručka (viz sekci „Odkazy“).
+Přehled podporovaných konfiguračních voleb pro příkaz „git config“ najdete
+(v angličtině) v online referenční příručce u příkazu „git config“.
 
 ## Tipy a zkušenosti
 * Normální repozitář je jednodušší než bare repozitář. Má vlastní pracovní adresář, se kterým pracuje. Normální repozitář můžete použít jako vzdálený repozitář, ale pouze ke čtení − nelze do něj zapisovat příkazem „git push“. Naopak bare repozitář slouží výhradně jako vzdálený repozitář.
 * Revize vzniklé sloučením větví (merge) mají za předky všechny revize, ze kterých byly sloučeny.
 
 ## Ukázka
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-<!--
-Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
--->
+*# Příprava adresáře a souborů*<br>
+**mkdir Projekt &amp;&amp; cd Projekt**<br>
+**printf %s\\\\n "#!""/bin/bash" "cat text" &gt; skript**<br>
+**chmod 755 skript**<br>
+**printf %s\\\\n "Toto je textový soubor" &gt; text**<br>
+
+*# Tělo příkladu*<br>
+**git init**
+**git add skript text**<br>
+**git commit -m "První verze"**<br>
+**printf %s\\\\n "Druhý řádek" &gt;&gt; text**<br>
+**git status**<br>
+**git commit -a -m "Přidán druhý řádek"**<br>
+**git log**
+
+*# Druhá část příkladu*<br>
+**git checkout -b nova-vetev HEAD~1**<br>
+**printf %s\\\\n "Jiný druhý řádek" &gt;&gt; text**<br>
+**git commit -a -m "Alternativní verze"**<br>
+**git diff master nova-vetev**
 
 ## Instalace na Ubuntu
 *# *<br>
@@ -279,15 +327,14 @@ Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
 Celé jméno a e-mail se používají k označení autorství revizí. Musíte je zadat, jinak git nebude fungovat, ale nemusí být pochopitelně pravdivé. Pro konkrétní repozitář můžete nastavit jiné hodnoty použitím stejných konfiguračních příkazů bez parametru **\-\-global**.
 
 ## Odkazy
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-Co hledat:
-
-* [stránka na Wikipedii](https://cs.wikipedia.org/wiki/Git)
-* [oficiální stránka programu](https://git-scm.com/) (anglicky)
-* [oficiální online referenční příručka](https://git-scm.com/docs) (anglicky)
-* [manuálová stránka](http://manpages.ubuntu.com/manpages/bionic/en/man1/git.1.html) (anglicky)
-* [balíček Bionic](https://packages.ubuntu.com/)
-* online referenční příručky
-* různé další praktické stránky, recenze, videa, tutorialy, blogy, ...
-* publikované knihy
+* [Playlist: tutorial gitu od BambooMachine](https://www.youtube.com/playlist?list=PL9n3wo1YKCEgKQBl1DrR_EzED9ogmKHX7)
+* [Stránka na Wikipedii](https://cs.wikipedia.org/wiki/Git)
+* [Kniha „Pro Git“](https://www.root.cz/knihy/pro-git/) (ISBN 978-80-904248-1-4, podléhá licenci [Creative Commons Uveďte autora-Nevyužívejte dílo komerčně-Zachovejte licenci 3.0 United States](https://creativecommons.org/licenses/by-nc-sa/3.0/us/))
+* [Video: Git křížem krážem](https://www.youtube.com/watch?v=OZeqGAbtBLQ)
+* [Video: Git - rýchly úvod, prvé príkazy](https://www.youtube.com/watch?v=8o5jutq2TEU) (slovensky)
+* [Oficiální online referenční příručka](https://git-scm.com/docs) (anglicky)
+* [Oficiální stránka programu](https://git-scm.com/) (anglicky)
+* [Manuálová stránka](http://manpages.ubuntu.com/manpages/bionic/en/man1/git.1.html) (anglicky)
+* [Balíček Bionic „git“](https://packages.ubuntu.com/bionic/git) (anglicky)
+* [Balíček Bionic „gitk“](https://packages.ubuntu.com/bionic/gitk) (anglicky)

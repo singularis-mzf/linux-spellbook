@@ -279,6 +279,10 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C) {
                 VYSTUP = VYSTUP ZpracujZnak("/") ZpracujZnak("/");
                 VSTUP = substr(VSTUP, 2);
                 continue;
+            case "`":
+            case "_":
+                ShoditFatalniVyjimku("Neescapovaný znak " C "! Všechny výskyty tohoto znaku musejí být escapovány zpětným lomítkem.");
+                continue;
             default:
                 # Zpracování bílých znaků
                 if (JeBilyZnak(C)) {

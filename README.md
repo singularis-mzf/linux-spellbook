@@ -61,6 +61,8 @@ Zatím nejsou.
 * [Markdown](kapitoly/markdown.md)
 * [Zpracování obrázků](kapitoly/obrazky.md)
 * [Plánování úloh](kapitoly/planovani-uloh.md)
+* [Docker](kapitoly/docker.md)
+* [Stahování videí](kapitoly/stahovani-videi.md)
 
 ### 2. Fáze shromažďování (pokročilá)
 * [FFmpeg](kapitoly/ffmpeg.md)
@@ -68,7 +70,6 @@ Zatím nejsou.
 * [Regulární výrazy](kapitoly/regularni-vyrazy.md)
 
 ### 1. Fáze shromažďování (začátek)
-* [Docker](kapitoly/docker.md)
 * [Firefox](kapitoly/firefox.md)
 * [Hledání souboru](kapitoly/hledani-souboru.md)
 * [LaTeX](kapitoly/latex.md)
@@ -76,12 +77,14 @@ Zatím nejsou.
 * [Soubory](kapitoly/soubory.md)
 
 ### 0. Plánované
+* Práce s archivy (atool)
 * Správce balíčků (apt/dpkg)
-* Bash
+* Bash (bash)
 * Diskové oddíly a /etc/fstab
 * GRUB
 * Systém (služby, swap apod.)
+* Šifrování a kryptografie (gpg)
 * Přehrávání videa, zvuku a obrázků
-* Stahování videí z internetu (youtube-dl)
 * Vim
+* X (Správce oken)
 * Záznam obrazovky (screenshooter, screencast, ...)
