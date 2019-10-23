@@ -14,6 +14,10 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 # Předmluva
 
+*„Prostě příkazový řádek v Linuxu je něco úchvatného, a kdo se neumí v tomto prostředí pohybovat, přichází o hodně.“*<br>− KAMENÍK, Pavel. *Příkazový řádek v Linuxu: praktická řešení.* Brno: Computer Press, 2011. ISBN 978-80-251-2819-0.
+
+&nbsp;
+
 „Linux: Kniha kouzel“ je sbírka velmi krátkých řešených příkladů pro operační systém Linux.
 Svým konceptem je určena začátečníkům a pokročilým uživatelům, přičemž každé z těchto skupin
 přináší něco jiného.
@@ -69,7 +73,7 @@ takový Harry Potter, kdyby se omezil jen na kouzla odpovídající jeho školn�
 Tato verze knihy je zaměřena primárně na **Ubuntu 18.04, Bionic Beaver**, a jeho varianty
 Kubuntu, Lubuntu, Ubuntu Budgie, Ubuntu MATE, Ubuntu Studio a Xubuntu,
 ale většina uvedených zaklínadel bude fungovat bez větších problémů i na mnoha jiných
-linuxových distribucích, především na Linuxu Mint. (Začátečníkům nedoporučuji
+současných linuxových distribucích, především na Linuxu Mint. (Začátečníkům nedoporučuji
 pokoušet Debian, kde může být jejich zprovoznění obtížnější.) U konkrétních zaklínadel
 může být uvedena jiná verze či distribuce, pro kterou jsou určena.
 
@@ -92,11 +96,8 @@ Proto jsem se rozhodl/a začít tento projekt.
 
 ## Licence
 
-Všechny zdrojové soubory tohoto projektu s výjimkou obrázků v adresáři
-„obrazky/gpl“ lze šířit pod podmínkami licence
-[Creative Commons Attribution-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/).
-Zmíněné obrázky pak podléhají různým verzím GNU General Public License
-a budou do knihy zařazeny pouze jako přílohy.
+Všechny zdrojové soubory tohoto projektu lze šířit pod podmínkami licence
+[Creative Commons Attribution-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/). Měly by být k dispozici na GitHubu na adrese<br>[https://github.com/singularis-mzf/linux-spellbook](https://github.com/singularis-mzf/linux-spellbook).
 
 <!--
 - kouzla

@@ -214,8 +214,6 @@ pokryty.
 **man at**
 
 ## Tipy a zkušenosti
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-
 * Pro jakoukoliv netriviální pravidelnou úlohu doporučuji vytvořit skript a funkci „pridat\_ulohu“ předat volání tohoto skriptu. Má to celou řadu výhod, např. možnost obsah úlohy editovat, možnost mít víc řádků a použít bash místo /bin/sh, definice se smazáním úlohy neztratí, ...
 * Naplánované úlohy jsou spouštěny mimo terminál a mimo grafické prostředí, což komplikuje jejich ladění.
 * Ačkoliv mi sekundy u příkazu „at“ nefungují, skript se spouští velmi přesně v nultou sekundu požadované minuty, což vybízí k použití příkazu „sleep“ na začátku spouštěného skriptu k dosažení spuštění v určitou sekundu minuty. Cron tak přesný není.
@@ -223,8 +221,6 @@ pokryty.
 * Pokud se pravidelná úloha nespustila, zkuste prozkoumat logy, které zobrazíte příkazem „fgrep CRON /var/log/syslog“. Mohou obsahovat odpovídající chybové hlášení.
 
 ## Ukázka
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-
 *# *<br>
 **mkdir -pv \~/moje\_ulohy**<br>
 **cd ~/moje\_ulohy**<br>
@@ -239,8 +235,6 @@ pokryty.
 Poznámka: ukázka vyžaduje nainstalovaný balíček „mplayer“ a do domovského adresáře musíte umístit platný zvukový soubor „zvuk.wav“ (popř. jiný zvukový soubor a adekvátně upravit jméno souboru v ukázce).
 
 ## Instalace na Ubuntu
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-
 *# *<br>
 **sudo apt-get install at**
 

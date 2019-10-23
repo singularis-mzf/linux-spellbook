@@ -33,6 +33,7 @@ Podle mých představ v době vydání této verze knihy by do její příští
 * „Hledání souborů“ (find, locate, whereis a další)
 * „Pevné a symbolické odkazy“
 * „Bash“ (syntaxe, rozvoj proměnných, exec, přesměrování, roury a další)
+* „GNU awk“ (vzorky, příkazy, funkce, syntaxe, použití)
 * „LaTeX“ (základní struktura dokumentu, standardní značky, překlad do PDF)
 * „Regulární výrazy“ (základní, rozšířené, Perl)
 * „SQL“ (SQLite, MySQL, MariaDB; všechno možné)

@@ -76,6 +76,8 @@
 }
 
 % {titlesec}:
+\titleclass{\chapter}{top}\relax%
+\newcommand{\chapterbreak}{\clearpage}% začínat kapitolu na nové straně
 \titleformat{\chapter}[hang]{\normalfont\LARGE\bfseries}{\makebox[35pt][l]{\thechapter}}{5pt}{}\relax
 \titlespacing*{\chapter}{0pt}{-1ex}{2ex plus2ex minus0.5ex}\relax
 
@@ -217,7 +219,6 @@ http://creativecommons.org/licenses/by-sa/4.0/
 \begin{itemize}%
 \item obrazky/ve-vystavbe.png \textcopyright~2010, Sarang (volné dílo podle německých zákonů)
 \item tučňák Tux \textcopyright~Larry Ewing; \textcopyright~Garrett LaSage (licence CC0, upraveno)
-\item ReText 7.0.1 (snímek obrazovky) \textcopyright~2011-2017 Dmitry Shachnev <mitya57@gmail.com> a přispěvatelé (licence GPL3), zobrazený text: \textcopyright~2019 Singularis (licence Creative Commons Attribution-ShareAlike 4.0 International; kompatibilní s GPL3)
 \end{itemize}%
 \vfill%
 \clearpage%
@@ -241,7 +242,7 @@ http://creativecommons.org/licenses/by-sa/4.0/
     Za skloněné podtržené části máte doplnit konkrétní hodnoty.\\%
 {\textcolor{seda}{\ensuremath{\dlsh}}}&%
     Dělí-li se zaklínadlo na víc řádků či variant,
-    je každá z nich ukončena šedým symbolem odrádkování; není-li na konci řádku tento symbol,
+    je každá z nich ukončena šedým symbolem odřádkování; není-li na konci řádku tento symbol,
     jde jen o zalomení řádku v knize.\\%
 {\ttfamily ABC=\,\textcolor{seda}{{\fontfamily{qcr}\fontseries{m}\fontshape{n}\selectfont\char`\\}}}&%
     Ve výjimečných případech, kdy bylo nutno řádek zalomit v místě,
