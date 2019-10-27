@@ -165,6 +165,14 @@ function KonecZaklinadla() {
     return "</div></div>\n";
 }
 
+function ZacatekOdsazenehoOdstavce(uroven) {
+    return Zopakovat("<blockquote>", uroven);
+}
+
+function KonecOdsazenehoOdstavce(uroven) {
+    return Zopakovat("</blockquote>", uroven);
+}
+
 function FormatTucne(jeZacatek) {
     return jeZacatek ? "<b>" : "</b>";
 }
@@ -191,6 +199,17 @@ function Obrazek(src, alt, rawSrc, rawAlt) {
     }
     return "<figure><img src=\"" src "\" alt=\"" alt "\"></figure>";
 }
+
+function ZapnoutRezimLicence() {
+    DO__REZIM_LICENCE = 1;
+    return "<div class=\"rezimlicence\">\n";
+}
+
+function VypnoutRezimLicence() {
+    DO__REZIM_LICENCE = 0;
+    return "</div>\n";
+}
+
 
 # dostává text poznámek v cílovém formátu
 #function OdkazyNaPoznamkyPodCarou(cisla, texty,   i, vysledek) {

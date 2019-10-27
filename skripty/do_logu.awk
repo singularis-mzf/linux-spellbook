@@ -105,6 +105,20 @@ function KonecOdstavcu() {
     return "KonecOdstavce();\n";
 }
 
+function ZacatekOdsazenehoOdstavce(uroven) {
+    if (uroven < 1 || uroven > 6) {
+        ShoditFatalniVyjimku("Nepodporovaná úroveň odsazení: " uroven);
+    }
+    return "ZacatekOdsazenehoOdstavce(" uroven ")";
+}
+
+function KonecOdsazenehoOdstavce(uroven) {
+    if (uroven < 1 || uroven > 6) {
+        ShoditFatalniVyjimku("Nepodporovaná úroveň odsazení: " uroven);
+    }
+    return "KonecOdsazenehoOdstavce(" uroven ")";
+}
+
 function KonecRadku() {
     return "KonecRadku();\n";
 }
@@ -182,6 +196,22 @@ function TriTecky() {
 
 function Obrazek(src, alt, rawSrc, rawAlt) {
     return "Obrazek(src=" src ",alt=" alt ",rawSrc=" rawSrc ",rawAlt=" rawAlt ");\n";
+}
+
+function ZapnoutRezimLicence() {
+    if (DO__REZIM_LICENCE) {
+        ShoditFatalniVyjimku("Režim licence opakovaně zapnut!");
+    }
+    DO__REZIM_LICENCE = 1;
+    return "ZapnoutRezimLicence();\n";
+}
+
+function VypnoutRezimLicence() {
+    if (!DO__REZIM_LICENCE) {
+        ShoditFatalniVyjimku("Režim licence vypnut bez zapnutí!!");
+    }
+    DO__REZIM_LICENCE = 0;
+    return "VypnoutRezimLicence();\n";
 }
 
 @include "skripty/hlavni.awk"

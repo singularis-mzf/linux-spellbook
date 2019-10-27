@@ -27,11 +27,11 @@ AWK := gawk
 CONVERT := convert
 PDFLATEX := pdflatex -halt-on-error
 
-VSECHNY_DODATKY := predmluva koncepce-projektu plan-vyvoje test mechanismus-prekladu
+VSECHNY_DODATKY := predmluva koncepce-projektu plan-vyvoje test mechanismus-prekladu licence
 VSECHNY_KAPITOLY := _ukazka awk docker ffmpeg firefox git hledani-souboru
 VSECHNY_KAPITOLY += make markdown obrazky odkazy ostatni planovani-uloh
 VSECHNY_KAPITOLY += soubory stahovani-videi barvy-a-titulek
-OBRAZKY := logo-knihy-velke.png make.png ve-vystavbe.png
+OBRAZKY := favicon.png by-sa.png logo-knihy-velke.png make.png ve-vystavbe.png marsh.jpg
 
 SOUBORY_PREKLADU := soubory_prekladu
 VYSTUP_PREKLADU := vystup_prekladu

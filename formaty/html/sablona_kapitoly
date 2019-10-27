@@ -42,7 +42,21 @@
 <link rel="icon" type="image/png" href="obrazky/favicon.png">
 </head>
 <body>
+<header>
+<span class="left"><img src="obrazky/favicon.png" width="16" height="16" alt=""> Linux: Kniha kouzel, {{JMÉNO VERZE}}</span>
+<span class="right"><span class="ico1"></span><span class="ico2"></span><span class="ico3"></span></span>
+</header><article>
 {{TĚLO KAPITOLY}}
+</article><footer>
+<img src="obrazky/by-sa.png" width="88" height="31" alt="[BY-SA]">
+Veškerý obsah této stránky (text, obrázky, zdrojový kód) je možno upravovat a šířit pod podmínkami licence
+<a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a>
+za podmínky uvedení autora, licence a zdroje a poskytnutí stejné či kompatibilní licence k provedeným změnám,
+jsou-li nějaké. Příslušné informace jsou dostupné
+v <a href="https://github.com/singularis-mzf/linux-spellbook">repozitáři na GitHubu</a>,
+konkrétně v souboru COPYING. Šíření obsahu bez těchto údajů nebo šíření upravené verze bez poskytnutí adekvátní
+licence k provedeným úpravám je porušení licenčních podmínek a může být postihováno.
+</footer>
 </body>
 </html>
 {{KONEC KAPITOLY}}

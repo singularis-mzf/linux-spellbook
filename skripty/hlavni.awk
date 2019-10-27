@@ -173,7 +173,7 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C) {
         # 3 znaky
         switch (C = substr(VSTUP, 1, 3)) {
             case "...":
-                if (VelikostZasobniku("format") == 0 && substr(VSTUP, 4, 1) != ".") {
+                if (TYP_RADKU == "RADEK_ZAKLINADLA" && VelikostZasobniku("format") == 0 && substr(VSTUP, 4, 1) != ".") {
                     VYSTUP = VYSTUP TriTecky();
                     VSTUP = substr(VSTUP, 4);
                     continue;
@@ -308,7 +308,7 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C) {
 function ZacitTypRadku(   bylPredel) {
     bylPredel = 0;
     if (TYP_RADKU != "PRAZDNY" && JE_ODSTAVEC_K_UKONCENI) {
-        if (TYP_RADKU != "NORMALNI") {
+        if (TYP_RADKU != "NORMALNI" || tolower(KAPITOLA) == "licence") {
             printf("%s", KonecOdstavcu());
         } else {
             printf("%s", PredelOdstavcu());
@@ -320,8 +320,17 @@ function ZacitTypRadku(   bylPredel) {
     switch (TYP_RADKU) {
         case "NORMALNI":
             if (!bylPredel) {
-                printf("%s", ZacatekOdstavcu(PREDCHOZI_NEPRAZDNY_TYP_RADKU == "NADPIS"));
+# + dodatečné pravidlo: v kapitole „Licence“ se všechny začátky odstavců uvažují jako po nadpisu (vypne odsazení).
+                printf("%s", ZacatekOdstavcu(PREDCHOZI_NEPRAZDNY_TYP_RADKU == "NADPIS" || tolower(KAPITOLA) == "licence"));
             }
+            break;
+        case "ODSAZENY_1":
+        case "ODSAZENY_2":
+        case "ODSAZENY_3":
+        case "ODSAZENY_4":
+        case "ODSAZENY_5":
+        case "ODSAZENY_6":
+            printf("%s", ZacatekOdsazenehoOdstavce(substr(TYP_RADKU, 10)));
             break;
         case "POLOZKA_SEZNAMU":
             if (PREDCHOZI_TYP_RADKU != "POKRACOVANI_POLOZKY_SEZNAMU") {
@@ -344,6 +353,15 @@ function UkoncitPredchoziTypRadku() {
         case "NORMALNI":
             JE_ODSTAVEC_K_UKONCENI = 1;
             return "";
+
+        case "ODSAZENY_1":
+        case "ODSAZENY_2":
+        case "ODSAZENY_3":
+        case "ODSAZENY_4":
+        case "ODSAZENY_5":
+        case "ODSAZENY_6":
+            printf("%s", KonecOdsazenehoOdstavce(substr(PREDCHOZI_TYP_RADKU, 10)));
+            break;
 
         case "POLOZKA_SEZNAMU":
             if (TYP_RADKU != "POKRACOVANI_POLOZKY_SEZNAMU") {
@@ -470,6 +488,13 @@ BEGIN {
         # typ řádku již byl určen
     } else if ($0 ~ /^#+ .+/) {
         TYP_RADKU = "NADPIS";
+    } else if ($0 ~ /^>+ .+/) {
+        UROVEN = index($0, " ") - 1;
+        if (UROVEN > 6) {
+            ShoditFatalniVyjimku("Příliš vysoká úroveň odsazení (víc než 6): " $0);
+        }
+        TYP_RADKU = "ODSAZENY_" UROVEN;
+        $0 = substr($0, UROVEN + 2);
     } else if (PREDCHOZI_TYP_RADKU != "NORMALNI" && $0 ~ /^\* .+/) {
         TYP_RADKU = "POLOZKA_SEZNAMU";
         $0 = substr($0, 3);
@@ -508,8 +533,12 @@ TYP_RADKU == "NADPIS" {
         printf("%s", KonecPodsekce(KAPITOLA, SEKCE, PODSEKCE));
     if (SEKCE != "" && $0 ~ /^##? /)
         printf("%s", KonecSekce(KAPITOLA, SEKCE));
-    if (KAPITOLA != "" && $0 ~ /^# /)
+    if (KAPITOLA != "" && $0 ~ /^# /) {
+        if (tolower(KAPITOLA) == "licence") {
+            printf("%s", VypnoutRezimLicence());
+        }
         printf("%s", KonecKapitoly(KAPITOLA, ppcall, pptall));
+    }
     C_ZAKLINADLA = 0;
     if ($0 ~ /^# /) {
         KAPITOLA = ZpracujZnaky(substr($0, 3));
@@ -520,6 +549,9 @@ TYP_RADKU == "NADPIS" {
         delete ppcall;
         delete pptall;
         printf("%s", ZacatekKapitoly(KAPITOLA, ++C_KAPITOLY));
+        if (tolower(KAPITOLA) == "licence") {
+            printf("%s", ZapnoutRezimLicence());
+        }
     } else if ($0 ~ /^## /) {
         SEKCE = ZpracujZnaky(substr($0, 4));
         PODSEKCE = "";
@@ -540,7 +572,7 @@ TYP_RADKU == "OBRAZEK" {
     next;
 }
 
-TYP_RADKU == "NORMALNI" {
+TYP_RADKU == "NORMALNI" || TYP_RADKU ~ /^ODSAZENY_[123456]$/ {
     printf("%s\n", FormatovatRadek($0));
     next;
 }
@@ -643,6 +675,10 @@ END {
         printf("%s", KonecPodsekce(KAPITOLA, SEKCE, PODSEKCE));
     if (SEKCE != "")
         printf("%s", KonecSekce(KAPITOLA, SEKCE));
-    if (KAPITOLA != "")
+    if (KAPITOLA != "") {
+        if (tolower(KAPITOLA) == "licence") {
+            printf("%s", VypnoutRezimLicence());
+        }
         printf("%s", KonecKapitoly(KAPITOLA, ppcall, pptall));
+    }
 }

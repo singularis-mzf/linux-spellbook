@@ -38,14 +38,43 @@ z-index:auto;font:inherit;}
 
 /* Blokové prvky */
 html {
-    background-color:#caddc0;
+    background:#caddc0 url("obrazky/marsh.jpg") 50% 0%/cover repeat fixed;
     color:#333333;
     font:62.5%/1.2 sans-serif;
-    padding:1rem 2% 5rem;
+/*    padding:1rem 2% 5rem;*/
 }
 
 body {
+    margin:2rem auto;
+    border:thin solid #802020;
+    padding:0;
+    width:90%;
+    max-width:150rem;
+    background-color:#caddc0;
     font-size:133%;
+    box-shadow:1rem 1rem 5rem 0 rgba(0,0,0,0.5);
+}
+
+header {
+/*    position:absolute;left:0;top:0;right:0;bottom:auto;*/
+    border-bottom:thin solid black;
+    padding:0.4em 0.5em;
+    background:#006600;
+    color:rgba(255,255,255,0.9);
+    font-weight:bold;
+    text-shadow:0 0 0.25em rgba(0,0,0,0.5);
+}
+
+article {
+    padding:2rem 3rem;
+}
+
+footer {
+    margin-top:2em;
+    border-top:thin solid purple;
+    padding:1rem 3rem;
+    font-size:85%;
+    background:#cccccc;
 }
 
 h1 {
@@ -161,6 +190,8 @@ h2+.zaklinadlo>hr, h3+.zaklinadlo>hr {display:none;visibility:hidden;}
 .zaklinadlo .radekzaklinadla:last-child::after {display:none;}
 .zaklinadlo .radekzaklinadla:empty::after {margin-left:0;}
 
+.zaklinadlo .akce {font-family:serif;font-style:italic;}
+.zaklinadlo .akce::before {content:"\2192 ";font-weight:bold;}
 
 .dopln {
     font: 100%/1.2 "DejaVu Sans Mono", monospace;
@@ -210,7 +241,37 @@ h2+.zaklinadlo>hr, h3+.zaklinadlo>hr {display:none;visibility:hidden;}
     padding-bottom:0;
 }
 
+/* header .right ikony */
+header .right span {
+    display:inline-block;
+    margin:0 0.25em;
+    color:#00cc00;
+}
+
+header .right .ico1 {
+    border-bottom:0.3rem solid;
+    width:1ex;height:1ex;
+}
+
+header .right .ico2 {
+    border-style:solid;
+    border-width:0.3rem 0.2rem 0.2rem;
+    width:0.8ex;height:0.75ex;
+}
+
+header .right .ico3 {
+    margin-left:0.1em;
+    width:1ex;height:1ex;text-align:center;
+    font-size:120%;
+    line-height:1;
+}
+
+header .right .ico3::before {content:"\d7";}
+
 /* zbytek */
+header .left img {vertical-align:bottom;margin-right:0.25em;}
+header .right {float:right;color:red;}
+footer img {float:left;margin:0 1rem 1rem 0;}
 .tab {
 /*    color:rgb(120,120,120);*/
     background:transparent url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAUCAYAAACJfM0wAAAACXBIWXMAAAsTAAALEwEAmpwYAAABtklEQVQ4y7XUzUtVURQF8N9+vsxCoSYNGkQfNEmjoKTMiCLDSQQNkqA/sGmfgygnZjgpopAaRF+zDILQICt9u8m5cHt29T2oNbrn7rMXh7XW3pGZICLambmmARHRysyOHtGqfU9ExGREtBruHo2IqYgY7Jd4G85juqG5jdO4HBE7+yGGwAlcjYjhhp4juB4Ru/shrnAYMxGxp6G+FzciYl8vxM/wsat5JiL2l/NrvKrVd+FaRIz91ewqFcX5IVzE8SILfMeDzFyMiDbOYBIDpf4L81iop+YP4ipWOIVzxVBYx1xmPil3xjCNHaWeeIrZKrIbNM7MTmYu4BaWy+8BHKrSkJmLuIkvNdMPYmQr82CrYeigcaDaDVM2XjK9vSbFe6yW+iguYbgmxTusNJk3iAs4WTPvBx5l5vOi/wTOduvfbV67RjqCKzhQe/wy7mfm25KYKRzrSszDzHy5mRTjXaRLuJuZn8p5tMSwwlfcy8wPPWtc9LyTmSsN9SXczszPvZqXeFE0XW3oeVPk+bZZZOrE63iM+Ya9m2XsZzPz51bbLWqLfmiTV1aJWet12W8Y6X+Flv+E39XGp4/1pQSiAAAAAElFTkSuQmCC") 0% 100%/1ch auto no-repeat;

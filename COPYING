@@ -19,6 +19,12 @@ License: CC-BY-SA-4.0
  RIGHTS CONTAINED HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS
  AND CONDITIONS.
 
+Files: dodatky/licence.md
+Copyright: Creative Commons
+License: PD
+PD according to: https://creativecommons.org/faq/#can-i-change-the-license-terms-or-conditions
+ „CC does not assert copyright in the text of its licenses“.
+
 Files: Makefile
 Files: skripty/*.awk
 Copyright: 2019, Singularis
@@ -55,6 +61,21 @@ License: GPL-2+
  You should have received a copy of the GNU General Public License
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+Files: obrazky/by-sa.png
+Copyright: Creative Commons
+License: PD (nedostatečně originální)
+Source: https://creativecommons.org/about/downloads/
+PD according to: https://commons.wikimedia.org/wiki/File:CC-BY-SA_icon.svg
+
+Files: obrazky/marsh.jpg
+Copyright: 2013, U.S. Fish and Wildlife Service
+License: PD (volné dílo podle zákonů USA − zaměstnanecké dílo vlády)
+Source: https://commons.wikimedia.org/wiki/File:A_scenic_view_of_the_marsh.jpg
+ PD according to: https://www.fws.gov/southeast/gulf-restoration/next-steps/focal-area/mississippi-alluvial-valley/
+ This file is in public domain, not copyrighted, no rights reserved, free for any use.
+ You can use this picture for any use including commercial purposes
+ without the prior written permission and without fee or obligation.
 
 Files: obrazky/ve-vystavbe.png
 Copyright: 2010, Sarang <https://de.wikipedia.org/wiki/Benutzer:Sarang>

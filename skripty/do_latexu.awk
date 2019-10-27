@@ -243,6 +243,14 @@ function KonecOdstavcu() {
     return "\\end{odstavce}";
 }
 
+function ZacatekOdsazenehoOdstavce(uroven) {
+    return "\\begin{odsazenyodstavec}{" uroven "}";
+}
+
+function KonecOdsazenehoOdstavce(uroven) {
+    return "\\end{odsazenyodstavec}";
+}
+
 function KonecRadku() {
     return "\\\\{}";
 }
@@ -385,6 +393,16 @@ function Obrazek(src, alt, rawSrc, rawAlt,   sirka) {
         sirka = "[width=" sirka "]";
     }
     return "\\begin{center}\\includegraphics" sirka "{" src "}\\end{center}";
+}
+
+function ZapnoutRezimLicence() {
+    DO__REZIM_LICENCE = 1;
+    return "\\zapnoutrezimlicence{}";
+}
+
+function VypnoutRezimLicence() {
+    DO__REZIM_LICENCE = 0;
+    return "\\vypnoutrezimlicence{}";
 }
 
 @include "skripty/hlavni.awk"
