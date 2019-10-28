@@ -47,6 +47,9 @@ Zdroj roku: https://en.wikipedia.org/wiki/X_Window_System#Release_history
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+*# simulovat stisknutí kláves*<br>
+**xdotool key** [**\-\-clearmodifiers**] [**\-\-delay** {*milisekundy*}] {*klávesa*}...
+
 ## Parametry příkazů
 <!--
 - Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.

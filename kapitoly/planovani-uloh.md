@@ -62,10 +62,12 @@ pokryty.
 *# skript „\~/bin/spustit-v-x“*<br>
 *// Tento skript je vyžadován pro spouštění grafických aplikací z naplánovaných úloh. Pro správný běh takto spuštěných aplikací může být nutno doplnit do seznamu u příkazu „egrep“ mnoho dalších proměnných.*<br>
 **#!/bin/bash -e**<br>
-**X\_PID="$(pgrep -u "$LOGNAME" '^[A-Za-z0-9]\*-session$' \| head -n 1)"**<br>
-**test -n "$X\_PID" || exit 1**<br>
-**source &lt;(egrep -z '^(DBUS\_SESSION\_BUS\_ADDRESS\|DISPLAY)=' /proc/$X\_PID/environ \| tr \\\\0 \\\\n \| sed 's/=/\\n/' \| xargs -rd \\\\n printf "export %s='%s'\n")**<br>
-**unset X\_PID**<br>
+**function f () \{**<br>
+**local xpid="$(pgrep -u "$LOGNAME" '^[A-Za-z0-9]\*-session$' \| head -n 1)"**<br>
+**test -n "$xpid" || exit 1**<br>
+**eval "$(egrep -z '^(DBUS\_SESSION\_BUS\_ADDRESS\|DISPLAY)=' /proc/$xpid/environ \| tr \\\\0 \\\\n \| sed -e s/=/\\\\n/ -e s/\\'/\\'\\\\\\\\\\'\\'/g \| xargs -rd \\\\n printf "export %s='%s'\\\\n")"**<br>
+**\}**<br>
+**f**<br>
 **exec "$@"**
 
 *# jak vytvořit skript „\~/bin/spustit-v-x“*<br>

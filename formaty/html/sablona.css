@@ -38,18 +38,17 @@ z-index:auto;font:inherit;}
 
 /* Blokové prvky */
 html {
-    background:#caddc0 url("obrazky/marsh.jpg") 50% 0%/cover repeat fixed;
+    background:#caddc0 url("obrazky/marsh.jpg") 100% 0%/cover repeat fixed;
     color:#333333;
     font:62.5%/1.2 sans-serif;
 /*    padding:1rem 2% 5rem;*/
 }
 
 body {
-    margin:2rem auto;
+    margin:15rem auto 25rem;
     border:thin solid #802020;
     padding:0;
-    width:90%;
-    max-width:150rem;
+    width:90%;min-width:95rem;max-width:120rem;
     background-color:#caddc0;
     font-size:133%;
     box-shadow:1rem 1rem 5rem 0 rgba(0,0,0,0.5);
@@ -63,6 +62,12 @@ header {
     color:rgba(255,255,255,0.9);
     font-weight:bold;
     text-shadow:0 0 0.25em rgba(0,0,0,0.5);
+}
+
+nav {
+    display:block;
+    margin:1em 3rem;
+    text-align:center;
 }
 
 article {
@@ -109,7 +114,7 @@ h3 .cislo {
 p, ul {
     font-family: "DejaVu Serif", serif;
     margin:0.75em 0;
-    max-width:50em;
+    max-width:70em;
 }
 
 p {
@@ -139,6 +144,13 @@ a:hover {text-decoration:underline;}
 b {font-weight:bold;}
 i {font-style:italic;}
 
+/* Formátování odkazů v navigaci */
+nav a {margin:0.25em;}
+/*nav a::before {content:"\2191";margin-right:0rem;}
+nav a::after {content:"\2191";margin-left:0rem;}*/
+nav a[rel="prev"]::before {content:"\ab ";margin:0;}
+nav a[rel="next"]::after {content:" \bb";margin:0;}
+nav a[rel="prev"]::after, nav a[rel="next"]::before {content:none;}
 
 /* Formátování zaklínadel */
 .zaklinadlo {
@@ -271,6 +283,8 @@ header .right .ico3::before {content:"\d7";}
 /* zbytek */
 header .left img {vertical-align:bottom;margin-right:0.25em;}
 header .right {float:right;color:red;}
+footer p {margin:0;padding:0;max-width:none;}
+footer p+p {margin-top:0.75em;}
 footer img {float:left;margin:0 1rem 1rem 0;}
 .tab {
 /*    color:rgb(120,120,120);*/
@@ -287,6 +301,61 @@ footer img {float:left;margin:0 1rem 1rem 0;}
 .tritecky {
     color:rgb(127,127,127);
     letter-spacing:-0.3em;
+}
+
+.zahlavistranky {
+    overflow:hidden;
+    position:relative;
+}
+.zahlavistranky img[src="obrazky/logo-knihy-velke.png"] {
+    float:left;
+    width:20vw;height:auto;
+    width:25%;
+}
+/* banner: */
+.zahlavistranky h1 img {
+    position:absolute;top:0;left:auto;right:0;bottom:auto;z-index:2;
+    width:75%;
+    border:0.1rem solid #802020;
+    box-shadow:0.1rem 0.1rem 0.2rem 0 #000000;
+}
+
+.zahlavistranky .slogan {
+    position:absolute;top:auto;left:auto;right:0;bottom:0;
+    width:75%;
+    padding:2.5em 0;
+    font-style:italic;
+    line-height:1.5;
+    text-align:center;
+}
+
+.informaceoverzi {text-align:center;}
+
+ol#prehledkapitol {
+    margin:5em auto;
+    width:20em;
+}
+ol#prehledkapitol li {
+    list-style:decimal outside;
+}
+ol#prehledkapitol li+li {
+    margin-top:0.5em;
+}
+
+dl.copyrights {
+}
+dl.copyrights dt {
+    display:list-item;
+    list-style:disc inside;
+}
+dl.copyrights dd {
+    margin:0 0 0.5rem auto;
+    max-width:95%;
+    overflow:auto;
+}
+dl.copyrights pre {
+    font-family:monospace;
+    white-space:pre;
 }
 
 @media print {

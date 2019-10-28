@@ -14,13 +14,13 @@ https://creativecommons.org/licenses/by-sa/4.0/
 # GNU make
 
 ## Úvod
-GNU make je nástroj k automatizaci procesu kompilace. Vykonává podobnou úlohu jako např.
-skript napsaný v bashi, ale na rozdíl od něj umí:
+GNU make je nástroj k automatizaci procesu sestavování určitých cílových souborů ze souborů zdrojových. Vykonává podobnou úlohu jako např. skript napsaný v bashi, ale na rozdíl od něj umí:
 
 * Kompilovat pouze ty části programu, které jsou potřeba (jejichž cílové soubory neexistují nebo se jejich zdrojové soubory změnily).
-* Spouštět kompilace paralelně, aniž by to narušilo definované závislosti.
+* Spouštět procesy paralelně, aniž by to narušilo definované závislosti.
 
-Vztahy mezi soubory a kompilační příkazy jsou popsány v tzv. Makefilu (souboru jménem „Makefile“),
+Vztahy mezi zdrojovými a cílovými soubory a kompilační příkazy jsou popsány
+v tzv. Makefilu (souboru jménem „Makefile“),
 jemuž se bude věnovat většina této kapitoly.
 
 ## Definice

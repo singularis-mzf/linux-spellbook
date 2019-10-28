@@ -61,7 +61,9 @@ function Tabulator(delka,  i, vysledek) {
 }
 
 function ZacatekKapitoly(kapitola, cisloKapitoly) {
-    return "<h1>" kapitola "</h1>\n";
+# Generování prvku <h1> obstarává šablona kapitoly (formaty/html/sablona_kapitoly).
+#    return "<h1>" kapitola "</h1>\n";
+    return "";
 }
 
 function KonecKapitoly(kapitola, cislaPoznamek, textyPoznamek,   i, vysledek) {

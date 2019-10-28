@@ -203,7 +203,7 @@ Pro podrobný popis formátovacího řetězce a mechanismu automatického výb�
 
 Aktuální instalační postup „youtube-dl“ hledejte na [oficiálních stránkách youtube-dl](https://ytdl-org.github.io/youtube-dl/download.html).
 
-Zde uvádím trochu složitější postup, který sestává z následujícího kroků: nejprve musíte samotný program stáhnout, pak můžete zkontrolovat jeho elektronický podpis (ačkoliv stahování z https je už samo o sobě slušná ochrana před podvržením). A nakonec ho musíte nainstalovat; buď pro všechny uživatele (což je běžná, doporučovaná cesta), nebo jen pro sebe (což nevyžaduje použití „sudo“).
+Zde uvádím trochu složitější postup, který sestává z následujících kroků: nejprve musíte samotný program stáhnout, pak můžete zkontrolovat jeho elektronický podpis (ačkoliv stahování z https je už samo o sobě slušná ochrana před podvržením). A nakonec ho musíte nainstalovat; buď pro všechny uživatele (což je běžná, doporučovaná cesta), nebo jen pro sebe (což nevyžaduje použití „sudo“).
 
 *# stažení (nezbytná část)*<br>
 **sudo apt-get install -y wget**<br>

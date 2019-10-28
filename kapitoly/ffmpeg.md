@@ -520,8 +520,8 @@ pozor na PTS!
 
 *# vypnout úvodní banner s verzí a konfigurací pro ffmpeg/ffprobe*<br>
 *// Toto vypnutí platí jen pro danou instanci bashe.*<br>
-**source &lt;(printf "ffmpeg() { '%s' -hide\_banner "\\$@";}\\n" "$(which ffmpeg)")**<br>
-**source &lt;(printf "ffprobe() { '%s' -hide\_banner "\\$@";}\\n" "$(which ffprobe)")**
+**eval "ffmpeg() { '$(which ffmpeg)' -hide\_banner \\"\\$@\\";}"**<br>
+**eval "ffprobe() { '$(which ffprobe)' -hide\_banner \\"\\$@\\";}"**
 
 ## Parametry příkazů
 ![ve výstavbě](../obrazky/ve-vystavbe.png)

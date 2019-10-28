@@ -256,7 +256,7 @@ Každá revize je jednoznačně identifikována pomocí své MD5 hashe. Kromě t
 **git config** [**\-\-global**] **log.date iso**
 
 *# po přihlášení (např. na GitHub) si nějakou dobu pamatovat přihlašovací údaje*<br>
-*// Vhodný počet sekund je např. 300 (5 minut), 86400 (24 hodin), 604800 (týden). Údaje se ukládat pouze v RAM, takže se ztratí restartem systému, možná i odhlášením.*<br>
+*// Vhodný počet sekund je např. 300 (5 minut), 86400 (24 hodin), 604800 (týden). Údaje se ukládají pouze v RAM, takže se ztratí restartem systému, možná i odhlášením.*<br>
 **git config** [**\-\-global**] **credential.helper "cache \-\-timeout=**{*počet-sekund*}**"**
 
 *# nastavit editor, který má být vyvolán pro editaci komentářů k revizím*<br>

@@ -19,7 +19,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 &nbsp;
 
 „Linux: Kniha kouzel“ je sbírka velmi krátkých řešených příkladů pro operační systém Linux.
-Svým konceptem je určena začátečníkům a pokročilým uživatelům, přičemž každé z těchto skupin
+Svou koncepcí je určena začátečníkům a pokročilým uživatelům, přičemž každé z těchto skupin
 přináší něco jiného.
 
 Může být velice užitečná každému, kdo v současnosti začíná s Linuxem
@@ -43,9 +43,9 @@ Máte-li na počítači nainstalovaný Linux, máte na disku gigabajty nesmírn�
 nástrojů, které v sobě skrývají desítky let práce špičkových programátorů, a nemusíte
 nezbytně pochopit, jak fungují, abyste s nimi dokázali velké věci; musíte však znát postup,
 jak je použít; příliš troufalí uživatelé totiž skončí na prvním chybovém hlášení.
-V této knize chci s využitím svých zkušeností (a v mezích možností i zkušeností
-jiných pokročilých uživatelů) k tomu, abych vám ukázal/a reálně dosažitelné cíle a postupy,
-které vás k nim opravdu zavedou, rychle a v klidu.
+V této knize vám chci s využitím svých zkušeností (a v mezích možností i zkušeností
+jiných pokročilých uživatelů) ukázat reálně dosažitelné cíle a postupy,
+které vás k nim opravdu zavedou, rychle a příjemně.
 
 Patříte-li k **pokročilým uživatelům** systému GNU/Linux, tato kniha vám nabídne především
 rychlou nápovědu k příkazům a parametrům, které už jste pozapomněli, a programátorskou
@@ -54,7 +54,7 @@ zakroužkovat či dopsat. Především vám ale nabízí možnost svoje znalosti
 sdílet nejen se sobě rovnými, ale také s uživateli méně zkušenými; takovými,
 jaký/á jste byl/a vy, než jste podstoupil/a roky experimentování, programování
 a studia dokumentace. Vaše příspěvky, zlepšovací návrhy a chybová hlášení jsou
-v repozitáři na GitHubu vítány, pokud budou v souladu s konceptem projektu. Pokud ne,
+v repozitáři na GitHubu vítány, pokud budou v souladu s koncepcí projektu. Pokud ne,
 bude vítána vaše odnož (fork), kterou si budete moci uzpůsobit přesně podle svých představ.
 (Veškerý obsah repozitáře je dostupný pod svobodnými licencemi, podrobněji viz níže.)
 

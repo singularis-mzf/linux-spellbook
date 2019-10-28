@@ -41,7 +41,7 @@ Tato verze kapitoly nepokrývá zvláštní schopnosti konkrétních terminálov
 Jedna z prvních věcí, která mě po otevření linuxového terminálu naštvala, bylo to, že neustále barevně zdůrazňoval moje uživatelské jméno a uváděl ho do titulku snad každého terminálového okna. Když si v Xubuntu ve výchozím nastavení poprvé otevřete Terminator a rozdělíte ho na čtyři podokna, svoje uživatelské jméno uvidíte na *deseti* místech a zopakuje se pokaždé, když máte zadat další příkaz. Mám z toho pocit, že toto nastavení musel navrhovat někdo s narcistickou poruchou osobnosti... Pokud si to chcete předělat, tato kapitola vám poradí jak.
 
 ## Definice
-* **Výzva terminálu** (zkráceně „výzva“) je řetězec, který vypisuje interpret příkazového řádku před, během nebo po přijetí příkazu od uživatele (tzn. v interaktivním režimu). V interpretu „bash“ se rozeznávají tři druhy výzvy a jejich šablony jsou uloženy v proměnných PS0, PS1 a PS2: **hlavní výzva** (PS1) značí, že bash očekává příkaz, **vedlejší výzva** (PS2) značí, že bash očekává pokračování příkazu na dalším řádku, **potvrzující výzva** (PS0) se vypisuje po přijetí příkazu a před zahájením jeho vykonávání.
+* **Výzva terminálu** (zkráceně „výzva“) je řetězec, který interpret příkazového řádku vypisuje před, během nebo po přijetí příkazu od uživatele (tzn. v interaktivním režimu). V interpretu „bash“ se rozeznávají tři druhy výzvy a jejich šablony jsou uloženy v proměnných PS0, PS1 a PS2: **hlavní výzva** (PS1) značí, že bash očekává příkaz, **vedlejší výzva** (PS2) značí, že bash očekává pokračování příkazu na dalším řádku, **potvrzující výzva** (PS0) se vypisuje po přijetí příkazu a před zahájením jeho vykonávání.
 * **Escape sekvence** je řetězec bajtů, na který terminál zareaguje tak, že místo vypsání čehokoliv na obrazovku provede změnu nastavení (např. barvy písma) či nějakou akci. Escape sekvence začínají netisknutelným znakem „escape“ (ASCII kód 0x1b). V minulosti se escape sekvence zapisovaly ručně a děsily nezkušené uživatele; dnes se však obvykle generují moderním příkazem „tput“, který současně redukuje problémy s kompatibilitou jednotlivých typů terminálů.
 * **Paleta** je v této kapitole pole barev, které daný terminál podporuje, *indexované od nuly*. Typicky se vyskytují pouze dvě palety: s 8 barvami a s 256 barvami, ačkoliv realizace konkrétních barev v těchto paletách se mohou v jednotlivých terminálech mírně lišit.
 
@@ -49,17 +49,24 @@ Jedna z prvních věcí, která mě po otevření linuxového terminálu naštv
 
 ### Pomocné funkce
 
-*# bezp\_set()*<br>
+*# bezp\_set() − použije první podporované číslo barvy*<br>
 **function bezp\_set () \{**<br>
-**local f="$1" c="$(tput colors 2&gt;/dev/null \|\| true)" x=""**<br>
+**local f="$1" c="$(tput colors 2&gt;/dev/null \|\| printf 0)" x=""**<br>
 **shift**<br>
 **for x in $@; do if test $x -lt $c; then tput $f $x; break; fi; done**<br>
 **return 0**<br>
 **\}**
 
+*# barvapronh() − nastaví barvu písma podle hodnoty parametru*<br>
+**function barvapronh () \{**<br>
+**test $1 -gt 0 &amp;&amp; tput bold**<br>
+**test $1 -eq 1 &amp;&amp; bezp\_set setaf 1**<br>
+**test $1 -gt 1 &amp;&amp; bezp\_set setaf 2**<br>
+**\}**
+
 ### Titulek
 *# nastavit titulek okna terminálu*<br>
-*// Ve standardním nastavení nastavuje titulek terminálu jeho výzva PS1. Pro vyzkoušení si nastavte PS1="". Pro permanentní nastavení budete muset upravit soubor „~/.bashrc“.*<br>
+*// Ve výchozím nastavení nastavuje titulek terminálu jeho hlavní výzva PS1. Pokud nechcete, aby vaše nastavení hned přepsala, musíte si ji před experimentem vypnout, např. příkazem „PS1=""“.*<br>
 **printf %s\\\\n "$TERM" \| egrep -isq ^xterm &amp;&amp; printf "\\\\e]2;%s\\\\a" "**{*nový titulek*}**"**
 
 ### Barvy
@@ -82,7 +89,7 @@ Jedna z prvních věcí, která mě po otevření linuxového terminálu naštv
 **tput sgr0**
 
 *# nastavit barvu popředí/pozadí*<br>
-*// Funkce „bezp\_set“ použije ze svých argumentů první podporované číslo barvy. Doporučuji jako první uvést číslo pro paletu s 256 barvami a jako druhé číslo náhradní barvy z osmibarevné palety.*<br>
+*// Funkce „bezp\_set“ použije ze svých argumentů první podporované číslo barvy. Není-li žádné z uvedených čísel podporováno, žádná barva se nanastaví. Při volání doporučuji jako první uvést číslo pro paletu s 256 barvami a jako druhé číslo náhradní barvy z osmibarevné palety.*<br>
 **bezp\_set setaf** {*číslo-barvy*}...<br>
 **bezp\_set setab** {*číslo-barvy*}...
 
@@ -181,12 +188,13 @@ Jedna z prvních věcí, která mě po otevření linuxového terminálu naštv
 **\\\\\\$**
 
 *# provedení příkazu a vypsání jeho výstupu (vyhodnotit hned/vyhodnotit při každém vypsání dané výzvy)*<br>
-*// V druhém případě musíte v uvedeném příkazu escapovat znaky ", \\, $ a !, aby se do proměnné PS1 (resp. PS0 či PS2) uložil tak, jak má být vykonán.*<br>
+*// U druhé varianty (vyhodnotit při každém vypsání výzvy) musíte v příkazu escapovat znaky ", \\, $ a !, aby se do příslušné proměnné uložil přesně tak, jak má být vykonán.*<br>
 **$(**{*příkaz*}**)**<br>
 **\\$(**{*příkaz*}**)**
 
-*# návratový kód posledního příkazu*<br>
-**\\$?**
+*# návratový kód posledního příkazu (viz poznámka!)*<br>
+*// Poznámka: Aby tento výraz fungoval, musíte do proměnné PROMPT\_COMMAND (ideálně na začátek) přidat příkaz „navr\_hodn=$?“, např. příkazem „PROMPT\_COMMAND="navr\_hodn=\\$?;$PROMPT\_COMMAND"“.*<br>
+**\\${navr\_hodn}**
 
 *# cesta/název aktuálního adresáře (v obou případech se domovský adresář nahrazuje znakem „~“)*<br>
 **\\\\w**<br>
@@ -214,19 +222,23 @@ Jedna z prvních věcí, která mě po otevření linuxového terminálu naštv
 **\\\\H**<br>
 **\\\\h**
 
+*# konec řádku/tabulátor*<br>
+**\\\\n**<br>
+
 *# uživatelské jméno přihlášeného uživatele*<br>
 **\\\\u**
+
+*# počet úloh běžících na pozadí (těch, které lze vypsat příkazem „jobs“)*<br>
+**\\\\j**
 
 *# cesta/název aktuálního adresáře (bez zkracování znakem „~“)*<br>
 **\\$(pwd)**<br>
 **\\$(basename \\$(pwd))**
 
 *# znak „$“ pro všechny (i pro uživatele root)*<br>
-**\\\\044\\\\[\\\\]**
+**\\$(printf \\$)**
 <!--
-Poznámka: závorky \[\] v předchozím zaklínadle nejsou nezbytné, ale bez nich
-se někdy příkaz nezpracuje správně, např. „PS1="\\044a"“ nevypíše očekávanou
-výzvu „$a“, zatímco „PS1="\\044\\[\\]a"“ ano.
+Další možnost: \\044\\[\\]
 -->
 
 ## Zaklínadla (příklady)
@@ -241,7 +253,7 @@ výzvu „$a“, zatímco „PS1="\\044\\[\\]a"“ ano.
 **PS1="**{*text*}**"**<br>
 **PS1+="**{*další text*}**"**
 
-*Poznámka:* Aby mohl bash správně zformátovat výzvu, potřebuje předem znát počet tisknutých znaků na každém jejím řádku. Bohužel bash nerozumí escape sekvencím, proto mu musíte napovědět a tyto sekvence uzavřít do zvláštních závorek „\\[“ a „\\]“ (ve dvojitých uvozovkách se zadávají „\\\\[“ a „\\\\]“), které znamenají, že jejich obsah bash nemá při výpočtu šířky řádků vůbec zohledňovat.
+*Důležitá poznámka:* Aby mohl bash správně zformátovat hlavní a vedlejší výzvu (PS1 a PS2), potřebuje předem znát počet tisknutých znaků na každém řádku. Bohužel bash nerozumí escape sekvencím, proto mu musíte napovědět a tyto sekvence uzavřít do zvláštních závorek „\\[“ a „\\]“ (ve dvojitých uvozovkách se zadávají „\\\\[“ a „\\\\]“), které znamenají, že jejich obsah bash nemá při výpočtu šířky řádků vůbec zohledňovat. Tyto závorky se bohužel naopak nesmějí používat v proměnné PS0, tam by vypsaly škaredé paznaky na terminál.
 
 ## Jak získat nápovědu
 
@@ -257,20 +269,18 @@ výzvu „$a“, zatímco „PS1="\\044\\[\\]a"“ ano.
 
 * Výchozí nastavení výzev se nachází v souboru „~/.bashrc“. Umístěním svých definic na konec tohoto souboru můžete výchozí nastavení přepsat. Změna se projeví při dalším spuštění bashe.
 * Konstrukci proměnné PS1 je vhodné pro přehlednost rozdělit do více řádků, kdy první řádek bude přiřazení a na dalších použijete operátor += k připojení hodnoty ke stávající hodnotě.
-* Nenechte vyhodnocovat příkazy „tput“ při každém vypisování výzvy, není-li to nutné. Je to zbytečné plýtvání systémovými zdroji; toto je špatně:<br>„PS1="\\\\[\\$(bezp\_set setaf 4)\\\\]\\\\w\\\\[\\$(tput sgr0)\\\\]'“<br>a toto je správně: „PS1="\\\\[$(bezp\_set setaf 4)\\\\]\\\\w\\\\[$(tput sgr0)\\\\]'“.
 * Tip: Před zkoušením nastavování barev a titulku terminálu nanečisto si vypněte výzvu příkazem „PS1=""“. Výchozí výzva obsahuje escape sekvence, které by kolidovaly s těmi, které se snažíte zadat a rušily by jejich účinek.
+* Bash podporuje proměnnou „PROMPT\_COMMAND“. Je-li nastavena, je vykonána jako příkaz těsně před vypsáním hlavní výzvy. Toho lze využít k nastavení proměnných, které pak ve výzvě použijeme. Proměnná PROMPT\_COMMAND může obsahovat i více příkazů oddělených středníky. Podle manuálové stránky by příkazy uvedené v této proměnné neměly generovat žádný výstup na terminál! (Ale výstup do souboru je pravděpodobně v pořádku.)
 
 ## Ukázka
-<!--
-- Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
-- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti − ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
-- Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-
 *# *<br>
-**PS1="\\[$(tput bold)Tato výzva je zbytečně rozsáhlá, abych vám ukázal/a spoustu možností.$(tput sgr0)\\]\\n"**
-**PS1="čas(pevný=$(date +%T)|proměnný=\\$(date +%T))"**
+**PROMPT\_COMMAND="navr\_hodn=\\$?;$PROMPT\_COMMAND"**<br>
+**PS1="\\\\[$(printf %s\\\\n "$TERM" \| egrep -isq ^xterm &amp;&amp; printf "\\\\e]2;%s\\\\a" "Bude příkaz č. \\\\#")\\\\]"**<br>
+**PS1+="Tato \\\\[$(tput smul)\\\\]výzva je \\\\[$(tput sitm)\\\\]zbytečně\\\\[$(tput rmul)\\\\] rozsáhlá, aby ukázala \\\\[$(tput bold)\\\\]spoustu\\\\[$(tput sgr0)\\\\] možností.\\n"**<br>
+**PS1+="\\\\[$(tput dim)\\\\]Velikost terminálu: \\$(tput cols)x\\$(tput lines) Volné místo: \\\\[$(tput smul)\\\\]\\$(df -h \-\-output=avail . \| tail -n 1 \| tr -d \\" \\")\\\\[$(tput sgr0)\\\\]\\\\n"**<br>
+**PS1+="Návr.kód:\\\\[\\$(barvapronh \\${navr\_hodn})\\\\]\\${navr\_hodn}\\\\[$(tput sgr0)\\\\] (\\\\[$(bezp\_set setaf 87 6)\\\\]\\\\t\\\\[$(tput sgr0)\\\\]) !""\\\\!&blank;"**<br>
+**PS1+="\\\\[$(bezp\_set setaf 220 3; tput bold)\\\\]\\\\w\\\\[$(tput sgr0)\\\\]&blank;\\\\$&blank;"**<br>
+**PS2="\\\\[$(bezp\_set setaf 10 2; tput bold)\\\\]\| \\\\[$(tput sgr0)\\\\]"**
 
 ## Instalace na Ubuntu
 
@@ -286,6 +296,10 @@ Všechny použité součásti jsou základními nástroji přítomnými v každ
 * [Manuálová stránka: bash](http://manpages.ubuntu.com/manpages/bionic/en/man1/bash.1.html) (anglicky)
 * [Video: Customizing Your Terminal \| Linux Terminal Beautification](https://www.youtube.com/watch?v=iaXQdyHRL8M)
 * [Balíček Bionic: ncurses-bin](https://packages.ubuntu.com/bionic/ncurses-bin) (anglicky)
-* [Video: Customize the Bash Prompt](https://www.youtube.com/watch?v=wOUYzKrGZaA)
-* [Video: Customize &amp; Colorize Your Bash Prompt/Terminal](https://www.youtube.com/watch?v=C92eaq\_bZR8)
+* [Video: Customize the Bash Prompt](https://www.youtube.com/watch?v=wOUYzKrGZaA) (anglicky)
+* [Video: Customize &amp; Colorize Your Bash Prompt/Terminal](https://www.youtube.com/watch?v=C92eaq\_bZR8) (anglicky)
 * [Video: Color Variables BASH Shell Script Linux Tutorial](https://www.youtube.com/watch?v=N8pdAvIwj28) (anglicky)
+
+## Snímek obrazovky
+
+![snímek obrazovky](../obrazky/barvy.png)

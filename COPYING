@@ -22,7 +22,7 @@ License: CC-BY-SA-4.0
 Files: dodatky/licence.md
 Copyright: Creative Commons
 License: PD
-PD according to: https://creativecommons.org/faq/#can-i-change-the-license-terms-or-conditions
+ PD according to: https://creativecommons.org/faq/#can-i-change-the-license-terms-or-conditions
  „CC does not assert copyright in the text of its licenses“.
 
 Files: Makefile
@@ -66,7 +66,7 @@ Files: obrazky/by-sa.png
 Copyright: Creative Commons
 License: PD (nedostatečně originální)
 Source: https://creativecommons.org/about/downloads/
-PD according to: https://commons.wikimedia.org/wiki/File:CC-BY-SA_icon.svg
+ PD according to: https://commons.wikimedia.org/wiki/File:CC-BY-SA_icon.svg
 
 Files: obrazky/marsh.jpg
 Copyright: 2013, U.S. Fish and Wildlife Service
@@ -102,15 +102,21 @@ Source: https://github.com/garrett/Tux (file "tux-large.png")
  .
  The copyright holder of this file allows anyone to use it for any purpose, provided that the copyright holder is properly attributed. Redistribution, derivative work, commercial use, and all other use is permitted. (https://commons.wikimedia.org/wiki/File:Tux.svg)
 
+Files: obrazky/banner.png
+Copyright: 2019, Singularis <singularis@volny.cz>
+License: CC-BY-SA-4.0
+ There is no originality in this file, but it contains a code of a simple computer program.
+ Only the code is copyrighted in this picture.
+
 Files: obrazky/make.png
 Files: zdroje_obrazku/tab.png
-Copyright: 2019, Singularis
+Copyright: 2019, Singularis <singularis@volny.cz>
 License: CC0
 
 Files: konfig.ini
-Copyright: 2019, Singularis
+Copyright: 2019, Singularis <singularis@volny.cz>
 License: CC0
 
 Files: zdroje_obrazku/vmezera.png
 License: PD
- Public domain, because there is not originality in this file and it's nor photography nor computer program.
+ Public domain, because there is no originality in this file and it's nor photography nor computer program.

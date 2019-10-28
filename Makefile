@@ -31,7 +31,7 @@ VSECHNY_DODATKY := predmluva koncepce-projektu plan-vyvoje test mechanismus-prek
 VSECHNY_KAPITOLY := _ukazka awk docker ffmpeg firefox git hledani-souboru
 VSECHNY_KAPITOLY += make markdown obrazky odkazy ostatni planovani-uloh
 VSECHNY_KAPITOLY += soubory stahovani-videi barvy-a-titulek
-OBRAZKY := favicon.png by-sa.png logo-knihy-velke.png make.png ve-vystavbe.png marsh.jpg
+OBRAZKY := favicon.png by-sa.png logo-knihy-velke.png make.png barvy.png ve-vystavbe.png marsh.jpg banner.png
 
 SOUBORY_PREKLADU := soubory_prekladu
 VYSTUP_PREKLADU := vystup_prekladu
@@ -95,10 +95,27 @@ $(OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%): $(VYSTUP_PREKLADU)/html/obrazky/
 	mkdir -pv $(dir $@)
 	$(CONVERT) $< $@
 
-# 5. vystup_prekladu/html/{id}.htm => vystup_prekladu/html/index.htm (provizorní)
+# 5. sepsat copyrighty ke kapitolám
 # ============================================================================
-$(VYSTUP_PREKLADU)/html/index.htm: skripty/kniha.awk $(SOUBORY_PREKLADU)/fragmenty.tsv $(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY))) $(VYSTUP_PREKLADU)/html/lkk.css $(OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%)
-	$(AWK) -f skripty/kniha.awk -v IDFORMATU=html -v VSTUPPREFIX=$(VYSTUP_PREKLADU)/html/ -v VSTUPSUFFIX=.htm formaty/html/sablona_kapitoly > $@
+$(SOUBORY_PREKLADU)/html/kap-copys.htm: $(SOUBORY_PREKLADU)/fragmenty.tsv skripty/sepsat-copyrighty.awk $(VSECHNY_DODATKY:%=dodatky/%.md) $(VSECHNY_KAPITOLY:%=kapitoly/%.md)
+	mkdir -pv $(SOUBORY_PREKLADU)/html
+	$(AWK) -f skripty/sepsat-copyrighty.awk $(shell cut -f 1,2 --output-delimiter=/ $< | sed 's/$$/.md/') >$@
+
+# 6. sepsat copyrighty k obrázkům
+# ============================================================================
+$(SOUBORY_PREKLADU)/html/obr-copys.htm: COPYING skripty/sepsat-copykobr.awk
+	$(AWK) -f skripty/sepsat-copykobr.awk $< $(OBRAZKY:%=obrazky/%) >$@
+
+# 7. vystup_prekladu/html/{id}.htm => vystup_prekladu/html/index.htm (provizorní)
+# ============================================================================
+$(VYSTUP_PREKLADU)/html/index.htm: $(SOUBORY_PREKLADU)/fragmenty.tsv \
+  skripty/generovat-index-html.awk \
+  $(SOUBORY_PREKLADU)/html/kap-copys.htm \
+  $(SOUBORY_PREKLADU)/html/obr-copys.htm \
+  $(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY))) \
+  $(VYSTUP_PREKLADU)/html/lkk.css \
+  $(OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%)
+	$(AWK) -f skripty/generovat-index-html.awk formaty/html/sablona_kapitoly > $@
 
 
 
