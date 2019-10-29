@@ -37,6 +37,15 @@
 \newcommand*{\vypnoutrezimlicence}{\end{multicols*}}
 {{KONEC POKUD}}
 %
+{{POKUD JE FORMÁT pdf-b5}}
+\usepackage[pdftex,b5paper,inner=2cm,outer=1.5cm,top=1.5cm,bottom=2cm]{geometry} % + showframe pro ladění
+\newlength{\sirkakodu}\setlength{\sirkakodu}{0.95\textwidth}
+\newenvironment{odstavce}{\begin{adjustwidth}{0.5cm}{0.5cm}}{\end{adjustwidth}}
+\newenvironment{obsahdosloupcu}{\begin{multicols*}{2}}{\end{multicols*}}
+\newcommand*{\zapnoutrezimlicence}{\begin{multicols*}{2}\tiny\renewenvironment*{odstavce}{\begin{adjustwidth}{}{}}{\end{adjustwidth}}}
+\newcommand*{\vypnoutrezimlicence}{\end{multicols*}}
+{{KONEC POKUD}}
+%
 {{POKUD JE FORMÁT pdf-a5}}
 \usepackage[pdftex,a5paper,inner=1.5cm,outer=1cm,top=1.5cm,bottom=1.5cm]{geometry} % + showframe pro ladění
 \newlength{\sirkakodu}\setlength{\sirkakodu}{0.98\textwidth}
