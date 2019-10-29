@@ -37,5 +37,16 @@ Podle mých představ v době vydání této verze knihy by do její příští
 * „LaTeX“ (základní struktura dokumentu, standardní značky, překlad do PDF)
 * „Regulární výrazy“ (základní, rozšířené, Perl)
 * „SQL“ (SQLite, MySQL, MariaDB; všechno možné)
+* „ASCII art“ (banner, toilet a další)
 
 Pokud máte nějaké osobní preference, které z nich byste tam chtěli vidět, nebo byste rádi dostali zpracované jiné téma, napište mi váš názor e-mailem nebo komentářem na GitHubu. Váš zájem mě určitě potěší a povzbudí.
+
+Kromě toho mám v plánu rozvíjet i formátování a mechanismus překladu. V plánu mám následující vlastnosti:
+
+* Zlepšit a sjednotit prezentaci pomocných funkcí a skriptů. Měly by být k dispozici v ucelené podobě ke stažení, možná dokonce jako deb-balíček.
+* Štítky kapitol (kapitoly budou organizované pomocí štítků, anglicky hashtags).
+* Univerzální poznámky pod čarou (tzn. podpora poznámek pod čarou i mimo zaklínadla).
+* Ikony pro kapitoly.
+* Ikony pro jednotlivá zaklínadla (zatím nemám přesnou představu, jak by měly vypadat; cílem je usnadnit orientaci lidem s grafickou pamětí).
+* Vylepšovat design a přehlednost HTML varianty.
+* Vylepšovat design a přehlednost PDF variant.

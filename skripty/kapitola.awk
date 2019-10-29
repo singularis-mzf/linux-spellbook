@@ -31,6 +31,9 @@ BEGIN {
     if (TELOKAPITOLY == "") {
         ShoditFatalniVyjimku("Vyžadovaná proměnná TELOKAPITOLY není nastavena pomocí parametru -v!");
     }
+    if (JMENOVERZE == "") {
+        ShoditFatalniVyjimku("Vyžadovaná proměnná JMENOVERZE není nastavena pomocí parametru -v!");
+    }
     prikaz = "egrep '^[^\t]*\t" IDKAPITOLY "\t' soubory_prekladu/fragmenty.tsv";
     prikaz | getline zaznam;
     close(prikaz);
@@ -151,6 +154,7 @@ VYTISKNOUT {
     gsub(/\{\{NÁSLEDUJÍCÍ NÁZEV\}\}/, NAZEV_NASLEDUJICI, $0);
     gsub(/\{\{NÁSLEDUJÍCÍ ČÍSLO\}\}/, ID_NASLEDUJICI != "" ? CISLO_KAPITOLY + 1 : 0, $0);
     gsub(/\{\{ČÍSLO KAPITOLY\}\}/, CISLO_KAPITOLY, $0);
+    gsub(/\{\{JMÉNO VERZE\}\}/, EscapovatKNahrade(JMENOVERZE));
     print $0;
 }
 

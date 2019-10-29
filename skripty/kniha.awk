@@ -39,6 +39,9 @@ BEGIN {
     if (IDFORMATU == "") {
         ShoditFatalniVyjimku("Vyžadovaná proměnná IDFORMATU není nastavena pomocí parametru -v!");
     }
+    if (JMENOVERZE == "") {
+        ShoditFatalniVyjimku("Vyžadovaná proměnná JMENOVERZE není nastavena pomocí parametru -v!");
+    }
     # Proměnná VSTUPSUFFIX je nepovinná
 
     split("", KAPITOLY);
@@ -108,6 +111,7 @@ STAV_PODMINENENO_PREKLADU == 2 {
 }
 
 VYTISKNOUT {
+    gsub(/\{\{JMÉNO VERZE\}\}/, EscapovatKNahrade(JMENOVERZE));
     print $0;
 }
 

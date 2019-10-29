@@ -29,6 +29,9 @@ BEGIN {
     if (system("test -r " FRAGMENTY_TSV) != 0) {
         ShoditFatalniVyjimku("Nemohu číst ze souboru " FRAGMENTY_TSV "!");
     }
+    if (JMENOVERZE == "") {
+        ShoditFatalniVyjimku("Vyžadovaná proměnná JMENOVERZE není nastavena pomocí parametru -v!");
+    }
     if (IDFORMATU == "") {
         IDFORMATU = "html";
     }
@@ -47,6 +50,9 @@ BEGIN {
     # 0 - mimo podmíněný blok
     # 1 - v podmíněném bloku, ale tiskne se
     # 2 - v podmíněném bloku, přeskakuje se
+
+    CAS = systime();
+    DATUM = strftime("%-d. ", CAS) MesicVDruhemPade(strftime("%-m", CAS)) strftime(" %Y", CAS);
 }
 
 # Podmíněný překlad
@@ -111,6 +117,8 @@ STAV_PODMINENENO_PREKLADU == 2 {
 }
 
 VYTISKNOUT {
+    gsub(/\{\{DATUM SESTAVENÍ\}\}/, DATUM);
+    gsub(/\{\{JMÉNO VERZE\}\}/, EscapovatKNahrade(JMENOVERZE));
     print $0;
 }
 

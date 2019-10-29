@@ -69,13 +69,13 @@ nav {
     margin:1em 3rem;
     text-align:center;
 }
+nav.spodni {margin-top:3em;margin-bottom:2em;}
 
 article {
     padding:2rem 3rem;
 }
 
 footer {
-    margin-top:2em;
     border-top:thin solid purple;
     padding:1rem 3rem;
     font-size:85%;
@@ -84,7 +84,8 @@ footer {
 
 h1 {
     font:bold 175%/1.2 "DejaVu Sans", sans-serif;
-    margin:0.5em 0;
+/*    margin:0.5em 0;*/
+    margin:0;
 }
 
 h2 {
@@ -329,7 +330,7 @@ footer img {float:left;margin:0 1rem 1rem 0;}
     text-align:center;
 }
 
-.informaceoverzi {text-align:center;}
+.informaceoverzi {margin:2em 0;text-align:center;}
 
 ol#prehledkapitol {
     margin:5em auto;
@@ -340,6 +341,10 @@ ol#prehledkapitol li {
 }
 ol#prehledkapitol li+li {
     margin-top:0.5em;
+}
+ol#prehledkapitol a {
+    display:block;
+    border-bottom:thin dotted rgba(0,0,0,0.2);
 }
 
 dl.copyrights {

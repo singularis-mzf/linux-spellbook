@@ -41,7 +41,8 @@
 <h1><img src="obrazky/banner.png" alt="Linux: Kniha kouzel"></h1>
 <div class="slogan">Veškerá moc příkazové řádky/příkazového řádku přehledně, pro začátečníky i pokročilé.<br>
 Známá také jako „konverzační slovník linuxštiny“.</div></div>
-<div class="informaceoverzi">Verze: {{JMÉNO VERZE}} (viz <a href="https://github.com/singularis-mzf/linux-spellbook">repozitář na GitHubu</a>)</div>
+<div class="informaceoverzi">Verze: {{JMÉNO VERZE}}<!-- (viz <a href="https://github.com/singularis-mzf/linux-spellbook">repozitář na GitHubu</a>)--><br>
+Datum sestavení: {{DATUM SESTAVENÍ}}</div>
 <ol id="prehledkapitol">
 {{ZAČÁTEK KAPITOLY}}
 <!doctype html>
@@ -57,7 +58,7 @@ Známá také jako „konverzační slovník linuxštiny“.</div></div>
 <span class="left"><img src="obrazky/favicon.png" width="16" height="16" alt=""> Linux: Kniha kouzel, {{JMÉNO VERZE}}</span>
 <span class="right"><span class="ico1"></span><span class="ico2"></span><span class="ico3"></span></span>
 </header>
-<nav>
+<nav class="horni">
 {{POKUD NENÍ PRVNÍ}}
 <a href="{{PŘEDCHOZÍ ID}}.htm" rel="prev" title="{{PŘEDCHOZÍ ČÍSLO}}. {{PŘEDCHOZÍ NÁZEV}}">Předchozí&nbsp;kapitola</a>&nbsp;|
 {{KONEC POKUD}}
@@ -72,6 +73,18 @@ Známá také jako „konverzační slovník linuxštiny“.</div></div>
 <article>
 <h1>{{ČÍSLO KAPITOLY}}. {{NÁZEV KAPITOLY}}</h1>
 {{TĚLO KAPITOLY}}
+<nav class="spodni">
+{{POKUD NENÍ PRVNÍ}}
+<a href="{{PŘEDCHOZÍ ID}}.htm" rel="prev" title="{{PŘEDCHOZÍ ČÍSLO}}. {{PŘEDCHOZÍ NÁZEV}}">Předchozí&nbsp;kapitola</a>&nbsp;|
+{{KONEC POKUD}}
+<a href="index.htm">Přehled</a><!--
+{{POKUD NENÍ POSLEDNÍ}}
+-->&nbsp;| <a href="{{NÁSLEDUJÍCÍ ID}}.htm" rel="next" title="{{NÁSLEDUJÍCÍ ČÍSLO}}. {{NÁSLEDUJÍCÍ NÁZEV}}">Následující&nbsp;kapitola</a>
+{{KONEC POKUD}}
+{{POKUD JE POSLEDNÍ}}
+-->
+{{KONEC POKUD}}
+</nav>
 </article>
 <footer>
 <img src="obrazky/by-sa.png" width="88" height="31" alt="[BY-SA]">

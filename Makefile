@@ -36,6 +36,9 @@ OBRAZKY := favicon.png by-sa.png logo-knihy-velke.png make.png barvy.png ve-vyst
 SOUBORY_PREKLADU := soubory_prekladu
 VYSTUP_PREKLADU := vystup_prekladu
 
+# Výchozí jméno buildu
+JMENO := Sid $(shell date +%Y%m%d)
+
 .PHONY: all clean
 
 all: html log pdf-a4 pdf-a5
@@ -50,13 +53,16 @@ pdf-a4: $(VYSTUP_PREKLADU)/pdf-a4/kniha.pdf
 pdf-a5: $(VYSTUP_PREKLADU)/pdf-a5/kniha.pdf
 
 # POMOCNÉ SOUBORY:
-# 1. kapitoly.lst (vygenerovat, pokud chybí)
+# 1. kapitoly.lst (není-li, použít kapitoly.lst.vychozi; není-li ani ten, vygenerovat)
 # ============================================================================
-kapitoly.lst:
-	echo '# Seznam kapitol a dodatků k vygenerování\npredmluva\n\n# Kapitoly' > $@
-	echo $(strip $(sort $(VSECHNY_KAPITOLY))) | tr ' ' '\n' >> $@
-	echo '\n# Dodatky' >> $@
-	echo $(strip $(sort $(filter-out predmluva,$(VSECHNY_DODATKY)))) | tr ' ' '\n' >> $@
+kapitoly.lst.vychozi:
+	printf %s\\n "# Seznam kapitol a dodatků k vygenerování" "predmluva" "" "# Kapitoly" > $@
+	printf %s\\n $(strip $(sort $(VSECHNY_KAPITOLY))) >> $@
+	printf %s\\n "" "# Dodatky" >> $@
+	printf %s\\n $(strip $(sort $(filter-out predmluva,$(VSECHNY_DODATKY)))) >> $@
+
+kapitoly.lst: kapitoly.lst.vychozi
+	test -e $@ && touch $@ || cat $< >$@
 
 # 2. kapitoly.lst => soubory_prekladu/fragmenty.tsv
 # ============================================================================
@@ -82,7 +88,7 @@ $(addprefix $(SOUBORY_PREKLADU)/html/,$(VSECHNY_DODATKY)): $(SOUBORY_PREKLADU)/h
 # ============================================================================
 $(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY))): $(VYSTUP_PREKLADU)/%.htm: $(SOUBORY_PREKLADU)/% skripty/kapitola.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(VYSTUP_PREKLADU)/html
-	$(AWK) -f skripty/kapitola.awk -v IDKAPITOLY=$(basename $(notdir $@)) -v TELOKAPITOLY=$< formaty/html/sablona_kapitoly > $@
+	$(AWK) -f skripty/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=$(basename $(notdir $@)) -v TELOKAPITOLY=$< formaty/html/sablona_kapitoly > $@
 
 # 3. formaty/html/sablona.css => vystup_prekladu/html/lkk.css
 # ============================================================================
@@ -115,7 +121,7 @@ $(VYSTUP_PREKLADU)/html/index.htm: $(SOUBORY_PREKLADU)/fragmenty.tsv \
   $(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY))) \
   $(VYSTUP_PREKLADU)/html/lkk.css \
   $(OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%)
-	$(AWK) -f skripty/generovat-index-html.awk formaty/html/sablona_kapitoly > $@
+	$(AWK) -f skripty/generovat-index-html.awk -v JMENOVERZE='$(JMENO)' formaty/html/sablona_kapitoly > $@
 
 
 
@@ -137,13 +143,13 @@ $(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_DODATKY)): $(SOUBORY_PREKLADU)/lo
 # ============================================================================
 $(addsuffix .kap,$(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY))): %.kap: % skripty/kapitola.awk $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/log/sablona_kapitoly
 	mkdir -pv $(SOUBORY_PREKLADU)/log
-	$(AWK) -f skripty/kapitola.awk -v IDKAPITOLY=$(basename $(notdir $@)) -v TELOKAPITOLY=$< formaty/log/sablona_kapitoly > $@
+	$(AWK) -f skripty/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=$(basename $(notdir $@)) -v TELOKAPITOLY=$< formaty/log/sablona_kapitoly > $@
 
 # 3. soubory_prekladu/log/{id}.kap => vystup_prekladu/log/index.log
 # ============================================================================
 $(VYSTUP_PREKLADU)/log/index.log: $(addsuffix .kap,$(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY))) skripty/kniha.awk $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/log/sablona_kapitoly
 	mkdir -pv $(VYSTUP_PREKLADU)/log
-	$(AWK) -f skripty/kniha.awk -v IDFORMATU=log -v VSTUPPREFIX=$(SOUBORY_PREKLADU)/log/ -v VSTUPSUFFIX=.kap formaty/log/sablona_kapitoly > $@
+	$(AWK) -f skripty/kniha.awk -v IDFORMATU=log -v JMENOVERZE='$(JMENO)' -v VSTUPPREFIX=$(SOUBORY_PREKLADU)/log/ -v VSTUPSUFFIX=.kap formaty/log/sablona_kapitoly > $@
 
 # PDF (společná část):
 
@@ -162,7 +168,7 @@ $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%): $(SOUBORY_PREKLADU)/pdf
 # 2. soubory_prekladu/pdf-spolecne/{id} => soubory_prekladu/pdf-spolecne/{id}.kap
 # ============================================================================
 $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap) $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap): %.kap: % skripty/kapitola.awk $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/pdf/sablona.tex
-	$(AWK) -f skripty/kapitola.awk -v IDKAPITOLY=$(basename $(notdir $@)) -v TELOKAPITOLY=$< formaty/pdf/sablona.tex > $@
+	$(AWK) -f skripty/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=$(basename $(notdir $@)) -v TELOKAPITOLY=$< formaty/pdf/sablona.tex > $@
 
 # 3. obrazky/{obrazek} => soubory_prekladu/pdf-spolecne/_obrazky/{obrazek}
 # ============================================================================
@@ -178,7 +184,7 @@ $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%): $(SOUBORY_PREKLADU)/pd
 # ============================================================================
 $(SOUBORY_PREKLADU)/pdf-a5/kniha.tex: $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap) $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap) $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/pdf/sablona.tex
 	mkdir -pv $(dir $@)
-	$(AWK) -f skripty/kniha.awk -v IDFORMATU=pdf-a5 -v VSTUPPREFIX=$(SOUBORY_PREKLADU)/pdf-spolecne/ -v VSTUPSUFFIX=.kap formaty/pdf/sablona.tex >$@
+	$(AWK) -f skripty/kniha.awk -v IDFORMATU=pdf-a5 -v JMENOVERZE='$(JMENO)' -v VSTUPPREFIX=$(SOUBORY_PREKLADU)/pdf-spolecne/ -v VSTUPSUFFIX=.kap formaty/pdf/sablona.tex >$@
 
 # 5. soubory_prekladu/pdf-a5/kniha.tex => vystup_prekladu/pdf-a5/kniha.pdf
 # ============================================================================
@@ -195,7 +201,7 @@ $(VYSTUP_PREKLADU)/pdf-a5/kniha.pdf: $(SOUBORY_PREKLADU)/pdf-a5/kniha.tex $(OBRA
 # ============================================================================
 $(SOUBORY_PREKLADU)/pdf-a4/kniha.tex: $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap) $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap) $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/pdf/sablona.tex
 	mkdir -pv $(dir $@)
-	$(AWK) -f skripty/kniha.awk -v IDFORMATU=pdf-a4 -v VSTUPPREFIX=$(SOUBORY_PREKLADU)/pdf-spolecne/ -v VSTUPSUFFIX=.kap formaty/pdf/sablona.tex >$@
+	$(AWK) -f skripty/kniha.awk -v IDFORMATU=pdf-a4 -v JMENOVERZE='$(JMENO)' -v VSTUPPREFIX=$(SOUBORY_PREKLADU)/pdf-spolecne/ -v VSTUPSUFFIX=.kap formaty/pdf/sablona.tex >$@
 
 # 5. soubory_prekladu/pdf-a4/kniha.tex => vystup_prekladu/pdf-a4/kniha.pdf
 # ============================================================================
