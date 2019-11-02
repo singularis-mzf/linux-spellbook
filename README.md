@@ -11,13 +11,12 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
-# Linux: Kniha kouzel
-Linux: Kniha kouzel je příručka pro začátečníky a pokročilé, která nabídne
-zjednodušený a uživatelsky přívětivý přehled toho, co v Linuxu můžete dělat
-s pomocí příkazové řádky/příkazového řádku a konfiguračních souborů.
+![Linux: Kniha kouzel](obrazky/banner.png)
+
+„Linux: Kniha kouzel“ je open source sbírka velmi krátkých řešených příkladů pro příkazovou řádku/příkazový řádek systému Linux, především distribuce Ubuntu. V současnosti je dostupná ve formátu HTML pro zobrazení na počítači a ve formátu PDF pro tisk na papír.
 
 Příručka podléhá licenci
-[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Podrobné údaje o autorství zdrojových souborů jsou uvedeny v jejich záhlaví; údaje o autorství obrázkových souborů jsou uvedeny v souboru [COPYING](COPYING).
 
 ## Návod k sestavení
 
@@ -33,58 +32,12 @@ Pak budete potřebovat stáhnout si repozitář:
 
 A nakonec stačí spustit make:
 
-> ``make -C linux-spellbook``
+> ``cd linux-spellbook``<br>
+> ``make``
 
 Výstup ve všech podporovaných formátech najdete v podadresářích
-adresáře ``linux-spellbook/vystup\_prekladu``.
+adresáře ``vystup_prekladu``.
 
 Pořadí a přítomnost kapitol a dodatků ve výstupu můžete ovlivnit v souboru
-„kapitoly.lst“, který se automaticky vygeneruje při prvním překladu.
+„kapitoly.lst“, který se při prvním překladu automaticky vygeneruje jako kopie souboru „kapitoly.lst.vychozi“.
 Kapitoly ani dodatky se však nesmějí opakovat.
-
-Varování *„LaTeX Font Warning: Some font shapes were not available,
-defaults substituted“* je bohužel v pořádku, zatím se mi ho nepodařilo zbavit.
-
-Soubor ``vystup\_prekladu/html/index.htm`` zatím bohužel není použitelný,
-ale můžete si prohlédnout HTML soubory jednotlivých přeložených kapitol.
-
-## Přehled kapitol podle stavu vývoje
-
-### 5. Hotové
-Zatím nejsou.
-
-### 4. Betaverze
-* [GNU Make](kapitoly/make.md)
-
-### 3. Fáze organizace
-* [Git](kapitoly/git.md)
-* [Markdown](kapitoly/markdown.md)
-* [Zpracování obrázků](kapitoly/obrazky.md)
-* [Plánování úloh](kapitoly/planovani-uloh.md)
-* [Docker](kapitoly/docker.md)
-* [Stahování videí](kapitoly/stahovani-videi.md)
-
-### 2. Fáze shromažďování (pokročilá)
-* [FFmpeg](kapitoly/ffmpeg.md)
-* [GNU awk](kapitoly/awk.md)
-* [Regulární výrazy](kapitoly/regularni-vyrazy.md)
-
-### 1. Fáze shromažďování (začátek)
-* [Firefox](kapitoly/firefox.md)
-* [Hledání souboru](kapitoly/hledani-souboru.md)
-* [LaTeX](kapitoly/latex.md)
-* [Odkazy](kapitoly/odkazy.md)
-* [Soubory](kapitoly/soubory.md)
-
-### 0. Plánované
-* Práce s archivy (atool)
-* Správce balíčků (apt/dpkg)
-* Bash (bash)
-* Diskové oddíly a /etc/fstab
-* GRUB
-* Systém (služby, swap apod.)
-* Šifrování a kryptografie (gpg)
-* Přehrávání videa, zvuku a obrázků
-* Vim
-* X (Správce oken)
-* Záznam obrazovky (screenshooter, screencast, ...)
