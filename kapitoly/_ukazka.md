@@ -22,6 +22,10 @@ Mohou také obsahovat vynucený<br>konec řádku a omezené formátování:
 a do *kurzívy lze vnořit **tučný text**,* ale „doplň“ s nimi nelze kombinovat.
 Dovolený je i [hypertextový odkaz](http://www.seznam.cz/).
 
+Normálně se odstavce v PDF verzi odsazují, kromě odstavců, které následují po nadpisu.
+
+<neodsadit>Značkou &lt;neodsadit&gt; ale toto odsazení můžete pro konkrétní odstavec vypnout.
+
 * Takto vypadají seznamy.
 Položka seznamu může pokračovat na dalším řádku a obsahovat text **tučně**, *kurzívou*, nebo {*na doplnění*}.
 * Další položka seznamu. Může obsahovat také [hypertextový odkaz](http://www.seznam.cz/) a vynucený<br>konec řádku.
@@ -78,23 +82,23 @@ Obrázky je dovoleno vkládat pouze jako samostatné odstavce:
 
 „Escapování“ znamená zapsání speciálního znaku za dodatečné zpětné lomítko
 (nebo jiným alternativním způsobem). Jeho účelem je zbavit znak nechtěného
-speciální významu a nechat ho vypsat do výstupního formátu jako obyčejný znak.
+speciálního významu a nechat ho vypsat do výstupního formátu jako obyčejný znak.
 Pravidla escapování ve zdrojových kódech tohoto projektu jsou následující:
 
-* (&lt;), (&amp;), (&gt;)<br>se zadávají vždy jako odpovídající entity.
+* (&lt;), (&amp;), (&gt;)<br>se zadávají vždy jako odpovídající entity &amp;lt;, &amp;amp; a &amp;gt;.
 * (\\), (\`), (\*), (\_)<br>se ve zdrojovém kódu escapují zpětným lomítkem vždy.
 * (\#), ($), (+), (-), (:), ([), (|), (~)<br>se escapují před prvním alfanumerickým znakem na řádku nebo jsou-li zdvojeny. Příklad: \\#\\#, \\$\\$, \\+\\+, \\-\\-, \\:\\:, \\[\\[, \\|\\|, \\~\\~.
 * (!)<br>se escapuje, má-li za ním stát „[“.
 * (])<br>se escapuje, je-li zdvojena nebo má-li za ní stát „(“ nebo „[“.
 * ({), (})<br>se escapují, jen utvořily-li by nechtěnou formátovací sekvenci „\{\*“ či „\*\}“. Příklad: \\\{\*text kurzívou\*\\}
 * ())<br>se escapuje jen uvnitř adresy hypertextového odkazu. Příklad: [X\](http:⫽pism.cz/Pismeno\\\_(X\\))
-* (.)<br>se escapuje za sekvencí desítkových číslic, které na řádce zdrojového kódu nepředchází žádné bílé nebílé znaky, a to jen v případě, že za danou tečkou následuje mezera.
+* (.)<br>se escapuje za sekvencí desítkových číslic, které na řádce zdrojového kódu nepředchází žádné nebílé znaky, a to jen v případě, že za danou tečkou následuje mezera.
 * ("), (%), ('), ((), (,), (/), (;), (=), (?), (@), (^)<br>se neescapují nikdy.
 * Nezlomitelnou mezeru lze zadat jak přímo, tak odpovídající entitou &amp;nbsp;.
 
 Potřebujete-li zapsat URL adresu, která nemá být nikde (ani na GitHubu) formátována jako odkaz,
 nahraďte v ní // speciálním znakem \⫽ (UCS operátor U+2AFD). Do výstupních formátů bude tento
-znak přeložen na obyčejnou sekvenci //.
+znak přeložen na obyčejnou sekvenci //, a to i v URL adresách.
 
 <!--
 Unicode Character 'DOUBLE SOLIDUS OPERATOR' (U+2AFD)
@@ -117,7 +121,7 @@ Všechny tisknutelné znaky ASCII jsou podporovány a uvedeny v následující
 * ({), (|), (}), (~) (ASCII 0x7b až 0x7e)
 * (á), (č), (ď), (é), (ě), (í), (ň), (ó), (ř), (š), (ť), (ú), (ů), (ý), (ž); příklad: „žluťoučký kůň příšerně úpěl ďábelské ódy“
 * (Á), (Č), (Ď), (É), (Ě), (Í), (Ň), (Ó), (Ř), (Š), (Ť), (Ú), (Ů), (Ý), (Ž); příklad: „ŽLUŤOUČKÝ KŮŇ PŘÍŠERNĚ ÚPĚL ĎÁBELSKÉ ÓDY“
-* „n-dash“ (−), „times“ (×), „degree“ (°)
+* „m-dash“ (—), „n-dash“ (−), „times“ (×), „degree“ (°)
 * „nezlomitelná mezera“ (&nbsp;)
 * „české uvozovky“ („) a (“)
 

@@ -28,9 +28,9 @@ CONVERT := convert
 PDFLATEX := pdflatex -halt-on-error
 
 VSECHNY_DODATKY := predmluva koncepce-projektu plan-vyvoje test mechanismus-prekladu licence
-VSECHNY_KAPITOLY := _ukazka awk docker ffmpeg firefox git hledani-souboru
+VSECHNY_KAPITOLY := _ukazka awk docker firefox git hledani-souboru
 VSECHNY_KAPITOLY += make markdown obrazky odkazy ostatni planovani-uloh
-VSECHNY_KAPITOLY += soubory stahovani-videi barvy-a-titulek
+VSECHNY_KAPITOLY += soubory stahovani-videi barvy-a-titulek zpracovani-videa-a-zvuku
 OBRAZKY := favicon.png by-sa.png logo-knihy-velke.png make.png barvy.png ve-vystavbe.png marsh.jpg banner.png
 
 SOUBORY_PREKLADU := soubory_prekladu

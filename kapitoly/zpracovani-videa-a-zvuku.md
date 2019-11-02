@@ -1,6 +1,6 @@
 <!--
 
-Linux Kniha kouzel, kapitola FFmpeg
+Linux Kniha kouzel, kapitola Zpracování videa a zvuku
 Copyright (c) 2019 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -28,7 +28,7 @@ Pochopit a zpracovat filtry:
 
 [ ] Stručně a pochopitelně vysvětlit PTS.
 -->
-# FFmpeg
+# Zpracování videa a zvuku
 
 ## Úvod
 FFmpeg je nástroj pro konverzi, úpravu a streamování videa, zvuku a titulků.

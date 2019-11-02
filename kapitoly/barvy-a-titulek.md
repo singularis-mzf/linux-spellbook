@@ -66,8 +66,8 @@ Jedna z prvních věcí, která mě po otevření linuxového terminálu naštv
 
 ### Titulek
 *# nastavit titulek okna terminálu*<br>
-*// Ve výchozím nastavení nastavuje titulek terminálu jeho hlavní výzva PS1. Pokud nechcete, aby vaše nastavení hned přepsala, musíte si ji před experimentem vypnout, např. příkazem „PS1=""“.*<br>
-**printf %s\\\\n "$TERM" \| egrep -isq ^xterm &amp;&amp; printf "\\\\e]2;%s\\\\a" "**{*nový titulek*}**"**
+*// Ve výchozím nastavení nastavuje titulek terminálu jeho hlavní výzva PS1. Proto ji musíte před experimentováním vypnout, např. příkazem „PS=""“, jinak vám vaše nové nastavení hned přepíše a ani si toho nevšimnete.*<br>
+**printf %s\\\\n "$TERM" \| egrep -isq "^(xterm|rxvt)" &amp;&amp; printf "\\\\e]2;%s\\\\a" "**{*nový titulek*}**"**
 
 ### Barvy
 
@@ -275,7 +275,7 @@ Další možnost: \\044\\[\\]
 ## Ukázka
 *# *<br>
 **PROMPT\_COMMAND="navr\_hodn=\\$?;$PROMPT\_COMMAND"**<br>
-**PS1="\\\\[$(printf %s\\\\n "$TERM" \| egrep -isq ^xterm &amp;&amp; printf "\\\\e]2;%s\\\\a" "Bude příkaz č. \\\\#")\\\\]"**<br>
+**PS1="\\\\[$(printf %s\\\\n "$TERM" \| egrep -isq "^(xterm|rxvt)" &amp;&amp; printf "\\\\e]2;%s\\\\a" "Bude příkaz č. \\\\#")\\\\]"**<br>
 **PS1+="Tato \\\\[$(tput smul)\\\\]výzva je \\\\[$(tput sitm)\\\\]zbytečně\\\\[$(tput rmul)\\\\] rozsáhlá, aby ukázala \\\\[$(tput bold)\\\\]spoustu\\\\[$(tput sgr0)\\\\] možností.\\n"**<br>
 **PS1+="\\\\[$(tput dim)\\\\]Velikost terminálu: \\$(tput cols)x\\$(tput lines) Volné místo: \\\\[$(tput smul)\\\\]\\$(df -h \-\-output=avail . \| tail -n 1 \| tr -d \\" \\")\\\\[$(tput sgr0)\\\\]\\\\n"**<br>
 **PS1+="Návr.kód:\\\\[\\$(barvapronh \\${navr\_hodn})\\\\]\\${navr\_hodn}\\\\[$(tput sgr0)\\\\] (\\\\[$(bezp\_set setaf 87 6)\\\\]\\\\t\\\\[$(tput sgr0)\\\\]) !""\\\\!&blank;"**<br>

@@ -81,6 +81,14 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C) {
     VYSTUP = "";
     VyprazdnitZasobnik("format");
     while (VSTUP != "") {
+        # 11 znaků
+        switch (C = substr(VSTUP, 1, 11)) {
+            case "<neodsadit>":
+                ShoditFatalniVyjimku("Značka <neodsadit> je dovolena jen na začátku prvního řádku nového odstavce!");
+                continue;
+            default:
+                break;
+        }
         # 7 znaků
         switch (C = substr(VSTUP, 1, 7)) {
             case "&blank;":
@@ -308,7 +316,7 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C) {
 function ZacitTypRadku(   bylPredel) {
     bylPredel = 0;
     if (TYP_RADKU != "PRAZDNY" && JE_ODSTAVEC_K_UKONCENI) {
-        if (TYP_RADKU != "NORMALNI" || tolower(KAPITOLA) == "licence") {
+        if (TYP_RADKU != "NORMALNI" || tolower(KAPITOLA) == "licence" || $0 ~ /^<neodsadit>/) {
             printf("%s", KonecOdstavcu());
         } else {
             printf("%s", PredelOdstavcu());
@@ -321,7 +329,10 @@ function ZacitTypRadku(   bylPredel) {
         case "NORMALNI":
             if (!bylPredel) {
 # + dodatečné pravidlo: v kapitole „Licence“ se všechny začátky odstavců uvažují jako po nadpisu (vypne odsazení).
-                printf("%s", ZacatekOdstavcu(PREDCHOZI_NEPRAZDNY_TYP_RADKU == "NADPIS" || tolower(KAPITOLA) == "licence"));
+                printf("%s", ZacatekOdstavcu(PREDCHOZI_NEPRAZDNY_TYP_RADKU == "NADPIS" || tolower(KAPITOLA) == "licence" || $0 ~ /^<neodsadit>/));
+            }
+            if ($0 ~ /^<neodsadit>/) {
+                $0 = substr($0, 12);
             }
             break;
         case "ODSAZENY_1":

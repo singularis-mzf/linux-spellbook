@@ -71,9 +71,13 @@ function ZpracujZnak(znak) {
         case "9":
         case ":":
         case ";":
+            return znak;
         case "<":
+            return "{<}";
         case "=":
+            return znak;
         case ">":
+            return "{>}";
         case "?":
         case "@":
         case "A":
@@ -176,6 +180,8 @@ function ZpracujZnak(znak) {
             return "\\textquotedblleft{}";
         case "−":
             return "\\textendash{}";
+        case "—":
+            return "\\textemdash{}";
         case " ":
             return "~";
         case "×":
@@ -212,8 +218,6 @@ function KonecKapitoly(kapitola, cislaPoznamek, textyPoznamek) {
 
 function ZacatekSekce(kapitola, sekce, cisloKapitoly, cisloSekce) {
     switch (sekce) {
-        case "Ukázka":
-            return "\\clearpage\\sekce{" sekce "}%\n";
         default:
             return "\\sekce{" sekce "}%\n";
     }
@@ -261,7 +265,7 @@ function HypertextovyOdkaz(adresa, text,   cisloPoznamky) {
 }
 
 function ZacatekSeznamu(uroven, zarovatDoBloku) {
-    return "{" (zarovatDoBloku ? "" : "\\raggedright") "\\begin{itemize}\\relax{}";
+    return "{" (zarovatDoBloku ? "" : "\\raggedright") "\\nastavitradkovaniodstavcu\\begin{itemize}\\relax{}";
 }
 
 function ZacatekPolozkySeznamu(uroven) {

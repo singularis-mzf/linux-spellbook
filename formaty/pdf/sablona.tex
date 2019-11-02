@@ -29,30 +29,45 @@
 \usepackage[czech]{babel}
 %
 {{POKUD JE FORMÁT pdf-a4}}
-\usepackage[pdftex,a4paper,inner=2cm,outer=1.5cm,top=1.5cm,bottom=2cm]{geometry} % + showframe pro ladění
-\newlength{\sirkakodu}\setlength{\sirkakodu}{0.9\textwidth}
-\newenvironment{odstavce}{\begin{adjustwidth}{1.0cm}{1.0cm}}{\end{adjustwidth}}
-\newenvironment{obsahdosloupcu}{\begin{multicols*}{2}}{\end{multicols*}}
-\newcommand*{\zapnoutrezimlicence}{\begin{multicols*}{2}\tiny\renewenvironment*{odstavce}{\begin{adjustwidth}{}{}}{\end{adjustwidth}}}
-\newcommand*{\vypnoutrezimlicence}{\end{multicols*}}
+\usepackage[pdftex,a4paper,inner=2.5cm,outer=2cm,top=1.5cm,bottom=2cm]{geometry} % + showframe pro ladění
+\newcommand{\inicializovatnastaveni}{%
+    \newlength{\sirkakodu}\setlength{\sirkakodu}{0.9\textwidth} % šířka kódu v příkladech
+    \setlength{\columnsep}{16pt}%
+    \setlength{\columnseprule}{1pt}% pro balík {multicols}
+    \renewcommand*{\columnseprulecolor}{\color{sedamezisloupci}}%
+    \newenvironment{odstavce}{\begin{adjustwidth}{}{}\nastavitradkovaniodstavcu{}}{\end{adjustwidth}}
+    \newenvironment{obsahdosloupcu}{\begin{multicols*}{2}}{\end{multicols*}}
+    \newcommand*{\zapnoutrezimlicence}{\begin{multicols*}{2}\tiny\renewenvironment*{odstavce}{\begin{adjustwidth}{}{}}{\end{adjustwidth}}}
+    \newcommand*{\vypnoutrezimlicence}{\end{multicols*}}
+    \newcommand*{\nadpisobsahu}{\mbox{PŘEHLED}\\[1ex]\mbox{(OBSAH)}}%
+    \newcommand*{\nastavitradkovaniodstavcu}{\renewcommand*{\baselinestretch}{1.2}\selectfont}
+}%
 {{KONEC POKUD}}
 %
 {{POKUD JE FORMÁT pdf-b5}}
 \usepackage[pdftex,b5paper,inner=2cm,outer=1.5cm,top=1.5cm,bottom=2cm]{geometry} % + showframe pro ladění
-\newlength{\sirkakodu}\setlength{\sirkakodu}{0.95\textwidth}
-\newenvironment{odstavce}{\begin{adjustwidth}{0.5cm}{0.5cm}}{\end{adjustwidth}}
-\newenvironment{obsahdosloupcu}{\begin{multicols*}{2}}{\end{multicols*}}
-\newcommand*{\zapnoutrezimlicence}{\begin{multicols*}{2}\tiny\renewenvironment*{odstavce}{\begin{adjustwidth}{}{}}{\end{adjustwidth}}}
-\newcommand*{\vypnoutrezimlicence}{\end{multicols*}}
+\newcommand{\inicializovatnastaveni}{%
+    \newlength{\sirkakodu}\setlength{\sirkakodu}{0.95\textwidth}
+    \newenvironment{odstavce}{\begin{adjustwidth}{}{}}{\end{adjustwidth}}
+    \newenvironment{obsahdosloupcu}{\begin{multicols*}{2}}{\end{multicols*}}
+    \newcommand*{\zapnoutrezimlicence}{\begin{multicols*}{2}\tiny\renewenvironment*{odstavce}{\begin{adjustwidth}{}{}}{\end{adjustwidth}}}
+    \newcommand*{\vypnoutrezimlicence}{\end{multicols*}}
+    \newcommand*{\nadpisobsahu}{\mbox{PŘEHLED} \mbox{(OBSAH)}}%
+    \newcommand*{\nastavitradkovaniodstavcu}{}%
+}%
 {{KONEC POKUD}}
 %
 {{POKUD JE FORMÁT pdf-a5}}
 \usepackage[pdftex,a5paper,inner=1.5cm,outer=1cm,top=1.5cm,bottom=1.5cm]{geometry} % + showframe pro ladění
-\newlength{\sirkakodu}\setlength{\sirkakodu}{0.98\textwidth}
-\newenvironment{odstavce}{\begin{adjustwidth}{}{}}{\end{adjustwidth}}
-\newenvironment{obsahdosloupcu}{\begin{blok}}{\end{blok}}
-\newcommand*{\zapnoutrezimlicence}{\begin{blok}\tiny\renewenvironment*{odstavce}{\begin{adjustwidth}{}{}}{\end{adjustwidth}}}
-\newcommand*{\vypnoutrezimlicence}{\end{blok}}
+\newcommand{\inicializovatnastaveni}{%
+    \newlength{\sirkakodu}\setlength{\sirkakodu}{0.98\textwidth}
+    \newenvironment{odstavce}{\begin{adjustwidth}{}{}}{\end{adjustwidth}}
+    \newenvironment{obsahdosloupcu}{\begin{blok}}{\end{blok}}
+    \newcommand*{\zapnoutrezimlicence}{\begin{blok}\tiny\renewenvironment*{odstavce}{\begin{adjustwidth}{}{}}{\end{adjustwidth}}}
+    \newcommand*{\vypnoutrezimlicence}{\end{blok}}
+    \newcommand*{\nadpisobsahu}{\mbox{PŘEHLED} \mbox{(OBSAH)}}%
+    \newcommand*{\nastavitradkovaniodstavcu}{}%
+}%
 {{KONEC POKUD}}
 %
 %\usepackage[B1,LY1,T1]{fontenc}
@@ -74,7 +89,9 @@
 \usepackage[pdftex]{graphicx}% vkládání obrázků
 \usepackage{ifthen}         % příkaz \ifthenelse a související konstrukce
 \usepackage{multicol}       % prostředí {multicols} a {multicols*}
+\usepackage{tabu}           % lepší tabulky (prostředí {tabu})
 \usepackage{titlesec}       % formátování nadpisů kapitol
+\usepackage{tocloft}        % formátování přehledu („obsahu“)
 \usepackage{verbatim}       % zejm. prostředí {comment}, ale také {verbatim}
 
 %
@@ -113,10 +130,21 @@
 
 \assignpagestyle{\chapter}{normalni}
 
+% {tocloft}:
+\setlength{\cftpartindent}{0pt}
+\setlength{\cftchapindent}{0pt}
+\setlength{\cftsecindent}{1em}
+\setlength{\cftsubsecindent}{2em}
+%\setlength{\cftsubsubsecindent}{3em}
+
 % {xcolor}:
 \definecolor{cervena}{rgb}{1,0,0}
 \definecolor{svetleseda}{gray}{0.9}
 \definecolor{seda}{gray}{0.5}
+\definecolor{sedamezisloupci}{gray}{0.75}
+
+% Inicializace nastavení závislých na formátu stránky:
+\inicializovatnastaveni
 
 %
 % DEFINICE DÉLKOVÝCH REGISTRŮ
@@ -201,19 +229,20 @@
 \pagestyle{empty}%
 \vspace*{0.05\textheight}%
 \begin{center}\fontfamily{cmss}\selectfont\bfseries\Huge\scalebox{1.5}{LINUX}\\[0.01\textheight]\Large Kniha kouzel\end{center}%
-\vspace{1cm}%
+\vspace{-2cm}\vfill%
 \begin{blok}%
     \setlength{\unitlength}{0.5\textwidth}%
     \begin{picture}(2,1.4)%
         \put(0,0){\includegraphics[width=0.5\textwidth]{../pdf-spolecne/_obrazky/logo-knihy-velke.png}}%
         \put(1,1.4){\parbox[t][0.7\textwidth][c]{0.5\textwidth}{\centering\itshape%
-            Praktická sbírka řešených příkladů\\[0.02\textwidth]%
+            Praktická sbírka krátkých řešených příkladů,\\%
+            také známá jako „konverzační slovník linuxštiny“\\[0.02\textwidth]%
             Veškerá moc příkazové řádky/příkazového řádku přehledně,
             pro~začátečníky i pokročilé}}%
     \end{picture}%
 \end{blok}%
 \par\vfill%
-\begin{center}\textcopyright\,2019 Singularis a ostatní přispěvatelé\end{center}%
+\begin{center}\mbox{https://github.com/singularis-mzf/linux-spellbook}\\[0.03\textheight]\textcopyright\,2019 Singularis a ostatní přispěvatelé\end{center}%
 \clearpage%
 %
 % DRUHÁ STRANA
@@ -243,45 +272,52 @@ http://creativecommons.org/licenses/by-sa/4.0/
 \pagestyle{normalni}%
 % Vysázet obsah
 \begin{obsahdosloupcu}%
-\renewcommand*{\contentsname}{OBSAH}%
+\renewcommand*{\contentsname}{\nadpisobsahu}%
 \tableofcontents%
 \end{obsahdosloupcu}%
 %
 %
-\clearpage%
-\chapter*{Typografické konvence}%
-\noindent\begin{tabular}{|l|p{0.6\textwidth}|}%
+\clearpage\mbox{}\par\vfill%
+\begin{center}{\normalfont\LARGE\bfseries\makebox[35pt][l]{}Typografické konvence\par}\vspace{2ex}%
+%\titleformat{\chapter}[hang]{\normalfont\LARGE\bfseries}{\makebox[35pt][l]{\thechapter}}{5pt}{}\relax
+%\titlespacing*{\chapter}{0pt}{-1ex}{2ex plus2ex minus0.5ex}\relax
+%\chapter*{\begin{center}Typografické konvence\end{center}}%
+\setlength{\abovetabulinesep}{1ex}\setlength{\belowtabulinesep}{\abovetabulinesep}%
+\begin{tabu}{|X[-1]|X[2]|}%
 {\ttfamily sudo apt-get update}&%
     Texty tištěné normálním neproporcionálním písmem máte přepsat
     přesně tak, jak jsou napsány.\\%
 {\ttfamily\itshape\underline{jméno-souboru}}&%
-    Za skloněné podtržené části máte doplnit konkrétní hodnoty.\\%
+    Za skloněné podtržené části zaklínadla máte doplnit konkrétní hodnoty.\\%
 {\textcolor{seda}{\ensuremath{\dlsh}}}&%
     Dělí-li se zaklínadlo na víc řádků či variant,
     je každá z nich ukončena šedým symbolem odřádkování; není-li na konci řádku tento symbol,
     jde jen o zalomení řádku v knize.\\%
 {\ttfamily ABC=\,\textcolor{seda}{{\fontfamily{qcr}\fontseries{m}\fontshape{n}\selectfont\char`\\}}}&%
     Ve výjimečných případech, kdy bylo nutno řádek zalomit v místě,
-    kam napatří žádné bílé znaky, je tato skutečnost vyznačena šedým zpětným lomítkem.
-    Takový konec řádku zcela ignorujte.\\%
+    kam napatří žádné bílé znaky, je tato skutečnost vyznačena nepatrným šedým zpětným lomítkem.
+    Takové zalomení zcela ignorujte, nevkládejte ani mezeru.\\%
 \textcolor{seda}{$\big[$}{\ttfamily{-}{-}volitelny []}\textcolor{seda}{$\big]$}&%
     Nepovinné a doplňkové části zaklínadla jsou uzavřeny do vysokých šedých
     hranatých závorek, jasně odlišitelných od obyčejných hranatých závorek.\\%
 {\ttfamily\itshape\underline{další-soubor}}\textcolor{seda}{...}&%
-    Části zaklínadla, které se mohou libovolně opakovat, jsou vyznačeny šedou trojtečkou.\\%
-{\ttfamily.\textvisiblespace:}&%
+    Části zaklínadla, které je možno uvést vícekrát, jsou vyznačeny šedou trojtečkou.\\%
+{\ttfamily{}@\textvisiblespace\textquotedbl}&%
     Ke zdůraznění místa, kam je nutno zapsat právě jednu obyčejnou mezeru, se v zaklínadlech
     používá symbol {\ttfamily\textvisiblespace}.\\%
 $\Rightarrow$ Klikněte.&%
-    Ve výjimečných případech, kdy je místo napsání něčeho, potřeba něco vykonat,
+    Ve výjimečných případech, kdy je místo napsání něčeho potřeba něco vykonat,
     je tato instrukce vyjádřena šipkou a textem v obyčejném písmu.\\%
 \textcolor{seda}{\guillemotright}&%
-    Tímto šedým symbolem se vyznačuje, že na dané místo musíte zapsat tabulátor.\\%
-{\ttfamily?}&%
+    Tímto šedým symbolem se vyznačuje, že na dané místo musíte zapsat tabulátor
+    (mezery nestačí).\\%
+{\ttfamily\textcolor{seda}?}&%
     Není-li řešení dané úlohy autorovi při psaní známo, uvede místo řádku zaklínadla
     pouhý otazník. To je podnět k tomu, aby bylo řešení nalezeno a doplněno.
-    Hojně se vyskytuje v rozpracovaných kapitolách.\\%
-\end{tabular}%
+    Hojně se vyskytuje v rozpracovaných kapitolách, ale u náročných úloh na něj
+    můžete příležitostně narazit i ve vydaných verzích.\\%
+\end{tabu}%
+\end{center}\par\vfill\mbox{}%
 %
 % Nastavit znak pro „dělení slov“ v kódu na zpětné lomítko
 {%

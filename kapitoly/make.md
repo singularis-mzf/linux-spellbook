@@ -26,7 +26,7 @@ jemuž se bude věnovat většina této kapitoly.
 ## Definice
 * **Pravidlo** je definice v Makefilu, která instruuje program make, na kterých dalších souborech určitý soubor závisí a jakými příkazy jej z nich vytvořit či aktualizovat.
 * **Cíl** je název souboru k vytvoření či akce k vykonání.
-* **Zdroj** (často nazýváný „závislost“) je název souboru, na kterém určitý cíl závisí. Příkazy stanovené pravidlem se vykonají jen tehdy, pokud cíl neexistuje nebo je alespoň jeden jeho z jeho zdrojů novější. (Vychází z času poslední změny souborů.) Zdrojem může být také název akce.
+* **Zdroj** (často nazýváný „závislost“) je název souboru, na kterém určitý cíl závisí. Příkazy stanovené pravidlem se vykonají jen tehdy, pokud cíl neexistuje nebo je alespoň jeden jeho z jeho zdrojů novější. (Vychází se z času poslední změny souborů.) Zdrojem může být také název akce.
 * **Slovo** je posloupnost nebílých znaků v řetězci. Jednotlivá slova v řetězci jsou od sebe oddělena bílými znaky, nejčastěji jednotlivou mezerou.
 * **%-vzor** je řetězec sloužící k filtrování slov a také k přidání, záměně nebo odebrání jejich předpony či přípony. Jde tedy o velice praktickou věc. Může obsahovat nejvýše jeden znak **%**, který slouží jako náhrada za libovolné množství znaků (včetně lomítek oddělujících adresáře). (Např. %-vzoru **a%** odpovídají právě ta slova, která začínají malým písmenem **a**.) Slouží-li %-vzor k záměně, slova, která mu neodpovídají, projdou záměnou nezměněna. %-vzor nemusí obsahovat znak %; v takovém případě mu odpovídají pouze slova, která se s ním přesně shodují.
 
@@ -68,7 +68,7 @@ jemuž se bude věnovat většina této kapitoly.
 *# rozvinout proměnnou, jejíž název je uložený v jiné proměnné*<br>
 **$($(**{*NÁZEV\_PROMĚNNÉ*}**))**
 
-*# příklad − vypíše: bbeceda.cpp hlavicka.h bbakus.cpp ostatni.cc*<br>
+*# příklad záměny při rozvoji − vypíše: bbeceda.cpp hlavicka.h bbakus.cpp ostatni.cc*<br>
 **TEST := abeceda.cc hlavicka.h abakus.cc ostatni.cc**<br>
 **all:**<br>
 <tab>**@echo $(TEST:a%.cc=b%.cpp)**
@@ -154,7 +154,7 @@ jemuž se bude věnovat většina této kapitoly.
 **$(sort** {*řetězec*}**)**
 
 *# obrátit pořadí slov v řetězci*<br>
-**$(shell printf %s\\n '$(strip** {*řetězec slov*}**)' \| tr '&blank;' \\n \| tac)**
+**$(shell printf %s\\\\n '$(strip** {*řetězec slov*}**)' \| tr '&blank;' \\\\n \| tac)**
 
 ### Analýza adresářových cest (pro každé slovo zvlášť)
 *# získat adresářovou cestu (např. „../a/“)*<br>

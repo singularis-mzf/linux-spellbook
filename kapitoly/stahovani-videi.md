@@ -12,6 +12,10 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
 <!--
+ÚKOLY:
+
+[ ] Rozšířit ukázku.
+
 -->
 
 # Stahování videí
@@ -206,7 +210,7 @@ Aktuální instalační postup „youtube-dl“ hledejte na [oficiálních strá
 Zde uvádím trochu složitější postup, který sestává z následujících kroků: nejprve musíte samotný program stáhnout, pak můžete zkontrolovat jeho elektronický podpis (ačkoliv stahování z https je už samo o sobě slušná ochrana před podvržením). A nakonec ho musíte nainstalovat; buď pro všechny uživatele (což je běžná, doporučovaná cesta), nebo jen pro sebe (což nevyžaduje použití „sudo“).
 
 *# stažení (nezbytná část)*<br>
-**sudo apt-get install -y wget**<br>
+**sudo apt-get install -y python wget**<br>
 **wget https://yt-dl.org/downloads/latest/youtube-dl -O youtube-dl**<br>
 
 *# kontrola elektronického podpisu (volitelná)*<br>

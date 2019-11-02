@@ -95,7 +95,7 @@ function KonecPodsekce(kapitola, sekce, podsekce) {
 }
 
 function ZacatekOdstavcu(bylNadpis) {
-    return "<p>\n";
+    return bylNadpis ? "<p class=\"ponadpisu\">\n" : "<p>\n";
 }
 
 function PredelOdstavcu() {

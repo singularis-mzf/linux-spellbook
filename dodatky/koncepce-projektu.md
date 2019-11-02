@@ -14,6 +14,11 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 # Koncepce projektu Linux: Kniha kouzel
 
+## Základní cíle projektu (heslovitě)
+
+* Ukázat začátečníkům, jaké možnosti jim jejich operační systém nabízí.
+* Začátečníkům i pokročilým pomoci najít a použít funkce Linuxu, které potřebují.
+
 ## Závazná pravidla
 
 * Cílem projektu je sdílení znalostí mezi pokročilými a začínajícími uživateli Linuxu tak, že projekt umožní pokročilým uživatelům sepisovat, přehledně organizovat a sdílet svoje nejčastěji používaná zaklínadla („snippets“) a začátečníkům umožní je (pokročilé) přitom sledovat a odnést si z toho v rámci jejich (začátečníků) schopností co nejvíc.
@@ -30,3 +35,12 @@ https://creativecommons.org/licenses/by-sa/4.0/
 * Primárním cílem PDF výstupu je tištěná podoba, proto je formátování PDF optimalizováno výhradně pro ni, ne pro čtení na počítači. Primárním cílem HTML výstupu je zobrazení na počítači a možnost zaklínadla vykopírovat (Ctrl+C/Ctrl+V) a přímo použít. Proto musí být kód zaklínadla vykopírovaný z HTML výstupu po doplnění položek „doplň“ okamžitě a bez dalších úprav použitelný a funkční.
 * Snažme se psát zaklínadla co nejkratší a nejefektivnější při zachování robustnosti, i za cenu toho, že nebudou srozumitelná. (Za deset zpětných lomítek po sobě není třeba se stydět...)
 * U příkazů, které vyžadují oprávnění superuživatele, používáme sudo, kdekoliv je to možné, dokonce i u příkazů určených ke spuštění v jednouživatelském režimu, kde to není nezbytné. Účelem je přehledná dokumentace faktu, že příkaz spuštění superuživatelem vyžaduje. Výjimkou jsou příkazy určené výhradně ke spouštění v kontejneru Dockeru, kde se sudo obvykle nepoužívá a mohlo by být matoucí.
+
+<!--
+
+Netušíte-li například jak naplánovat vyskakovací oznámení na dnešních 15.30, jak začít
+psát svoje poznámky v Markdownu a nechat je automaticky zformátovat do HTML,
+jak zmenšit všechny svoje fotografie a odstranit z nich EXIF data,
+nebo jak otočit svoje oblíbené video o 180° a všít do něj titulky, je toto kniha pro vás.
+
+-->

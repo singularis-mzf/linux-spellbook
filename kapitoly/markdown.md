@@ -21,9 +21,9 @@ https://creativecommons.org/licenses/by-sa/4.0/
 # Markdown
 
 ## Úvod
-Markdown je jednoduchý a praktický značkovací jazyk pro pohodlné psaní i čtení textů s jednoduchým formátováním v editorech prostého textu. Je primárně určen k převodu do HTML, kde se na něj aplikují kaskádové styly.
+Markdown je jednoduchý a praktický značkovací jazyk pro pohodlné psaní i čtení textů s jednoduchým formátováním v editorech prostého textu. Je primárně určen k převodu do HTML, kde se na výsledek aplikují kaskádové styly.
 
-Bohužel existuje řada implementací Markdownu, které nejsou plně kompatibilní. Proto se tato kapitola zaměřuje především na původní (standardní) Markdown, který je základem pro všechny ostatní varianty, a poměrně značně rozšířenou variantu Markdown Extra.
+Bohužel existuje řada ne zcela kompatibilních implementací Markdownu. Proto se tato kapitola zaměřuje především na původní (standardní) Markdown, který je základem pro všechny ostatní varianty, a poměrně značně rozšířenou variantu Markdown Extra.
 
 Tato verze kapitoly nepokrývá GFM (GitHub Flavoured Markdown), nicméně všechna uvedená zaklínadla na GitHubu fungují.
 
@@ -47,11 +47,9 @@ Tato verze kapitoly nepokrývá GFM (GitHub Flavoured Markdown), nicméně všec
 ### Základní formátování
 
 *# dva odstavce*<br>
-{*první řádek prvního odstavce*}<br>
-[{*další řádek prvního odstavce*}]...<br>
+{*první odstavec*}<br>
 {*prázdný řádek*}<br>
-{*první řádek druhého odstavce*}<br>
-[{*další řádek druhého odstavce*}]...<br>
+{*druhý odstavec*}
 
 *# tučný text*<br>
 **\*\***{*text*}**\*\***
@@ -62,9 +60,10 @@ Tato verze kapitoly nepokrývá GFM (GitHub Flavoured Markdown), nicméně všec
 *# podtržení (nestandardní!)*<br>
 **&lt;u&gt;**{*text*}**&lt;/u&gt;**
 
-*# vložený kód v rámci řádku*<br>
-*// Uvnitř kódu se neinterpretují formátovací sekvence, takže je není nutno escapovat.*<br>
-**\`\`**{*kód*}**\`\`**
+*# vložený kód v rámci řádku (obecně/příklad)*<br>
+*// Ve vloženém kódu se neinterpretují žádné formátovací sekvence ani escapování (dokonce i zpětné lomítko si tam zachovává význam obyčejného znaku), proto je potřeba zvláštní přístup, pokud má vložený kód obsahovat zpětné apostrofy. K otevření a uzavření vloženého kódu můžete použít libovolný počet zpětných apostrofů, ale musí být stejný pro otevření i pro uzavření a vyšší než maximální počet zpětných apostrofů vyskytujících se ve formátovaném kódu vedle sebe.*<br>
+**\`**{*kód*}**\`**<br>
+**\`\`\`\`PRIKLAD="\*\`\`\`\*"\`\`\`\`**
 
 *# víceřádkový kód*<br>
 **&blank;&blank;&blank;&blank;**{*první řádek*}<br>
@@ -210,7 +209,7 @@ Velmi obsáhlým a formálně přesným zdrojem je „Specifikace GitHub Flavor
 **\# Ukázka Markdownu**<br>
 **\## Nadpis druhé úrovně**<br>
 **Text prvního**<br>
-**odstavce obsahuje část \*\*tučně\*\*, část \*kurzívou\* a část &lt;u&gt;podtrženou&lt;/u&gt; a také \`\`vložený kód\`\`.**<br>
+**odstavce obsahuje část \*\*tučně\*\*, část \*kurzívou\* a část &lt;u&gt;podtrženou&lt;/u&gt; a také \`\`vložený kód se zpětným apostrofem (\`)\`\`.**<br>
 <br>
 **Text druhého odstavce. [Odkaz s&amp;nbsp;textem\](http:⫽www.slovnik-synonym.cz/), [s&nbsp;id\][Slovník synonym], [znovu s&nbsp;id\][Slovník synonym] a &lt;http:⫽www.slovnik-synonym.cz/&gt;.**<br>
 <br>
@@ -230,8 +229,6 @@ Velmi obsáhlým a formálně přesným zdrojem je „Specifikace GitHub Flavor
 **\| :\-\-\- \| \-\-\- \| \-\-\-:**<br>
 **\| vlevo \| na střed \| vpravo**
 
-Tato ukázka je funkční, ale zestručněná. Úplnou ukázku můžete najít v repozitáři na GitHubu v souboru „ukazka\_markdownu.md“.
-
 ## Instalace na Ubuntu
 *# příkaz pandoc pro konverzi na HTML a jiné formáty*<br>
 **sudo apt-get install pandoc**
@@ -243,7 +240,7 @@ Existuje i modernější a propracovanější editor [Remarkable](https://rema
 
 ## Odkazy
 * [Stránka na Wikipedii](https://cs.wikipedia.org/wiki/Markdown)
-* [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+* [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) (anglicky)
 * [Oficiální stránky: Markdown Syntax](https://daringfireball.net/projects/markdown/syntax) (anglicky)
 * [GitHub Help: Basic writing and formatting syntax](https://help.github.com/en/articles/basic-writing-and-formatting-syntax) (anglicky)
 * [Markdown Extra Syntax](https://catalog.olemiss.edu/help/markdown/extra) (anglicky)

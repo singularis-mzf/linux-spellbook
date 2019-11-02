@@ -33,16 +33,16 @@ Tato verze kapitoly nepokrývá dostatečně řešení konfliktů při slučová
 * **Pracovní adresář** je množina všech verzovaných souborů v gitem spravovaném uživatelském adresáři. Nikdy nezahrnuje obsah speciálního adresáře „.git“.
 * **Revize** je konkrétní neměnný (historický) stav pracovního adresáře zapsaný do repozitáře a doplněný o další údaje. Revizi lze v příkazovém řádku určit řadou způsobů, viz níže.
 * **Repozitář** je skupina souborů a adresářů, do kterých git vysoce optimalizovaným způsobem ukládá všechny revize. Pracovní adresář má vždy přiřazený právě jeden „lokální“ repozitář a k němu pak mohou být přiřazeny vzdálené repozitáře (nejčastěji pouze jeden, zvaný **origin**).
-* **Tag** je symbolický název pevně přiřazený uživatelem určité konkrétní revizi; není vhodné jej dodatečně měnit.
-* **Větev** je proměnný symbolický název přiřazený určité revizi v repozitáři (s výjimkou takzvané prázdné větve). Součástí operace „commit“ je přiřazení nové revize větvi. (Větev je v gitu analogií proměnné v programování.)
+* **Tag** je symbolický název pevně přiřazený uživatelem určité konkrétní revizi; není vhodné jej dodatečně měnit. (Je v gitu analogií konstanty v programování.)
+* **Větev** je proměnný symbolický název odkazující na určitou revizi v repozitáři (s výjimkou takzvané prázdné větve, která na žádnou revizi neodkazuje). Součástí operace „**commit**“ je přiřazení nové revize větvi. (Větev je v gitu analogií proměnné v programování.)
 * **HEAD** je „aktuální revize“. Nejčastěji je to prostě revize, která byla načtena z repozitáře jako poslední.
-* **Index** (také zvaný „staging area“) je myšlená kopie revize HEAD, do které lze průběžně zapisovat změny a pak z ní operací „commit“ vytvořit novou revizi. Do indexu se rovněž provádí slučování větví (merge). Doporučuji představovat si index jako skrytý adresář.
+* **Index** (také zvaný „staging area“) je myšlená kopie revize HEAD, do které lze průběžně zapisovat změny a pak z ní operací „commit“ vytvořit novou revizi. Do indexu se rovněž provádí slučování větví (merge). Doporučuji představovat si index jako skrytý adresář určený k tvorbě nových revizí.
 
 ### Označení revize
 
 Každá revize je jednoznačně identifikována pomocí své MD5 hashe. Kromě této úplné hashe můžeme pojmenovat revizi těmito způsoby:
 
-* Jednoznačný prefix hashe (Nebude-li uvedený prefix jednoznačný, git vyvolá chybu a umožní vám situaci napravit.)
+* Jednoznačný prefix hashe (Nebude-li uvedený prefix jednoznačný, git vyvolá chybu a umožní vám situaci napravit, takže se nebojte používat ani velmi krátké prefixy.)
 * HEAD
 * Název větve
 * Název tagu
@@ -58,13 +58,13 @@ Každá revize je jednoznačně identifikována pomocí své MD5 hashe. Kromě t
 *# vytořit lokální repozitář ze vzdáleného*<br>
 **git clone** {*vzdálená-adresa*} [{*místní-adresář*}]
 
-*# získat do nového adresáře konkrétní revizi*<br>
+*# získat do samostatného nového adresáře konkrétní revizi*<br>
 **git clone -s -n** {*lokální-repozitář*} {*nový-adresář*}<br>
 **git -C** {*nový-adresář*} **checkout** {*revize*}<br>
 **rm -Rf** {*nový-adresář*}**/.git**
 
 *# konverze bare repozitáře na normální*<br>
-**git -C** {*repozitář*} **config \-\-local core.bare false**<br>
+**git -C** {*repozitář*} **config core.bare false**<br>
 **mv** {*repozitář*} {*repozitář*}**-git**<br>
 **mkdir** {*repozitář*}<br>
 **mv** {*repozitář*}**-git** {*repozitář*}**/.git**<br>
@@ -74,11 +74,11 @@ Každá revize je jednoznačně identifikována pomocí své MD5 hashe. Kromě t
 **mv** {*repozitář*}**/.git** {*repozitář*}**-git**<br>
 **rm -R** {*repozitář*}<br>
 **mv** {*repozitář*}**-git** {*repozitář*}<br>
-**git -C** {*repozitář*} **config \-\-local core.bare true**
+**git -C** {*repozitář*} **config core.bare true**
 
 ### Mezi pracovním adresářem, indexem a lokálním repozitářem
 
-*# načíst zadanou revizi do pracovního adresáře i indexu (jen načíst/vytvořit z ní ní novou větev)*<br>
+*# načíst zadanou revizi do pracovního adresáře i indexu (jen načíst/načíst a vytvořit z ní ní novou větev)*<br>
 *// Jsou-li v pracovním adresáři změny, tento příkaz se je pokusí zachovat.*<br>
 **git checkout** {*revize*}<br>
 **git checkout -b** {*nová-větev*} [{*revize*}]
@@ -90,7 +90,7 @@ Každá revize je jednoznačně identifikována pomocí své MD5 hashe. Kromě t
 **git add -u** [**-A**] [**\-\-**] [{*soubor-nebo-adresář*}]...
 
 *# operace commit (vytvořit z indexu novou revizi a nastavit na ni aktuální větev)*<br>
-**git commit** [**-m** {*komentář*}] [**-a**] [**\-\-allow-empty**] [**\-\-amend**] [*\-\-reset-author*]
+**git commit** [**-m** {*komentář*}] [**-a**] [**\-\-allow-empty**] [**\-\-amend**] [**-S**] [**\-\-reset-author**]
 
 *# nahradit poslední commitnutou revizi novým commitem se zachováním původního autora, předků, komentáře a časové známky*<br>
 *// Pozn.: hash commitu se v tomto případě změní, protože revize je neměnná, takže jediný způsob, jak ji upravit, je vytvořit novou revizi a nahradit s ní tu původní.*<br>
@@ -154,17 +154,19 @@ Každá revize je jednoznačně identifikována pomocí své MD5 hashe. Kromě t
 *# vytvořit novou větev z HEAD a přepnout se na ni (nezmění pracovní adresář ani index)*<br>
 **git checkout -b** {*nová-větev*}
 
-*# vytvořit novou větev z HEAD*<br>
-**git branch** {*nová-větev*}
+*# vytvořit novou větev a přiřadit jí HEAD/určitou revizi (lze použít k duplikaci větve)*<br>
+**git branch** {*nová-větev*}<br>
+**git branch** {*nová-větev*} {*revize*}
 
 *# smazat větev (jen sloučenou/kteroukoliv)*<br>
+*// Pozor, při smazání nesloučené větve můžete přijít o commitnuté revize, které přestanou být po smazání dané větve dostupné!*<br>
 **git branch -d** {*větev*}...<br>
 **git branch -D** {*větev*}...
 
 *# přejmenovat větev*<br>
 **git branch -m** {*starý-název*} {*nový-název*}
 
-*# ručně přiřadit větvi určitou revizi (i nesouvisející)*<br>
+*# ručně přiřadit aktuální větvi určitou revizi (i nesouvisející)*<br>
 **git reset \-\-soft** {*revize*}
 
 *# vytvořit novou odpojenou větev (orphan branch)(z určité revize/zcela prázdnou)*<br>
@@ -213,7 +215,7 @@ Každá revize je jednoznačně identifikována pomocí své MD5 hashe. Kromě t
 *# vypsat úplnou hash dané revize*<br>
 **git rev-list -n 1** {*revize*}
 
-### Slučování větví
+### Slučování větví a řešení konfliktů
 
 *# sloučit HEAD s dalšími revizemi (+ provést commit)*<br>
 *// Dojde-li při slučování ke konfliktu, můžeme je zrušit příkazem „git merge \-\-abort“.*<br>
@@ -226,11 +228,12 @@ Každá revize je jednoznačně identifikována pomocí své MD5 hashe. Kromě t
 **git revert** [**\-\-no-edit**] [**-n**] {*revize*}...<br>
 **git revert** [**\-\-no-edit**] [**-n**] {*starší-revize*}**..**{*novější-revize*}
 
-*# přenést změny z uvedených revizí do aktuální větve (uvést v příkazu/načíst)*<br>
+*# přenést změny z uvedených revizí do aktuální větve (seznam revizí uvést v příkazu/načíst)*<br>
 **git cherry-pick** [**-x**] [**-n**] {*revize*}...<br>
 {*příkaz generující seznam revizí*} **\| git cherry-pick \-\-stdin** [**-x**] [**-n**]
 
 *# zařadit změny provedené v jiné větvi před změny provedené v této větvi*<br>
+*// Protože revize jsou neměnné, tento příkaz vytvoří zcela novou historii větve, a změní tak hashe všech jejích revizí.*<br>
 **git rebase** {*revize-jiná-větev*}
 
 ### Konfigurace repozitáře (obecně)
@@ -268,7 +271,7 @@ Každá revize je jednoznačně identifikována pomocí své MD5 hashe. Kromě t
 ## Zaklínadla (.gitignore)
 
 *# komentář*<br>
-**#** [{*text*}]
+**#** [{*text do konce řádku*}]
 
 *# ignorovat soubory a adresáře vyhovující vzorku (může obsahovat znaky ? a \* ve stejném významu jako v bashi)*<br>
 {*vzorek*}
@@ -282,6 +285,22 @@ Každá revize je jednoznačně identifikována pomocí své MD5 hashe. Kromě t
 **git** [{*globální parametry*}] {*příkaz*} [{*parametry příkazu*}]
 
 * **-C** {*adresář*} \:\: (globální parametr) Před vykonáním příkazu vstoupí do zadaného adresáře.
+
+*# *<br>
+**git** [{*globální parametry*}] **commit** [{*parametry*}]
+
+* **\-a** \:\: Před provedením commitu přenese do indexu všechny změny a smazání verzovaných souborů v pracovním adresáři.
+* **\-m** "{*komentář*}" \:\: Slouží k uvedení komentáře ke commitu na příkazovém řádku (jinak se uživateli k sepsání komentáře otevře nastavený editor).
+* **\-\-amend** \:\: Nově vytvořenou revizí nahradí stávající revizi, na kterou odkazuje aktuální větev. (Na rozdíl od normálního chování, při kterém commit přidá novou revizi jako potomka.) Nové revizi se přiřadí čas a autorství (a potenciálně i komentář) původní revize.
+* **\-\-allow-empty** \:\: Dovolí vložit novou revizi i v případě, že index neobsahuje oproti HEAD žádné změny.
+* **\-\-reset-author** \:\: V kombinaci s volbou \-\-amend nepřebírá z přepsané revize autorství a čas.
+* **\-\-no-edit** \:\: Potlačí vyvolání editoru k zadání komentáře ke commitu.
+
+*# *<br>
+**git** [{*globální parametry*}] **add** [{*parametry*}]
+
+* **\-u** \:\: Přenese do indexu jen změny ve verzovaných souborech a jejich smazání, nepřidává nové soubory k verzování.
+* **\-v** \:\: Vypisuje provedené změny.
 
 ## Jak získat nápovědu
 *# *<br>
@@ -297,7 +316,7 @@ Přehled podporovaných konfiguračních voleb pro příkaz „git config“ naj
 * Revize vzniklé sloučením větví (merge) mají za předky všechny revize, ze kterých byly sloučeny.
 
 ## Ukázka
-*# Příprava adresáře a souborů*<br>
+*# Příprava ukázkového adresáře a souborů*<br>
 **mkdir Projekt &amp;&amp; cd Projekt**<br>
 **printf %s\\\\n "#!""/bin/bash" "cat text" &gt; skript**<br>
 **chmod 755 skript**<br>

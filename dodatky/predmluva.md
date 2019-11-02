@@ -10,20 +10,24 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 
 https://creativecommons.org/licenses/by-sa/4.0/
 
+ÚKOLY:
+[ ] Zmínit pomocné funkce a skripty.
+
 -->
 
 # Předmluva
 
-*„Prostě příkazový řádek v Linuxu je něco úchvatného, a kdo se neumí v tomto prostředí pohybovat, přichází o hodně.“*<br>− KAMENÍK, Pavel. *Příkazový řádek v Linuxu: praktická řešení.* Brno: Computer Press, 2011. ISBN 978-80-251-2819-0.
+*„Prostě příkazový řádek v Linuxu je něco úchvatného, a kdo se neumí v tomto prostředí pohybovat, přichází o hodně.“*<br>— KAMENÍK, Pavel. *Příkazový řádek v Linuxu: praktická řešení.* Brno: Computer Press, 2011. ISBN 978-80-251-2819-0.
 
 &nbsp;
 
-„Linux: Kniha kouzel“ je sbírka velmi krátkých řešených příkladů pro operační systém Linux.
+<neodsadit>„Linux: Kniha kouzel“ je sbírka velmi krátkých řešených příkladů pro operační systém Linux.
 Svou koncepcí je určena začátečníkům a pokročilým uživatelům, přičemž každé z těchto skupin
 přináší něco jiného.
 
 Může být velice užitečná každému, kdo v současnosti začíná s Linuxem
-a troufne si na příkazový řádek/příkazovou řádku, v Linuxu zvaný/ou „terminál“, zadat „ls“
+a troufne si na příkazový řádek/příkazovou řádku, v Linuxu zvaný/ou „terminál“ či „konzole“,
+zadat „ls“
 a chtěl by toho víc, ale nemá představu, co mu může příkazová řádka/příkazový řádek
 nabídnout. Jste-li takovým uživatelem a dáte-li této knize šanci, bude se snažit vám
 doplnit dostupné referenční příručky, dokumentaci a různé online zdroje o to, co jim,
@@ -32,12 +36,12 @@ Jejím cílem je zpřístupnit vám tajuplnou moc terminálu a konfiguračních
 s elegancí a přehledností běžnou pro menu, dialogová okna a jiná grafická uživatelská
 rozhraní, aniž byste museli studovat stovky stran dokumentace a pronikat do ezoterických
 a tajuplných zákonitostí systému, jejichž pochopení je výsadou takzvaných „power users“.
-Na druhou stranu vás ale nepovede jako běžné uživatelské příručky a určitou minimální míru
-důvtipu a nahlížení do manuálových stránek po vás její praktické využití zpravidla vyžadovat
-bude.
+Na druhou stranu ale nejde o návod; nepovede vás vždy krok za krokem a určitou minimální
+mírů důvtipu, schopnosti tvůrčím způsobem kombinovat nástroje či občasná nahlédnutí
+do manuálových stránek po vás po vás její praktické využití zpravidla vyžadovat bude.
 
 Patříte-li k **začátečníkům**, bude od vás tato kniha vyžadovat přinejmenším znalosti základů
-programování (tzn. pojmy jako „proměnná“, „příkaz“ či „podprogram“) a zájem dozvědět se
+programování (tzn. pojmy jako „proměnná“, „příkaz“ či „skript“) a zájem dozvědět se
 něco nového o tom, co a jak můžete dělat s programy nabízenými vám moderní distribucí Linuxu.
 Máte-li na počítači nainstalovaný Linux, máte na disku gigabajty nesmírně mocných
 nástrojů, které v sobě skrývají desítky let práce špičkových programátorů, a nemusíte
@@ -48,15 +52,16 @@ jiných pokročilých uživatelů) ukázat reálně dosažitelné cíle a postu
 které vás k nim opravdu zavedou, rychle a příjemně.
 
 Patříte-li k **pokročilým uživatelům** systému GNU/Linux, tato kniha vám nabídne především
-rychlou nápovědu k příkazům a parametrům, které už jste pozapomněli, a programátorskou
-inspiraci. Svoje oblíbená řešení si můžete ve vlastním výtisku knihy barevně zvýraznit,
+rychlou nápovědu k příkazům a parametrům, které už jste pozapomněli, moderní a pohodlné
+alternativy k zastaralým a těžkopádným postupům, na které jste možná zvyklí,
+a programátorskou inspiraci. Svoje oblíbená řešení si můžete ve vlastním výtisku
+knihy barevně zvýraznit,
 zakroužkovat či dopsat. Především vám ale nabízí možnost svoje znalosti a zkušenosti
 sdílet nejen se sobě rovnými, ale také s uživateli méně zkušenými; takovými,
 jaký/á jste byl/a vy, než jste podstoupil/a roky experimentování, programování
-a studia dokumentace. Vaše příspěvky, zlepšovací návrhy a chybová hlášení jsou
-v repozitáři na GitHubu vítány, pokud budou v souladu s koncepcí projektu. Pokud ne,
-bude vítána vaše odnož (fork), kterou si budete moci uzpůsobit přesně podle svých představ.
-(Veškerý obsah repozitáře je dostupný pod svobodnými licencemi, podrobněji viz níže.)
+a studia dokumentace. Vaše názory, příspěvky, zlepšovací návrhy a chybová hlášení jsou
+v repozitáři na GitHubu vítány, pokud budou v souladu s aktuální
+[koncepcí projektu](https://github.com/singularis-mzf/linux-spellbook/tree/master/dodatky/koncepce-projektu.md).
 
 Napadlo vás už někdy, že zadávání příkazů v terminálu se mnoha aspekty podobá
 **sesílání kouzel** ve fantasy světech? Tento příměr je o to děsivější, že zatímco
@@ -92,23 +97,24 @@ již nedokážou přehledně a pravdivě představit úžasný systém, který 
 A tak mě mrzelo, že od roku 2012 již žádná nová podobně hodnotná příručka pro uživatele
 nevyšla. Online zdroje jsou zdlouhavé, nepraktické, úzce specializované a z velké části
 v angličtině a je mi skoro až líto osob, které jsou na ně odkázány.
-Proto jsem se rozhodl/a začít tento projekt.
+Proto jsem se rozhodl/a založit tento projekt.
 
 ## Licence
 
-Všechny zdrojové soubory tohoto projektu lze šířit pod podmínkami licence
-[Creative Commons Attribution-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-sa/4.0/). Měly by být k dispozici na GitHubu na adrese<br>[https://github.com/singularis-mzf/linux-spellbook](https://github.com/singularis-mzf/linux-spellbook).
+Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
+podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
+vydané neziskovou organizací Creative Commons. Text licence je přiložený
+k tomuto projektu nebo ho můžete najít na webové adrese:
 
-<!--
-- kouzla
-- záhady
-- autorita
-- „zahrávat si s příkazy, kterým nerozumí“
+&nbsp;
 
-Stejně jako uživatelské příručky si klade za cíl ukázat začátečníkům, jaké možnosti jim jejich operační systém nabízí, a stejně jako referenční příručka jim má kvalitní organizací pomoci najít a použít funkce, které budou potřebovat.
+<neodsadit>**https://creativecommons.org/licenses/by-sa/4.0/**
 
-Netušíte-li například jak naplánovat vyskakovací oznámení na dnešních 15.30, jak začít
-psát v Markdownu, jak zmenšit všechny svoje obrázky nebo jak otočit svoje oblíbené video
-o 180° (popř. jak ho pustit pozpátku nebo s ním dělat jiné hlouposti), je toto kniha pro vás.
+&nbsp;
 
--->
+Zdrojové soubory a návod k sestavení by měly být k dispozici na GitHubu
+na adrese:
+
+&nbsp;
+
+<neodsadit>**https://github.com/singularis-mzf/linux-spellbook**

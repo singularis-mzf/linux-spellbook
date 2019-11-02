@@ -31,26 +31,15 @@ Oběma mechanismům je také společné omezení přesnosti − spuštění lze 
 jen s přesností na minuty. Potřebujete-li přesnější zacílení, je třeba,
 aby si přesný čas ohlídal až spuštěný proces.
 
-Protože některé konstrukce jsou velmi komplikované a náchylné na chyby,
-používám k přidávání úloh pomocnou funkci „pridat\_ulohu“, kterou si můžete
-nadefinovat pomocí uvedeného kódu, a ke spouštění grafických úloh pomocný
-skript „\~/bin/spustit-v-x“.
-
-V této kapitole používám pomocnou funkci „pridat\_ulohu“, kterou si musíte
-nadefinovat pomocí uvedeného kódu. (Doporučuji funkci vykopírovat z HTML verze
-příručky, protože ruční opisování z knihy je velmi náchylné na chyby.)
-
-Poznámka: Každý systémový uživatel má vlastní seznam úloh a ty se spouštějí
-pod jeho uživatelským účtem. Vedle toho existují i systémové úlohy, které lze
-spouštět i pod účtem superuživatele; ty však zatím nejsou touto verzí kapitoly
-pokryty.
+Poznámka: Každý uživatel má vlastní seznam úloh a ty se spouštějí
+pod jeho uživatelským účtem. Vedle toho existují i systémové úlohy,
+spouštěné pod účtem superuživatele, ty však nejsou touto verzí kapitoly pokryty.
 
 ## Definice
 
-* **Úloha** je příkaz naplánovaný k jednorázovému spuštění, jde-li o jednorázovou úlohu, nebo k pravidelnému spouštění, jde-li o pravidelnou úlohu.
+* **Úloha** je příkaz naplánovaný k jednorázovému spuštění, jde-li o **jednorázovou úlohu**, nebo k pravidelnému spouštění, jde-li o **pravidelnou úlohu**. Tímto příkazem bývá nejčastěji volání uživatelem definovaného skriptu.
 
-## Zaklínadla
-### Pomocná funkce „pridat\_ulohu“
+## Zaklínadla (pomocné funkce a skripty)
 
 *# funkce „pridat\_ulohu“*<br>
 *// Vyžadovaná pro přidávání pravidelných úloh.*<br>
@@ -70,13 +59,7 @@ pokryty.
 **f**<br>
 **exec "$@"**
 
-*# jak vytvořit skript „\~/bin/spustit-v-x“*<br>
-**cd**<br>
-**mkdir -pv bin**<br>
-**cat &gt;bin/spustit-v-x**<br>
-!: Sem překopírujte obsah skriptu a na konci stiskněte Enter a Ctrl+D.<br>
-**chmod u+x bin/spustit-v-x**
-
+## Zaklínadla
 ### Pravidelné úlohy (obecně)
 
 *# přidat nebo nahradit úlohu (spustit na pozadí/spustit v grafickém prostředí)*<br>
@@ -86,13 +69,14 @@ pokryty.
 *# vypsat seznam úloh (id je na konci řádku, za znakem „#“)/vypsat konkrétní úlohu*<br>
 *// Poznámka: Znaky „\\“ a „%“ jsou ve výpisu escapovány, protože mají pro crontab speciální význam.*<br>
 **crontab -l**<br>
-**crontab -l \| egrep '#**{*id-úlohy*}**$'**fgrep CRON /var/log/syslog | tail
+**crontab -l \| egrep '#**{*id-úlohy*}**$'**
 
 *# zrušit úlohu/všechny úlohy*<br>
 **crontab -l \| egrep -v '#**{*id-úlohy*}**$' \| crontab -**<br>
 **crontab -r**
 
 *# změnit plán úlohy*<br>
+*// Vyžaduje nainstalovat balíček „gawk“.*<br>
 **crontab -l \| gawk '{ if (/#**{*id-úlohy*}**$/ &amp;&amp; match($0, /^(([^&blank;]+&blank;){5}\|@[a-z]+&blank;)/)) {print "**{*nový-plán*}**" substr($0, RLENGTH)} else {print}}' \| crontab -**
 
 *# uložit tabulku úloh do souboru/načíst ze souboru*<br>
@@ -111,7 +95,8 @@ pokryty.
 ### Pravidelné úlohy (plány)
 
 *# spouštět hned po startu systému/spouštět po přihlášení*<br>
-**pridat\_ulohu** {*id-úlohy*} **@reboot '**{*příkaz*}**'**...
+**pridat\_ulohu** {*id-úlohy*} **@reboot '**{*příkaz*}**'**...<br>
+?
 
 *# spouštět každou minutu*<br>
 **pridat\_ulohu** {*id-úlohy*} **"\* \* \* \* \*" '**{*příkaz*}**'**...
@@ -154,7 +139,7 @@ pokryty.
 ### Jednorázové úlohy (obecně)
 
 *# přidat úlohu*<br>
-**printf "%s\n" '**{*příkaz*}**'**... **\| at** {*plán*}
+**printf "%s\\n" '**{*příkaz*}**'**... **\| at** {*plán*}
 
 *# vypsat úlohy (číslo úlohy je v prvním sloupci)*<br>
 **atq**
@@ -199,15 +184,17 @@ pokryty.
 **crontab** {*soubor*}<br>
 **crontab** {*parametry*}
 
-* **-l** -- Vypíše tabulku úloh.
-* **-u** {*uživatel*} -- Bude pracovat s tabulkou úloh zadaného uživatele.
-* **-r** -- Smaže tabulku úloh.
+* **-l** \:\: Vypíše tabulku úloh.
+* **-u** {*uživatel*} \:\: Bude pracovat s tabulkou úloh zadaného uživatele (vyžaduje „sudo“).
+* **-r** \:\: Smaže tabulku úloh.
 
 *# *<br>
 **at** {*plán*}<br>
 **atq**<br>
 **atrm** {*číslo-úlohy*}...<br>
 **at -c** {*číslo-úlohy*}...
+
+Poznámka: Příkaz „at“ očekává na standardním vstupu skript k provedení.
 
 ## Jak získat nápovědu
 *# *<br>
@@ -216,11 +203,11 @@ pokryty.
 **man at**
 
 ## Tipy a zkušenosti
-* Pro jakoukoliv netriviální pravidelnou úlohu doporučuji vytvořit skript a funkci „pridat\_ulohu“ předat volání tohoto skriptu. Má to celou řadu výhod, např. možnost obsah úlohy editovat, možnost mít víc řádků a použít bash místo /bin/sh, definice se smazáním úlohy neztratí, ...
+* Pro jakoukoliv netriviální pravidelnou úlohu doporučuji vytvořit samostatný skript a funkci „pridat\_ulohu“ předat volání tohoto skriptu místo vlastních příkazů. Má to celou řadu výhod, např. možnost obsah úlohy editovat, možnost mít víc řádků a použít bash místo /bin/sh. Další výhodou je, že definice se v případě smazání úlohy neztratí a je ji možno použít opakovaně.
 * Naplánované úlohy jsou spouštěny mimo terminál a mimo grafické prostředí, což komplikuje jejich ladění.
 * Ačkoliv mi sekundy u příkazu „at“ nefungují, skript se spouští velmi přesně v nultou sekundu požadované minuty, což vybízí k použití příkazu „sleep“ na začátku spouštěného skriptu k dosažení spuštění v určitou sekundu minuty. Cron tak přesný není.
 * Cron spustí další instanci úlohy i v případě, že předchozí instance ještě běží.
-* Pokud se pravidelná úloha nespustila, zkuste prozkoumat logy, které zobrazíte příkazem „fgrep CRON /var/log/syslog“. Mohou obsahovat odpovídající chybové hlášení.
+* Pokud se pravidelná úloha nespustila, zkuste prozkoumat logy, které zobrazíte příkazem:<br>„fgrep CRON /var/log/syslog“. Mohou obsahovat odpovídající chybové hlášení.
 
 ## Ukázka
 *# *<br>
@@ -234,7 +221,7 @@ pokryty.
 **\}**<br>
 **pridat\_ulohu minuta "\* \* \* \* \*" "~/bin/spustit-v-x bash ~/moje\_ulohy/uloha-minuta"**
 
-Poznámka: ukázka vyžaduje nainstalovaný balíček „mplayer“ a do domovského adresáře musíte umístit platný zvukový soubor „zvuk.wav“ (popř. jiný zvukový soubor a adekvátně upravit jméno souboru v ukázce).
+Poznámka: ukázka vyžaduje nainstalovaný balíček „mplayer“ (a pochopitelně vytvořený pomocný skript „~/bin/spustit-v-x“).
 
 ## Instalace na Ubuntu
 *# *<br>
