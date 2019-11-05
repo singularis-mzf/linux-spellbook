@@ -39,10 +39,15 @@
 <article>
 <div class="zahlavistranky"><img src="obrazky/logo-knihy-velke.png" alt="">
 <h1><img src="obrazky/banner.png" alt="Linux: Kniha kouzel"></h1>
-<div class="slogan">Veškerá moc příkazové řádky/příkazového řádku přehledně, pro začátečníky i pokročilé.<br>
+<div class="slogan">Praktická sbírka krátkých řešených příkladů pro začátečníky i&nbsp;pokročilé.<br>
 Známá také jako „konverzační slovník linuxštiny“.</div></div>
 <div class="informaceoverzi">Verze: {{JMÉNO VERZE}}<!-- (viz <a href="https://github.com/singularis-mzf/linux-spellbook">repozitář na GitHubu</a>)--><br>
 Datum sestavení: {{DATUM SESTAVENÍ}}</div>
+<p class="ponadpisu" style="margin:0 auto;">„Linux: Kniha kouzel“ je sbírka velmi krátkých řešených příkladů pro operační systém Linux.
+Cílem projektu je sdílení znalostí mezi pokročilými a&nbsp;začínajícími uživateli Linuxu tak, že projekt umožňuje
+pokročilým uživatelům sepisovat, přehledně organizovat a&nbsp;sdílet svoje nejčastěji používaná zaklínadla
+(„snippets“) a&nbsp;začátečníkům umožňuje je (pokročilé) přitom sledovat a&nbsp;odnést si z&nbsp;toho
+v&nbsp;rámci svých (začátečníků) schopností co nejvíc.</p><p>Tato verze obsahuje následující kapitoly a&nbsp;dodatky:</p>
 <ol id="prehledkapitol">
 {{ZAČÁTEK KAPITOLY}}
 <!doctype html>
@@ -59,6 +64,7 @@ Datum sestavení: {{DATUM SESTAVENÍ}}</div>
 <span class="right"><span class="ico1"></span><span class="ico2"></span><span class="ico3"></span></span>
 </header>
 <nav class="horni">
+<div class="slogan">Veškerá moc příkazové řádky/příkazového řádku přehledně, pro začátečníky i&nbsp;pokročilé</div>
 {{POKUD NENÍ PRVNÍ}}
 <a href="{{PŘEDCHOZÍ ID}}.htm" rel="prev" title="{{PŘEDCHOZÍ ČÍSLO}}. {{PŘEDCHOZÍ NÁZEV}}">Předchozí&nbsp;kapitola</a>&nbsp;|
 {{KONEC POKUD}}

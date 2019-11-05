@@ -1,6 +1,6 @@
 <!--
 
-Linux Kniha kouzel, kapitola X (Správce oken)
+Linux Kniha kouzel, kapitola X (správce oken)
 Copyright (c) 2019 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -16,7 +16,7 @@ Poznámky:
 
 -->
 
-# X (Správce oken)
+# X (správce oken)
 
 ## Úvod
 <!--
@@ -50,12 +50,45 @@ Zdroj roku: https://en.wikipedia.org/wiki/X_Window_System#Release_history
 *# simulovat stisknutí kláves*<br>
 **xdotool key** [**\-\-clearmodifiers**] [**\-\-delay** {*milisekundy*}] {*klávesa*}...
 
+### Noční osvětlení
+
+*# spustit automatické noční osvětlení pro západ ČR/východ ČR/východ Slovenska*<br>
+**redshift -l 50:14** [**-t** {*bar-tepl-ve-dne*}**:**{*v-noci*}] [**-b** {*jas-ve-dne*}**:**{*v-noci*}]<br>
+**redshift -l 50:17** [**-t** {*bar-tepl-ve-dne*}**:**{*v-noci*}] [**-b** {*jas-ve-dne*}**:**{*v-noci*}]<br>
+**redshift -l 49:21** [**-t** {*bar-tepl-ve-dne*}**:**{*v-noci*}] [**-b** {*jas-ve-dne*}**:**{*v-noci*}]
+
+*# jednorázové noční osvětlení*<br>
+**redshift -o -l** {*zem-šířka*}**:**{*délka*}** [**-t** {*bar-tepl-ve-dne*}**:**{*v-noci*}] [**-b** {*jas-ve-dne*}**:**{*v-noci*}]
+
+*# jednorázové ruční nastavení barevné teploty a jasu (obecně/na noc/na den)*<br>
+**redshift -O** {*teplota*} [**-b** {*jas*}**:**{*jas*}]<br>
+**redshift -O 3500K -b 0.65:0.65**<br>
+**redshift -O 5500K -b 1:1**
+
+*# jednorázově zrušit noční osvětlení*<br>
+**redshift -x**
+
+### Ostatní
+
+*# zjistit, zda program běží na X-serveru (tzn. ne např. Waylandu nebo v konzoli)*<br>
+*// Uvedený příkaz uspěje (vrátí kód 0), pouze pokud je spušten v prostředí X-serveru.*<br>
+**test "$XDG\_SESSION\_TYPE" = "x11"**
+
 ## Parametry příkazů
 <!--
 - Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.
 - Jinak by zde měl být přehled nejužitečnějších parametrů používaných nástrojů.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+*# *<br>
+**redshift** {*parametry*}
+
+* **\-l** {*zem-šířka*}**:**{*zem-délka*} \:\: Ruční určení zeměpisné polohy. Potlačí automatické zjišťování.
+* **\-t** {*teplota-ve-dne*}**:**{*teplota-v-noci*} \:\: Ruční nastavení barevné teploty; výchozí hodnoty jsou „5500K:3500K“; normální hodnota (bez redshiftu) je „6500K“.
+* **\-o** \:\: Jednorázový režim. Nastaví barevnou teplotu a jas a skončí. Vhodné pro automatické spouštění jako naplánovaná úloha.
+* **\-r** \:\: Zakáže plynulý přechod teploty a jasu; nastavení se změní skokově.
+
 
 ## Jak získat nápovědu
 <!--
@@ -99,3 +132,27 @@ Co hledat:
 * online referenční příručky
 * různé další praktické stránky, recenze, videa, tutorialy, blogy, ...
 * publikované knihy
+
+<!--
+Příkazy ke zpracování:
+
+- xwininfo
+- xclip
+- xdotool
+- xprop
+- xkill
+- xdpyinfo
+- xhost
+- xrandr, xgamma, xvidtune
+- xset
+- xrefresh
+- xeyes, xcalc
+- notify-send
+- dbus-run-session
+
+Úlohy ke zpracování:
++ zamknout obrazovku/odhlásit se
++ spusit spořič obrazovky
++ spustit program minimalizovaný/maximalizovaný/skrytý/nemaximalizovaný
++ rozdíly mezi podporovanými okenními prostředí
+-->

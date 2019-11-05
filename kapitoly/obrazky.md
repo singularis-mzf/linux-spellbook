@@ -112,10 +112,10 @@ https://creativecommons.org/licenses/by-sa/4.0/
 {*formát*}**:**{*jméno-souboru*}
 
 *# načíst konkétní snímek z animovaného gifu*<br>
-**\\( -scene 0** {*jméno-souboru*} **-swap 0,**{*číslo-snímku*} **-delete 1--1 \\)**
+**\\( -scene 0** {*jméno-souboru*} **-swap 0,**{*číslo-snímku*} **-delete 1\-\-1 \\)**
 
 *# odstranit ze seznamu poslední obrázek/čtyři poslední obrázky/všechny obrázky/všechny kromě předposledního/libovolné obrázky*<br>
-*// Místo indexů lze v operátoru -delete použít i rozsahy, např. 3-5 značí obrázky na indexech 3, 4 a 5; 3--2 značí obrázky na indexech 3, 4 a tak dále až po předposlední obrázek včetně; -3--1 značí tři poslední obrázky.*<br>
+*// Místo indexů lze v operátoru -delete použít i rozsahy, např. 3-5 značí obrázky na indexech 3, 4 a 5; 3\-\-2 značí obrázky na indexech 3, 4 a tak dále až po předposlední obrázek včetně; -3\-\-1 značí tři poslední obrázky.*<br>
 **\-delete -1**<br>
 **\-delete -4\-\-1**<br>
 **\-delete 0\-\-1**<br>
@@ -125,7 +125,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 *# vykonat sekvenci příkazů s novým, odděleným seznamem (prázdným/sestaveným z kopií obrázků na indexech 3, 3 a 5 původního seznamu/sestaveným jako kopie původního seznamu/sestaveným jen z posledního obrázku původního seznamu) a ten pak připojit na konec původního seznamu*<br>
 **\\(** {*sekvence příkazů*} **\\)**<br>
 **\\( -clone 3,3,5** {*sekvence příkazů*} **\\)**<br>
-**\\( -clone 0--1** {*sekvence příkazů*} **\\)**<br>
+**\\( -clone 0\-\-1** {*sekvence příkazů*} **\\)**<br>
 **\\( +clone** {*sekvence příkazů*} **\\)**
 
 *# přesunout poslední obrázek na určitou pozici v seznamu*<br>
@@ -235,7 +235,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 **\-size** {*šířka*}**x**{*výška*} **xc: +noise Random**
 
 *# vytvořit transparentní obrázek právě tak velký, aby se na něj vešel kterýkoliv obrázek ze seznamu*<br>
-**\\( \-clone 0--1 -mosaic -alpha transparent \)**
+**\\( \-clone 0\-\-1 -mosaic -alpha transparent \)**
 
 ### Dělení obrázků
 *# rozřezat obrázek na pravidelnou mřížku podobrázků*<br>
@@ -274,7 +274,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 {*název-souboru*}
 
 *# zapsat jen poslední obrázek*<br>
-**\-delete 0--2** {*název-souboru*}
+**\-delete 0\-\-2** {*název-souboru*}
 
 *# zapsat všechny obrázky v seznamu do souborů obr000.png, obr001.png atd./do jinak pojmenovaných souborů*<br>
 *// Soubory jsou číslovány celými čísly vždy od 0! Místo %03d lze použít jakoukoliv formátovací sekvenci, kterou v jazyce C dovoluje funkce printf() pro argument typu int.*<br>

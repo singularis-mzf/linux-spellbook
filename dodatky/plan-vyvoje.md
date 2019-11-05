@@ -17,7 +17,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 Podle mých představ v době vydání této verze knihy by do její příští verze měly přibýt některé z následujících kapitol:
 
 * „Práce s archivy“ (atool, možná tar a gzip)
-* „X (Správce oken)“ (práce s okny, se schránkou, oznámení a další)
+* „X (správce oken)“ (práce s okny, se schránkou, oznámení a další)
 * „Zpracování obrázků“ (ImageMagick, konverze RAW z fotoaparátů, zatím asi bez animovaných gifů)
 * „Zpracování binárních souborů“ (md5sum, uuencode, base64, analýzy, konverze a další)
 * „Zpracování textových souborů“ (prohledávání, filtrování, řazení, CSV, TSV, JSON, XML apod.)
@@ -45,6 +45,7 @@ Kromě toho mám v plánu rozvíjet i formátování a mechanismus překladu.
 
 * Zlepšit a sjednotit prezentaci pomocných funkcí a skriptů. Měly by být k dispozici v ucelené podobě ke stažení, možná dokonce jako deb-balíček. Bude potřeba automatická extrakce funkcí z kapitol.
 * Štítky kapitol (kapitoly budou organizované pomocí štítků, anglicky hashtags).
+* Podpora tučně zvýrazněných „klíčových slov“ pro rychlou orientaci mezi zaklínadly.
 * Podpora poznámek pod čarou i mimo zaklínadla.
 * Šetření inkoustem (obrázky se do PDF varianty budou konvertovat tak, aby snímky terminálu byly tištěny dobře čitelným černým písmem na bílém podkladu).
 * Ikony pro kapitoly.

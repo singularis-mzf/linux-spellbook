@@ -225,6 +225,9 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C) {
             case "$$":
                 ShoditFatalniVyjimku("Funkce $$ není v této verzi podporována. Při opakování znaku $ musí být tyto znaky escapovány zpětným lomítkem.");
                 break;
+            case "--":
+                ShoditFatalniVyjimku("Kombinace -- musí být ve zdrojovém kódu povinné escapovaná.");
+                break;
             default:
                 break;
         }
@@ -345,7 +348,7 @@ function ZacitTypRadku(   bylPredel) {
             break;
         case "POLOZKA_SEZNAMU":
             if (PREDCHOZI_TYP_RADKU != "POKRACOVANI_POLOZKY_SEZNAMU") {
-                printf("%s", ZacatekSeznamu(1, tolower(SEKCE) ~ /^(tipy a.zkušenosti|definice)/));
+                printf("%s", ZacatekSeznamu(1, tolower(SEKCE) ~ /^(tipy a.zkušenosti|definice)/ || tolower(KAPITOLA) ~ /^(koncepce projektu)/));
                 printf("%s", ZacatekPolozkySeznamu(1));
             }
             break;

@@ -34,10 +34,10 @@ doplnit dostupné referenční příručky, dokumentaci a různé online zdroje
 dle mého názoru, většinou zoufale chybí − bude se snažit být stručná, přehledná a praktická.
 Jejím cílem je zpřístupnit vám tajuplnou moc terminálu a konfiguračních souborů
 s elegancí a přehledností běžnou pro menu, dialogová okna a jiná grafická uživatelská
-rozhraní, aniž byste museli studovat stovky stran dokumentace a pronikat do ezoterických
+rozhraní, aniž byste musel/a studovat stovky stran dokumentace a pronikat do ezoterických
 a tajuplných zákonitostí systému, jejichž pochopení je výsadou takzvaných „power users“.
 Na druhou stranu ale nejde o návod; nepovede vás vždy krok za krokem a určitou minimální
-mírů důvtipu, schopnosti tvůrčím způsobem kombinovat nástroje či občasná nahlédnutí
+míru důvtipu, schopnost tvůrčím způsobem kombinovat příklady či občasná nahlédnutí
 do manuálových stránek po vás po vás její praktické využití zpravidla vyžadovat bude.
 
 Patříte-li k **začátečníkům**, bude od vás tato kniha vyžadovat přinejmenším znalosti základů
@@ -53,11 +53,12 @@ které vás k nim opravdu zavedou, rychle a příjemně.
 
 Patříte-li k **pokročilým uživatelům** systému GNU/Linux, tato kniha vám nabídne především
 rychlou nápovědu k příkazům a parametrům, které už jste pozapomněli, moderní a pohodlné
-alternativy k zastaralým a těžkopádným postupům, na které jste možná zvyklí,
-a programátorskou inspiraci. Svoje oblíbená řešení si můžete ve vlastním výtisku
-knihy barevně zvýraznit,
-zakroužkovat či dopsat. Především vám ale nabízí možnost svoje znalosti a zkušenosti
-sdílet nejen se sobě rovnými, ale také s uživateli méně zkušenými; takovými,
+alternativy k zastaralým a těžkopádným postupům, na které jste možná zvyklí ze starších
+verzí GNU/Linuxu, a programátorskou inspiraci. Svoje oblíbená řešení si můžete
+ve vlastním výtisku knihy barevně zvýraznit,
+zakroužkovat či dopsat. Především vám ale díky své open source koncepci nabízí možnost
+svoje znalosti a zkušenosti sdílet nejen se sobě rovnými, ale také s uživateli méně
+zkušenými; takovými,
 jaký/á jste byl/a vy, než jste podstoupil/a roky experimentování, programování
 a studia dokumentace. Vaše názory, příspěvky, zlepšovací návrhy a chybová hlášení jsou
 v repozitáři na GitHubu vítány, pokud budou v souladu s aktuální
@@ -101,7 +102,7 @@ Proto jsem se rozhodl/a založit tento projekt.
 
 ## Licence
 
-Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
+„Linux: Kniha kouzel“ je dílem svobodné kultury; můžete ho/ji šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
 vydané neziskovou organizací Creative Commons. Text licence je přiložený
 k tomuto projektu nebo ho můžete najít na webové adrese:

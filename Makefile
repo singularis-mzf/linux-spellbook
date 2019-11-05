@@ -44,7 +44,7 @@ JMENO := Sid $(shell date +%Y%m%d)
 all: html log pdf-a4 pdf-b5 pdf-a5
 
 clean:
-	$(RM) -R $(SOUBORY_PREKLADU) $(VYSTUP_PREKLADU)
+	$(RM) -Rv $(SOUBORY_PREKLADU) $(VYSTUP_PREKLADU) kapitoly.lst
 
 # Podporované formáty:
 html: $(VYSTUP_PREKLADU)/html/index.htm
@@ -70,6 +70,13 @@ kapitoly.lst: kapitoly.lst.vychozi
 $(SOUBORY_PREKLADU)/fragmenty.tsv: kapitoly.lst skripty/sepsat-fragmenty.awk
 	mkdir -pv $(SOUBORY_PREKLADU)
 	$(AWK) -f skripty/sepsat-fragmenty.awk $< > $@
+
+
+# 3. soubory_prekladu/postprocess.tsv
+# ============================================================================
+$(SOUBORY_PREKLADU)/postprocess.tsv:
+	test -r postprocess.tsv && cat postprocess.tsv >"$@"
+	touch "$@"
 
 # HTML:
 
@@ -181,13 +188,19 @@ $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%): $(SOUBORY_PREKLADU)/pd
 
 # PDF A5:
 
-# 4. soubory_prekladu/pdf-spolecne/{id}.kap => soubory_prekladu/pdf-a5/kniha.tex
+# 4. soubory_prekladu/pdf-spolecne/{id}.kap => soubory_prekladu/pdf-a5/{id}.kap
 # ============================================================================
-$(SOUBORY_PREKLADU)/pdf-a5/kniha.tex: $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap) $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap) $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/pdf/sablona.tex
+$(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-a5/%.kap) $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-a5/%.kap): $(SOUBORY_PREKLADU)/pdf-a5/%.kap: $(SOUBORY_PREKLADU)/pdf-spolecne/%.kap $(SOUBORY_PREKLADU)/postprocess.tsv skripty/postprocess.awk
 	mkdir -pv $(dir $@)
-	$(AWK) -f skripty/kniha.awk -v IDFORMATU=pdf-a5 -v JMENOVERZE='$(JMENO)' -v VSTUPPREFIX=$(SOUBORY_PREKLADU)/pdf-spolecne/ -v VSTUPSUFFIX=.kap formaty/pdf/sablona.tex >$@
+	touch $(SOUBORY_PREKLADU)/postprocess.log
+	$(AWK) -v IDFORMATU=pdf-a5 -v IDKAPITOLY=$(<:$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap=%) -v LOGSOUBOR=$(SOUBORY_PREKLADU)/postprocess.log -f skripty/postprocess.awk $< >$@
 
-# 5. soubory_prekladu/pdf-a5/kniha.tex => vystup_prekladu/pdf-a5/kniha.pdf
+# 5. soubory_prekladu/pdf-a5/{id}.kap => soubory_prekladu/pdf-a5/kniha.tex
+# ============================================================================
+$(SOUBORY_PREKLADU)/pdf-a5/kniha.tex: $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-a5/%.kap) $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-a5/%.kap) $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/pdf/sablona.tex
+	$(AWK) -f skripty/kniha.awk -v IDFORMATU=pdf-a5 -v JMENOVERZE='$(JMENO)' -v VSTUPPREFIX=$(SOUBORY_PREKLADU)/pdf-a5/ -v VSTUPSUFFIX=.kap formaty/pdf/sablona.tex >$@
+
+# 6. soubory_prekladu/pdf-a5/kniha.tex => vystup_prekladu/pdf-a5/kniha.pdf
 # ============================================================================
 # skript "prelozit_vystup_latexu.awk" je zde volán jen pro zpřehlednění výstupu; je možno ho bezpečně vynechat
 $(VYSTUP_PREKLADU)/pdf-a5/kniha.pdf: $(SOUBORY_PREKLADU)/pdf-a5/kniha.tex $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%)
@@ -198,13 +211,19 @@ $(VYSTUP_PREKLADU)/pdf-a5/kniha.pdf: $(SOUBORY_PREKLADU)/pdf-a5/kniha.tex $(OBRA
 
 # PDF A4:
 
-# 4. soubory_prekladu/pdf-spolecne/{kapitola}.kap => soubory_prekladu/pdf-a4/kniha.tex
+# 4. soubory_prekladu/pdf-spolecne/{id}.kap => soubory_prekladu/pdf-a4/{id}.kap
 # ============================================================================
-$(SOUBORY_PREKLADU)/pdf-a4/kniha.tex: $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap) $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap) $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/pdf/sablona.tex
+$(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-a4/%.kap) $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-a4/%.kap): $(SOUBORY_PREKLADU)/pdf-a4/%.kap: $(SOUBORY_PREKLADU)/pdf-spolecne/%.kap $(SOUBORY_PREKLADU)/postprocess.tsv skripty/postprocess.awk
 	mkdir -pv $(dir $@)
-	$(AWK) -f skripty/kniha.awk -v IDFORMATU=pdf-a4 -v JMENOVERZE='$(JMENO)' -v VSTUPPREFIX=$(SOUBORY_PREKLADU)/pdf-spolecne/ -v VSTUPSUFFIX=.kap formaty/pdf/sablona.tex >$@
+	touch $(SOUBORY_PREKLADU)/postprocess.log
+	$(AWK) -v IDFORMATU=pdf-a4 -v IDKAPITOLY=$(<:$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap=%) -v LOGSOUBOR=$(SOUBORY_PREKLADU)/postprocess.log -f skripty/postprocess.awk $< >$@
 
-# 5. soubory_prekladu/pdf-a4/kniha.tex => vystup_prekladu/pdf-a4/kniha.pdf
+# 5. soubory_prekladu/pdf-a4/{kapitola}.kap => soubory_prekladu/pdf-a4/kniha.tex
+# ============================================================================
+$(SOUBORY_PREKLADU)/pdf-a4/kniha.tex: $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-a4/%.kap) $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-a4/%.kap) $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/pdf/sablona.tex
+	$(AWK) -f skripty/kniha.awk -v IDFORMATU=pdf-a4 -v JMENOVERZE='$(JMENO)' -v VSTUPPREFIX=$(SOUBORY_PREKLADU)/pdf-a4/ -v VSTUPSUFFIX=.kap formaty/pdf/sablona.tex >$@
+
+# 6. soubory_prekladu/pdf-a4/kniha.tex => vystup_prekladu/pdf-a4/kniha.pdf
 # ============================================================================
 # skript "prelozit_vystup_latexu.awk" je zde volán jen pro zpřehlednění výstupu; je možno ho bezpečně vynechat
 $(VYSTUP_PREKLADU)/pdf-a4/kniha.pdf: $(SOUBORY_PREKLADU)/pdf-a4/kniha.tex $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%)
@@ -214,13 +233,19 @@ $(VYSTUP_PREKLADU)/pdf-a4/kniha.pdf: $(SOUBORY_PREKLADU)/pdf-a4/kniha.tex $(OBRA
 	cat $(<:%.tex=%.pdf) > $@
 
 # PDF B5:
-# 4. soubory_prekladu/pdf-spolecne/{kapitola}.kap => soubory_prekladu/pdf-a4/kniha.tex
+# 4. soubory_prekladu/pdf-spolecne/{id}.kap => soubory_prekladu/pdf-b5/{id}.kap
 # ============================================================================
-$(SOUBORY_PREKLADU)/pdf-b5/kniha.tex: $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap) $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap) $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/pdf/sablona.tex
+$(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-b5/%.kap) $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-b5/%.kap): $(SOUBORY_PREKLADU)/pdf-b5/%.kap: $(SOUBORY_PREKLADU)/pdf-spolecne/%.kap $(SOUBORY_PREKLADU)/postprocess.tsv skripty/postprocess.awk
 	mkdir -pv $(dir $@)
-	$(AWK) -f skripty/kniha.awk -v IDFORMATU=pdf-b5 -v JMENOVERZE='$(JMENO)' -v VSTUPPREFIX=$(SOUBORY_PREKLADU)/pdf-spolecne/ -v VSTUPSUFFIX=.kap formaty/pdf/sablona.tex >$@
+	touch $(SOUBORY_PREKLADU)/postprocess.log
+	$(AWK) -v IDFORMATU=pdf-b5 -v IDKAPITOLY=$(<:$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap=%) -v LOGSOUBOR=$(SOUBORY_PREKLADU)/postprocess.log -f skripty/postprocess.awk $< >$@
 
-# 5. soubory_prekladu/pdf-b5/kniha.tex => vystup_prekladu/pdf-b5/kniha.pdf
+# 5. soubory_prekladu/pdf-spolecne/{kapitola}.kap => soubory_prekladu/pdf-a4/kniha.tex
+# ============================================================================
+$(SOUBORY_PREKLADU)/pdf-b5/kniha.tex: $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-b5/%.kap) $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-b5/%.kap) $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/pdf/sablona.tex
+	$(AWK) -f skripty/kniha.awk -v IDFORMATU=pdf-b5 -v JMENOVERZE='$(JMENO)' -v VSTUPPREFIX=$(SOUBORY_PREKLADU)/pdf-b5/ -v VSTUPSUFFIX=.kap formaty/pdf/sablona.tex >$@
+
+# 6. soubory_prekladu/pdf-b5/kniha.tex => vystup_prekladu/pdf-b5/kniha.pdf
 # ============================================================================
 # skript "prelozit_vystup_latexu.awk" je zde volán jen pro zpřehlednění výstupu; je možno ho bezpečně vynechat
 $(VYSTUP_PREKLADU)/pdf-b5/kniha.pdf: $(SOUBORY_PREKLADU)/pdf-b5/kniha.tex $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%)

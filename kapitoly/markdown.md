@@ -57,9 +57,6 @@ Tato verze kapitoly nepokrývá GFM (GitHub Flavoured Markdown), nicméně všec
 *# kurzíva*<br>
 **\***{*text*}**\***
 
-*# podtržení (nestandardní!)*<br>
-**&lt;u&gt;**{*text*}**&lt;/u&gt;**
-
 *# vložený kód v rámci řádku (obecně/příklad)*<br>
 *// Ve vloženém kódu se neinterpretují žádné formátovací sekvence ani escapování (dokonce i zpětné lomítko si tam zachovává význam obyčejného znaku), proto je potřeba zvláštní přístup, pokud má vložený kód obsahovat zpětné apostrofy. K otevření a uzavření vloženého kódu můžete použít libovolný počet zpětných apostrofů, ale musí být stejný pro otevření i pro uzavření a vyšší než maximální počet zpětných apostrofů vyskytujících se ve formátovaném kódu vedle sebe.*<br>
 **\`**{*kód*}**\`**<br>
@@ -134,7 +131,7 @@ Tato verze kapitoly nepokrývá GFM (GitHub Flavoured Markdown), nicméně všec
 ## Zaklínadla (Markdown Extra)
 
 *# tabulka *<br>
-*// Zarovnání je „:---“ vlevo, „---“ na střed nebo „---:“ vpravo. Řádek se záhlavím a řádek se zarovnáními jsou povinné, ostatní řádky tabulky jsou nepovinné. Buňky tabulky mohou obsahovat formátování.*<br>
+*// Zarovnání je „:\-\-\-“ vlevo, „\-\-\-“ na střed nebo „\-\-\-:“ vpravo. Řádek se záhlavím a řádek se zarovnáními jsou povinné, ostatní řádky tabulky jsou nepovinné. Buňky tabulky mohou obsahovat formátování.*<br>
 **\|** {*záhlaví 1*} [**\|** {*další záhlaví*}]...<br>
 **\|** {*zarovnání 1*} [**\|** {*další zarovnání*}]...<br>
 [**\|** {*buňka 1*} [**\|** {*další buňka*}]...]...
@@ -175,6 +172,9 @@ Tato verze kapitoly nepokrývá GFM (GitHub Flavoured Markdown), nicméně všec
 **\*\*\***
 
 ## Zaklínadla (nestandardní)
+
+*# podtržení (nestandardní!)*<br>
+**&lt;u&gt;**{*text*}**&lt;/u&gt;**
 
 *# přeškrtnutý text*<br>
 **\~\~**{*text*}**\~\~**

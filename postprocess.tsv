@@ -1,0 +1,35 @@
+# Linux Kniha kouzel, postprocess.tsv
+# Copyright (c) 2019 Singularis <singularis@volny.cz>
+#
+# Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
+# podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
+# vydané neziskovou organizací Creative Commons. Text licence je přiložený
+# k tomuto projektu nebo ho můžete najít na webové adrese:
+#
+# https://creativecommons.org/licenses/by-sa/4.0/
+#
+# ----
+#
+# Tento soubor slouží k ručnímu finálnímu doladění sazby formátů určených pro tisk.
+# Funguje na principu náhrady celého vygenerovaného řádku kódu v LaTeXu jiným
+# (ručně upraveným) řádkem a do repozitáře gitu se zpravidla ukládá jen při vydání
+# nové finální verze. Pro pracovní meziverze projektu nemá velký význam,
+# protože jakékoliv úpravy v textu či formátování kapitol nebo v generování
+# kódu LaTeXu mohou provedené doladění znehodnodit. Pokud kód projektu upravujete,
+# doporučuji tento soubor smazat a případně si vygenerovat vlastní náhrady,
+# pokud o tuto funkci stojíte.
+#
+# Při úpravách pozor - tento soubor se v projektu vyskytuje na dvou místech:
+#
+# /postprocess.tsv − tato varianta se odesílá do repozitáře gitu, při překladu se
+#                    nepoužije, ledaže neexistuje druhá varianta
+# /soubory_prekladu/postprocess.tsv − tato varianta se použije při překladu
+#
+# <id-náhrady>[TAB]<id-formátu>[TAB]<id-kapitoly>[TAB]<původní řádek>[TAB]<náhrada>
+#
+10	pdf-a5	barvy-a-titulek	{\footnotetext[7]{Poznámka: Aby tento výraz fungoval, musíte do proměnné PROMPT\_COMMAND~(ideálně na začátek) přidat příkaz \quotedblbase{}navr\_hodn=\$?\textquotedblleft{}, např. příkazem \quotedblbase{}PROMPT\_COMMAND=\textquotedbl{}navr\_hodn=\textbackslash{}\$?;\$PROMPT\_COMMAND\textquotedbl{}\textquotedblleft{}.}}{%	{\footnotetext[7]{\raggedright Poznámka: Aby tento výraz fungoval, musíte do proměnné PROMPT\_COMMAND~(ideálně na začátek) přidat příkaz \quotedblbase{}navr\_hodn=\$?\textquotedblleft{}, např. příkazem \quotedblbase{}PROMPT\_COMMAND=\textquotedbl{}navr\_hodn=\textbackslash{}\$?;\$PROMPT\_COMMAND\textquotedbl{}\textquotedblleft{}.}}{%
+11	pdf-b5	barvy-a-titulek	{\footnotetext[7]{Poznámka: Aby tento výraz fungoval, musíte do proměnné PROMPT\_COMMAND~(ideálně na začátek) přidat příkaz \quotedblbase{}navr\_hodn=\$?\textquotedblleft{}, např. příkazem \quotedblbase{}PROMPT\_COMMAND=\textquotedbl{}navr\_hodn=\textbackslash{}\$?;\$PROMPT\_COMMAND\textquotedbl{}\textquotedblleft{}.}}{%	{\footnotetext[7]{\raggedright Poznámka: Aby tento výraz fungoval, musíte do proměnné PROMPT\_COMMAND~(ideálně na začátek) přidat příkaz \quotedblbase{}navr\_hodn=\$?\textquotedblleft{}, např. příkazem \quotedblbase{}PROMPT\_COMMAND=\textquotedbl{}navr\_hodn=\textbackslash{}\$?;\$PROMPT\_COMMAND\textquotedbl{}\textquotedblleft{}.}}{%
+20	pdf-a5	stahovani-videi	\item{}Některé parametry (zejména {-}f a {-}o) budete pravděpodobně používat velmi často. Proto se vyplatí je buď umístit do konfiguračního souboru (\quotedblbase{}\char`\~{}/.config/youtube{-}dl/config\textquotedblleft{}) nebo si na ně zřídit skripty či funkce.	\item{}Některé parametry (zejména {-}f a {-}o) budete pravděpodobně používat velmi často. Proto se vyplatí je buď umístit do konfiguračního souboru\\(\quotedblbase{}\char`\~{}/.config/youtube{-}dl/config\textquotedblleft{}) nebo si na ně zřídit skripty či funkce.
+30	pdf-a5	koncepce-projektu	\kapitola{\MakeUppercase{Koncepce projektu Linux: Kniha kouzel}}%	\kapitola{KONCEPCE PROJEKTU\\LINUX: KNIHA KOUZEL}%
+40	pdf-b5	zpracovani-videa-a-zvuku	\bfseries{}{-}filter\_complex\mdseries{} (resp. \bfseries{}{-}filter\_complex\_script\mdseries{}),	\bfseries{}{-}filter\_complex\mdseries{}\\(resp. \bfseries{}{-}filter\_complex\_script\mdseries{}),
+

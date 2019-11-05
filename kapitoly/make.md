@@ -247,7 +247,7 @@ jemuž se bude věnovat většina této kapitoly.
 * Není-li cíl zadán, použije se první cíl v Makefile (tradičně akce „all“).
 
 ## Jak získat nápovědu
-* **make --help**
+* **make \-\-help**
 * Online GNU manuál (viz sekce Odkazy) (anglicky)
 * **man make** (anglicky)
 

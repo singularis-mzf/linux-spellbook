@@ -204,7 +204,7 @@ Každá revize je jednoznačně identifikována pomocí své MD5 hashe. Kromě t
 **git log** [**\-\-pretty=**{*formát*}] [**-n** {*maximální-počet-revizí*}] {*omezující-revize*}**..**{*revize*}
 
 *# vypsat „pro člověka“ zpětnou historii revizí, u kterých došlo ke změně v některém z uvedených souborů*<br>
-**git log** [**\-\-pretty=**{*formát*}] [**-n** {*maximální-počet-revizí*}] [{*revize*}] **--** {*soubor-nebo-adresář*}...
+**git log** [**\-\-pretty=**{*formát*}] [**-n** {*maximální-počet-revizí*}] [{*revize*}] **\-\-** {*soubor-nebo-adresář*}...
 
 *# vypsat podrobné informace o revizi*<br>
 **git show** {*revize*}
@@ -290,7 +290,7 @@ Každá revize je jednoznačně identifikována pomocí své MD5 hashe. Kromě t
 **git** [{*globální parametry*}] **commit** [{*parametry*}]
 
 * **\-a** \:\: Před provedením commitu přenese do indexu všechny změny a smazání verzovaných souborů v pracovním adresáři.
-* **\-m** "{*komentář*}" \:\: Slouží k uvedení komentáře ke commitu na příkazovém řádku (jinak se uživateli k sepsání komentáře otevře nastavený editor).
+* **\-m "**{*komentář*}**"** \:\: Slouží k uvedení komentáře ke commitu na příkazovém řádku (jinak se uživateli k sepsání komentáře otevře nastavený editor).
 * **\-\-amend** \:\: Nově vytvořenou revizí nahradí stávající revizi, na kterou odkazuje aktuální větev. (Na rozdíl od normálního chování, při kterém commit přidá novou revizi jako potomka.) Nové revizi se přiřadí čas a autorství (a potenciálně i komentář) původní revize.
 * **\-\-allow-empty** \:\: Dovolí vložit novou revizi i v případě, že index neobsahuje oproti HEAD žádné změny.
 * **\-\-reset-author** \:\: V kombinaci s volbou \-\-amend nepřebírá z přepsané revize autorství a čas.

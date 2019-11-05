@@ -49,6 +49,7 @@ function ZpracujZnak(znak) {
         case "&":
             return "\\" znak;
         case "'":
+            return "\\textquotesingle{}";
         case "(":
         case ")":
         case "*":
@@ -117,7 +118,7 @@ function ZpracujZnak(znak) {
         case "_":
             return "\\_";
         case "`":
-            return "{`}";
+            return "\\textasciigrave{}";
         case "a":
         case "b":
         case "c":

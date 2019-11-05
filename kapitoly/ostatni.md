@@ -49,7 +49,7 @@ Neměla by být součástí výsledné knihy.
 **truncate -s** {*velikost*} {*soubor*}...
 
 *# konvertovat obrázek na „data URL“/z „data URL“*<br>
-**printf "data:%s;base64," "$(file -b --mime-type "**{*soubor*}**")"; base64 -w 0** {*soubor*}<br>
+**printf "data:%s;base64," "$(file -b \-\-mime-type "**{*soubor*}**")"; base64 -w 0** {*soubor*}<br>
 **printf "%s\\n" "**{*data-url*}**" \| cut -d , -f 2- -s \| base64 -d &gt;** {*výstupní-soubor*}
 
 *# počkat určitou dobu/1 minutu/1 milisekundu*<br>

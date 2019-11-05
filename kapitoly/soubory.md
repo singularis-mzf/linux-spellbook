@@ -86,11 +86,12 @@ https://creativecommons.org/licenses/by-sa/4.0/
 *// výchozí text řádeku je "y"*<br>
 **yes** [{*text-řádku*}]
 
-*# donekonečna opakovat obsah souboru*<br>
-**yes -- "$(cat** {*soubor*} **)"**
+*# donekonečna opakovat obsah souboru (krátkého/dlouhého)*<br>
+**yes \-\- "$(cat** {*soubor*} **)"**<br>
+?
 
 *# rozdělit vstupní soubor na díly o uvedené maximální velikosti, s uvedeným prefixem, číslováním a suffixem*<br>
-**split -d -a** {*počet-číslic*} **-b** {*velikost-dílu*} [**--additional-suffix='**{*suffix-výstupních-souborů*}**'**] {*vstupní-soubor*} {*prefix-výstupních-souborů*}
+**split -d -a** {*počet-číslic*} **-b** {*velikost-dílu*} [**\-\-additional-suffix='**{*suffix-výstupních-souborů*}**'**] {*vstupní-soubor*} {*prefix-výstupních-souborů*}
 
 *# zapsat vstup do více souborů*<br>
 **tee** [**-a**] {*soubor*}... [**&gt;/dev/null**]

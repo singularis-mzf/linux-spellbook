@@ -39,7 +39,7 @@
     \newenvironment{obsahdosloupcu}{\begin{multicols*}{2}}{\end{multicols*}}
     \newcommand*{\zapnoutrezimlicence}{\begin{multicols*}{2}\tiny\renewenvironment*{odstavce}{\begin{adjustwidth}{}{}}{\end{adjustwidth}}}
     \newcommand*{\vypnoutrezimlicence}{\end{multicols*}}
-    \newcommand*{\nadpisobsahu}{\mbox{PŘEHLED}\\[1ex]\mbox{(OBSAH)}}%
+    \newcommand*{\nadpisobsahu}{\mbox{PŘEHLED (OBSAH)}}%
     \newcommand*{\nastavitradkovaniodstavcu}{\renewcommand*{\baselinestretch}{1.2}\selectfont}
 }%
 {{KONEC POKUD}}
@@ -49,7 +49,7 @@
 \newcommand{\inicializovatnastaveni}{%
     \newlength{\sirkakodu}\setlength{\sirkakodu}{0.95\textwidth}
     \newenvironment{odstavce}{\begin{adjustwidth}{}{}}{\end{adjustwidth}}
-    \newenvironment{obsahdosloupcu}{\begin{multicols*}{2}}{\end{multicols*}}
+    \newenvironment{obsahdosloupcu}{}{}
     \newcommand*{\zapnoutrezimlicence}{\begin{multicols*}{2}\tiny\renewenvironment*{odstavce}{\begin{adjustwidth}{}{}}{\end{adjustwidth}}}
     \newcommand*{\vypnoutrezimlicence}{\end{multicols*}}
     \newcommand*{\nadpisobsahu}{\mbox{PŘEHLED} \mbox{(OBSAH)}}%
@@ -62,7 +62,7 @@
 \newcommand{\inicializovatnastaveni}{%
     \newlength{\sirkakodu}\setlength{\sirkakodu}{0.98\textwidth}
     \newenvironment{odstavce}{\begin{adjustwidth}{}{}}{\end{adjustwidth}}
-    \newenvironment{obsahdosloupcu}{\begin{blok}}{\end{blok}}
+    \newenvironment{obsahdosloupcu}{}{}
     \newcommand*{\zapnoutrezimlicence}{\begin{blok}\tiny\renewenvironment*{odstavce}{\begin{adjustwidth}{}{}}{\end{adjustwidth}}}
     \newcommand*{\vypnoutrezimlicence}{\end{blok}}
     \newcommand*{\nadpisobsahu}{\mbox{PŘEHLED} \mbox{(OBSAH)}}%
@@ -91,7 +91,7 @@
 \usepackage{multicol}       % prostředí {multicols} a {multicols*}
 \usepackage{tabu}           % lepší tabulky (prostředí {tabu})
 \usepackage{titlesec}       % formátování nadpisů kapitol
-\usepackage{tocloft}        % formátování přehledu („obsahu“)
+\usepackage[titles]{tocloft}% formátování přehledu („obsahu“)
 \usepackage{verbatim}       % zejm. prostředí {comment}, ale také {verbatim}
 
 %
@@ -108,10 +108,10 @@
 % {titlesec}:
 \titleclass{\chapter}{top}\relax%
 \newcommand{\chapterbreak}{\clearpage}% začínat kapitolu na nové straně
-\titleformat{\chapter}[hang]{\normalfont\LARGE\bfseries}{\makebox[35pt][l]{\thechapter}}{5pt}{}\relax
+\titleformat{\chapter}[hang]{\normalfont\LARGE\bfseries}{\makebox[25pt][l]{\thechapter}}{5pt}{}\relax
 \titlespacing*{\chapter}{0pt}{-1ex}{2ex plus2ex minus0.5ex}\relax
 
-\titleformat{\section}[hang]{\normalfont\Large\bfseries}{\makebox[35pt][l]{\thesection}}{5pt}{}\relax
+\titleformat{\section}[hang]{\normalfont\Large\bfseries}{\makebox[25pt][l]{\thesection}}{5pt}{}\relax
 \titlespacing*{\section}{0pt}{2ex plus0.5ex minus0ex}{1ex}\relax
 
 \titleformat{\subsection}[hang]{\normalfont\large\bfseries}{}{0pt}{%
@@ -155,6 +155,16 @@
 
 \newlength{\odsazeni}\setlength{\odsazeni}{1em}
 
+%
+% KOREKCE DĚLENÍ SLOV
+% ============================================================================
+\hyphenation{
+    Git-Hub Git-Hubu Git-Hube Git-Hubem
+    ffmpeg ffmpegu
+    make
+% úprava dělení slov kvůli sazbě:
+    trou-fne
+}
 %
 % Další definice
 % ============================================================================
@@ -283,7 +293,7 @@ http://creativecommons.org/licenses/by-sa/4.0/
 %\titlespacing*{\chapter}{0pt}{-1ex}{2ex plus2ex minus0.5ex}\relax
 %\chapter*{\begin{center}Typografické konvence\end{center}}%
 \setlength{\abovetabulinesep}{1ex}\setlength{\belowtabulinesep}{\abovetabulinesep}%
-\begin{tabu}{|X[-1]|X[2]|}%
+\begin{tabu}{|X[-1,l]|X[2,l]|}%
 {\ttfamily sudo apt-get update}&%
     Texty tištěné normálním neproporcionálním písmem máte přepsat
     přesně tak, jak jsou napsány.\\%
