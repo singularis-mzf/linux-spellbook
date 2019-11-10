@@ -66,6 +66,7 @@ header {
 
 nav {
     display:block;
+    line-height:2;
     margin:2em 3rem 0;
     text-align:center;
 }
@@ -349,6 +350,11 @@ nav .prev, nav .next {
 }
 nav .prev {text-align:right;}
 nav .next {text-align:left;}
+
+.rozcestnikkapitol a {white-space:nowrap;}
+.rozcestnikkapitol .oddelovac:last-child {
+    display:none;
+}
 
 .informaceoverzi {margin:2em 0;text-align:center;}
 

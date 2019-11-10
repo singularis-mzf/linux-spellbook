@@ -76,7 +76,9 @@ v&nbsp;rámci svých (začátečníků) schopností co nejvíc.</p><p>Tato verze
 {{POKUD JE POSLEDNÍ}}
 -->
 {{KONEC POKUD}}
-</span></nav>
+</span>
+{{ROZCESTNÍK KAPITOL}}
+</nav>
 <article>
 <h1>{{ČÍSLO KAPITOLY}}. {{NÁZEV KAPITOLY}}</h1>
 {{TĚLO KAPITOLY}}
