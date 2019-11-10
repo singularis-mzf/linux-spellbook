@@ -162,24 +162,9 @@ Tato verze kapitoly pokrývá pouze základy Dockeru; nezmiňuje se o nástoji 
 * **\-w** {*/adresář/v/kontejneru*} \:\: Nastaví aktuální adresář v kontejneru.
 * **\-\-network none** \:\: Spuštěný kontejner nebude mít přístup k síti.
 
-## Jak získat nápovědu
-Pro sestavení Dockerfilu je asi nejlepším informačním zdrojem online „Referenční příručka pro Dockerfile“. Pro spouštění je pak vhodná „Oficiální referenční příručka“. Oba zdroje jsou bohužel v angličtině.
-
-Pro základní přehled lze použít i příkazy:
-
+## Instalace na Ubuntu
 *# *<br>
-**docker \-\-help**<br>
-**docker** {*příkaz*} **\-\-help**
-
-## Tipy a zkušenosti
-
-* Přidání uživatele do skupiny „docker“, které některé stránky doporučují, mu umožňuje spouštět Docker bez sudo. Z bezpečnostního hlediska to ale není dobrý nápad, protože jak ukazuje sekce zaklínadel „Eskalace práv“, spouštění Dockeru je prakticky ekvivalentem přidělení práv superuživatele. Proto raději příkaz „docker“ spouštím z bashe spuštěného pomocí „sudo bash“.
-* Řádek v Dockerfilu lze rozdělit na víc řádků; v takovém případě se na konec každého kromě posledního přidá zpětné lomítko.
-* Programy spouštěné při sestavování image nesmí vyžadovat žádnou uživatelskou interakci. Pokud k tomu dojde, sestavení image selže. (Proto je třeba u příkazu „apt-get install“ používat parametr „-y“.)
-* V kontejnerech je možno zakládat nové uživatele a používat jejich účty, ale není to příliš běžné. Obvykle se všechny programy v kontejnerech spouští pod účtem uživatele root.
-* Při sestavování image příkazem „docker build“ se celý obsah lokálního adresáře včetně všech podadresářů nejprve zkopíruje do zvláštní oblasti zvané „build context“; příkaz Dockerfilu „COPY“ pak může čerpat pouze z této oblasti. Proto doporučuji mít aktuální adresář při sestavování image co nejmenší a nikdy nespouštět „docker build“ např. z kořenového adresáře. (Ani domovský adresář uživatele není moc dobrý nápad.)
-* Hash kontejneru se v kontejneru používá jako název počítače, takže se zobrazuje ve výzvě příkazového interpretu a lze ji snadno zjistit příkazem „hostname“.
-* Ačkoliv by spuštění grafických aplikací v Dockeru mělo být také možné, vyžaduje specializovaný postup a nikdy jsem se o ně nepokoušel/a.
+**sudo apt-get install docker.io**
 
 ## Ukázka
 *# Dockerfile*<br>
@@ -192,9 +177,24 @@ Pro základní přehled lze použít i příkazy:
 **sudo docker build -t midnight-commander .**<br>
 **sudo docker run \-\-rm -it midnight-commander**
 
-## Instalace na Ubuntu
+## Tipy a zkušenosti
+
+* Přidání uživatele do skupiny „docker“, které některé stránky doporučují, mu umožňuje spouštět Docker bez sudo. Z bezpečnostního hlediska to ale není dobrý nápad, protože jak ukazuje sekce zaklínadel „Eskalace práv“, spouštění Dockeru je prakticky ekvivalentem přidělení práv superuživatele. Proto raději příkaz „docker“ spouštím z bashe spuštěného pomocí „sudo bash“.
+* Řádek v Dockerfilu lze rozdělit na víc řádků; v takovém případě se na konec každého kromě posledního přidá zpětné lomítko.
+* Programy spouštěné při sestavování image nesmí vyžadovat žádnou uživatelskou interakci. Pokud k tomu dojde, sestavení image selže. (Proto je třeba u příkazu „apt-get install“ používat parametr „-y“.)
+* V kontejnerech je možno zakládat nové uživatele a používat jejich účty, ale není to příliš běžné. Obvykle se všechny programy v kontejnerech spouští pod účtem uživatele root.
+* Při sestavování image příkazem „docker build“ se celý obsah lokálního adresáře včetně všech podadresářů nejprve zkopíruje do zvláštní oblasti zvané „build context“; příkaz Dockerfilu „COPY“ pak může čerpat pouze z této oblasti. Proto doporučuji mít aktuální adresář při sestavování image co nejmenší a nikdy nespouštět „docker build“ např. z kořenového adresáře. (Ani domovský adresář uživatele není moc dobrý nápad.)
+* Hash kontejneru se v kontejneru používá jako název počítače, takže se zobrazuje ve výzvě příkazového interpretu a lze ji snadno zjistit příkazem „hostname“.
+* Ačkoliv by spuštění grafických aplikací v Dockeru mělo být také možné, vyžaduje specializovaný postup a nikdy jsem se o ně nepokoušel/a.
+
+## Jak získat nápovědu
+Pro sestavení Dockerfilu je asi nejlepším informačním zdrojem online „Referenční příručka pro Dockerfile“. Pro spouštění je pak vhodná „Oficiální referenční příručka“. Oba zdroje jsou bohužel v angličtině.
+
+Pro základní přehled lze použít i příkazy:
+
 *# *<br>
-**sudo apt-get install docker.io**
+**docker \-\-help**<br>
+**docker** {*příkaz*} **\-\-help**
 
 ## Odkazy
 

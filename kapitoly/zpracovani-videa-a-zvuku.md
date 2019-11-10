@@ -28,6 +28,7 @@ Pochopit a zpracovat filtry:
 
 [ ] Stručně a pochopitelně vysvětlit PTS.
 [ ] Otestovat, zda „-pix_fmt yuv420p“ umožní bezproblémové přehrátí videa s kodekem h264 (nebo mpeg4) na Windows 7 a Windows 10.
+[ ] Dodělat ukázku.
 
 Poznámky:
 - filtr v360 (https://ffmpeg.org/ffmpeg-filters.html#toc-v360)
@@ -630,21 +631,29 @@ a platí pouze pro daný výstup.
 *# analyzovat soubor (ukáže stopy a jejich parametry)*<br>
 **ffprobe** {*vstupní-soubor*}
 
+*# vypnout úvodní banner s verzí a konfigurací pro ffmpeg/ffprobe (jen pro interaktivní bash)*<br>
+**alias ffmpeg="ffmpeg -hide\_banner"**<br>
+**alias ffprobe="ffprobe -hide\_banner"**
+
 *# vypnout úvodní banner s verzí a konfigurací pro ffmpeg/ffprobe*<br>
-*// Toto vypnutí platí jen pro danou instanci bashe. Globálně ho můžete nastavit vložením do ~/.bashrc.*<br>
-**eval "ffmpeg() { '$(which ffmpeg)' -hide\_banner \\"\\$@\\";}"**<br>
-**eval "ffprobe() { '$(which ffprobe)' -hide\_banner \\"\\$@\\";}"**
+**ffmpeg() { command ffmpeg -hide\_banner "$@";}**<br>
+**ffprobe() { command ffprobe -hide\_banner "$@";}"**
 
 ## Parametry příkazů
 
 Parametry příkazů a způsob volání ffmpegu jsou uvedeny v sekci „Zaklínadla (příkaz ffmpeg)“.
 
-## Jak získat nápovědu
-*# *<br>
-**man ffmpeg**<br>
-**man ffmpeg-filters**
+## Instalace na Ubuntu
 
-Dalším dobrým zdrojem je oficiální dokumentace k filtrům, ale ta může být podstatně novější než vaše verze ffmpegu; v takovém případě váš ffmpeg nemusí podporovat vše, co je v online dokumentaci uvedeno.
+*# *<br>
+**sudo apt-get install ffmpeg**
+
+<!--
+## Ukázka
+
+- Zatím chybí.
+
+-->
 
 ## Tipy a zkušenosti
 
@@ -657,11 +666,17 @@ Dalším dobrým zdrojem je oficiální dokumentace k filtrům, ale ta může b
 Zdroj: https://superuser.com/questions/1273920/deprecated-pixel-format-used-make-sure-you-did-set-range-correctly
 -->
 
-
 <!--
 Podle https://superuser.com/questions/435941/which-codecs-are-most-suitable-for-playback-with-windows-media-player-on-windows
 - přidat **-pix_fmt yuv420p** má umožnit přehrání videa v microsoftích přehravačích
 -->
+
+## Jak získat nápovědu
+*# *<br>
+**man ffmpeg**<br>
+**man ffmpeg-filters**
+
+Dalším dobrým zdrojem je oficiální dokumentace k filtrům, ale ta může být podstatně novější než vaše verze ffmpegu; v takovém případě váš ffmpeg nemusí podporovat vše, co je v online dokumentaci uvedeno.
 
 ## Odkazy
 

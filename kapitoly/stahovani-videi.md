@@ -186,23 +186,6 @@ Začíná-li zaklínadlo v této kapitole příkazem „youtube-dl“, uvádí 
 * **\-\-ignore-config** \:\: Nečte konfigurační soubor. Vhodné, pokud všechna potřebná nastavení uvádíte jako parametry.
 * **\-\-no-continue** \:\: Začne stahování od začátku, i když už byla část videa stažena.
 
-## Jak získat nápovědu
-*# *<br>
-**youtube-dl \-\-help**
-
-Pro podrobný popis formátovacího řetězce a mechanismu automatického výběru formátu ke stažení navštivte oficiální dokumentaci. Bohužel, veškerá oficiální nápověda je jen v angličtině.
-
-## Tipy a zkušenosti
-
-* Pokud stahování z některé služby přestane fungovat, první, co je třeba vyzkoušet, je aktualizovat program.
-* Některé parametry (zejména -f a -o) budete pravděpodobně používat velmi často. Proto se vyplatí je buď umístit do konfiguračního souboru („~/.config/youtube-dl/config“) nebo si na ně zřídit skripty či funkce.
-* Je-li video v playlistu nedostupné, youtube-dl na něm skončí s chybou. Přimějete-li ho pokračovat parametrem **-i**, přeskočí nedostupné video jako by v playlistu nebylo.
-
-## Ukázka
-
-*# *<br>
-**youtube-dl "https://www.youtube.com/watch?v=CvhJWKtBLn4"**
-
 ## Instalace na Ubuntu
 
 Aktuální instalační postup „youtube-dl“ hledejte na [oficiálních stránkách youtube-dl](https://ytdl-org.github.io/youtube-dl/download.html).
@@ -230,6 +213,23 @@ Zde uvádím trochu složitější postup, který sestává z následujících 
 **mv youtube-dl ~/bin/**
 
 V repozitáři Ubuntu sice je balíček „youtube-dl“, ale zpravidla zastaralý a již nefunkční, protože rozhraní streamovacích služeb se často mění.
+
+## Ukázka
+
+*# *<br>
+**youtube-dl "https://www.youtube.com/watch?v=CvhJWKtBLn4"**
+
+## Tipy a zkušenosti
+
+* Pokud stahování z některé služby přestane fungovat, první, co je třeba vyzkoušet, je aktualizovat program.
+* Některé parametry (zejména -f a -o) budete pravděpodobně používat velmi často. Proto se vyplatí je buď umístit do konfiguračního souboru („~/.config/youtube-dl/config“) nebo si na ně zřídit skripty či funkce.
+* Je-li video v playlistu nedostupné, youtube-dl na něm skončí s chybou. Přimějete-li ho pokračovat parametrem **-i**, přeskočí nedostupné video jako by v playlistu nebylo.
+
+## Jak získat nápovědu
+*# *<br>
+**youtube-dl \-\-help**
+
+Pro podrobný popis formátovacího řetězce a mechanismu automatického výběru formátu ke stažení navštivte oficiální dokumentaci. Bohužel, veškerá oficiální nápověda je jen v angličtině.
 
 ## Odkazy
 

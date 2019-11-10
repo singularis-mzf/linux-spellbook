@@ -28,9 +28,16 @@ CONVERT := convert
 PDFLATEX := pdflatex -halt-on-error
 
 VSECHNY_DODATKY := predmluva koncepce-projektu plan-vyvoje test mechanismus-prekladu licence
-VSECHNY_KAPITOLY := _ukazka awk docker firefox git hledani-souboru
-VSECHNY_KAPITOLY += make markdown obrazky odkazy ostatni planovani-uloh
-VSECHNY_KAPITOLY += soubory stahovani-videi barvy-a-titulek zpracovani-videa-a-zvuku
+
+# _ A, B, C, D, E, F, G
+VSECHNY_KAPITOLY := _ostatni _ukazka awk barvy-a-titulek docker firefox git
+# H, I, J, K, L, M
+VSECHNY_KAPITOLY += hledani-souboru make markdown
+# N, O, P, Q, R, S
+VSECHNY_KAPITOLY += obrazky odkazy planovani-uloh regularni-vyrazy soubory stahovani-videi
+# T, U, V, W, X, Y, Z
+VSECHNY_KAPITOLY += x zpracovani-videa-a-zvuku
+
 OBRAZKY := favicon.png by-sa.png logo-knihy-velke.png make.png barvy.png ve-vystavbe.png marsh.jpg banner.png
 
 SOUBORY_PREKLADU := soubory_prekladu
@@ -96,7 +103,7 @@ $(addprefix $(SOUBORY_PREKLADU)/html/,$(VSECHNY_DODATKY)): $(SOUBORY_PREKLADU)/h
 # ============================================================================
 $(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY))): $(VYSTUP_PREKLADU)/%.htm: $(SOUBORY_PREKLADU)/% skripty/kapitola.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(VYSTUP_PREKLADU)/html
-	$(AWK) -f skripty/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=$(basename $(notdir $@)) -v TELOKAPITOLY=$< formaty/html/sablona_kapitoly > $@
+	cut -f 2 $(SOUBORY_PREKLADU)/fragmenty.tsv | fgrep -qx $(basename $(notdir $<)) && exec $(AWK) -f skripty/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=$(basename $(notdir $@)) -v TELOKAPITOLY=$< formaty/html/sablona_kapitoly > $@ || true
 
 # 3. formaty/html/sablona.css => vystup_prekladu/html/lkk.css
 # ============================================================================
@@ -120,7 +127,7 @@ $(SOUBORY_PREKLADU)/html/kap-copys.htm: $(SOUBORY_PREKLADU)/fragmenty.tsv skript
 $(SOUBORY_PREKLADU)/html/obr-copys.htm: COPYING skripty/sepsat-copykobr.awk
 	$(AWK) -f skripty/sepsat-copykobr.awk $< $(OBRAZKY:%=obrazky/%) >$@
 
-# 7. vystup_prekladu/html/{id}.htm => vystup_prekladu/html/index.htm (provizorní)
+# 7. vystup_prekladu/html/{id}.htm => vystup_prekladu/html/index.htm
 # ============================================================================
 $(VYSTUP_PREKLADU)/html/index.htm: $(SOUBORY_PREKLADU)/fragmenty.tsv \
   skripty/generovat-index-html.awk \

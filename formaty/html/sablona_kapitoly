@@ -65,31 +65,33 @@ v&nbsp;rámci svých (začátečníků) schopností co nejvíc.</p><p>Tato verze
 </header>
 <nav class="horni">
 <div class="slogan">Veškerá moc příkazové řádky/příkazového řádku přehledně, pro začátečníky i&nbsp;pokročilé</div>
+<span class="prev">
 {{POKUD NENÍ PRVNÍ}}
 <a href="{{PŘEDCHOZÍ ID}}.htm" rel="prev" title="{{PŘEDCHOZÍ ČÍSLO}}. {{PŘEDCHOZÍ NÁZEV}}">Předchozí&nbsp;kapitola</a>&nbsp;|
 {{KONEC POKUD}}
-<a href="index.htm">Přehled</a><!--
+</span><a href="index.htm">Přehled</a><span class="next"><!--
 {{POKUD NENÍ POSLEDNÍ}}
 -->&nbsp;| <a href="{{NÁSLEDUJÍCÍ ID}}.htm" rel="next" title="{{NÁSLEDUJÍCÍ ČÍSLO}}. {{NÁSLEDUJÍCÍ NÁZEV}}">Následující&nbsp;kapitola</a>
 {{KONEC POKUD}}
 {{POKUD JE POSLEDNÍ}}
 -->
 {{KONEC POKUD}}
-</nav>
+</span></nav>
 <article>
 <h1>{{ČÍSLO KAPITOLY}}. {{NÁZEV KAPITOLY}}</h1>
 {{TĚLO KAPITOLY}}
-<nav class="spodni">
+<nav class="spodni"><span class="prev">
 {{POKUD NENÍ PRVNÍ}}
 <a href="{{PŘEDCHOZÍ ID}}.htm" rel="prev" title="{{PŘEDCHOZÍ ČÍSLO}}. {{PŘEDCHOZÍ NÁZEV}}">Předchozí&nbsp;kapitola</a>&nbsp;|
 {{KONEC POKUD}}
-<a href="index.htm">Přehled</a><!--
+</span><a href="index.htm">Přehled</a><span class="next"><!--
 {{POKUD NENÍ POSLEDNÍ}}
 -->&nbsp;| <a href="{{NÁSLEDUJÍCÍ ID}}.htm" rel="next" title="{{NÁSLEDUJÍCÍ ČÍSLO}}. {{NÁSLEDUJÍCÍ NÁZEV}}">Následující&nbsp;kapitola</a>
 {{KONEC POKUD}}
 {{POKUD JE POSLEDNÍ}}
 -->
 {{KONEC POKUD}}
+</span>
 </nav>
 </article>
 <footer>

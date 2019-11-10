@@ -281,12 +281,10 @@ https://creativecommons.org/licenses/by-sa/4.0/
 **obr%03d.png**<br>
 {*název-souboru-obsahující-„%03d“*}
 
-## Jak získat nápovědu
-Jediným zdrojem, který se mi osvědčil, je web „Examples of ImageMagick Usage“ (v angličtině). Jeho obsah je ale komplexní a studium pracné a příkaz „convert“ není přátelský k nováčkům. Mnohdy s ním není možné dosáhnout požadovaného výsledku bez detailní znalosti problematiky a způsobu, jakým dochází ke zpracování obrázků. Proto doporučuji začátečníkům, kteří nestojí o podrobné znalosti, aby se raději drželi příkladů uvedených v této kapitole a kontrolovali, zda udělaly to, co od nich očekávali.
+## Instalace na Ubuntu
 
-## Tipy a zkušenosti
-* Některé operátory (např. „-crop“ či „-resize“) se chovají výrazně odlišně od toho, co by začátečník očekával.
-* ImageMagick podporuje i typy .pdf, .ps, .eps, .xps, ale je nutno je zapnout v globálním konfiguračním souboru „/etc/ImageMagick-6/policy.xml“: Najděte prvek &lt;policy&gt; s atributem „pattern“ obsahujícím např. PDF a atribut „rights“ změňte z hodnoty **"none"** na hodnotu **"read\|write"**. Účinek změny je okamžitý. Důvodem, proč je zpracování těchto formátů ve výchozím nastavení vypnuto, jsou bezpečnostní díry; podrobný popis na [webové stránce](https://cromwell-intl.com/open-source/pdf-not-authorized.html).
+*# *<br>
+**sudo apt-get install imagemagick**
 
 ## Ukázka
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
@@ -294,10 +292,12 @@ Jediným zdrojem, který se mi osvědčil, je web „Examples of ImageMagick Usa
 Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
 -->
 
-## Instalace na Ubuntu
+## Tipy a zkušenosti
+* Některé operátory (např. „-crop“ či „-resize“) se chovají výrazně odlišně od toho, co by začátečník očekával.
+* ImageMagick podporuje i typy .pdf, .ps, .eps, .xps, ale je nutno je zapnout v globálním konfiguračním souboru „/etc/ImageMagick-6/policy.xml“: Najděte prvek &lt;policy&gt; s atributem „pattern“ obsahujícím např. PDF a atribut „rights“ změňte z hodnoty **"none"** na hodnotu **"read\|write"**. Účinek změny je okamžitý. Důvodem, proč je zpracování těchto formátů ve výchozím nastavení vypnuto, jsou bezpečnostní díry; podrobný popis na [webové stránce](https://cromwell-intl.com/open-source/pdf-not-authorized.html).
 
-*# *<br>
-**sudo apt-get install imagemagick**
+## Jak získat nápovědu
+Jediným zdrojem, který se mi osvědčil, je web „Examples of ImageMagick Usage“ (v angličtině). Jeho obsah je ale komplexní a studium pracné a příkaz „convert“ není přátelský k nováčkům. Mnohdy s ním není možné dosáhnout požadovaného výsledku bez detailní znalosti problematiky a způsobu, jakým dochází ke zpracování obrázků. Proto doporučuji začátečníkům, kteří nestojí o podrobné znalosti, aby se raději drželi příkladů uvedených v této kapitole a kontrolovali, zda udělaly to, co od nich očekávali.
 
 ## Odkazy
 * [Stránka na Wikipedii](https://cs.wikipedia.org/wiki/ImageMagick)

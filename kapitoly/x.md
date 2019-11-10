@@ -28,8 +28,8 @@ Poznámky:
 
 Velké písmeno „X“ odpradávna označovalo cosi záhadného a tajuplného. Toho si pravděpodobně
 byli vědomi vývojáři, když v roce 1984 pojmenovali grafické rozhraní X Window System;
-pravděpodobně znali především příkazovou řádku a děrné štítky a grafické rozhraní jim
-bylo něčím novým, záhadným a tajuplným. Netušili, že o padesát let později na tom budou
+pravděpodobně znali především příkazovou řádku a děrné štítky, zatímco grafické rozhraní jim
+bylo něčím novým, záhadným a tajuplným. Netušili však, že o padesát let později na tom budou
 uživatelé-začátečníci přesně naopak.
 <!--
 Zdroj roku: https://en.wikipedia.org/wiki/X_Window_System#Release_history
@@ -41,14 +41,103 @@ Zdroj roku: https://en.wikipedia.org/wiki/X_Window_System#Release_history
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+* Okno (+ titulek + pozice(počítá se od levého horního rohu plochy)) Zmínit také speciální okna jako plochu, panely, doky apod.
+* Virtuální plocha
+* Zaměřené okno
+
 ## Zaklínadla
 <!--
 - Rozdělte na podsekce a naplňte „zaklínadly“.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-*# simulovat stisknutí kláves*<br>
-**xdotool key** [**\-\-clearmodifiers**] [**\-\-delay** {*milisekundy*}] {*klávesa*}...
+### Okna (najít ID)
+
+*# získat seznam ID oken (výpis pro člověka/jen ID pro skript)*<br>
+*// Sloupce: ID okna, číslo virtuální plochy, PID (jen s „-p“); s „-G“ pozice-x, pozice-y, šířka a výška; zbytek řádku obsahuje titulek okna.*<br>
+**wmctrl -l** [**-p**] [**-G**]<br>
+**wmctrl -l \| cut -d "&blank;" -f 1**
+
+*# získat ID právě zaměřeného okna*<br>
+**xdotool getactivewindow**
+
+*# ID oken, jejichž titulek vyhovuje regulárnímu výrazu*<br>
+**wmctrl -l \| egrep** [**-i**] [**-v**] **"^([^&blank;]+&blank;+){3}**{*regulární výraz*}**\\$" \| cut -d "&blank;" -f 1**
+
+*# ID oken příslušných k určitému PID*<br>
+**wmctrl -lp \| egrep "^([^&blank;]+&blank;+){2}**{*PID*}**&blank;" \| cut -d "&blank;" -f 1**
+
+### Práce s okny
+
+*# zaměřit okno*<br>
+**wmctrl -ia** {*id-okna*}
+
+*# přesunout okno a nastavit velikost/vypsat pozici a velikost okna v pixelech*<br>
+**wmctrl -ir** {*id-okna*} **-e 0,**{*posun-x*}**,**{*posun-y*}**,**{*šířka*}**,**{*výška*}<br>
+**xwininfo -id** {*id-okna*} **\| egrep "^&blank;&blank;-geometry"**
+
+*# nastavit/vypsat titulek okna*<br>
+**wmctrl -ir** {*id-okna*} **-T "**{*nový titulek*}**"**<br>
+**xdotool getwindowname** {*id-okna*}
+
+*# zavřít okno („křížkem“/násilně ukončit celý program)*<br>
+*// Pozor, má-li daný proces otevřených víc oken (typické např. pro webové prohlížeče), po provedení „xkill“ zmizí všechna, protože xkill nezavírá okno, ale ukončuje proces!*<br>
+**wmctrl -ic** {*id-okna*}
+**xkill -id** {*id-okna*}
+
+*# vypsat PID příslušné k oknu*<br>
+**xdotool getwindowpid** {*id-okna*}
+
+*# vypsat kompletní příkaz, kterým byl spuštěn proces, který otevřel okno*<br>
+**ps -o command= -p $(xdotool getwindowpid** {*id-okna*}**)**
+
+*# přesunout okno bez změny velikosti*<br>
+**wmctrl -ir** {*id-okna*} **-e 0,**{*posun-x*}**,**{*posun-y*}**,$(xwininfo -id** {*id-okna*} **\| egrep "^&blank;&blank;-geometry" \| egrep -o [0-9]+x[0-9]+ \| tr x ,)**
+
+*# vypsat oknem dovolené akce*<br>
+*// Známé akce jsou: minimize, maximize\_horz, maximize\_vert, fullscreen, close, move, change\_desktop, above, below, stick, shade a další.*<br>
+**xprop -id** {*id-okna*} **\_NET\_WM\_ALLOWED\_ACTIONS \| sed -E -e 's/.\*=\| \*\_NET\_WM\_ACTION\_//g' -e 's/.\*/\\L&amp;/g'**
+
+
+### Binární vlastnosti okna
+
+*# maximalizované (nastavit/zrušit)*<br>
+**wmctrl -ir** {*id-okna*} **-b add,maximized\_horz,maximized\_vert**<br>
+**wmctrl -ir** {*id-okna*} **-b remove,maximized\_horz,maximized\_vert**
+
+*# minimalizované (nastavit)*<br>
+**xdotool windowminimize \-\-sync** {*id-okna*}
+
+*# minimalizované (zrušit)*<br>
+?
+
+*# okno vždy nahoře (nastavit/zrušit)*<br>
+**wmctrl -ir** {*id-okna*} **-b add,above**<br>
+**wmctrl -ir** {*id-okna*} **-b remove,above**
+
+*# okno na celou obrazovku (nastavit/zrušit)*<br>
+**wmctrl -ir** {*id-okna*} **-b add,fullscreen**<br>
+**wmctrl -ir** {*id-okna*} **-b remove,fullscreen**
+
+*# okno vždy pod ostatními okny (nastavit/zrušit)*<br>
+**wmctrl -ir** {*id-okna*} **-b add,below**<br>
+**wmctrl -ir** {*id-okna*} **-b remove,below**
+
+*# vždy na viditelné ploše (sticky)(nastavit/zrušit)*<br>
+**wmctrl -ir** {*id-okna*} **-b add,sticky**<br>
+**wmctrl -ir** {*id-okna*} **-b remove,sticky**
+
+*# zarolovat/odrolovat okno*<br>
+**wmctrl -ir** {*id-okna*} **-b add,shaded**<br>
+**wmctrl -ir** {*id-okna*} **-b remove,shaded**
+
+*# zrušit oknu modální status*<br>
+**wmctrl -ir** {*id-okna*} **-b remove,modal**
+
+*# vypsat aktivní binární vlastnosti okna*<br>
+*// Poznámka: normální okno nemá žádné binární vlastnosti, proto pro ně uvedený příkaz vrátí prázdný řádek.*<br>
+**xprop -id** {*id-okna*} **\_NET\_WM\_STATE \| sed -E -e 's/.\*=\| \*\_NET\_WM\_STATE\_//g' -e 's/.\*/\\L&amp;/g'**
+
 
 ### Noční osvětlení
 
@@ -58,7 +147,7 @@ Zdroj roku: https://en.wikipedia.org/wiki/X_Window_System#Release_history
 **redshift -l 49:21** [**-t** {*bar-tepl-ve-dne*}**:**{*v-noci*}] [**-b** {*jas-ve-dne*}**:**{*v-noci*}]
 
 *# jednorázové noční osvětlení*<br>
-**redshift -o -l** {*zem-šířka*}**:**{*délka*}** [**-t** {*bar-tepl-ve-dne*}**:**{*v-noci*}] [**-b** {*jas-ve-dne*}**:**{*v-noci*}]
+**redshift -o -l** {*zem-šířka*}**:**{*délka*} [**-t** {*bar-tepl-ve-dne*}**:**{*v-noci*}] [**-b** {*jas-ve-dne*}**:**{*v-noci*}]
 
 *# jednorázové ruční nastavení barevné teploty a jasu (obecně/na noc/na den)*<br>
 **redshift -O** {*teplota*} [**-b** {*jas*}**:**{*jas*}]<br>
@@ -67,6 +156,44 @@ Zdroj roku: https://en.wikipedia.org/wiki/X_Window_System#Release_history
 
 *# jednorázově zrušit noční osvětlení*<br>
 **redshift -x**
+
+### Virtuální plochy
+
+*# zjistit počet virtuálních ploch*<br>
+**xdotool get\_num\_desktops**
+
+*# nastavit počet virtuálních ploch*<br>
+**xdotool set\_num\_desktops** {*počet*}
+
+*# vypsat informace o virtuálních plochách*<br>
+**wmctrl -d**
+
+*# přejít na určitou virtuální plochu/o N ploch vpřed/o N ploch vzad*<br>
+*// Virtuální plochy se číslují od nuly!*<br>
+**xdotool set\_desktop** {*číslo-plochy*}<br>
+**xdotool set\_desktop \-\-relative** {*N*}<br>
+**xdotool set\_desktop \-\-relative -**{*N*}
+
+*# zjistit, na které virtuální ploše je okno*<br>
+**xdotool get\_desktop\_for\_window** {*id-okna*}
+
+*# přesunout okno na virtuální plochu*<br>
+**xdotool set\_desktop\_for\_window** {*id-okna*} {*číslo-plochy*}
+
+### Automatizace klávesnice a myši
+
+*# stisknutí kláves*<br>
+**xdotool key** [**\-\-clearmodifiers**] [**\-\-delay** {*milisekundy*}] {*klávesa*}...
+
+*# pohyb myši*<br>
+?
+
+*# kliknutí myši*<br>
+?
+
+*# tažení myší*<br>
+?
+
 
 ### Ostatní
 
@@ -89,10 +216,21 @@ Zdroj roku: https://en.wikipedia.org/wiki/X_Window_System#Release_history
 * **\-o** \:\: Jednorázový režim. Nastaví barevnou teplotu a jas a skončí. Vhodné pro automatické spouštění jako naplánovaná úloha.
 * **\-r** \:\: Zakáže plynulý přechod teploty a jasu; nastavení se změní skokově.
 
-
-## Jak získat nápovědu
+## Instalace na Ubuntu
 <!--
-- Uveďte, které informační zdroje jsou pro začátečníka nejlepší k získání rychlé a obsáhlé nápovědy. Typicky jsou to manuálové stránky, vestavěná nápověda programu nebo webové zdroje (ale neuvádějte konkrétní odkazy, ty patří do sekce „Odkazy“).
+- Jako zaklínadlo bez titulku uveďte příkazy (popř. i akce) nutné k instalaci a zprovoznění všech nástrojů požadovaných kterýmkoliv zaklínadlem uvedeným v kapitole. Po provedení těchto činností musí být nástroje plně zkonfiguraované a připravené k práci.
+- Ve výčtu balíků k instalaci vycházejte z minimální instalace Ubuntu.
+-->
+![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+*# *<br>
+**sudo apt-get install redshift wmctrl xdotool**
+
+## Ukázka
+<!--
+- Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
+- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti − ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
+- Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
@@ -104,20 +242,13 @@ Zdroj roku: https://en.wikipedia.org/wiki/X_Window_System#Release_history
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-## Ukázka
+
+## Jak získat nápovědu
 <!--
-- Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
-- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti − ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
-- Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
+- Uveďte, které informační zdroje jsou pro začátečníka nejlepší k získání rychlé a obsáhlé nápovědy. Typicky jsou to manuálové stránky, vestavěná nápověda programu nebo webové zdroje (ale neuvádějte konkrétní odkazy, ty patří do sekce „Odkazy“).
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-## Instalace na Ubuntu
-<!--
-- Jako zaklínadlo bez titulku uveďte příkazy (popř. i akce) nutné k instalaci a zprovoznění všech nástrojů požadovaných kterýmkoliv zaklínadlem uvedeným v kapitole. Po provedení těchto činností musí být nástroje plně zkonfiguraované a připravené k práci.
-- Ve výčtu balíků k instalaci vycházejte z minimální instalace Ubuntu.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 ## Odkazy
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
@@ -156,3 +287,41 @@ Příkazy ke zpracování:
 + spustit program minimalizovaný/maximalizovaný/skrytý/nemaximalizovaný
 + rozdíly mezi podporovanými okenními prostředí
 -->
+<!--
+Alternativní řešení:
+Vypsat PID:
+**xprop -id** {*id-okna*} **\_NET\_WM\_PID**<br>
+**xprop -id** {*id-okna*} **\_NET\_WM\_PID \| egrep -o [0-9]+**
+-->
+<!--
+Alternativní řešení:
+Zaměřit okno:
+**xdotool windowactivate** {*id-okna*}
+-->
+<!--
+Alternativní řešení:
+Vypsat titulek okna:
+**xprop -id** {*id-okna*} **\_NET\_WM\_NAME WM\_NAME \| egrep -m 1 -v 'not found\\.$'**<br>
+**xprop -id** {*id-okna*} **\_NET\_WM\_NAME WM\_NAME \| gawk '!/not found\\.$/ { gsub(/^[^"]\*"\|"$/, ""); gsub(/\\\\\\"/, "\\""); gsub(/\\\\\\\\/, "\\\\"); gsub(/\\t/, "\\\\t"); print; exit;}'**
+-->
+<!--
+Původní řešení:
+Získat seznam ID oken:
+*// Okna jsou v seznamu v pořadí podle poslední „aktivace“ od nejnovějšího po nejstarší.*<br>
+**xwininfo -root -tree \| egrep -o '^&blank;+0x[^&blank;]+&blank;"' \| tr -s " " \| cut -d " " -f 2 \| oknogrep**
+
+*# skript ~/bin/oknogrep*<br>
+**#!/usr/bin/gawk -f**<br>
+**/^[0-9]+$/ { $0 = sprintf("0x%x", $0); }**<br>
+**/^0x[0-9a-fA-F]+$/ \{**<br>
+**<tab8>id = $0;**<br>
+**<tab8>prikaz = "xprop -id " id " \_NET\_WM\_WINDOW\_TYPE \_NET\_WM\_ALLOWED\_ACTIONS";**<br>
+**<tab8>if ((prikaz \| getline) &amp;&amp; $0 ~ /= \_NET\_WM\_WINDOW\_TYPE\_NORMAL$/ &amp;&amp; (prikaz | getline) &amp;&amp; $0 !~ /not found\\.$/) print id;**<br>
+**<tab8>close(prikaz);**<br>
+**\}**
+
+-->
+<!--
+https://specifications.freedesktop.org/wm-spec/1.3/ar01s05.html
+-->
+

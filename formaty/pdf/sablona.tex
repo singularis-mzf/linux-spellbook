@@ -200,8 +200,8 @@
             \fontencoding{IL2}\fontfamily{bsk}\fontseries{m}\fontshape{n}\selectfont%
             \textcolor{seda}{$\carriagereturn$}\\\relax%
         }}%
-        % Vypsat samotný řádek zaklínadla:
-        {##1}%
+        % Vypsat samotný řádek zaklínadla (nutný „strut“ kvůli výšce řádku a orámování):
+        {\rule{0pt}{1.5ex}##1}%
     }%
     % Definovat \akcezaklinadla{text}
     \newcommand*{\akcezaklinadla}[1]{\radekzaklinadla{\ensuremath{\Rightarrow}~\rmfamily{}##1}}%
@@ -252,7 +252,9 @@
     \end{picture}%
 \end{blok}%
 \par\vfill%
-\begin{center}\mbox{https://github.com/singularis-mzf/linux-spellbook}\\[0.03\textheight]\textcopyright\,2019 Singularis a ostatní přispěvatelé\end{center}%
+\begin{center}\mbox{https://github.com/singularis-mzf/linux-spellbook}\\%
+verze: {{JMÉNO VERZE}}%
+\\[0.03\textheight]\textcopyright\,2019 Singularis a ostatní přispěvatelé\end{center}%
 \clearpage%
 %
 % DRUHÁ STRANA

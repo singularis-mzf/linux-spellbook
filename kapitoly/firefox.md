@@ -29,11 +29,6 @@ https://creativecommons.org/licenses/by-sa/4.0/
 ## Parametry příkazů
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-## Jak získat nápovědu
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-
-## Tipy a zkušenosti
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 ## Instalace na Ubuntu
 
@@ -41,13 +36,15 @@ Běžná aktuální verze Firefoxu je ve většině variant Ubuntu předinstalov
 
 **sudo apt-get install firefox** [**firefox-locale-cs**]
 
-Firefox ESR je možno doinstalovat z PPA:
+<!--
+[ ] Prozkoumat transplantaci Firefoxu ESR z Debianu.
+-->
 
-**sudo add-apt-repository ppa:mozillateam/ppa**<br>
-**sudo apt-get update**<br>
-**sudo apt-get install firefox-esr** [**firefox-esr-locale-cs**]
+## Tipy a zkušenosti
+![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-Takto doinstalovaný Firefox ESR není v konfliktu s běžným Firefoxem. Spouští se příkazem **firefox-esr**. Má však stejnou ikonu i název v menu.
+## Jak získat nápovědu
+![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 ## Odkazy
 ![ve výstavbě](../obrazky/ve-vystavbe.png)

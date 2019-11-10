@@ -45,17 +45,10 @@ Poznámky:
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-## Jak získat nápovědu
+## Instalace na Ubuntu
 <!--
-- Uveďte, které informační zdroje jsou pro začátečníka nejlepší k získání rychlé a obsáhlé nápovědy. Typicky jsou to manuálové stránky, vestavěná nápověda programu nebo webové zdroje (ale neuvádějte konkrétní odkazy, ty patří do sekce „Odkazy“).
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-
-## Tipy a zkušenosti
-<!--
-- Do odrážek uveďte konkrétní zkušenosti, které jste při práci s nástrojem získali; zejména případy, kdy vás chování programu překvapilo nebo očekáváte, že by mohlo překvapit začátečníky.
-- Popište typické chyby nových uživatelů a jak se jim vyhnout.
-- Buďte co nejstručnější; neodbíhejte k popisování čehokoliv vedlejšího, co je dost možné, že už čtenář zná.
+- Jako zaklínadlo bez titulku uveďte příkazy (popř. i akce) nutné k instalaci a zprovoznění všech nástrojů požadovaných kterýmkoliv zaklínadlem uvedeným v kapitole. Po provedení těchto činností musí být nástroje plně zkonfigurované a připravené k práci.
+- Ve výčtu balíků k instalaci vycházejte z minimální instalace Ubuntu.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
@@ -67,10 +60,17 @@ Poznámky:
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-## Instalace na Ubuntu
+## Tipy a zkušenosti
 <!--
-- Jako zaklínadlo bez titulku uveďte příkazy (popř. i akce) nutné k instalaci a zprovoznění všech nástrojů požadovaných kterýmkoliv zaklínadlem uvedeným v kapitole. Po provedení těchto činností musí být nástroje plně zkonfigurované a připravené k práci.
-- Ve výčtu balíků k instalaci vycházejte z minimální instalace Ubuntu.
+- Do odrážek uveďte konkrétní zkušenosti, které jste při práci s nástrojem získali; zejména případy, kdy vás chování programu překvapilo nebo očekáváte, že by mohlo překvapit začátečníky.
+- Popište typické chyby nových uživatelů a jak se jim vyhnout.
+- Buďte co nejstručnější; neodbíhejte k popisování čehokoliv vedlejšího, co je dost možné, že už čtenář zná.
+-->
+![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+## Jak získat nápovědu
+<!--
+- Uveďte, které informační zdroje jsou pro začátečníka nejlepší k získání rychlé a obsáhlé nápovědy. Typicky jsou to manuálové stránky, vestavěná nápověda programu nebo webové zdroje (ale neuvádějte konkrétní odkazy, ty patří do sekce „Odkazy“).
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 

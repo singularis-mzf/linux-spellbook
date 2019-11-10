@@ -246,7 +246,6 @@ Další možnost: \\044\\[\\]
 *# příkazy psát červeně na zeleném pozadí, výpisy příkazů tyrkysově na fialové pozadí*<br>
 **PS1="\\\\[$(bezp\_set setaf 1)$(bezp\_set setab 2)$(tput el)\\\\]\\\$&blank;" PS0="$(bezp\_set setaf 6)$(bezp\_set setab 5)$(tput el)"**
 
-
 ## Parametry příkazů
 
 *# nastavit šablonu hlavní výzvy/připojit k ní další text (analogicky platí i pro ostatní výzvy)*<br>
@@ -255,10 +254,19 @@ Další možnost: \\044\\[\\]
 
 *Důležitá poznámka:* Aby mohl bash správně zformátovat hlavní a vedlejší výzvu (PS1 a PS2), potřebuje předem znát počet tisknutých znaků na každém řádku. Bohužel bash nerozumí escape sekvencím, proto mu musíte napovědět a tyto sekvence uzavřít do zvláštních závorek „\\[“ a „\\]“ (ve dvojitých uvozovkách se zadávají „\\\\[“ a „\\\\]“), které znamenají, že jejich obsah bash nemá při výpočtu šířky řádků vůbec zohledňovat. Tyto závorky se bohužel naopak nesmějí používat v proměnné PS0, tam by vypsaly škaredé paznaky na terminál.
 
-## Jak získat nápovědu
+## Instalace na Ubuntu
 
-* Přehled syntaxe pro proměnné PS0, PS1 a PS2 najdete v sekci „PROMPTING“ v manuálové stránce „bash“ (anglicky).
-* Různé další tipy se dají najít v článku Bash/Prompt customization (anglicky, viz Odkazy).
+Všechny použité součásti jsou základními nástroji přítomnými v každé instalaci Ubuntu.
+
+## Ukázka
+*# *<br>
+**PROMPT\_COMMAND="navr\_hodn=\\$?;$PROMPT\_COMMAND"**<br>
+**PS1="\\\\[$(printf %s\\\\n "$TERM" \| egrep -isq "^(xterm|rxvt)" &amp;&amp; printf "\\\\e]2;%s\\\\a" "Bude příkaz č. \\\\#")\\\\]"**<br>
+**PS1+="Tato \\\\[$(tput smul)\\\\]výzva je \\\\[$(tput sitm)\\\\]zbytečně\\\\[$(tput rmul)\\\\] rozsáhlá, aby ukázala \\\\[$(tput bold)\\\\]spoustu\\\\[$(tput sgr0)\\\\] možností.\\n"**<br>
+**PS1+="\\\\[$(tput dim)\\\\]Velikost terminálu: \\$(tput cols)x\\$(tput lines) Volné místo: \\\\[$(tput smul)\\\\]\\$(df -h \-\-output=avail . \| tail -n 1 \| tr -d \\" \\")\\\\[$(tput sgr0)\\\\]\\\\n"**<br>
+**PS1+="Návr.kód:\\\\[\\$(barvapronh \\${navr\_hodn})\\\\]\\${navr\_hodn}\\\\[$(tput sgr0)\\\\] (\\\\[$(bezp\_set setaf 87 6)\\\\]\\\\t\\\\[$(tput sgr0)\\\\]) !""\\\\!&blank;"**<br>
+**PS1+="\\\\[$(bezp\_set setaf 220 3; tput bold)\\\\]\\\\w\\\\[$(tput sgr0)\\\\]&blank;\\\\$&blank;"**<br>
+**PS2="\\\\[$(bezp\_set setaf 10 2; tput bold)\\\\]\| \\\\[$(tput sgr0)\\\\]"**
 
 ## Tipy a zkušenosti
 <!--
@@ -272,19 +280,10 @@ Další možnost: \\044\\[\\]
 * Tip: Před zkoušením nastavování barev a titulku terminálu nanečisto si vypněte výzvu příkazem „PS1=""“. Výchozí výzva obsahuje escape sekvence, které by kolidovaly s těmi, které se snažíte zadat a rušily by jejich účinek.
 * Bash podporuje proměnnou „PROMPT\_COMMAND“. Je-li nastavena, je vykonána jako příkaz těsně před vypsáním hlavní výzvy. Toho lze využít k nastavení proměnných, které pak ve výzvě použijeme. Proměnná PROMPT\_COMMAND může obsahovat i více příkazů oddělených středníky. Podle manuálové stránky by příkazy uvedené v této proměnné neměly generovat žádný výstup na terminál! (Ale výstup do souboru je pravděpodobně v pořádku.)
 
-## Ukázka
-*# *<br>
-**PROMPT\_COMMAND="navr\_hodn=\\$?;$PROMPT\_COMMAND"**<br>
-**PS1="\\\\[$(printf %s\\\\n "$TERM" \| egrep -isq "^(xterm|rxvt)" &amp;&amp; printf "\\\\e]2;%s\\\\a" "Bude příkaz č. \\\\#")\\\\]"**<br>
-**PS1+="Tato \\\\[$(tput smul)\\\\]výzva je \\\\[$(tput sitm)\\\\]zbytečně\\\\[$(tput rmul)\\\\] rozsáhlá, aby ukázala \\\\[$(tput bold)\\\\]spoustu\\\\[$(tput sgr0)\\\\] možností.\\n"**<br>
-**PS1+="\\\\[$(tput dim)\\\\]Velikost terminálu: \\$(tput cols)x\\$(tput lines) Volné místo: \\\\[$(tput smul)\\\\]\\$(df -h \-\-output=avail . \| tail -n 1 \| tr -d \\" \\")\\\\[$(tput sgr0)\\\\]\\\\n"**<br>
-**PS1+="Návr.kód:\\\\[\\$(barvapronh \\${navr\_hodn})\\\\]\\${navr\_hodn}\\\\[$(tput sgr0)\\\\] (\\\\[$(bezp\_set setaf 87 6)\\\\]\\\\t\\\\[$(tput sgr0)\\\\]) !""\\\\!&blank;"**<br>
-**PS1+="\\\\[$(bezp\_set setaf 220 3; tput bold)\\\\]\\\\w\\\\[$(tput sgr0)\\\\]&blank;\\\\$&blank;"**<br>
-**PS2="\\\\[$(bezp\_set setaf 10 2; tput bold)\\\\]\| \\\\[$(tput sgr0)\\\\]"**
+## Jak získat nápovědu
 
-## Instalace na Ubuntu
-
-Všechny použité součásti jsou základními nástroji přítomnými v každé instalaci Ubuntu.
+* Přehled syntaxe pro proměnné PS0, PS1 a PS2 najdete v sekci „PROMPTING“ v manuálové stránce „bash“ (anglicky).
+* Různé další tipy se dají najít v článku Bash/Prompt customization (anglicky, viz Odkazy).
 
 ## Odkazy
 

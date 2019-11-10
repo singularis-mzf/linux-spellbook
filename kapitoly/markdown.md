@@ -184,24 +184,18 @@ Tato verze kapitoly nepokrývá GFM (GitHub Flavoured Markdown), nicméně všec
 {*řádek kódu*}...<br>
 **\`\`\`**
 
-
-
 ## Parametry příkazů
 *# převod Markdownu na HTML5*<br>
 **pandoc -f gfm -t html5 -o** {*výstupní-soubor*} {*vstupní-soubor*}
 
-## Jak získat nápovědu
-Doporučuji prohledat online zdroje v sekci „Odkazy“ této kapitoly nebo prostě experimentovat.
-Velmi obsáhlým a formálně přesným zdrojem je „Specifikace GitHub Flavored Markdown“.
+## Instalace na Ubuntu
+*# příkaz pandoc pro konverzi na HTML a jiné formáty*<br>
+**sudo apt-get install pandoc**
 
-## Tipy a zkušenosti
-* Asi nejhorším problémem v Markdownu je escapování. Speciální znaky se totiž escapují zpětným lomítkem pouze tehdy, když mají speciální význam; v ostatních případech se zpětné lomítko před takovým znakem exportuje jako normální znak. Problém však je, že inteprety Markdownu se velmi značně liší v tom, které znaky a v jakých kontextech považují za speciální. Proto nelze dosáhnout zcela jednotných výsledků. Standardní Markdown však zaručuje možnost zpětným lomíkem escapovat: \!, \#, \*, \+, \-, \., \\, \_, \` a všechny tři druhy závorek. Markdown Extra k tomu přidává znaky \: a \|.
-* Identifikátory předdefinovaných odkazů a obrázků jsou prakticky obecné řetězce. Vhodný identifikátor je i např. „3.12;Dobrý den/Žlutoučký kůň\*“. Jejich maximální délka je ale omezena implementací.
-* V Markdownu můžete přímo používat inline prvky HTML (např. &lt;br&gt; či &lt;strong&gt;). Při konverzi na jiný formát než HTML však tyto prvky pravděpodobně nebudou podporovány.
-* Markdown (standardní) umožňuje vložit zalomení řádku pomocí dvou či více mezer na konci řádku. Osobně to nedoporučuji, protože některé textové editory (např. vim) bílé znaky na konci řádku nezobrazují a některé nástroje je mohou považovat za překlep a automaticky odstranit. Doporučuji místo toho používat HTML značku &lt;br&gt;, případně &lt;br&nbsp;/&gt;.
-* Markdown neumožňuje vloženému obrázku definovat rozměry. Toto můžete učinit buď pomocí CSS, nebo místo syntaxe Markdownu přímo použít značku &lt;img&gt;.
-* Po prvním spuštění ReTextu doporučuji otevřít Úpravy / Nastavení a zaškrtnout políčka „Vždy použít živý náhled“, „Zvýrazňovat aktuální řádek“ a „Zobrazovat čísla řádků“ a restartovat ReText. S těmito nastaveními mi připadne práce pohodlnější.
+*# editor (grafický)*<br>
+**sudo apt-get install retext**
 
+Existuje i modernější a propracovanější editor [Remarkable](https://remarkableapp.github.io/linux.html) (licence MIT) zaměřený především na Arch Linux, ale je možno ho nainstalovat i v Ubuntu.
 
 ## Ukázka
 
@@ -229,14 +223,17 @@ Velmi obsáhlým a formálně přesným zdrojem je „Specifikace GitHub Flavor
 **\| :\-\-\- \| \-\-\- \| \-\-\-:**<br>
 **\| vlevo \| na střed \| vpravo**
 
-## Instalace na Ubuntu
-*# příkaz pandoc pro konverzi na HTML a jiné formáty*<br>
-**sudo apt-get install pandoc**
+## Tipy a zkušenosti
+* Asi nejhorším problémem v Markdownu je escapování. Speciální znaky se totiž escapují zpětným lomítkem pouze tehdy, když mají speciální význam; v ostatních případech se zpětné lomítko před takovým znakem exportuje jako normální znak. Problém však je, že inteprety Markdownu se velmi značně liší v tom, které znaky a v jakých kontextech považují za speciální. Proto nelze dosáhnout zcela jednotných výsledků. Standardní Markdown však zaručuje možnost zpětným lomíkem escapovat: \!, \#, \*, \+, \-, \., \\, \_, \` a všechny tři druhy závorek. Markdown Extra k tomu přidává znaky \: a \|.
+* Identifikátory předdefinovaných odkazů a obrázků jsou prakticky obecné řetězce. Vhodný identifikátor je i např. „3.12;Dobrý den/Žlutoučký kůň\*“. Jejich maximální délka je ale omezena implementací.
+* V Markdownu můžete přímo používat inline prvky HTML (např. &lt;br&gt; či &lt;strong&gt;). Při konverzi na jiný formát než HTML však tyto prvky pravděpodobně nebudou podporovány.
+* Markdown (standardní) umožňuje vložit zalomení řádku pomocí dvou či více mezer na konci řádku. Osobně to nedoporučuji, protože některé textové editory (např. vim) bílé znaky na konci řádku nezobrazují a některé nástroje je mohou považovat za překlep a automaticky odstranit. Doporučuji místo toho používat HTML značku &lt;br&gt;, případně &lt;br&nbsp;/&gt;.
+* Markdown neumožňuje vloženému obrázku definovat rozměry. Toto můžete učinit buď pomocí CSS, nebo místo syntaxe Markdownu přímo použít značku &lt;img&gt;.
+* Po prvním spuštění ReTextu doporučuji otevřít Úpravy / Nastavení a zaškrtnout políčka „Vždy použít živý náhled“, „Zvýrazňovat aktuální řádek“ a „Zobrazovat čísla řádků“ a restartovat ReText. S těmito nastaveními mi připadne práce pohodlnější.
 
-*# editor (grafický)*<br>
-**sudo apt-get install retext**
-
-Existuje i modernější a propracovanější editor [Remarkable](https://remarkableapp.github.io/linux.html) (licence MIT) zaměřený především na Arch Linux, ale je možno ho nainstalovat i v Ubuntu.
+## Jak získat nápovědu
+Doporučuji prohledat online zdroje v sekci „Odkazy“ této kapitoly nebo prostě experimentovat.
+Velmi obsáhlým a formálně přesným zdrojem je „Specifikace GitHub Flavored Markdown“.
 
 ## Odkazy
 * [Stránka na Wikipedii](https://cs.wikipedia.org/wiki/Markdown)

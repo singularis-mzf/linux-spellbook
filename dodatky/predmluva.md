@@ -84,12 +84,12 @@ pokoušet Debian, kde může být jejich zprovoznění obtížnější.) U konk
 může být uvedena jiná verze či distribuce, pro kterou jsou určena.
 
 Velmi podstatnou vlastností této knihy je její **organizace**. Zaklínadla jsou
-v kapitolách organizována do logických skupin a vždy jsou řazena od nejužitečnějších
-k nejméně užitečným, což znamená, že už přečtením několika prvních zaklínadel
-z několika prvních skupin získáte ty nejdůležitější znalosti. Ačkoliv jsou v knize
-i kapitoly zaměřené na konkrétní nástroje (např. GNU make), důraz kladu
-spíš na kapitoly tematické, které kombinují vždy ty nejvhodnější nástroje
-k dosažení daných cílů.
+v kapitolách organizována do logických skupin a vždy jsou řazena od nejčastějších
+a nejdůležitějších k méně obvyklým, což znamená, že už přečtením několika
+prvních zaklínadel z několika prvních skupin získáte ty nejužitečnější znalosti.
+Ačkoliv jsou v knize i kapitoly zaměřené na konkrétní nástroje (např. GNU make),
+důraz kladu spíš na kapitoly tematické, které kombinují vždy ty nejvhodnější
+nástroje k dosažení daných cílů.
 
 Když jsem s Linuxem kdysi dávno začínal/a, nesmírně mi pomáhaly některé vynikající příručky;
 ve vědeckých knihovnách na ně sice lze stále narazit, ale vzhledem k prudkému vývoji Linuxu,

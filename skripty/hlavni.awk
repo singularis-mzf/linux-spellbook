@@ -263,14 +263,14 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C) {
                     VYSTUP = VYSTUP HypertextovyOdkaz(ZpracujZnaky(substr(VSTUP, i + 2, j - i - 2)), ZpracujZnaky(substr(VSTUP, 2, i - 2)));
                     VSTUP = substr(VSTUP, j + 1);
                     continue;
-                } else if (JE_UVNITR_ZAKLINADLA && VelikostZasobniku("format") == 0) {
+                } else if (TYP_RADKU == "RADEK_ZAKLINADLA" && VelikostZasobniku("format") == 0) {
                     VYSTUP = VYSTUP FormatVolitelny(1);
                     VSTUP = substr(VSTUP, 2);
                     continue;
                 }
                 break;
             case "]":
-                if (JE_UVNITR_ZAKLINADLA && VelikostZasobniku("format") == 0) {
+                if (TYP_RADKU == "RADEK_ZAKLINADLA" && VelikostZasobniku("format") == 0) {
                     VYSTUP = VYSTUP FormatVolitelny(0);
                     VSTUP = substr(VSTUP, 2);
                     continue;

@@ -244,19 +244,34 @@ TODO: Test.
 * **-F** {*řetězec*} \-\- nastaví oddělovač vstupních polí (k rozdělení řádků na $1, $2 atd.)
 
 
+## Instalace na Ubuntu
+*# *<br>
+**sudo apt-get install gawk**
 
-## Jak získat nápovědu
+## Ukázka
+<!--
+- Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
+- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti − ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
+- Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
+-->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 ## Tipy a zkušenosti
+<!--
+- Do odrážek uveďte konkrétní zkušenosti, které jste při práci s nástrojem získali; zejména případy, kdy vás chování programu překvapilo nebo očekáváte, že by mohlo překvapit začátečníky.
+- Popište typické chyby nových uživatelů a jak se jim vyhnout.
+- Buďte co nejstručnější; neodbíhejte k popisování čehokoliv vedlejšího, co je dost možné, že už čtenář zná.
+-->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 * Pole jsou asociativní a indexy v polích jsou vždy řetězce; při indexování číslem se číslo nejprve převede na řetězec.
 * Neexistující prvky...
 
+## Jak získat nápovědu
+<!--
+- Uveďte, které informační zdroje jsou pro začátečníka nejlepší k získání rychlé a obsáhlé nápovědy. Typicky jsou to manuálové stránky, vestavěná nápověda programu nebo webové zdroje (ale neuvádějte konkrétní odkazy, ty patří do sekce „Odkazy“).
+-->
+![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-## Instalace na Ubuntu
-*# *<br>
-**sudo apt-get install gawk**
 
 ## Odkazy
 ![ve výstavbě](../obrazky/ve-vystavbe.png)

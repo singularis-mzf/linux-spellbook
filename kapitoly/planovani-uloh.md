@@ -52,9 +52,9 @@ spouštěné pod účtem superuživatele, ty však nejsou touto verzí kapitoly 
 *// Tento skript je vyžadován pro spouštění grafických aplikací z naplánovaných úloh. Pro správný běh takto spuštěných aplikací může být nutno doplnit do seznamu u příkazu „egrep“ mnoho dalších proměnných.*<br>
 **#!/bin/bash -e**<br>
 **function f () \{**<br>
-**local xpid="$(pgrep -u "$LOGNAME" '^[A-Za-z0-9]\*-session$' \| head -n 1)"**<br>
+**local xpid="$(pgrep -u "$(whoami)" '^[A-Za-z0-9]\*-session$' \| head -n 1)"**<br>
 **test -n "$xpid" || exit 1**<br>
-**eval "$(egrep -z '^(DBUS\_SESSION\_BUS\_ADDRESS\|DISPLAY)=' /proc/$xpid/environ \| tr \\\\0 \\\\n \| sed -e s/=/\\\\n/ -e s/\\'/\\'\\\\\\\\\\'\\'/g \| xargs -rd \\\\n printf "export %s='%s'\\\\n")"**<br>
+**eval "$(egrep -z '^(DBUS\_SESSION\_BUS\_ADDRESS\|DISPLAY\|XDG\_[A-Z\_]+)=' /proc/$xpid/environ \| tr \\\\0 \\\\n \| sed -e s/=/\\\\n/ -e s/\\'/\\'\\\\\\\\\\'\\'/g \| xargs -rd \\\\n printf "export %s='%s'\\\\n")"**<br>
 **\}**<br>
 **f**<br>
 **exec "$@"**
@@ -139,7 +139,7 @@ spouštěné pod účtem superuživatele, ty však nejsou touto verzí kapitoly 
 ### Jednorázové úlohy (obecně)
 
 *# přidat úlohu*<br>
-**printf "%s\\n" '**{*příkaz*}**'**... **\| at** {*plán*}
+**printf "%s\\\\n" '**{*příkaz*}**'**... **\| at** {*plán*}
 
 *# vypsat úlohy (číslo úlohy je v prvním sloupci)*<br>
 **atq**
@@ -196,18 +196,12 @@ spouštěné pod účtem superuživatele, ty však nejsou touto verzí kapitoly 
 
 Poznámka: Příkaz „at“ očekává na standardním vstupu skript k provedení.
 
-## Jak získat nápovědu
+## Instalace na Ubuntu
 *# *<br>
-**man 5 crontab**<br>
-**man 1 crontab**<br>
-**man at**
+**sudo apt-get install at**
 
-## Tipy a zkušenosti
-* Pro jakoukoliv netriviální pravidelnou úlohu doporučuji vytvořit samostatný skript a funkci „pridat\_ulohu“ předat volání tohoto skriptu místo vlastních příkazů. Má to celou řadu výhod, např. možnost obsah úlohy editovat, možnost mít víc řádků a použít bash místo /bin/sh. Další výhodou je, že definice se v případě smazání úlohy neztratí a je ji možno použít opakovaně.
-* Naplánované úlohy jsou spouštěny mimo terminál a mimo grafické prostředí, což komplikuje jejich ladění.
-* Ačkoliv mi sekundy u příkazu „at“ nefungují, skript se spouští velmi přesně v nultou sekundu požadované minuty, což vybízí k použití příkazu „sleep“ na začátku spouštěného skriptu k dosažení spuštění v určitou sekundu minuty. Cron tak přesný není.
-* Cron spustí další instanci úlohy i v případě, že předchozí instance ještě běží.
-* Pokud se pravidelná úloha nespustila, zkuste prozkoumat logy, které zobrazíte příkazem:<br>„fgrep CRON /var/log/syslog“. Mohou obsahovat odpovídající chybové hlášení.
+Démon „cron“ je základní systémovou součástí Ubuntu a mnoha linuxových
+distribucí, proto zpravidla není třeba ho instalovat.
 
 ## Ukázka
 *# *<br>
@@ -223,12 +217,18 @@ Poznámka: Příkaz „at“ očekává na standardním vstupu skript k provede
 
 Poznámka: ukázka vyžaduje nainstalovaný balíček „mplayer“ (a pochopitelně vytvořený pomocný skript „~/bin/spustit-v-x“).
 
-## Instalace na Ubuntu
-*# *<br>
-**sudo apt-get install at**
+## Tipy a zkušenosti
+* Pro jakoukoliv netriviální pravidelnou úlohu doporučuji vytvořit samostatný skript a funkci „pridat\_ulohu“ předat volání tohoto skriptu místo vlastních příkazů. Má to celou řadu výhod, např. možnost obsah úlohy editovat, možnost mít víc řádků a použít bash místo /bin/sh. Další výhodou je, že definice se v případě smazání úlohy neztratí a je ji možno použít opakovaně.
+* Naplánované úlohy jsou spouštěny mimo terminál a mimo grafické prostředí, což komplikuje jejich ladění.
+* Ačkoliv mi sekundy u příkazu „at“ nefungují, skript se spouští velmi přesně v nultou sekundu požadované minuty, což vybízí k použití příkazu „sleep“ na začátku spouštěného skriptu k dosažení spuštění v určitou sekundu minuty. Cron tak přesný není.
+* Cron spustí další instanci úlohy i v případě, že předchozí instance ještě běží.
+* Pokud se pravidelná úloha nespustila, zkuste prozkoumat logy, které zobrazíte příkazem:<br>„fgrep CRON /var/log/syslog“. Mohou obsahovat odpovídající chybové hlášení.
 
-Démon „cron“ je základní systémovou součástí Ubuntu a mnoha linuxových
-distribucí, proto zpravidla není třeba ho instalovat.
+## Jak získat nápovědu
+*# *<br>
+**man 5 crontab**<br>
+**man 1 crontab**<br>
+**man at**
 
 ## Odkazy
 

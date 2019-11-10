@@ -16,6 +16,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 [ ] Lépe zpracovat git rev-list.
 [ ] Nějak zpracovat řešení konfliktů při slučování větví.
+[ ] Zahrnout příkaz „git worktree“.
 -->
 
 # Git
@@ -302,18 +303,13 @@ Každá revize je jednoznačně identifikována pomocí své MD5 hashe. Kromě t
 * **\-u** \:\: Přenese do indexu jen změny ve verzovaných souborech a jejich smazání, nepřidává nové soubory k verzování.
 * **\-v** \:\: Vypisuje provedené změny.
 
-## Jak získat nápovědu
+## Instalace na Ubuntu
 *# *<br>
-**git \-\-help**<br>
-**git** {*příkaz-gitu*} **\-\-help**
+**sudo apt-get install git**<br>
+**git config \-\-global user.name "**{*vaše celé jméno*}**"**<br>
+**git config \-\-global user.email "**{*váš e-mail*}**"**
 
-Další dobrou možností je oficiální online referenční příručka (viz sekci „Odkazy“).
-Přehled podporovaných konfiguračních voleb pro příkaz „git config“ najdete
-(v angličtině) v online referenční příručce u příkazu „git config“.
-
-## Tipy a zkušenosti
-* Normální repozitář je jednodušší než bare repozitář. Má vlastní pracovní adresář, se kterým pracuje. Normální repozitář můžete použít jako vzdálený repozitář, ale pouze ke čtení − nelze do něj zapisovat příkazem „git push“. Naopak bare repozitář slouží výhradně jako vzdálený repozitář.
-* Revize vzniklé sloučením větví (merge) mají za předky všechny revize, ze kterých byly sloučeny.
+Celé jméno a e-mail se používají k označení autorství revizí. Musíte je zadat, jinak git nebude fungovat, ale nemusí být pochopitelně pravdivé. Pro konkrétní repozitář můžete nastavit jiné hodnoty použitím stejných konfiguračních příkazů bez parametru **\-\-global**.
 
 ## Ukázka
 *# Příprava ukázkového adresáře a souborů*<br>
@@ -337,13 +333,18 @@ Přehled podporovaných konfiguračních voleb pro příkaz „git config“ naj
 **git commit -a -m "Alternativní verze"**<br>
 **git diff master nova-vetev**
 
-## Instalace na Ubuntu
-*# *<br>
-**sudo apt-get install git**<br>
-**git config \-\-global user.name "**{*vaše celé jméno*}**"**<br>
-**git config \-\-global user.email "**{*váš e-mail*}**"**
+## Tipy a zkušenosti
+* Normální repozitář je jednodušší než bare repozitář. Má vlastní pracovní adresář, se kterým pracuje. Normální repozitář můžete použít jako vzdálený repozitář, ale pouze ke čtení − nelze do něj zapisovat příkazem „git push“. Naopak bare repozitář slouží výhradně jako vzdálený repozitář.
+* Revize vzniklé sloučením větví (merge) mají za předky všechny revize, ze kterých byly sloučeny.
 
-Celé jméno a e-mail se používají k označení autorství revizí. Musíte je zadat, jinak git nebude fungovat, ale nemusí být pochopitelně pravdivé. Pro konkrétní repozitář můžete nastavit jiné hodnoty použitím stejných konfiguračních příkazů bez parametru **\-\-global**.
+## Jak získat nápovědu
+*# *<br>
+**git \-\-help**<br>
+**git** {*příkaz-gitu*} **\-\-help**
+
+Další dobrou možností je oficiální online referenční příručka (viz sekci „Odkazy“).
+Přehled podporovaných konfiguračních voleb pro příkaz „git config“ najdete
+(v angličtině) v online referenční příručce u příkazu „git config“.
 
 ## Odkazy
 

@@ -174,6 +174,36 @@ TODO: Zamyslet se nad formátováním.
 **%R = %H:%M**<br>
 **%T = %H:%M:%S**
 
+### Metapříkazy
+
+*# spustit příkaz jako superuživatel/jiný uživatel*<br>
+**sudo** {*příkaz*} [{*parametry*}]...<br>
+**sudo -u** {*uživatel*} {*příkaz*} [{*parametry*}]...
+
+*# spustit příkaz místo aktuální instance příkazového interpretu*<br>
+**exec** {*příkaz*} {*parametry*}
+
+*# spustit příkaz a po jeho skončení vypsat, kolik času spotřeboval (kvůli ladění)*<br>
+**time** {*příkaz*} {*parametry*}
+
+*# spustit příkaz a ignorovat přitom aliasy, funkce a vestavěné příkazy*<br>
+**command** {*příkaz*} {*parametry*}
+
+*# spustit příkaz v odlišném prostředí a s jiným aktuálním adresářem*<br>
+**env** [**-C** {*nový/aktuální/adresář*}] [**-i**] [**-u** {*PROMĚNNÁ*}]... [{*PROMĚNNÁ*}**='**{*nová hodnota*}**'**]... {*příkaz*}
+
+*# spustit příkaz jako superuživatel/jiný uživatel (varianta pro GUI)*<br>
+**pkexec** {*příkaz*} {*parametry*}<br>
+**pkexec \-\-user** {*uživatel*} {*příkaz*} {*parametry*}
+
+*# spustit příkaz na pozadí, který neskončí s volajícím shellem*<br>
+*// Pokud výstup nepřesměrujete mimo terminál či konzoli, „nohup“ jej automaticky přesměruje do souboru „nohup.out“, popř. „~/nohup.out“.*
+**nohup** {*příkaz*} {*parametry*}... [**&gt;/dev/null**] **&amp;**
+
+*# spustit příkaz s jiným efektivním ID skupiny*<br>
+**sg** {*skupina*} **'**{*příkaz*} [{*parametry*}]...**'**
+
+
 <!--
 ...
 -->

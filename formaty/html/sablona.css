@@ -66,7 +66,7 @@ header {
 
 nav {
     display:block;
-    margin:1em 3rem;
+    margin:2em 3rem 0;
     text-align:center;
 }
 nav.spodni {margin-top:3em;margin-bottom:2em;}
@@ -336,12 +336,19 @@ footer img {float:left;margin:0 1rem 1rem 0;}
 }
 
 nav .slogan {
-    position:relative;top:-0.5em;
+    position:relative;top:-1.5em;
     font-size:90%;
     font-style:italic;
     text-align:right;
     line-height:1.5;
 }
+
+nav .prev, nav .next {
+    display:inline-block;
+    min-width:13em;
+}
+nav .prev {text-align:right;}
+nav .next {text-align:left;}
 
 .informaceoverzi {margin:2em 0;text-align:center;}
 

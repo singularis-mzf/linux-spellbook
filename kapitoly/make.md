@@ -246,21 +246,9 @@ jemuž se bude věnovat většina této kapitoly.
 * **\-s** \:\: nevypisuje příkazy, pouze je spouští
 * Není-li cíl zadán, použije se první cíl v Makefile (tradičně akce „all“).
 
-## Jak získat nápovědu
-* **make \-\-help**
-* Online GNU manuál (viz sekce Odkazy) (anglicky)
-* **man make** (anglicky)
-
-## Tipy a zkušenosti
-* Dlouhé řádky Makefilu můžete rozdělit, pokud před každý konec řádku, který má make ignorovat, vložíte zpětné lomítko. Rozdělíte-li řádek s příkazem, make toto rozdělení předá volanému interpretu příkazové řádky, což však u běžně používaných „sh“ a „bash“ nezpůsobí problémy.
-* Nebojte se definovat více cílů v jednom pravidle. Funguje to stejně jako definovat stejné pravidlo pro každý uvedený cíl zvlášť a ušetří vám to spoustu práce s údržbou. Ze stejného důvodu se vyplatí naučit se syntaxi pravidla s %-vzorem.
-* Pro jeden cíl můžete definovat více pravidel, pokud nejvýše jedno z nich bude deklarovat příkazy; v takovém případě se automaticky sloučí zdroje ze všech odpovídajících pravidel.
-* Program make v příkazech pravidel interpretuje znak $. Má-li se předat shellu, je třeba jej zdvojit, např. **\$\$PATH** nebo **\$\$\$\$**. To platí i při uzavření do apostrofů.
-* Některé textové editory mohou v závislosti na svém nastavení nahrazovat tabulátory mezerami či naopak. Pokud takovým editorem upravíte Makefile, přestane fungovat, protože na začátku každého příkazu v pravidle musí být tabulátor, ne posloupnost mezer.
-* Obvyklé názvy akcí jsou např.: all, clean, install.
-* Každý příkaz pravidla se při kompilaci spouští ve vlastní instanci interpretu příkazové řádky!
-* Použitý interpret v příkazech a volání funkce $(shell) určuje proměnná **SHELL**. Kvůli přenositelnosti se doporučuje ji na začátku Makefile výslovně nastavit: **SHELL := /bin/sh** nebo **SHELL := /bin/bash**.
-* Akce může mít jako zdroje soubory a další akce; ty budou přeloženy před vykonáním vlastní akce.
+## Instalace na Ubuntu
+*# *<br>
+**sudo apt-get install make**
 
 ## Ukázka
 *# /home/elli/test/Makefile:*<br>
@@ -294,9 +282,21 @@ jemuž se bude věnovat většina této kapitoly.
 **clean:**<br>
 **<tab>$(RM) hello.o**
 
-## Instalace na Ubuntu
-*# *<br>
-**sudo apt-get install make**
+## Tipy a zkušenosti
+* Dlouhé řádky Makefilu můžete rozdělit, pokud před každý konec řádku, který má make ignorovat, vložíte zpětné lomítko. Rozdělíte-li řádek s příkazem, make toto rozdělení předá volanému interpretu příkazové řádky, což však u běžně používaných „sh“ a „bash“ nezpůsobí problémy.
+* Nebojte se definovat více cílů v jednom pravidle. Funguje to stejně jako definovat stejné pravidlo pro každý uvedený cíl zvlášť a ušetří vám to spoustu práce s údržbou. Ze stejného důvodu se vyplatí naučit se syntaxi pravidla s %-vzorem.
+* Pro jeden cíl můžete definovat více pravidel, pokud nejvýše jedno z nich bude deklarovat příkazy; v takovém případě se automaticky sloučí zdroje ze všech odpovídajících pravidel.
+* Program make v příkazech pravidel interpretuje znak $. Má-li se předat shellu, je třeba jej zdvojit, např. **\$\$PATH** nebo **\$\$\$\$**. To platí i při uzavření do apostrofů.
+* Některé textové editory mohou v závislosti na svém nastavení nahrazovat tabulátory mezerami či naopak. Pokud takovým editorem upravíte Makefile, přestane fungovat, protože na začátku každého příkazu v pravidle musí být tabulátor, ne posloupnost mezer.
+* Obvyklé názvy akcí jsou např.: all, clean, install.
+* Každý příkaz pravidla se při kompilaci spouští ve vlastní instanci interpretu příkazové řádky!
+* Použitý interpret v příkazech a volání funkce $(shell) určuje proměnná **SHELL**. Kvůli přenositelnosti se doporučuje ji na začátku Makefile výslovně nastavit: **SHELL := /bin/sh** nebo **SHELL := /bin/bash**.
+* Akce může mít jako zdroje soubory a další akce; ty budou přeloženy před vykonáním vlastní akce.
+
+## Jak získat nápovědu
+* **make \-\-help**
+* Online GNU manuál (viz sekce Odkazy) (anglicky)
+* **man make** (anglicky)
 
 ## Odkazy
 ### Česky
