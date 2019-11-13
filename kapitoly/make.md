@@ -28,7 +28,7 @@ jemuž se bude věnovat většina této kapitoly.
 * **Cíl** je název souboru k vytvoření či akce k vykonání.
 * **Zdroj** (často nazýváný „závislost“) je název souboru, na kterém určitý cíl závisí. Příkazy stanovené pravidlem se vykonají jen tehdy, pokud cíl neexistuje nebo je alespoň jeden jeho z jeho zdrojů novější. (Vychází se z času poslední změny souborů.) Zdrojem může být také název akce.
 * **Slovo** je posloupnost nebílých znaků v řetězci. Jednotlivá slova v řetězci jsou od sebe oddělena bílými znaky, nejčastěji jednotlivou mezerou.
-* **%-vzor** je řetězec sloužící k filtrování slov a také k přidání, záměně nebo odebrání jejich předpony či přípony. Jde tedy o velice praktickou věc. Může obsahovat nejvýše jeden znak **%**, který slouží jako náhrada za libovolné množství znaků (včetně lomítek oddělujících adresáře). (Např. %-vzoru **a%** odpovídají právě ta slova, která začínají malým písmenem **a**.) Slouží-li %-vzor k záměně, slova, která mu neodpovídají, projdou záměnou nezměněna. %-vzor nemusí obsahovat znak %; v takovém případě mu odpovídají pouze slova, která se s ním přesně shodují.
+* **%-vzor** je řetězec sloužící k filtrování, vyhledávání a nahrazování slov. Jde o velice praktickou věc. Může obsahovat nejvýše jeden znak **%**, který slouží jako náhrada za libovolné množství znaků (včetně lomítek oddělujících adresáře). (Např. %-vzoru **a%** odpovídají právě ta slova, která začínají malým písmenem **a**.) Slouží-li %-vzor k záměně, slova, která mu neodpovídají, projdou záměnou nezměněna. %-vzor nemusí obsahovat znak %; v takovém případě mu odpovídají pouze slova, která se s ním přesně shodují.
 
 ## Zaklínadla (v souboru Makefile)
 ### Nastavení proměnných

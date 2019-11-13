@@ -16,7 +16,6 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 [ ] Lépe zpracovat git rev-list.
 [ ] Nějak zpracovat řešení konfliktů při slučování větví.
-[ ] Zahrnout příkaz „git worktree“.
 -->
 
 # Git
@@ -33,11 +32,11 @@ Tato verze kapitoly nepokrývá dostatečně řešení konfliktů při slučová
 ## Definice
 * **Pracovní adresář** je množina všech verzovaných souborů v gitem spravovaném uživatelském adresáři. Nikdy nezahrnuje obsah speciálního adresáře „.git“.
 * **Revize** je konkrétní neměnný (historický) stav pracovního adresáře zapsaný do repozitáře a doplněný o další údaje. Revizi lze v příkazovém řádku určit řadou způsobů, viz níže.
-* **Repozitář** je skupina souborů a adresářů, do kterých git vysoce optimalizovaným způsobem ukládá všechny revize. Pracovní adresář má vždy přiřazený právě jeden „lokální“ repozitář a k němu pak mohou být přiřazeny vzdálené repozitáře (nejčastěji pouze jeden, zvaný **origin**).
+* **Repozitář** je skupina souborů a adresářů, do kterých git vysoce optimalizovaným způsobem ukládá všechny revize. Repozitář může mít přiřazen jeden nebo více vzdálených repozitářů (nejčastěji pouze jeden, zvaný **origin**); není-li repozitář takzvaně „bare“, má také svůj primární pracovní adresář a může mít i jeden nebo více „sekundárních pracovních adresářů“.
 * **Tag** je symbolický název pevně přiřazený uživatelem určité konkrétní revizi; není vhodné jej dodatečně měnit. (Je v gitu analogií konstanty v programování.)
 * **Větev** je proměnný symbolický název odkazující na určitou revizi v repozitáři (s výjimkou takzvané prázdné větve, která na žádnou revizi neodkazuje). Součástí operace „**commit**“ je přiřazení nové revize větvi. (Větev je v gitu analogií proměnné v programování.)
-* **HEAD** je „aktuální revize“. Nejčastěji je to prostě revize, která byla načtena z repozitáře jako poslední.
-* **Index** (také zvaný „staging area“) je myšlená kopie revize HEAD, do které lze průběžně zapisovat změny a pak z ní operací „commit“ vytvořit novou revizi. Do indexu se rovněž provádí slučování větví (merge). Doporučuji představovat si index jako skrytý adresář určený k tvorbě nových revizí.
+* **HEAD** je „aktuální revize“. Nejčastěji je to prostě revize, která byla do pracovního adresáře načtena jako poslední.
+* **Index** (také zvaný „staging area“) je myšlená kopie revize HEAD příslušná pracovnímu adresáři, do které lze průběžně zapisovat změny a pak z ní operací „commit“ vytvořit novou revizi. Do indexu se rovněž provádí slučování větví (merge). Doporučuji představovat si index jako skrytý adresář určený k tvorbě nových revizí.
 
 ### Označení revize
 
@@ -60,9 +59,8 @@ Každá revize je jednoznačně identifikována pomocí své MD5 hashe. Kromě t
 **git clone** {*vzdálená-adresa*} [{*místní-adresář*}]
 
 *# získat do samostatného nového adresáře konkrétní revizi*<br>
-**git clone -s -n** {*lokální-repozitář*} {*nový-adresář*}<br>
-**git -C** {*nový-adresář*} **checkout** {*revize*}<br>
-**rm -Rf** {*nový-adresář*}**/.git**
+*// Poznámka: nový adresář musí ležet mimo stávající pracovní adresář. Můžete jej zadat jak relativní, tak i absolutní cestou.*<br>
+**git worktree add \-\-detach** {*nový/adresář*} {*revize*} **&amp;&amp;rm** {*nový/adresář*}**/.git &amp;&amp; git worktree prune**
 
 *# konverze bare repozitáře na normální*<br>
 **git -C** {*repozitář*} **config core.bare false**<br>
@@ -215,6 +213,28 @@ Každá revize je jednoznačně identifikována pomocí své MD5 hashe. Kromě t
 
 *# vypsat úplnou hash dané revize*<br>
 **git rev-list -n 1** {*revize*}
+
+### Sekundární pracovní adresáře
+
+*# vytvořit*<br>
+**Poznámka: v žádných dvou pracovních adresářích jednoho repozitáře nemůže být současně aktivní tatáž větev; toto opatření platí, aby se zamezilo konfliktům při commitování.**<br>
+**git worktree add** [**\-\-detach**] [**-b** {*nová-větev*}] {*/nový/adresář*} {*revize*}
+
+*# vypsat seznam*<br>
+**git worktree list** [**\-\-porcelain**]
+
+*# smazat*<br>
+**git worktree remove** {*/sekundární/pracovní/adresář*}
+
+*# smazat všechny nedostupné sekundární pracovní adresáře*<br>
+**git worktree prune**
+
+*# přesunout*<br>
+**git worktree move** {*/sekundární/pracovní/adresář*} {*/nové/umístění*}
+
+*# zamknout/odemknout (zamknutý adresář se nesmaže příkazem „prune“)*<br>
+**git worktree lock** [**\-\-reason** {*důvod*}] {*/sekundární/pracovní/adresář*}<br>
+**git worktree unlock** {*/sekundární/pracovní/adresář*}
 
 ### Slučování větví a řešení konfliktů
 

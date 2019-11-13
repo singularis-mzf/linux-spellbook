@@ -203,13 +203,16 @@ h2+.zaklinadlo>hr, h3+.zaklinadlo>hr {display:none;visibility:hidden;}
     padding:2pt 5pt;
 }
 
-/* zobrazení znaku ↲ na konci každého řádku zaklínadla kromě posledního */
-.zaklinadlo .radekzaklinadla::after {content:"↲";margin-left:0.5em;color:rgb(120,120,120);}
-.zaklinadlo .radekzaklinadla:last-child::after {display:none;}
-.zaklinadlo .radekzaklinadla:empty::after {margin-left:0;}
+.zaklinadlo td:nth-child(1) {white-space:nowrap;}
+.zaklinadlo td:nth-child(2) {font:100%/1.2 "DejaVu Serif";padding-left:1em;}
 
-.zaklinadlo .akce {font-family:serif;font-style:italic;}
-.zaklinadlo .akce::before {content:"\2192 ";font-weight:bold;}
+/* zobrazení znaku ↲ na konci každého řádku zaklínadla kromě posledního */
+.radekzaklinadla::after, .radekzaklinadlaafter::after {content:"↲";margin-left:0.5em;color:rgb(120,120,120);}
+.radekzaklinadla:last-child::after {display:none;}
+.radekzaklinadla:empty::after {margin-left:0;}
+
+.zaklinadlo .akce, .radekzaklinadla.akce {font-family:serif;font-style:italic;}
+.zaklinadlo .akce::before, .zaklinadloakcebefore::before {content:"\2192 ";font-weight:bold;}
 
 .dopln {
     font: 100%/1.2 "DejaVu Sans Mono", monospace;
