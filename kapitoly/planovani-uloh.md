@@ -241,6 +241,7 @@ Poznámka: ukázka vyžaduje nainstalovaný balíček „mplayer“ (a pochopit
 * [Manuálová stránka „at“](http://manpages.ubuntu.com/manpages/bionic/en/man1/at.1posix.html) (anglicky)
 * [Bionic: balíček „at“](https://packages.ubuntu.com/bionic/at) (anglicky)
 * [Bionic: balíček „bcron-run“](https://packages.ubuntu.com/bionic/bcron-run) (anglicky)
+* [TL;DR stránka „crontab“](https://github.com/tldr-pages/tldr/blob/master/pages/common/crontab.md) (anglicky)
 
 <!--
 

@@ -94,85 +94,6 @@ Kategorie: http://www.galago-project.org/specs/notification/0.9/x211.html
 [**TZ="**{*časová-zóna*}**"**] **date -d @**{*časová-známka-Unixu*} [**+**{*formát*}]
 
 ### date
-<!--
-TODO: Zamyslet se nad formátováním.
--->
-*# den v týdnu (alternativy)*<br>
-**%A = Úterý (plný název, lokalizovaný)**<br>
-**%a = Út (zkratka, lokalizovaná)**<br>
-**%u = 2 (číslo 1..7, kde 1 je pondělí)**<br>
-**%w = 2 (číslo 0..6, kde 0 je neděle)**
-
-*# rok (alternativy)*<br>
-**%Y = 2010 (4 číslice)**<br>
-**%C = 20 (století)**<br>
-**%y = 10 (dvojčíslí roku)**
-
-*# čtvrtletí*<br>
-**%q = 3 (číslo 1..4)**
-
-*# měsíc (alternativy)*<br>
-**%m = 03 (číslo)**<br>
-**%B = listopad (plný název, lokalizovaný)**<br>
-**%b = lis (zkratka, lokalizovaná)**
-
-*# den v měsíci (alternativy)*<br>
-**%d = 03 (číslo)**<br>
-**%e = &blank;3 (číslo zarovnané mezerou)**
-
-*# hodina + období dne (alternativy)*<br>
-**%H = 15 (číslo 00..23)**<br>
-**%I = 03 (číslo 01..12)**<br>
-**%p = AM/PM (lokalizovaně)**<br>
-**%P = am/pm (lokalizovaně)**
-
-*# minuta*<br>
-**%M = 59 (číslo 00..59)**
-
-*# sekunda*<br>
-**%S = 59 (číslo 00..61)**
-
-*# nanosekundy*<br>
-**%N = 123456789 (počítadlo nanosekund)**
-
-*# časová zóna*<br>
-**%Z = CET (zkratka časové zóny)**<br>
-**%z = +0100**<br>
-**%:z = +01:00**<br>
-**%::z = +01:00:00**<br>
-**%:::z = +01 (nejkratší přesné vyjádření)**<br>
-
-*# číslo týdne podle ISO normy (týden začíná pondělím)*<br>
-**%G = 2010 (celé číslo roku)**<br>
-**%g = 10 (dvojčíslí roku)**<br>
-**%V = 03 (číslo týdne 01..53)**
-
-*# číslo týdne v roce*<br>
-**%W = 07 (00..53, týden začíná pondělím)**<br>
-**%U = 07 (00..53, týden začíná nedělí)**
-
-*# escapované znaky (alternativy)*<br>
-**%% = %**<br>
-**%n = konec řádku**<br>
-**%t = tabulátor**
-
-*# počet sekund od 00:00:00 1. ledna 1970 UTC*<br>
-**%s**
-
-*# číslo dne v roce*<br>
-**%j**
-
-*# lokalizované celky*<br>
-**%x = datum**<br>
-**%X = čas (24hodinový)**<br>
-**%r = čas (12hodinový)**<br>
-**%c = datum a čas (24hodinový)**
-
-*# nelokalizované celky*<br>
-**%D = %m/%d/%y**<br>
-**%F = %Y-%m-%d**<br>
-**%R = %H:%M**<br>
-**%T = %H:%M:%S**
 
 ### Metapříkazy
 
@@ -202,6 +123,49 @@ TODO: Zamyslet se nad formátováním.
 
 *# spustit příkaz s jiným efektivním ID skupiny*<br>
 **sg** {*skupina*} **'**{*příkaz*} [{*parametry*}]...**'**
+
+
+### QR a EAN kódy
+
+*# vygenerovat QR kód (zadat text/ze standardního vstupu)*<br>
+*// Typ obrázku může být PNG, SVG, ASCII a některé další. Výstupu na standardní výstup lze dosáhnout zadáním „-“ místo výstupního souboru.*<br>
+**qrencode** [**-o** {*výstupní-soubor*}] [**-t** {*typ-obrázku*}] [**-s** {*rozměr-čtverečku*}] [**\-\-foreground=**{*barva*}] [**\-\-background=**{*barva*}] **"**{*text*}**"**<br>
+**qrencode** [**-o** {*výstupní-soubor*}] [**-t** {*typ-obrázku*}] [**-s** {*rozměr-čtverečku*}] [**\-\-foreground=**{*barva*}] [**\-\-background=**{*barva*}]
+<!--
+Vyžaduje balík: qrencode
+-->
+
+*# přečíst QR kód (pro skript/pro člověka)*<br>
+**zbarimg -q \-\-raw** {*vstupní-obrázek*}<br>
+**zbarimg** {*vstupní-obrázek*}
+<!--
+Vyžaduje balík „zbar-tools“.
+-->
+
+*# vygenerovat EAN kód*<br>
+*// Zadané číslo musí být dlouhé 12 nebo 7 číslic, případně 13 nebo 8 číslic s platným kontrolním součtem. Šířka a výška mohou být libovolné, ale pro EAN kódy je vhodné, když jsou v poměru 5:4, např. „1024x819“. Výstupní obrázek bude ve skutečnosti ještě o něco větší, protože kromě samotného kódu zahrnuje i text a okraje.*<br>
+**barcode -b** {*číslobezpomlček*} **-e EAN -E** [**-g** {*šířka-kódu*}**x**{*výška-kódu*}] **\| ps2pdf -dEPSCrop -** {*název-souboru.pdf*}
+<!--
+Vyžaduje balík „barcode“ a povolit čtení formátu EPS.
+Také možno „**epspdf** {*název-souboru*}**.eps**“ a umí konverzi na grayscale, ale vyžaduje balík „texlive-pictures“.
+-->
+
+*# vygenerovat EAN kód pro ISBN*<br>
+**barcode -b** {*ISBN-s-pomlčkami*} **-e ISBN -E** [**-g** {*šířka-kódu*}**x**{*výška-kódu*}] **\| ps2pdf -dEPSCrop -** {*název-souboru.pdf*}
+
+
+*# přečíst EAN kód (pro skript/pro člověka)*<br>
+*// Výstup obou příkazů je bez pomlček.*<br>
+**zbarimg -q \-\-raw** {*vstupní-obrázek*}<br>
+**zbarimg** {*vstupní-obrázek*}
+<!--
+Vyžaduje balík „zbar-tools“.
+-->
+
+<!--
+Viz csvquote:
+https://github.com/dbro/csvquote
+-->
 
 
 <!--

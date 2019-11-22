@@ -57,6 +57,12 @@ BEGIN {
             NAZEV_NASLEDUJICI = zaznam2[7];
         }
         CISLO_KAPITOLY = zaznam2[8];
+    } else if (IDKAPITOLY == "_autori") {
+        ID_PREDCHOZI = "";
+        NAZEV_PREDCHOZI = "";
+        ID_NASLEDUJICI = "";
+        NAZEV_NASLEDUJICI = "";
+        CISLO_KAPITOLY = 0;
     } else {
 # kapitola, pro kterou neexistuje záznam, takže pravděpodobně nebude zapsána na výstup:
 #       ShoditFatalniVyjimku("Nepodařilo se najít záznam o kapitole či dodatku " IDKAPITOLY ".md pomocí příkazu: {" prikaz "}!");
@@ -141,6 +147,18 @@ STAV_PODMINENENO_PREKLADU == 2 {
     switch ($0) {
         case "{{TĚLO KAPITOLY}}":
             system("cat '" TELOKAPITOLY "'");
+            break;
+        case "{{COPYRIGHTY KAPITOL}}":
+            if (COPYRIGHTY_KAPITOL == "") {
+                ShoditFatalniVyjimku("Kapitola požaduje {{COPYRIGHTY KAPITOL}} a není nastavena proměnná COPYRIGHTY_KAPITOL!");
+            }
+            system("cat '" COPYRIGHTY_KAPITOL "'");
+            break;
+        case "{{COPYRIGHTY OBRÁZKŮ}}":
+            if (COPYRIGHTY_OBRAZKU == "") {
+                ShoditFatalniVyjimku("Kapitola požaduje {{COPYRIGHTY OBRÁZKŮ}} a není nastavena proměnná COPYRIGHTY_OBRAZKU!");
+            }
+            system("cat '" COPYRIGHTY_OBRAZKU "'");
             break;
         case "{{ROZCESTNÍK SEKCÍ}}":
 #            ShoditFatalniVyjimku("egrep -x '<h2 id=\".*</h2>' '" TELOKAPITOLY "' | sed -E 's/<h2 id=\"([^\"]*)\">(<span[^>]*>[^<]*<\\/span>)? ?([^<]*)<\\/h2>/<a href=\"#\\1\">\\3<\\/a>/'");

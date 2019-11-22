@@ -97,6 +97,11 @@
 %
 % NASTAVENÍ BALÍČKŮ
 % ============================================================================
+% {dashbox}:
+\setlength{\fboxrule}{0.25pt}   % tloušťka čáry
+\setlength{\dashdash}{1pt}      % délka čárky
+\setlength{\dashlength}{3pt}    % vzdálenost od začátku čárky k začátku další
+
 % {fancyhdr}:
 \fancypagestyle{normalni}{%
     \fancyhead{}\fancyfoot{}%
@@ -212,7 +217,7 @@
         \ifthenelse{\equal{#2}{0}}{}{%
             % Vygenerovat vodicí čáru nad zaklínadlem:
             \ifthenelse{\equal{#2}{1}}{}{%
-                \makebox[0pt][l]{\rule[2ex]{5cm}{0.5pt}}%
+                \makebox[0pt][l]{{\color{seda}\rule[2ex]{5cm}{0.25pt}}}%
             }%
             % Vygenerovat číslo zaklínadla:
             \makebox[\sirkacislazaklinadla][l]{\##2}%
@@ -220,7 +225,8 @@
             \parbox[t]{\sirkazbytku}{\raggedright{#3}}%
             \par\vspace{1ex}%
         }\raggedleft%
-        \dashbox{\parbox{\sirkakodu}{\raggedright%
+        \color{seda}%
+        \dashbox{\color{black}\parbox{\sirkakodu}{\raggedright%
             \fontfamily{qcr}\fontseries{m}\fontshape{n}\selectfont\budepoprve%
             #5%
         }}%

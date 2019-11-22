@@ -304,4 +304,5 @@ Jediným zdrojem, který se mi osvědčil, je web „Examples of ImageMagick Usa
 * [Examples of ImageMagick Usage](https://www.imagemagick.org/Usage/) (anglicky)
 * [Referenční příručka](https://www.imagemagick.org/Usage/reference.html) (anglicky)
 * [Oficiální stránka ImageMagick](https://imagemagick.org/) (anglicky)
+* [TL;DR stránka „convert“](https://github.com/tldr-pages/tldr/blob/master/pages/common/convert.md) (anglicky)
 * [Balíček Bionic](https://packages.ubuntu.com/bionic/imagemagick) (anglicky)

@@ -38,7 +38,7 @@ rozhraní, aniž byste musel/a studovat stovky stran dokumentace a pronikat do 
 a tajuplných zákonitostí systému, jejichž pochopení je výsadou takzvaných „power users“.
 Na druhou stranu ale nejde o návod; nepovede vás vždy krok za krokem a určitou minimální
 míru důvtipu, schopnost tvůrčím způsobem kombinovat příklady či občasná nahlédnutí
-do manuálových stránek po vás po vás její praktické využití zpravidla vyžadovat bude.
+do manuálových stránek po vás její praktické využití zpravidla vyžadovat bude.
 
 Patříte-li k **začátečníkům**, bude od vás tato kniha vyžadovat přinejmenším znalosti základů
 programování (tzn. pojmy jako „proměnná“, „příkaz“ či „skript“) a zájem dozvědět se
@@ -67,7 +67,7 @@ v repozitáři na GitHubu vítány, pokud budou v souladu s aktuální
 Napadlo vás už někdy, že zadávání příkazů v terminálu se mnoha aspekty podobá
 **sesílání kouzel** ve fantasy světech? Tento příměr je o to děsivější, že zatímco
 fantasy kouzla ovlivňují jen životy smyšlených postav, vaše příkazy budou mít
-reálné důsledky va vašem vlastním počítači! Linux: Kniha kouzel je na tomto přirovnání
+reálné důsledky ve vašem vlastním počítači! Linux: Kniha kouzel je na tomto přirovnání
 založena, a proto se v ní všechny druhy příkladů nazývají „zaklínadla“.
 Představte si to, jako že jste začínající čaroděj ve fantasy světě a dostal/a jste
 do ruky lexikon kouzel pro pokročilé, s poznámkami, které si pro sebe poznačil váš

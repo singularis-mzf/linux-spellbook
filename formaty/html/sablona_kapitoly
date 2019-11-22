@@ -37,17 +37,21 @@
 <span class="right"><span class="ico1"></span><span class="ico2"></span><span class="ico3"></span></span>
 </header>
 <article>
-<div class="zahlavistranky"><img src="obrazky/logo-knihy-velke.png" alt="">
+<div class="zahlavistranky">
+<div class="logo"><img src="obrazky/logo-knihy-velke.png" alt=""></div>
+<div class="zbytek">
 <h1><img src="obrazky/banner.png" alt="Linux: Kniha kouzel"></h1>
 <div class="slogan">Praktická sbírka krátkých řešených příkladů pro začátečníky i&nbsp;pokročilé.<br>
-Známá také jako „konverzační slovník linuxštiny“.</div></div>
-<div class="informaceoverzi">Verze: {{JMÉNO VERZE}}<!-- (viz <a href="https://github.com/singularis-mzf/linux-spellbook">repozitář na GitHubu</a>)--><br>
-Datum sestavení: {{DATUM SESTAVENÍ}}</div>
+Známá také jako „konverzační slovník linuxštiny“.</div>
+</div></div>
+<div class="podzahlavim">
+<div class="informaceoverzi">Verze: {{JMÉNO VERZE}}<br>Datum sestavení: {{DATUM SESTAVENÍ}}</div>
 <p class="ponadpisu" style="margin:0 auto;">„Linux: Kniha kouzel“ je sbírka velmi krátkých řešených příkladů pro operační systém Linux.
 Cílem projektu je sdílení znalostí mezi pokročilými a&nbsp;začínajícími uživateli Linuxu tak, že projekt umožňuje
 pokročilým uživatelům sepisovat, přehledně organizovat a&nbsp;sdílet svoje nejčastěji používaná zaklínadla
 („snippets“) a&nbsp;začátečníkům umožňuje je (pokročilé) přitom sledovat a&nbsp;odnést si z&nbsp;toho
 v&nbsp;rámci svých (začátečníků) schopností co nejvíc.</p>
+</div>
 <h2>Typografické konvence</h2>
 <table class="zaklinadlo" style="font-size:87%;margin:0 2rem;"><tbody>
 <tr><td><div class="radekzaklinadla">sudo apt-get update</div></td><td>Texty obyčejným neproporcionálním písmem zkopírujte přesně tak, jak jsou.</td></tr>
@@ -83,11 +87,11 @@ uvést víckrát, jsou vyznačeny šedou trojtečkou.</td></tr>
 <div class="slogan">Veškerá moc příkazové řádky/příkazového řádku přehledně, pro začátečníky i&nbsp;pokročilé</div>
 <span class="prev">
 {{POKUD NENÍ PRVNÍ}}
-<a href="{{PŘEDCHOZÍ ID}}.htm" rel="prev" title="{{PŘEDCHOZÍ ČÍSLO}}. {{PŘEDCHOZÍ NÁZEV}}">Předchozí&nbsp;kapitola</a>&nbsp;|
+<a href="{{PŘEDCHOZÍ ID}}.htm" rel="prev" title="{{PŘEDCHOZÍ ČÍSLO}}. {{PŘEDCHOZÍ NÁZEV}}" accesskey="p">Předchozí&nbsp;kapitola</a>&nbsp;|
 {{KONEC POKUD}}
-</span><a href="index.htm">Přehled</a><span class="next"><!--
+</span><a href="index.htm" accesskey="i">Přehled</a><span class="next"><!--
 {{POKUD NENÍ POSLEDNÍ}}
--->&nbsp;| <a href="{{NÁSLEDUJÍCÍ ID}}.htm" rel="next" title="{{NÁSLEDUJÍCÍ ČÍSLO}}. {{NÁSLEDUJÍCÍ NÁZEV}}">Následující&nbsp;kapitola</a>
+-->&nbsp;| <a href="{{NÁSLEDUJÍCÍ ID}}.htm" rel="next" title="{{NÁSLEDUJÍCÍ ČÍSLO}}. {{NÁSLEDUJÍCÍ NÁZEV}}" accesskey="n">Následující&nbsp;kapitola</a>
 {{KONEC POKUD}}
 {{POKUD JE POSLEDNÍ}}
 -->
@@ -118,7 +122,7 @@ uvést víckrát, jsou vyznačeny šedou trojtečkou.</td></tr>
 <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a>.
 Upozorňuji, že uvedená licence vyžaduje uvedení seznamu autorů, licence a zdroje a poskytnutí stejné
 či kompatibilní licence k provedeným změnám, jsou-li nějaké. Příslušné údaje jsou dostupné
-na stránce „<a href="index.htm">Přehled</a>“.
+na stránce „<a href="_autori.htm">Přehled autorů</a>“.
 Šíření obsahu bez těchto údajů nebo šíření upravené verze bez poskytnutí adekvátní
 licence k provedeným úpravám je pravděpodobně porušení licenčních podmínek a může být postihováno.
 Poskytování zdrojového kódu při šíření není touto licencí vyžadováno.</p><p>Pro nové verze, další informace, aktuální zdrojový kód
@@ -129,15 +133,6 @@ a možnost se zapojit do projektu „Linux: Kniha kouzel“ navštivte jeho
 </html>
 {{KONEC KAPITOLY}}
 </ol>
-
-<h2>Seznam autorů kapitol</h2>
-<ul>
-{{COPYRIGHTY KAPITOL}}
-</ul>
-<h2>Seznam autorů a licencí obrázků</h2>
-<dl class="copyrights">
-{{COPYRIGHTY OBRÁZKŮ}}
-</dl>
 </article>
 <footer>
 <img src="obrazky/by-sa.png" width="88" height="31" alt="[BY-SA]">
@@ -145,7 +140,7 @@ a možnost se zapojit do projektu „Linux: Kniha kouzel“ navštivte jeho
 <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a>.
 Upozorňuji, že uvedená licence vyžaduje uvedení seznamu autorů, licence a zdroje a poskytnutí stejné
 či kompatibilní licence k provedeným změnám, jsou-li nějaké. Příslušné údaje jsou dostupné
-na stránce „<a href="index.htm">Přehled</a>“.
+na stránce „<a href="_autori.htm">Přehled autorů</a>“.
 Šíření obsahu bez těchto údajů nebo šíření upravené verze bez poskytnutí adekvátní
 licence k provedeným úpravám je pravděpodobně porušení licenčních podmínek a může být postihováno.
 Poskytování zdrojového kódu při šíření není touto licencí vyžadováno.</p><p>Pro nové verze, další informace, aktuální zdrojový kód

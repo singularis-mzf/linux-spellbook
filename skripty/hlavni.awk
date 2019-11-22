@@ -428,11 +428,26 @@ function VypsatZahlaviZaklinadla(   i, maPoznamky) {
 }
 
 BEGIN {
+    if (IDKAPITOLY == "") {
+        ShoditFatalniVyjimku("Vyžadovaná proměnná IDKAPITOLY není vyplněna!");
+    }
+    prikaz = "egrep '^[^\t]*\t" IDKAPITOLY "\t' soubory_prekladu/fragmenty.tsv";
+    prikaz | getline;
+    close(prikaz);
+
+    if ($0 == "") {
+        C_KAPITOLY = 0;
+    } else {
+        split($0, ppc, "\t");
+        C_KAPITOLY = ppc[8] - 1;
+    }
+
+    ID_KAPITOLY_OMEZENE = IDKAPITOLY;
+    gsub(/[^A-Za-z0-9]/, "", ID_KAPITOLY_OMEZENE);
     NULL_STRING = "\x01\x02";
     KAPITOLA = "";
     SEKCE = "";
     PODSEKCE = "";
-    C_KAPITOLY = 0;
     C_SEKCE = 0;
     C_PODSEKCE = 0;
     C_ZAKLINADLA = 0;

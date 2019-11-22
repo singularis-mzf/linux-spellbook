@@ -312,32 +312,41 @@ footer img {float:left;margin:0 1rem 1rem 0;}
     letter-spacing:-0.3em;
 }
 
+/* .zahlavistranky: */
 .zahlavistranky {
-    overflow:hidden;
-    position:relative;
+    display:flex;
+    flex-flow:row nowrap;
+    text-align:center;
 }
-.zahlavistranky img[src="obrazky/logo-knihy-velke.png"] {
-    float:left;
-    width:20vw;height:auto;
-    width:25%;
+.zahlavistranky .logo {
+    width:20%;height:auto;
 }
-/* banner: */
+.zahlavistranky .logo img {
+    width:100%;height:auto;
+}
+.zahlavistranky .zbytek {
+    display:flex;
+    flex-flow:column nowrap;
+    padding-left:1.5%;
+}
 .zahlavistranky h1 img {
-    position:absolute;top:0;left:auto;right:0;bottom:auto;z-index:2;
-    width:75%;
+/*    position:absolute;top:0;left:auto;right:0;bottom:auto;z-index:2;*/
+    width:95%;
     border:0.1rem solid #802020;
     box-shadow:0.1rem 0.1rem 0.2rem 0 #000000;
 }
-
 .zahlavistranky .slogan {
-    position:absolute;top:auto;left:auto;right:0;bottom:0;
-    width:75%;
-    padding:2.5em 0;
-
+    margin:2ex auto;
     font-style:italic;
-    text-align:center;
     line-height:1.5;
 }
+/* .podzahlavim: */
+.podzahlavim {
+    display:flex;
+    flex-flow:row-reverse nowrap;
+    margin:1.5em 0;
+}
+
 
 nav .slogan {
     position:relative;top:-1.5em;

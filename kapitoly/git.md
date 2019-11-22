@@ -16,6 +16,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 [ ] Lépe zpracovat git rev-list.
 [ ] Nějak zpracovat řešení konfliktů při slučování větví.
+[ ] Zpracovat „git remote add“
+[ ] Zpracovat „git stash“
 -->
 
 # Git

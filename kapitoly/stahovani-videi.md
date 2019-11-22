@@ -240,4 +240,5 @@ Pro podrobný popis formátovacího řetězce a mechanismu automatického výb�
 * [Oficiální stránka](https://ytdl-org.github.io/youtube-dl/index.html) (anglicky)
 * [Balíček Bionic](https://packages.ubuntu.com/bionic/youtube-dl) (anglicky)
 * [Manuálová stránka](http://manpages.ubuntu.com/manpages/bionic/en/man1/youtube-dl.1.html) (anglicky)
+* [TL;DR stránka „youtube-dl“](https://github.com/tldr-pages/tldr/blob/master/pages/common/youtube-dl.md) (anglicky)
 * [Návod na vypsání playlistu](https://archive.zhimingwang.org/blog/2014-11-05-list-youtube-playlist-with-youtube-dl.html) (anglicky)

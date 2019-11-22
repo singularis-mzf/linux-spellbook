@@ -286,3 +286,4 @@ Co hledat:
 * online referenční příručky
 * různé další praktické stránky, recenze, videa, blogy, ...
 * [oficiální manuál od GNU](https://www.gnu.org/software/gawk/manual/) (anglicky)
+* [TL;DR stránka](https://github.com/tldr-pages/tldr/blob/master/pages/common/awk.md) (anglicky)

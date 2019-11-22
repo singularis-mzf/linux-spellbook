@@ -310,6 +310,7 @@ jemuž se bude věnovat většina této kapitoly.
 * [Manuálová stránka](http://manpages.ubuntu.com/manpages/bionic/en/man1/make.1.html) (anglicky)
 * [Balíček Ubuntu Bionic Beaver](https://packages.ubuntu.com/bionic/make) (anglicky)
 * [Oficiální stránka GNU make](https://www.gnu.org/software/make/) (anglicky)
+* [TL;DR stránka „make“](https://github.com/tldr-pages/tldr/blob/master/pages/common/make.md) (anglicky)
 
 ## Snímek obrazovky
 

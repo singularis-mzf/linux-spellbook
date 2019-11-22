@@ -30,7 +30,7 @@ PDFLATEX := pdflatex -halt-on-error
 VSECHNY_DODATKY := predmluva koncepce-projektu plan-vyvoje test mechanismus-prekladu licence
 
 # _ A, B, C, D, E, F, G
-VSECHNY_KAPITOLY := _ostatni _ukazka awk barvy-a-titulek docker firefox git
+VSECHNY_KAPITOLY := _ostatni _ukazka awk barvy-a-titulek datum-cas-kalendar docker firefox git
 # H, I, J, K, L, M
 VSECHNY_KAPITOLY += hledani-souboru make markdown
 # N, O, P, Q, R, S
@@ -54,7 +54,7 @@ clean:
 	$(RM) -Rv $(SOUBORY_PREKLADU) $(VYSTUP_PREKLADU) kapitoly.lst
 
 # Podporované formáty:
-html: $(VYSTUP_PREKLADU)/html/index.htm
+html: $(addprefix $(VYSTUP_PREKLADU)/html/, index.htm _autori.htm)
 log: $(VYSTUP_PREKLADU)/log/index.log
 pdf-a4: $(VYSTUP_PREKLADU)/pdf-a4/kniha.pdf
 pdf-b5: $(VYSTUP_PREKLADU)/pdf-b5/kniha.pdf
@@ -91,13 +91,13 @@ $(SOUBORY_PREKLADU)/postprocess.tsv:
 # ============================================================================
 $(addprefix $(SOUBORY_PREKLADU)/html/,$(VSECHNY_KAPITOLY)): $(SOUBORY_PREKLADU)/html/%: kapitoly/%.md skripty/do_html.awk skripty/hlavni.awk skripty/utility.awk formaty/html/sablona_kapitoly $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(SOUBORY_PREKLADU)/html
-	$(AWK) -f skripty/do_html.awk $< > $@
+	$(AWK) -f skripty/do_html.awk -v IDKAPITOLY=$(basename $(notdir $@)) $< > $@
 
 # 1B. dodatky/{dodatek}.md => soubory_prekladu/html/{dodatek}
 # ============================================================================
 $(addprefix $(SOUBORY_PREKLADU)/html/,$(VSECHNY_DODATKY)): $(SOUBORY_PREKLADU)/html/%: dodatky/%.md skripty/do_html.awk skripty/hlavni.awk skripty/utility.awk formaty/html/sablona_kapitoly $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(SOUBORY_PREKLADU)/html
-	$(AWK) -f skripty/do_html.awk $< > $@
+	$(AWK) -f skripty/do_html.awk -v IDKAPITOLY=$(basename $(notdir $@)) $< > $@
 
 # 2. soubory_prekladu/html/{id} => vystup_prekladu/html/{id}.htm
 # ============================================================================
@@ -116,28 +116,29 @@ $(OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%): $(VYSTUP_PREKLADU)/html/obrazky/
 	mkdir -pv $(dir $@)
 	$(CONVERT) $< $@
 
-# 5. sepsat copyrighty ke kapitolám
+# 5. vystup_prekladu/html/{id}.htm => vystup_prekladu/html/index.htm
+# ============================================================================
+$(VYSTUP_PREKLADU)/html/index.htm: $(SOUBORY_PREKLADU)/fragmenty.tsv \
+  skripty/generovat-index-html.awk \
+  $(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY)))   $(VYSTUP_PREKLADU)/html/lkk.css \
+  $(OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%)
+	$(AWK) -f skripty/generovat-index-html.awk -v JMENOVERZE='$(JMENO)' formaty/html/sablona_kapitoly > $@
+
+# 6. sepsat copyrighty ke kapitolám
 # ============================================================================
 $(SOUBORY_PREKLADU)/html/kap-copys.htm: $(SOUBORY_PREKLADU)/fragmenty.tsv skripty/sepsat-copyrighty.awk $(VSECHNY_DODATKY:%=dodatky/%.md) $(VSECHNY_KAPITOLY:%=kapitoly/%.md)
 	mkdir -pv $(SOUBORY_PREKLADU)/html
 	$(AWK) -f skripty/sepsat-copyrighty.awk $(shell cut -f 1,2 --output-delimiter=/ $< | sed 's/$$/.md/') >$@
 
-# 6. sepsat copyrighty k obrázkům
+# 7. sepsat copyrighty k obrázkům
 # ============================================================================
 $(SOUBORY_PREKLADU)/html/obr-copys.htm: COPYING skripty/sepsat-copykobr.awk
 	$(AWK) -f skripty/sepsat-copykobr.awk $< $(OBRAZKY:%=obrazky/%) >$@
 
-# 7. vystup_prekladu/html/{id}.htm => vystup_prekladu/html/index.htm
+# 8. shromáždit copyrighty na stránku _autori.htm
 # ============================================================================
-$(VYSTUP_PREKLADU)/html/index.htm: $(SOUBORY_PREKLADU)/fragmenty.tsv \
-  skripty/generovat-index-html.awk \
-  $(SOUBORY_PREKLADU)/html/kap-copys.htm \
-  $(SOUBORY_PREKLADU)/html/obr-copys.htm \
-  $(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY))) \
-  $(VYSTUP_PREKLADU)/html/lkk.css \
-  $(OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%)
-	$(AWK) -f skripty/generovat-index-html.awk -v JMENOVERZE='$(JMENO)' formaty/html/sablona_kapitoly > $@
-
+$(VYSTUP_PREKLADU)/html/_autori.htm: $(addprefix $(SOUBORY_PREKLADU)/html/, kap-copys.htm obr-copys.htm) skripty/kapitola.awk formaty/html/sablona_licinfo
+	$(AWK) -f skripty/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=_autori -v TELOKAPITOLY=/dev/null -v COPYRIGHTY_KAPITOL=$(SOUBORY_PREKLADU)/html/kap-copys.htm -v COPYRIGHTY_OBRAZKU=$(SOUBORY_PREKLADU)/html/obr-copys.htm formaty/html/sablona_licinfo > $@ || true
 
 
 # LOG:
@@ -146,13 +147,13 @@ $(VYSTUP_PREKLADU)/html/index.htm: $(SOUBORY_PREKLADU)/fragmenty.tsv \
 # ============================================================================
 $(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_KAPITOLY)): $(SOUBORY_PREKLADU)/log/%: kapitoly/%.md skripty/do_logu.awk skripty/hlavni.awk skripty/utility.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(SOUBORY_PREKLADU)/log
-	$(AWK) -f skripty/do_logu.awk $< > $@
+	$(AWK) -v IDKAPITOLY=$(basename $(notdir $@)) -f skripty/do_logu.awk $< > $@
 
 # 1B. dodatky/{dodatek}.md => soubory_prekladu/log/{dodatek}
 # ============================================================================
 $(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_DODATKY)): $(SOUBORY_PREKLADU)/log/%: dodatky/%.md skripty/do_logu.awk skripty/hlavni.awk skripty/utility.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(SOUBORY_PREKLADU)/log
-	$(AWK) -f skripty/do_logu.awk $< > $@
+	$(AWK) -f skripty/do_logu.awk -v IDKAPITOLY=$(basename $(notdir $@)) $< > $@
 
 # 2. soubory_prekladu/log/{id} => soubory_prekladu/log/{id}.kap
 # ============================================================================
@@ -172,13 +173,13 @@ $(VYSTUP_PREKLADU)/log/index.log: $(addsuffix .kap,$(addprefix $(SOUBORY_PREKLAD
 # ============================================================================
 $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%): $(SOUBORY_PREKLADU)/pdf-spolecne/%: kapitoly/%.md skripty/do_latexu.awk skripty/hlavni.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(dir $@)
-	$(AWK) -f skripty/do_latexu.awk $< > $@
+	$(AWK) -f skripty/do_latexu.awk -v IDKAPITOLY=$(basename $(notdir $@)) $< > $@
 
 # 1A. dodatky/{dodatek}.md => soubory_prekladu/pdf-spolecne/{dodatek}
 # ============================================================================
 $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%): $(SOUBORY_PREKLADU)/pdf-spolecne/%: dodatky/%.md skripty/do_latexu.awk skripty/hlavni.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(dir $@)
-	$(AWK) -f skripty/do_latexu.awk $< > $@
+	$(AWK) -f skripty/do_latexu.awk -v IDKAPITOLY=$(basename $(notdir $@)) $< > $@
 
 # 2. soubory_prekladu/pdf-spolecne/{id} => soubory_prekladu/pdf-spolecne/{id}.kap
 # ============================================================================

@@ -87,3 +87,4 @@ Co hledat:
 * online referenční příručky
 * různé další praktické stránky, recenze, videa, tutorialy, blogy, ...
 * publikované knihy
+* [stránky TL;DR](https://github.com/tldr-pages/tldr/tree/master/pages/common)
