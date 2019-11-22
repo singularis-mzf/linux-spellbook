@@ -401,6 +401,13 @@ dl.copyrights pre {
     white-space:pre;
 }
 
+span.chybny {
+    color:red !important;
+    background:white !important;
+    font-weight:bold;
+    border:1px solid red;
+}
+
 @media print {
     html, body {
         background:none !important;

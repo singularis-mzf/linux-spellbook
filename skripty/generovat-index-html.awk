@@ -35,15 +35,6 @@ BEGIN {
     if (IDFORMATU == "") {
         IDFORMATU = "html";
     }
-    KAP_COPYS = "soubory_prekladu/" IDFORMATU "/kap-copys.htm";
-    OBR_COPYS = "soubory_prekladu/" IDFORMATU "/obr-copys.htm";
-
-    if (system("test -r " KAP_COPYS) != 0) {
-        ShoditFatalniVyjimku("Nemohu číst ze souboru " KAP_COPYS "!");
-    }
-    if (system("test -r " OBR_COPYS) != 0) {
-        ShoditFatalniVyjimku("Nemohu číst ze souboru " OBR_COPYS "!");
-    }
 
     split("", KAPITOLY);
     STAV_PODMINENENO_PREKLADU = 0;
@@ -92,14 +83,8 @@ STAV_PODMINENENO_PREKLADU == 2 {
     VYTISKNOUT = 0;
 }
 
-/^\{\{COPYRIGHTY KAPITOL\}\}$/ {
-    system("cat '" KAP_COPYS "'");
-    next;
-}
-
-/^\{\{COPYRIGHTY OBRÁZKŮ\}\}$/ {
-    system("cat '" OBR_COPYS "'");
-    next;
+/^\{\{COPYRIGHTY (KAPITOL|OBRÁZKŮ)\}\}$/ {
+    ShoditFatalniVyjimku($0 "již nejsou v index.html podporovány!");
 }
 
 /^\{\{ZAČÁTEK KNIHY\}\}$/,/^\{\{ZAČÁTEK KAPITOLY\}\}$/ {

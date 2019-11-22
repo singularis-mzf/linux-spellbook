@@ -109,8 +109,8 @@ se pracuje jako s číslem, kdykoliv se použije v číselném kontextu.
 
 *# nahradit všechny výskyty regulárního výrazu/starého řetězce v textu proměnné novým řetězcem*<br>
 *// Výsledek přepíše původní hodnotu proměnné. V novém řetězci je nutno navíc escapovat znaky \\ a &amp;; neescapovaný znak &amp; se v něm nahradí nahrazovaným textem v řetězci.*<br>
-**gsub(/**{*regulární výraz*}**/, escapovatknahrade(**{*nový-řetězec*}**)**[, {*proměnná*}]**)**<br>
-**gsub(escapovat(**{*starý-řetězec*}**), escapovatknahrade(**{*nový řetězec*}**)**[, {*proměnná*}]**)**
+**gsub(/**{*regulární výraz*}**/, escapovatknahrade(**{*nový-řetězec*}**)**[**,** {*proměnná*}]**)**<br>
+**gsub(escapovat(**{*starý-řetězec*}**), escapovatknahrade(**{*nový řetězec*}**)**[**,** {*proměnná*}]**)**
 
 *# nahradit N-tý výskyt (počítáno od 1) regulárního výrazu/starého řetězce v textu proměnné novým textem*<br>
 {*proměnná*} **= gensub(/**{*regulární-výraz*}**/, escapovatknahrade(**{*nový-řetězec*}**),** {*kolikátý-výskyt*}**,** {*proměnná*}**)**<br>
@@ -169,12 +169,15 @@ length(retezec) => délka řetězce
 ### Uživatelsky definované funkce
 
 *# definovat funkci (volitelně s lokálními proměnnými)*<br>
-**function** {*název funkce*}**(**[{*první-parametr*}[**,**{*další-parametry*}]...][[{*bílé znaky navíc*}{*lokální proměnná*}**,**...]]**)** TODO: Dodělat...
+**function** {*název funkce*}**(**[{*první-parametr*}[**,**{*další-parametry*}]...][[{*bílé znaky navíc*}{*lokální proměnná*}**,**...]]**)**
+<!--
+TODO: Dodělat
+-->
 
 ### Číselné funkce
 
 *# zaokrouhlit desetinné číslo na nejbližší celé číslo/k nule*<br>
-{*číslo*} &gt;= 0 ? int({*číslo*} + 0.4999999) : int({*číslo*} - 0.4999999)<br>
+{*číslo*} **&gt;= 0 ? int(**{*číslo*} **+ 0.4999999) : int(**{*číslo*} **- 0.4999999)**<br>
 **int(**{*hodnota*}**)**
 <!--
 TODO: Test.

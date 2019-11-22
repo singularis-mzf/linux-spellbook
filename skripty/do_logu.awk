@@ -33,6 +33,10 @@ function ZpracujBilyZnak(znak, opakovany) {
 #    return "ZpracujBilyZnak('" znak "', opakovany = " (opakovany ? "TRUE" : "FALSE") ");";
 }
 
+function ZpracujChybnyZnak(znak) {
+    return "{CHYBNÝ ZNAK:" znak"}";
+}
+
 function Tabulator(delka) {
     return "Tabulator(" delka ")";
 }
@@ -166,8 +170,17 @@ function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, cislaPoznamek, texty
     return vysledek;
 }
 
-function RadekZaklinadla(text, jeAkce) {
-    return "    RadekZaklinadla(\"" text "\", jeAkce=" (jeAkce ? "ANO" : "NE") ")\n";
+# urovenOdsazeni: -1 = akce; 0 = normální řádek; 1, 2, atd. = odsazený řádek
+function RadekZaklinadla(text, urovenOdsazeni) {
+    text = "    RadekZaklinadla(\"" text "\"";
+    if (urovenOdsazeni == -1) {
+        text = text ", JE_AKCE";
+    } else if (urovenOdsazeni > 0) {
+        text = text ", ODSAZENI=" urovenOdsazeni;
+    } else if (urovenOdsazeni != 0) {
+        ShoditFatalniVyjimku("Nepodporovaná úroveň odsazení: " urovenOdsazeni);
+    }
+    return text ")\n";
 }
 
 function KonecZaklinadla() {
@@ -192,6 +205,10 @@ function FormatVolitelny(jeZacatek) {
 
 function TriTecky() {
     return "TriTecky[]";
+}
+
+function ReseniNezname() {
+    return "ReseniNezname();\n";
 }
 
 function Obrazek(src, alt, rawSrc, rawAlt) {

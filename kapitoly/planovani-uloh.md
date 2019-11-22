@@ -39,26 +39,6 @@ spouštěné pod účtem superuživatele, ty však nejsou touto verzí kapitoly 
 
 * **Úloha** je příkaz naplánovaný k jednorázovému spuštění, jde-li o **jednorázovou úlohu**, nebo k pravidelnému spouštění, jde-li o **pravidelnou úlohu**. Tímto příkazem bývá nejčastěji volání uživatelem definovaného skriptu.
 
-## Zaklínadla (pomocné funkce a skripty)
-
-*# funkce „pridat\_ulohu“*<br>
-*// Vyžadovaná pro přidávání pravidelných úloh.*<br>
-*// Poznámka: Příkazy zadávané pomocí této funkce nesmějí obsahovat znak konce řádku. Vyžaduje-li vaše úloha více příkazů nebo komplikovanější konstrukce, zapište ji do skriptu a z úlohy spouštějte daný skript.*<br>
-**function pridat\_ulohu () \{**<br>
-**(tmp="$2 %s #$1\\\\n"; crontab -l 2&gt;/dev/null \| egrep -v "#$1\\$"; shift 2; printf "$tmp" "$@" \| sed -e 's/\\\\/\\\\\\\\/g' -e 's/%/\\\\%/g') \| crontab -**<br>
-**\}**
-
-*# skript „\~/bin/spustit-v-x“*<br>
-*// Tento skript je vyžadován pro spouštění grafických aplikací z naplánovaných úloh. Pro správný běh takto spuštěných aplikací může být nutno doplnit do seznamu u příkazu „egrep“ mnoho dalších proměnných.*<br>
-**#!/bin/bash -e**<br>
-**function f () \{**<br>
-**local xpid="$(pgrep -u "$(whoami)" '^[A-Za-z0-9]\*-session$' \| head -n 1)"**<br>
-**test -n "$xpid" || exit 1**<br>
-**eval "$(egrep -z '^(DBUS\_SESSION\_BUS\_ADDRESS\|DISPLAY\|XDG\_[A-Z\_]+)=' /proc/$xpid/environ \| tr \\\\0 \\\\n \| sed -e s/=/\\\\n/ -e s/\\'/\\'\\\\\\\\\\'\\'/g \| xargs -rd \\\\n printf "export %s='%s'\\\\n")"**<br>
-**\}**<br>
-**f**<br>
-**exec "$@"**
-
 ## Zaklínadla
 ### Pravidelné úlohy (obecně)
 
@@ -229,6 +209,26 @@ Poznámka: ukázka vyžaduje nainstalovaný balíček „mplayer“ (a pochopit
 **man 5 crontab**<br>
 **man 1 crontab**<br>
 **man at**
+
+## Pomocné funkce a skripty
+
+*# pridat\_ulohu() − přidá nebo nahradí pravidelnou úlohu*<br>
+*// Vyžadovaná pro přidávání pravidelných úloh.*<br>
+*// Poznámka: Příkazy zadávané pomocí této funkce nesmějí obsahovat znak konce řádku. Vyžaduje-li vaše úloha více příkazů nebo komplikovanější konstrukce, zapište ji do skriptu a z úlohy spouštějte daný skript.*<br>
+**function pridat\_ulohu () \{**<br>
+**(tmp="$2 %s #$1\\\\n"; crontab -l 2&gt;/dev/null \| egrep -v "#$1\\$"; shift 2; printf "$tmp" "$@" \| sed -e 's/\\\\/\\\\\\\\/g' -e 's/%/\\\\%/g') \| crontab -**<br>
+**\}**
+
+*# \~/bin/spustit-v-x − slouží ke spouštění grafických aplikací z naplánovaných úloh*<br>
+*// Tento skript je vyžadován pro spouštění grafických aplikací z naplánovaných úloh. Pro správný běh takto spuštěných aplikací může být nutno doplnit do seznamu u příkazu „egrep“ mnoho dalších proměnných.*<br>
+**#!/bin/bash -e**<br>
+**function f () \{**<br>
+**local xpid="$(pgrep -u "$(whoami)" '^[A-Za-z0-9]\*-session$' \| head -n 1)"**<br>
+**test -n "$xpid" || exit 1**<br>
+**eval "$(egrep -z '^(DBUS\_SESSION\_BUS\_ADDRESS\|DISPLAY\|XDG\_[A-Z\_]+)=' /proc/$xpid/environ \| tr \\\\0 \\\\n \| sed -e s/=/\\\\n/ -e s/\\'/\\'\\\\\\\\\\'\\'/g \| xargs -rd \\\\n printf "export %s='%s'\\\\n")"**<br>
+**\}**<br>
+**f**<br>
+**exec "$@"**
 
 ## Odkazy
 

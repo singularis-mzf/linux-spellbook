@@ -304,8 +304,8 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C) {
                     continue;
                 }
                 break;
-    }
-        VYSTUP = VYSTUP ZpracujZnak(C);
+        }
+        VYSTUP = VYSTUP ((TYP_RADKU == "RADEK_ZAKLINADLA" && UROVEN != -1 && VelikostZasobniku("format") == 0) ? ZpracujChybnyZnak(C) : ZpracujZnak(C));
         VSTUP = substr(VSTUP, 2);
     }
 
@@ -654,12 +654,25 @@ TYP_RADKU == "RADEK_ZAKLINADLA" {
     if ($0 ~ /<br>$/) {
         $0 = substr($0, 1, length($0) - 4);
     }
-    VypsatZahlaviZaklinadla();
-    jeAkce = (match($0, /^!: ?/) != 0);
-    if (!jeAkce) {
-        printf("%s", RadekZaklinadla(FormatovatRadek($0), 0));
+    if ($0 ~ /^<odsadit[1-8]>./) {
+        UROVEN = substr($0, 9, 1);
+        $0 = substr($0, 11);
+        if ($0 ~ /^!: ?/) {
+            ShoditFatalniVyjimku("Odsazení akcí není umožněno!");
+        }
+    } else if (match($0, /^<odsadit[0-9]+>./)) {
+        ShoditFatalniVyjimku("Nepodporovaná úroveň odsazení: " substr($0, RSTART, RLENGTH) "!");
+    } else if (match($0, /^!: ?/)) {
+        UROVEN = -1;
+        $0 = substr($0, 1 + RLENGTH);
     } else {
-        printf("%s", RadekZaklinadla(FormatovatRadek(substr($0, RLENGTH + 1)), 1));
+        UROVEN = 0;
+    }
+    VypsatZahlaviZaklinadla();
+    if (UROVEN == 0 && $0 == "?") {
+        printf("%s", RadekZaklinadla(ReseniNezname(), 0));
+    } else {
+        printf("%s", RadekZaklinadla(FormatovatRadek($0), UROVEN));
     }
     next;
 }

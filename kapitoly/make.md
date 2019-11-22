@@ -121,16 +121,16 @@ jemuž se bude věnovat většina této kapitoly.
 ### Textové funkce
 *# připojit text před/za každé slovo v řetězci/v rozvoji proměnné*<br>
 *// Při použití poslední uvedené varianty nesmějí text-před a text-za obsahovat znak %.*<br>
-**$(addprefix** {*text-před*},{*řetězec slov*}**)**<br>
-**$(addsuffix** {*text-za*},{*řetězec slov*}**)**<br>
+**$(addprefix** {*text-před*}**,**{*řetězec slov*}**)**<br>
+**$(addsuffix** {*text-za*}**,**{*řetězec slov*}**)**<br>
 **$(**{*proměnná*}**:%=**{*text-před*}**%**{*text-za*}**)**
 
 *# provést náhradu (záměnu) ve slovech pomocí %-vzoru*<br>
 **$(patsubst** {*co-nahradit-%-vzor*}**,**{*čím-nahradit-%-vzor*}**,**{*řetězec slov*}**)**
 
 *# vybrat slova odpovídající/neodpovídající kterémukoliv ze zadaných %-vzorů*<br>
-**$(filter** {*%-vzory oddělené mezerou*}...,{*řetězec slov*}**)**<br>
-**$(filter-out** {*%-vzory oddělené mezerou*}...,{*řetězec slov*}**)**
+**$(filter** {*%-vzory oddělené mezerou*}...**,**{*řetězec slov*}**)**<br>
+**$(filter-out** {*%-vzory oddělené mezerou*}...**,**{*řetězec slov*}**)**
 
 *# nahradit všechny výskyty podřetězce*<br>
 **$(subst** {*co nahradit*}**,**{*čím nahradit*}**,**{*původní text*}**)**

@@ -50,6 +50,10 @@ function ZpracujBilyZnak(znak, opakovany) {
     return (opakovany) ? "" : znak;
 }
 
+function ZpracujChybnyZnak(znak) {
+    return "<span class=\"chybny\">" ZpracujZnak(znak) "</span>";
+}
+
 function Tabulator(delka,  i, vysledek) {
     return "<span class=\"tab\" style=\"width:" delka "ch\">&#9;</span>";
 # old:
@@ -159,8 +163,13 @@ function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, cislaPoznamek, texty
     return vysledek;
 }
 
-function RadekZaklinadla(text, jeAkce) {
-    return "<div class=\"radekzaklinadla" (jeAkce ? " akce" : "") "\">" text "</div>\n";
+# urovenOdsazeni: -1 = akce; 0 = normální řádek; 1, 2, atd. = odsazený řádek
+function RadekZaklinadla(text, urovenOdsazeni) {
+    return "<div class=\"radekzaklinadla" \
+        (urovenOdsazeni == -1 ? " akce" : "") \
+        "\"" \
+        (urovenOdsazeni > 0 ? " style=\"padding-left:" (2 * urovenOdsazeni) "ch;\"" : "") \
+        ">" text "</div>\n";
 }
 
 function KonecZaklinadla() {
@@ -193,6 +202,10 @@ function FormatVolitelny(jeZacatek) {
 
 function TriTecky() {
     return "<span class=\"tritecky\">...</span>";
+}
+
+function ReseniNezname() {
+    return "?";
 }
 
 function Obrazek(src, alt, rawSrc, rawAlt) {

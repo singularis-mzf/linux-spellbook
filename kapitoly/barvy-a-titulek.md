@@ -47,23 +47,6 @@ Jedna z prvních věcí, která mě po otevření linuxového terminálu naštv
 
 ## Zaklínadla
 
-### Pomocné funkce
-
-*# bezp\_set() − použije první podporované číslo barvy*<br>
-**function bezp\_set () \{**<br>
-**local f="$1" c="$(tput colors 2&gt;/dev/null \|\| printf 0)" x=""**<br>
-**shift**<br>
-**for x in $@; do if test $x -lt $c; then tput $f $x; break; fi; done**<br>
-**return 0**<br>
-**\}**
-
-*# barvapronh() − nastaví barvu písma podle hodnoty parametru*<br>
-**function barvapronh () \{**<br>
-**test $1 -gt 0 &amp;&amp; tput bold**<br>
-**test $1 -eq 1 &amp;&amp; bezp\_set setaf 1**<br>
-**test $1 -gt 1 &amp;&amp; bezp\_set setaf 2**<br>
-**\}**
-
 ### Titulek
 *# nastavit titulek okna terminálu*<br>
 *// Ve výchozím nastavení nastavuje titulek terminálu jeho hlavní výzva PS1. Proto ji musíte před experimentováním vypnout, např. příkazem „PS=""“, jinak vám vaše nové nastavení hned přepíše a ani si toho nevšimnete.*<br>
@@ -284,6 +267,23 @@ Všechny použité součásti jsou základními nástroji přítomnými v každ
 
 * Přehled syntaxe pro proměnné PS0, PS1 a PS2 najdete v sekci „PROMPTING“ v manuálové stránce „bash“ (anglicky).
 * Různé další tipy se dají najít v článku Bash/Prompt customization (anglicky, viz Odkazy).
+
+## Pomocné funkce
+
+*# bezp\_set() − použije první podporované číslo barvy*<br>
+**function bezp\_set () \{**<br>
+**local f="$1" c="$(tput colors 2&gt;/dev/null \|\| printf 0)" x=""**<br>
+**shift**<br>
+**for x in $@; do if test $x -lt $c; then tput $f $x; break; fi; done**<br>
+**return 0**<br>
+**\}**
+
+*# barvapronh() − nastaví barvu písma podle hodnoty parametru*<br>
+**function barvapronh () \{**<br>
+**test $1 -gt 0 &amp;&amp; tput bold**<br>
+**test $1 -eq 1 &amp;&amp; bezp\_set setaf 1**<br>
+**test $1 -gt 1 &amp;&amp; bezp\_set setaf 2**<br>
+**\}**
 
 ## Odkazy
 

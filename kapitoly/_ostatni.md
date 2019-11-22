@@ -65,7 +65,7 @@ TODO: Vylepšit řazení; první pokus: | LC_ALL=C sort -k 6
 
 *# zobrazit „oznámení“ operačního systému*<br>
 *// Vhodné ikony jsou např.: dialog-warning, dialog-error, dialog-information, ale můžete použít jakékoliv ikony nainstalované v systému (např. ikony nainstalovaných aplikací, zkuste „-i firefox“).*<br>
-**notify-send** [**-i** {*ikona*}] [**-u** {*význam*}] "{*Titulek oznámení*}" ["{*Text oznámení*}"]
+**notify-send** [**-i** {*ikona*}] [**-u** {*význam*}] **"**{*Titulek oznámení*}**"** [**"**{*Text oznámení*}**"**]
 
 <!--
 Kategorie: http://www.galago-project.org/specs/notification/0.9/x211.html

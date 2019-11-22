@@ -46,9 +46,9 @@ VYSTUP_PREKLADU := vystup_prekladu
 # Výchozí jméno buildu
 JMENO := Sid $(shell date +%Y%m%d)
 
-.PHONY: all clean
+.PHONY: all clean html log pdf-a4 pdf-b5 pdf-a5 pomocne-funkce
 
-all: html log pdf-a4 pdf-b5 pdf-a5
+all: html log pdf-a4 pdf-b5 pdf-a5 pomocne-funkce
 
 clean:
 	$(RM) -Rv $(SOUBORY_PREKLADU) $(VYSTUP_PREKLADU) kapitoly.lst
@@ -59,6 +59,7 @@ log: $(VYSTUP_PREKLADU)/log/index.log
 pdf-a4: $(VYSTUP_PREKLADU)/pdf-a4/kniha.pdf
 pdf-b5: $(VYSTUP_PREKLADU)/pdf-b5/kniha.pdf
 pdf-a5: $(VYSTUP_PREKLADU)/pdf-a5/kniha.pdf
+pomocne-funkce: $(VYSTUP_PREKLADU)/bin/pomocne-funkce.sh
 
 # POMOCNÉ SOUBORY:
 # 1. kapitoly.lst (není-li, použít kapitoly.lst.vychozi; není-li ani ten, vygenerovat)
@@ -82,7 +83,7 @@ $(SOUBORY_PREKLADU)/fragmenty.tsv: kapitoly.lst skripty/sepsat-fragmenty.awk
 # 3. soubory_prekladu/postprocess.tsv
 # ============================================================================
 $(SOUBORY_PREKLADU)/postprocess.tsv:
-	test -r postprocess.tsv && cat postprocess.tsv >"$@"
+	-test -r postprocess.tsv && cat postprocess.tsv >"$@"
 	touch "$@"
 
 # HTML:
@@ -261,3 +262,9 @@ $(VYSTUP_PREKLADU)/pdf-b5/kniha.pdf: $(SOUBORY_PREKLADU)/pdf-b5/kniha.tex $(OBRA
 	bash -e -c '(cd $(dir $<); exec $(PDFLATEX) $(notdir $<)) | $(AWK) -f skripty/prelozit_vystup_latexu.awk; exit $${PIPESTATUS[0]}'
 	bash -e -c '(cd $(dir $<); exec $(PDFLATEX) $(notdir $<)) | $(AWK) -f skripty/prelozit_vystup_latexu.awk; exit $${PIPESTATUS[0]}'
 	cat $(<:%.tex=%.pdf) > $@
+
+
+# Pomocné funkce a skripty:
+$(VYSTUP_PREKLADU)/bin/pomocne-funkce.sh: $(VSECHNY_KAPITOLY:%=kapitoly/%.md) $(SOUBORY_PREKLADU)/fragmenty.tsv skripty/extrahovat-pomocne-funkce.awk
+	mkdir -pv $(VYSTUP_PREKLADU)/bin
+	$(AWK) -f skripty/extrahovat-pomocne-funkce.awk $(SOUBORY_PREKLADU)/fragmenty.tsv

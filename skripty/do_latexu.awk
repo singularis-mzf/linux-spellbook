@@ -205,6 +205,11 @@ function ZpracujBilyZnak(znak, opakovany) {
     return znak;
 }
 
+# Zatím jsou chybné znaky do formátu PDF exportovány jako normální.
+function ZpracujChybnyZnak(znak) {
+    return ZpracujZnak(znak);
+}
+
 function Tabulator(delka,  i, vysledek) {
     return "\\textcolor{seda}{\\guillemotright}{" Zopakovat("~", max(0, delka - 1)) "}";
 }
@@ -362,9 +367,12 @@ function ZalomitRadekZaklinadla(text,   c, i, slzav, hrzav, lastzlom) {
 }
 
 
-function RadekZaklinadla(text, jeAkce) {
+# urovenOdsazeni: -1 = akce; 0 = normální řádek; 1, 2, atd. = odsazený řádek
+function RadekZaklinadla(text, urovenOdsazeni) {
 #    gsub(/=/, "={\\moznyzlom}", text);
-    return "%\n\\" (jeAkce ? "akcezaklinadla" : "radekzaklinadla") "{" ZalomitRadekZaklinadla(text) "}";
+    return "%\n\\" (urovenOdsazeni == -1 ? "akcezaklinadla" : "radekzaklinadla") \
+        "{" (urovenOdsazeni > 0 ? Zopakovat("~", 2 * urovenOdsazeni) : "") \
+        ZalomitRadekZaklinadla(text) "}";
 }
 
 function KonecZaklinadla() {
@@ -385,6 +393,10 @@ function FormatDopln(jeZacatek) {
 
 function FormatVolitelny(jeZacatek) {
     return jeZacatek ? "\\volitelnyzacatek{}" : "\\volitelnykonec{}";
+}
+
+function ReseniNezname() {
+    return "?";
 }
 
 function TriTecky() {

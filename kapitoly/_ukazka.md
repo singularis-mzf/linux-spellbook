@@ -30,19 +30,19 @@ Normálně se odstavce v PDF verzi odsazují, kromě odstavců, které následu
 Položka seznamu může pokračovat na dalším řádku a obsahovat text **tučně**, *kurzívou*, nebo {*na doplnění*}.
 * Další položka seznamu. Může obsahovat také [hypertextový odkaz](http://www.seznam.cz/) a vynucený<br>konec řádku.
 
-### Příklady
+### Zaklínadlo
 
-*# zvláštním typem záznamu je takzvaný příklad*<br>
+*# zvláštním typem záznamu je takzvané zaklínadlo; to může obsahovat tučně zvýrazněná **klíčová slova**, a to i **na konci***<br>
 *// může mít poznámku pod čarou, která vypadá takto*<br>
-**tučné části v řádcích příkladu má uživatel zadat tak, jak jsou** {*toto-má-doplnit*} [**nepovinná část**]...<br>
+**tučné části v řádcích zaklínadla má uživatel zadat tak, jak jsou** {*toto-má-doplnit*} [**nepovinná část**]...<br>
 **příklad může mít i víc řádků**
 
-*# druhý příklad, který...*<br>
+*# druhé zaklínadlo, které...*<br>
 *// má dvě poznámky pod čarou, z toho první je velmi velmi dlouhá, aby se ukázalo, jak se bude v okně prohlížeče, na papíře nebo v jiném výstupním formátu zalamovat do více řádků; pro tento účel by se hodil text Lorem Ipsum, ale tento text je také dost dobrý*<br>
 *// a toto je ta druhá*<br>
 {*doplnit*} **a musí mít i nějaký řádek**
 
-*# třetí příklad má:*<br>
+*# třetí zaklínadlo má:*<br>
 *// jednu*<br>
 *// druhou*<br>
 *// třetí poznámku pod čarou*<br>
@@ -52,7 +52,16 @@ Položka seznamu může pokračovat na dalším řádku a obsahovat text **tuč
 **&blank;řádek odsazený jednou mezerou**<br>
 **&blank;&blank;..dvěma mezerami**<br>
 **&nbsp;řádek odsazený jednou nezlomitelnou mezerou**<br>
-**&nbsp;&nbsp;řádek odsazený dvěma nezlomitelnými mezerami**
+**&nbsp;&nbsp;řádek odsazený dvěma nezlomitelnými mezerami**<br>
+**neinterpretovaný netučný nebílý znak v řádku zaklínadla je chybný jako tato tečka:** .<br>
+<odsadit1>**řádek odsazený o 1 úroveň**<br>
+<odsadit2>**řádek odsazený o 2 úrovně**<br>
+<odsadit3>**řádek odsazený o 3 úrovně**<br>
+<odsadit4>**řádek odsazený o 4 úrovně**<br>
+<odsadit5>**řádek odsazený o 5 úrovní**<br>
+<odsadit6>**řádek odsazený o 6 úrovní**<br>
+<odsadit7>**řádek odsazený o 7 úrovní**<br>
+<odsadit8>**řádek odsazený o 8 úrovní (což je maximum)**
 <!--
 Poznámka: ve Firefoxu se nezlomitelné mezery zkopírují do schránky jako obyčejné mezery.
 -->
