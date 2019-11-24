@@ -20,6 +20,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 # Stahování videí
 
+!Štítky: {tematický okruh}{internet}{video}
+
 ## Úvod
 Tato kapitola se zabývá stahováním videí a zvuku ze služeb jako YouTube,
 Instagram, Facebook, MixCloud, Vimeo apod.

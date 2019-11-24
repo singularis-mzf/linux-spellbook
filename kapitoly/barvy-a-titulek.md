@@ -25,6 +25,8 @@ __git_ps1
 
 # Barvy, titulek a výzva terminálu
 
+!Štítky: {tematický okruh}{bash}{barvy}
+
 ## Úvod
 <!--
 - Vymezte, co je předmětem této kapitoly.

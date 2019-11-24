@@ -431,15 +431,31 @@ BEGIN {
     if (IDKAPITOLY == "") {
         ShoditFatalniVyjimku("Vyžadovaná proměnná IDKAPITOLY není vyplněna!");
     }
+    if (FS != "\t") {
+        ShoditFatalniVyjimku("Chybně nastavený field separator. Musí být tabulátor. Použijte parametr -F \\\\t při spouštění awk!");
+    }
     prikaz = "egrep '^[^\t]*\t" IDKAPITOLY "\t' soubory_prekladu/fragmenty.tsv";
     prikaz | getline;
     close(prikaz);
 
     if ($0 == "") {
         C_KAPITOLY = 0;
+        STITKY = "";
     } else {
-        split($0, ppc, "\t");
-        C_KAPITOLY = ppc[8] - 1;
+        C_KAPITOLY = $8 - 1;
+        if ($9 == "NULL") {
+            STITKY = "";
+        } else {
+            prikaz = "sort -iu | tr \\\\n \\|";
+            STITKY = $9;
+            gsub(/^\{|\}$|'/, "", STITKY);
+            gsub(/\}\{/, "\n", STITKY);
+            print STITKY |& prikaz;
+            close(prikaz, "to");
+            prikaz |& getline STITKY;
+            close(prikaz);
+            gsub(/\|$/, "", STITKY);
+        }
     }
 
     ID_KAPITOLY_OMEZENE = IDKAPITOLY;
@@ -505,7 +521,7 @@ BEGIN {
 /<!--.*-->/ {
     while ((i = index($0, "<!--")) && (j = 4 + index(substr($0, i + 4), "-->"))) {
 #        text_komentare = substr($0, i + 4, j - 5);
-#        print "DEBUG: inline komentář <!--" text_komentare "-->.";
+#        print "LADĚNÍ: inline komentář <!--" text_komentare "-->.";
 
         $0 = substr($0, 1, i - 1) substr($0, i + j + 2);
     }
@@ -534,6 +550,8 @@ BEGIN {
         TYP_RADKU = "POZNAMKA";
     } else if (PREDCHOZI_TYP_RADKU != "NORMALNI" && $0 ~ /^!\[.+\]\(.+\)$/) {
         TYP_RADKU = "OBRAZEK";
+    } else if (PREDCHOZI_TYP_RADKU != "NORMALNI" && $0 ~ /^![A-Za-z0-9ÁČĎÉĚÍŇÓŘŠŤŮÝŽáčďéěíňóřšťůýž]+:( |$)/) {
+        TYP_RADKU = "DIREKTIVA";
     } else if (JE_UVNITR_ZAKLINADLA) {
         TYP_RADKU = "RADEK_ZAKLINADLA";
     } else if (PREDCHOZI_TYP_RADKU == "POLOZKA_SEZNAMU" || PREDCHOZI_TYP_RADKU == "POKRACOVANI_POLOZKY_SEZNAMU") {
@@ -542,7 +560,7 @@ BEGIN {
         TYP_RADKU = "NORMALNI";
     }
 #
-# DEBUG:
+# LADĚNÍ:
 #    printf("\n<TYP=%s>%s>", PREDCHOZI_TYP_RADKU, TYP_RADKU);
 }
 
@@ -577,7 +595,7 @@ TYP_RADKU == "NADPIS" {
         C_PODSEKCE = 0;
         delete ppcall;
         delete pptall;
-        printf("%s", ZacatekKapitoly(KAPITOLA, ++C_KAPITOLY));
+        printf("%s", ZacatekKapitoly(KAPITOLA, ++C_KAPITOLY, STITKY));
         if (tolower(KAPITOLA) == "licence") {
             printf("%s", ZapnoutRezimLicence());
         }
@@ -617,6 +635,17 @@ TYP_RADKU == "POLOZKA_SEZNAMU" {
 
 TYP_RADKU == "POKRACOVANI_POLOZKY_SEZNAMU" {
     printf("%s\n", FormatovatRadek($0));
+    next;
+}
+
+TYP_RADKU == "DIREKTIVA" {
+    match($0, /[^!][^:]*:/);
+    DIREKTIVA = toupper(substr($0, RSTART, RLENGTH - 1));
+    HODNOTA_DIREKTIVY = substr($0, RSTART + RLENGTH);
+    if (HODNOTA_DIREKTIVY ~ /^ /) {
+        HODNOTA_DIREKTIVY = substr(HODNOTA_DIREKTIVY, 2);
+    }
+#    print "LADĚNÍ: Direktiva „" DIREKTIVA "“ = \"" HODNOTA_DIREKTIVY "\"" > "/dev/stderr";
     next;
 }
 

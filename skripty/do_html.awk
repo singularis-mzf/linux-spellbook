@@ -64,10 +64,14 @@ function Tabulator(delka,  i, vysledek) {
     return vysledek "</span>";
 }
 
-function ZacatekKapitoly(kapitola, cisloKapitoly) {
+function ZacatekKapitoly(kapitola, cisloKapitoly, stitky) {
 # Generování prvku <h1> obstarává šablona kapitoly (formaty/html/sablona_kapitoly).
 #    return "<h1>" kapitola "</h1>\n";
-    return "";
+    if (stitky == "") {
+        return "";
+    }
+    gsub(/\|/, "</span>\n<span>", stitky);
+    return "<div class=\"stitky\"><span>" stitky "</span></div>";
 }
 
 function KonecKapitoly(kapitola, cislaPoznamek, textyPoznamek,   i, vysledek) {

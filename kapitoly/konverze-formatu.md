@@ -1,6 +1,6 @@
 <!--
 
-Linux Kniha kouzel, kapitola Hledání souborů
+Linux Kniha kouzel, kapitola Konverze formátů
 Copyright (c) 2019 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -11,8 +11,12 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
+<!--
+Poznámky:
 
-# Hledání souborů
+-->
+
+# Konverze formátů
 
 !Štítky: {tematický okruh}
 
@@ -35,6 +39,31 @@ https://creativecommons.org/licenses/by-sa/4.0/
 - Rozdělte na podsekce a naplňte „zaklínadly“.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+### Rastrové obrázky kromě gifů
+
+
+
+### PDF a PostScript
+*# do SVG (jednu stránku/všechny stránky)*<br>
+*// Šablona jména je jméno souboru obsahující printf-specifikátor %d, např. „%02d“.*<br>
+**pdf2svg** {*soubor.pdf*} {*soubor.svg*} [{*číslo-stránky*}]<br>
+**pdf2svg** {*soubor.pdf*} {*šablona-jména.svg*} **all**
+
+*# .eps na .pdf*<br>
+**ps2pdf -dEPSCrop** {*soubor.eps*} [{*soubor.pdf*}]
+
+*# .ps na .pdf*<br>
+*// Pro použití standardního vstupu a výstupu je možno místo názvu souboru uvést „-“.*<br>
+**ps2pdf** {*soubor.ps*} [{*soubor.pdf*}]
+
+
+### SVG
+
+### Video
+
+### HTML
+
 
 ## Parametry příkazů
 <!--
@@ -80,7 +109,9 @@ Co hledat:
 * [stránku na Wikipedii](https://cs.wikipedia.org/wiki/Hlavn%C3%AD_strana)
 * oficiální stránku programu
 * oficiální dokumentaci
-* [http://manpages.ubuntu.com/](manuálovou stránku)
-* [https://packages.ubuntu.com/](balíček Bionic)
+* [manuálovou stránku](http://manpages.ubuntu.com/)
+* [balíček Bionic](https://packages.ubuntu.com/)
 * online referenční příručky
-* různé další praktické stránky, recenze, videa, blogy, ...
+* různé další praktické stránky, recenze, videa, tutorialy, blogy, ...
+* publikované knihy
+* [stránky TL;DR](https://github.com/tldr-pages/tldr/tree/master/pages/common)

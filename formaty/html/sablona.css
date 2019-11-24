@@ -73,7 +73,7 @@ nav {
 nav.spodni {margin-top:3em;margin-bottom:2em;}
 
 article {
-    padding:2rem 3rem;
+    padding:2rem 3rem 10rem;
 }
 
 footer {
@@ -120,6 +120,7 @@ p, ul {
 }
 
 p {
+    hyphens:auto;
     line-height:1.5;
 }
 
@@ -343,8 +344,30 @@ footer img {float:left;margin:0 1rem 1rem 0;}
 /* .podzahlavim: */
 .podzahlavim {
     display:flex;
-    flex-flow:row-reverse nowrap;
-    margin:1.5em 0;
+    flex-flow:row nowrap;
+    margin:1em 0;
+    border-radius:1rem 1rem;
+    padding:1rem 2%;
+    box-shadow:0 0.25rem 1.5rem 0 rgba(50,100,50,0.5);
+}
+.podzahlavim p.ponadpisu {
+    margin:0 auto;
+    width:75%;
+    text-align:justify;
+}
+.podzahlavim .ikona img {
+    margin:0 0.5em 0 2em;
+    width:auto; height:6.4rem;
+}
+.podzahlavim p.informaceoverzi {
+    margin:0;
+    text-indent:0;
+    width:20em;
+}
+.podzahlavim em {
+    font-style:italic;
+    font-weight:normal;
+    margin-left:1em;
 }
 
 
@@ -368,8 +391,41 @@ nav .next {text-align:left;}
     display:none;
 }
 
-.informaceoverzi {margin:2em 0;text-align:center;}
+/* .stitky */
+.stitky {
+    margin:2em 0;
+}
+.stitky span {
+    display:inline-block;
+    background:#cccccc;
+    margin:0 0.5em;
+    border:thin solid rgba(0,0,0,0.25);
+    border-radius:0.4em;
+    padding:0.25em 0.5em;
+    min-width:5em;
+    box-shadow:0.1em 0.15em 0 0 rgba(0,0,0,0.5);
+    text-align:center;
+    white-space:nowrap;
+}
 
+/* .prehledy */
+.prehledy {
+    display:flex;
+    flex-flow:row nowrap;
+    justify-content:center;
+    align-items:flex-start;
+    position:relative;
+    left:1em;
+}
+.prehledy>div {width:33%;}
+.prehledy li {list-style:decimal outside;width:85%;margin-top:0.5em;}
+/*.prehledy li+li {margin-top:0.5em;}*/
+.prehledy a {display:block;
+    border-bottom:thin dotted rgba(0,0,0,0.2);}
+.prehledy strong {display:block;font-weight:bold;margin-top:1em;}
+
+
+/*
 ol#prehledkapitol {
     margin:5em auto;
     width:20em;
@@ -384,6 +440,7 @@ ol#prehledkapitol a {
     display:block;
     border-bottom:thin dotted rgba(0,0,0,0.2);
 }
+*/
 
 dl.copyrights {
 }

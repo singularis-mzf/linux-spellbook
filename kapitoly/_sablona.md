@@ -18,6 +18,11 @@ Poznámky:
 
 # Název
 
+<!--
+Odkomentujte a vyplňte štítky, zejména rozlišení na {program} a {tematický okruh}:
+-- !Štítky: {...}{...}
+-->
+
 ## Úvod
 <!--
 - Vymezte, co je předmětem této kapitoly.

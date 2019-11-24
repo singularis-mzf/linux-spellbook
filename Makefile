@@ -34,11 +34,11 @@ VSECHNY_KAPITOLY := _ostatni _ukazka awk barvy-a-titulek datum-cas-kalendar dock
 # H, I, J, K, L, M
 VSECHNY_KAPITOLY += hledani-souboru make markdown
 # N, O, P, Q, R, S
-VSECHNY_KAPITOLY += obrazky odkazy planovani-uloh regularni-vyrazy soubory stahovani-videi
+VSECHNY_KAPITOLY += odkazy planovani-uloh regularni-vyrazy sprava-balicku sprava-uzivatelu stahovani-videi
 # T, U, V, W, X, Y, Z
-VSECHNY_KAPITOLY += x zpracovani-videa-a-zvuku
+VSECHNY_KAPITOLY += x zpracovani-obrazku zpracovani-textovych-souboru zpracovani-videa-a-zvuku
 
-OBRAZKY := favicon.png by-sa.png logo-knihy-velke.png make.png barvy.png ve-vystavbe.png marsh.jpg banner.png
+OBRAZKY := favicon.png by-sa.png logo-knihy-velke.png make.png barvy.png ve-vystavbe.png marsh.jpg banner.png kalendar.svg
 
 SOUBORY_PREKLADU := soubory_prekladu
 VYSTUP_PREKLADU := vystup_prekladu
@@ -54,7 +54,7 @@ clean:
 	$(RM) -Rv $(SOUBORY_PREKLADU) $(VYSTUP_PREKLADU) kapitoly.lst
 
 # Podporované formáty:
-html: $(addprefix $(VYSTUP_PREKLADU)/html/, index.htm _autori.htm)
+html: $(addprefix $(VYSTUP_PREKLADU)/html/, lkk.css index.htm _autori.htm)
 log: $(VYSTUP_PREKLADU)/log/index.log
 pdf-a4: $(VYSTUP_PREKLADU)/pdf-a4/kniha.pdf
 pdf-b5: $(VYSTUP_PREKLADU)/pdf-b5/kniha.pdf
@@ -75,7 +75,7 @@ kapitoly.lst: kapitoly.lst.vychozi
 
 # 2. kapitoly.lst => soubory_prekladu/fragmenty.tsv
 # ============================================================================
-$(SOUBORY_PREKLADU)/fragmenty.tsv: kapitoly.lst skripty/sepsat-fragmenty.awk
+$(SOUBORY_PREKLADU)/fragmenty.tsv: kapitoly.lst skripty/sepsat-fragmenty.awk $(VSECHNY_DODATKY:%=dodatky/%.md) $(VSECHNY_KAPITOLY:%=kapitoly/%.md)
 	mkdir -pv $(SOUBORY_PREKLADU)
 	$(AWK) -f skripty/sepsat-fragmenty.awk $< > $@
 
@@ -92,13 +92,13 @@ $(SOUBORY_PREKLADU)/postprocess.tsv:
 # ============================================================================
 $(addprefix $(SOUBORY_PREKLADU)/html/,$(VSECHNY_KAPITOLY)): $(SOUBORY_PREKLADU)/html/%: kapitoly/%.md skripty/do_html.awk skripty/hlavni.awk skripty/utility.awk formaty/html/sablona_kapitoly $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(SOUBORY_PREKLADU)/html
-	$(AWK) -f skripty/do_html.awk -v IDKAPITOLY=$(basename $(notdir $@)) $< > $@
+	$(AWK) -f skripty/do_html.awk -F \\t -v IDKAPITOLY=$(basename $(notdir $@)) $< > $@
 
 # 1B. dodatky/{dodatek}.md => soubory_prekladu/html/{dodatek}
 # ============================================================================
 $(addprefix $(SOUBORY_PREKLADU)/html/,$(VSECHNY_DODATKY)): $(SOUBORY_PREKLADU)/html/%: dodatky/%.md skripty/do_html.awk skripty/hlavni.awk skripty/utility.awk formaty/html/sablona_kapitoly $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(SOUBORY_PREKLADU)/html
-	$(AWK) -f skripty/do_html.awk -v IDKAPITOLY=$(basename $(notdir $@)) $< > $@
+	$(AWK) -f skripty/do_html.awk -F \\t -v IDKAPITOLY=$(basename $(notdir $@)) $< > $@
 
 # 2. soubory_prekladu/html/{id} => vystup_prekladu/html/{id}.htm
 # ============================================================================
@@ -109,21 +109,26 @@ $(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY) $(VSEC
 # 3. formaty/html/sablona.css => vystup_prekladu/html/lkk.css
 # ============================================================================
 $(VYSTUP_PREKLADU)/html/lkk.css: formaty/html/sablona.css
+	mkdir -pv $(dir $@)
 	cat $< > $@
 
 # 4. obrazky/{obrazek} => vystup_prekladu/html/obrazky/{obrazek}
 # ============================================================================
-$(OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%): $(VYSTUP_PREKLADU)/html/obrazky/%: obrazky/%
+$(filter %.jpg %.png, $(OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%)): $(VYSTUP_PREKLADU)/html/obrazky/%: obrazky/%
 	mkdir -pv $(dir $@)
 	$(CONVERT) $< $@
+
+$(filter %.svg, $(OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%)): $(VYSTUP_PREKLADU)/html/obrazky/%: obrazky/%
+	mkdir -pv $(dir $@)
+	cp $< $@
 
 # 5. vystup_prekladu/html/{id}.htm => vystup_prekladu/html/index.htm
 # ============================================================================
 $(VYSTUP_PREKLADU)/html/index.htm: $(SOUBORY_PREKLADU)/fragmenty.tsv \
   skripty/generovat-index-html.awk \
-  $(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY)))   $(VYSTUP_PREKLADU)/html/lkk.css \
+  $(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY)))   $(SOUBORY_PREKLADU)/fragmenty.tsv \
   $(OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%)
-	$(AWK) -f skripty/generovat-index-html.awk -v JMENOVERZE='$(JMENO)' formaty/html/sablona_kapitoly > $@
+	$(AWK) -f skripty/generovat-index-html.awk -F \\t -v JMENOVERZE='$(JMENO)' $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/html/sablona_kapitoly > $@
 
 # 6. sepsat copyrighty ke kapitolám
 # ============================================================================
@@ -148,13 +153,13 @@ $(VYSTUP_PREKLADU)/html/_autori.htm: $(addprefix $(SOUBORY_PREKLADU)/html/, kap-
 # ============================================================================
 $(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_KAPITOLY)): $(SOUBORY_PREKLADU)/log/%: kapitoly/%.md skripty/do_logu.awk skripty/hlavni.awk skripty/utility.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(SOUBORY_PREKLADU)/log
-	$(AWK) -v IDKAPITOLY=$(basename $(notdir $@)) -f skripty/do_logu.awk $< > $@
+	$(AWK) -v IDKAPITOLY=$(basename $(notdir $@)) -f skripty/do_logu.awk -F \\t $< > $@
 
 # 1B. dodatky/{dodatek}.md => soubory_prekladu/log/{dodatek}
 # ============================================================================
 $(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_DODATKY)): $(SOUBORY_PREKLADU)/log/%: dodatky/%.md skripty/do_logu.awk skripty/hlavni.awk skripty/utility.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(SOUBORY_PREKLADU)/log
-	$(AWK) -f skripty/do_logu.awk -v IDKAPITOLY=$(basename $(notdir $@)) $< > $@
+	$(AWK) -f skripty/do_logu.awk -F \\t -v IDKAPITOLY=$(basename $(notdir $@)) $< > $@
 
 # 2. soubory_prekladu/log/{id} => soubory_prekladu/log/{id}.kap
 # ============================================================================
@@ -174,13 +179,13 @@ $(VYSTUP_PREKLADU)/log/index.log: $(addsuffix .kap,$(addprefix $(SOUBORY_PREKLAD
 # ============================================================================
 $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%): $(SOUBORY_PREKLADU)/pdf-spolecne/%: kapitoly/%.md skripty/do_latexu.awk skripty/hlavni.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(dir $@)
-	$(AWK) -f skripty/do_latexu.awk -v IDKAPITOLY=$(basename $(notdir $@)) $< > $@
+	$(AWK) -f skripty/do_latexu.awk -F \\t -v IDKAPITOLY=$(basename $(notdir $@)) $< > $@
 
 # 1A. dodatky/{dodatek}.md => soubory_prekladu/pdf-spolecne/{dodatek}
 # ============================================================================
 $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%): $(SOUBORY_PREKLADU)/pdf-spolecne/%: dodatky/%.md skripty/do_latexu.awk skripty/hlavni.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(dir $@)
-	$(AWK) -f skripty/do_latexu.awk -v IDKAPITOLY=$(basename $(notdir $@)) $< > $@
+	$(AWK) -f skripty/do_latexu.awk -F \\t -v IDKAPITOLY=$(basename $(notdir $@)) $< > $@
 
 # 2. soubory_prekladu/pdf-spolecne/{id} => soubory_prekladu/pdf-spolecne/{id}.kap
 # ============================================================================
@@ -189,10 +194,13 @@ $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap) $(VSECHNY_DODATKY:%
 
 # 3. obrazky/{obrazek} => soubory_prekladu/pdf-spolecne/_obrazky/{obrazek}
 # ============================================================================
-$(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%): $(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%: obrazky/%
+$(filter %.jpg %.png, $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%)): $(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%: obrazky/%
 	mkdir -pv $(dir $@)
 	$(CONVERT) $< -colorspace Gray $@
 
+$(filter %.svg, $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%)): $(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%: obrazky/%
+	mkdir -pv $(dir $@)
+	cp $< $@
 
 
 # PDF A5:

@@ -80,6 +80,7 @@ BEGIN {
         CISLO_KAPITOLY = 0;
     }
 
+    PREDEVSIM_PRO = ZjistitPredevsimPro(JMENOVERZE);
     STAV_PODMINENENO_PREKLADU = 0;
     # 0 - mimo podmíněný blok
     # 1 - v podmíněném bloku, ale tiskne se
@@ -114,6 +115,13 @@ BEGIN {
         ShoditFatalniVyjimku("Chyba syntaxe: {{POKUD ...}} bez ukončení předchozího podmíněného bloku!");
     }
     STAV_PODMINENENO_PREKLADU = (ID_NASLEDUJICI != "") ? 1 : 2;
+}
+
+/^\{\{POKUD ZNÁME PŘEDEVŚIM PRO\}\}$/ {
+    if (STAV_PODMINENENO_PREKLADU != 0) {
+        ShoditFatalniVyjimku("Chyba syntaxe: {{POKUD ...}} bez ukončení předchozího podmíněného bloku!");
+    }
+    STAV_PODMINENENO_PREKLADU = (PREDEVSIM_PRO != "") ? 1 : 2;
 }
 
 # správně zpracovat neznámé direktivy „{{POKUD}}“
@@ -170,15 +178,16 @@ STAV_PODMINENENO_PREKLADU == 2 {
 }
 
 VYTISKNOUT {
-    gsub(/\{\{NÁZEV KAPITOLY\}\}/, NAZEVKAPITOLY, $0);
-    gsub(/\{\{PŘEDCHOZÍ ID\}\}/, ID_PREDCHOZI, $0);
-    gsub(/\{\{PŘEDCHOZÍ NÁZEV\}\}/, NAZEV_PREDCHOZI, $0);
-    gsub(/\{\{PŘEDCHOZÍ ČÍSLO\}\}/, ID_PREDCHOZI != "" ? CISLO_KAPITOLY - 1 : 0, $0);
-    gsub(/\{\{NÁSLEDUJÍCÍ ID\}\}/, ID_NASLEDUJICI, $0);
-    gsub(/\{\{NÁSLEDUJÍCÍ NÁZEV\}\}/, NAZEV_NASLEDUJICI, $0);
-    gsub(/\{\{NÁSLEDUJÍCÍ ČÍSLO\}\}/, ID_NASLEDUJICI != "" ? CISLO_KAPITOLY + 1 : 0, $0);
-    gsub(/\{\{ČÍSLO KAPITOLY\}\}/, CISLO_KAPITOLY, $0);
+    gsub(/\{\{NÁZEV KAPITOLY\}\}/, NAZEVKAPITOLY);
+    gsub(/\{\{PŘEDCHOZÍ ID\}\}/, ID_PREDCHOZI);
+    gsub(/\{\{PŘEDCHOZÍ NÁZEV\}\}/, NAZEV_PREDCHOZI);
+    gsub(/\{\{PŘEDCHOZÍ ČÍSLO\}\}/, ID_PREDCHOZI != "" ? CISLO_KAPITOLY - 1 : 0);
+    gsub(/\{\{NÁSLEDUJÍCÍ ID\}\}/, ID_NASLEDUJICI);
+    gsub(/\{\{NÁSLEDUJÍCÍ NÁZEV\}\}/, NAZEV_NASLEDUJICI);
+    gsub(/\{\{NÁSLEDUJÍCÍ ČÍSLO\}\}/, ID_NASLEDUJICI != "" ? CISLO_KAPITOLY + 1 : 0);
+    gsub(/\{\{ČÍSLO KAPITOLY\}\}/, CISLO_KAPITOLY);
     gsub(/\{\{JMÉNO VERZE\}\}/, EscapovatKNahrade(JMENOVERZE));
+    gsub(/\{\{PŘEDEVŚIM PRO\}\}/, EscapovatKNahrade(PREDEVSIM_PRO));
     print $0;
 }
 

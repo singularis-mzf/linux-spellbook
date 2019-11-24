@@ -18,6 +18,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 # Docker
 
+!Štítky: {program}{kontejnery}{virtualizace}
+
 ## Úvod
 Docker je nástroj pro odlehčenou virtualizaci formou takzvaných kontejnerů. Kontejner obsahuje vlastní podstrom procesů, který je izolovaný od zbytku systému (má vlastní souborový systém, konfiguraci, knihovny, démony, síťové rozhraní a IP adresu), ale sdílí s ním jádro a výpočetní prostředky. To umožňuje bezpečný a snadno přenositelný běh programů určených pro jiné distribuce (můžete např. na Fedoře spouštět program ze staré verze Debianu apod.).
 

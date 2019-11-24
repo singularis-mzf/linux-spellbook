@@ -14,6 +14,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 # LaTeX
 
+!Štítky: {program}{typografie}
+
 ## Úvod
 <!--
 - Vymezte, co je předmětem této kapitoly.

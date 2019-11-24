@@ -25,10 +25,13 @@
 @include "skripty/utility.awk"
 
 BEGIN {
-    FRAGMENTY_TSV = "soubory_prekladu/fragmenty.tsv";
-    if (system("test -r " FRAGMENTY_TSV) != 0) {
-        ShoditFatalniVyjimku("Nemohu číst ze souboru " FRAGMENTY_TSV "!");
+    CAS = systime();
+    DATUM = strftime("%-d. ", CAS) MesicVDruhemPade(strftime("%-m", CAS)) strftime(" %Y", CAS);
+
+    if (FS != "\t") {
+        ShoditFatalniVyjimku("Chybně nastavený field separator. Musí být tabulátor. Použijte parametr -F \\\\t při spouštění awk!");
     }
+
     if (JMENOVERZE == "") {
         ShoditFatalniVyjimku("Vyžadovaná proměnná JMENOVERZE není nastavena pomocí parametru -v!");
     }
@@ -36,14 +39,32 @@ BEGIN {
         IDFORMATU = "html";
     }
 
-    split("", KAPITOLY);
+    delete ADRESAR;
+    delete CISLO;
+    delete ID;
+    delete NAZEV;
+    delete STITKY;
+
+    delete VYCLENENO;
+
+    PREDEVSIM_PRO = ZjistitPredevsimPro(JMENOVERZE);
     STAV_PODMINENENO_PREKLADU = 0;
     # 0 - mimo podmíněný blok
     # 1 - v podmíněném bloku, ale tiskne se
     # 2 - v podmíněném bloku, přeskakuje se
+}
 
-    CAS = systime();
-    DATUM = strftime("%-d. ", CAS) MesicVDruhemPade(strftime("%-m", CAS)) strftime(" %Y", CAS);
+# zvláštní zpracování pro fragmenty.tsv:
+ARGIND < 2 {
+# 1=Adresář|2=ID|3=Název|4=Předchozí ID|5=Předchozí název|6=Následující ID|7=Následující název
+# 8=Číslo dodatku/kapitoly|9=Štítky v {}
+    ADRESAR[FNR] = $1;
+    CISLO[FNR] = $8;
+    ID[FNR] = $2;
+    NAZEV[FNR] = $3;
+    STITKY[FNR] = $9 != "NULL" ? $9 : "";
+    VYCLENENO[FNR] = 0;
+    next;
 }
 
 # Podmíněný překlad
@@ -53,6 +74,15 @@ BEGIN {
         ShoditFatalniVyjimku("Chyba syntaxe: {{POKUD JE FORMÁT ...}} bez ukončení předchozího podmíněného bloku!");
     }
     STAV_PODMINENENO_PREKLADU = (substr($0, 19, length($0) - 20) == IDFORMATU) ? 1 : 2;
+    next;
+}
+
+/^\{\{POKUD ZNÁME PŘEDEVŠÍM PRO\}\}$/ {
+    if (STAV_PODMINENENO_PREKLADU != 0) {
+        ShoditFatalniVyjimku("Chyba syntaxe: {{POKUD ...}} bez ukončení předchozího podmíněného bloku!");
+    }
+    STAV_PODMINENENO_PREKLADU = (PREDEVSIM_PRO != "") ? 1 : 2;
+    next;
 }
 
 # správně zpracovat neznámé direktivy „{{POKUD}}“
@@ -76,35 +106,85 @@ STAV_PODMINENENO_PREKLADU == 2 {
     next;
 }
 
-# Zbytek zpracování
+# Zbytek zpracování šablony
 # ====================================================
-{
-    JE_RIDICI_RADEK = $0 ~ /^\{\{[^{}]+\}\}$/;
-    VYTISKNOUT = 0;
+function VypsatOdkazNaKapitolu(i, vyclenit) {
+    print "<li value=\"" CISLO[i] "\"><a href=\"" ID[i] ".htm\">" NAZEV[i] "</a></li>";
+    if (vyclenit) {
+        VYCLENENO[i] = 1;
+    }
 }
+#    JE_RIDICI_RADEK = $0 ~ /^\{\{[^{}]+\}\}$/;
 
 /^\{\{COPYRIGHTY (KAPITOL|OBRÁZKŮ)\}\}$/ {
     ShoditFatalniVyjimku($0 "již nejsou v index.html podporovány!");
 }
 
-/^\{\{ZAČÁTEK KNIHY\}\}$/,/^\{\{ZAČÁTEK KAPITOLY\}\}$/ {
-    VYTISKNOUT =  !JE_RIDICI_RADEK;
-}
+{ZPRACOVAT = 0;}
+/^\{\{ZAČÁTEK KNIHY\}\}$/,/^\{\{ZAČÁTEK KAPITOLY\}\}$/ {ZPRACOVAT = 1;}
+/^\{\{KONEC KAPITOLY\}\}$/,/^\{\{KONEC KNIHY\}\}$/ {ZPRACOVAT = 1;}
+/^\{\{((ZAČÁTEK|KONEC) (KNIHY|KAPITOLY))\}\}$/ || !ZPRACOVAT {next;}
 
-/^\{\{KONEC KAPITOLY\}\}$/,/^\{\{KONEC KNIHY\}\}$/ {
-    VYTISKNOUT =  !JE_RIDICI_RADEK;
-    if ($0 == "{{KONEC KAPITOLY}}") {
-        while (getline < FRAGMENTY_TSV) {
-            split($0, sloupce, "\t");
-            print "<li value=\"" sloupce[8] "\"><a href=\"" sloupce[2] ".htm\">" sloupce[3] "</a></li>";
+/^\{\{VYČLENIT SEM PODLE ID:[^}]*\}\}$/ {
+    s = substr($0, 25, length($0) - 26);
+    for (i = 1; i <= length(ID); ++i) {
+        if (ID[i] == s) {
+            VypsatOdkazNaKapitolu(i, 1);
         }
     }
+    next;
 }
 
-VYTISKNOUT {
+/^\{\{VYČLENIT SEM PODLE ŠTÍTKU:[^}]*\}\}$/ {
+    s = substr($0, 29, length($0) - 30);
+    for (i = 1; i <= length(ID); ++i) {
+        if (index(STITKY[i], "{" s "}")) {
+            VypsatOdkazNaKapitolu(i, 1);
+        }
+    }
+    next;
+}
+
+/^\{\{VYPSAT ZBYTEK PO VYČLENĚNÍ\}\}$/ {
+    for (i = 1; i <= length(ID); ++i) {
+        if (!VYCLENENO[i]) {
+            VypsatOdkazNaKapitolu(i, 0);
+        }
+    }
+    next;
+}
+
+/^\{\{VYPSAT ZBYTEK KAPITOL\}\}$/ {
+    for (i = 1; i <= length(ID); ++i) {
+        if (!VYCLENENO[i] && ADRESAR[i] == "kapitoly") {
+            VypsatOdkazNaKapitolu(i, 0);
+        }
+    }
+    next;
+}
+
+/^\{\{VYPSAT ZBYTEK DODATKŮ\}\}$/ {
+    for (i = 1; i <= length(ID); ++i) {
+        if (!VYCLENENO[i] && ADRESAR[i] == "dodatky") {
+            VypsatOdkazNaKapitolu(i, 0);
+        }
+    }
+    next;
+}
+
+
+/\{\{(DATUM SESTAVENÍ|JMÉNO VERZE|PŘEDEVŠÍM PRO)\}\}/ {
     gsub(/\{\{DATUM SESTAVENÍ\}\}/, DATUM);
     gsub(/\{\{JMÉNO VERZE\}\}/, EscapovatKNahrade(JMENOVERZE));
-    print $0;
+    gsub(/\{\{PŘEDEVŠÍM PRO\}\}/, EscapovatKNahrade(PREDEVSIM_PRO));
+}
+
+/^\{\{.*\}\}$/ {
+    ShoditFatalniVyjimku("Nezpracovaný řídicí řádek: " $0);
+}
+
+{
+    print;
 }
 
 END {

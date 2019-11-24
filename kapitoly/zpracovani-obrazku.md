@@ -1,6 +1,6 @@
 <!--
 
-Linux Kniha kouzel, kapitola Obrázky
+Linux Kniha kouzel, kapitola Zpracování obrázků
 Copyright (c) 2019 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -12,7 +12,9 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
 
-# Obrázky
+# Zpracování obrázků
+
+!Štítky: {tematický okruh}{bitmapová grafika}
 
 ## Úvod
 ![ve výstavbě](../obrazky/ve-vystavbe.png)

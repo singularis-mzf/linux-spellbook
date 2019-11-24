@@ -14,6 +14,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 # Ostatní
 
+!Štítky: {interní kapitola}{ostatní}
+
 ## Úvod
 Tato kapitola slouží jako „skládka“ pro dosud nezařazené příklady.
 Neměla by být součástí výsledné knihy.

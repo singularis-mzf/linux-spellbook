@@ -14,6 +14,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 # Firefox
 
+!Štítky: {program}
+
 ## Úvod
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 

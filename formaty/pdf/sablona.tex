@@ -90,6 +90,7 @@
 \usepackage{ifthen}         % příkaz \ifthenelse a související konstrukce
 \usepackage{multicol}       % prostředí {multicols} a {multicols*}
 \usepackage{tabu}           % lepší tabulky (prostředí {tabu})
+\usepackage{tcolorbox}      % boxy s pozadím, kulatými okraji a podobně
 \usepackage{titlesec}       % formátování nadpisů kapitol
 \usepackage[titles]{tocloft}% formátování přehledu („obsahu“)
 \usepackage{verbatim}       % zejm. prostředí {comment}, ale také {verbatim}
@@ -154,11 +155,12 @@
 %
 % DEFINICE DÉLKOVÝCH REGISTRŮ
 % ============================================================================
-\newlength{\sirkacislazaklinadla}\newlength{\sirkazbytku}
-
-\setlength{\sirkacislazaklinadla}{23pt}
-
+\newlength{\sirkacislazaklinadla}\setlength{\sirkacislazaklinadla}{23pt}
+\newlength{\sirkazbytku}
 \newlength{\odsazeni}\setlength{\odsazeni}{1em}
+\newlength{\minsirkastitku}\setlength{\minsirkastitku}{2cm}
+\newlength{\sirkastitkutmp}
+
 
 %
 % KOREKCE DĚLENÍ SLOV
@@ -193,6 +195,11 @@
 \newcommand*{\volitelnykonec}{\textcolor{seda}{\ensuremath{\big]}}}%
 \newcommand*{\carriagereturn}{\mbox{}\dlsh}%
 \newenvironment*{odsazenyodstavec}[1]{\vspace{1ex}\begin{adjustwidth}{#1\odsazeni}{}}{\end{adjustwidth}\vspace{1ex}}%
+\newcommand*{\stitek}[1]{{%
+    \settowidth{\sirkastitkutmp}{#1}%
+    \ifthenelse{\lengthtest{\sirkastitkutmp<\minsirkastitku}}{\setlength{\sirkastitkutmp}{\minsirkastitku}}{}%
+    \mbox{\tcbox[boxrule=0.5pt,size=fbox,arc=1mm]{\makebox[\sirkastitkutmp]{\rule[-0.45ex]{0pt}{1em}#1}}}%
+}}
 
 %
 % \zaklinadlo[#1=(rezervováno)]{#2=číslo zaklínadla}{#3=titulek (volitelný) + \footnotemark}{#4=\footnotetext...}{#5=řádky a akce zaklínadla}

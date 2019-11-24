@@ -1,6 +1,6 @@
 <!--
 
-Linux Kniha kouzel, kapitola X (správce oken)
+Linux Kniha kouzel, kapitola X (ovládání oken)
 Copyright (c) 2019 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -16,7 +16,9 @@ Poznámky:
 
 -->
 
-# X (správce oken)
+# X (ovládání oken)
+
+!Štítky: {tematický okruh}{GUI}
 
 ## Úvod
 <!--

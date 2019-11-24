@@ -45,12 +45,17 @@
 Známá také jako „konverzační slovník linuxštiny“.</div>
 </div></div>
 <div class="podzahlavim">
-<div class="informaceoverzi">Verze: {{JMÉNO VERZE}}<br>Datum sestavení: {{DATUM SESTAVENÍ}}</div>
 <p class="ponadpisu" style="margin:0 auto;">„Linux: Kniha kouzel“ je sbírka velmi krátkých řešených příkladů pro operační systém Linux.
 Cílem projektu je sdílení znalostí mezi pokročilými a&nbsp;začínajícími uživateli Linuxu tak, že projekt umožňuje
 pokročilým uživatelům sepisovat, přehledně organizovat a&nbsp;sdílet svoje nejčastěji používaná zaklínadla
 („snippets“) a&nbsp;začátečníkům umožňuje je (pokročilé) přitom sledovat a&nbsp;odnést si z&nbsp;toho
 v&nbsp;rámci svých (začátečníků) schopností co nejvíc.</p>
+<div class="ikona"><img src="obrazky/kalendar.svg" alt="" height="64"></div>
+<p class="informaceoverzi">Verze:<br><em>{{JMÉNO VERZE}}</em>
+{{POKUD ZNÁME PŘEDEVŠÍM PRO}}
+<br>Především pro:<br><em>{{PŘEDEVŠÍM PRO}}</em>
+{{KONEC POKUD}}
+<br>Datum sestavení:<br><em>{{DATUM SESTAVENÍ}}</em></p>
 </div>
 <h2>Typografické konvence</h2>
 <table class="zaklinadlo" style="font-size:87%;margin:0 2rem;"><tbody>
@@ -67,8 +72,45 @@ uvést víckrát, jsou vyznačeny šedou trojtečkou.</td></tr>
 <tr><td><div class="radekzaklinadla">?</div></td><td>Samostatný otazník značí, že řešení dané úlohy není dosud známo. Hojně se vyskytuje v rozpracovaných kapitolách.<td></tr>
 </tbody></table>
 
-<p style="margin:4rem auto -2rem;">Tato verze Knihy kouzel obsahuje následující kapitoly a&nbsp;dodatky:</p>
-<ol id="prehledkapitol">
+<!--<p>Tato verze Knihy kouzel obsahuje následující kapitoly a&nbsp;dodatky:</p>-->
+{{POKUD JE FORMÁT nepodporovaný}}
+<!--
+Podporované konstrukce:
+* {{VYČLENIT SEM PODLE ID:<ID>}}
+* {{VYČLENIT SEM PODLE ŠTÍTKU:<ŠTÍTEK>}}
+* {{VYPSAT ZBYTEK PO VYČLENĚNÍ}}
+* {{VYPSAT ZBYTEK KAPITOL}}
+* {{VYPSAT ZBYTEK DODATKŮ}}
+-->
+{{KONEC POKUD}}
+<div class="prehledy">
+<div class="sloupec1">
+<strong>Předmluva</strong>
+<ol>
+{{VYČLENIT SEM PODLE ID:predmluva}}
+</ol>
+<strong>Tematické okruhy</strong>
+<ol>
+{{VYČLENIT SEM PODLE ŠTÍTKU:tematický okruh}}
+</ol>
+</div>
+<div class="sloupec2">
+<strong>Programy</strong>
+<ol>
+{{VYČLENIT SEM PODLE ŠTÍTKU:program}}
+</ol>
+<strong>Syntaxe</strong>
+<ol>
+{{VYČLENIT SEM PODLE ŠTÍTKU:syntaxe}}
+</ol></div>
+<div class="sloupec3"><strong>Dodatky</strong><ol>
+{{VYPSAT ZBYTEK DODATKŮ}}
+</ol>
+<strong>Ostatní</strong>
+<ol>
+{{VYPSAT ZBYTEK KAPITOL}}
+</ol></div>
+</div>
 {{ZAČÁTEK KAPITOLY}}
 <!doctype html>
 <html lang="cs">
@@ -132,7 +174,6 @@ a možnost se zapojit do projektu „Linux: Kniha kouzel“ navštivte jeho
 </body>
 </html>
 {{KONEC KAPITOLY}}
-</ol>
 </article>
 <footer>
 <img src="obrazky/by-sa.png" width="88" height="31" alt="[BY-SA]">

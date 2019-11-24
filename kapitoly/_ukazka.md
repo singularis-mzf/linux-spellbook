@@ -14,6 +14,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 # Ukázka
 
+!Štítky: {ostatní}{ukázka}
+
 ## Úvod
 Tato kapitola je jen ukázka dovoleného formátování. Je zatím poměrně omezené.
 Běžné odstavce mohou pokračovat na dalším řádku.

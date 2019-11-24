@@ -41,9 +41,10 @@ function Tabulator(delka) {
     return "Tabulator(" delka ")";
 }
 
-function ZacatekKapitoly(kapitola, cisloKapitoly) {
+function ZacatekKapitoly(kapitola, cisloKapitoly, stitky) {
     DO_LOGU_UROVEN_ODSTAVCE = 0;
-    return "ZacatekKapitoly(\"" kapitola "\");\n";
+    gsub(/\|/, "}{", stitky);
+    return "ZacatekKapitoly(\"" kapitola "\"" (stitky != "" ? ", štítky={" stitky "}" : "") ");\n";
 }
 
 function KonecKapitoly(kapitola, cislaPoznamek, textyPoznamek,   i, vysledek) {

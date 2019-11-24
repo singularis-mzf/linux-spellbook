@@ -156,3 +156,17 @@ function Vrchol(zasobnik) {
         return "";
     }
 }
+
+#
+# SPECIÁLNÍ FUNKCE PRO TENTO PROJEKT
+# ============================================================================
+
+function ZjistitPredevsimPro(verze) {
+    if (JMENOVERZE ~ /^vanilková příchuť.*[^0-9]1\.[0-9]+$/) {
+        return "Ubuntu 18.04 Bionic Beaver";
+    } else if (JMENOVERZE ~ /^vanilková příchuť.*[^0-9]2\.[0-9]+$/) {
+        return "Ubuntu 20.04 Focal Fossa";
+    } else {
+        return "";
+    }
+}

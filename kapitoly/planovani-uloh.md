@@ -14,6 +14,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 # Plánování úloh
 
+!Štítky: {tematický okruh}
+
 ## Úvod
 V této kapitole se dozvíte, jak spouštět příkazy automaticky v určený čas.
 Linux na tento účel poskytuje dva oddělené mechanismy: prastarý démon „cron“

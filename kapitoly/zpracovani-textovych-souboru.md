@@ -1,6 +1,6 @@
 <!--
 
-Linux Kniha kouzel, kapitola [DOPLNIT NÁZEV]
+Linux Kniha kouzel, kapitola Zpracování textových souborů
 Copyright (c) 2019 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -12,13 +12,18 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
 
-# Název
+# Zpracování textových souborů
+
+!Štítky: {tematický okruh}
 
 ## Úvod
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 ## Definice
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+* **Záznam** je...
+* **Pole** je...
 
 ## Zaklínadla
 ![ve výstavbě](../obrazky/ve-vystavbe.png)

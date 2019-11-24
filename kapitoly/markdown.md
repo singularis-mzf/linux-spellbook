@@ -20,6 +20,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 # Markdown
 
+!Štítky: {syntaxe}
+
 ## Úvod
 Markdown je jednoduchý a praktický značkovací jazyk pro pohodlné psaní i čtení textů s jednoduchým formátováním v editorech prostého textu. Je primárně určen k převodu do HTML, kde se na výsledek aplikují kaskádové styly.
 

@@ -18,6 +18,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 # GNU awk
 
+!Štítky: {program}{syntaxe}{zpracování textu}
+
 ## Úvod
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 

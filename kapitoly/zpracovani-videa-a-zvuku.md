@@ -38,6 +38,8 @@ Poznámky:
 -->
 # Zpracování videa a zvuku
 
+!Štítky: {tematický okruh}{video}{zvuk}
+
 ## Úvod
 FFmpeg je nástroj pro konverzi, úpravu a streamování videa, zvuku a titulků.
 Hlavní výhodou FFmpegu oproti videoeditorům s grafickým uživatelským rozhraním

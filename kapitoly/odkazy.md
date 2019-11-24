@@ -14,6 +14,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 # Pevné a symbolické odkazy
 
+!Štítky: {tematický okruh}{systém souborů}
+
 ## Úvod
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 

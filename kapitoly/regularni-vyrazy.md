@@ -18,6 +18,8 @@ Poznámky:
 
 # Regulární výrazy
 
+!Štítky: {syntaxe}{zpracování textu}
+
 ## Úvod
 <!--
 - Vymezte, co je předmětem této kapitoly.

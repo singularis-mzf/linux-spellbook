@@ -214,8 +214,13 @@ function Tabulator(delka,  i, vysledek) {
     return "\\textcolor{seda}{\\guillemotright}{" Zopakovat("~", max(0, delka - 1)) "}";
 }
 
-function ZacatekKapitoly(kapitola, cisloKapitoly) {
-    return "\\kapitola{\\MakeUppercase{" kapitola "}}%\n";
+function ZacatekKapitoly(kapitola, cisloKapitoly, stitky,   polestitku) {
+    kapitola = "\\kapitola{\\MakeUppercase{" kapitola "}}%\n";
+    if (stitky != "") {
+        gsub(/\|/, "} \\stitek{", stitky);
+        return kapitola "\\noindent\\stitek{" stitky "}\n";
+    }
+    return kapitola;
 }
 
 function KonecKapitoly(kapitola, cislaPoznamek, textyPoznamek) {
