@@ -205,12 +205,58 @@ http://docs.flatpak.org/en/latest/single-file-bundles.html
 -->
 
 *# instalovat balíček*<br>
-**flatpak install** {*server*} {*balíček*}
+**sudo flatpak install \-\-system** [{*server*}] {*balíček*}
+
+*# instalovat balíček jen pro tohoto uživatele*<br>
+**flatpak install \-\-user** [{*server*}] {*balíček*}
 
 *# vypsat všechny dostupné balíčky*<br>
 **flatpak search ""**
 
+### Snap
 
+*# spustit program z balíčku*<br>
+**snap run** {*balíček*}
+
+*# instalovat balíček*<br>
+**sudo snap install** [**\-\-**{*kanál*}] {*balíček*}...
+
+*# odinstalovat balíček*<br>
+**sudo snap remove** {*balíček*}...
+
+*# vypsat nainstalované balíčky*<br>
+**snap list**
+
+*# vypsat podrobnější informace o balíčku*<br>
+**snap info** {*balíček*}
+
+*# deaktivovat balíček/znovu ho aktivovat*<br>
+**sudo snap disable** {*balíček*}<br>
+**sudo snap enable** {*balíček*}
+
+*# ručně připojit konektor balíčku do slotu jiného balíčku/rozpojit spojení*<br>
+**sudo snap connect** {*balíček*}**:**{*jeho-konektor*} {*jiný-balíček*}**:**{*jeho-slot*}<br>
+**sudo snap disconnect** {*balíček*}**:**{*konektor-nebo-slot*}
+
+*# stáhnout balíček k offline instalaci*<br>
+*// Kanál může být: edge, beta, candidate nebo stable.*<br>
+**snap download** [**\-\-**{*kanál*}] {*balíček*}
+
+*# nainstalovat balíček offline*<br>
+*// Pokud má balíček závislosti na dalších balíčcích, je potřeba nejprve nainstalovat je, jinak se je bude se snap-démon nainstalovat online.*<br>
+**sudo snap ack** {*soubor\_s\_balíčkem.assert*}<br>
+**sudo snap install** {*soubor\_s\_balíčkem.snap*}
+
+*# vypsat seznam všech dostupných balíčků*<br>
+*// Poznámka: provedení tohoto příkazu může trvat i několik minut a vzhledem k velkému rozsahu vypsaných informací doporučuji výstup přesměrovat do souboru.*<br>
+**(for X in {a..z} {0..9}; do snap find** [**\-\-narrow**] **$X \| sed 1d; done) \| tr -s "&blank;" \| sort -iu \| sed "$(printf "%s/&blank;/\\\\\|/\\\\n" s s s)" \| column -ts \\\|** [**&gt;** {*soubor*}]
+
+*# vypsat spojení konektorů a slotů (všech/jen spojených)*<br>
+**snap connections \-\-all**<br>
+**snap connections**
+
+*# vrátit balíček do stavu před posledním upgradem na novou verzi (neověřeno)*<br>
+**sudo snap revert** {*balíček*}
 
 
 ## Parametry příkazů
@@ -226,6 +272,21 @@ http://docs.flatpak.org/en/latest/single-file-bundles.html
 - Ve výčtu balíků k instalaci vycházejte z minimální instalace Ubuntu.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+*# Aptitude*<br>
+**sudo apt-get install aptitude**
+
+*# Flatpak*<br>
+**sudo add-apt-repository ppa:alexlarsson/flatpak**<br>
+**sudo aptitude update**<br>
+**sudo apt-get install flatpak** [**gnome-software-plugin-flatpak**]<br>
+**sudo flatpak remote-add \-\-if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo**<br>
+!: Restartujte operační systém.
+
+Snap je základní součástí Ubuntu přítomnou v každé nové instalaci. Je možno ho odinstalovat tímto příkazem:
+
+*# *<br>
+**sudo apt-get purge snapd**
 
 ## Ukázka
 <!--
@@ -248,6 +309,9 @@ http://docs.flatpak.org/en/latest/single-file-bundles.html
 - Uveďte, které informační zdroje jsou pro začátečníka nejlepší k získání rychlé a obsáhlé nápovědy. Typicky jsou to manuálové stránky, vestavěná nápověda programu nebo webové zdroje (ale neuvádějte konkrétní odkazy, ty patří do sekce „Odkazy“).
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+*# *<br>
+**snap help** {*podpříkaz*}
 
 ## Odkazy
 ![ve výstavbě](../obrazky/ve-vystavbe.png)

@@ -221,7 +221,7 @@ Každá revize je jednoznačně identifikována pomocí své MD5 hashe. Kromě t
 ### Sekundární pracovní adresáře
 
 *# vytvořit*<br>
-**Poznámka: v žádných dvou pracovních adresářích jednoho repozitáře nemůže být současně aktivní tatáž větev; toto opatření platí, aby se zamezilo konfliktům při commitování.**<br>
+*// Poznámka: v žádných dvou pracovních adresářích jednoho repozitáře nemůže být současně aktivní tatáž větev; toto opatření platí, aby se zamezilo konfliktům při commitování.*<br>
 **git worktree add** [**\-\-detach**] [**-b** {*nová-větev*}] {*/nový/adresář*} {*revize*}
 
 *# vypsat seznam*<br>

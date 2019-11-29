@@ -169,6 +169,7 @@ STAV_PODMINENENO_PREKLADU == 2 {
             system("cat '" COPYRIGHTY_OBRAZKU "'");
             break;
         case "{{ROZCESTNÍK SEKCÍ}}":
+            ShoditFatalniVyjimku("{{ROZCESTNÍK SEKCÍ}}: Již nepodporováno!");
 #            ShoditFatalniVyjimku("egrep -x '<h2 id=\".*</h2>' '" TELOKAPITOLY "' | sed -E 's/<h2 id=\"([^\"]*)\">(<span[^>]*>[^<]*<\\/span>)? ?([^<]*)<\\/h2>/<a href=\"#\\1\">\\3<\\/a>/'");
             printf("<div class=\"rozcestnikkapitol\">");
             system("egrep -x '<h2 id=\".*</h2>' '" TELOKAPITOLY "' | sed -E 's/<h2 id=\"([^\"]*)\">(<span[^>]*>[^<]*<\\/span>)? ?([^<]*)<\\/h2>/<a href=\"#\\1\" class=\"cast\">\\3<\\/a><span class=\"oddelovac\">\\&nbsp;|<\\/span>/'");

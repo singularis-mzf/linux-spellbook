@@ -193,9 +193,10 @@ TODO: Zamyslet se nad formátováním.
 *# zjistit datum Velikonoční neděle*<br>
 **date -d "$(LC\_ALL=C ncal -e** [{*rok*}]**)" +%F**
 
+### Synchronizace času
 
-
-
+*# ručně synchronizovat systémový čas*<br>
+?
 
 
 ## Parametry příkazů

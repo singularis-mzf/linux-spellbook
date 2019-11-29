@@ -34,7 +34,7 @@ VSECHNY_KAPITOLY := _ostatni _ukazka awk barvy-a-titulek datum-cas-kalendar dock
 # H, I, J, K, L, M
 VSECHNY_KAPITOLY += hledani-souboru make markdown
 # N, O, P, Q, R, S
-VSECHNY_KAPITOLY += odkazy planovani-uloh regularni-vyrazy sprava-balicku sprava-uzivatelu stahovani-videi
+VSECHNY_KAPITOLY += odkazy planovani-uloh prace-s-archivy regularni-vyrazy sprava-balicku sprava-uzivatelu stahovani-videi
 # T, U, V, W, X, Y, Z
 VSECHNY_KAPITOLY += x zpracovani-obrazku zpracovani-textovych-souboru zpracovani-videa-a-zvuku
 

@@ -151,6 +151,16 @@ https://creativecommons.org/licenses/by-sa/4.0/
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+## Pomocné funkce a skripty
+
+*# propustit\_radku() − Propustí N řádků přímo a zbytek nechá projít zadaným příkazem*<br>
+**function propustit\_radku() \{**<br>
+**sed -u "$1q"**<br>
+**shift**<br>
+**"$@"**<br>
+**\}**
+
+
 ## Odkazy
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 

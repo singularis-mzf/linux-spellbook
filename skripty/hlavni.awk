@@ -315,6 +315,50 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C) {
     return VYSTUP;
 }
 
+function ExtrahovatOsnovu(soubor, osnova,   v_komentari, i, c_sekce, c_podsekce) {
+    prikaz = "cat '" soubor "'";
+    split("", osnova);
+    c_sekce = 0;
+    c_podsekce = 0;
+    v_komentari = 0;
+    i = 0;
+    while (prikaz | getline) {
+        if (v_komentari) {
+            v_komentari = ($0 != "-->");
+            continue;
+        }
+        else if ($0 == "<!--") {
+            v_komentari = 1;
+            continue;
+        }
+        if ($0 ~ /^#{1,3} .+/) {
+            ++i;
+            switch (index($0, " ")) {
+                case 2:
+                    osnova[i ".typ"] = "KAPITOLA";
+                    osnova[i ".id"] = "";
+                    osnova[i ".nazev"] = ZpracujZnaky(substr($0, 3));
+                    c_sekce = 0;
+                    c_podsekce = 0;
+                    break;
+                case 3:
+                    osnova[i ".typ"] = "SEKCE";
+                    osnova[i ".id"] = ++c_sekce;
+                    osnova[i ".nazev"] = ZpracujZnaky(substr($0, 4));
+                    c_podsekce = 0;
+                    break;
+                case 4:
+                    osnova[i ".typ"] = "PODSEKCE";
+                    osnova[i ".id"] = c_sekce "x" (++c_podsekce);
+                    osnova[i ".nazev"] = ZpracujZnaky(substr($0, 5));
+                    break;
+            }
+        }
+    }
+    close(prikaz);
+    return i;
+}
+
 # Tato funkce se volá pro první ze sekvence řádků určitého typu.
 function ZacitTypRadku(   bylPredel) {
     bylPredel = 0;
@@ -458,6 +502,15 @@ BEGIN {
         }
     }
 
+    SOUBOR = $1 "/" $2 ".md";
+
+    split("", OSNOVA);
+    DELKA_OSNOVY = ExtrahovatOsnovu(SOUBOR, OSNOVA);
+
+#    for (i = 1; i <= DELKA_OSNOVY; ++i) {
+#        print "OSNOVA[" i "] = {" OSNOVA[i ".typ"] "|" OSNOVA[i ".id"] "|" OSNOVA[i ".nazev"] "}" > "/dev/stderr";
+#    }
+
     ID_KAPITOLY_OMEZENE = IDKAPITOLY;
     gsub(/[^A-Za-z0-9]/, "", ID_KAPITOLY_OMEZENE);
     NULL_STRING = "\x01\x02";
@@ -479,6 +532,8 @@ BEGIN {
     split("", ppt);
     split("", ppcall);
     split("", pptall);
+
+
 }
 
 # komentář započatý na samostatném řádku kompletně ignorovat

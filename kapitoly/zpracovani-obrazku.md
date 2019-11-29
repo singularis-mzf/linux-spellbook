@@ -11,6 +11,11 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
+<!--
+
+[ ] Zpracovat „pngquant“ a výstup „PNG8:“.
+
+-->
 
 # Zpracování obrázků
 
@@ -26,26 +31,26 @@ https://creativecommons.org/licenses/by-sa/4.0/
 ## Zaklínadla
 
 ### Škálování (scale)
-*# vynutit šířku (WIDTH)/výšku (HEIGHT)*<br>
+*# vynutit šířku (**WIDTH**)/výšku (**HEIGHT**)*<br>
 **\-resize** {*šířka*}<br>
 **\-resize x**{*výška*}
 
-*# vynutit oba rozměry (FORCE) − jediná varianta, která v případě potřeby změní poměr stran obrázku*<br>
+*# vynutit oba rozměry (**FORCE**) − jediná varianta, která v případě potřeby změní poměr stran obrázku*<br>
 **\-resize** {*šířka*}**x**{*výška*}**\\!**
 
-*# vyplnit (CONTAIN)/a doplnit pozadím na přesný rozměr*<br>
+*# vyplnit (**CONTAIN**)/a doplnit pozadím na přesný rozměr*<br>
 **\-resize** {*šířka*}**x**{*výška*}<br>
 **\-resize** {*šířka*}**x**{*výška*} **-background** {*barva*} **-compose Copy -gravity Center -extent** {*šířka*}**x**{*výška*}
 
-*# pokrýt (COVER)/a oříznout na přesný rozměr*<br>
+*# pokrýt (**COVER**)/a oříznout na přesný rozměr*<br>
 **\-resize** {*šířka*}**x**{*výška*}**\^**<br>
 **\-resize** {*šířka*}**x**{*výška*}**\^ -gravity Center -crop** {*šířka*}**x**{*výška*}**+0+0 +repage**
 
-*# jen zmenšit (SHRINK)/a doplnit pozadím na přesný rozměr*<br>
+*# jen zmenšit (**SHRINK**)/a doplnit pozadím na přesný rozměr*<br>
 **\-resize** {*šířka*}**x**{*výška*}**\\&gt;**<br>
 **\-resize** {*šířka*}**x**{*výška*}\\&gt; **-background** {*barva*} **-compose Copy -gravity Center -extent** {*šířka*}**x**{*výška*}
 
-*# jen zvětšit (ENLARGE)/nebo doplnit pozadím na přesný rozměr (Pozor! Viz poznámku.)*<br>
+*# jen zvětšit (**ENLARGE**)/nebo doplnit pozadím na přesný rozměr (Pozor! Viz poznámku.)*<br>
 *// Druhá varianta je poměrně komplikovaná a aplikuje požadovanou operaci pouze na poslední obrázek v seznamu, ne na všechny obrázky v seznamu jako ostatní operace!*<br>
 **\-resize** {*šířka*}**x**{*výška*}**\\&lt;**<br>
 **\-resize** {*šířka*}**x**{*výška*}**\\&lt; \\( -size** {*šířka*}**x**{*výška*} **-background** {*barva*} **-gravity Center -compose Copy -clone -1 -alpha transparent xc:none -mosaic -clone -1 -composite \\) -delete -2**

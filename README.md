@@ -56,7 +56,9 @@ Kapitoly ani dodatky se však nesmějí opakovat.
 
 ### Dospělé nevydané kapitoly
 
-* V této chvíli nejsou.
+* [prace-s-archivy](kapitoly/prace-s-archivy.md)
+
+<!-- * V této chvíli nejsou. -->
 
 ### Kapitoly-děti
 

@@ -64,14 +64,25 @@ function Tabulator(delka,  i, vysledek) {
     return vysledek "</span>";
 }
 
-function ZacatekKapitoly(kapitola, cisloKapitoly, stitky) {
+# + OSNOVA, DELKA_OSNOVY
+
+function ZacatekKapitoly(kapitola, cisloKapitoly, stitky,   vysledek) {
 # Generování prvku <h1> obstarává šablona kapitoly (formaty/html/sablona_kapitoly).
 #    return "<h1>" kapitola "</h1>\n";
-    if (stitky == "") {
-        return "";
+    vysledek = "";
+    if (stitky != "") {
+        gsub(/\|/, "</span>\n<span>", stitky);
+        vysledek = "<div class=\"stitky\"><span>" stitky "</span></div>";
     }
-    gsub(/\|/, "</span>\n<span>", stitky);
-    return "<div class=\"stitky\"><span>" stitky "</span></div>";
+
+    vysledek = vysledek "<div class=\"rozcestnikkapitol\">\n";
+    for (i = 1; i <= DELKA_OSNOVY; ++i) {
+        if (OSNOVA[i ".typ"] == "SEKCE") {
+            vysledek = vysledek "<a href=\"#cast" OSNOVA[i ".id"] "\">" OSNOVA[i ".nazev"] "</a><span class=\"oddelovac\">&nbsp;|</span>\n";
+        }
+    }
+    vysledek = vysledek "</div>";
+    return vysledek;
 }
 
 function KonecKapitoly(kapitola, cislaPoznamek, textyPoznamek,   i, vysledek) {
