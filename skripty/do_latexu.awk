@@ -214,8 +214,8 @@ function Tabulator(delka,  i, vysledek) {
     return "\\textcolor{seda}{\\guillemotright}{" Zopakovat("~", max(0, delka - 1)) "}";
 }
 
-function ZacatekKapitoly(kapitola, cisloKapitoly, stitky,   polestitku) {
-    kapitola = "\\kapitola{\\MakeUppercase{" kapitola "}}%\n";
+function ZacatekKapitoly(kapitola, cisloKapitoly, stitky, osnova) {
+    kapitola = "\\kapitola{\\MakeUppercase{" kapitola "}}%\n\\label{kapx" ID_KAPITOLY_OMEZENE "}";
     if (stitky != "") {
         gsub(/\|/, "} \\stitek{", stitky);
         return kapitola "\\noindent\\stitek{" stitky "}\n";
@@ -401,7 +401,7 @@ function FormatVolitelny(jeZacatek) {
 }
 
 function ReseniNezname() {
-    return "?";
+    return "{\\reseninezname}";
 }
 
 function TriTecky() {

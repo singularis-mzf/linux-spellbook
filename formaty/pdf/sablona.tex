@@ -202,7 +202,32 @@
     \ifthenelse{\lengthtest{\sirkastitkutmp<\minsirkastitku}}{\setlength{\sirkastitkutmp}{\minsirkastitku}}{}%
     \mbox{\tcbox[boxrule=0.5pt,size=fbox,arc=1mm]{\makebox[\sirkastitkutmp]{\rule[-0.45ex]{0pt}{1em}#1}}}%
 }}
+\newcommand*{\stitekrejstriku}[1]{{%
+    \settowidth{\sirkastitkutmp}{#1}%
+    \ifthenelse{\lengthtest{\sirkastitkutmp<\minsirkastitku}}{\setlength{\sirkastitkutmp}{\minsirkastitku}}{}%
+    \mbox{\tcbox[boxrule=0.5pt,size=fbox,arc=1mm,boxsep=2pt,left=1pt,right=1pt]{\makebox[\sirkastitkutmp][l]{\rule[-0.45ex]{0pt}{1em}#1}}}%
+}}
+\newcommand*{\reseninezname}{{\bfseries\color{seda}?}}
 
+%
+% Přehled podle štítků (pps)
+% ============================================================================
+\newenvironment{ppsstitek}[1]{%
+    \newcommand*{\ppspolozka}[4][]{\item\relax{\bfseries\makebox[1.4em][l]{\ref{##4}}##2}~##3\dotfill\pageref{##4}}%
+    \newcommand*{\ppsstitekpolozky}[1]{\mbox{((##1))}\ }%
+    \raggedright%
+    \begin{list}{}{%
+        \setlength{\leftmargin}{2em}%
+        \setlength{\rightmargin}{0pt}%
+        \setlength{\labelwidth}{0pt}%
+        \setlength{\itemindent}{0pt}%
+        \setlength{\itemsep}{0pt}%
+        \setlength{\listparindent}{0pt}%
+        \setlength{\parsep}{0pt}%
+    }\item\relax\hspace*{-\leftmargin}\stitekrejstriku{#1}%
+}{%
+    \end{list}%
+}
 %
 % \zaklinadlo[#1=(rezervováno)]{#2=číslo zaklínadla}{#3=titulek (volitelný) + \footnotemark}{#4=\footnotetext...}{#5=řádky a akce zaklínadla}
 % ====================================
@@ -297,7 +322,13 @@ http://creativecommons.org/licenses/by-sa/4.0/
 %
 % Nastavit styl záhlaví a zápatí
 \pagestyle{normalni}%
-% Vysázet obsah
+% Vysázet přehled podle štítků
+\chapter*{PŘEHLED PODLE ŠTÍTKŮ}%
+%
+{{PŘEHLED PODLE ŠTÍTKŮ}}
+\clearpage%
+%
+% Vysázet přehled podle stránek
 \begin{obsahdosloupcu}%
 \renewcommand*{\contentsname}{\nadpisobsahu}%
 \tableofcontents%
@@ -338,7 +369,7 @@ $\Rightarrow$ Klikněte.&%
 \textcolor{seda}{\guillemotright}&%
     Tímto šedým symbolem se vyznačuje, že na dané místo musíte zapsat tabulátor
     (mezery nestačí).\\%
-{\ttfamily\textcolor{seda}?}&%
+{\ttfamily\bfseries\textcolor{seda}?}&%
     Není-li řešení dané úlohy autorovi při psaní známo, uvede místo řádku zaklínadla
     pouhý otazník. To je podnět k tomu, aby bylo řešení nalezeno a doplněno.
     Hojně se vyskytuje v rozpracovaných kapitolách, ale u náročných úloh na něj

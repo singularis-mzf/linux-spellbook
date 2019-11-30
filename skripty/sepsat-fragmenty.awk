@@ -87,7 +87,12 @@ ADRESAR[INDEX] == "kapitoly" && match(toupper($0), /^!ŠTÍTKY:( |$)/) {
     if (s !~ /^({[A-Za-z0-9ÁČĎÉĚÍŇÓŘŠŤŮÝŽáčďéěíňóřšťůýž ]+})*$/) {
         ShoditFatalniVyjimku("Chybný formát štítků v " FILENAME ": " $0);
     }
-    STITKY[INDEX] = STITKY[INDEX] substr($0, 1 + RLENGTH);
+    prikaz = "tr -d \\\\n | tr \\} \\\\n | LC_ALL=\"cs_CZ.UTF-8\" sort -iu | tr \\\\n \\}";
+    print s |& prikaz;
+    close(prikaz, "to");
+    prikaz |& getline s;
+    close(prikaz);
+    STITKY[INDEX] = STITKY[INDEX] s;
 }
 
 ENDFILE {

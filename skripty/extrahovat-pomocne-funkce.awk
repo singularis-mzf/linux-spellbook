@@ -144,7 +144,7 @@ BEGIN {
 BEGINFILE {
     zapnuto = 0;
     if (ARGIND == 3) {
-        print "Zahajuji extrakci pomocných funkcí a skriptů.";
+        print "=== Zahajuji extrakci pomocných funkcí a skriptů. ===";
     }
 }
 
@@ -248,5 +248,5 @@ END {
         }
         close(fn);
     }
-    print "Extrakce pomocných funkcí a skriptů dokončena. Počty nalezených funkcí a skriptů: " length(funkce_puvod) " a " length(skripty_puvod) ".";
+    print "=== Extrakce pomocných funkcí a skriptů dokončena. ===\nPočty nalezených funkcí a skriptů: " length(funkce_puvod) " a " length(skripty_puvod) ".";
 }

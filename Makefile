@@ -81,6 +81,15 @@ $(SOUBORY_PREKLADU)/fragmenty.tsv: kapitoly.lst skripty/sepsat-fragmenty.awk $(V
 	mkdir -pv $(SOUBORY_PREKLADU)
 	$(AWK) -f skripty/sepsat-fragmenty.awk $< > $@
 
+# 3. soubory_prekladu/fragmenty.tsv + *.md => soubory_prekladu/osnova/*.tsv
+# ============================================================================
+$(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/osnova/%.tsv): $(SOUBORY_PREKLADU)/osnova/%.tsv: kapitoly/%.md skripty/sepsat-osnovu.awk
+	mkdir -pv $(SOUBORY_PREKLADU)/osnova
+	$(AWK) -f skripty/sepsat-osnovu.awk -v IDKAPITOLY=$(<:kapitoly/%.md=%) $< >$@
+
+$(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/osnova/%.tsv): $(SOUBORY_PREKLADU)/osnova/%.tsv: dodatky/%.md skripty/sepsat-osnovu.awk
+	mkdir -pv $(SOUBORY_PREKLADU)/osnova
+	$(AWK) -f skripty/sepsat-osnovu.awk -v IDKAPITOLY=$(<:dodatky/%.md=%) $< >$@
 
 # 3. soubory_prekladu/postprocess.tsv
 # ============================================================================
@@ -92,15 +101,15 @@ $(SOUBORY_PREKLADU)/postprocess.tsv:
 
 # 1A. kapitoly/{kapitola}.md => soubory_prekladu/html/{kapitola}
 # ============================================================================
-$(addprefix $(SOUBORY_PREKLADU)/html/,$(VSECHNY_KAPITOLY)): $(SOUBORY_PREKLADU)/html/%: kapitoly/%.md skripty/do_html.awk skripty/hlavni.awk skripty/utility.awk formaty/html/sablona_kapitoly $(SOUBORY_PREKLADU)/fragmenty.tsv
+$(addprefix $(SOUBORY_PREKLADU)/html/,$(VSECHNY_KAPITOLY)): $(SOUBORY_PREKLADU)/html/%: kapitoly/%.md $(SOUBORY_PREKLADU)/osnova/%.tsv skripty/do_html.awk skripty/hlavni.awk skripty/utility.awk formaty/html/sablona_kapitoly $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(SOUBORY_PREKLADU)/html
-	$(AWK) -f skripty/do_html.awk -F \\t -v IDKAPITOLY=$(basename $(notdir $@)) $< > $@
+	$(AWK) -f skripty/do_html.awk $< > $@
 
 # 1B. dodatky/{dodatek}.md => soubory_prekladu/html/{dodatek}
 # ============================================================================
-$(addprefix $(SOUBORY_PREKLADU)/html/,$(VSECHNY_DODATKY)): $(SOUBORY_PREKLADU)/html/%: dodatky/%.md skripty/do_html.awk skripty/hlavni.awk skripty/utility.awk formaty/html/sablona_kapitoly $(SOUBORY_PREKLADU)/fragmenty.tsv
+$(addprefix $(SOUBORY_PREKLADU)/html/,$(VSECHNY_DODATKY)): $(SOUBORY_PREKLADU)/html/%: dodatky/%.md $(SOUBORY_PREKLADU)/osnova/%.tsv skripty/do_html.awk skripty/hlavni.awk skripty/utility.awk formaty/html/sablona_kapitoly $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(SOUBORY_PREKLADU)/html
-	$(AWK) -f skripty/do_html.awk -F \\t -v IDKAPITOLY=$(basename $(notdir $@)) $< > $@
+	$(AWK) -f skripty/do_html.awk $< > $@
 
 # 2. soubory_prekladu/html/{id} => vystup_prekladu/html/{id}.htm
 # ============================================================================
@@ -154,15 +163,15 @@ $(VYSTUP_PREKLADU)/html/_autori.htm: $(addprefix $(SOUBORY_PREKLADU)/html/, kap-
 
 # 1A. kapitoly/{kapitola}.md => soubory_prekladu/log/{kapitola}
 # ============================================================================
-$(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_KAPITOLY)): $(SOUBORY_PREKLADU)/log/%: kapitoly/%.md skripty/do_logu.awk skripty/hlavni.awk skripty/utility.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
+$(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_KAPITOLY)): $(SOUBORY_PREKLADU)/log/%: kapitoly/%.md $(SOUBORY_PREKLADU)/osnova/%.tsv skripty/do_logu.awk skripty/hlavni.awk skripty/utility.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(SOUBORY_PREKLADU)/log
-	$(AWK) -v IDKAPITOLY=$(basename $(notdir $@)) -f skripty/do_logu.awk -F \\t $< > $@
+	$(AWK) -f skripty/do_logu.awk $< > $@
 
 # 1B. dodatky/{dodatek}.md => soubory_prekladu/log/{dodatek}
 # ============================================================================
-$(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_DODATKY)): $(SOUBORY_PREKLADU)/log/%: dodatky/%.md skripty/do_logu.awk skripty/hlavni.awk skripty/utility.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
+$(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_DODATKY)): $(SOUBORY_PREKLADU)/log/%: dodatky/%.md $(SOUBORY_PREKLADU)/osnova/%.tsv skripty/do_logu.awk skripty/hlavni.awk skripty/utility.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(SOUBORY_PREKLADU)/log
-	$(AWK) -f skripty/do_logu.awk -F \\t -v IDKAPITOLY=$(basename $(notdir $@)) $< > $@
+	$(AWK) -f skripty/do_logu.awk $< > $@
 
 # 2. soubory_prekladu/log/{id} => soubory_prekladu/log/{id}.kap
 # ============================================================================
@@ -180,15 +189,15 @@ $(VYSTUP_PREKLADU)/log/index.log: $(addsuffix .kap,$(addprefix $(SOUBORY_PREKLAD
 
 # 1A. kapitoly/{kapitola}.md => soubory_prekladu/pdf-spolecne/{kapitola}
 # ============================================================================
-$(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%): $(SOUBORY_PREKLADU)/pdf-spolecne/%: kapitoly/%.md skripty/do_latexu.awk skripty/hlavni.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
+$(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%): $(SOUBORY_PREKLADU)/pdf-spolecne/%: kapitoly/%.md $(SOUBORY_PREKLADU)/osnova/%.tsv skripty/do_latexu.awk skripty/hlavni.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(dir $@)
-	$(AWK) -f skripty/do_latexu.awk -F \\t -v IDKAPITOLY=$(basename $(notdir $@)) $< > $@
+	$(AWK) -f skripty/do_latexu.awk $< > $@
 
-# 1A. dodatky/{dodatek}.md => soubory_prekladu/pdf-spolecne/{dodatek}
+# 1B. dodatky/{dodatek}.md => soubory_prekladu/pdf-spolecne/{dodatek}
 # ============================================================================
-$(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%): $(SOUBORY_PREKLADU)/pdf-spolecne/%: dodatky/%.md skripty/do_latexu.awk skripty/hlavni.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
+$(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%): $(SOUBORY_PREKLADU)/pdf-spolecne/%: dodatky/%.md $(SOUBORY_PREKLADU)/osnova/%.tsv skripty/do_latexu.awk skripty/hlavni.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(dir $@)
-	$(AWK) -f skripty/do_latexu.awk -F \\t -v IDKAPITOLY=$(basename $(notdir $@)) $< > $@
+	$(AWK) -f skripty/do_latexu.awk $< > $@
 
 # 2. soubory_prekladu/pdf-spolecne/{id} => soubory_prekladu/pdf-spolecne/{id}.kap
 # ============================================================================

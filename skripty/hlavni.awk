@@ -315,50 +315,6 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C) {
     return VYSTUP;
 }
 
-function ExtrahovatOsnovu(soubor, osnova,   v_komentari, i, c_sekce, c_podsekce) {
-    prikaz = "cat '" soubor "'";
-    split("", osnova);
-    c_sekce = 0;
-    c_podsekce = 0;
-    v_komentari = 0;
-    i = 0;
-    while (prikaz | getline) {
-        if (v_komentari) {
-            v_komentari = ($0 != "-->");
-            continue;
-        }
-        else if ($0 == "<!--") {
-            v_komentari = 1;
-            continue;
-        }
-        if ($0 ~ /^#{1,3} .+/) {
-            ++i;
-            switch (index($0, " ")) {
-                case 2:
-                    osnova[i ".typ"] = "KAPITOLA";
-                    osnova[i ".id"] = "";
-                    osnova[i ".nazev"] = ZpracujZnaky(substr($0, 3));
-                    c_sekce = 0;
-                    c_podsekce = 0;
-                    break;
-                case 3:
-                    osnova[i ".typ"] = "SEKCE";
-                    osnova[i ".id"] = ++c_sekce;
-                    osnova[i ".nazev"] = ZpracujZnaky(substr($0, 4));
-                    c_podsekce = 0;
-                    break;
-                case 4:
-                    osnova[i ".typ"] = "PODSEKCE";
-                    osnova[i ".id"] = c_sekce "x" (++c_podsekce);
-                    osnova[i ".nazev"] = ZpracujZnaky(substr($0, 5));
-                    break;
-            }
-        }
-    }
-    close(prikaz);
-    return i;
-}
-
 # Tato funkce se volá pro první ze sekvence řádků určitého typu.
 function ZacitTypRadku(   bylPredel) {
     bylPredel = 0;
@@ -472,24 +428,26 @@ function VypsatZahlaviZaklinadla(   i, maPoznamky) {
 }
 
 BEGIN {
-    if (IDKAPITOLY == "") {
-        ShoditFatalniVyjimku("Vyžadovaná proměnná IDKAPITOLY není vyplněna!");
+    FS = "\t";
+    OFS = "\t";
+    if (ARGC != 2) {
+        ShoditFatalniVyjimku("Chybný počet parametrů (ARGC=" ARGC ")");
     }
-    if (FS != "\t") {
-        ShoditFatalniVyjimku("Chybně nastavený field separator. Musí být tabulátor. Použijte parametr -F \\\\t při spouštění awk!");
-    }
+
+    # Určit ID kapitoly
+    IDKAPITOLY = ARGV[1];
+    gsub(/^.*\/|\.md$/, "", IDKAPITOLY);
+
+    # Načíst a zpracovat údaje z fragmenty.tsv, jsou-li k dispozici:
+    $0 = "";
     prikaz = "egrep '^[^\t]*\t" IDKAPITOLY "\t' soubory_prekladu/fragmenty.tsv";
     prikaz | getline;
     close(prikaz);
-
-    if ($0 == "") {
-        C_KAPITOLY = 0;
-        STITKY = "";
-    } else {
+    if ($0 != "") {
+        # číslo kapitoly
         C_KAPITOLY = $8 - 1;
-        if ($9 == "NULL") {
-            STITKY = "";
-        } else {
+        # štítky
+        if ($9 != "NULL") {
             prikaz = "sort -iu | tr \\\\n \\|";
             STITKY = $9;
             gsub(/^\{|\}$|'/, "", STITKY);
@@ -499,17 +457,13 @@ BEGIN {
             prikaz |& getline STITKY;
             close(prikaz);
             gsub(/\|$/, "", STITKY);
+        } else {
+            STITKY = "";
         }
+    } else {
+        C_KAPITOLY = 0;
+        STITKY = "";
     }
-
-    SOUBOR = $1 "/" $2 ".md";
-
-    split("", OSNOVA);
-    DELKA_OSNOVY = ExtrahovatOsnovu(SOUBOR, OSNOVA);
-
-#    for (i = 1; i <= DELKA_OSNOVY; ++i) {
-#        print "OSNOVA[" i "] = {" OSNOVA[i ".typ"] "|" OSNOVA[i ".id"] "|" OSNOVA[i ".nazev"] "}" > "/dev/stderr";
-#    }
 
     ID_KAPITOLY_OMEZENE = IDKAPITOLY;
     gsub(/[^A-Za-z0-9]/, "", ID_KAPITOLY_OMEZENE);
@@ -528,12 +482,18 @@ BEGIN {
     JE_UVNITR_KOMENTARE = 0;
     JE_ODSTAVEC_K_UKONCENI = 0;
     TEXT_ZAKLINADLA = NULL_STRING;
-    split("", ppc);
-    split("", ppt);
-    split("", ppcall);
-    split("", pptall);
+    delete ppc;
+    delete ppt;
+    delete ppcall;
+    delete pptall;
 
-
+    # Načíst osnovu:
+    delete OSNOVA;
+    while (getline < ("soubory_prekladu/osnova/" IDKAPITOLY ".tsv")) {
+# $1=TYP $2=ID $3=ČÍSLO_ŘÁDKU $4=NÁZEV $5=;
+        OSNOVA[1 + length(OSNOVA)] = sprintf("%s\t%s\t%s\t%s\t%s", $1, $2, $3, ZpracujZnaky($4), ";");
+    }
+    close("soubory_prekladu/osnova/" IDKAPITOLY ".tsv");
 }
 
 # komentář započatý na samostatném řádku kompletně ignorovat
@@ -650,7 +610,7 @@ TYP_RADKU == "NADPIS" {
         C_PODSEKCE = 0;
         delete ppcall;
         delete pptall;
-        printf("%s", ZacatekKapitoly(KAPITOLA, ++C_KAPITOLY, STITKY));
+        printf("%s", ZacatekKapitoly(KAPITOLA, ++C_KAPITOLY, STITKY, OSNOVA));
         if (tolower(KAPITOLA) == "licence") {
             printf("%s", ZapnoutRezimLicence());
         }

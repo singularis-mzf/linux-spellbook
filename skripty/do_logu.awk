@@ -41,10 +41,14 @@ function Tabulator(delka) {
     return "Tabulator(" delka ")";
 }
 
-function ZacatekKapitoly(kapitola, cisloKapitoly, stitky) {
+function ZacatekKapitoly(kapitola, cisloKapitoly, stitky, osnova,   osnovadohromady) {
     DO_LOGU_UROVEN_ODSTAVCE = 0;
     gsub(/\|/, "}{", stitky);
-    return "ZacatekKapitoly(\"" kapitola "\"" (stitky != "" ? ", štítky={" stitky "}" : "") ");\n";
+    for (i = 1; i <= length(osnova); ++i) {
+        osnovadohromady = osnovadohromady "\t" osnova[i] "\n";
+#        if (i > 500) { ShoditFatalniVyjimku("Příliš mnoho osnovy!"); }
+    }
+    return "ZacatekKapitoly(\"" kapitola "\"" (stitky != "" ? ", štítky={" stitky "}" : "") ") {\n" osnovadohromady "};\n";
 }
 
 function KonecKapitoly(kapitola, cislaPoznamek, textyPoznamek,   i, vysledek) {

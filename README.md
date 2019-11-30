@@ -21,10 +21,11 @@ Příručka podléhá licenci
 ## Návod k sestavení
 
 K sestavení příručky ze zdrojového kódu budete potřebovat Git, GNU make,
-GNU awk, ImageMagick a LaTeX. V Ubuntu 18.04 LTS, Debianu 10 a Linuxu Mint 17.2
+GNU awk, ImageMagick a LaTeX a kvůli řazení české locale
+„cs\_CZ.UTF-8“. V Ubuntu 18.04 LTS, Debianu 10 a Linuxu Mint 17.2
 můžete tyto nástroje nainstalovat příkazem:
 
-> ``sudo apt-get install git make gawk imagemagick texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra texlive-lang-czechslovak``
+> ``sudo apt-get install git make gawk imagemagick texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra texlive-lang-czechslovak language-pack-cs hunspell-cs``
 
 Pak budete potřebovat stáhnout si repozitář:
 

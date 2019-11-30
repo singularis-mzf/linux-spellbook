@@ -29,6 +29,8 @@ function VstupniSoubor(idkapitoly) {
 }
 
 BEGIN {
+    FS = "\t";
+    OFS = "\t"
     FRAGMENTY_TSV = "soubory_prekladu/fragmenty.tsv";
     if (system("test -r " FRAGMENTY_TSV) != 0) {
         ShoditFatalniVyjimku("Nemohu číst ze souboru " FRAGMENTY_TSV "!");
@@ -85,21 +87,21 @@ STAV_PODMINENENO_PREKLADU == 2 {
 # ====================================================
 {
     JE_RIDICI_RADEK = $0 ~ /^\{\{[^{}]+\}\}$/;
-    VYTISKNOUT = 0;
+    ZPRACOVAT = 0;
 }
 
 /^\{\{ZAČÁTEK KNIHY\}\}$/,/^\{\{ZAČÁTEK KAPITOLY\}\}$/ {
-    VYTISKNOUT =  !JE_RIDICI_RADEK;
+    ZPRACOVAT = 1;
 }
 
 /^\{\{KONEC KAPITOLY\}\}$/,/^\{\{KONEC KNIHY\}\}$/ {
-    VYTISKNOUT =  !JE_RIDICI_RADEK;
+    ZPRACOVAT = 1;
     if ($0 == "{{KONEC KAPITOLY}}") {
         prikaz = "cat";
         while (getline < FRAGMENTY_TSV) {
-            split($0, sloupce, "\t");
-            prikaz = prikaz " " VSTUPPREFIX sloupce[2] VSTUPSUFFIX;
+            prikaz = prikaz " " VSTUPPREFIX $2 VSTUPSUFFIX;
         }
+        close(FRAGMENTY_TSV);
         if (prikaz == "cat") {
             ShoditFatalniVyjimku("Žádné kapitoly ani dodatky ke zpracování!");
         }
@@ -110,7 +112,40 @@ STAV_PODMINENENO_PREKLADU == 2 {
     }
 }
 
-VYTISKNOUT {
+ZPRACOVAT && $0 == "{{PŘEHLED PODLE ŠTÍTKŮ}}" {
+    delete stitky;
+    prikaz = "cut -f 9 " FRAGMENTY_TSV " | egrep -o '\\{[^}]*\\}' | tr -d '{}' | LC_ALL=\"cs_CZ.UTF-8\" sort -iu";
+    while (prikaz | getline) {
+        stitky[1 + length(stitky)] = $0;
+    }
+    close(prikaz);
+    for (i = 1; i <= length(stitky); ++i) {
+        prvniZaznamNaStitek = 1;
+        while (getline < FRAGMENTY_TSV) {
+            if (index($9, "{" stitky[i] "}")) {
+                if (prvniZaznamNaStitek) {
+                    prvniZaznamNaStitek = 0;
+                    print "\\begin{ppsstitek}{" stitky[i] "}";
+                }
+# FRAGMENTY_TSV:
+# 1=Adresář|2=ID|3=Název|4=Předchozí ID|5=Předchozí název|6=Následující ID|7=Následující název
+# 8=Číslo dodatku/kapitoly|9=Štítky v {}
+                stitkykapitoly = $9;
+                gsub(/\{/, "\\ppsstitekpolozky{", stitkykapitoly); /\}/; # „/\}/“ jen kvůli zvýrazňování syntaxe, nic nedělá
+                omezene_id = $2;
+                gsub(/[^A-Za-z0-9]/, "", omezene_id);
+                print "\\ppspolozka{" $3 "}{" stitkykapitoly "}{kapx" omezene_id "}%";
+            }
+        }
+        close(FRAGMENTY_TSV);
+        if (!prvniZaznamNaStitek) {
+            print "\\end{ppsstitek}";
+        }
+    }
+    next;
+}
+
+ZPRACOVAT && !JE_RIDICI_RADEK {
     gsub(/\{\{JMÉNO VERZE\}\}/, EscapovatKNahrade(JMENOVERZE));
     print $0;
 }
