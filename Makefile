@@ -38,7 +38,9 @@ VSECHNY_KAPITOLY += odkazy planovani-uloh prace-s-archivy regularni-vyrazy sprav
 # T, U, V, W, X, Y, Z
 VSECHNY_KAPITOLY += x zpracovani-obrazku zpracovani-textovych-souboru zpracovani-videa-a-zvuku
 
-OBRAZKY := favicon.png by-sa.png logo-knihy-velke.png make.png barvy.png ve-vystavbe.png marsh.jpg banner.png kalendar.svg
+OBRAZKY := favicon.png by-sa.png logo-knihy-velke.png make.png barvy.png ve-vystavbe.png marsh.jpg banner.png
+
+SVG_OBRAZKY := kalendar.svg tritecky.svg
 
 SOUBORY_PREKLADU := soubory_prekladu
 VYSTUP_PREKLADU := vystup_prekladu
@@ -114,11 +116,11 @@ $(VYSTUP_PREKLADU)/html/lkk.css: formaty/html/sablona.css
 
 # 4. obrazky/{obrazek} => vystup_prekladu/html/obrazky/{obrazek}
 # ============================================================================
-$(filter %.jpg %.png, $(OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%)): $(VYSTUP_PREKLADU)/html/obrazky/%: obrazky/%
+$(OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%): $(VYSTUP_PREKLADU)/html/obrazky/%: obrazky/%
 	mkdir -pv $(dir $@)
 	$(CONVERT) $< $@
 
-$(filter %.svg, $(OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%)): $(VYSTUP_PREKLADU)/html/obrazky/%: obrazky/%
+$(SVG_OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%): $(VYSTUP_PREKLADU)/html/obrazky/%: obrazky/%
 	mkdir -pv $(dir $@)
 	cp $< $@
 
@@ -127,7 +129,8 @@ $(filter %.svg, $(OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%)): $(VYSTUP_PREKLA
 $(VYSTUP_PREKLADU)/html/index.htm: $(SOUBORY_PREKLADU)/fragmenty.tsv \
   skripty/generovat-index-html.awk \
   $(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY)))   $(SOUBORY_PREKLADU)/fragmenty.tsv \
-  $(OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%)
+  $(OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%) \
+  $(SVG_OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%)
 	$(AWK) -f skripty/generovat-index-html.awk -F \\t -v JMENOVERZE='$(JMENO)' $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/html/sablona_kapitoly > $@
 
 # 6. sepsat copyrighty ke kapitolám
@@ -139,7 +142,7 @@ $(SOUBORY_PREKLADU)/html/kap-copys.htm: $(SOUBORY_PREKLADU)/fragmenty.tsv skript
 # 7. sepsat copyrighty k obrázkům
 # ============================================================================
 $(SOUBORY_PREKLADU)/html/obr-copys.htm: COPYING skripty/sepsat-copykobr.awk
-	$(AWK) -f skripty/sepsat-copykobr.awk $< $(OBRAZKY:%=obrazky/%) >$@
+	$(AWK) -f skripty/sepsat-copykobr.awk $< $(OBRAZKY:%=obrazky/%) $(SVG_OBRAZKY:%=obrazky/%) >$@
 
 # 8. shromáždit copyrighty na stránku _autori.htm
 # ============================================================================
@@ -194,11 +197,11 @@ $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap) $(VSECHNY_DODATKY:%
 
 # 3. obrazky/{obrazek} => soubory_prekladu/pdf-spolecne/_obrazky/{obrazek}
 # ============================================================================
-$(filter %.jpg %.png, $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%)): $(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%: obrazky/%
+$(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%): $(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%: obrazky/%
 	mkdir -pv $(dir $@)
 	$(CONVERT) $< -colorspace Gray $@
 
-$(filter %.svg, $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%)): $(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%: obrazky/%
+$(SVG_OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%): $(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%: obrazky/%
 	mkdir -pv $(dir $@)
 	cp $< $@
 
@@ -220,7 +223,7 @@ $(SOUBORY_PREKLADU)/pdf-a5/kniha.tex: $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/p
 # 6. soubory_prekladu/pdf-a5/kniha.tex => vystup_prekladu/pdf-a5/kniha.pdf
 # ============================================================================
 # skript "prelozit_vystup_latexu.awk" je zde volán jen pro zpřehlednění výstupu; je možno ho bezpečně vynechat
-$(VYSTUP_PREKLADU)/pdf-a5/kniha.pdf: $(SOUBORY_PREKLADU)/pdf-a5/kniha.tex $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%)
+$(VYSTUP_PREKLADU)/pdf-a5/kniha.pdf: $(SOUBORY_PREKLADU)/pdf-a5/kniha.tex $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%) $(SVG_OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%)
 	mkdir -pv $(dir $@)
 	bash -e -c '(cd $(dir $<); exec $(PDFLATEX) $(notdir $<)) | $(AWK) -f skripty/prelozit_vystup_latexu.awk; exit $${PIPESTATUS[0]}'
 	bash -e -c '(cd $(dir $<); exec $(PDFLATEX) $(notdir $<)) | $(AWK) -f skripty/prelozit_vystup_latexu.awk; exit $${PIPESTATUS[0]}'
@@ -243,7 +246,7 @@ $(SOUBORY_PREKLADU)/pdf-a4/kniha.tex: $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/p
 # 6. soubory_prekladu/pdf-a4/kniha.tex => vystup_prekladu/pdf-a4/kniha.pdf
 # ============================================================================
 # skript "prelozit_vystup_latexu.awk" je zde volán jen pro zpřehlednění výstupu; je možno ho bezpečně vynechat
-$(VYSTUP_PREKLADU)/pdf-a4/kniha.pdf: $(SOUBORY_PREKLADU)/pdf-a4/kniha.tex $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%)
+$(VYSTUP_PREKLADU)/pdf-a4/kniha.pdf: $(SOUBORY_PREKLADU)/pdf-a4/kniha.tex $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%) $(SVG_OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%)
 	mkdir -pv $(dir $@)
 	bash -e -c '(cd $(dir $<); exec $(PDFLATEX) $(notdir $<)) | $(AWK) -f skripty/prelozit_vystup_latexu.awk; exit $${PIPESTATUS[0]}'
 	bash -e -c '(cd $(dir $<); exec $(PDFLATEX) $(notdir $<)) | $(AWK) -f skripty/prelozit_vystup_latexu.awk; exit $${PIPESTATUS[0]}'
@@ -265,7 +268,7 @@ $(SOUBORY_PREKLADU)/pdf-b5/kniha.tex: $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/p
 # 6. soubory_prekladu/pdf-b5/kniha.tex => vystup_prekladu/pdf-b5/kniha.pdf
 # ============================================================================
 # skript "prelozit_vystup_latexu.awk" je zde volán jen pro zpřehlednění výstupu; je možno ho bezpečně vynechat
-$(VYSTUP_PREKLADU)/pdf-b5/kniha.pdf: $(SOUBORY_PREKLADU)/pdf-b5/kniha.tex $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%)
+$(VYSTUP_PREKLADU)/pdf-b5/kniha.pdf: $(SOUBORY_PREKLADU)/pdf-b5/kniha.tex $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%) $(SVG_OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%)
 	mkdir -pv $(dir $@)
 	bash -e -c '(cd $(dir $<); exec $(PDFLATEX) $(notdir $<)) | $(AWK) -f skripty/prelozit_vystup_latexu.awk; exit $${PIPESTATUS[0]}'
 	bash -e -c '(cd $(dir $<); exec $(PDFLATEX) $(notdir $<)) | $(AWK) -f skripty/prelozit_vystup_latexu.awk; exit $${PIPESTATUS[0]}'

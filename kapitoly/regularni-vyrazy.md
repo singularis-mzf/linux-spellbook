@@ -14,6 +14,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 <!--
 Poznámky:
 
+- gawk, sed, perl, egrep, grep -P
+
 -->
 
 # Regulární výrazy
@@ -21,22 +23,15 @@ Poznámky:
 !Štítky: {syntaxe}{zpracování textu}
 
 ## Úvod
-<!--
-- Vymezte, co je předmětem této kapitoly.
-- Obecně popište základní principy, na kterých fungují používané nástroje.
-- Uveďte, co kapitola nepokrývá, ačkoliv by to čtenář mohl očekávat.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+Regulární výraz je řetězec speciálních a obyčejných znaků, který slouží
+k formálnímu popsání množiny textových řetězců splňujících určité
+syntaktické parametry. Např. celá čísla můžeme popsat výrazem
+„0|-?[1-9][0-9]\*“ a poštovní směrovací čísla výrazem „[0-9]{3} [0-9]{2}“.
 
-Regulární výrazy jsou formálním jazykem, který nám slouží k tomu,
-abychom dokázali vyhledávat a nahrazovat nejen konkrétní textové řetězce,
-jak to umí téměř každý dostupný textový editor, ale i obecné podřetězce,
-které mohou nabývat mnoha různých tvarů, jako jsou např. celá čísla.
-Zatímco obyčejným řetězcem můžeme popsat jen konkrétní čísla jako např.
-číslo „789“, regulárním výrazem „0|-?[1-9][0-9]\*“ najednou a elegantně
-popíšeme množinu všech celých čísel. Regulární výrazy také můžeme
-využít ke kontrole syntaxe (např. zda jde o platné PSČ) nebo
-při analýze a zpracování textových dat.
+Regulární výrazy se používají při vyhledávání, filtrování, zpracování textu
+a kontrole syntaxe; objevují se ve většině programovacích jazyků,
+ale neprogramátoři je využijí např. při nastavení filtrování e-mailů
+či při vyhledávání komplikovanějších konstrukcí v textových editorech.
 
 V Linuxu se bohužel vyskytují tři různé syntaxe regulárních výrazů − základní
 regulární výrazy, rozšířené regulární výrazy a regulární výrazy jazyka Perl.
@@ -46,14 +41,10 @@ rozšířený regulární výraz. Kde se od sebe syntaxe liší, bude to u zakl
 upřesněno; kde není uvedena samostatná varianta pro Perl, platí pro Perl
 varianta pro rozšířený regulární výraz.
 
-
 ## Definice
-<!--
-- Uveďte výčet specifických pojmů pro použití v této kapitole a tyto pojmy definujte co nejprecizněji.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-
-* Jako **atom** v několika zaklínadlech z praktických důvodů označuji nedělitelnou část regulárního výrazu. Úsek regulárního výrazu seskupený pomocí závorek je pro tento účel nedělitelný jako celek.
+* Jako **atom** z praktických důvodů označuji nejkratší část regulárního výrazu, která končí na dané pozici a tvořila by syntakticky správný regulární výraz sama o sobě. Atomem je např. „a“, „[abc]“, „(a|b)?“ či „\\s+“, ale ne „a|b“, protože „b“ je kratší a samo o sobě tvoří syntakticky platný regulární výraz.
+* **Kvalifikátor** je speciální podřetězec, který se zapisuje za atom a určuje dovolený počet opakování.
+* **Kotva** a **hranice** jsou speciální atomy odpovídající fiktivnímu prázdnému podřetězci na určité pozici.
 
 ## Zaklínadla
 ### Jednotlivé znaky
@@ -69,19 +60,19 @@ varianta pro rozšířený regulární výraz.
 *// Uvnitř těchto hranatých závorek se speciální znaky neescapují zpětným lomítkem, ale uvedením na určitou pozici.*<br>
 **[**{*znaky*}**]**
 
-*# libovolný znak kromě uvedených*<br>
+*# libovolný znak **kromě uvedených***<br>
 **[^**{*znaky*}**]**
 
-*# bílý znak/nebílý znak*<br>
+*# **bílý znak**/nebílý znak*<br>
 **\\s**<br>
 **\\S**
 
-*# číslice desítková (rozšířený/základní/Perl)*<br>
-**[[:digit:]]**<br>
-**[[:digit:]]**<br>
+*# desítková **číslice** (rozšířený/základní/Perl)*<br>
+**[0-9]**<br>
+**[0-9]**<br>
 **\\d**
 
-*# nečíslice (rozšířený/základní/Perl)*<br>
+*# jiný znak než desítková číslice (rozšířený/základní/Perl)*<br>
 **[^0-9]**<br>
 **[^0-9]**<br>
 **\\D**
@@ -102,57 +93,74 @@ varianta pro rozšířený regulární výraz.
 **\\w**
 
 *# libovolný znak kromě alfanumerických (rozšířený/základní/Perl)*<br>
-?<br>
-?<br>
+**[^[:alnum:]]**<br>
+**[^[:alnum:]]**<br>
 **\\W**
 
-### Operátory opakování
+### Kvalifikátory (operátory opakování)
 
-*# nejvýše jednou (&lt;= 1)(rozšířený/základní)*<br>
+*# **jednou nebo vůbec** (&lt;= 1)(rozšířený/základní)*<br>
 {*atom*}**?**<br>
 {*atom*}**\\?**
 
-*# libovolný počet (&gt;= 0)(rozšířený/základní)*<br>
+*# **libovolněkrát** (&gt;= 0)(rozšířený/základní)*<br>
 {*atom*}**\***<br>
 {*atom*}**\***
 
-*# alespoň jednou (&gt;= 1)(rozšířený/základní)*<br>
+*# **jednou nebo víckrát** (&gt;= 1)(rozšířený/základní)*<br>
 {*atom*}**+**<br>
 {*atom*}**\\+**
 
-*# konkrétní počet výskytů (rozšířený/základní)*<br>
+*# přesně počet-krát (rozšířený/základní)*<br>
 {*atom*}**\{**{*počet*}**\}**<br>
 {*atom*}**\\\{**{*počet*}**\\\}**
 
-*# minimálně M výskytů, maximálně N výskytů (rozšířený/základní)*<br>
+*# M- až N-krát včetně (rozšířený/základní)*<br>
 {*atom*}**\{**{*M*}**,**{*N*}**\}**<br>
 {*atom*}**\\\{**{*M*}**,**{*N*}**\\\}**
 
-*# alespoň M výskytů; může být i víc (rozšířený/základní)*<br>
+*# M- nebo víckrát (rozšířený/základní)*<br>
 {*atom*}**\{**{*M*}**,}**<br>
 {*atom*}**\\\{**{*M*}**,\\}**
 
-*# nejvýše M výskytů (rozšířený/základní)*<br>
+*# maximálně M-krát (rozšířený/základní)*<br>
 {*atom*}**{,**{*N*}**\}**<br>
 {*atom*}**\\{,**{*N*}**\\\}**
 
 *# snažit se opakovat co nejméně (non-greedy)(jen Perl)*<br>
 {*atom*}{*operátor-opakování*}**?**
 
-### Pozice (odpovídá fiktivnímu prázdnému řetězci na určité pozici)
-*# začátek/konec řetězce*<br>
-?
+### Operátor „nebo“
 
-*# začátek/konec řádku (rozšířený i základní)*<br>
+*# některý z podvýrazů (rozšířený/základní)*<br>
+{*výraz 1*}[**\|**{*další výraz*}]...<br>
+{*výraz 1*}[**\\\|**{*další výraz*}]...
+
+### Kotvy a hranice (pozice)
+
+Kotvy odpovídají fiktivnímu prázdnému řetězci na určité pozici.
+
+*# začátek/konec řádku (rozšířený i základní)*<br>
 **^**<br>
 **$**
 
-*# začátek/konec slova (rozšířený i základní, ale ne Perl)*<br>
+*# začátek slova (rozšířený a základní/Perl)*<br>
 **\\&lt;**<br>
-**\\&gt;**
+**\\b(?=\\w)**
 
-*# začátek nebo konec slova (rozšířený i základní)*<br>
+*# konec slova (rozšířený a základní/Perl)*<br>
+**\\&gt;**<br>
+**\\b(?&lt;=\\w)**
+
+*# začátek nebo konec slova (rozšířený/základní/Perl)*<br>
+**(\\&lt;\|\\&gt;)**<br>
+**\\(\\&lt;\\\|\\&gt;\\)**<br>
 **\\b**
+
+*# úplný začátek/konec testovaného řetězce (rozšířený i základní)*<br>
+*// Pozor na escapování znaku „'“! Podpora těchto kotev v programech je omezená, ale gawk, sed i perl je podporují.*<br>
+**\\\`**<br>
+**\\'**
 
 ### Seskupení
 
@@ -164,6 +172,11 @@ varianta pro rozšířený regulární výraz.
 **(?:**{*podvýraz*}**)**
 
 ### Paměť (omezená podpora)
+
+*# původní podřetězec odpovídající celému regulárnímu výrazu (rozšířený a základní/Perl)*<br>
+*// Tato konstrukce je v programech „egrep“, „gawk“ a „perl“ rozeznávána jako speciální pouze v řetězci pro náhradu, nikoliv přímo v regulárním výrazu.*<br>
+**&amp;**<br>
+**$&amp;**
 
 *# vrátit podřetězec původního řetězce odpovídající seskupení (rozšířený i základní)*<br>
 *// Tato funkce je podporovaná pouze v některých programech, mezi něž patří např. egrep, grep, perl a sed; ne však „gawk“.*<br>
@@ -178,12 +191,6 @@ varianta pro rozšířený regulární výraz.
 *// Viz poznámku k předchozímu zaklínadlu.*<br>
 **\\L\\**{*pořadové-číslo-1-až-9*}**\\E**<br>
 **\\U\\**{*pořadové-číslo-1-až-9*}**\\E**
-
-### Operátor „nebo“
-
-*# některý z podvýrazů (rozšířený/základní)*<br>
-{*výraz 1*}[**\|**{*další výraz*}]...<br>
-{*výraz 1*}[**\\\|**{*další výraz*}]...
 
 ### Vyhlížení (jen Perl)
 
@@ -200,12 +207,30 @@ varianta pro rozšířený regulární výraz.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+<!--
+[ ] egrep
+[ ] expr
+[ ] gawk
+[ ] grep -P
+[ ] perl
+[ ] sed -E
+-->
+
 ## Instalace na Ubuntu
 <!--
 - Jako zaklínadlo bez titulku uveďte příkazy (popř. i akce) nutné k instalaci a zprovoznění všech nástrojů požadovaných kterýmkoliv zaklínadlem uvedeným v kapitole. Po provedení těchto činností musí být nástroje plně zkonfigurované a připravené k práci.
 - Ve výčtu balíků k instalaci vycházejte z minimální instalace Ubuntu.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+Příkazy „egrep“, „expr“, „grep“, „perl“ a „sed“ jsou základními součástmi
+Ubuntu. Příkaz „gawk“ je nutné doinstalovat, nebo místo něj použít méně
+schopný příkaz „awk“, který je základní součástí Ubuntu.
+
+*# *<br>
+**sudo apt-get install gawk**
+
+Regulární výrazy jsou i v mnoha dalších programech.
 
 ## Ukázka
 <!--
@@ -223,6 +248,8 @@ varianta pro rozšířený regulární výraz.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+* V Perlu se k označení desítkové číslice běžně používá podvýraz „\\d“; v jiných syntaxích regulárních výrazů ovšem není podporován, proto doporučuji zvyknout si na podvýraz „[0-9]“, která je čitelnější a je podporovaná opravdu všude.
+
 ## Jak získat nápovědu
 <!--
 - Uveďte, které informační zdroje jsou pro začátečníka nejlepší k získání rychlé a obsáhlé nápovědy. Typicky jsou to manuálové stránky, vestavěná nápověda programu nebo webové zdroje (ale neuvádějte konkrétní odkazy, ty patří do sekce „Odkazy“).
@@ -230,18 +257,22 @@ varianta pro rozšířený regulární výraz.
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 ## Odkazy
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-
+* [Web regularnivyrazy.info](https://www.regularnivyrazy.info/)
+* [Přednáška Lukáše Bařinky: Bash a regulární výrazy vs shellovské vzory](https://youtu.be/dOKydwMDYUU)
+* [Seriál Regulární výrazy v PHP (Perl-compatible)](https://www.regularnivyrazy.info/serial-php-pcre-perl-compatible.html)
 * [Seriál článků na Root.cz](https://www.root.cz/serialy/regularni-vyrazy/)
 * [Článek Regulární výraz na Wikipedii](https://cs.wikipedia.org/wiki/Regul%C3%A1rn%C3%AD_v%C3%BDraz)
-
-Co hledat:
-
-* [stránku na Wikipedii](https://cs.wikipedia.org/wiki/Hlavn%C3%AD_strana)
-* oficiální stránku programu
-* oficiální dokumentaci
-* [manuálovou stránku](http://manpages.ubuntu.com/)
-* [balíček Bionic](https://packages.ubuntu.com/)
-* online referenční příručky
-* různé další praktické stránky, recenze, videa, tutorialy, blogy, ...
-* publikované knihy
+* Kniha: GOYVAERTS, Jan a Steven LEVITHAN. *Regulární výrazy: kuchařka programátora.* Brno: Computer Press, 2010. ISBN 978-80-251-1935-8.
+* [Online tester regulárních výrazů](http://www.regexp.cz/index.php)
+* [Přednáška Milana Davídka: Regulární výrazy](https://youtu.be/HHh-U0dZcOc)
+* [Článek na blogu Miroslava Pecky](https://miroslavpecka.cz/blog/regularni-vyrazy-vse-co-jste-o-nich-chteli-vedet/)
+* [Web Regular-Expressions.info](https://www.regular-expressions.info/) (anglicky)
+* [Web RexEgg](https://www.rexegg.com/) (anglicky)
+* [Online příručka GNU awk](https://www.gnu.org/software/gawk/manual/) (anglicky)
+* [Online příručka GNU sed](https://www.gnu.org/software/sed/manual/) (anglicky)
+* [Online příručka modulu perlre](https://perldoc.perl.org/perlre.html) (anglicky)
+* [Manuálová stránka: grep](http://manpages.ubuntu.com/manpages/bionic/en/man1/grep.1.html) (anglicky)
+* [Manuálová stránka: pcrepattern](http://manpages.ubuntu.com/manpages/bionic/en/man3/pcrepattern.3.html) (anglicky)
+* [Balíček „gawk“](https://packages.ubuntu.com/bionic/gawk) (anglicky)
+* [Balíček „perl“](https://packages.ubuntu.com/bionic/perl) (anglicky)
+* [Balíček „sed“](https://packages.ubuntu.com/bionic/sed) (anglicky)

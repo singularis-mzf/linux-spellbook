@@ -14,13 +14,11 @@ https://creativecommons.org/licenses/by-sa/4.0/
 <!--
 Poznámky:
 
-[ ] Zpracovat xinput (zachytávání klávesnice a myši + možnost je vypnout)
-
 -->
 
 # X (ovládání oken)
 
-!Štítky: {tematický okruh}{GUI}
+!Štítky: {tematický okruh}{GUI}{automatizace}{klávesnice}{myš}
 
 ## Úvod
 <!--
@@ -184,26 +182,68 @@ Zdroj roku: https://en.wikipedia.org/wiki/X_Window_System#Release_history
 *# přesunout okno na virtuální plochu*<br>
 **xdotool set\_desktop\_for\_window** {*id-okna*} {*číslo-plochy*}
 
+### Ověření přítomnosti X-serveru
+
+*# zjistit, zda program běží na X-serveru (tzn. ne např. Waylandu nebo v konzoli)*<br>
+*// Uvedený příkaz uspěje (vrátí kód 0), pouze pokud je spušten v prostředí X-serveru.*<br>
+**test "$XDG\_SESSION\_TYPE" = x11**
+
 ### Automatizace klávesnice a myši
 
 *# stisknutí kláves*<br>
 **xdotool key** [**\-\-clearmodifiers**] [**\-\-delay** {*milisekundy*}] {*klávesa*}...
 
-*# pohyb myši*<br>
-?
+*# pohyb myši (relativně k obrazovce/relativně k oknu/relativně k aktuální pozici)*<br>
+**xdotool mousemove** {*x*} {*y*}<br>
+**xdotool mousemove \-\-window** {*id-okna*} {*x*} {*y*}<br>
+**xdotool mousemove\_relative** {*x*} {*y*}
 
 *# kliknutí myši*<br>
-?
+*// „Tlačítko-myši“ je 1 pro levé tlačítko, 2 pro prostřední tlačítko a 3 pro pravé tlačítko.*<br>
+**xdotool click** {*tlačítko-myši*}
+
+*# dvojklik myší*<br>
+**xdotool click \-\-repeat 2** {*tlačítko-myši*}
+
+*# rolovat kolečkem myši nahoru/dolu*<br>
+**xdotool click \-\-repeat** {*počet-kroků*} **4**<br>
+**xdotool click \-\-repeat** {*počet-kroků*} **5**
+
+*# posunout kurzor myši (relativně k obrazovce/relativně k oknu/relativně k aktuální pozici), kliknout a vrátit ji na původní pozici*<br>
+**xdotool mousemove** {*x*} {*y*} **click** {*tlačítko-myši*} **mousemove restore**<br>
+**xdotool mousemove \-\-window** {*id-okna*} {*x*} {*y*} **click** {*tlačítko-myši*} **mousemove restore**<br>
+**xdotool mousemove\_relative** {*x*} {*y*} **click** {*tlačítko-myši*} **mousemove restore**
 
 *# tažení myší*<br>
-?
+**xdotool mousemove** {*výchozí-x*} {*výchozí-y*} **mousedown** {*tlačítko-myši*} **mousemove** {*cílové-x*} {*cílové-y*} **mouseup** {*tlačítko-myši*} [**mousemove restore**]
 
+*# získat pozice myši, číslo obrazovky a decimální id okna do proměnných X, Y, SCREEN a WINDOW*<br>
+**eval "$(xdotool getmouselocation \-\-shell)"**
 
-### Ostatní
+*# uložit pozici myši, počkat 1,5 sekundy a vrátit její kurzor na uloženou pozici*<br>
+**(eval "$(xdotool getmouselocation \-\-shell)"; xdotool sleep 1.5 mousemove \-\-screen $SCREEN $X $Y)**
 
-*# zjistit, zda program běží na X-serveru (tzn. ne např. Waylandu nebo v konzoli)*<br>
-*// Uvedený příkaz uspěje (vrátí kód 0), pouze pokud je spušten v prostředí X-serveru.*<br>
-**test "$XDG\_SESSION\_TYPE" = "x11"**
+### Odposlouchávání klávesnice a myši
+
+*# zjistit ID klávesnice*<br>
+**xinput list \| egrep -iv "virtual\|power button" \| egrep -im 1 '\\[.\*keyboard.\*\\]' \| sed -E 's/.\*id=([0-9]+).\*/\\1/'**
+
+*# zjistit ID myši*<br>
+**xinput list \| egrep -iv "virtual\|power button" \| egrep -im 1 '\\[.\*pointer.\*\\]' \| sed -E 's/.\*id=([0-9]+).\*/\\1/'**
+<!--
+k: 9 m: 8
+-->
+
+*# vypnout/zapnout zařízení*<br>
+**xinput disable** {*id-zařízení*}<br>
+**xinput enable** {*id-zařízení*}
+
+*# odposlouchávat události zařízení*<br>
+*// Čísla, která přikaz vypisuje při odposlouchávání klávesnice, jsou fyzické kódy kláves. Určit podle nich konkrétní stisknuté klávesy je možné, ale obtížné.*<br>
+**xinput test** {*id-zařízení*}
+<!--
+https://github.com/Wh1t3Rh1n0/xinput-keylog-decoder
+-->
 
 ## Parametry příkazů
 <!--
@@ -271,19 +311,19 @@ Co hledat:
 <!--
 Příkazy ke zpracování:
 
-- xwininfo
-- xclip
-- xdotool
-- xprop
-- xkill
-- xdpyinfo
-- xhost
-- xrandr, xgamma, xvidtune
-- xset
-- xrefresh
-- xeyes, xcalc
-- notify-send
-- dbus-run-session
+[0] xwininfo
+[ ] xclip
+[x] xdotool
+[0] xprop
+[ ] xkill
+[ ] xdpyinfo
+[ ] xhost
+[ ] xrandr, xgamma, xvidtune
+[ ] xset
+[ ] xrefresh
+[ ] xeyes, xcalc
+[ ] notify-send
+[ ] dbus-run-session
 
 Úlohy ke zpracování:
 + zamknout obrazovku/odhlásit se

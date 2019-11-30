@@ -216,11 +216,11 @@ function FormatVolitelny(jeZacatek) {
 }
 
 function TriTecky() {
-    return "<span class=\"tritecky\">...</span>";
+    return "<span class=\"tritecky\"></span>";
 }
 
 function ReseniNezname() {
-    return "?";
+    return "<a href=\"#\" class=\"reseninezname\" title=\"Řešení tohoto příkladu nebylo při vydání této verze kapitoly známo.\">?</a>";
 }
 
 function Obrazek(src, alt, rawSrc, rawAlt) {

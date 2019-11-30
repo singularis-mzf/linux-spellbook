@@ -220,6 +220,7 @@ h2+.zaklinadlo>hr, h3+.zaklinadlo>hr {display:none;visibility:hidden;}
 .radekzaklinadla:last-child::after {display:none;}
 .radekzaklinadla:empty::after {margin-left:0;}
 
+
 .zaklinadlo .akce, .radekzaklinadla.akce {font-family:serif;font-style:italic;}
 .zaklinadlo .akce::before, .zaklinadloakcebefore::before {content:"\2192 ";font-weight:bold;}
 
@@ -238,6 +239,12 @@ h2+.zaklinadlo>hr, h3+.zaklinadlo>hr {display:none;visibility:hidden;}
     color:rgb(127,127,127);
     margin:0 -0.2em;
     transform:scaleY(1.75);
+}
+
+.zaklinadlo .reseninezname {
+    color:rgb(127,127,127);
+    font-weight:bold;
+    text-shadow:0 0 0.5em rgba(0,0,0,0.5);
 }
 
 /* Formátování poznámek pod čarou */
@@ -317,8 +324,10 @@ footer img {float:left;margin:0 1rem 1rem 0;}
     white-space:pre;
 }
 .tritecky {
-    color:rgb(127,127,127);
-    letter-spacing:-0.3em;
+    display:inline-block;
+    background-image:url("obrazky/tritecky.svg");
+    background-size:100% 100%;
+    width:1em;height:1ex;
 }
 
 /* .zahlavistranky: */
@@ -380,7 +389,7 @@ footer img {float:left;margin:0 1rem 1rem 0;}
 
 
 nav .slogan {
-    position:absolute;top:0.25em;right:0;
+    position:absolute;top:0.15em;right:2%;
     font-size:90%;
     font-style:italic;
     text-align:right;
@@ -391,7 +400,7 @@ nav .prev, nav .next {
     display:inline-block;
     min-width:13em;
 }
-nav .prev {text-align:right;}
+nav .prev {text-align:right;margin-right:0.25em;}
 nav .next {text-align:left;}
 
 .rozcestnikkapitol {
