@@ -25,8 +25,32 @@ https://creativecommons.org/licenses/by-sa/4.0/
 ## Zaklínadla (about:config)
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-*# ...*<br>
-**privacy.resistFingerprinting = TRUE**
+*# drastická opatření proti fingerprintingu*<br>
+**privacy.resistFingerprinting = TRUE**<br>
+**privacy.resistFingerprinting.autoDeclineNoUserInputCanvasPrompts = FALSE**
+
+*# vypnout cache na disku (paměť stačí)*<br>
+**browser.cache.disk.enable = FALSE**
+
+*# otevírat nové taby vždy úplně vpravo*<br>
+**browser.tabs.insertAfterCurrent = FALSE**<br>
+**browser.tabs.insertRelatedAfterCurrent = FALSE**
+
+*# povolit přizpůsobení stránek a prohlížeče pomocí stylových předpisů*<br>
+*// Přizpůsobení se provádí pomocí souborů userContent.css (stránky) a userChrome.css (rozhraní prohlížeče). V profilu Firefoxu musíte vytvořit nový adresář „chrome“ a umístit je tam.*<br>
+**toolkit.legacyUserProfileCustomizations.stylesheets = TRUE**
+
+### Vypínání
+*# vypnout webové fonty (stahované)*<br>
+**gfx.downloadable\_fonts.enabled = FALSE**
+
+*# vypnout JavaScript*<br>
+**javascript.enabled = FALSE**
+
+
+### Jsou v GUI
+*# nenašeptávat otevřené panely*<br>
+**browser.urlbar.suggest.openpage = FALSE**
 
 ## Parametry příkazů
 ![ve výstavbě](../obrazky/ve-vystavbe.png)

@@ -52,7 +52,7 @@ Poznámky:
 *# vytvořit nového uživatele/nového systémového uživatele*<br>
 *// Pozor! Celé jméno uživatele nesmí obsahovat znaky „,“ a „=“ a při použití non-ASCII znaků program vypíše varování (což je ale na dnešních systémech dost absurdní).*<br>
 *// Volbou „\-\-disable-login“ umožníte zadat heslo později, jinak se na něj program hned zeptá.*<br>
-**sudo adduser \-\-gecos **"{*Celé jméno*}**"** [**\-\-disable-login**] [**\-\-debug**] [**\-\-shell** {*shell*}] [**\-\-uid** {*konkrétní-UID*}] {*nový-uživatel*}<br>
+**sudo adduser \-\-gecos "**{*Celé jméno*}**"** [**\-\-disable-login**] [**\-\-debug**] [**\-\-shell** {*shell*}] [**\-\-uid** {*konkrétní-UID*}] {*nový-uživatel*}<br>
 **sudo adduser \-\-system** [**\-\-gid** {*ID-skupiny*}] [**\-\-uid** {*konkrétní-UID*}] {*nový-uživatel*}
 
 *# smazat uživatele*<br>

@@ -143,8 +143,11 @@ BEGIN {
 
 BEGINFILE {
     zapnuto = 0;
-    if (ARGIND == 3) {
+    if (ARGIND == 2) {
         print "=== Zahajuji extrakci pomocných funkcí a skriptů. ===";
+    }
+    if (LADENI) {
+        print "LADĚNÍ: otevírám soubor " FILENAME > "/dev/stderr";
     }
 }
 
@@ -164,16 +167,18 @@ ARGIND < 2 {
 
 # pro jakýkoliv nadpis druhé úrovně vypnout načítání funkcí a skriptů
 /^## / {
-#    if (zapnuto) {
-#        print "DEBUG: končím blok pomocných funkcí a skriptů v souboru " FILENAME ".";
-#    }
     zapnuto = 0;
+    if (LADENI) {
+        print "LADĚNÍ: vypínám pro řádek \"" $0 "\"." > "/dev/stderr";
+    }
 }
 
 # pro vybrané nadpisy druhé úrovně zapnout načítání funkcí a skriptů
 /^## Pomocné (funkce|skripty)( *a( | |&nbsp;)(funkce|skripty))?$/ {
     zapnuto = 1;
-#    print "DEBUG: začínám blok pomocných funkcí a skriptů v souboru " FILENAME ".";
+    if (LADENI) {
+        print "LADĚNÍ: zapínám pro řádek \"" $0 "\"." > "/dev/stderr";
+    }
 }
 
 # dál pokračovat, jen je-li načítání zapnuté
@@ -190,8 +195,11 @@ ARGIND < 2 {
     next;
 }
 
-jmeno != "" && /^\*\*.*\*\*(<br>)?$/ {
+jmeno != "" && /^(<odsadit[1-8]>)?\*\*.*\*\*(<br>)?$/ {
     jePosledni = !/<br>$/;
+    if (/^<odsadit[1-8]>/) {
+        $0 = "**" Zopakovat("\t", substr($0, 9, 1)) substr($0, 13);
+    }
     telo = telo ZpracujZnaky(substr($0, 3, length($0) - (jePosledni ? 4 : 8))) "\n";
     if (jePosledni) {
 # konec definice

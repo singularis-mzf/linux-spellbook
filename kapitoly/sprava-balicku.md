@@ -11,62 +11,81 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
-<!--
-Poznámky:
-[ ] Pokračovat v dpkg-*
--->
 
 # Správa balíčků
 
 !Štítky: {tematický okruh}{systém}
 
 ## Úvod
-<!--
-- Vymezte, co je předmětem této kapitoly.
-- Obecně popište základní principy, na kterých fungují používané nástroje.
-- Uveďte, co kapitola nepokrývá, ačkoliv by to čtenář mohl očekávat.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+Tématem této kapitoly jsou balíčkovací systémy dpkg, apt, PPA, snap a Flatpak používáné
+k instalaci a aktualizaci aplikací, knihoven a systémových součástí v distribuci Ubuntu.
+
+Systém „dpkg“ (Debian PacKaGe manager) instaluje do systému balíčky typu .deb,
+hlídá, aby byly splněny závislosti mezi instalovanými balíčky,
+a eviduje, které soubory v systému patří ke kterému balíčku. Nekomunikuje online.
+
+Systém „apt“ je nadstavbou dpkg, která komunikuje se vzdáleným repozitářem
+balíčků typu .deb, stahuje potřebné balíčky a ověřuje jejich pravost.
+K instalaci je ovšem předává systému dpkg.
+
+PPA je rozšíření „apt“, které umožňuje pohodlně přidávat mezi vzdálené zdroje apt
+repozitáře vývojářů hostované firmou Canonical pro použití v distribuci Ubuntu.
+Balíčky z PPA jdou přímo od vývojářů a nejsou po cestě nikým dalším prověřovány,
+takže je vhodné používat pouze PPA velmi důvěryhodných vývojářů.
+
+Snap je nový balíčkovací systém firmy Canonical, exkluzivně pro Ubuntu.
+Není dobře přijímán linuxovou komunitou.
+
+Flatpak je nový balíčkovací systém založený na sandboxingu a systému práv.
+Je primárně určený k online instalaci nejnovějších verzí distribuovaných
+programů bez rizika konfiktů mezi různými verzemi knihoven.
+
+Tato kapitola se nezabývá vytvářením balíčků, vytvářením repozitářů ani jejich zrcadel.
+Rovněž se (pochopitelně) nezabývá sestavováním programů ze zdrojového kódu
+nebo instalací balíčků jiného typu (.rpm, .tar.xz apod.). Do budoucna však možná
+pokryje instalaci balíčků typu .rpm s použitím nástroje „alien“.
+
+Tato verze kapitoly nepokrývá offline instalaci Flatpaku.
 
 ## Definice
-<!--
-- Uveďte výčet specifických pojmů pro použití v této kapitole a tyto pojmy definujte co nejprecizněji.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+* **Balíček** je soubor obsahující neměnná data aplikace, knihovny apod. a metadata včetně případných závislostí na ostatních balíčcích.
+* **Repozitář** je ucelený sklad souvisejících balíčků. Může být dostupný buď online, nebo může být umístněný v systému souborů.
 
 <!--
 Offline instalací se rozumí stažení balíčků, jejich přenesení na počítač nepřipojený k síti a instalace tam.
 -->
 
-## Zaklínadla
-<!--
-- Rozdělte na podsekce a naplňte „zaklínadly“.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+## Zaklínadla (DPKG a APT)
 
-*# aktualizovat informace o dostupných balíčcích*<br>
+### Instalace a odinstalace
+*# aktualizovat informace o dostupných balíčcích (alternativy)*<br>
+**sudo aptitude update**<br>
 **sudo apt-get update**
 
-*# aktualizovat všechny aktualizovatelné balíčky*<br>
-**sudo apt-get upgrade** [**-y**] [**\-\-autoremove** [**\-\-purge**]]
+*# aktualizovat všechny aktualizovatelné balíčky (normálně/drasticky)*<br>
+**sudo apt-get upgrade** [**-y**] [**\-\-autoremove** [**\-\-purge**]]<br>
+**sudo apt-get dist-upgrade** [**-y**] [**\-\-autoremove** [**\-\-purge**]]
 
 *# nainstalovat nový balíček (včetně závislostí)*<br>
 **sudo apt-get install** [**-y**] [**\-\-no-install-recommends**] [**\-\-install-suggests**] [**-V**] {*balíček*}...
 
 *# aktualizovat jen konkrétní balíčky a jejich závislosti*<br>
-**sudo apt-get install \-\-only-upgrade \-\-with-new-pkgs** {*balíček*}...
-<!--
-[ ] vyzkoušet
--->
+**sudo apt-get install \-\-only-upgrade** {*balíček*}...
 
 *# pokusit se napravit poškozené závislosti*<br>
 **sudo apt-get install \-\-fix-broken**
 
+### Informace o balíčcích
 
-*# zjistit hodnotu konfigurační volby APT*<br>
-**apt-config dump** {*volba*}...
+*# vypsat všechny dostupné balíčky*<br>
+**egrep -h ^Package: /var/lib/apt/lists/\*\_Packages \| cut -d " " -f 2- \| LC\_ALL=C sort -u**
 
-*# vypsat podrobné informace o balíku*<br>
+*# vypsat všechny nainstalované balíčky (pro člověka/pro skript)*<br>
+**apt list \-\-installed**<br>
+**(apt-mark showauto; apt-mark showmanual) \| LC\_ALL=C sort -u**
+
+*# vypsat podrobné informace o balíčku*<br>
 **apt-cache show** {*balík*}...
 
 *# vypsat všechny známé (nainstalované nebo dostupné) balíčky*<br>
@@ -76,12 +95,47 @@ Offline instalací se rozumí stažení balíčků, jejich přenesení na počí
 Problém: nevypíše balíčky pro každou architekturu; nahradit za apt-cache search ""
 -->
 
-*# vypsat všechny dostupné balíčky*<br>
-**egrep -h ^Package: /var/lib/apt/lists/\*\_Packages \| cut -d " " -f 2- \| LC\_ALL=C sort -u**
+*# vypsat závislosti balíčku*<br>
+**apt-cache depends** {*balík*}...
 
-*# vypsat všechny nainstalované balíčky (pro člověka/pro skript)*<br>
-**apt list \-\-installed**<br>
-**(apt-mark showauto; apt-mark showmanual) \| LC\_ALL=C sort -u**
+
+
+
+
+
+*# vypsat balíčky předinstalované nebo instalované ručně*<br>
+**apt-mark showmanual**
+
+*# vypsat balíčky instalované jen jako závislosti jiných balíčků*<br>
+**apt-mark showauto**
+
+
+
+
+*# označit balíček jako instalovaný ručně*<br>
+**sudo apt-mark auto** {*balíček*}...
+
+*# označit balíček jako instalovaný automaticky*<br>
+**sudo apt-mark manual** {*balíček*}...
+
+
+### Zákaz aktualizace
+
+*# zakázat instalaci či aktualizaci balíčku*<br>
+**sudo apt-mark hold** {*balíček*}...
+
+*# vypsat zákazy instalace či aktualizace balíčků*<br>
+**apt-mark showhold**
+
+*# zrušit zákaz instalace či aktualizace balíčku*<br>
+**sudo apt-mark unhold** {*balíček*}...
+
+### Ostatní
+
+*# zjistit hodnotu konfigurační volby APT*<br>
+**apt-config dump** {*volba*}...
+
+
 
 <!--
 Viz https://askubuntu.com/questions/99834/how-do-you-see-what-packages-are-available-for-update
@@ -98,38 +152,22 @@ aptitude search --disable-columns -F %p "?upgradable"
 -->
 
 
-*# vypsat závislosti balíčku*<br>
-**apt-cache depends** {*balík*}...
-
 *# přidat do zdrojů nový repozitář/odebrat repozitář*<br>
-**sudo add-apt-repository 'deb** {*adresa*} {*jméno-repozitáře*} {*sekce*}...**'**<br>
+**sudo add-apt-repository '**{*řádek sources.list*}**'**<br>
+**sudo add-apt-repository -r '**{*řádek sources.list*}**'**
+
+
+### PPA
+
+*# přidat do zdrojů nové PPA/odebrat PPA*<br>
+**sudo add-apt-repository** [**-y**] **ppa:**{*id-vývojáře*}**/**{*id-repozitáře*}<br>
+**sudo add-apt-repository -r** [**-y**] **ppa:**{*id-vývojáře*}**/**{*id-repozitáře*}
+
+*# vypsat seznam aktivních PPA*<br>
+**egrep -shx '\\s\*deb(\\\[\[^\]\]\*\\\])?\\s\*http://ppa.launchpad.net/.\*' /etc/apt/sources.list /etc/apt/sources.list.d/\*.list \| cut -d / -f 4,5 \| sed 's/.\*/ppa:&amp;/' \| LC\_ALL=C sort -u**
+
+*# vypsat seznam balíčků dostupných z určitého PPA*<br>
 ?
-
-*# přidat do zdrojů nový PPA/odebrat PPA*<br>
-**sudo add-apt-repository -y ppa://**{*ppa-uživatel*}**/**{*ppa-repozitář*}<br>
-**sudo add-apt-repository -ry ppa://**{*ppa-uživatel*}**/**{*ppa-repozitář*}
-
-*# vypsat balíčky předinstalované nebo instalované ručně*<br>
-**apt-mark showmanual**
-
-*# vypsat balíčky instalované jen jako závislosti jiných balíčků*<br>
-**apt-mark showauto**
-
-*# označit balíček jako instalovaný ručně*<br>
-**sudo apt-mark auto** {*balíček*}...
-
-*# označit balíček jako instalovaný automaticky*<br>
-**sudo apt-mark manual** {*balíček*}...
-
-*# zakázat instalaci či aktualizaci balíčku*<br>
-**sudo apt-mark hold** {*balíček*}...
-
-*# zrušit zákaz instalace či aktualizace balíčku*<br>
-**sudo apt-mark unhold** {*balíček*}...
-
-*# vypsat zákazy instalace či aktualizace balíčků*<br>
-**apt-mark showhold**
-
 
 ### Správá důvěryhodných klíčů
 
@@ -192,7 +230,10 @@ aptitude search --disable-columns -F %p "?upgradable"
 *# vypsat seznam balíčků, kterým přísluší soubory s cestami odpovídající danému vzorku*<br>
 **dpkg-query -S** {*vzorek*}
 
-### Flatpak
+*# vypsat balíček (popř. balíčky) vlastnící určitý příkaz*<br>
+**test -e "$(which **{*příkaz*}**)" &amp;&amp; (dpkg-query -S "$(which **{*příkaz*}**)" \| cut -d : -f 1)**
+echi
+## Zaklínadla (Flatpak)
 
 <!--
 https://flatpak.org/setup/Ubuntu/
@@ -204,16 +245,75 @@ Single file bundle:
 http://docs.flatpak.org/en/latest/single-file-bundles.html
 -->
 
+*# spustit program z balíčku*<br>
+**flatpak run** {*balíček*} {*parametry*}
+
 *# instalovat balíček*<br>
-**sudo flatpak install \-\-system** [{*server*}] {*balíček*}
+**flatpak install** [{*server*}] {*balíček*}
 
-*# instalovat balíček jen pro tohoto uživatele*<br>
-**flatpak install \-\-user** [{*server*}] {*balíček*}
+*# odinstalovat balíček*<br>
+**flatpak uninstall** {*balíček*}
 
-*# vypsat všechny dostupné balíčky*<br>
-**flatpak search ""**
+*# vypsat nainstalované balíčky*<br>
+**flatpak list**
 
-### Snap
+*# vypsat výchozí práva aplikace*<br>
+**flatpak info \-\-show-permissions** {*balíček*}
+
+*# vypsat podrobnější informace o balíčku (nainstalovaném/dostupném)*<br>
+*// Uvedení verze k balíčku je povinné, pokud je v repozitáři víc verzí téhož balíčku. Bez něj v takovém případě příkaz „flathub remote-info“ selže a vypíše dostupné verze.*<br>
+**flatpak info** {*balíček*}<br>
+**flatpak remote-info flathub** {*balíček*}[**//**{*verze*}]
+
+*# hledat dostupné balíčky podle podřetězce*<br>
+**flatpak search** {*podřetězec*}
+
+*# vypsat všechny dostupné balíčky aplikací/úplně všechny dostupné balíčky*<br>
+**flatpak remote-ls \-\-app flathub**<br>
+**flatpak remote-ls \-\-all flathub**
+
+*# spustit program z balíčku bez přístupu k síti*<br>
+**flatpak run \-\-unshare=network** {*balíček*}
+
+*# spustit GIMP s přístupem jen ke čtení k většině systému souborů*<br>
+*// K provedení tohoto příkazu musíte mít daný balíček nainstalovaný.*<br>
+**flatpak run \-\-nofilesystem=host \-\-filesystem=host:ro org.gimp.GIMP**
+
+<!--
+### Flatpak (offline instalace)
+
+*# příprava (online počítač)*<br>
+**sudo flatpak remote-modify \-\-collection-id=org.flathub.Stable flathub**<br>
+**wget "https://flathub.org/repo/flathub.flatpakrepo"**
+
+*# příprava (offline počítač)*<br>
+**
+
+
+*# stáhnout balíček*<br>
+**flatpak update**<br>
+**flatpak create-usb ./docasny** {*balíček*}<br>
+**flatpak build-bundle ./docasny** {*jméno-souboru*}**.flatpak** {*balíček*}
+
+*# nainstalovat balíček*<br>
+?
+-->
+
+### Flatpak (správa vzdálených repozitářů)
+
+*# přidat FlatHub*<br>
+**flatpak remote-add \-\-if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo**
+
+*# přidat repozitář*<br>
+**flatpak remote-add** [**\-\-if-not-exists**] {*id-pro-repozitář*} {*URL*}
+
+*# odebrat repozitář*<br>
+**flatpak remote-delete** {*id-repozitáře*}
+
+*# vypsat seznam repozitářů*<br>
+**flatpak remotes**
+
+## Zaklínadla (snap)
 
 *# spustit program z balíčku*<br>
 **snap run** {*balíček*}
@@ -240,6 +340,7 @@ http://docs.flatpak.org/en/latest/single-file-bundles.html
 
 *# stáhnout balíček k offline instalaci*<br>
 *// Kanál může být: edge, beta, candidate nebo stable.*<br>
+*// Poznámka: tento příkaz stáhne pouze uvedený balíček, ne však jeho závislosti.*<br>
 **snap download** [**\-\-**{*kanál*}] {*balíček*}
 
 *# nainstalovat balíček offline*<br>
@@ -258,35 +359,35 @@ http://docs.flatpak.org/en/latest/single-file-bundles.html
 *# vrátit balíček do stavu před posledním upgradem na novou verzi (neověřeno)*<br>
 **sudo snap revert** {*balíček*}
 
-
-## Parametry příkazů
 <!--
+## Parametry příkazů
+<!- -
 - Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.
 - Jinak by zde měl být přehled nejužitečnějších parametrů používaných nástrojů.
--->
+- ->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
+-->
 
 ## Instalace na Ubuntu
-<!--
-- Jako zaklínadlo bez titulku uveďte příkazy (popř. i akce) nutné k instalaci a zprovoznění všech nástrojů požadovaných kterýmkoliv zaklínadlem uvedeným v kapitole. Po provedení těchto činností musí být nástroje plně zkonfigurované a připravené k práci.
-- Ve výčtu balíků k instalaci vycházejte z minimální instalace Ubuntu.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-*# Aptitude*<br>
+*# Příkaz „aptitude“*<br>
 **sudo apt-get install aptitude**
 
 *# Flatpak*<br>
 **sudo add-apt-repository ppa:alexlarsson/flatpak**<br>
 **sudo aptitude update**<br>
 **sudo apt-get install flatpak** [**gnome-software-plugin-flatpak**]<br>
-**sudo flatpak remote-add \-\-if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo**<br>
+**flatpak remote-add \-\-if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo**<br>
 !: Restartujte operační systém.
+
+*# Pro umožnění uživatelské instalace (parametr \-\-user) spusťte z účtu příslušného uživatele navíc:*<br>
+**flatpak remote-add \-\-user \-\-if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo**
+
 
 Snap je základní součástí Ubuntu přítomnou v každé nové instalaci. Je možno ho odinstalovat tímto příkazem:
 
 *# *<br>
-**sudo apt-get purge snapd**
+**sudo apt-get purge \-\-autoremove snapd**
 
 ## Ukázka
 <!--
@@ -304,6 +405,10 @@ Snap je základní součástí Ubuntu přítomnou v každé nové instalaci. Je
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+* Co je špatně na snapu: 1) Automatické updatování balíčků, které nelze vypnout. 2) Zatímco klientská část je svobodný software, serverová část je proprietární a může ji provozovat pouze firma Canonical, takže není možné vytvářet zrcadla repozitáře snapů a při instalaci programů jste závislí na připojení do USA.
+* Stalo se mi, že u některých snapů nebyla správně vyplněna licence.
+* Flatpak přistupuje poměrně benevolentně k přístupovým právům uživatelů. Umožňuje instalovat a odinstalovávat balíčky systémové instalace bez zadání hesla nejen superuživateli, ale také všem uživatelům, kteří jsou členy skupin admin a sudo. Ostatní uživatelům to umožní po zadání hesla administrujícího uživatele, dokonce i přesto, že sami nemají právo používat sudo.
+
 ## Jak získat nápovědu
 <!--
 - Uveďte, které informační zdroje jsou pro začátečníka nejlepší k získání rychlé a obsáhlé nápovědy. Typicky jsou to manuálové stránky, vestavěná nápověda programu nebo webové zdroje (ale neuvádějte konkrétní odkazy, ty patří do sekce „Odkazy“).
@@ -311,6 +416,7 @@ Snap je základní součástí Ubuntu přítomnou v každé nové instalaci. Je
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 *# *<br>
+**snap \-\-help**<br>
 **snap help** {*podpříkaz*}
 
 ## Odkazy

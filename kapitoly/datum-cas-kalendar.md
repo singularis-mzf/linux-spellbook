@@ -18,7 +18,7 @@ Poznámky:
 
 # Datum, čas a kalendář
 
-!Štítky: {tematický okruh}
+!Štítky: {tematický okruh}{čas}
 
 ## Úvod
 <!--
@@ -101,7 +101,7 @@ TODO: Zamyslet se nad formátováním.
 **%s**
 
 *# číslo dne v roce*<br>
-**%j**
+**%**[**-**]**j**
 
 *# lokalizované celky*<br>
 **%x = datum**<br>
@@ -116,22 +116,14 @@ TODO: Zamyslet se nad formátováním.
 **%T = %H:%M:%S**
 
 ## Zaklínadla
-<!--
-- Rozdělte na podsekce a naplňte „zaklínadly“.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-
 
 ### Čekání
 
 *# počkat určitou dobu*<br>
-*// Počet sekund může být i necelé číslo, např. 0.12 počká 120 milisekund. Pro hodnoty pod 100ms ale neočekávejte velkou přesnost.*<br>
+*// Počet sekund může být i necelé číslo, např. 0.12 počká 120 milisekund. Pro hodnoty pod 100 milisekund ale neočekávejte velkou přesnost.*<br>
 **sleep** {*sekund*}...
 
 ### Kalendář
-
-*# zobrazit kalendář všech měsíců v roce*<br>
-**ncal -Mb**[**w**][**J**] {*rok*}
 
 *# zobrazit kalendář měsíce a dvou okolních*<br>
 **ncal -M3**[**b**][**w**][**J**] [{*měsíc-1-až-12*} {*rok*}]
@@ -139,39 +131,52 @@ TODO: Zamyslet se nad formátováním.
 *# zobrazit kalendář měsíce*<br>
 **ncal -M**[**b**][**w**][**J**] [{*měsíc-1-až-12*}] {*rok*}
 
+*# zobrazit kalendář všech měsíců v roce*<br>
+**ncal -Mb**[**w**][**J**] {*rok*}
+
 *# zobrazit kalendář měsíce a N následujících*<br>
 **ncal -M**[**b**][**w**][**J**] **-A** {*N*} [{*měsíc-1-až-12*}] {*rok*}
 
-### Konverze časových zón
+### Aktuální čas a datum
+
+*# vypsat aktuální čas (resp. datum): lokální/UTC/v určité časové zóně*<br>
+**date** [**+**{*formát*}]<br>
+**date -u** [**+**{*formát*}]<br>
+**TZ="**{*časová/zóna*}**" date** [**+**{*formát*}]
+
+*# zobrazit kalendář aktuálního měsíce a dvou okolních*<br>
+**ncal -M3**[**b**][**w**][**J**]
+
+### Časové zóny
 *# konverze z UTC na lokální čas/z lokálního času na UTC*<br>
 **date -d "TZ=\\"UTC\\"** {*čas-UTC*}**" "+%F %T"**<br>
 **date -ud "@$(date -d "**{*čas*}**" +%s)" "+%F %T"**
 
 *# konverze z jedné časové zóny do druhé (obecně/příklad)*<br>
-**TZ="**{*cílová/časová/zóna*}**" date -d "TZ=\"**{*zdrojová/časová/zóna*}**\"&blank;**{*čas*}**" "+%F %T**[**&blank;%z**]**"**<br>
-**TZ="America/New\_York" date -d "TZ=\\"Asia/Vladivostok\\" 2019-01-01 12:35:57" "+%F %T %z"**
+**TZ="**{*cílová/časová/zóna*}**" date -d 'TZ="**{*zdrojová/časová/zóna*}**"&blank;**{*čas*}**' "+%F %T**[**&blank;%z**]**"**<br>
+**TZ="America/New\_York" date -d 'TZ="Asia/Vladivostok" 2019-01-01 12:35:57' "+%F %T %z"**
 
-*# vypsat seznam rozumných podporovaných časových zón seřazený podle jejich aktuální odchylky od UTC*<br>
-**find -L /usr/share/zoneinfo -type f \| cut -d / -f 5- \| egrep '^(Africa\|America\|Antarctica\|Asia\|Atlantic\|Australia\|Etc\|Europe\|Indian\|Pacific\|UTC)' \| sed 's/.\*/TZ="&amp;" date +%z; echo &amp;/' \| bash \| xargs -rd \\\\n -n 2 printf "%s\\\\t%s\\\\n" \| LC\_ALL=C sort \| sort -ns**
+*# vypsat seznam rozumných podporovaných časových zón, seřazený podle jejich aktuální odchylky od UTC*<br>
+**vypsat-casove-zony \| sed 's/.\*/TZ="&amp;" date +%z; echo &amp;/' \| bash \| xargs -rd \\\\n -n 2 printf "%s\\\\t%s\\\\n" \| LC\_ALL=C sort \| sort -ns**
 
 *# vypsat seznam podporovaných časových zón (rozumný/naprosto úplný)*<br>
-**find -L /usr/share/zoneinfo -type f \| cut -d / -f 5- \| egrep '^(Africa\|America\|Antarctica\|Asia\|Atlantic\|Australia\|Etc\|Europe\|Indian\|Pacific)' \| LC\_ALL=C sort -i**<br>
-**find -L /usr/share/zoneinfo -type f \| cut -d / -f 5-**
+**vypsat-casove-zony**<br>
+**vypsat-casove-zony vsechny**
 
 ### Aritmetika s datem
 *# konverze data na „číslo dne“/zpět*<br>
-**echo $(($(date -ud** {*datum*} **+%s) / 86400))**<br>
+**printf %s\\\\n $(($(date -ud** {*datum*} **+%s) / 86400))**<br>
 **date -ud "@$((**{*číslo-dne*}** \* 86400))" +%F**
 
 *# přičíst k datu N dní/odečíst od data N dní*<br>
-?<br>
-?
+**date -ud @$((**{*N*} **\* 86400 + $(date -ud "**{*datum*}**" +%s))) +%F**<br>
+**date -ud @$((-**{*N*} **\* 86400 + $(date -ud "**{*datum*}**" +%s))) +%F**
 
 *# rozdíl dvou dat ve dnech*<br>
-**echo $((($(date -ud** {*datum*} **+%s) - $(date -ud** {*odečítané-datum*} **+%s)) / 86400))**
+**printf %s\\\\n $((($(date -ud** {*datum*} **+%s) - $(date -ud** {*odečítané-datum*} **+%s)) / 86400))**
 
 *# je rok přestupný?*<br>
-?
+**test 61 -eq $(date -d** {*rok*}**-03-01 +%-j)**
 
 ### Artimetika s časem
 *# konverze lokálního/UTC času na „časovou známku“*<br>
@@ -182,12 +187,12 @@ TODO: Zamyslet se nad formátováním.
 **date -d %**{*časová-známka*} **"+%F %T**[**&blank;%z**]**"**<br>
 **date -ud %**{*časová-známka*} **"+%F %T"**
 
-*# přičíst/odečíst daný počet sekund (v UTC)*<br>
-**date -ud "%$(($(date -ud "**{*čas*} **+%s) +** {*sekund*}**))" "+%F %T"**<br>
-**date -ud "%$(($(date -ud "**{*čas*} **+%s) -** {*sekund*}**))" "+%F %T"**
+*# přičíst/odečíst N sekund (v UTC)*<br>
+**date -ud @$(($(date -ud "**{*datum čas*}**" +%s) +** {*N*} **)) "+%F %T"**<br>
+**date -ud @$(($(date -ud "**{*datum čas*}**" +%s) -** {*N*} **)) "+%F %T"**
 
 *# rozdíl UTC časů v sekundách*<br>
-**expr $(date -ud** {*čas*} **+%s) - $(date -ud** {*odečítaný-čas*} **+%s)**
+**printf %s\\\\n $(($(date -ud** {*čas*} **+%s) - $(date -ud** {*odečítaný-čas*} **+%s)))**
 
 ### Svátky
 *# zjistit datum Velikonoční neděle*<br>
@@ -234,6 +239,16 @@ TODO: Zamyslet se nad formátováním.
 - Uveďte, které informační zdroje jsou pro začátečníka nejlepší k získání rychlé a obsáhlé nápovědy. Typicky jsou to manuálové stránky, vestavěná nápověda programu nebo webové zdroje (ale neuvádějte konkrétní odkazy, ty patří do sekce „Odkazy“).
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+## Pomocné funkce a skripty
+
+*# \~/bin/vypsat-casove-zony − vypíše seznam podporovaných časových zón*<br>
+**#!/bin/bash -e**<br>
+**find -L /usr/share/zoneinfo -type f \| cut -d / -f 5- \| (if test "$1" = "vsechny"**<br>
+**then**<br>
+<odsadit1>**exec cat**<br>
+**fi**<br>
+**exec egrep "^($(echo Africa America Antarctica Asia Atlantic Australia Etc Europe Indian Pacific \| tr "&blank;" \\\|))") \| LC\_ALL=C sort -i**
 
 ## Odkazy
 ![ve výstavbě](../obrazky/ve-vystavbe.png)

@@ -64,6 +64,13 @@ Poznámky:
 
 ### HTML
 
+### Archivy
+
+*# konverze jednoho typu archivu na druhý*<br>
+**arepack** {*původní-archiv.přípona*} {*nový-archiv.přípona*}
+
+
+
 
 ## Parametry příkazů
 <!--

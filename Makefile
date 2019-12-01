@@ -32,9 +32,11 @@ VSECHNY_DODATKY := predmluva koncepce-projektu plan-vyvoje test mechanismus-prek
 # _ A, B, C, D, E, F, G
 VSECHNY_KAPITOLY := _ostatni _ukazka awk barvy-a-titulek datum-cas-kalendar docker firefox git
 # H, I, J, K, L, M
-VSECHNY_KAPITOLY += hledani-souboru make markdown
+VSECHNY_KAPITOLY += hledani-souboru konverze-formatu latex make markdown
 # N, O, P, Q, R, S
-VSECHNY_KAPITOLY += odkazy planovani-uloh prace-s-archivy regularni-vyrazy sprava-balicku sprava-uzivatelu stahovani-videi
+VSECHNY_KAPITOLY += odkazy planovani-uloh prace-s-archivy regularni-vyrazy
+# S
+VSECHNY_KAPITOLY += sprava-balicku sprava-uzivatelu stahovani-videi
 # T, U, V, W, X, Y, Z
 VSECHNY_KAPITOLY += x zpracovani-obrazku zpracovani-textovych-souboru zpracovani-videa-a-zvuku
 
@@ -77,17 +79,17 @@ kapitoly.lst: kapitoly.lst.vychozi
 
 # 2. kapitoly.lst => soubory_prekladu/fragmenty.tsv
 # ============================================================================
-$(SOUBORY_PREKLADU)/fragmenty.tsv: kapitoly.lst skripty/sepsat-fragmenty.awk $(VSECHNY_DODATKY:%=dodatky/%.md) $(VSECHNY_KAPITOLY:%=kapitoly/%.md)
+$(SOUBORY_PREKLADU)/fragmenty.tsv: kapitoly.lst skripty/sepsat-fragmenty.awk
 	mkdir -pv $(SOUBORY_PREKLADU)
 	$(AWK) -f skripty/sepsat-fragmenty.awk $< > $@
 
 # 3. soubory_prekladu/fragmenty.tsv + *.md => soubory_prekladu/osnova/*.tsv
 # ============================================================================
-$(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/osnova/%.tsv): $(SOUBORY_PREKLADU)/osnova/%.tsv: kapitoly/%.md skripty/sepsat-osnovu.awk
+$(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/osnova/%.tsv): $(SOUBORY_PREKLADU)/osnova/%.tsv: kapitoly/%.md $(SOUBORY_PREKLADU)/fragmenty.tsv skripty/sepsat-osnovu.awk
 	mkdir -pv $(SOUBORY_PREKLADU)/osnova
 	$(AWK) -f skripty/sepsat-osnovu.awk -v IDKAPITOLY=$(<:kapitoly/%.md=%) $< >$@
 
-$(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/osnova/%.tsv): $(SOUBORY_PREKLADU)/osnova/%.tsv: dodatky/%.md skripty/sepsat-osnovu.awk
+$(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/osnova/%.tsv): $(SOUBORY_PREKLADU)/osnova/%.tsv: dodatky/%.md $(SOUBORY_PREKLADU)/fragmenty.tsv skripty/sepsat-osnovu.awk
 	mkdir -pv $(SOUBORY_PREKLADU)/osnova
 	$(AWK) -f skripty/sepsat-osnovu.awk -v IDKAPITOLY=$(<:dodatky/%.md=%) $< >$@
 
@@ -151,6 +153,7 @@ $(SOUBORY_PREKLADU)/html/kap-copys.htm: $(SOUBORY_PREKLADU)/fragmenty.tsv skript
 # 7. sepsat copyrighty k obrázkům
 # ============================================================================
 $(SOUBORY_PREKLADU)/html/obr-copys.htm: COPYING skripty/sepsat-copykobr.awk
+	mkdir -pv $(dir $@)
 	$(AWK) -f skripty/sepsat-copykobr.awk $< $(OBRAZKY:%=obrazky/%) $(SVG_OBRAZKY:%=obrazky/%) >$@
 
 # 8. shromáždit copyrighty na stránku _autori.htm

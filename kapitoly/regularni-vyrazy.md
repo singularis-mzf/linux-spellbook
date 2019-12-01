@@ -14,7 +14,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 <!--
 Poznámky:
 
-- gawk, sed, perl, egrep, grep -P
+[ ] Vymyslet ukázku.
 
 -->
 
@@ -201,28 +201,54 @@ Kotvy odpovídají fiktivnímu prázdnému řetězci na určité pozici.
 **(?!**{*podvýraz*}**)**
 
 ## Parametry příkazů
-<!--
-- Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.
-- Jinak by zde měl být přehled nejužitečnějších parametrů používaných nástrojů.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-<!--
-[ ] egrep
-[ ] expr
-[ ] gawk
-[ ] grep -P
-[ ] perl
-[ ] sed -E
--->
+*# egrep*<br>
+**egrep** {*parametry*} [**-e**] **'**{*regulární výraz*}**'** [{*soubor*}]...
+
+* **\-v** \:\: Logická negace; hledat řádky, které nevyhovují výrazu.
+* **\-x** \:\: Regulárnímu výrazu musí odpovídat celá řádka (výchozí chování: jakýkoliv podřetězec řádku).
+* **\-q** \:\: Žádný normální výstup, jen otestuje, zda by našel alespoň jeden vyhovující řádek. Parametr **-s** zase potlačí chybová hlášení.
+* **\-i** \:\: Nerozlišovat velká a malá písmena.
+* **\-C** {*počet*} \:\: „kontext“ Kromě vyhovujícího řádku vypíše zadaný počet předchozích a následujících. (Samostatně lze tyto počty nastavit parametry **-A** a **-B**.)
+* **\-o** \:\: Místo celých řádků vypisuje jednotlivé podřetězce vyhovující výrazu, každý podřetězec na samostatný řádek.
+* **\-h** \:\: Vyhledává-li se ve více souborech, neuvede se jako prefix řádky název souboru.
+* **\-H** \:\: Vždy uvede jako prefix řádku název souboru.
+* **\-n** \:\: Jako prefix bude vypisovat číslo řádky.
+* **\-m** {*N*} \:\: Ukončí hledání po nalezení N vyhovujících řádků.
+* **\-z** \:\: Řádky vstupních souborů jsou ukončeny nulovým bajtem; znak \\n bude považovat za za normální znak.
+
+Poznámka: příkaz „grep“ má tytéž parametry jako „egrep“, ale pracuje se základními regulárními výrazy.
+
+*# expr*<br>
+**expr** **"**{*řetězec*}**"** **'**{*základní regulární výraz*}**' &gt;/dev/null**<br>
+**printf %s\\n "**{*řetězec*}**" \| egrep -q '**{*regulární výraz*}**'**
+
+*# gawk*<br>
+**gawk** [{*parametry*}] **'/**{*regulární výraz*}**/**[**\{**{*příkazy*}**\}**]**'** {*soubor*}...
+
+* **\-F** {*hodnota*} \:\: Nastaví systémovou proměnnou „FS“ (field separator) na uvedenou hodnotu.
+* **\-v** {*proměnná*}**=**{*hodnota*} \:\: Nastaví proměnnou na uvedenou hodnotu.
+* **\-S** \:\: Spustí skript v „bezpečném režimu“, kdy nemůže volat příkazy bashe, spouštět jiné programy ani otevírat další soubory.
+
+*# perl*<br>
+**perl -nwe 'if ($\_ =~ /**{*regulární výraz Perlu*}**/) {print $\_}' &lt;**{*vstupní-soubor*}<br>
+**perl -pwe 's/**{*regulární výraz Perlu*}**/**{*výraz náhrady*}**/**[**g**]**' &lt;**{*vstupní-soubor*}
+
+* **\-n** \:\: Vykoná program v cyklu pro každý řádek vstupu.
+* **\-p** \:\: Vykoná program v cyklu pro každý řádek vstupu a na konci každého cyklu vypíše proměnnou „$\_“.
+* **\-w** \:\: Zapne užitečná varování. (**-W** zapne všechna varování.)
+* **\-e** {*program*} \:\: Vykoná tento program místo načtení programu ze souboru.
+* **\-X** \:\: Vypne všechna varování.
+
+*# sed*<br>
+**sed** {*parametry*} [[**-e** {*příkazy*}]...  **-e**] {*příkazy*} [{*vstupní-soubor*}]...
+
+* **\-E** \:\: Používá rozšířené regulární výrazy místo základních.
+* **\-i** \:\: „in-place“ Výstupem přepíše původní soubor.
+* **\-z** \:\: Řádek končí nulovým bajtem, ne znakem \\n.
+* **\-u** \:\: „unbuffered“ Čte a zapisuje data po jednotlivých řádcích. (Normálně je kvůli výkonu načítá po delších blocích.)
 
 ## Instalace na Ubuntu
-<!--
-- Jako zaklínadlo bez titulku uveďte příkazy (popř. i akce) nutné k instalaci a zprovoznění všech nástrojů požadovaných kterýmkoliv zaklínadlem uvedeným v kapitole. Po provedení těchto činností musí být nástroje plně zkonfigurované a připravené k práci.
-- Ve výčtu balíků k instalaci vycházejte z minimální instalace Ubuntu.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-
 Příkazy „egrep“, „expr“, „grep“, „perl“ a „sed“ jsou základními součástmi
 Ubuntu. Příkaz „gawk“ je nutné doinstalovat, nebo místo něj použít méně
 schopný příkaz „awk“, který je základní součástí Ubuntu.
@@ -230,7 +256,7 @@ schopný příkaz „awk“, který je základní součástí Ubuntu.
 *# *<br>
 **sudo apt-get install gawk**
 
-Regulární výrazy jsou i v mnoha dalších programech.
+Regulární výrazy jsou používány i v mnoha dalších programech.
 
 ## Ukázka
 <!--
@@ -241,20 +267,24 @@ Regulární výrazy jsou i v mnoha dalších programech.
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 ## Tipy a zkušenosti
-<!--
-- Do odrážek uveďte konkrétní zkušenosti, které jste při práci s nástrojem získali; zejména případy, kdy vás chování programu překvapilo nebo očekáváte, že by mohlo překvapit začátečníky.
-- Popište typické chyby nových uživatelů a jak se jim vyhnout.
-- Buďte co nejstručnější; neodbíhejte k popisování čehokoliv vedlejšího, co je dost možné, že už čtenář zná.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 * V Perlu se k označení desítkové číslice běžně používá podvýraz „\\d“; v jiných syntaxích regulárních výrazů ovšem není podporován, proto doporučuji zvyknout si na podvýraz „[0-9]“, která je čitelnější a je podporovaná opravdu všude.
+* Parametr -o u příkazu „egrep“ lze efektivně využít při počítání ne-ASCII znaků. Počet znaků č, š a ž v textu zjistíte příkazem „egrep -o '[čšž]' \| wc -l“.
+* Regulární výrazy jsou přezdívány „write-only language“, protože bývá výrazně snazší je napsat než přečíst a pochopit. Než začnete rozumět cizím regulárním výrazům, musíte získat značné zkušenosti s psaním svých vlastních.
 
 ## Jak získat nápovědu
-<!--
-- Uveďte, které informační zdroje jsou pro začátečníka nejlepší k získání rychlé a obsáhlé nápovědy. Typicky jsou to manuálové stránky, vestavěná nápověda programu nebo webové zdroje (ale neuvádějte konkrétní odkazy, ty patří do sekce „Odkazy“).
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+Pro samotné regulární výrazy je k dispozici velké množství webových stránek (viz Odkazy),
+ale většinou jsou zbytečné, protože s referenční příručkou (resp. s touto kapitolou)
+budete pravděpodobně schopen/a požadovaný regulární výraz vymyslet sám/a.
+
+Pro zmíněné programy:
+
+*# *<br>
+**egrep \-\-help**<br>
+**man gawk**<br>
+**perl \-\-help**
+**expr \-\-help**
 
 ## Odkazy
 * [Web regularnivyrazy.info](https://www.regularnivyrazy.info/)

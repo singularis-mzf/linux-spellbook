@@ -14,7 +14,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 # Plánování úloh
 
-!Štítky: {tematický okruh}
+!Štítky: {tematický okruh}{čas}
 
 ## Úvod
 V této kapitole se dozvíte, jak spouštět příkazy automaticky v určený čas.

@@ -93,7 +93,8 @@ BEGIN {
     close(prikaz);
 
     if ($0 == "") {
-        ShoditFatalniVyjimku("Neznámé ID kapitoly: \"" IDKAPITOLY "\"");
+        # Neznámé ID kapitoly, pravděpodobně se daná kapitola nebude generovat.
+        exit;
     }
     C_KAPITOLY = $8;
     SOUBOR = $1 "/" $2 ".md";

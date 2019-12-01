@@ -36,7 +36,7 @@ Oproti tomu příkazy pro práci s určitým typem archivu (např. 7z, tar či 
 pracují s archivem samy.
 
 Tato kapitola se nezabývá zálohováním ani správou verzí.
-Nepokrývá obrazy souborových systémů ani různé typy softwarových balíků.
+Nepokrývá práci s obrazy souborových systémů ani různé typy softwarových balíků.
 Nezabývá se konverzí jednoho archivního formátu na jiný.
 
 Tato verze kapitoly nepokrývá formát SquashFS.
