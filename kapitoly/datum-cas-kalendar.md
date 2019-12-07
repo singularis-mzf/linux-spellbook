@@ -14,6 +14,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 <!--
 Poznámky:
 
+[ ] Zamyslet se nad formátováním formátu date/strftime.
 -->
 
 # Datum, čas a kalendář
@@ -21,23 +22,31 @@ Poznámky:
 !Štítky: {tematický okruh}{čas}
 
 ## Úvod
-<!--
-- Vymezte, co je předmětem této kapitoly.
-- Obecně popište základní principy, na kterých fungují používané nástroje.
-- Uveďte, co kapitola nepokrývá, ačkoliv by to čtenář mohl očekávat.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-## Definice
+Obsahem této kapitoly je veškerá práce s hodnotami času a data a kalendářem jako takovým,
+to znamená výpočty, formátování, konverze časových zón a vizualizace.
+
+Tato verze kapitoly nepokrývá menstruační kalendář, výpočet časů astronomických jevů včetně východu a západu slunce, výpočet času muslimských modliteb ani méně obvyklé druhy
+kalendářů (čínský apod.).
+
+Plánovní úloh na konkrétní čas do této kapitoly nespadá.
+
 <!--
+## Definice
+
 - Uveďte výčet specifických pojmů pro použití v této kapitole a tyto pojmy definujte co nejprecizněji.
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-## Zaklínadla (formát příkazu „date“)
-<!--
-TODO: Zamyslet se nad formátováním.
--->
+## Zaklínadla
+
+### Výstupní formát („date +“ a „strftime“)
+
+V následujících zaklínadlech následuje na každém řádku příklad s vysvětlením,
+oddělený znakem „=“.
+Číselné hodnoty se automaticky zarovnávají nulami (např. leden je měsíc 01);
+potlačit to můžete vložením „-“ za %, např. „%-m“ vrátí pro leden „1“;
+pro zarovnání mezerami tam vložte „\_“, např. „%\_m“ vrátí pro leden „&blank;1“.
+
 *# den v týdnu (alternativy)*<br>
 **%A = Úterý (plný název, lokalizovaný)**<br>
 **%a = Út (zkratka, lokalizovaná)**<br>
@@ -49,7 +58,7 @@ TODO: Zamyslet se nad formátováním.
 **%C = 20 (století)**<br>
 **%y = 10 (dvojčíslí roku)**
 
-*# čtvrtletí*<br>
+*# čtvrtletí (ne strftime)*<br>
 **%q = 3 (číslo 1..4)**
 
 *# měsíc (alternativy)*<br>
@@ -73,10 +82,12 @@ TODO: Zamyslet se nad formátováním.
 *# sekunda*<br>
 **%S = 59 (číslo 00..61)**
 
-*# nanosekundy*<br>
-**%N = 123456789 (počítadlo nanosekund)**
+*# zlomky sekundy (ne strftime)*<br>
+*// Počet „číslic“ by měl být v rozsahu 1 až 9.*<br>
+**%**[{*číslic*}]**N = 123456789 (počítadlo nanosekund)**
 
 *# časová zóna*<br>
+*// strftime jen %z a %Z.*<br>
 **%Z = CET (zkratka časové zóny)**<br>
 **%z = +0100**<br>
 **%:z = +01:00**<br>
@@ -97,7 +108,7 @@ TODO: Zamyslet se nad formátováním.
 **%n = konec řádku**<br>
 **%t = tabulátor**
 
-*# počet sekund od 00:00:00 1. ledna 1970 UTC*<br>
+*# počet sekund od 00:00:00 1. ledna 1970 UTC (ne strftime)*<br>
 **%s**
 
 *# číslo dne v roce*<br>
@@ -115,7 +126,49 @@ TODO: Zamyslet se nad formátováním.
 **%R = %H:%M**<br>
 **%T = %H:%M:%S**
 
-## Zaklínadla
+### Doporučené vstupní formáty času („date -d“)
+
+*# **lokální čas** (alternativa 1/2/příklady...)*<br>
+*// Odpovídá formátům „%F %T“, „%FT%T.%3N“, „%F %T.%9N“, „%FT%T.%6N“ apod.*<br>
+*// „f“ je jedna až devět číslic.*<br>
+{*rok*}**-**{*měsíc*}**-**{*den*}**&blank;**{*hodina*}**:**{*minuta*}**:**{*sekunda*}[**.**{*f*}]<br>
+{*rok*}**-**{*měsíc*}**-**{*den*}**T**{*hodina*}**:**{*minuta*}**:**{*sekunda*}[**.**{*f*}]<br>
+**2019-12-31 23:59:59**<br>
+**2019-12-31 23:59:59.123456789**<br>
+**2019-12-31T23:59:59.123456**
+
+*# čas s udaným **posunem proti UTC** (obecně/příklady)*<br>
+*// „posun“ je znaménko a čtyři číslice značící posun oproti UTC v hodinách a minutách, např. „+0100“. Odpovídá formátu „%z“.*<br>
+{*rok*}**-**{*měsíc*}**-**{*den*}**&blank;**{*hodina*}**:**{*minuta*}**:**{*sekunda*}[**.**{*f*}][**&blank;**]{*posun*}<br>
+{*rok*}**-**{*měsíc*}**-**{*den*}**T**{*hodina*}**:**{*minuta*}**:**{*sekunda*}[**.**{*f*}]{*posun*}<br>
+**2019-12-31 23:59:59.123456789 -0100**<br>
+**2019-12-31T23:59:59.123456+0100**
+
+
+*# čas v udané **časové zóně** (obecně/příklady...)*<br>
+**TZ="**{*časová/zóna*}**"&blank;**{*rok*}**-**{*měsíc*}**-**{*den*}**&blank;**{*hodina*}**:**{*minuta*}**:**{*sekunda*}[**.**{*f*}]<br>
+**TZ="Europe/Prague"&blank;2019-12-31&blank;23:59:59.123456**<br>
+**TZ="UTC"&blank;2019-12-31&blank;23:59:59.123456789**
+
+*# **UTC čas** (alternativy)*<br>
+{*rok*}**-**{*měsíc*}**-**{*den*}**&blank;**{*hodina*}**:**{*minuta*}**:**{*sekunda*}[**.**{*f*}]**Z**<br>
+{*rok*}**-**{*měsíc*}**-**{*den*}**T**{*hodina*}**:**{*minuta*}**:**{*sekunda*}[**.**{*f*}]**Z**<br>
+{*rok*}**-**{*měsíc*}**-**{*den*}**&blank;**{*hodina*}**:**{*minuta*}**:**{*sekunda*}[**.**{*f*}][**&blank;**]**+0000**<br>
+{*rok*}**-**{*měsíc*}**-**{*den*}**T**{*hodina*}**:**{*minuta*}**:**{*sekunda*}[**.**{*f*}]**+0000**<br>
+**TZ="UTC"&blank;**{*rok*}**-**{*měsíc*}**-**{*den*}**&blank;**{*hodina*}**:**{*minuta*}**:**{*sekunda*}[**.**{*f*}]<br>
+
+*# **Unix timestamp***<br>
+*// „číslo“ může být kladné i záporné, celé i s desetinnou tečkou. Výsledkem bude čas posunutý od začátku unixové éry (UTC půlnoc 1. ledna 1970) o zadaný počet sekund. Odpovídá formátu „%s“, resp. „%s.%N“*<br>
+**@**{*číslo*}<br>
+**@1577750400**<br>
+**@-12345.6789**
+
+*# půlnoc daného dne (obecně/příklad)*<br>
+*// Odpovíďá formátu „+%F“.*<br>
+{*rok*}**-**{*měsíc*}**-**{*den*}<br>
+**2019-12-31**
+
+Příkaz „date“ podporuje i mnoho dalších vstupních formátů; úplná dokumentace v angličtině je dostupná příkazem „info date“, ale v praxi doporučuji omezit se pouze na zde uvedené.
 
 ### Čekání
 
@@ -126,16 +179,16 @@ TODO: Zamyslet se nad formátováním.
 ### Kalendář
 
 *# zobrazit kalendář měsíce a dvou okolních*<br>
-**ncal -M3**[**b**][**w**][**J**] [{*měsíc-1-až-12*} {*rok*}]
+**ncal -M3**[**b**][**w**] [{*měsíc-1-až-12*} {*rok*}]
 
 *# zobrazit kalendář měsíce*<br>
-**ncal -M**[**b**][**w**][**J**] [{*měsíc-1-až-12*}] {*rok*}
+**ncal -M**[**b**][**w**] [{*měsíc-1-až-12*}] {*rok*}
 
 *# zobrazit kalendář všech měsíců v roce*<br>
-**ncal -Mb**[**w**][**J**] {*rok*}
+**ncal -Mb**[**w**] {*rok*}
 
 *# zobrazit kalendář měsíce a N následujících*<br>
-**ncal -M**[**b**][**w**][**J**] **-A** {*N*} [{*měsíc-1-až-12*}] {*rok*}
+**ncal -M**[**b**][**w**] **-A** {*N*} [{*měsíc-1-až-12*}] {*rok*}
 
 ### Aktuální čas a datum
 
@@ -145,11 +198,12 @@ TODO: Zamyslet se nad formátováním.
 **TZ="**{*časová/zóna*}**" date** [**+**{*formát*}]
 
 *# zobrazit kalendář aktuálního měsíce a dvou okolních*<br>
-**ncal -M3**[**b**][**w**][**J**]
+**ncal -M3**[**b**][**w**]
 
 ### Časové zóny
 *# konverze z UTC na lokální čas/z lokálního času na UTC*<br>
 **date -d "TZ=\\"UTC\\"** {*čas-UTC*}**" "+%F %T"**<br>
+**date -ud "TZ=\\"$(cat /etc/timezone)\\"&blank;**{*lokální čas*}**" "+%F %T"**<br>
 **date -ud "@$(date -d "**{*čas*}**" +%s)" "+%F %T"**
 
 *# konverze z jedné časové zóny do druhé (obecně/příklad)*<br>
@@ -162,6 +216,9 @@ TODO: Zamyslet se nad formátováním.
 *# vypsat seznam podporovaných časových zón (rozumný/naprosto úplný)*<br>
 **vypsat-casove-zony**<br>
 **vypsat-casove-zony vsechny**
+
+*# vypsat aktuální časovou zónu nastavenou v systému*<br>
+**cat /etc/timezone**
 
 ### Aritmetika s datem
 *# konverze data na „číslo dne“/zpět*<br>
@@ -203,42 +260,47 @@ TODO: Zamyslet se nad formátováním.
 *# ručně synchronizovat systémový čas*<br>
 ?
 
-
 ## Parametry příkazů
-<!--
-- Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.
-- Jinak by zde měl být přehled nejužitečnějších parametrů používaných nástrojů.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+*# *<br>
+[**TZ="**{*cílová časová zóna*}**"**] **date** [{*parametry*}] [**+**{*formát*}]
+
+* **-d '**[**"**{*původní časová zóna*}**"&blank;**]{*datum a čas*}**'** \:\: Použije zadaný čas místo aktuálního.
+* **-u** \:\: Cílová časová zóna bude UTC, bez ohledu na proměnnou TZ.
+* **-f** {*soubor*} \:\: Čte data z řádků zadaného souboru (alternativa k **-d**).
+
+*# *<br>
+**ncal** {*parametry*} [[{*měsíc*}] {*rok*}]
+
+* **-M** \:\: Týden začíná pondělím. (**-S** − začíná nedělí.)
+* **-b** \:\: Týdny tvoří řádky. (Výchozí chování: týdny tvoří sloupce.)
+* **-3** \:\: Zobrazí také předchozí a následující měsíc. (Výchozí chování: zobrazí pouze zadaný měsíc.)
+* **-w** \:\: Do kalendáře zahrne čísla týdnů.
 
 ## Instalace na Ubuntu
-<!--
-- Jako zaklínadlo bez titulku uveďte příkazy (popř. i akce) nutné k instalaci a zprovoznění všech nástrojů požadovaných kterýmkoliv zaklínadlem uvedeným v kapitole. Po provedení těchto činností musí být nástroje plně zkonfigurované a připravené k práci.
-- Ve výčtu balíků k instalaci vycházejte z minimální instalace Ubuntu.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+Veškeré použité nástroje jsou základními součástmi Ubuntu dostupnými v minimální instalaci.
 
 ## Ukázka
-<!--
-- Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
-- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti − ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
-- Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+*# *<br>
+**ncal -M3bw**<br>
+**date "+%F %T.%9N %z%t(%s.%9N)"**<br>
+**date -u "+%F %T.%9N %z%t(%s.%9N)"**<br>
+**date -d "TZ=\\"America/New\_York\\"&blank;2000-02-29 12:01:02.123" "+%FT%T.%9N%z"**<br>
+**date -ud "TZ=\\"America/New\_York\\"&blank;2000-02-29 12:01:02.123" "+%FT%T.%9N%z"**<br>
+**TZ="America/New\_York" date -d "TZ=\\"America/New\_York\\"&blank;2000-02-29 12:01:02.123" "+%FT%T.%9N%z"**<br>
+**printf %s\\\\n $((($(date -ud 2001-01-01 +%s) - $(date -ud 2000-01-01 +%s)) / 86400))**
 
 ## Tipy a zkušenosti
-<!--
-- Do odrážek uveďte konkrétní zkušenosti, které jste při práci s nástrojem získali; zejména případy, kdy vás chování programu překvapilo nebo očekáváte, že by mohlo překvapit začátečníky.
-- Popište typické chyby nových uživatelů a jak se jim vyhnout.
-- Buďte co nejstručnější; neodbíhejte k popisování čehokoliv vedlejšího, co je dost možné, že už čtenář zná.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+* Specifikace časové zóny či posunu mají následující prioritu: 1) uvedení přímo u času (v parametru **-d**); 2) parametr **-u**; 3) proměnná prostředí **TZ**.
 
 ## Jak získat nápovědu
-<!--
-- Uveďte, které informační zdroje jsou pro začátečníka nejlepší k získání rychlé a obsáhlé nápovědy. Typicky jsou to manuálové stránky, vestavěná nápověda programu nebo webové zdroje (ale neuvádějte konkrétní odkazy, ty patří do sekce „Odkazy“).
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+*# *<br>
+**man date**<br>
+**man ncal**
 
 ## Pomocné funkce a skripty
 
@@ -251,16 +313,9 @@ TODO: Zamyslet se nad formátováním.
 **exec egrep "^($(echo Africa America Antarctica Asia Atlantic Australia Etc Europe Indian Pacific \| tr "&blank;" \\\|))") \| LC\_ALL=C sort -i**
 
 ## Odkazy
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-Co hledat:
-
-* [stránku na Wikipedii](https://cs.wikipedia.org/wiki/Hlavn%C3%AD_strana)
-* oficiální stránku programu
-* oficiální dokumentaci
-* [manuálovou stránku](http://manpages.ubuntu.com/)
-* [balíček Bionic](https://packages.ubuntu.com/)
-* online referenční příručky
-* různé další praktické stránky, recenze, videa, tutorialy, blogy, ...
-* publikované knihy
-* [TL;DR stránka „date“](https://github.com/tldr-pages/tldr/blob/master/pages/common/date.md)
+* [Reference funkce strftime](https://en.cppreference.com/w/c/chrono/strftime) (anglicky)
+* [Manuálová stránka „date“](http://manpages.ubuntu.com/manpages/bionic/en/man1/date.1.html) (anglicky)
+* [Manuálová stránka „ncal“](http://manpages.ubuntu.com/manpages/bionic/en/man1/ncal.1.html) (anglicky)
+* [Video Linux Operating System \| Commands \| Date And Time](https://www.youtube.com/watch?v=FMrV5FdmBVI) (anglicky)
+* [TL;DR stránka „date“](https://github.com/tldr-pages/tldr/blob/master/pages/common/date.md) (anglicky)

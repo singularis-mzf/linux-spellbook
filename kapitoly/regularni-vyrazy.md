@@ -14,7 +14,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 <!--
 Poznámky:
 
-[ ] Vymyslet ukázku.
+Náměty k vylepšení:
+[ ] Pro každou syntaxi vypsat, které znaky vyžaduje escapovat.
 
 -->
 
@@ -43,7 +44,7 @@ varianta pro rozšířený regulární výraz.
 
 ## Definice
 * Jako **atom** z praktických důvodů označuji nejkratší část regulárního výrazu, která končí na dané pozici a tvořila by syntakticky správný regulární výraz sama o sobě. Atomem je např. „a“, „[abc]“, „(a|b)?“ či „\\s+“, ale ne „a|b“, protože „b“ je kratší a samo o sobě tvoří syntakticky platný regulární výraz.
-* **Kvalifikátor** je speciální podřetězec, který se zapisuje za atom a určuje dovolený počet opakování.
+* **Kvantifikátor** je speciální podřetězec, který se zapisuje za atom a určuje dovolený počet opakování.
 * **Kotva** a **hranice** jsou speciální atomy odpovídající fiktivnímu prázdnému podřetězci na určité pozici.
 
 ## Zaklínadla
@@ -97,7 +98,7 @@ varianta pro rozšířený regulární výraz.
 **[^[:alnum:]]**<br>
 **\\W**
 
-### Kvalifikátory (operátory opakování)
+### Kvantifikátory (operátory opakování)
 
 *# **jednou nebo vůbec** (&lt;= 1)(rozšířený/základní)*<br>
 {*atom*}**?**<br>
@@ -128,7 +129,7 @@ varianta pro rozšířený regulární výraz.
 {*atom*}**\\{,**{*N*}**\\\}**
 
 *# snažit se opakovat co nejméně (non-greedy)(jen Perl)*<br>
-{*atom*}{*operátor-opakování*}**?**
+{*atom*}{*kvantifikátor*}**?**
 
 ### Operátor „nebo“
 
@@ -200,6 +201,12 @@ Kotvy odpovídají fiktivnímu prázdnému řetězci na určité pozici.
 *# ověřit, že následujícící podřetězec vstupního řetězce neodpovídá podvýrazu*<br>
 **(?!**{*podvýraz*}**)**
 
+*# ověřit, že předcházející podřetězec odpovídá podvýrazu*<br>
+**(?&lt;=**{*podvýraz*}**)**
+
+*# ověřit, že předcházející podřetězec neodpovídá podvýrazu*<br>
+**(?&lt;!**{*podvýraz*}**)**
+
 ## Parametry příkazů
 
 *# egrep*<br>
@@ -258,19 +265,23 @@ schopný příkaz „awk“, který je základní součástí Ubuntu.
 
 Regulární výrazy jsou používány i v mnoha dalších programech.
 
-## Ukázka
 <!--
+## Ukázka
+<!- -
 - Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
 - Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti − ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
 - Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
+- ->
+
+// Je pro mě příliš obtížné vymyslet vhodnou ukázku, tak tuto sekci vynechávám.
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 ## Tipy a zkušenosti
 
 * V Perlu se k označení desítkové číslice běžně používá podvýraz „\\d“; v jiných syntaxích regulárních výrazů ovšem není podporován, proto doporučuji zvyknout si na podvýraz „[0-9]“, která je čitelnější a je podporovaná opravdu všude.
 * Parametr -o u příkazu „egrep“ lze efektivně využít při počítání ne-ASCII znaků. Počet znaků č, š a ž v textu zjistíte příkazem „egrep -o '[čšž]' \| wc -l“.
 * Regulární výrazy jsou přezdívány „write-only language“, protože bývá výrazně snazší je napsat než přečíst a pochopit. Než začnete rozumět cizím regulárním výrazům, musíte získat značné zkušenosti s psaním svých vlastních.
+* Ve výrazech typu „"[^"]\*"“ často zapomínám kvantifikátor + či \*.
 
 ## Jak získat nápovědu
 

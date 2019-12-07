@@ -32,6 +32,10 @@ https://creativecommons.org/licenses/by-sa/4.0/
 *# vypnout cache na disku (paměť stačí)*<br>
 **browser.cache.disk.enable = FALSE**
 
+*# vypnout otravnou výzvu k „Refresh Firefox“*<br>
+*// Nutno vytvořit jako novou hodnotu typu BOOLEAN.*<br>
+**browser.disableResetPrompt = TRUE**
+
 *# otevírat nové taby vždy úplně vpravo*<br>
 **browser.tabs.insertAfterCurrent = FALSE**<br>
 **browser.tabs.insertRelatedAfterCurrent = FALSE**

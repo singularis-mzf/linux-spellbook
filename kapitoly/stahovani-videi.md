@@ -225,7 +225,7 @@ V repozitáři Ubuntu sice je balíček „youtube-dl“, ale zpravidla zastara
 
 * Pokud stahování z některé služby přestane fungovat, první, co je třeba vyzkoušet, je aktualizovat program.
 * Některé parametry (zejména -f a -o) budete pravděpodobně používat velmi často. Proto se vyplatí je buď umístit do konfiguračního souboru („~/.config/youtube-dl/config“) nebo si na ně zřídit skripty či funkce.
-* Je-li video v playlistu nedostupné, youtube-dl na něm skončí s chybou. Přimějete-li ho pokračovat parametrem **-i**, přeskočí nedostupné video jako by v playlistu nebylo.
+* Je-li video v playlistu nedostupné, youtube-dl na něm skončí s chybou. Přimějete-li ho pokračovat parametrem **-i**, přeskočí nedostupné video, jako by v playlistu nebylo.
 
 ## Jak získat nápovědu
 *# *<br>
