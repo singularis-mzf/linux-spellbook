@@ -45,8 +45,8 @@ programů bez rizika konfiktů mezi různými verzemi knihoven.
 
 Tato kapitola se nezabývá vytvářením balíčků, vytvářením repozitářů ani jejich zrcadel
 (pro zrcadla zkuste např.
-[tuto sérii článků](https://www.howtoforge.com/local\_debian\_ubuntu\_mirror)
-nebo zkuste modernější [aptly](https://www.aptly.info/)).
+[tuto sérii článků](https://www.howtoforge.com/local\_debian\_ubuntu\_mirror) (anglicky)
+nebo zkuste modernější [aptly](https://www.aptly.info/)) (anglicky).
 Rovněž se (pochopitelně) nezabývá sestavováním programů ze zdrojového kódu
 nebo instalací balíčků jiného typu (.rpm, .tar.xz apod.).
 Do budoucna však možná pokryje instalaci balíčků typu .rpm s použitím

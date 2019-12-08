@@ -57,18 +57,23 @@ Kapitoly ani dodatky se však nesmějí opakovat.
 
 ### Dospělé nevydané kapitoly
 
+* [datum-cas-kalendar](kapitoly/datum-cas-kalendar.md)
 * [prace-s-archivy](kapitoly/prace-s-archivy.md)
-
-<!-- * V této chvíli nejsou. -->
+* [regularni-vyrazy](kapitoly/regularni-vyrazy.md)
+* [sprava-balicku](kapitoly/sprava-balicku.md)
 
 ### Kapitoly-děti
 
-* [regularni-vyrazy](kapitoly/regularni-vyrazy.md) (99%)
 * [sprava-uzivatelu](kapitoly/sprava-uzivatelu.md) (80%)
 * [awk](kapitoly/awk.md) (40%)
-* [obrazky](kapitoly/obrazky.md) (40%)
+* [zpracovani-obrazku](kapitoly/zpracovani-obrazku.md) (40%)
 * [x](kapitoly/x.md) (40%)
 * [odkazy](kapitoly/odkazy.md) (20%)
+* [konverze-formatu](kapitoly/konverze-formatu.md) (0%)
+* [latex](kapitoly/latex.md) (0%)
+* [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) (0%)
+
+<!-- * [unicode](kapitoly/unicode.md) (0%) -->
 
 ### Zvláštní kapitoly
 

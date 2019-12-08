@@ -91,9 +91,8 @@ Kategorie: http://www.galago-project.org/specs/notification/0.9/x211.html
 *# konverze časové zóny*<br>
 **TZ="**{*cílová-zóna*}**" date -d 'TZ="**{*zdrojová-zóna*}**"** {*zdrojový-čas*}**'** [**"+**{*formát*}**"**]
 
-*# konverze na/z časovou známku Unixu*<br>
-**date -d '**[**TZ=**{*časová-zóna*}**&blank;**]{*čas*}**' +%s**<br>
-[**TZ="**{*časová-zóna*}**"**] **date -d @**{*časová-známka-Unixu*} [**+**{*formát*}]
+*# vypsat banán*<br>
+**printf \\\\U0001f34c\\\\n**
 
 ### date
 

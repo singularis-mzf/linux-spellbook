@@ -45,9 +45,10 @@ varianta pro rozšířený regulární výraz.
 ## Definice
 * Jako **atom** z praktických důvodů označuji nejkratší část regulárního výrazu, která končí na dané pozici a tvořila by syntakticky správný regulární výraz sama o sobě. Atomem je např. „a“, „[abc]“, „(a|b)?“ či „\\s+“, ale ne „a|b“, protože „b“ je kratší a samo o sobě tvoří syntakticky platný regulární výraz.
 * **Kvantifikátor** je speciální podřetězec, který se zapisuje za atom a určuje dovolený počet opakování.
-* **Kotva** a **hranice** jsou speciální atomy odpovídající fiktivnímu prázdnému podřetězci na určité pozici.
+* **Kotva** a **hranice** jsou speciální atomy k testování pozice, např. „^“ nebo „\\&lt;“. Odpovídají fiktivnímu prázdnému podřetězci na jednoznačné pozici (u kotvy) nebo na všech pozicích splňujících dané podmínky (u hranice). Zvláštním případem hranice je **vyhlížení**.
 
 ## Zaklínadla
+
 ### Jednotlivé znaky
 
 *# konkrétní znak*<br>
@@ -63,6 +64,10 @@ varianta pro rozšířený regulární výraz.
 
 *# libovolný znak **kromě uvedených***<br>
 **[^**{*znaky*}**]**
+
+*# všechny znaky po první výskyt některého z uvedených/případně až do konce řetězce*<br>
+**[^**{*znaky*}**]\*[**{*znaky*}**]**<br>
+**[^**{*znaky*}**]\***
 
 *# **bílý znak**/nebílý znak*<br>
 **\\s**<br>
@@ -139,9 +144,18 @@ varianta pro rozšířený regulární výraz.
 
 ### Kotvy a hranice (pozice)
 
-Kotvy odpovídají fiktivnímu prázdnému řetězci na určité pozici.
+Kotvy a řetězce odpovídají fiktivnímu prázdnému řetězci na určité pozici.
 
-*# začátek/konec řádku (rozšířený i základní)*<br>
+*# začátek/konec testovaného řetězce (rozšířený i základní, mimo víceřádkový režim)*<br>
+**^**<br>
+**$**
+
+*# začátek/konec testovaného řetězce (ve víceřádkovém režimu)*<br>
+*// Podpora těchto kotev v programech je omezená, ale gawk, sed i perl je podporují.*<br>
+**\\\`**<br>
+**\\'**
+
+*# začátek/konec řádku (rozšířený i základní, ve víceřádkovém režimu)*<br>
 **^**<br>
 **$**
 
@@ -158,11 +172,6 @@ Kotvy odpovídají fiktivnímu prázdnému řetězci na určité pozici.
 **\\(\\&lt;\\\|\\&gt;\\)**<br>
 **\\b**
 
-*# úplný začátek/konec testovaného řetězce (rozšířený i základní)*<br>
-*// Pozor na escapování znaku „'“! Podpora těchto kotev v programech je omezená, ale gawk, sed i perl je podporují.*<br>
-**\\\`**<br>
-**\\'**
-
 ### Seskupení
 
 *# seskupení (rozšířený/základní)*<br>
@@ -175,7 +184,7 @@ Kotvy odpovídají fiktivnímu prázdnému řetězci na určité pozici.
 ### Paměť (omezená podpora)
 
 *# původní podřetězec odpovídající celému regulárnímu výrazu (rozšířený a základní/Perl)*<br>
-*// Tato konstrukce je v programech „egrep“, „gawk“ a „perl“ rozeznávána jako speciální pouze v řetězci pro náhradu, nikoliv přímo v regulárním výrazu.*<br>
+*// Tato konstrukce je v programech „gawk“ a „perl“ rozeznávána jako speciální pouze v řetězci pro náhradu, nikoliv přímo v regulárním výrazu.*<br>
 **&amp;**<br>
 **$&amp;**
 

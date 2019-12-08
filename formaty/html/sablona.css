@@ -174,11 +174,13 @@ nav a[rel="prev"]::after, nav a[rel="next"]::before {content:none;}
 }
 
 .zaklinadlo>hr {
-    /* orientační čára nad každým zaklínadlem */
+    /* orientační čára nad každým zaklínadlem * /
     display:block;
     border-top:1px solid;
     margin:0 auto 0.5pt 0;
     max-width:15em;
+    */
+    display:none;
 }
 h2+.zaklinadlo>hr, h3+.zaklinadlo>hr {display:none;visibility:hidden;}
 
@@ -188,13 +190,16 @@ h2+.zaklinadlo>hr, h3+.zaklinadlo>hr {display:none;visibility:hidden;}
 }
 
 .zaklinadlo .zahlavi {
-    font-family: "Noto Mono", "DejaVu Serif", serif;
+    font-family: "DejaVu Sans", "Helvetica", "Arial", sans-serif;
     font-size:90%;
     line-height:1.3;
     margin-left:3rem;
     position:relative;
 }
 
+.zaklinadlo .zahlavi b {
+    color:#222222;
+}
 
 .zaklinadlo .zahlavi>.cislo {
     margin-left:-3rem;
@@ -207,7 +212,8 @@ h2+.zaklinadlo>hr, h3+.zaklinadlo>hr {display:none;visibility:hidden;}
     font-size:80%;
     line-height:1.8;
     margin:3pt 5pt 3pt 7rem;
-    border:1pt dotted #999999;
+    /*border:1pt dotted #999999;*/
+    border-left:1pt dotted #999999;
     padding:2pt 5pt;
     color:rgba(0,0,0,0.7);
 }
@@ -368,8 +374,8 @@ footer img {float:left;margin:0 1rem 1rem 0;}
     box-shadow:0 0.25rem 1.5rem 0 rgba(50,100,50,0.5);
 }
 .podzahlavim p.ponadpisu {
-    margin:0 auto;
-    width:75%;
+    margin:1ex auto;
+    width:65%;
     text-align:justify;
 }
 .podzahlavim .ikona img {
@@ -405,7 +411,7 @@ nav .next {text-align:left;}
 
 .rozcestnikkapitol {
     background:#cccccc;
-    margin:0 -1em;
+    margin:1rem -1em;
     border:0.1rem solid rgba(0,0,0,0.2);
     border-radius:1em;
     padding:0.5em 1em;
@@ -449,8 +455,7 @@ nav .next {text-align:left;}
     flex-flow:row nowrap;
     justify-content:center;
     align-items:flex-start;
-    position:relative;
-    left:1em;
+    margin:2em 0 2em 1em;
 }
 .prehledy>div {width:33%;}
 .prehledy li {list-style:decimal outside;width:85%;margin-top:0.5em;}

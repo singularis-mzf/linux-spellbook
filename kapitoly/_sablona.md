@@ -84,12 +84,12 @@ Odkomentujte a vyplňte štítky, zejména rozlišení na {program} a {tematic
 
 Co hledat:
 
-* [stránku na Wikipedii](https://cs.wikipedia.org/wiki/Hlavn%C3%AD_strana)
-* oficiální stránku programu
-* oficiální dokumentaci
-* [manuálovou stránku](http://manpages.ubuntu.com/)
-* [balíček Bionic](https://packages.ubuntu.com/)
-* online referenční příručky
-* různé další praktické stránky, recenze, videa, tutorialy, blogy, ...
-* publikované knihy
-* [stránky TL;DR](https://github.com/tldr-pages/tldr/tree/master/pages/common)
+* [Článek na Wikipedii](https://cs.wikipedia.org/wiki/Hlavn%C3%AD_strana)
+* Oficiální stránku programu
+* Oficiální dokumentaci
+* [Manuálovou stránku](http://manpages.ubuntu.com/)
+* [Balíček](https://packages.ubuntu.com/)
+* Online referenční příručky
+* Různé další praktické stránky, recenze, videa, tutorialy, blogy, ...
+* Publikované knihy
+* [Stránky TL;DR](https://github.com/tldr-pages/tldr/tree/master/pages/common)

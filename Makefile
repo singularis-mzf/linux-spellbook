@@ -27,7 +27,7 @@ AWK := gawk
 CONVERT := convert
 PDFLATEX := pdflatex -halt-on-error
 
-VSECHNY_DODATKY := predmluva koncepce-projektu plan-vyvoje test mechanismus-prekladu licence
+VSECHNY_DODATKY := predmluva koncepce-projektu plan-vyvoje test licence
 
 # _ A, B, C, D, E, F, G
 VSECHNY_KAPITOLY := _ostatni _ukazka awk barvy-a-titulek datum-cas-kalendar docker firefox git

@@ -266,7 +266,7 @@ Každá revize je jednoznačně identifikována pomocí své MD5 hashe. Kromě t
 **git config** [**\-\-global**] **\-\-get** {*klíč*}
 
 *# nastavit hodnotu určitého klíče*<br>
-**git config** [**\-\-global**] {*klíč*} "{*nová hodnota*}"
+**git config** [**\-\-global**] {*klíč*} **"**{*nová hodnota*}**"**
 
 *# vypsat celou konfiguraci (lokální/globální/globální a pod ní lokální)*<br>
 **git config** [**\-\-local**] **-l**
@@ -282,6 +282,9 @@ Každá revize je jednoznačně identifikována pomocí své MD5 hashe. Kromě t
 ### Konfigurace gitu či repozitáře (konkrétně)
 *# v logu zobrazovat datum ve formátu YYYY-MM-DD HH:MM:SS +ZZZZ (např. „1970-12-31 23:59:59 +0700“)*<br>
 **git config** [**\-\-global**] **log.date iso**
+
+*# vypisovat ne-ASCII znaky v názvech souborů tak, jak jsou*<br>
+**git config** [**\-\-global**] **core.quotePath false**
 
 *# po přihlášení (např. na GitHub) si nějakou dobu pamatovat přihlašovací údaje*<br>
 *// Vhodný počet sekund je např. 300 (5 minut), 86400 (24 hodin), 604800 (týden). Údaje se ukládají pouze v RAM, takže se ztratí restartem systému, možná i odhlášením.*<br>

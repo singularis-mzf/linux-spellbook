@@ -255,9 +255,17 @@ Příkaz „date“ podporuje i mnoho dalších vstupních formátů; úplná d
 *# zjistit datum Velikonoční neděle*<br>
 **date -d "$(LC\_ALL=C ncal -e** [{*rok*}]**)" +%F**
 
-### Synchronizace času
+### Nastavení systémového času
+
+*# přepnout časovou zónu systému*<br>
+**sudo dpkg-reconfigure tzdata**<br>
+!: V dialogu zvolit požadovanou oblast a konkrétní časovou zónu.
 
 *# ručně synchronizovat systémový čas*<br>
+?
+
+*# vypnout/zapnout automatickou synchronizaci systémového času*<br>
+?<br>
 ?
 
 ## Parametry příkazů
