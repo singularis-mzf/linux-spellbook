@@ -200,8 +200,8 @@ function FormatKurziva(jeZacatek) {
     return "FormatKurziva[" (jeZacatek ? "zacatek" : "konec") "]";
 }
 
-function FormatDopln(jeZacatek) {
-    return "FormatDopln[" (jeZacatek ? "zacatek" : "konec") "]";
+function FormatDopln(jeZacatek, jePoJinemDopln) {
+    return "FormatDopln[" (jeZacatek ? "zacatek" : "konec") (jePoJinemDopln ? " po jinem Dopln" : "") "]";
 }
 
 function FormatVolitelny(jeZacatek) {

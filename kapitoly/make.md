@@ -34,13 +34,13 @@ jemuž se bude věnovat většina této kapitoly.
 
 ## Zaklínadla (v souboru Makefile)
 ### Nastavení proměnných
-*# nastavit proměnnou (expandovat v místě definice)*<br>
+*# **nastavit** proměnnou (expandovat v místě definice)*<br>
 {*NÁZEV\_PROMĚNNÉ*} **:=** {*hodnota včetně mezer*}
 
-*# připojit obsah na konec proměnné (expanze stejně jako v původní definici)*<br>
+*# **připojit** obsah na konec proměnné (expanze stejně jako v původní definici)*<br>
 {*NÁZEV\_PROMĚNNÉ*} **\+=** {*hodnota včetně mezer*}
 
-*# nastavit proměnnou (expandovat v každém místě použití)*<br>
+*# **nastavit** proměnnou (expandovat v každém místě použití)*<br>
 {*NÁZEV\_PROMĚNNÉ*} **=** {*hodnota včetně mezer*}
 
 *# přiřadit do proměnné mezeru (trik)*<br>
@@ -63,7 +63,7 @@ jemuž se bude věnovat většina této kapitoly.
 **$(**{*NÁZEV\_PROMĚNNÉ*}**:%**[{*původní-suffix*}]**=%**[{*nový-suffix*}]**)**<br>
 **$(**{*NÁZEV\_PROMĚNNÉ*}**:**[{*původní-prefix*}]**%**[{*původní-suffix*}]**=**[{*nový-prefix*}]**%**[{*nový-suffix*}]**)**
 
-*# rozvinout proměnnou prostředí či příkazového interpretu (ne proměnnou Makefilu)(alternativy)*<br>
+*# rozvinout **proměnnou prostředí** či příkazového interpretu (ne proměnnou Makefilu)(alternativy)*<br>
 **\$\$**{*NÁZEV\_PROMĚNNÉ*}<br>
 **\$\${**{*NÁZEV\_PROMĚNNÉ*}**}**
 
@@ -76,15 +76,15 @@ jemuž se bude věnovat většina této kapitoly.
 <tab>**@echo $(TEST:a%.cc=b%.cpp)**
 
 ### Automatické a předdefinované proměnné
-*# cíl pravidla (alternativy)*<br>
+*# **cíl** pravidla (alternativy)*<br>
 **$@**<br>
 **$(@)**
 
-*# první zdroj pravidla (alternativy)*<br>
+*# **první zdroj** pravidla (alternativy)*<br>
 **$&lt;**<br>
 **$(&lt;)**
 
-*# všechny zdroje (alternativy)*<br>
+*# **všechny zdroje** (alternativy)*<br>
 **$\^**<br>
 **$(\^)**
 
@@ -94,25 +94,29 @@ jemuž se bude věnovat většina této kapitoly.
 *# program make*<br>
 **$(MAKE)**
 
-*# v generovaném a implicitním pravidle posloupnost znaků odpovídající znaku % v %-vzoru cíle (alternativy)*<br>
+*# v generovaném a implicitním pravidle posloupnost znaků odpovídající znaku % v %-vzoru cíle*<br>
+?
+<!--
+[ ] Vyřešit problémy s podadresáři.
 **$\***<br>
 **$(\*)**
+-->
 
 ### Obecný tvar pravidel
-*# normální (pevné) pravidlo*<br>
+*# normální (**pevné**) pravidlo*<br>
 {*cíle oddělené mezerami*}**:** [{*zdroje oddělené mezerami*}] [**;**{*příkaz*}]<br>
 [<tab>[{*prefix-příkazu*}]{*příkaz*}]...
 
-*# zobecněné (generované) pravidlo (zdroje lze odvodit od cíle)*<br>
+*# zobecněné (**generované**) pravidlo (zdroje lze odvodit od cíle)*<br>
 {*cíle oddělené mezerami*}**:** {*%-vzor-pro-cíle*}: {*cesta-nebo-%-vzor-zdroje*}... [**;**{*příkaz*}]<br>
 [<tab>[{*prefix-příkazu*}]{*příkaz*}]...
 
-*# obecné (implicitní) pravidlo (zdroje lze odvodit od cíle)*<br>
+*# obecné (**implicitní**) pravidlo (zdroje lze odvodit od cíle)*<br>
 *// Obecné pravidlo má nižší prioritu než všechna pevná a generovaná pravidla. Navíc je tiše ignorováno, pokud chybí nekterý ze zdrojů. Má-li uvedeno víc cílů, považují se po jeho provedení všechny uvedené cíle za vygenerované, a tedy se pravidlo nevolá pro překlad dalších zdrojů znovu.*<br>
 {*%-vzor cíle*}...**:** {*cesta-nebo-%-vzor-zdroje*}... [**;**{*příkaz*}]<br>
 [<tab>[{*prefix-příkazu*}]{*příkaz*}]...
 
-*# označit, že určité cíle jsou akce, ne soubory*<br>
+*# označit, že určité cíle jsou **akce**, ne soubory*<br>
 **.PHONY:** [{*akce oddělené mezerami*}]
 
 *# přeložit soubory uvedené v proměnné ZDROJE, které se nacházejí v adresáři „kod“ a jeho podadresářích a mají příponu „.cc“, na objektové soubory do adresáře obj*<br>
@@ -121,29 +125,29 @@ jemuž se bude věnovat většina této kapitoly.
 **<tab>$(CXX) $(CXXFLAGS) -c -o $@ $&lt;**
 
 ### Textové funkce
-*# připojit text před/za každé slovo v řetězci/v rozvoji proměnné*<br>
+*# **připojit** text před/za každé slovo v řetězci/v rozvoji proměnné*<br>
 *// Při použití poslední uvedené varianty nesmějí text-před a text-za obsahovat znak %.*<br>
 **$(addprefix** {*text-před*}**,**{*řetězec slov*}**)**<br>
 **$(addsuffix** {*text-za*}**,**{*řetězec slov*}**)**<br>
 **$(**{*proměnná*}**:%=**{*text-před*}**%**{*text-za*}**)**
 
-*# provést náhradu (záměnu) ve slovech pomocí %-vzoru*<br>
+*# provést **náhradu** (záměnu) ve slovech pomocí %-vzoru*<br>
 **$(patsubst** {*co-nahradit-%-vzor*}**,**{*čím-nahradit-%-vzor*}**,**{*řetězec slov*}**)**
 
-*# vybrat slova odpovídající/neodpovídající kterémukoliv ze zadaných %-vzorů*<br>
+*# **vybrat** slova odpovídající/neodpovídající kterémukoliv ze zadaných %-vzorů*<br>
 **$(filter** {*%-vzory oddělené mezerou*}...**,**{*řetězec slov*}**)**<br>
 **$(filter-out** {*%-vzory oddělené mezerou*}...**,**{*řetězec slov*}**)**
 
-*# nahradit všechny výskyty podřetězce*<br>
+*# **nahradit** všechny výskyty podřetězce*<br>
 **$(subst** {*co nahradit*}**,**{*čím nahradit*}**,**{*původní text*}**)**
 
-*# normalizovat bílé znaky (posloupnosti nahradit jednou mezerou, na začátku a konci odstranit)*<br>
+*# normalizovat **bílé znaky** (posloupnosti nahradit jednou mezerou, na začátku a konci odstranit)*<br>
 **$(strip** {*řetězec*}**)**
 
-*# získat počet slov v řetězci*<br>
+*# získat **počet slov** v řetězci*<br>
 **$(words** {*řetězec*}**)**
 
-*# první/poslední/n-té slovo z řetězce*<br>
+*# první/poslední/n-té slovo z řetězce*<br>
 **$(firstword** {*řetězec*}**)**<br>
 **$(lastword** {*řetězec*}**)**<br>
 **$(word** {*n*}**,**{*řetězec*}**)**
@@ -152,22 +156,22 @@ jemuž se bude věnovat většina této kapitoly.
 **$(if $(word 2,**{*řetězec*}**),$(word $(shell expr $(words** {*řetězec*} **) - 1),**{*řetězec*}**),)**<br>
 **$(if $(word 3,**{*řetězec*}**),$(word $(shell expr $(words** {*řetězec*} **) - 2),**{*řetězec*}**),)**
 
-*# seřadit slova a odstranit duplicity*<br>
+*# **seřadit** slova a odstranit duplicity*<br>
 **$(sort** {*řetězec*}**)**
 
 *# obrátit pořadí slov v řetězci*<br>
 **$(shell printf %s\\\\n '$(strip** {*řetězec slov*}**)' \| tr '&blank;' \\\\n \| tac)**
 
 ### Analýza adresářových cest (pro každé slovo zvlášť)
-*# získat adresářovou cestu (např. „../a/“)*<br>
+*# získat **adresářovou cestu** (např. „../a/“)*<br>
 *// Neobsahuje-li slovo žádné „/“, vrací pro něj $(dir) „./“.*<br>
 **$(dir** {*řetězec slov*}**)**
 
-*# získat samotný název souboru včetně přípony/bez přípony (např. „b.o“, resp. „b“)*<br>
+*# získat samotný **název souboru** včetně přípony/bez přípony (např. „b.o“, resp. „b“)*<br>
 **$(notdir** {*řetězec slov*}**)**<br>
 **$(basename $(notdir** {*řetězec slov*}**))**
 
-*# získat příponu souboru (např. „.o“)*<br>
+*# získat **příponu** souboru (např. „.o“)*<br>
 *// Pozor! Slova, která takovou příponu neobsahují, budou touto funkcí vynechána bez náhrady, což sníží počet slov ve výsledném řetězci.*<br>
 **$(suffix** {*řetězec slov*}**)**
 
@@ -181,8 +185,14 @@ jemuž se bude věnovat většina této kapitoly.
 *// Vzorek příkazového interpretu může obsahovat znaky ? a \* s významem obvyklým v bashi. Pokud vzorku neodpovídá žádný soubor ani adresář, vzorek se potichu přeskočí. Toho je možno použít k vynechání neexistujících souborů z proměnné.*<br>
 **$(wildcard** {*vzorek*}...**)**
 
-### Logické funkce
+### Příkazy v pravidlech
+*# vykonat příkaz bez vypsání*<br>
+<tab>**@**{*příkaz*}
 
+*# vykonat příkaz a ignorovat návratovou hodnotu*<br>
+<tab>**\-**{*příkaz*}
+
+### Logické funkce
 *# podmíněný výraz*<br>
 **$(if** {*podmínkový řetězec*}**,**{*je-li neprázdný*}[**,**{*jinak*}]**)**
 
@@ -201,23 +211,15 @@ jemuž se bude věnovat většina této kapitoly.
 *# příklad − vrátí: aa bb cc cc bb aa*<br>
 **$(foreach PROM,a b c c b a,$(PROM)$(PROM))**
 
-### Příkazy v pravidlech
-*# vykonat příkaz bez vypsání*<br>
-<tab>**@**{*příkaz*}
-
-*# vykonat příkaz a ignorovat návratovou hodnotu*<br>
-<tab>**\-**{*příkaz*}
-
 ### Podmíněný překlad a include
-
 *# podmíněný překlad*<br>
 *// Vybere první z alternativ, kde jsou si uvedené výrazy po rozvinutí rovny. Doporučuji alternativy v Makefilu odsadit, ale není to vyžadováno.*<br>
 **ifeq "**{*výraz 1*}**" "**{*výraz 2*}**"**<br>
-{*první alternativa*}<br>
+<odsadit1>{*první alternativa*}<br>
 [**else ifeq "**{*výraz 1*}**" "**{*výraz 2*}**"**<br>
-{*další alternativa*}]...<br>
+<odsadit1>{*další alternativa*}]...<br>
 [**else**<br>
-{*poslední alternativa*}]<br>
+<odsadit1>{*poslední alternativa*}]<br>
 **endif**
 
 *# načíst kód Makefilu z jiných souborů, jako by byl zde*<br>
@@ -225,10 +227,10 @@ jemuž se bude věnovat většina této kapitoly.
 
 ### Ostatní funkce
 
-*# vykonat příkaz v aktuálním shellu (typicky bash) a rozvinout se na jeho výstup; konce řádků se nahradí mezerami*<br>
+*# **vykonat příkaz** a rozvinout se na jeho výstup; konce řádků se nahradí mezerami*<br>
 **$(shell** {*příkaz shellu*}**)**
 
-*# vyvolat chybu a ukončit zpracování Makefile*<br>
+*# **vyvolat chybu** a ukončit zpracování Makefile*<br>
 *// Tip: Popis chyby v parametru funkce $(error) může obsahovat rozvoj proměnných a volání funkcí.*<br>
 **$(error** {*popis chyby*}**)**
 
@@ -301,13 +303,10 @@ jemuž se bude věnovat většina této kapitoly.
 * **man make** (anglicky)
 
 ## Odkazy
-### Česky
 * [Makefile na sallyx.org](https://www.sallyx.org/sally/c/linux/makefile)
 * [Stránka na Wikipedii](https://cs.wikipedia.org/wiki/Make)
 * [Rychlo-školička pro Makefile](http://www.linux.cz/noviny/1999-0304/clanek12.html)
 * [Správa projektů pomocí programu Make](http://www.fit.vutbr.cz/~martinek/clang/make.html)
-
-### Anglicky
 * [Oficiální manuál GNU make](https://www.gnu.org/software/make/manual/make.html) (anglicky)
 * [Manuálová stránka](http://manpages.ubuntu.com/manpages/bionic/en/man1/make.1.html) (anglicky)
 * [Balíček Ubuntu Bionic Beaver](https://packages.ubuntu.com/bionic/make) (anglicky)

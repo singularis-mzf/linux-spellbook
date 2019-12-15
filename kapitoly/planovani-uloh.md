@@ -42,24 +42,27 @@ spouštěné pod účtem superuživatele, ty však nejsou touto verzí kapitoly 
 * **Úloha** je příkaz naplánovaný k jednorázovému spuštění, jde-li o **jednorázovou úlohu**, nebo k pravidelnému spouštění, jde-li o **pravidelnou úlohu**. Tímto příkazem bývá nejčastěji volání uživatelem definovaného skriptu.
 
 ## Zaklínadla
+
 ### Pravidelné úlohy (obecně)
 
-*# přidat nebo nahradit úlohu (spustit na pozadí/spustit v grafickém prostředí)*<br>
-**pridat\_ulohu** {*id-úlohy*} **"**{*plán*}**"** **'**{*příkaz a parametry*}**'**<br>
-**pridat\_ulohu** {*id-úlohy*} **"**{*plán*}**"** **'\~/bin/spustit-v-x** {*příkaz a parametry*}**'**
+Plán − viz podsekci „Pravidelné úlohy (plány)“.
 
-*# vypsat seznam úloh (id je na konci řádku, za znakem „#“)/vypsat konkrétní úlohu*<br>
+*# **přidat** nebo **nahradit** úlohu (spustit na pozadí/spustit v grafickém prostředí)*<br>
+**pridat\_ulohu** {*id-úlohy*} {*plán*} **'**{*příkaz a parametry*}**'**<br>
+**pridat\_ulohu** {*id-úlohy*} {*plán*} **'\~/bin/spustit-v-x** {*příkaz a parametry*}**'**
+
+*# **vypsat** seznam úloh (id je na konci řádku, za znakem „#“)/vypsat konkrétní úlohu*<br>
 *// Poznámka: Znaky „\\“ a „%“ jsou ve výpisu escapovány, protože mají pro crontab speciální význam.*<br>
 **crontab -l**<br>
 **crontab -l \| egrep '#**{*id-úlohy*}**$'**
 
-*# zrušit úlohu/všechny úlohy*<br>
+*# **zrušit** úlohu/všechny úlohy*<br>
 **crontab -l \| egrep -v '#**{*id-úlohy*}**$' \| crontab -**<br>
 **crontab -r**
 
-*# změnit plán úlohy*<br>
+*# **změnit** plán úlohy*<br>
 *// Vyžaduje nainstalovat balíček „gawk“.*<br>
-**crontab -l \| gawk '{ if (/#**{*id-úlohy*}**$/ &amp;&amp; match($0, /^(([^&blank;]+&blank;){5}\|@[a-z]+&blank;)/)) {print "**{*nový-plán*}**" substr($0, RLENGTH)} else {print}}' \| crontab -**
+**crontab -l \| gawk '{ if (/#**{*id-úlohy*}**$/ &amp;&amp; match($0, /^(([^&blank;]+&blank;){5}\|@[a-z]+&blank;)/)) {print** {*nový-plán*} **substr($0, RLENGTH)} else {print}}' \| crontab -**
 
 *# uložit tabulku úloh do souboru/načíst ze souboru*<br>
 **crontab -l &gt;** {*soubor*}<br>
@@ -76,61 +79,61 @@ spouštěné pod účtem superuživatele, ty však nejsou touto verzí kapitoly 
 
 ### Pravidelné úlohy (plány)
 
-*# spouštět hned po startu systému/spouštět po přihlášení*<br>
-**pridat\_ulohu** {*id-úlohy*} **@reboot '**{*příkaz*}**'**...<br>
-?
+*# spouštět každou **hodinu**/každou hodinu od 10.00 do 15.59*<br>
+**"**{*číslo-minuty*} **\* \* \* \*"**<br>
+**"**{*číslo-minuty*} **10-15 \* \* \*"**
 
-*# spouštět každou minutu*<br>
-**pridat\_ulohu** {*id-úlohy*} **"\* \* \* \* \*" '**{*příkaz*}**'**...
+*# spouštět každou **minutu***<br>
+**"\* \* \* \* \*"**
 
 *# spouštět každých pět minut (alternativy)*<br>
-**pridat\_ulohu** {*id-úlohy*} **"\*/5 \* \* \* \*" '**{*příkaz*}**'**...<br>
-**pridat\_ulohu** {*id-úlohy*} **"0,5,10,15,20,25,30,35,40,45,50,55 \* \* \* \*" '**{*příkaz*}**'**...
+**"\*/5 \* \* \* \*"**<br>
+**"0,5,10,15,20,25,30,35,40,45,50,55 \* \* \* \*"**
 
-*# spouštět každou hodinu*<br>
-**pridat\_ulohu** {*id-úlohy*} **"**{*číslo-minuty*} **\* \* \* \*" '**{*příkaz*}**'**...
+*# spouštět hned po startu systému/spouštět po přihlášení*<br>
+**"@reboot"**<br>
+?
 
-*# spouštět každou hodinu od 10.00 do 15.59*<br>
-**pridat\_ulohu** {*id-úlohy*} **"**{*číslo-minuty*} **10-15 \* \* \*" '**{*příkaz*}**'**...
+*# spouštět **denně**/denně, ale jen od pondělí do pátku*<br>
+**"**{*číslo-minuty*} {*číslo-hodiny*} **\* \* \*"**<br>
+**"**{*číslo-minuty*} {*číslo-hodiny*} **\* \* 1-5"**
 
-*# spouštět denně/denně, ale jen od pondělí do pátku*<br>
-**pridat\_ulohu** {*id-úlohy*} **"**{*číslo-minuty*} {*číslo-hodiny*} **\* \* \*" '**{*příkaz*}**'**...<br>
-**pridat\_ulohu** {*id-úlohy*} **"**{*číslo-minuty*} {*číslo-hodiny*} **\* \* 1-5" '**{*příkaz*}**'**...
+*# spouštět **týdně**, každé pondělí/každou neděli*<br>
+**"**{*číslo-minuty*} {*číslo-hodiny*} **\* \* 1"**<br>
+**"**{*číslo-minuty*} {*číslo-hodiny*} **\* \* 7"**
 
-*# spouštět týdně, každé pondělí/každou neděli*<br>
-**pridat\_ulohu** {*id-úlohy*} **"**{*číslo-minuty*} {*číslo-hodiny*} **\* \* 1" '**{*příkaz*}**'**...<br>
-**pridat\_ulohu** {*id-úlohy*} **"**{*číslo-minuty*} {*číslo-hodiny*} **\* \* 7" '**{*příkaz*}**'**...
+*# spouštět **měsíčně** v N-tý den měsíce*<br>
+**"**{*číslo-minuty*} {*číslo-hodiny*} {*N*} **\* \*"**
 
-*# spouštět měsíčně v N-tý den měsíce*<br>
-**pridat\_ulohu** {*id-úlohy*} **"**{*číslo-minuty*} {*číslo-hodiny*} {*N*} **\* \*" '**{*příkaz*}**'**...
-
-*# spouštět v druhé a čtvrté pondělí od května do září včetně*<br>
+*# spouštět v druhé a čtvrté pondělí od května do září včetně (celý příkaz)*<br>
 *// Rozsahy dnů pro N-tý den týdne v měsíci jsou: první: 1-7, druhý: 8-14, třetí: 15-21, čtvrtý: 22-28, pátý: 29-31.*<br>
 **pridat\_ulohu** {*id-úlohy*} **"**{*číslo-minuty*} {*číslo-hodiny*} **8-14,22-28 5-9 \*" 'test $(date +%u) -eq 1 &amp;&amp;** {*příkaz*}**'**
 
 *# spouštět jednou ročně v určitý den*<br>
-**pridat\_ulohu** {*id-úlohy*} **"**{*číslo-minuty*} {*číslo-hodiny*} {*číslo-dne-v-měsíci*} {*číslo-měsíce*} **\*" '**{*příkaz*}**'**
+**"**{*číslo-minuty*} {*číslo-hodiny*} {*číslo-dne-v-měsíci*} {*číslo-měsíce*} **\*"**
 
 *# spouštět v poledne 29. února každého přestupného roku*<br>
-**pridat\_ulohu** {*id-úlohy*} **"0 12 29 2 \*" '**{*příkaz*}**'**
+**"0 12 29 2 \*"**
 
-*# spouštět v poledne každou adventní neděli*<br>
+*# spouštět v poledne každou adventní neděli (celý příkaz)*<br>
 *// Uvedený příkaz využívá skutečnost, že adventní neděle se vyskytují pouze v období 27. listopadu až 24. prosince včetně.*<br>
 **pridat\_ulohu** {*id-úlohy*} **"0 12 \* 11-12 7" 'test 1127 -le $(date +%m%d) -a $(date +%m%d) -le 1224 &amp;&amp;** {*příkaz*}**'**
 
-### Jednorázové úlohy (obecně)
+### Jednorázové úlohy
 
-*# přidat úlohu*<br>
+Plán − viz sekci „Jednorázové úlohy (plány)“. Plán se zde neuzavírá do uvozovek!
+
+*# **přidat** úlohu*<br>
 **printf "%s\\\\n" '**{*příkaz*}**'**... **\| at** {*plán*}
 
-*# vypsat úlohy (číslo úlohy je v prvním sloupci)*<br>
+*# **vypsat** úlohy (číslo úlohy je v prvním sloupci)*<br>
 **atq**
 
-*# zrušit úlohu/všechny úlohy*<br>
+*# **zrušit** úlohu/všechny úlohy*<br>
 **atrm** {*číslo-úlohy*}<br>
 **atq \| cut -f 1 \| xargs -r atrm**
 
-*# změnit plán úlohy*<br>
+*# **změnit** plán úlohy*<br>
 ?
 
 *# vypsat obsah úlohy*<br>
@@ -140,23 +143,22 @@ spouštěné pod účtem superuživatele, ty však nejsou touto verzí kapitoly 
 
 *# spustit v přesně zadaný čas/31. prosince 2030 ve 2 hodiny a 3 minuty*<br>
 *// Hodina, minuta, měsíc a den musí být zadány dvěma číslicemi.*<br>
-**at** {*hodina*}**:**{*minuta*} [{*rok*}**-**{*měsíc*}**-**{*den*}]<br>
-**at 02:03 2030-12-31**
+{*hodina*}**:**{*minuta*} [{*rok*}**-**{*měsíc*}**-**{*den*}]<br>
+**02:03 2030-12-31**
 
 *# spustit při příštím startu systému/při příštím přihlášení*<br>
 ?<br>
 ?
 
 *# spustit dnes/zítra v 15.30*<br>
-**at 15:30 today**<br>
-**at 15:30 tomorrow**
+**15:30 today**<br>
+**15:30 tomorrow**
 
 *# spustit příští úterý ve 12.00*<br>
-**at 12:00 next tuesday**
+**12:00 next tuesday**
 
 *# spustit v poledne druhého dne příštího měsíce*<br>
 ?
-
 
 
 ## Parametry příkazů
@@ -180,7 +182,7 @@ Poznámka: Příkaz „at“ očekává na standardním vstupu skript k provede
 
 ## Instalace na Ubuntu
 *# *<br>
-**sudo apt-get install at**
+**sudo apt-get install at gawk**
 
 Démon „cron“ je základní systémovou součástí Ubuntu a mnoha linuxových
 distribucí, proto zpravidla není třeba ho instalovat.
@@ -189,15 +191,18 @@ distribucí, proto zpravidla není třeba ho instalovat.
 *# *<br>
 **mkdir -pv \~/moje\_ulohy**<br>
 **cd ~/moje\_ulohy**<br>
-**printf %s\\\\n 'cd' 'sleep 7' \\**<br>
-**'mplayer /usr/share/sounds/sound-icons/piano-3.wav &amp;' \\**<br>
-**'sleep 0.5' 'notify-send -i dialog-information "Další minuta uplynula."' &gt;uloha-minuta**<br>
+**printf %s\\\\n \\**<br>
+<odsadit1>**'cd' \\**<br>
+<odsadit1>**'sleep 7' \\**<br>
+<odsadit1>**'mplayer /usr/share/sounds/sound-icons/piano-3.wav &amp;' \\**<br>
+<odsadit1>**'sleep 0.5' \\**<br>
+<odsadit1>**'notify-send -i dialog-information "Další minuta uplynula."' &gt;uloha-minuta**<br>
 **function pridat\_ulohu () \{**<br>
 **(tmp="$2 %s #$1\\\\n"; crontab -l 2&gt;/dev/null \| egrep -v "#$1\\$"; shift 2; printf "$tmp" "$@" \| sed -e 's/\\\\/\\\\\\\\/g' -e 's/%/\\\\%/g') \| crontab -**<br>
 **\}**<br>
 **pridat\_ulohu minuta "\* \* \* \* \*" "~/bin/spustit-v-x bash ~/moje\_ulohy/uloha-minuta"**
 
-Poznámka: ukázka vyžaduje nainstalovaný balíček „mplayer“ (a pochopitelně vytvořený pomocný skript „~/bin/spustit-v-x“).
+Poznámka: ukázka vyžaduje nainstalovaný balíček „mplayer“ (a pochopitelně nainstalovaný pomocný skript „~/bin/spustit-v-x“).
 
 ## Tipy a zkušenosti
 * Pro jakoukoliv netriviální pravidelnou úlohu doporučuji vytvořit samostatný skript a funkci „pridat\_ulohu“ předat volání tohoto skriptu místo vlastních příkazů. Má to celou řadu výhod, např. možnost obsah úlohy editovat, možnost mít víc řádků a použít bash místo /bin/sh. Další výhodou je, že definice se v případě smazání úlohy neztratí a je ji možno použít opakovaně.
@@ -244,10 +249,3 @@ Poznámka: ukázka vyžaduje nainstalovaný balíček „mplayer“ (a pochopit
 * [Bionic: balíček „at“](https://packages.ubuntu.com/bionic/at) (anglicky)
 * [Bionic: balíček „bcron-run“](https://packages.ubuntu.com/bionic/bcron-run) (anglicky)
 * [TL;DR stránka „crontab“](https://github.com/tldr-pages/tldr/blob/master/pages/common/crontab.md) (anglicky)
-
-<!--
-
-date '+%F %T.%N %:z'
-=> 2019-10-12 13:01:02.142174946 +02:00
-
--->

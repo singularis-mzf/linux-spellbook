@@ -216,7 +216,7 @@ function FormatKurziva(jeZacatek) {
     return jeZacatek ? "<i>" : "</i>";
 }
 
-function FormatDopln(jeZacatek) {
+function FormatDopln(jeZacatek, jePoJinemDopln) {
     return jeZacatek ? "<i class=\"dopln\">" : "</i>";
 }
 

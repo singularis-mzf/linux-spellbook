@@ -16,6 +16,7 @@ Poznámky:
 
 Náměty k vylepšení:
 [ ] Pro každou syntaxi vypsat, které znaky vyžaduje escapovat.
+[ ] Perl: vyřešit problémy s UTF-8.
 
 -->
 
@@ -46,6 +47,8 @@ varianta pro rozšířený regulární výraz.
 * Jako **atom** z praktických důvodů označuji nejkratší část regulárního výrazu, která končí na dané pozici a tvořila by syntakticky správný regulární výraz sama o sobě. Atomem je např. „a“, „[abc]“, „(a|b)?“ či „\\s+“, ale ne „a|b“, protože „b“ je kratší a samo o sobě tvoří syntakticky platný regulární výraz.
 * **Kvantifikátor** je speciální podřetězec, který se zapisuje za atom a určuje dovolený počet opakování.
 * **Kotva** a **hranice** jsou speciální atomy k testování pozice, např. „^“ nebo „\\&lt;“. Odpovídají fiktivnímu prázdnému podřetězci na jednoznačné pozici (u kotvy) nebo na všech pozicích splňujících dané podmínky (u hranice). Zvláštním případem hranice je **vyhlížení**.
+* **Shoda** (match) je podřetězec testovaného řetězce, který celý vyhovuje požadavkům daného regulárního výrazu. Pokud na stejné pozici řetězce začíná víc takových podřetězců, shodou s regulárním výrazem je pouze ten nejdelší z nich. Proto např. regulární výraz „.\*“ má v každém testovaném řetězci pouze jedinou shodu − celý řetězec, přestože by jeho požadavkům odpovídal i jakýkoliv podřetězec.
+* Řetězec **odpovídá** regulárnímu výrazu, pokud s ním má alespoň jednu shodu, a to i tehdy, pokud jako celek požadavky regulárního výrazu nesplňuje. Tzn. řetězec „abc“ regulárnímu výrazu „b“ odpovídá. Prázdnému regulárnímu výrazu odpovídá každý řetězec.
 
 ## Zaklínadla
 
@@ -55,10 +58,10 @@ varianta pro rozšířený regulární výraz.
 *// Některé znaky musejí být v regulárních výrazech pro zbavení svého speciálního významu escapovány zpětným lomítkem.*<br>
 {*znak*}
 
-*# libovolný znak*<br>
+*# **libovolný znak***<br>
 **.**
 
-*# kterýkoliv z uvedených znaků*<br>
+*# kterýkoliv **z uvedených znaků***<br>
 *// Uvnitř těchto hranatých závorek se speciální znaky neescapují zpětným lomítkem, ale uvedením na určitou pozici.*<br>
 **[**{*znaky*}**]**
 
@@ -83,15 +86,9 @@ varianta pro rozšířený regulární výraz.
 **[^0-9]**<br>
 **\\D**
 
-*# závorky „()“ (rozšířený i základní)*<br>
-**[(][)]**
-
-*# závorky „[]“ (rozšířený i základní)*<br>
-**\\[\\]**
-
-*# závorky „{}“ (rozšířený/základní)*<br>
-**\\{\\}**<br>
-**{}**
+*# závorky „()[]{}“ (rozšířený/ základní)*<br>
+**[(][)]\\[\\]\\{\\}**
+**[(][)]\\[\\]{}**
 
 *# libovolný alfanumerický znak, i národní abecedy (rozšířený/základní/Perl)*<br>
 **[[:alnum:]]**<br>
@@ -117,9 +114,9 @@ varianta pro rozšířený regulární výraz.
 {*atom*}**+**<br>
 {*atom*}**\\+**
 
-*# přesně počet-krát (rozšířený/základní)*<br>
-{*atom*}**\{**{*počet*}**\}**<br>
-{*atom*}**\\\{**{*počet*}**\\\}**
+*# přesně N-krát (rozšířený/základní)*<br>
+{*atom*}**\{**{*N*}**\}**<br>
+{*atom*}**\\\{**{*N*}**\\\}**
 
 *# M- až N-krát včetně (rozšířený/základní)*<br>
 {*atom*}**\{**{*M*}**,**{*N*}**\}**<br>
@@ -129,7 +126,7 @@ varianta pro rozšířený regulární výraz.
 {*atom*}**\{**{*M*}**,}**<br>
 {*atom*}**\\\{**{*M*}**,\\}**
 
-*# maximálně M-krát (rozšířený/základní)*<br>
+*# maximálně N-krát (rozšířený/základní)*<br>
 {*atom*}**{,**{*N*}**\}**<br>
 {*atom*}**\\{,**{*N*}**\\\}**
 
@@ -188,9 +185,10 @@ Kotvy a řetězce odpovídají fiktivnímu prázdnému řetězci na určité po
 **&amp;**<br>
 **$&amp;**
 
-*# vrátit podřetězec původního řetězce odpovídající seskupení (rozšířený i základní)*<br>
-*// Tato funkce je podporovaná pouze v některých programech, mezi něž patří např. egrep, grep, perl a sed; ne však „gawk“.*<br>
-**\\**{*pořadové-číslo-1-až-9*}
+*# podřetězec původního řetězce odpovídající seskupení (rozšířený i základní/Perl)*<br>
+*// Poznámka: gawk tuto funkci nepodporuje vůbec. V Perlu se syntaxe liší mezi regulárním výrazem (\\číslo) a řetězcem pro náhradu ($číslo), v sedu se v obou případech používá jen syntaxe „\\číslo“.*<br>
+**\\**{*pořadové-číslo-1-až-9*}<br>
+**$**{*pořadové-číslo-1-až-9*}
 
 *# totéž, ale první písmeno malé/velké*<br>
 *// Tuto variantu podporuje pravděpodobně jen Perl a sed a smí se vyskytnout pouze v řetězci pro náhradu, nikoliv přímo ve vlastním regulárním výrazu.*<br>
@@ -204,16 +202,16 @@ Kotvy a řetězce odpovídají fiktivnímu prázdnému řetězci na určité po
 
 ### Vyhlížení (jen Perl)
 
-*# ověřit, že následujícící podřetězec vstupního řetězce odpovídá podvýrazu*<br>
+*# ověřit, že za aktuální pozicí **následuje** shoda s daným regulárním podvýrazem*<br>
 **(?=**{*podvýraz*}**)**
 
-*# ověřit, že následujícící podřetězec vstupního řetězce neodpovídá podvýrazu*<br>
+*# ověřit, že za aktuální pozicí **nenásleduje** shoda s daným regulárním podvýrazem*<br>
 **(?!**{*podvýraz*}**)**
 
-*# ověřit, že předcházející podřetězec odpovídá podvýrazu*<br>
+*# ověřit, že aktuální pozici **předchází** shoda s daným regulárním podvýrazem*<br>
 **(?&lt;=**{*podvýraz*}**)**
 
-*# ověřit, že předcházející podřetězec neodpovídá podvýrazu*<br>
+*# ověřit, že aktuální pozici **nepředchází** shoda s daným regulárním podvýrazem*<br>
 **(?&lt;!**{*podvýraz*}**)**
 
 ## Parametry příkazů
@@ -234,10 +232,6 @@ Kotvy a řetězce odpovídají fiktivnímu prázdnému řetězci na určité po
 * **\-z** \:\: Řádky vstupních souborů jsou ukončeny nulovým bajtem; znak \\n bude považovat za za normální znak.
 
 Poznámka: příkaz „grep“ má tytéž parametry jako „egrep“, ale pracuje se základními regulárními výrazy.
-
-*# expr*<br>
-**expr** **"**{*řetězec*}**"** **'**{*základní regulární výraz*}**' &gt;/dev/null**<br>
-**printf %s\\n "**{*řetězec*}**" \| egrep -q '**{*regulární výraz*}**'**
 
 *# gawk*<br>
 **gawk** [{*parametry*}] **'/**{*regulární výraz*}**/**[**\{**{*příkazy*}**\}**]**'** {*soubor*}...
@@ -265,7 +259,7 @@ Poznámka: příkaz „grep“ má tytéž parametry jako „egrep“, ale pracu
 * **\-u** \:\: „unbuffered“ Čte a zapisuje data po jednotlivých řádcích. (Normálně je kvůli výkonu načítá po delších blocích.)
 
 ## Instalace na Ubuntu
-Příkazy „egrep“, „expr“, „grep“, „perl“ a „sed“ jsou základními součástmi
+Příkazy „egrep“, „grep“, „perl“ a „sed“ jsou základními součástmi
 Ubuntu. Příkaz „gawk“ je nutné doinstalovat, nebo místo něj použít méně
 schopný příkaz „awk“, který je základní součástí Ubuntu.
 
@@ -287,7 +281,7 @@ Regulární výrazy jsou používány i v mnoha dalších programech.
 
 ## Tipy a zkušenosti
 
-* V Perlu se k označení desítkové číslice běžně používá podvýraz „\\d“; v jiných syntaxích regulárních výrazů ovšem není podporován, proto doporučuji zvyknout si na podvýraz „[0-9]“, která je čitelnější a je podporovaná opravdu všude.
+* V Perlu se k označení desítkové číslice běžně používá podvýraz „\\d“; v jiných syntaxích regulárních výrazů ovšem není podporován, proto doporučuji zvyknout si na podvýraz „[0-9]“, který je čitelnější a je podporovaný opravdu všude.
 * Parametr -o u příkazu „egrep“ lze efektivně využít při počítání ne-ASCII znaků. Počet znaků č, š a ž v textu zjistíte příkazem „egrep -o '[čšž]' \| wc -l“.
 * Regulární výrazy jsou přezdívány „write-only language“, protože bývá výrazně snazší je napsat než přečíst a pochopit. Než začnete rozumět cizím regulárním výrazům, musíte získat značné zkušenosti s psaním svých vlastních.
 * Ve výrazech typu „"[^"]\*"“ často zapomínám kvantifikátor + či \*.
@@ -304,7 +298,6 @@ Pro zmíněné programy:
 **egrep \-\-help**<br>
 **man gawk**<br>
 **perl \-\-help**
-**expr \-\-help**
 
 ## Odkazy
 * [Web regularnivyrazy.info](https://www.regularnivyrazy.info/)

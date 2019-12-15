@@ -41,27 +41,27 @@ ke stažení (např. z Ulož.to nebo z různých FTP serverů).
 ## Zaklínadla (youtube-dl)
 
 ### Parametry ve formátovacím řetězci (-o)
-*# identifikátor videa (např. „CvhJWKtBLn4“)*<br>
+*# **identifikátor** videa (např. „CvhJWKtBLn4“)*<br>
 **%(id)s**
 
-*# název videa (např. „Oficiální ASMR booktrailer seriálu Ester Krejčí 1.0“)*<br>
+*# **název** videa (např. „Oficiální ASMR booktrailer seriálu Ester Krejčí 1.0“)*<br>
 **%(title)s**
 
-*# správná přípona výstupního souboru (např. „mkv“)*<br>
+*# správná **přípona** výstupního souboru (např. „mkv“)*<br>
 **%(ext)s**
 
-*# šířka/výška videa (např. „1920“ a „1080“)*<br>
+*# **šířka/výška** videa (např. „1920“ a „1080“)*<br>
 **%(width)d**<br>
 **%(height)d**
 
-*# formát videa (ve formátu pro parametr -f/podrobný popis)*<br>
+*# **formát** videa (ve formátu pro parametr -f/podrobný popis)*<br>
 **%(format\_id)s**<br>
 **%(format)s**
 
-*# datum uploadu videa (např. 20190618)*<br>
+*# **datum uploadu** videa (např. 20190618)*<br>
 **%(upload\_date)s**
 
-*# počítadlo (pět míst, např. „00001“/jen číslo, např. „1“)*<br>
+*# **počítadlo** (pět míst, např. „00001“/jen číslo, např. „1“)*<br>
 *// Počáteční hodnota počítadla je 1, ale lze ji změnit parametrem „\-\-autonumber-start“.*<br>
 **%(autonumber)s**<br>
 **%(autonumber)d**
@@ -82,18 +82,18 @@ ke stažení (např. z Ulož.to nebo z různých FTP serverů).
 **%(dislike\_count)d**
 
 ### Výběr formátu (-f)
-*# stáhnout nejlepší dostupný formát*<br>
+*# stáhnout **nejlepší** dostupný formát*<br>
 **\-f "bestvideo+bestaudio/best"**
 
 *# stáhnout nejlepší dostupný formát s výškou maximálně 480 pixelů*<br>
 *// Vhodné hodnoty výšky: 144, 240, 360, 480, 720, 1080, 1440, 2160.*<br>
 **\-f "bestvideo[height&lt;=?480]+bestaudio/best[height&lt;=?480]/best"**
 
-*# stáhnout jen co nejlepší zvuk bez obrazu*<br>
+*# stáhnout jen co nejlepší **zvuk bez obrazu***<br>
 *// Audio-formát může být: best, aac, flac, mp3, m4a, opus, vorbis nebo wav.*<br>
 **\-f "bestaudio/best" -x** [**\-\-audio-format** {*audio-formát*}]
 
-*# stáhnout konkrétní formát*<br>
+*# stáhnout **konkrétní formát***<br>
 **\-f** {*číslo-formátu*}
 
 *# stáhnout více různých formátů*<br>
@@ -118,11 +118,11 @@ ke stažení (např. z Ulož.to nebo z různých FTP serverů).
 
 ### Zpracování playlistu či kanálu
 
-*# rychle vypsat playlist*<br>
+*# **rychle vypsat playlist***<br>
 *// Při použití parametru \-\-flat-playlist budou ve formátovacím řetězci fungovat pouze parametry %(id)s a %(title)s! Žádné jiné pravděpodobně fungovat nebudou!*<br>
 **youtube-dl \-\-flat-playlist \-\-get-filename -o "**{*formátovací řetězec*}**"** {*URL-playlistu-či-kanálu*}...
 
-*# vypsat každé video z playlistu ve vlastním formátu (1 video na řádek)*<br>
+*# vypsat **každé video z playlistu** ve vlastním formátu (1 video na řádek)*<br>
 **youtube-dl -i \-\-get-filename -o "**{*formátovací řetězec*}**"** [**-f** {*formát-videa*}] {*URL-playlistu*}...
 
 *# pro každé video v playlistu YouTube vypsat jeho úplnou adresu*<br>

@@ -13,7 +13,9 @@ https://creativecommons.org/licenses/by-sa/4.0/
 -->
 ![Linux: Kniha kouzel](obrazky/banner.png)
 
-„Linux: Kniha kouzel“ je open source sbírka velmi krátkých řešených příkladů pro příkazovou řádku/příkazový řádek systému Linux, především distribuce Ubuntu. V současnosti je dostupná ve formátu HTML pro zobrazení na počítači a ve formátu PDF pro tisk na papír. Verze 1.0 je cílena na *Ubuntu 18.04 Bionic Beaver* a jeho deriváty.
+„Linux: Kniha kouzel“ je open source sbírka velmi krátkých řešených příkladů pro příkazovou řádku/příkazový řádek systému Linux, především distribuce Ubuntu. V současnosti je dostupná ve formátu HTML pro zobrazení na počítači a ve formátu PDF pro tisk na papír.
+
+Verze 1.0 je cílena na *Ubuntu 18.04 Bionic Beaver* a jeho deriváty.
 
 Příručka podléhá licenci
 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Podrobné údaje o autorství zdrojových souborů jsou uvedeny v komentářích v jejich záhlaví; údaje o autorství obrázkových souborů jsou uvedeny v souboru [COPYING](COPYING).
@@ -21,11 +23,11 @@ Příručka podléhá licenci
 ## Návod k sestavení
 
 K sestavení příručky ze zdrojového kódu budete potřebovat Git, GNU make,
-GNU awk, ImageMagick a LaTeX a kvůli řazení české locale
+GNU awk, ImageMagick, Inkscape a LaTeX a kvůli řazení české locale
 „cs\_CZ.UTF-8“. V Ubuntu 18.04 LTS, Debianu 10 a Linuxu Mint 17.2
 můžete tyto nástroje nainstalovat příkazem:
 
-> ``sudo apt-get install git make gawk imagemagick texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra texlive-lang-czechslovak language-pack-cs hunspell-cs``
+> ``sudo apt-get install inkscape git make gawk imagemagick texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra texlive-lang-czechslovak language-pack-cs hunspell-cs``
 
 Pak budete potřebovat stáhnout si repozitář:
 
@@ -65,7 +67,7 @@ Kapitoly ani dodatky se však nesmějí opakovat.
 ### Kapitoly-děti
 
 * [sprava-uzivatelu](kapitoly/sprava-uzivatelu.md) (80%)
-* [awk](kapitoly/awk.md) (40%)
+* [awk](kapitoly/awk.md) (60%)
 * [zpracovani-obrazku](kapitoly/zpracovani-obrazku.md) (40%)
 * [x](kapitoly/x.md) (40%)
 * [odkazy](kapitoly/odkazy.md) (20%)

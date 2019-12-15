@@ -48,29 +48,29 @@ Tato verze kapitoly nepokrývá GFM (GitHub Flavoured Markdown), nicméně všec
 
 ### Základní formátování
 
-*# dva odstavce*<br>
+*# dva **odstavce***<br>
 {*první odstavec*}<br>
 {*prázdný řádek*}<br>
 {*druhý odstavec*}
 
-*# tučný text*<br>
+*# **tučný** text*<br>
 **\*\***{*text*}**\*\***
 
-*# kurzíva*<br>
+*# **kurzíva***<br>
 **\***{*text*}**\***
 
-*# vložený kód v rámci řádku (obecně/příklad)*<br>
+*# vložený **kód** v rámci řádku (obecně/příklad)*<br>
 *// Ve vloženém kódu se neinterpretují žádné formátovací sekvence ani escapování (dokonce i zpětné lomítko si tam zachovává význam obyčejného znaku), proto je potřeba zvláštní přístup, pokud má vložený kód obsahovat zpětné apostrofy. K otevření a uzavření vloženého kódu můžete použít libovolný počet zpětných apostrofů, ale musí být stejný pro otevření i pro uzavření a vyšší než maximální počet zpětných apostrofů vyskytujících se ve formátovaném kódu vedle sebe.*<br>
 **\`**{*kód*}**\`**<br>
 **\`\`\`\`PRIKLAD="\*\`\`\`\*"\`\`\`\`**
 
-*# víceřádkový kód*<br>
+*# víceřádkový **kód***<br>
 **&blank;&blank;&blank;&blank;**{*první řádek*}<br>
 [**&blank;&blank;&blank;&blank;**{*další řádek*}]...
 
 ### Odkazy a obrázky
 
-*# hypertextový odkaz (normální/zjednodušený)*<br>
+*# hypertextový **odkaz** (normální/zjednodušený)*<br>
 *// Některé interprety markdownu automaticky převádějí úplné URL adresy na hypertextové odkazy bez zjevné možnosti escapování.*<br>
 **[**{*text odkazu*}**\](**{*adresa-odkazu*}[**&blank;"**{*titulek*}**"**]**)**<br>
 **&lt;**{*adresa-odkazu*}**&gt;**
@@ -80,7 +80,7 @@ Tato verze kapitoly nepokrývá GFM (GitHub Flavoured Markdown), nicméně všec
 **[**{*identifikátor*}**]:&blank;**[{*bílé znaky*}]{*adresa-odkazu*}[**&blank;"**{*titulek*}**"**]<br>
 **[**{*text odkazu*}**\][**{*identifikátor*}**]**
 
-*# vložit obrázek (jako znak)*<br>
+*# vložit **obrázek** (jako znak)*<br>
 **![**{*alternativní text*}**\](**{*adresa-odkazu*}[**&blank;"**{*titulek*}**"**]**)**
 
 *# předdefinovaný obrázek (definice/použití)*<br>
@@ -89,12 +89,12 @@ Tato verze kapitoly nepokrývá GFM (GitHub Flavoured Markdown), nicméně všec
 
 ### Seznamy a odsazení
 
-*# odrážkovaný seznam*<br>
+*# **odrážkovaný** seznam*<br>
 **\*** {*položka seznamu*}<br>
 [**\*** {*další položka seznamu*}]...<br>
 {*prázdný řádek*}
 
-*# automaticky číslovaný seznam*<br>
+*# automaticky **číslovaný** seznam*<br>
 **1.** {*položka seznamu*}<br>
 [**1.** {*další položka seznamu*}]...<br>
 {*prázdný řádek*}
@@ -122,7 +122,7 @@ Tato verze kapitoly nepokrývá GFM (GitHub Flavoured Markdown), nicméně všec
 **1.&blank;&blank;**{*druhá položka*}
 -->
 
-*# výrazné odsazení odstavce zleva (první úroveň)*<br>
+*# výrazné **odsazení** odstavce zleva (první úroveň)*<br>
 **&gt;** {*začátek textu*}<br>
 [**&gt;** {*pokračování*}]...
 
@@ -132,18 +132,18 @@ Tato verze kapitoly nepokrývá GFM (GitHub Flavoured Markdown), nicméně všec
 
 ## Zaklínadla (Markdown Extra)
 
-*# tabulka *<br>
+*# **tabulka***<br>
 *// Zarovnání je „:\-\-\-“ vlevo, „\-\-\-“ na střed nebo „\-\-\-:“ vpravo. Řádek se záhlavím a řádek se zarovnáními jsou povinné, ostatní řádky tabulky jsou nepovinné. Buňky tabulky mohou obsahovat formátování.*<br>
 **\|** {*záhlaví 1*} [**\|** {*další záhlaví*}]...<br>
 **\|** {*zarovnání 1*} [**\|** {*další zarovnání*}]...<br>
 [**\|** {*buňka 1*} [**\|** {*další buňka*}]...]...
 
-*# poznámka pod čarou (odkaz na poznámku/text poznámky)*<br>
+*# **poznámka pod čarou** (odkaz na poznámku/text poznámky)*<br>
 *// Omezení: Na jednu poznámku pod čarou lze odkazovat tímto způsobem pouze jednou!*<br>
 **\[\^**{*id*}**]**<br>
 **\[\^**{*id*}**]:&blank;**{*text poznámky*}
 
-*# seznam definic se dvěma definicemi (druhá má dva pojmy)*<br>
+*# **seznam definic** se dvěma definicemi (druhá má dva pojmy)*<br>
 {*první pojem*}<br>
 **:**&blank;{*odstavec popisující první pojem*}<br>
 {*prázdný řádek*}<br>
@@ -151,7 +151,7 @@ Tato verze kapitoly nepokrývá GFM (GitHub Flavoured Markdown), nicméně všec
 {*třetí pojem*}<br>
 **:**&blank;{*odstavec popisující druhý a třetí pojem*}
 
-*# víceřádkový kód*<br>
+*# víceřádkový **kód***<br>
 *// Pro tuto syntaxi můžete použít i více než tři znaky \~, ale jejich počet v zahajujícím a ukončujícím řádku se musí shodovat.*<br>
 **\~\~\~**[&blank;**.**{*CSS-třída*}]<br>
 {*řádek kódu*}...<br>
@@ -167,7 +167,7 @@ Tato verze kapitoly nepokrývá GFM (GitHub Flavoured Markdown), nicméně všec
 
 ### Ostatní
 
-*# komentář*<br>
+*# **komentář***<br>
 **&lt;!\-\-** {*obsah komentáře, i víc řádků*} **\-\-&gt;**
 
 *# horizontální čára*<br>
@@ -175,13 +175,13 @@ Tato verze kapitoly nepokrývá GFM (GitHub Flavoured Markdown), nicméně všec
 
 ## Zaklínadla (nestandardní)
 
-*# podtržení (nestandardní!)*<br>
+*# **podtržení***<br>
 **&lt;u&gt;**{*text*}**&lt;/u&gt;**
 
-*# přeškrtnutý text*<br>
+*# **přeškrtnutý** text*<br>
 **\~\~**{*text*}**\~\~**
 
-*# kód se zvýrazněním syntaxe*<br>
+*# **kód** se zvýrazněním syntaxe*<br>
 **\`\`\`**{*syntaxe*}<br>
 {*řádek kódu*}...<br>
 **\`\`\`**

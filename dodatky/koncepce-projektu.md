@@ -16,7 +16,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 ## Základní cíle projektu (heslovitě)
 
-* Ukázat začátečníkům, jaké možnosti jim jejich operační systém nabízí.
+* Ukázat začátečníkům v Ubuntu, jaké možnosti jim jejich operační systém nabízí.
 * Začátečníkům i pokročilým pomoci najít a použít funkce Linuxu, které potřebují.
 
 ## Závazná pravidla

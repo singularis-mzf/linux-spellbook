@@ -114,7 +114,7 @@ STAV_PODMINENENO_PREKLADU == 2 {
 
 ZPRACOVAT && $0 == "{{PŘEHLED PODLE ŠTÍTKŮ}}" {
     delete stitky;
-    prikaz = "cut -f 9 " FRAGMENTY_TSV " | egrep -o '\\{[^}]*\\}' | tr -d '{}' | LC_ALL=\"cs_CZ.UTF-8\" sort -iu";
+    prikaz = "cut -f 9 " FRAGMENTY_TSV " | egrep -o '\\{[^}]*\\}' | tr -d '{}' | LC_ALL=\"cs_CZ.UTF-8\" sort -fu";
     while (prikaz | getline) {
         stitky[1 + length(stitky)] = $0;
     }

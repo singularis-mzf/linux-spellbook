@@ -12,7 +12,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
 <!--
-[ ] dpkg-reconfigure?
+[ ] dpkg-reconfigure
 -->
 
 # Správa balíčků
@@ -20,46 +20,47 @@ https://creativecommons.org/licenses/by-sa/4.0/
 !Štítky: {tematický okruh}{systém}{apt}{Snap}{Flatpak}
 
 ## Úvod
-Tématem této kapitoly jsou balíčkovací systémy dpkg, apt, PPA, snap a Flatpak používáné
+Tématem této kapitoly jsou balíčkovací systémy dpkg, apt, PPA, Flatpak a Snap, používáné
 k instalaci a aktualizaci aplikací, knihoven a systémových součástí v distribuci Ubuntu.
 
 Systém „dpkg“ (Debian PacKaGe manager) instaluje do systému balíčky typu .deb,
-hlídá, aby byly splněny závislosti mezi instalovanými balíčky,
-a eviduje, které soubory v systému patří ke kterému balíčku. Nekomunikuje online.
+hlídá, aby byly splněny závislosti mezi nimi, a eviduje, které soubory v systému
+patří ke kterému balíčku; díky tomu je umí také odinstalovat. Nekomunikuje online.
 
 Systém „apt“ (Advanced Packaging Tool) je nadstavbou dpkg, která komunikuje se vzdáleným
 repozitářem balíčků typu .deb, stahuje potřebné balíčky a ověřuje jejich pravost.
 K instalaci je ovšem předává systému dpkg.
 
 PPA je rozšíření „apt“, které umožňuje pohodlně přidávat mezi vzdálené zdroje apt
-repozitáře vývojářů hostované firmou Canonical pro použití v distribuci Ubuntu.
+repozitáře konkrétních vývojářů hostované firmou Canonical pro použití v distribuci Ubuntu.
 Balíčky z PPA jdou přímo od vývojářů a nejsou po cestě nikým dalším prověřovány,
 takže je vhodné používat pouze PPA velmi důvěryhodných vývojářů.
 
-Snap je nový balíčkovací systém firmy Canonical, exkluzivně pro Ubuntu.
-Není dobře přijímán linuxovou komunitou.
+Flatpak je nový, moderní balíčkovací systém založený na sandboxingu a systému práv.
+Představuje dobrý, bezpečný a pohodlný způsob, jak na staré, ověřené verzi systému
+provozovat nejnovější verze vybraných programů.
 
-Flatpak je nový balíčkovací systém založený na sandboxingu a systému práv.
-Je primárně určený k online instalaci nejnovějších verzí distribuovaných
-programů bez rizika konfiktů mezi různými verzemi knihoven.
+Snap je nový balíčkovací systém firmy Canonical. Není dobře přijímán linuxovou komunitou
+z mnoha důvodů, především proto, že serverová část systému (repozitář) je proprietární
+(nesvobodná) a výhradně závislá na firmě Canonical; není možné vytvářet jiné repozitáře
+Snapu ani Snap nastavit tak, aby s firmou Canonical nekomunikoval.
 
 Tato kapitola se nezabývá vytvářením balíčků, vytvářením repozitářů ani jejich zrcadel
 (pro zrcadla zkuste např.
 [tuto sérii článků](https://www.howtoforge.com/local\_debian\_ubuntu\_mirror) (anglicky)
-nebo zkuste modernější [aptly](https://www.aptly.info/)) (anglicky).
+nebo modernější [aptly](https://www.aptly.info/)) (anglicky).
 Rovněž se (pochopitelně) nezabývá sestavováním programů ze zdrojového kódu
 nebo instalací balíčků jiného typu (.rpm, .tar.xz apod.).
-Do budoucna však možná pokryje instalaci balíčků typu .rpm s použitím
-nástroje „alien“.
 
-Tato verze kapitoly nepokrývá offline instalaci Flatpaku a nedostatečně
-pokrývá vyhledávání balíků příkazem „aptitude“ a chybí i zmínka
-o příkazu „apt-file“.
+Tato verze kapitoly nepokrývá offline instalaci balíčků Flatpaku a chybí zmínka
+o příkazu „dpkg-deb“. Rovněž až na výjimky nepokrývá uživatelské nastavení práv
+aplikací ve Flathubu (výchozí nastavení práv určuje dodavatel aplikace, ale uživatel může
+výchozí práva aplikace zúžit nebo rozšířit).
 
 ## Definice
 
-* **Balíček** je soubor obsahující neměnná data aplikace, knihovny apod. a metadata včetně případných závislostí na ostatních balíčcích.
-* **Repozitář** je ucelený sklad souvisejících balíčků. Může být dostupný buď online, nebo může být umístněný v systému souborů. Repozitář APT má svůj název (v Ubuntu typicky „ubuntu“) a dělí se na **archivy** („bionic“, „bionic-updates“, „bionic-security“ atd.) a ty se dělí na **sekce** („main“, „universe“, „restricted“ a „multiverse“). Sekce main obsahuje svobodný software přímo podporovaný jsou součást Ubuntu, sekce „universe“ obsahuje svobodný software udržovaný pouze komunitou, sekce „restricted“ obsahuje nesvobodný software považovaný za podporovanou součást Ubuntu (typicky proprietární ovladače) a sekce „multiverse“ obsahuje nesvobodný software neudržovaný komunitou. Sekce se dále dělí na **podsekce** podle druhu softwaru.
+* **Balíček** je soubor obsahující neměnná data tvořící aplikaci, knihovnu apod. a metadata včetně případných závislostí na ostatních balíčcích.
+* **Repozitář** je ucelený sklad souvisejících balíčků. Může být dostupný buď online, nebo může být umístněný v systému souborů. Repozitář APT má svůj **název** (v Ubuntu typicky „ubuntu“) a dělí se na **archivy** („bionic“, „bionic-updates“, „bionic-security“ atd.) a ty se dělí na **sekce** („main“, „universe“, „restricted“ a „multiverse“). Sekce main obsahuje svobodný software přímo podporovaný jsou součást Ubuntu, sekce „universe“ obsahuje svobodný software udržovaný pouze komunitou, sekce „restricted“ obsahuje nesvobodný software považovaný za podporovanou součást Ubuntu (typicky proprietární ovladače) a sekce „multiverse“ obsahuje nesvobodný software neudržovaný komunitou. Sekce se dále dělí na **podsekce** podle druhu softwaru.
 
 <!--
 Offline instalací se rozumí stažení balíčků, jejich přenesení na počítač nepřipojený k síti a instalace tam.
@@ -72,11 +73,13 @@ Offline instalací se rozumí stažení balíčků, jejich přenesení na počí
 **sudo aptitude update**<br>
 **sudo apt-get update**
 
-*# aktualizovat všechny aktualizovatelné balíčky (normálně/drasticky)*<br>
+*# **aktualizovat** všechny aktualizovatelné balíčky (normálně/drasticky/normálně/drasticky)*<br>
 **sudo apt-get upgrade** [**-y**] [**\-\-autoremove** [**\-\-purge**]]<br>
-**sudo apt-get dist-upgrade** [**-y**] [**\-\-autoremove** [**\-\-purge**]]
+**sudo apt-get dist-upgrade** [**-y**] [**\-\-autoremove** [**\-\-purge**]]<br>
+**sudo aptitude** [**-y**] [**\-\-no-new-installs**] **safe-upgrade** <br>
+**sudo aptitude** [**-y**] **full-upgrade**
 
-*# nainstalovat nový balíček včetně závislostí (vzdálený balíček/lokální soubor)*<br>
+*# **nainstalovat** nový balíček včetně závislostí (vzdálený balíček/lokální soubor)*<br>
 **sudo apt-get install** [**-y**] [**\-\-no-install-recommends**] [**\-\-install-suggests**] [**-V**] {*balíček*}...<br>
 **sudo gdebi** {*balíček.deb*}
 
@@ -84,58 +87,41 @@ Offline instalací se rozumí stažení balíčků, jejich přenesení na počí
 **sudo apt-get install \-\-only-upgrade** {*balíček*}...
 
 *# nainstalovat či upgradovat zvolené balíčky a současně upgradovat ostatní*<br>
-?
+**sudo apt-get upgrade** [**-y**] **&amp;&amp; sudo apt-get install** [**-y**] [**\-\-autoremove** [**\-\-purge**]] {*balíček*}...
 
 *# pokusit se napravit poškozené závislosti*<br>
 **sudo apt-get install \-\-fix-broken**
 
-### Informace o balíčcích
+*# stáhnout balíčky do lokálních souborů .deb (bez závislostí)*<br>
+**apt-get download** {*balíček*}...
+
+### Vypsat balíčky
+
+*# vypsat všechny dostupné nebo nainstalované balíčky (pro člověka)*<br>
+**apt list**
+
+*# vypsat známé balíčky, filtrovat na základě kritérií*<br>
+**aptitude** [**-F** {*formát*}] **search '**{*vyhledávací podmínka*}**'** [**'**{*další vyhledávací podmínka*}**'**]...
 
 *# vypsat **všechny dostupné balíčky** (včetně dostupných verzí, pouze pro hlavní architekturu)*<br>
 **aptitude search \-\-disable-columns -F "$(printf "%s\\t%s" %p %V)" '?true' \| egrep -v "$(printf "[^\\t]\*:[^\\t]|[^\\t]\*\\t&lt;[^\\t]\*&gt;(\\t\|\\$)")"**
 
-*# vypsat **všechny nainstalované balíčky** (pro člověka/pro skript/s aptitude)*<br>
+*# vypsat seznam **nainstalovaných balíčků** včetně verzí (pro člověka − alternativy)*<br>
 **apt list \-\-installed**<br>
-**(apt-mark showauto; apt-mark showmanual) \| LC\_ALL=C sort -u**<br>
-**aptitude search '?installed'**
+**dpkg-query -l** [**\| less**]<br>
 
-*# vypsat podrobné informace o balíčku*<br>
-**apt-cache show** {*balík*}...
+*# vypsat seznam **nainstalovaných balíčků** (pro skript − alternativy)*<br>
+**dpkg-query -Wf '${Package}:${Architecture}/${Version}/${db:Status-Status}\n'** [**'**{*vzorek*}**'**] **\| egrep '/installed$'**<br>
+**(apt-mark showauto; apt-mark showmanual) \| LC\_ALL=C sort -u**<br>
+**aptitude \-\-disable-columns -F** {*formát*} **search '?installed'**
 
 *# vypsat všechny známé (nainstalované nebo dostupné) balíčky (pro všechny architektury)*<br>
 **aptitude search '?true'**
 
-*# vypsat závislosti balíčku*<br>
-**apt-cache depends** {*balík*}...
-
-*# vypsat balíčky předinstalované nebo instalované ručně*<br>
-**apt-mark showmanual**
-
-*# vypsat balíčky instalované jen jako závislosti jiných balíčků*<br>
-**apt-mark showauto**
-
-*# označit balíček jako instalovaný ručně*<br>
-**sudo apt-mark auto** {*balíček*}...
-
-*# označit balíček jako instalovaný automaticky*<br>
-**sudo apt-mark manual** {*balíček*}...
-
-### Zákaz aktualizace
-
-*# zakázat instalaci či aktualizaci balíčku*<br>
-**sudo apt-mark hold** {*balíček*}...
-
-*# vypsat zákazy instalace či aktualizace balíčků*<br>
-**apt-mark showhold**
-
-*# zrušit zákaz instalace či aktualizace balíčku*<br>
-**sudo apt-mark unhold** {*balíček*}...
-
-### Ostatní
-
-*# zjistit hodnotu konfigurační volby APT*<br>
-**apt-config dump** {*volba*}...
-
+*# vypsat balíčky, pro které je dostupný upgrade (pro člověka/pro skript)*<br>
+*// Poznámka: vypíše i balíčky, jejichž upgrade není možný např. kvůli konfliktu s jiným balíčkem.*<br>
+**apt list \-\-upgradable**<br>
+**aptitude search \-\-disable-columns -F %p "?upgradable"**
 <!--
 Viz https://askubuntu.com/questions/99834/how-do-you-see-what-packages-are-available-for-update
 Viz https://www.debian.org/doc/manuals/aptitude/ch02s04s05.en.html
@@ -143,55 +129,50 @@ Zejm.:
 aptitude search --disable-columns -F %p "?upgradable"
 -->
 
-*# vypsat balíčky, pro které je dostupný upgrade (pro člověka/pro skript)*<br>
-*// Poznámka: vypíše i balíčky, jejichž upgrade není možný např. kvůli konfliktu s jiným balíčkem.*<br>
-**apt list \-\-upgradable**<br>
-**aptitude search \-\-disable-columns -F %p "?upgradable"**
+*# vypsat balíčky, které by se skutečně upgradovaly*<br>
+**sudo apt-get upgrade \-\-simulate \| egrep "^Inst&blank;"**
 
-*# přidat do zdrojů nový repozitář/odebrat repozitář*<br>
-**sudo add-apt-repository '**{*řádek sources.list*}**'**<br>
-**sudo add-apt-repository -r '**{*řádek sources.list*}**'**
+*# vypsat nainstalovaný balíček vlastnící určitý příkaz*<br>
+**test -e "$(which **{*příkaz*}**)" &amp;&amp; (dpkg-query -S "$(which **{*příkaz*}**)" \| cut -d : -f 1)**
 
-*# „velikonoční vajíčko“ v APT*<br>
-**apt-get moo**
+*# vypsat seznam balíčků (nainstalovaných/dostupných), kterým přísluší určitý soubor*<br>
+**dpkg-query -S** {*vzorek*}<br>
+**apt-file search -F "**{*/celá/cesta*}**"**
 
-### Aptitude (formát -F)
+### Podrobné informace o balíčku
 
-Za znakem „=“ následuje příklad hodnoty pro balíček „gimp“.
+*# vypsat podrobné informace o balíčku*<br>
+**apt-cache show** {*balík*}...
 
-*# název balíčku*<br>
-*// Název balíčku jiné než výchozí architektury bude doplněn o architekturu, např. „gimp:i386“.*<br>
-**%p = gimp**
+*# vypsat seznam souborů a adresářů v systému, které kontroluje daný (nainstalovaný/dostupný) balíček*<br>
+*// Poznámka: Ve výpisu „dpkg-query -L“ se typicky objevují také společné adresáře jako /etc či /usr; není příliš spolehnutí na to, že jde pouze o soubory příslušné danému balíku.*<br>
+**dpkg-query -L** {*balíček*}<br>
+**apt-file list** {*balíček*}...
+<!--
+[ ] Otestovat, jak dpkg-query reaguje na odklonění.
+-->
 
-*# krátký popis balíčku*<br>
-**%d = GNU Image Manipulation Program**
+*# vypsat závislosti balíčku*<br>
+**apt-cache depends** {*balík*}...
 
-*# architektura*<br>
-**%E = amd64**
+### Zákaz aktualizace a označení „automaticky“
 
-*# verze (instalovaná/dostupná)*<br>
-*// Je-li dostupných víc verzí balíčku, parametr %V vybere tu, která by se nejspíš instalovala.*<br>
-*// Není-li instalovaná, resp. dostupná žádná verze, tyto parametry vypíšou „&lt;žádná&gt;“ a ignorují snahu o změnu lokalizace. Pro přenositelnost je proto doporučuji ve skriptech testovat proti regulárnímu výrazu „&lt;.\*&gt;“ místo porovnání s konkrétní hodnotou.*<br>
-**%v = 2.8.22-1**<br>
-**%V = 2.8.22-1**
+*# vypsat zákazy instalace či aktualizace balíčku*<br>
+**apt-mark showhold**
 
-*# archiv balíčku v repozitáři*<br>
-*// Je-li dostupných víc verzí balíčku, tento parametr zohledňuje pouze nejnovější verzi. Je-li dostupná ve více archivech, vypíše parametr %t všechny dané archivy oddělené čárkou, typicky např. „bionic-security,bionic-updates“.*<br>
-**%t = bionic**
+*# vypsat balíčky předinstalované nebo instalované ručně*<br>
+**apt-mark showmanual**
 
-*# sekce a podsekce balíčku*<br>
-**%s = universe/graphics**
+*# vypsat balíčky instalované jen jako závislosti jiných balíčků*<br>
+**apt-mark showauto**
 
-*# velikost balíčku/velikost instalovaných souborů*<br>
-**%D = 3 672 kB**<br>
-**%I = 15,8 MB**
+*# zakázat instalaci či aktualizaci balíčku/zrušit tento zákaz*<br>
+**sudo apt-mark hold** {*balíček*}...<br>
+**sudo apt-mark unhold** {*balíček*}...
 
-*# popis původu balíčku*<br>
-**%O = Ubuntu:18.04/bionic [amd64]**
-
-*# příznak automatické instalace*<br>
-*// Pro balíčky instalované jen pro splnění závislosti jiného balíčku vypíše „A“, jinak vypíše prázdný řetězec.*<br>
-**%M =**
+*# označit balíček jako instalovaný ručně/automaticky*<br>
+**sudo apt-mark manual** {*balíček*}...<br>
+**sudo apt-mark auto** {*balíček*}...
 
 ### Aptitude (vyhledávací podmínky)
 
@@ -218,6 +199,11 @@ Za znakem „=“ následuje příklad hodnoty pro balíček „gimp“.
 *# jen nainstalované balíčky*<br>
 **?installed**
 
+*# logické operace mezi vzorky*<br>
+**?and(**{*vzorek1*}**,**{*vzorek2*}**)**<br>
+**?or(**{*vzorek1*}**,**{*vzorek2*}**)**<br>
+**?not(**{*vzorek*}**)**
+
 *# balíčky, které by byly odstraněny operací „autoremove“*<br>
 **\~g**
 
@@ -232,23 +218,55 @@ Za znakem „=“ následuje příklad hodnoty pro balíček „gimp“.
 *# jen „virtuální“ balíčky*<br>
 **?virtual**
 
-*# logické operace mezi vzorky*<br>
-**?and(**{*vzorek1*}**,**{*vzorek2*}**)**<br>
-**?or(**{*vzorek1*}**,**{*vzorek2*}**)**<br>
-**?not(**{*vzorek*}**)**
-
 <!--
 ?origin(původ) − jen balíčky určitého původu
 -->
 
+### Aptitude (formát -F)
+
+Za znakem „=“ následuje příklad hodnoty pro balíček „gimp“.
+
+*# **název** balíčku*<br>
+*// Název balíčku jiné než výchozí architektury bude doplněn o architekturu, např. „gimp:i386“.*<br>
+**%p = gimp**
+
+*# krátký **popis** balíčku*<br>
+**%d = GNU Image Manipulation Program**
+
+*# **architektura***<br>
+**%E = amd64**
+
+*# **verze** (instalovaná/dostupná)*<br>
+*// Je-li dostupných víc verzí balíčku, parametr %V vybere tu, která by se nejspíš instalovala.*<br>
+*// Není-li instalovaná, resp. dostupná žádná verze, tyto parametry vypíšou „&lt;žádná&gt;“ a ignorují snahu o změnu lokalizace. Pro přenositelnost je proto doporučuji ve skriptech testovat proti regulárnímu výrazu „&lt;.\*&gt;“ místo porovnání s konkrétní hodnotou.*<br>
+**%v = 2.8.22-1**<br>
+**%V = 2.8.22-1**
+
+*# **archiv** balíčku v repozitáři*<br>
+*// Je-li dostupných víc verzí balíčku, tento parametr zohledňuje pouze nejnovější verzi. Je-li dostupná ve více archivech, vypíše parametr %t všechny dané archivy oddělené čárkou, typicky např. „bionic-security,bionic-updates“.*<br>
+**%t = bionic**
+
+*# **sekce a podsekce** balíčku*<br>
+**%s = universe/graphics**
+
+*# velikost balíčku/velikost instalovaných souborů*<br>
+**%D = 3 672 kB**<br>
+**%I = 15,8 MB**
+
+*# popis původu balíčku*<br>
+**%O = Ubuntu:18.04/bionic [amd64]**
+
+*# příznak automatické instalace*<br>
+*// Pro balíčky instalované jen pro splnění závislosti jiného balíčku vypíše „A“, jinak vypíše prázdný řetězec.*<br>
+**%M =**
 
 ### PPA
 
-*# přidat do zdrojů nové PPA/odebrat PPA*<br>
+*# **přidat** do zdrojů nové PPA/odebrat PPA*<br>
 **sudo add-apt-repository** [**-y**] **ppa:**{*id-vývojáře*}**/**{*id-repozitáře*}<br>
 **sudo add-apt-repository -r** [**-y**] **ppa:**{*id-vývojáře*}**/**{*id-repozitáře*}
 
-*# vypsat seznam aktivních PPA*<br>
+*# **vypsat** seznam aktivních PPA*<br>
 **egrep -shx '\\s\*deb(\\\[\[^\]\]\*\\\])?\\s\*http://ppa.launchpad.net/.\*' /etc/apt/sources.list /etc/apt/sources.list.d/\*.list \| cut -d / -f 4,5 \| sed -E 's/.\*/ppa:&amp;/' \| LC\_ALL=C sort -u**
 
 *# vypsat seznam balíčků dostupných z určitého PPA*<br>
@@ -256,30 +274,31 @@ Za znakem „=“ následuje příklad hodnoty pro balíček „gimp“.
 
 ### Správá důvěryhodných klíčů
 
-*# přidat klíč jako důvěryhodný (ze souboru/ze standardního vstupu)*<br>
+*# **přidat** klíč jako důvěryhodný (ze souboru/ze standardního vstupu)*<br>
 **sudo apt-key add** {*soubor*}<br>
 **sudo apt-key add -**
 
-*# odstranit klíč ze seznamu důvěryhodných*<br>
+*# **odstranit** klíč ze seznamu důvěryhodných*<br>
 **sudo apt-key del** {*id-klíče*}
 
-*# vypsat seznam důvěryhodných klíčů (pro člověka, ne pro skript)*<br>
+*# **vypsat** seznam důvěryhodných klíčů (pro člověka, ne pro skript)*<br>
 **apt-key list**
 
 ### Offline provoz APT
 
-*# updatovat databázi (poprvé)*<br>
+*# aktualizovat údaje o dostupných balíčcích (poprvé)*<br>
 *// Příkazy „get“ se provádějí na online počítači a stáhnout vše, co je potřeba, do uvedeného archivu typu zip, příkazy „set“ a „install“ se spouštějí na offline počítači.*<br>
 **sudo apt-offline set pozadavek.sig \-\-update**<br>
 **sudo apt-offline get pozadavek.sig \-\-generate-changelog \-\-bundle pozadavek.zip**<br>
 **sudo apt-offline install pozadavek.zip**
 
-*# provést „upgrade“*<br>
+*# **aktualizovat** všechny balíčky*<br>
 **sudo apt-offline set pozadavek.sig**<br>
 **sudo apt-offline get pozadavek.sig \-\-generate-changelog \-\-bundle pozadavek.zip**<br>
-**sudo apt-offline install pozadavek.zip**
+**sudo apt-offline install pozadavek.zip**<br>
+**sudo apt-get upgrade** [**-y**]
 
-*# nainstalovat balíčky*<br>
+*# **nainstalovat** nové balíčky*<br>
 **sudo apt-offline set pozadavek.sig \-\-install-packages** {*balíček*} [{*další-balíček*}]...<br>
 **sudo apt-offline get pozadavek.sig \-\-generate-changelog \-\-bundle pozadavek.zip**<br>
 **sudo apt-offline install pozadavek.zip**<br>
@@ -287,56 +306,59 @@ Za znakem „=“ následuje příklad hodnoty pro balíček „gimp“.
 
 ### Odklonění
 
-*# odklonit soubor do nového umístění*<br>
+*# **odklonit** soubor do nového umístění*<br>
 **sudo dpkg-divert \-\-local** [**\-\-move**] **\-\-divert** {*/nové/umístění*} {*/původní/umístění*}
 
-*# zrušit odklon souboru*<br>
+*# **zrušit** odklon souboru*<br>
 **sudo dpkg-divert \-\-remove** {*/původní/umístění*}
 
-*# vypsat seznam odklonů*<br>
+*# **vypsat** seznam odklonů*<br>
 **dpkg-divert \-\-list \\\***
 
 *# odklonit soubor pro všechny balíky kromě zadaného*<br>
 **sudo dpkg-divert \-\-package** {*balík*} [**\-\-move**] **\-\-divert** {*/nové/umístění*} {*/původní/umístění*}
 
-### ...
+### Ostatní
 
-*# vypsat seznam nainstalovaných balíků včetně verzí (pro člověka/pro skript)*<br>
-**dpkg-query -l** [**\| less**]<br>
-**dpkg-query -Wf '${Package}:${Architecture}/${Version}/${db:Status-Status}\n'** [**'**{*vzorek*}**'**] **\| egrep '/installed$'**
+*# přidat do zdrojů nový repozitář/odebrat repozitář*<br>
+**sudo add-apt-repository '**{*řádek sources.list*}**'**<br>
+**sudo add-apt-repository -r '**{*řádek sources.list*}**'**
 
-*# vypsat seznam souborů a adresářů v systému, které kontroluje daný balíček*<br>
-*// Poznámka: Ve výpisu se typicky objevují také společné adresáře jako /etc či /usr; není příliš spolehnutí na to, že jde pouze o soubory příslušné danému balíku.*<br>
-**dpkg-query -L** {*balíček*}
-<!--
-[ ] Otestovat, jak reaguje na odklonění.
--->
+*# zjistit hodnotu konfigurační volby APT*<br>
+**apt-config dump** {*volba*}...
 
-*# vypsat seznam balíčků, kterým přísluší soubory s cestami odpovídající danému vzorku*<br>
-**dpkg-query -S** {*vzorek*}
+*# „velikonoční vajíčko“ v APT*<br>
+**apt-get moo**
 
-*# vypsat balíček (popř. balíčky) vlastnící určitý příkaz*<br>
-**test -e "$(which **{*příkaz*}**)" &amp;&amp; (dpkg-query -S "$(which **{*příkaz*}**)" \| cut -d : -f 1)**
+
 
 ## Zaklínadla (Flatpak)
-
 <!--
 https://flatpak.org/setup/Ubuntu/
 -->
 
 ### Časté úkony
 
-*# spustit program z balíčku*<br>
+Poznámka: „server“ je v uvedených příkazech zpravidla „flathub“.
+
+*# **spustit** program z balíčku*<br>
 **flatpak run** {*balíček*} {*parametry*}
 
-*# instalovat balíček*<br>
+*# **aktualizovat** všechny nainstalované balíčky/jen konkrétní*<br>
+**flatpak update**<br>
+**flatpak update** {*balíček*}...
+
+*# **instalovat** balíček*<br>
 **flatpak install** [{*server*}] {*balíček*}
 
-*# odinstalovat balíček*<br>
+*# **odinstalovat** balíček*<br>
 **flatpak uninstall** {*balíček*}
 
-*# vypsat nainstalované balíčky*<br>
+*# **vypsat** nainstalované balíčky*<br>
 **flatpak list**
+
+*# **hledat** dostupné balíčky podle podřetězce*<br>
+**flatpak search** {*podřetězec*}
 
 *# vypsat výchozí práva aplikace*<br>
 **flatpak info \-\-show-permissions** {*balíček*}
@@ -344,10 +366,7 @@ https://flatpak.org/setup/Ubuntu/
 *# vypsat podrobnější informace o balíčku (nainstalovaném/dostupném)*<br>
 *// Uvedení verze k balíčku je povinné, pokud je v repozitáři víc verzí téhož balíčku. Bez něj v takovém případě příkaz „flathub remote-info“ selže a vypíše dostupné verze.*<br>
 **flatpak info** {*balíček*}<br>
-**flatpak remote-info flathub** {*balíček*}[**//**{*verze*}]
-
-*# hledat dostupné balíčky podle podřetězce*<br>
-**flatpak search** {*podřetězec*}
+**flatpak remote-info** {*server*} {*balíček*}[**//**{*verze*}]
 
 *# vypsat všechny dostupné balíčky aplikací/úplně všechny dostupné balíčky*<br>
 **flatpak remote-ls \-\-app flathub**<br>
@@ -388,16 +407,16 @@ http://docs.flatpak.org/en/latest/single-file-bundles.html
 
 ### Správa vzdálených repozitářů
 
-*# přidat FlatHub*<br>
+*# přidat **FlatHub***<br>
 **flatpak remote-add \-\-if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo**
 
-*# přidat repozitář*<br>
+*# **přidat** repozitář*<br>
 **flatpak remote-add** [**\-\-if-not-exists**] {*id-pro-repozitář*} {*URL*}
 
-*# odebrat repozitář*<br>
+*# **odebrat** repozitář*<br>
 **flatpak remote-delete** {*id-repozitáře*}
 
-*# vypsat seznam repozitářů*<br>
+*# **vypsat** seznam repozitářů*<br>
 **flatpak remotes**
 
 ### Offline instalace
@@ -408,24 +427,39 @@ http://docs.flatpak.org/en/latest/single-file-bundles.html
 *# instalace (na offline počítači)*<br>
 ?
 
-## Zaklínadla (snap)
+## Zaklínadla (Snap)
 
-*# spustit program z balíčku*<br>
+### Instalace, spuštění a odinstalace
+
+*# **spustit** program z balíčku*<br>
 **snap run** {*balíček*}
 
-*# instalovat balíček*<br>
+*# **instalovat** balíček*<br>
 **sudo snap install** [**\-\-**{*kanál*}] {*balíček*}...
 
-*# odinstalovat balíček*<br>
+*# **odinstalovat** balíček*<br>
 **sudo snap remove** {*balíček*}...
 
-*# vypsat nainstalované balíčky*<br>
+*# vrátit balíček do stavu před posledním upgradem na novou verzi (neověřeno)*<br>
+**sudo snap revert** {*balíček*}
+
+### Vypsat balíčky a informace o nich
+*# **vypsat** nainstalované balíčky*<br>
 **snap list**
 
-*# vypsat podrobnější informace o balíčku*<br>
+*# vypsat seznam všech dostupných balíčků*<br>
+*// Poznámka: provedení tohoto příkazu může trvat i několik minut a vzhledem k velkému rozsahu vypsaných informací doporučuji výstup přesměrovat do souboru.*<br>
+**(for X in {a..z} {0..9}; do snap find** [**\-\-narrow**] **$X \| sed 1d; done) \| tr -s "&blank;" \| sort -iu \| sed "$(printf "%s/&blank;/\\\\\|/\\\\n" s s s)" \| column -ts \\\|** [**&gt;** {*soubor*}]
+
+*# vypsat podrobnější **informace** o balíčku*<br>
 **snap info** {*balíček*}
 
-*# deaktivovat balíček/znovu ho aktivovat*<br>
+*# vypsat spojení konektorů a slotů (všech/jen spojených)*<br>
+**snap connections \-\-all**<br>
+**snap connections**
+
+### Ostatní
+*# **deaktivovat** balíček/znovu ho **aktivovat***<br>
 **sudo snap disable** {*balíček*}<br>
 **sudo snap enable** {*balíček*}
 
@@ -443,17 +477,6 @@ http://docs.flatpak.org/en/latest/single-file-bundles.html
 **sudo snap ack** {*soubor\_s\_balíčkem.assert*}<br>
 **sudo snap install** {*soubor\_s\_balíčkem.snap*}
 
-*# vypsat seznam všech dostupných balíčků*<br>
-*// Poznámka: provedení tohoto příkazu může trvat i několik minut a vzhledem k velkému rozsahu vypsaných informací doporučuji výstup přesměrovat do souboru.*<br>
-**(for X in {a..z} {0..9}; do snap find** [**\-\-narrow**] **$X \| sed 1d; done) \| tr -s "&blank;" \| sort -iu \| sed "$(printf "%s/&blank;/\\\\\|/\\\\n" s s s)" \| column -ts \\\|** [**&gt;** {*soubor*}]
-
-*# vypsat spojení konektorů a slotů (všech/jen spojených)*<br>
-**snap connections \-\-all**<br>
-**snap connections**
-
-*# vrátit balíček do stavu před posledním upgradem na novou verzi (neověřeno)*<br>
-**sudo snap revert** {*balíček*}
-
 <!--
 ## Parametry příkazů
 <!- -
@@ -468,44 +491,73 @@ http://docs.flatpak.org/en/latest/single-file-bundles.html
 *# Příkazy „aptitude“ a „gdebi“ (doporučuji)*<br>
 **sudo apt-get install aptitude gdebi**
 
+*# Příkaz „apt-file“*<br>
+**sudo apt-get install apt-file &amp;&amp;sudo apt-file update**
+
+Poznámka: Neinstalujte balíček apt-file, pokud ho nevyužijete. Výrazně zvyšuje objem dat přednášených při každé aktualizaci (při každém „sudo apt-get update“)!
+
 *# Flatpak*<br>
+*// PPA podle: https://flatpak.org/setup/Ubuntu/*<br>
 **sudo add-apt-repository ppa:alexlarsson/flatpak**<br>
 **sudo aptitude update**<br>
 **sudo apt-get install flatpak** [**gnome-software-plugin-flatpak**]<br>
-**flatpak remote-add \-\-if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo**<br>
+**sudo flatpak remote-add \-\-if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo**<br>
 !: Restartujte operační systém.
 
 *# Pro umožnění uživatelské instalace (parametr \-\-user) spusťte z účtu příslušného uživatele navíc:*<br>
 **flatpak remote-add \-\-user \-\-if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo**
 
-
-Snap je základní součástí Ubuntu přítomnou v každé nové instalaci. Je možno ho odinstalovat tímto příkazem:
+Snap je základní součástí Ubuntu přítomnou v každé nové instalaci.
+Je možno ho odinstalovat tímto příkazem:
 
 *# *<br>
 **sudo apt-get purge \-\-autoremove snapd**
 
+Ale začátečníkům to nedoporučuji, protože není zaručeno, že nová verze některé systémové
+součásti nebude Snap vyžadovat. Začátečníkům doporučuji Snap v systému ponechat,
+ale nepoužívat.
+
 ## Ukázka
-<!--
-- Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
-- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti − ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
-- Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+Instalace, spuštění a odinstalování GIMPu různými způsoby:
+
+*# *<br>
+**sudo apt-get update**<br>
+**sudo apt-get install -y gimp**<br>
+**gimp**<br>
+!: Ukončete Gimp.<br>
+**sudo apt-get remove -y gimp**<br>
+**apt-get download gimp**<br>
+**sudo gdebi gimp\*.deb**<br>
+!: Odpovězte „a“.<br>
+**gimp**<br>
+!: Ukončete Gimp.<br>
+**sudo apt-get remove -y gimp**<br>
+**sudo snap install gimp**<br>
+**snap run gimp**<br>
+!: Ukončete Gimp.<br>
+**sudo snap remove gimp**<br>
+**flatpak install flathub org.gimp.GIMP**<br>
+!: Odpovězte kladně na všechny dotazy.<br>
+**flatpak run org.gimp.GIMP**<br>
+!: Ukončete Gimp.<br>
+**flatpak remove org.gimp.GIMP**<br>
+!: Potvrďte.
+
 
 ## Tipy a zkušenosti
 
-* Co je špatně na snapu: 1) Automatické updatování balíčků, které nelze vypnout. 2) Zatímco klientská část je svobodný software, serverová část je proprietární a může ji provozovat pouze firma Canonical, takže není možné vytvářet zrcadla repozitáře snapů a při instalaci programů jste závislí na připojení do USA. 3) Vzhledem k použítí SquashFS připojené snapy zaplevelují výpisy příkazů jako „mount“ a „df“.
-* Stalo se mi, že u některých snapů nebyla správně vyplněna licence.
+* Co je špatně na Snapu: 1) Automatické updatování balíčků, které nelze vypnout. 2) Zatímco klientská část je svobodný software dostupný pro mnoho linuxových distribucí, serverová část je proprietární a může ji provozovat pouze firma Canonical, takže není možné vytvářet zrcadla repozitáře a při instalaci programů je uživatel závislý na firmě Canonical a připojení do USA. 3) Vzhledem k použítí SquashFS připojené snapy zaplevelují výpisy příkazů jako „mount“ a „df“ (Flatpak tímto netrpí).
 * Flatpak přistupuje poměrně benevolentně k přístupovým právům uživatelů. Umožňuje instalovat a odinstalovávat balíčky systémové instalace bez zadání hesla nejen superuživateli, ale také všem uživatelům, kteří jsou členy skupin admin a sudo. Ostatní uživatelům to umožní po zadání hesla administrujícího uživatele, dokonce i přesto, že sami nemají právo používat sudo.
-* Flatpak neprovádí automatickou aktualizaci balíčků; balíčky je možno aktualizovat pohodlně ručně příkazem „flatpak update“.
+* Flatpak neprovádí automatickou aktualizaci balíčků.
+<!--
+4) Stalo se mi, že u některých snapů nebyla správně vyplněna licence. − Vrátit
+jen v případě ověření.
+-->
 
 ## Jak získat nápovědu
 
-Pro APT: „man apt-get“ apod. (ale není příliš přehledná)
-
-Pro Snap: „snap \-\-help“ a „snap help {*podpříkaz*}“.
-
-Pro Flatpak: „man flatpak“ a všechny odtud odkazované manuálové stránky, např. „man flatpak-install“.
+Pro APT: „man apt-get“ apod. (ale není příliš přehledná) Pro Flatpak: „man flatpak“ a všechny odtud odkazované manuálové stránky, např. „man flatpak-install“. Pro Snap: „snap \-\-help“ a „snap help {*podpříkaz*}“.
 
 ## Odkazy
 

@@ -21,28 +21,31 @@ https://creativecommons.org/licenses/by-sa/4.0/
 !Štítky: {program}{kontejnery}{virtualizace}
 
 ## Úvod
-Docker je nástroj pro odlehčenou virtualizaci formou takzvaných kontejnerů. Kontejner obsahuje vlastní podstrom procesů, který je izolovaný od zbytku systému (má vlastní souborový systém, konfiguraci, knihovny, démony, síťové rozhraní a IP adresu), ale sdílí s ním jádro a výpočetní prostředky. To umožňuje bezpečný a snadno přenositelný běh programů určených pro jiné distribuce (můžete např. na Fedoře spouštět program ze staré verze Debianu apod.).
+Docker je nástroj pro odlehčenou virtualizaci formou takzvaných kontejnerů. Kontejner obsahuje vlastní podstrom procesů, který je izolovaný od zbytku systému (má vlastní souborový systém, konfiguraci, knihovny, démony, síťové rozhraní a IP adresu), ale sdílí s ním jádro a výpočetní prostředky. To umožňuje bezpečný a snadno přenositelný běh programů určených pro jiné distribuce (můžete např. na nejnovější Fedoře spouštět program ze staré verze Debianu apod.). Nevýhodou Dockeru je, že jeho používání vyžaduje oprávnění superuživatele a nepodporuje přímo spouštění grafických aplikací nebo přímý přístup k hardwaru (i barvy v terminálu je tam podtřeba zprovoznit). Nejčastěji se používá na provozování databází.
 
-Použití Dockeru obecně probíhá tak, že napíšete vlastní Dockerfile, z něj sestavíte image a z této image pak spouštíte kontejnery. Kontejner může běžet buď na popředí (v příkazové řádce), nebo na pozadí.
+Použití Dockeru obecně probíhá tak, že napíšete vlastní Dockerfile, z něj sestavíte obraz a z tohoto obrazku pak vytváříte kontejnery, které spouštíte. Kontejner může běžet buď na popředí (v příkazové řádce), nebo na pozadí.
 
 Tato verze kapitoly pokrývá pouze základy Dockeru; nezmiňuje se o nástoji „docker-compose“ a pokrývá jen malou část dostupných „docker“-příkazů. Neuvádí specializované repozitáře jako např. „mysql“.
 
 ## Definice
 
 * **Kontejner** je dočasné (ale perzistentní) částečně izolované prostředí pro spouštění programů.
-* **Image** je neměnný, opakovaně použitelný výchozí stav kontejneru.
-* **Repozitář** je soubor imagí se společným označením (např. „ubuntu“ či „mysql“). Jednotlivé image se pak identifikují pomocí **tagu** uvedeného za název repozitáře a dvojtečku (např. „ubuntu:18.04“). Není-li tag uveden, Docker automaticky doplní „latest“.
-* **Dockerfile** je textový soubor s názvem „Dockerfile“, obsahující instrukce k vytvoření image.
+* **Obraz** je neměnný, opakovaně použitelný výchozí stav kontejneru.
+* **Repozitář** je soubor obrazů se společným označením (např. „ubuntu“ či „mysql“). Jednotlivé obrazy se pak identifikují pomocí **tagu** uvedeného za název repozitáře a dvojtečku (např. „ubuntu:18.04“). Není-li tag uveden, Docker automaticky doplní „latest“.
+* **Dockerfile** je textový soubor s názvem „Dockerfile“, obsahující instrukce k vytvoření obrazu.
 
 ## Zaklínadla (docker)
 
-### Práce s images
-*# vytvořit image z Dockerfilu*<br>
+### Práce s obrazy
+*# **vytvořit** obraz z Dockerfilu*<br>
 *// Pozor na tečku na konci příkazu, je povinná a bez ní příkaz skončí vypsáním nápovědy!*<br>
-**sudo docker build** [**-t** {*repozitář*}[**:**{*tag-pro-image*}]] [**\-\-no-cache**] **.**
+**sudo docker build** [**-t** {*repozitář*}[**:**{*tag-pro-obraz*}]] [**\-\-no-cache**] **.**
 
-*# vypsat lokálně dostupné image*<br>
+*# **vypsat** lokálně dostupné obrazy*<br>
 **sudo docker images**
+
+*# **smazat** obraz (lokálně)*<br>
+**sudo docker rmi** {*obraz*}...
 
 *# vyhledat vzdáleně dostupné repozitáře*<br>
 *// Uvedený příkaz má přednastavený limit 25 položek; parametrem lze počet zvýšit maximálně na 100.*<br>
@@ -51,49 +54,48 @@ Tato verze kapitoly pokrývá pouze základy Dockeru; nezmiňuje se o nástoji 
 *# vypsat všechny vzdáleně dostupné repozitáře*<br>
 ?
 
-*# vypsat vzdáleně dostupné image z určitého repozitáře*<br>
+*# vypsat vzdáleně dostupné obrazy z určitého repozitáře*<br>
 ?
 
-*# smazat image (lokálně)*<br>
-**sudo docker rmi** {*image*}
-
-*# stáhnout vzdálenou image k použití lokálně*<br>
-**sudo docker pull** {*image*}
-
-*# nové označení pro image*<br>
+*# **přejmenovat** obraz *<br>
 *// Původní označení zůstane zachováno.*<br>
-**sudo docker tag** {*image*} {*nové-označení-repozitář*}[**:**{*nové-označení-tag*}]
+**sudo docker tag** {*starý-repozitář*}[**:**{*starý-tag*}] {*nový-repozitář*}[**:**{*nový-označení-tag*}]<br>
+**sudo docker rmi** {*starý-repozitář*}[**:**{*starý-tag*}]
 
-*# uložit image do souboru/načíst ze souboru*<br>
-*// Uloženou image doporučuji komprimovat (je ve formátu tar). Uložená image obsahuje všechny vrstvy potřebné pro rekonstrukci image, takže ji lze načíst i na počítači bez připojení k internetu. Rovněž je to vhodný způsob, jak si image zálohovat.*<br>
-**sudo docker save -o** {*soubor*} {*image*}<br>
+*# **uložit** obraz do souboru/**načíst** ze souboru*<br>
+*// Uložený obraz doporučuji komprimovat (je ve formátu tar); obsahuje všechny vrstvy potřebné pro rekonstrukci obrazu, takže ho lze načíst i na počítači bez připojení k internetu. Rovněž je to vhodný způsob, jak si obraz zálohovat.*<br>
+**sudo docker save -o** {*soubor*} {*obraz*}<br>
 **sudo docker load -i** {*soubor*}
 
-*# uložit image na standardní výstup/načíst ze standardního vstupu*<br>
-**sudo docker save** {*image*}<br>
+*# uložit obraz na standardní výstup/načíst ze standardního vstupu*<br>
+**sudo docker save** {*obraz*}<br>
 **sudo docker load**
+
+*# stáhnout vzdálený obraz k použití lokálně*<br>
+*// Tento příkaz obvykle není třeba používat, protože Docker chybějící obrazy stahuje automaticky, jakmile jsou potřeba.*<br>
+**sudo docker pull** {*obraz*}
 
 ### Práce s kontejnery
 
-*# vytvořit a spustit kontejer*<br>
-**sudo docker run** [{*parametry*}] {*image*} [{*náhradní příkaz a jeho parametry*}]
+*# vytvořit a **spustit** kontejer*<br>
+**sudo docker run** [{*parametry*}] {*obraz*} [{*náhradní příkaz a jeho parametry*}]
 
-*# vypsat seznam kontejnerů (jen běžících/všech na daném počítači)*<br>
+*# **vypsat** seznam kontejnerů (jen běžících/všech na daném počítači)*<br>
 **sudo docker ps**<br>
 **sudo docker ps -a**
 
-*# zastavit kontejner (normálně/násilně)*<br>
+*# **zastavit** kontejner (normálně/násilně)*<br>
 **sudo docker stop** {*kontejner*}<br>
 **sudo docker kill** {*kontejner*}
 
-*# znovu spustit zastavený kontejner*<br>
+*# **znovu spustit** zastavený kontejner*<br>
 **sudo docker start** {*kontejner*}
 
-*# smazat kontejner (jen zastavený/i běžící)*<br>
+*# **smazat** kontejner (jen zastavený/i běžící)*<br>
 **sudo docker rm** {*kontejner*}<br>
 **sudo docker rm -f** {*kontejner*}
 
-*# přejmenovat kontejner*<br>
+*# **přejmenovat** kontejner*<br>
 **sudo docker rename** {*kontejner*} {*nové-jméno*}
 
 *# spustit nový interpret příkazové řádky v již běžícím kontejneru (obecně/konkrétně)*<br>
@@ -105,10 +107,10 @@ Tato verze kapitoly pokrývá pouze základy Dockeru; nezmiňuje se o nástoji 
 **sudo docker cp** {*zdroj/mimo/kontejner*} {*kontejner*}**:**{*/cíl/v/kontejneru*}
 
 *# vytvořit kontejner bez spuštění*<br>
-**sudo docker create** [{*parametry*}] {*image*}
+**sudo docker create** [{*parametry*}] {*obraz*}
 
 ### Pročištění systému
-*# pročistit systém (po čase bývá nezbytné)*<br>
+*# **pročistit systém** (po čase bývá nezbytné)*<br>
 **sudo docker system prune**
 
 ### Eskalace práv
@@ -126,8 +128,8 @@ Tato verze kapitoly pokrývá pouze základy Dockeru; nezmiňuje se o nástoji 
 *# komentář*<br>
 **#** {*komentář do konce řádku*}
 
-*# načíst existující image a použít ji jako základ pro novou*<br>
-**FROM** {*image*}
+*# načíst existující obraz a použít ji jako základ pro nový*<br>
+**FROM** {*obraz*}
 
 *# spustit příkaz*<br>
 *// Pozor, každý příkaz se spouští v nové instanci příkazovém intepretu „/bin/sh“!*<br>
@@ -153,7 +155,7 @@ Tato verze kapitoly pokrývá pouze základy Dockeru; nezmiňuje se o nástoji 
 
 ### docker run
 *# *<br>
-**sudo docker run** [{*parametry*}] {*image*} [{*náhradní příkaz a jeho parametry*}]
+**sudo docker run** [{*parametry*}] {*obraz*} [{*náhradní příkaz a jeho parametry*}]
 
 * **\-\-rm** \:\: Po ukončení hlavního procesu automaticky smaže kontejner.
 * **-it** \:\: Spustí pro kontejner interaktivní terminál. (Opakem je **-d**, které spustí kontejner na pozadí.)
@@ -175,17 +177,17 @@ Tato verze kapitoly pokrývá pouze základy Dockeru; nezmiňuje se o nástoji 
 **WORKDIR /root**<br>
 **ENTRYPOINT ["/usr/bin/mc"]**
 
-*# sestavení a spuštění image*<br>
+*# sestavení a spuštění obrazu*<br>
 **sudo docker build -t midnight-commander .**<br>
 **sudo docker run \-\-rm -it midnight-commander**
 
 ## Tipy a zkušenosti
 
-* Přidání uživatele do skupiny „docker“, které některé stránky doporučují, mu umožňuje spouštět Docker bez sudo. Z bezpečnostního hlediska to ale není dobrý nápad, protože jak ukazuje sekce zaklínadel „Eskalace práv“, spouštění Dockeru je prakticky ekvivalentem přidělení práv superuživatele. Proto raději příkaz „docker“ spouštím z bashe spuštěného pomocí „sudo bash“.
+* Přidání uživatele do skupiny „docker“, které některé stránky doporučují, mu umožňuje spouštět Docker bez sudo. Z bezpečnostního hlediska to ale není dobrý nápad, protože jak ukazuje podsekce zaklínadel „Eskalace práv“, spouštění Dockeru je prakticky ekvivalentem přidělení práv superuživatele. Proto raději příkaz „docker“ spouštím z bashe spuštěného pomocí „sudo bash“.
 * Řádek v Dockerfilu lze rozdělit na víc řádků; v takovém případě se na konec každého kromě posledního přidá zpětné lomítko.
-* Programy spouštěné při sestavování image nesmí vyžadovat žádnou uživatelskou interakci. Pokud k tomu dojde, sestavení image selže. (Proto je třeba u příkazu „apt-get install“ používat parametr „-y“.)
+* Programy spouštěné při sestavování obrazu nesmí vyžadovat žádnou uživatelskou interakci. Pokud k tomu dojde, sestavení obrazu selže. (Proto je třeba u příkazu „apt-get install“ používat parametr „-y“.)
 * V kontejnerech je možno zakládat nové uživatele a používat jejich účty, ale není to příliš běžné. Obvykle se všechny programy v kontejnerech spouští pod účtem uživatele root.
-* Při sestavování image příkazem „docker build“ se celý obsah lokálního adresáře včetně všech podadresářů nejprve zkopíruje do zvláštní oblasti zvané „build context“; příkaz Dockerfilu „COPY“ pak může čerpat pouze z této oblasti. Proto doporučuji mít aktuální adresář při sestavování image co nejmenší a nikdy nespouštět „docker build“ např. z kořenového adresáře. (Ani domovský adresář uživatele není moc dobrý nápad.)
+* Při sestavování obrazu příkazem „docker build“ se celý obsah lokálního adresáře včetně všech podadresářů nejprve zkopíruje do zvláštní oblasti zvané „build context“; příkaz Dockerfilu „COPY“ pak může čerpat pouze z této oblasti. Proto doporučuji mít aktuální adresář při sestavování obrazu co nejmenší a nikdy nespouštět „docker build“ např. z kořenového adresáře. (Ani domovský adresář uživatele není moc dobrý nápad.)
 * Hash kontejneru se v kontejneru používá jako název počítače, takže se zobrazuje ve výzvě příkazového interpretu a lze ji snadno zjistit příkazem „hostname“.
 * Ačkoliv by spuštění grafických aplikací v Dockeru mělo být také možné, vyžaduje specializovaný postup a nikdy jsem se o ně nepokoušel/a.
 

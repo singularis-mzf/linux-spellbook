@@ -25,7 +25,13 @@
 @include "skripty/utility.awk"
 
 BEGIN {
+    #
+    # Autonomní číslování poznámek pod čarou (oddělené kvůli hypertextovým odkazům).
     DO_LATEXU_CISLO_POZN_POD_CAROU = 0;
+    #
+    # Tento příznak se nastavuje s koncem bloku odstavců a ruší s každým nadpisem.
+    # Jeho účelem je umožnit vložení mezery mezi odstavec a první zaklínadlo.
+    DO_LATEXU_ODSTAVEC_PRED_ZAKLINADLEM = 0;
 }
 
 # Pomocná funkce:
@@ -215,6 +221,7 @@ function Tabulator(delka,  i, vysledek) {
 }
 
 function ZacatekKapitoly(kapitola, cisloKapitoly, stitky, osnova) {
+    DO_LATEXU_ODSTAVEC_PRED_ZAKLINADLEM = 0;
     kapitola = "\\kapitola{\\MakeUppercase{" kapitola "}}%\n\\label{kapx" ID_KAPITOLY_OMEZENE "}";
     if (stitky != "") {
         gsub(/\|/, "} \\stitek{", stitky);
@@ -228,6 +235,7 @@ function KonecKapitoly(kapitola, cislaPoznamek, textyPoznamek) {
 }
 
 function ZacatekSekce(kapitola, sekce, cisloKapitoly, cisloSekce) {
+    DO_LATEXU_ODSTAVEC_PRED_ZAKLINADLEM = 0;
     switch (sekce) {
         default:
             return "\\sekce{" sekce "}%\n";
@@ -239,6 +247,7 @@ function KonecSekce(kapitola, sekce) {
 }
 
 function ZacatekPodsekce(kapitola, sekce, podsekce, cisloKapitoly, cisloSekce, cisloPodsekce) {
+    DO_LATEXU_ODSTAVEC_PRED_ZAKLINADLEM = 0;
     return "\\podsekce{" podsekce "}%\n";
 }
 
@@ -255,6 +264,7 @@ function PredelOdstavcu() {
 }
 
 function KonecOdstavcu() {
+    DO_LATEXU_ODSTAVEC_PRED_ZAKLINADLEM = 1;
     return "\\end{odstavce}";
 }
 
@@ -292,7 +302,11 @@ function KonecSeznamu(uroven) {
 }
 
 function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, cislaPoznamek, textyPoznamek,   i, ax, base) {
-    ax = "%\n\\zaklinadlo{";
+    ax = "%\n";
+    if (DO_LATEXU_ODSTAVEC_PRED_ZAKLINADLEM && cisloZaklinadla == 1 && textZaklinadla != "") {
+        ax = ax "\\vspace{2ex}";
+    }
+    ax = ax "\\zaklinadlo{";
     # #2 = číslo zaklínadla
     ax = ax cisloZaklinadla "}{";
     # #3 = text zaklínadla + \footnotemark
@@ -392,8 +406,8 @@ function FormatKurziva(jeZacatek) {
     return jeZacatek ? "\\itshape{}" : "\\upshape{}";
 }
 
-function FormatDopln(jeZacatek) {
-    return jeZacatek ? "\\dopln{" : "}";
+function FormatDopln(jeZacatek, jePoJinemDopln) {
+    return jeZacatek ? (jePoJinemDopln ? "\\hspace{0.2em}" : "") "\\dopln{" : "}";
 }
 
 function FormatVolitelny(jeZacatek) {
@@ -409,7 +423,9 @@ function TriTecky() {
 }
 
 function Obrazek(src, alt, rawSrc, rawAlt,   sirka) {
-    src = (rawSrc ~ /^\.\.\// ? "../pdf-spolecne/_" substr(rawSrc, 4) : rawSrc);
+    src = rawSrc;
+    sub(/^\.\.\//, "../pdf-spolecne/_", src);
+    sub(/\.svg$/, ".pdf", src);
     sirka = PrecistKonfig("Obrázky", rawSrc);
     if (sirka != "") {
         sirka = "[width=" sirka "]";

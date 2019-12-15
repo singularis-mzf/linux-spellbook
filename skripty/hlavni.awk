@@ -76,10 +76,12 @@ function ZpracujZnaky(text,     VSTUP, VYSTUP, ZNAK) {
 #
 # Může využívat globálních proměnných TYP_RADKU a PREDCHOZI_TYP_RADKU.
 # Lokálně používá zásobník "format".
-function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C) {
+function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C, priznak) {
+    priznak = 0; # příznak použitelný k zachování kontextu
     VSTUP = text;
     VYSTUP = "";
     VyprazdnitZasobnik("format");
+
     while (VSTUP != "") {
         # 11 znaků
         switch (C = substr(VSTUP, 1, 11)) {
@@ -209,7 +211,8 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C) {
             case "{*":
                 if (VelikostZasobniku("format") != 0)
                     break;
-                VYSTUP = VYSTUP FormatDopln(1);
+                VYSTUP = VYSTUP FormatDopln(1, priznak);
+                priznak = 0;
                 Push("format", "{*");
                 VSTUP = substr(VSTUP, 3);
                 continue;
@@ -219,8 +222,9 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C) {
                 if (Pop("format") != "{*") {
                     ShoditFatalniVyjimku("Uzavřena neotevřená formátovací značka: {*..*}");
                 }
-                VYSTUP = VYSTUP FormatDopln(0);
+                VYSTUP = VYSTUP FormatDopln(0, 0);
                 VSTUP = substr(VSTUP, 3);
+                priznak = substr(VSTUP, 1, 2) == "{*";
                 continue;
             case "$$":
                 ShoditFatalniVyjimku("Funkce $$ není v této verzi podporována. Při opakování znaku $ musí být tyto znaky escapovány zpětným lomítkem.");
