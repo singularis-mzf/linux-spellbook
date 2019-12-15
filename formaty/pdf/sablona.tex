@@ -145,6 +145,8 @@
 \setlength{\cftchapnumwidth}{1.6em}
 \setlength{\cftsecnumwidth}{2.6em}
 \setlength{\cftsubsecnumwidth}{3.2em}
+% zarovnat titulky vlevo: (jinak se zarovnají do bloku, což nevypadá hezky)
+\makeatletter\renewcommand{\@tocrmarg}{\@pnumwidth plus1fil}\makeatother
 
 % {xcolor}:
 \definecolor{cervena}{rgb}{1,0,0}
@@ -180,7 +182,7 @@
 % ============================================================================
 \newenvironment*{blok}{}{}
 
-\newcommand*{\kapitola}[2][]{\chapter{#2}}
+\newcommand*{\kapitola}[2][]{\ifthenelse{\equal{#1}{}}{\chapter{#2}}{\chapter[#1]{#2}}}
 \newcommand*{\sekce}[2][]{\section{#2}}
 \newcommand*{\podsekce}[2][]{\subsection{#2}}
 

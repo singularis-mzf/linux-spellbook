@@ -24,7 +24,23 @@
 
 @include "skripty/utility.awk"
 
+function ZacitLog() {
+    if (LOG_SOUBOR != "") {
+        system("date \"+Otevřeno %F %T %z\" > '" LOG_SOUBOR "'");
+    }
+    return 0;
+}
+
+function Log(text) {
+    if (LOG_SOUBOR != "") {
+        print text >> LOG_SOUBOR;
+    }
+    return 0;
+}
+
 BEGIN {
+    OFS = "";
+    ORS = "\n";
     POSTPROCESS_TSV = "soubory_prekladu/postprocess.tsv";
     if (system("test -r " POSTPROCESS_TSV) != 0) {
         ShoditFatalniVyjimku("Nemohu číst ze souboru " POSTPROCESS_TSV "!");
@@ -36,6 +52,15 @@ BEGIN {
         ShoditFatalniVyjimku("Vyžadovaná proměnná IDKAPITOLY není nastavena pomocí parametru -v!");
     }
 
+    #
+    # Logování
+    #
+    LOG_SOUBOR = "";
+    # odkomentujte následující řádek pro zapnutí logování:
+    #LOG_SOUBOR = "soubory_prekladu/" IDFORMATU "/" IDKAPITOLY ".postprocess.log";
+    ZacitLog();
+
+    #
     split("", NAHRADY); # zdroj-text => id-náhrady
     split("", TEXT_NAHRADY_ZDROJ); # id-náhrady => zdroj-text
     split("", TEXT_NAHRADY_CIL); # id-náhrady => cíl-text
@@ -45,6 +70,9 @@ BEGIN {
         # formát: <id-náhrady>[TAB]<id-formátu>[TAB]<id-kapitoly>[TAB]<původní řádek>[TAB]<nový řádek>
         # řádky začínající # a prázdné řádky se vynechávají
         split($0, sloupce, "\t");
+        Log("Načtena náhrada: id<<" sloupce[1] ">>, formát<<" sloupce[2] ">>, kapitola<<" sloupce[3] ">>");
+        Log("F:" sloupce[4]);
+        Log("T:" sloupce[5]);
         if ($0 != "" && substr($0, 1, 1) != "#" && sloupce[2] == IDFORMATU && sloupce[3] == IDKAPITOLY) {
             idnahrady = sloupce[1];
             z = sloupce[4];
@@ -66,6 +94,7 @@ BEGIN {
             TEXT_NAHRADY_ZDROJ[idnahrady] = z;
             TEXT_NAHRADY_CIL[idnahrady] = na;
             POCET_NAHRAD[idnahrady] = 0;
+            Log("Náhrada id " idnahrady "přijata.");
         }
     }
     close(POSTPROCESS_TSV);
@@ -75,6 +104,11 @@ $0 in NAHRADY {
     idnahrady = NAHRADY[$0];
     $0 = TEXT_NAHRADY_CIL[idnahrady];
     ++POCET_NAHRAD[idnahrady];
+    Log("Nalezena shoda na řádku " FNR " s náhradou id " idnahrady "!!! Počítadlo stoupne na hodnotu " POCET_NAHRAD[idnahrady] ".");
+}
+
+!($0 in NAHRADY) {
+    Log("BN#" FNR ":" $0);
 }
 
 {

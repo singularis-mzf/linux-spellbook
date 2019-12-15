@@ -15,7 +15,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 „Linux: Kniha kouzel“ je open source sbírka velmi krátkých řešených příkladů pro příkazovou řádku/příkazový řádek systému Linux, především distribuce Ubuntu. V současnosti je dostupná ve formátu HTML pro zobrazení na počítači a ve formátu PDF pro tisk na papír.
 
-Verze 1.0 je cílena na *Ubuntu 18.04 Bionic Beaver* a jeho deriváty.
+Verze 1.1 je cílena na *Ubuntu 18.04 Bionic Beaver* a jeho deriváty.
 
 Příručka podléhá licenci
 [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Podrobné údaje o autorství zdrojových souborů jsou uvedeny v komentářích v jejich záhlaví; údaje o autorství obrázkových souborů jsou uvedeny v souboru [COPYING](COPYING).
@@ -23,11 +23,13 @@ Příručka podléhá licenci
 ## Návod k sestavení
 
 K sestavení příručky ze zdrojového kódu budete potřebovat Git, GNU make,
-GNU awk, ImageMagick, Inkscape a LaTeX a kvůli řazení české locale
+GNU awk, ImageMagick, rsvg-convert a LaTeX a kvůli řazení české locale
 „cs\_CZ.UTF-8“. V Ubuntu 18.04 LTS, Debianu 10 a Linuxu Mint 17.2
 můžete tyto nástroje nainstalovat příkazem:
 
-> ``sudo apt-get install inkscape git make gawk imagemagick texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra texlive-lang-czechslovak language-pack-cs hunspell-cs``
+> ``sudo apt-get install git make gawk imagemagick librsvg2-bin texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra texlive-lang-czechslovak hunspell-cs``
+
+Nemáte-li v systému čestou lokalizaci, přidejte v Ubuntu a Linuxu Mint navíc balíček „language-pack-cs“. Jak se instaluje české locale v Debianu nevím.
 
 Pak budete potřebovat stáhnout si repozitář:
 
@@ -49,20 +51,21 @@ Kapitoly ani dodatky se však nesmějí opakovat.
 ### Vydané kapitoly
 
 * [barvy-a-titulek](kapitoly/barvy-a-titulek.md)
+* [datum-cas-kalendar](kapitoly/datum-cas-kalendar.md)
 * [docker](kapitoly/docker.md)
 * [git](kapitoly/git.md)
 * [make](kapitoly/make.md)
 * [markdown](kapitoly/markdown.md)
 * [planovani-uloh](kapitoly/planovani-uloh.md)
+* [prace-s-archivy](kapitoly/prace-s-archivy.md)
+* [regularni-vyrazy](kapitoly/regularni-vyrazy.md)
+* [sprava-balicku](kapitoly/sprava-balicku.md)
 * [stahovani-videi](kapitoly/stahovani-videi.md)
 * [zpracovani-videa-a-zvuku](kapitoly/zpracovani-videa-a-zvuku.md)
 
 ### Dospělé nevydané kapitoly
 
-* [datum-cas-kalendar](kapitoly/datum-cas-kalendar.md)
-* [prace-s-archivy](kapitoly/prace-s-archivy.md)
-* [regularni-vyrazy](kapitoly/regularni-vyrazy.md)
-* [sprava-balicku](kapitoly/sprava-balicku.md)
+*Zatím nejsou.*
 
 ### Kapitoly-děti
 
@@ -75,6 +78,7 @@ Kapitoly ani dodatky se však nesmějí opakovat.
 * [latex](kapitoly/latex.md) (0%)
 * [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) (0%)
 
+<!-- * [perl](kapitoly/perl.md) (0%) -->
 <!-- * [unicode](kapitoly/unicode.md) (0%) -->
 
 ### Zvláštní kapitoly

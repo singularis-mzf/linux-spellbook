@@ -45,11 +45,6 @@ FFmpeg je nástroj pro konverzi, úpravu a streamování videa, zvuku a titulk
 Hlavní výhodou FFmpegu oproti videoeditorům s grafickým uživatelským rozhraním
 je modularita a opakovatelnost zpracování pro různé vstupní soubory.
 
-Základním nástrojem pro zpracování multimediálních souborů v ffmpegu je
-tzv. graf filtrů (filtergraph), který definujete pomocí globálního parametru
-**-filter\_complex** (resp. **-filter\_complex\_script**),
-případně zjednodušeně pomocí výstupních parametrů **-vf** a **-af**.
-
 Tato verze kapitoly nepokrývá všechny dostupné filtry ffmpegu (zvlášť v oblasti
 zpracování zvuku není pokrytí příliš dobré) a neobsahuje vysvětlení pojmu PTS.
 Rovněž chybí popis vestavěných funkcí používaných ve výrazech v parametrech filtrů.
@@ -78,20 +73,23 @@ vzorků za sekundu.
 
 ### Syntaxe grafu filtrů
 
-Graf filtrů se obvykle nastavuje pomocí globálního parametru
-„-filter\_complex“ (popř. „-filter\_complex\_script“). Stopa vstupu se zde značí např.
-„[0:v]“, kde na místě 0 je pořadové číslo vstupu (od nuly) a na místě „v“ může být
-„v“ pro výchozí obrazovou stopu, „a“ pro výchozí zvukovou stopu, nebo pořadové číslo stopy
-v kontejneru (lze zjistit z výstupu příkazu „ffprobe“).
+Základním nástrojem pro zpracování multimediálních souborů v ffmpegu je
+tzv. graf filtrů (filtergraph), který může být buď kompletní, definovaný
+pomocí globálního parametru **-filter\_complex** (resp. **-filter\_complex\_script**),
+nebo jednoduchý, definovaný pomocí výstupních parametrů **-vf** a **-af**.
 
-Jednoduché propojení mezi filtry se vytvoří tak, že se filtry zapíšou vedle sebe a oddělí
-čárkou. Složitější propojení se vytváří pomocí libovolně pojmenovaných propojení, jejichž
-identifikátory je nutno uzavřít do hranatých závorek. Namapování pojmenovaného výstupu
-na stopu výstupního souboru se provede mimo graf filtrů výstupním parametrem „-map“.
+V komplexním grafu filtrů se každá stopa vstupu značí formou „[0:v]“, kde na místě 0
+je pořadové číslo vstupu (počítáno od nuly) a na místě „v“ může být „v“ pro výchozí
+obrazovou stopu, „a“ pro výchozí zvukovou stopu, nebo pořadové číslo stopy
+v kontejneru vstupního souboru (lze zjistit z výstupu příkazu „ffprobe“).
 
-Jednoduché grafy filtrů lze místo toho zadat výstupními parametry „-vf“ a „-af“.
-Ty mají automaticky na vstupu výchozí obrazovou (resp. zvukovou) stopu a jejich výstup
-se namapuje na obrazovou, resp. zvukovou stopu výstupního souboru.
+Jednoduché propojení mezi filtry se v komplexním i jednoduchém grafu filtrů vytvoří tak,
+že se filtry zapíšou vedle sebe a oddělí čárkou (kde propojení není, píše se místo
+čárky středník). V komplexním grafu filtrů se vytvářejí také pojmenovaná propojení,
+jejichž identifikátory je nutno uzavřít do hranatých závorek.
+Zatímco u jednoduchého grafu filtrů se konec namapuje na stopu výstupního souboru
+automaticky, u komplexního grafu filtrů to musíme udělat ručně, samostatným výstupním
+parametrem „-map“.
 
 ## Zaklínadla (filtry)
 

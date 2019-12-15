@@ -57,20 +57,6 @@ v&nbsp;rámci svých (začátečníků) schopností co nejvíc.</p>
 {{KONEC POKUD}}
 <br>Datum sestavení:<br><em>{{DATUM SESTAVENÍ}}</em></p>
 </div>
-<h2>Typografické konvence</h2>
-<table class="zaklinadlo" style="font-size:87%;margin:0 2rem;"><tbody>
-<tr><td><div class="radekzaklinadla">sudo apt-get update</div></td><td>Texty obyčejným neproporcionálním písmem zkopírujte přesně tak, jak jsou.</td></tr>
-<tr><td><div class="radekzaklinadla"><span class="dopln">jméno-souboru</span></div></td><td>Podtržené části doplňte.</td></tr>
-<tr><td><div class="radekzaklinadla"><span class="radekzaklinadlaafter"></span></div></td><td>Na konci každého neposledního řádku (pro odlišení od pouhého zalomení) je tento symbol.</td></tr>
-<tr><td><div class="radekzaklinadla"><span class="volznak">[</span>--vol []<span class="volznak">]</span></div></td><td>Nepovinné a doplňkové části zaklínadla jsou uzavřeny do vysokých šedých hranatých závorek,
-jasně odlišitelných od obyčejných hranatých závorek.</td></tr>
-<tr><td><div class="radekzaklinadla"><span class="dopln">další-soubor</span><span class="tritecky">...</span></div></td><td>Části zaklínadla, které je možno
-uvést víckrát, jsou vyznačeny šedou trojtečkou.</td></tr>
-<tr><td><div class="radekzaklinadla">@&blank;&quot;</div></td><td>Ke zdůraznění místa, kam je nutno zapsat právě jednu obyčejnou mezeru, se v zaklínadlech používá symbol &blank;.</td></tr>
-<tr><td><div class="radekzaklinadla">@<span class="tab" style="width:7ch">&#9;</span>&quot;</td><td>Znakem » se značí, že do souboru musíte zapsat tabulátor (ne mezery).</td></tr>
-<tr><td><div class="radekzaklinadla akce">Klikněte.</div></td><td>Je-li nutno místo napsání něčeho něco vykonat, je to vyznačeno takto.</td></tr>
-<tr><td><div class="radekzaklinadla">?</div></td><td>Samostatný otazník značí, že řešení dané úlohy není dosud známo. Hojně se vyskytuje v rozpracovaných kapitolách.<td></tr>
-</tbody></table>
 
 <!--<p>Tato verze Knihy kouzel obsahuje následující kapitoly a&nbsp;dodatky:</p>-->
 {{POKUD JE FORMÁT nepodporovaný}}
@@ -111,6 +97,22 @@ Podporované konstrukce:
 {{VYPSAT ZBYTEK KAPITOL}}
 </ol></div>
 </div>
+
+<h2>Typografické konvence</h2>
+<table class="zaklinadlo" style="font-size:87%;margin:0 2rem;"><tbody>
+<tr><td><div class="radekzaklinadla">sudo apt-get update</div></td><td>Texty obyčejným neproporcionálním písmem zkopírujte přesně tak, jak jsou.</td></tr>
+<tr><td><div class="radekzaklinadla"><span class="dopln">jméno-souboru</span></div></td><td>Podtržené části doplňte.</td></tr>
+<tr><td><div class="radekzaklinadla"><span class="radekzaklinadlaafter"></span></div></td><td>Na konci každého neposledního řádku (pro odlišení od pouhého zalomení) je tento symbol.</td></tr>
+<tr><td><div class="radekzaklinadla"><span class="volznak">[</span>--vol []<span class="volznak">]</span></div></td><td>Nepovinné a doplňkové části zaklínadla jsou uzavřeny do vysokých šedých hranatých závorek,
+jasně odlišitelných od obyčejných hranatých závorek.</td></tr>
+<tr><td><div class="radekzaklinadla"><span class="dopln">další-soubor</span><span class="tritecky">...</span></div></td><td>Části zaklínadla, které je možno
+uvést víckrát, jsou vyznačeny šedou trojtečkou.</td></tr>
+<tr><td><div class="radekzaklinadla">@&blank;&quot;</div></td><td>Ke zdůraznění místa, kam je nutno zapsat právě jednu obyčejnou mezeru, se v zaklínadlech používá symbol &blank;.</td></tr>
+<tr><td><div class="radekzaklinadla">@<span class="tab" style="width:7ch">&#9;</span>&quot;</td><td>Znakem » se značí, že do souboru musíte zapsat tabulátor (ne mezery).</td></tr>
+<tr><td><div class="radekzaklinadla akce">Klikněte.</div></td><td>Je-li nutno místo napsání něčeho něco vykonat, je to vyznačeno takto.</td></tr>
+<tr><td><div class="radekzaklinadla">?</div></td><td>Samostatný otazník značí, že řešení dané úlohy není dosud známo. Hojně se vyskytuje v rozpracovaných kapitolách.<td></tr>
+</tbody></table>
+
 {{ZAČÁTEK KAPITOLY}}
 <!doctype html>
 <html lang="cs">

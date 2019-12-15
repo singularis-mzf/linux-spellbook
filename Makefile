@@ -238,7 +238,7 @@ $(SOUBORY_PREKLADU)/pdf-a5/kniha.tex: $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/p
 # skript "prelozit_vystup_latexu.awk" je zde volán jen pro zpřehlednění výstupu; je možno ho bezpečně vynechat
 $(VYSTUP_PREKLADU)/pdf-a5/kniha.pdf: $(SOUBORY_PREKLADU)/pdf-a5/kniha.tex $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%) $(SVG_OBRAZKY:%.svg=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%.pdf)
 	mkdir -pv $(dir $@)
-	-ln -rs skripty $(dir $<)skripty 2>/dev/null
+	ln -rsTv skripty $(dir $<)skripty 2>/dev/null || true
 	cd $(dir $<); exec $(AWK) -f skripty/latex.awk
 	cat $(<:%.tex=%.pdf) > $@
 
@@ -258,10 +258,9 @@ $(SOUBORY_PREKLADU)/pdf-a4/kniha.tex: $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/p
 
 # 6. soubory_prekladu/pdf-a4/kniha.tex => vystup_prekladu/pdf-a4/kniha.pdf
 # ============================================================================
-# skript "prelozit_vystup_latexu.awk" je zde volán jen pro zpřehlednění výstupu; je možno ho bezpečně vynechat
 $(VYSTUP_PREKLADU)/pdf-a4/kniha.pdf: $(SOUBORY_PREKLADU)/pdf-a4/kniha.tex $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%) $(SVG_OBRAZKY:%.svg=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%.pdf)
 	mkdir -pv $(dir $@)
-	-ln -rs skripty $(dir $<)skripty 2>/dev/null
+	ln -rsTv skripty $(dir $<)skripty 2>/dev/null || true
 	cd $(dir $<); exec $(AWK) -f skripty/latex.awk
 	cat $(<:%.tex=%.pdf) > $@
 
@@ -280,10 +279,9 @@ $(SOUBORY_PREKLADU)/pdf-b5/kniha.tex: $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/p
 
 # 6. soubory_prekladu/pdf-b5/kniha.tex => vystup_prekladu/pdf-b5/kniha.pdf
 # ============================================================================
-# skript "prelozit_vystup_latexu.awk" je zde volán jen pro zpřehlednění výstupu; je možno ho bezpečně vynechat
 $(VYSTUP_PREKLADU)/pdf-b5/kniha.pdf: $(SOUBORY_PREKLADU)/pdf-b5/kniha.tex $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%) $(SVG_OBRAZKY:%.svg=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%.pdf)
 	mkdir -pv $(dir $@)
-	-ln -rs skripty $(dir $<)skripty 2>/dev/null
+	ln -rsTv skripty $(dir $<)skripty 2>/dev/null || true
 	cd $(dir $<); exec $(AWK) -f skripty/latex.awk
 	cat $(<:%.tex=%.pdf) > $@
 
