@@ -31,6 +31,37 @@ function NactiBarvu(cislo,   prikaz, vysledek) {
     return close(prikaz) == 0 ? vysledek : "";
 }
 
+function ZiskejHashTocSouboru(  prikaz, vysledek) {
+    prikaz = "md5sum kniha.toc 2>/dev/null";
+    vysledek = "";
+    while (prikaz | getline vysledek) {}
+    sub(/ .*/, "", vysledek);
+    return close(prikaz) == 0 ? vysledek : "(not found)";
+}
+
+function ZaradZpravu(hlavicka, text,   i) {
+    i = 1 + length(hlavickyZprav);
+    hlavickyZprav[i] = hlavicka;
+    textyZprav[i] = text;
+    return i;
+}
+
+function VypisZpravy(barva, jejiReset,   nejvetsiDelkaHlavicky, hranice, i) {
+    nejvetsiDelkaHlavicky = 0;
+    for (i in hlavickyZprav) {
+        nejvetsiDelkaHlavicky = max(nejvetsiDelkaHlavicky, length(hlavickyZprav[i]));
+    }
+    hranice = Zopakovat("#", 2 + nejvetsiDelkaHlavicky);
+    print barva, hranice;
+    for (i = 1; i <= length(hlavickyZprav); ++i) {
+        print barva, "# ", hlavickyZprav[i], jejiReset, textyZprav[i] != "" ? (": " textyZprav[i]) : "";
+    }
+    print barva, hranice, jejiReset;
+    delete hlavickyZprav;
+    delete textyZprav;
+    return i;
+}
+
 BEGIN {
     # Globální nastavení
     FS = "\t";
@@ -51,21 +82,29 @@ BEGIN {
 
     # Inicializovat globální proměnné
     delete fronta;
-    prikaz = "pdflatex -halt-on-error -no-shell-escape kniha | tr '\\200-\\376\\377' '?'";
+    delete hlavickyZprav;
+    delete textyZprav;
+#    prikaz = "pdflatex -halt-on-error -no-shell-escape kniha | tr '\\200-\\376\\377' '?'";
+    prikaz = "xelatex -halt-on-error -file-line-error -interaction=errorstopmode -no-shell-escape kniha.tex";
     beh = 0;
+    puvodni_toc_hash = ZiskejHashTocSouboru();
 
     do {
         # Inicializovat lokální proměnné
         pamet = ""; # pokud se zdá, že řádek ještě neskončil, uloží se sem
         znovu = 0;  # pokud je třeba spustit LaTeX znovu, nastaví se tento příznak.
         po_varovani = 0;
-        zprava = "Spouštím LaTeX (" (++beh) ". běh):";
-        hranice = Zopakovat("#", length(zprava) + 2);
+#        zprava = "Spouštím LaTeX (" (++beh) ". běh)(heš toc souboru: " puvodni_toc_hash "):";
+#        hranice = Zopakovat("#", length(zprava) + 2);
         delete dulezite_radky;
         po_full_hboxu = 0;
 
+        ZaradZpravu("Spouštím LaTeX", "(" (++beh) ". běh)");
+        ZaradZpravu("Heš toc souboru", puvodni_toc_hash);
+        ZaradZpravu("Příkaz", prikaz);
+        VypisZpravy(zelena, resetbarvy);
+
         # Spustit LaTeX a zpracovat výstup
-        print "\n\n", zelena, hranice, "\n# ", zprava, resetbarvy, " ", prikaz, "\n", zelena, hranice, resetbarvy;
         while (prikaz | getline) {
             if (length($0) == 79) {
                 pamet = pamet $0;
@@ -97,9 +136,13 @@ BEGIN {
                 po_varovani = 0;
             }
 
-            if ($0 == "LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.") {
-                znovu = 1;
-            }
+#            if (match($0, /^Document Class: [a-zA-Z0-9]+/)) {
+#                $0 = "Document Class: " zluta substr($0, 16, RLENGTH - 16) resetbarvy substr($0, RLENGTH);
+#            }
+
+#            if ($0 == "LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.") {
+#                znovu = 1;
+#            }
         }
         if (pamet != "") {
             print pamet;
@@ -113,6 +156,10 @@ BEGIN {
             FATALNI_VYJIMKA = vysledek;
             exit;
         }
+
+        nova_toc_hash = ZiskejHashTocSouboru();
+        znovu = nova_toc_hash != puvodni_toc_hash;
+        puvodni_toc_hash = nova_toc_hash;
     } while (znovu);
 
     if (length(dulezite_radky) != 0) {

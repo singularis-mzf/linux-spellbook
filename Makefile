@@ -29,15 +29,15 @@ CONVERT := convert
 VSECHNY_DODATKY := predmluva koncepce-projektu plan-vyvoje test licence
 
 # _ A, B, C, D, E, F, G
-VSECHNY_KAPITOLY := _ostatni _ukazka awk barvy-a-titulek datum-cas-kalendar docker firefox git
+VSECHNY_KAPITOLY := _ostatni _ukazka awk barvy-a-titulek datum-cas-kalendar diskove-oddily docker firefox git
 # H, I, J, K, L, M
 VSECHNY_KAPITOLY += hledani-souboru konverze-formatu latex make markdown
 # N, O, P, Q, R, S
-VSECHNY_KAPITOLY += odkazy planovani-uloh prace-s-archivy regularni-vyrazy
+VSECHNY_KAPITOLY += odkazy perl planovani-uloh prace-s-archivy regularni-vyrazy
 # S
 VSECHNY_KAPITOLY += sprava-balicku sprava-uzivatelu stahovani-videi
 # T, U, V, W, X, Y, Z
-VSECHNY_KAPITOLY += x zpracovani-obrazku zpracovani-textovych-souboru zpracovani-videa-a-zvuku
+VSECHNY_KAPITOLY += unicode x zpracovani-obrazku zpracovani-textovych-souboru zpracovani-videa-a-zvuku
 
 OBRAZKY := favicon.png by-sa.png logo-knihy-velke.png make.png barvy.png ve-vystavbe.png marsh.jpg banner.png
 
@@ -191,7 +191,9 @@ $(VYSTUP_PREKLADU)/log/index.log: $(addsuffix .kap,$(addprefix $(SOUBORY_PREKLAD
 
 # 1A. kapitoly/{kapitola}.md => soubory_prekladu/pdf-spolecne/{kapitola}
 # ============================================================================
-$(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%): $(SOUBORY_PREKLADU)/pdf-spolecne/%: kapitoly/%.md $(SOUBORY_PREKLADU)/osnova/%.tsv skripty/do_latexu.awk skripty/hlavni.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
+$(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%): \
+  $(SOUBORY_PREKLADU)/pdf-spolecne/%: \
+  kapitoly/%.md $(SOUBORY_PREKLADU)/osnova/%.tsv skripty/do_latexu.awk skripty/hlavni.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(dir $@)
 	$(AWK) -f skripty/do_latexu.awk $< > $@
 
@@ -203,7 +205,9 @@ $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%): $(SOUBORY_PREKLADU)/pdf
 
 # 2. soubory_prekladu/pdf-spolecne/{id} => soubory_prekladu/pdf-spolecne/{id}.kap
 # ============================================================================
-$(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap) $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap): %.kap: % skripty/kapitola.awk $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/pdf/sablona.tex
+$(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap) $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap): \
+  %.kap: \
+  % skripty/kapitola.awk $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/pdf/sablona.tex
 	$(AWK) -f skripty/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=$(basename $(notdir $@)) -v TELOKAPITOLY=$< formaty/pdf/sablona.tex > $@
 
 # 3. obrazky/{obrazek} => soubory_prekladu/pdf-spolecne/_obrazky/{obrazek}
@@ -246,7 +250,9 @@ $(VYSTUP_PREKLADU)/pdf-a5/kniha.pdf: $(SOUBORY_PREKLADU)/pdf-a5/kniha.tex $(OBRA
 
 # 4. soubory_prekladu/pdf-spolecne/{id}.kap => soubory_prekladu/pdf-a4/{id}.kap
 # ============================================================================
-$(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-a4/%.kap) $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-a4/%.kap): $(SOUBORY_PREKLADU)/pdf-a4/%.kap: $(SOUBORY_PREKLADU)/pdf-spolecne/%.kap $(SOUBORY_PREKLADU)/postprocess.tsv skripty/postprocess.awk
+$(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-a4/%.kap) $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-a4/%.kap): \
+  $(SOUBORY_PREKLADU)/pdf-a4/%.kap: \
+  $(SOUBORY_PREKLADU)/pdf-spolecne/%.kap $(SOUBORY_PREKLADU)/postprocess.tsv skripty/postprocess.awk
 	mkdir -pv $(dir $@)
 	touch $(SOUBORY_PREKLADU)/postprocess.log
 	$(AWK) -v IDFORMATU=pdf-a4 -v IDKAPITOLY=$(<:$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap=%) -v LOGSOUBOR=$(SOUBORY_PREKLADU)/postprocess.log -f skripty/postprocess.awk $< >$@

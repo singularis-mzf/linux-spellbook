@@ -25,11 +25,12 @@
 {{ZAČÁTEK KNIHY}}
 \documentclass[10pt,final]{book}
 % 1. skupina balíčků:
-\usepackage[utf8]{inputenc}
 \usepackage[czech]{babel}
+\usepackage[IL2,TU]{fontenc}
+\usepackage{fontspec}
 %
 {{POKUD JE FORMÁT pdf-a4}}
-\usepackage[pdftex,a4paper,inner=2.5cm,outer=2cm,top=1.5cm,bottom=2cm]{geometry} % + showframe pro ladění
+\usepackage[xetex,a4paper,inner=2.5cm,outer=2cm,top=1.5cm,bottom=2cm]{geometry} % + showframe pro ladění
 \newcommand{\inicializovatnastaveni}{%
     \newlength{\sirkakodu}\setlength{\sirkakodu}{0.9\textwidth} % šířka kódu v příkladech
     \setlength{\columnsep}{16pt}%
@@ -45,7 +46,7 @@
 {{KONEC POKUD}}
 %
 {{POKUD JE FORMÁT pdf-b5}}
-\usepackage[pdftex,b5paper,inner=2cm,outer=1.5cm,top=1.5cm,bottom=2cm]{geometry} % + showframe pro ladění
+\usepackage[xetex,b5paper,inner=2cm,outer=1.5cm,top=1.5cm,bottom=2cm]{geometry} % + showframe pro ladění
 \newcommand{\inicializovatnastaveni}{%
     \newlength{\sirkakodu}\setlength{\sirkakodu}{0.95\textwidth}
     \newenvironment{odstavce}{\begin{adjustwidth}{}{}}{\end{adjustwidth}}
@@ -58,7 +59,7 @@
 {{KONEC POKUD}}
 %
 {{POKUD JE FORMÁT pdf-a5}}
-\usepackage[pdftex,a5paper,inner=1.5cm,outer=1cm,top=1.5cm,bottom=1.5cm]{geometry} % + showframe pro ladění
+\usepackage[xetex,a5paper,inner=1.5cm,outer=1cm,top=1.5cm,bottom=1.5cm]{geometry} % + showframe pro ladění
 \newcommand{\inicializovatnastaveni}{%
     \newlength{\sirkakodu}\setlength{\sirkakodu}{0.98\textwidth}
     \newenvironment{odstavce}{\begin{adjustwidth}{}{}}{\end{adjustwidth}}
@@ -70,24 +71,23 @@
 }%
 {{KONEC POKUD}}
 %
-%\usepackage[B1,LY1,T1]{fontenc}
-%\usepackage[T1]{fontenc}
-\usepackage[IL2,T1]{fontenc}
 
 % 2. skupina balíčků:
 \usepackage{mathabx}        % symboly (zejména \dlsh)
 \usepackage{textcomp}       % musí být načtený přednostně; vyžadovaný balíčkem {gensymb}
-\usepackage[pdftex]{xcolor} % barevné písmo
+\usepackage[xetex]{xcolor}  % barevné písmo
 
 % 3. skupina balíčků:
-\let\degree=\undefined      % nouzové řešení konfliktu (použít \degree z {gensymb}, ne z {mathabx})
+%\let\degree=\undefined      % nouzové řešení konfliktu (použít \degree z {gensymb}, ne z {mathabx})
+\renewcommand*{\degree}{°}%
 \usepackage{changepage}     % prostředí {adjustwidth}
 \usepackage{dashbox}        % příkazy \dbox{} a \dashbox{}
 \usepackage{fancyhdr}       % formátování záhlaví a zápatí
 \usepackage[bottom]{footmisc}% aby se poznámky pod čarou správně umístily
-\usepackage{gensymb}        % symboly jako např. \degree
-\usepackage[pdftex]{graphicx}% vkládání obrázků
-\usepackage{ifthen}         % příkaz \ifthenelse a související konstrukce
+%\usepackage{gensymb}        % symboly jako např. \degree
+% Poznámka − balíček {gensymb} nefunguje správně v XeLaTeXu; odvolává se na kódování fontů TS1
+\usepackage[xetex]{graphicx}% vkládání obrázků
+\usepackage{ifthen}         % příkaz \ifthenelse a související konstrukce [ ] nahradit modernější alternativou
 \usepackage{multicol}       % prostředí {multicols} a {multicols*}
 \usepackage{tabu}           % lepší tabulky (prostředí {tabu})
 \usepackage{tcolorbox}      % boxy s pozadím, kulatými okraji a podobně
@@ -110,6 +110,19 @@
     \renewcommand*{\headrulewidth}{0pt}%
     \renewcommand*{\footrulewidth}{0pt}%
 }
+
+% {fontspec}:
+%\renewcommand*{\rmdefault}{cmr}
+%\renewcommand*{\sfdefault}{cmss}
+%\renewcommand*{\ttdefault}{qcr}
+\setmainfont{TeX Gyre Schola}\relax%
+\setsansfont{TeX Gyre Heros}\relax%
+\setmonofont{TeX Gyre Cursor}\relax%
+
+\newfontfamily{\doplnfamily}[Scale=MatchLowercase]{Latin Modern Mono Slanted} % ?
+\newfontfamily{\urlfamily}[Scale=MatchLowercase]{Latin Modern Mono Light Cond}
+\newfontfamily{\zaklinadlofamily}[Scale=MatchLowercase]{Latin Modern Mono Light}
+
 
 % {titlesec}:
 \titleclass{\chapter}{top}\relax%
@@ -191,10 +204,10 @@
         \renewcommand{\nepoprve}[1]{####1}%
     }%
 }
-\newcommand*{\dopln}[1]{{\fontfamily{qcr}\fontseries{m}\fontshape{it}\selectfont\underline{{#1}}}}%
-\newcommand*{\moznyzlom}{{\fontseries{m}\fontshape{n}\selectfont\textcolor{seda}{\-}}}%
+\newcommand*{\dopln}[1]{{\doplnfamily\mdseries\itshape\underline{{#1}}}}%
+\newcommand*{\moznyzlom}{{\mdseries\upshape\textcolor{seda}{\-}}}%
 \newcommand{\nepoprve}[1]{#1}
-\newcommand*{\tritecky}{{\fontfamily{cmss}\fontseries{m}\fontshape{n}\selectfont\normalsize\mbox{...}}}%
+\newcommand*{\tritecky}{{\sffamily\mdseries\upshape\normalsize\mbox{...}}}%
 % {} \big \Big \bigg \Bigg
 \newcommand*{\volitelnyzacatek}{\textcolor{seda}{\ensuremath{\big[}}}%
 \newcommand*{\volitelnykonec}{\textcolor{seda}{\ensuremath{\big]}}}%
@@ -241,14 +254,14 @@
     \newcommand*{\radekzaklinadla}[1]{%
         % Ukončit předchozí řádek:
         \nepoprve{{%
-            \fontencoding{IL2}\fontfamily{bsk}\fontseries{m}\fontshape{n}\selectfont%
-            \textcolor{seda}{$\carriagereturn$}\\\relax%
+            \fontencoding{IL2}\fontfamily{bsk}\fontseries{m}\fontshape{n}\selectfont\color{seda}\ensuremath{\carriagereturn}%
+            \\\relax%
         }}%
         % Vypsat samotný řádek zaklínadla (nutný „strut“ kvůli výšce řádku a orámování):
         {\rule{0pt}{1.5ex}##1}%
     }%
     % Definovat \akcezaklinadla{text}
-    \newcommand*{\akcezaklinadla}[1]{\radekzaklinadla{\ensuremath{\Rightarrow}~\rmfamily{}##1}}%
+    \newcommand*{\akcezaklinadla}[1]{\radekzaklinadla{\ensuremath{\Rightarrow}~\rmfamily\itshape{}##1}}%
     \setlength{\sirkazbytku}{\textwidth}%
     \addtolength{\sirkazbytku}{-\sirkacislazaklinadla}%
     \noindent%
@@ -266,16 +279,15 @@
         }\raggedleft%
         \color{seda}%
         \dashbox{\color{black}\parbox{\sirkakodu}{\raggedright%
-            \fontfamily{qcr}\fontseries{m}\fontshape{n}\selectfont\budepoprve%
+            \zaklinadlofamily\mdseries\upshape\budepoprve%
             #5%
         }}%
     }#4\par\vspace{2ex plus0.5ex minus0.25ex}%
 }}
-% qcr = TeX Gyre Cursor
 
-\renewcommand*{\rmdefault}{cmr}
-\renewcommand*{\sfdefault}{cmss}
-\renewcommand*{\ttdefault}{qcr}
+%\renewcommand*{\rmdefault}{cmr}
+%\renewcommand*{\sfdefault}{cmss}
+%\renewcommand*{\ttdefault}{qcr}
 
 \begin{document}%
 %
@@ -283,7 +295,7 @@
 %
 \pagestyle{empty}%
 \vspace*{0.05\textheight}%
-\begin{center}\fontfamily{cmss}\selectfont\bfseries\Huge\scalebox{1.5}{LINUX}\\[0.01\textheight]\Large Kniha kouzel\end{center}%
+\begin{center}\sffamily\bfseries\Huge\scalebox{1.5}{LINUX}\\[0.01\textheight]\Large Kniha kouzel\end{center}%
 \vspace{-2cm}\vfill%
 \begin{blok}%
     \setlength{\unitlength}{0.5\textwidth}%
@@ -313,7 +325,7 @@ verze: {{JMÉNO VERZE}}%
 Toto dílo \quotedblbase Linux: Kniha kouzel\textquotedblleft{} podléhá licenci
 Creative Commons Attribution-ShareAlike 4.0 International. Úplný text licence
 je přiložen. Pro jeho zobrazení na počítači navštivte:
-\begin{center}\ttfamily%
+\begin{center}\urlfamily%
 http://creativecommons.org/licenses/by-sa/4.0/
 \end{center}
 
@@ -347,34 +359,34 @@ http://creativecommons.org/licenses/by-sa/4.0/
 %\chapter*{\begin{center}Typografické konvence\end{center}}%
 \setlength{\abovetabulinesep}{1ex}\setlength{\belowtabulinesep}{\abovetabulinesep}%
 \begin{tabu}{|X[-1,l]|X[2,l]|}%
-{\ttfamily sudo apt-get update}&%
+{\zaklinadlofamily sudo apt-get update}&%
     Texty tištěné normálním neproporcionálním písmem máte přepsat
     přesně tak, jak jsou napsány.\\%
-{\ttfamily\itshape\underline{jméno-souboru}}&%
+{\doplnfamily\itshape\underline{jméno-souboru}}&%
     Za skloněné podtržené části zaklínadla máte doplnit konkrétní hodnoty.\\%
-{\textcolor{seda}{\ensuremath{\dlsh}}}&%
+{\color{seda}\ensuremath{\dlsh}}&%
     Dělí-li se zaklínadlo na víc řádků či variant,
     je každá z nich ukončena šedým symbolem odřádkování; není-li na konci řádku tento symbol,
     jde jen o zalomení řádku v knize.\\%
-{\ttfamily ABC=\,\textcolor{seda}{{\fontfamily{qcr}\fontseries{m}\fontshape{n}\selectfont\char`\\}}}&%
+{\zaklinadlofamily ABC=\,{\fontfamily{qcr}\fontseries{m}\fontshape{n}\selectfont\color{seda}\char`\\}}&%
     Ve výjimečných případech, kdy bylo nutno řádek zalomit v místě,
     kam napatří žádné bílé znaky, je tato skutečnost vyznačena nepatrným šedým zpětným lomítkem.
     Takové zalomení zcela ignorujte, nevkládejte ani mezeru.\\%
-\textcolor{seda}{$\big[$}{\ttfamily{-}{-}volitelny []}\textcolor{seda}{$\big]$}&%
+{\zaklinadlofamily{\color{seda}$\big[$}{-}{-}volitelny []\color{seda}$\big]$}&%
     Nepovinné a doplňkové části zaklínadla jsou uzavřeny do vysokých šedých
     hranatých závorek, jasně odlišitelných od obyčejných hranatých závorek.\\%
-{\ttfamily\itshape\underline{další-soubor}}\textcolor{seda}{...}&%
+{\zaklinadlofamily{\itshape\underline{další-soubor}}\color{seda}...}&%
     Části zaklínadla, které je možno uvést vícekrát, jsou vyznačeny šedou trojtečkou.\\%
-{\ttfamily{}@\textvisiblespace\textquotedbl}&%
+{\zaklinadlofamily{}@\textvisiblespace\textquotedbl}&%
     Ke zdůraznění místa, kam je nutno zapsat právě jednu obyčejnou mezeru, se v zaklínadlech
-    používá symbol {\ttfamily\textvisiblespace}.\\%
+    používá symbol {\zaklinadlofamily\textvisiblespace}.\\%
 $\Rightarrow$ Klikněte.&%
     Ve výjimečných případech, kdy je místo napsání něčeho potřeba něco vykonat,
     je tato instrukce vyjádřena šipkou a textem v obyčejném písmu.\\%
-\textcolor{seda}{\guillemotright}&%
+{\color{seda}\guillemotright}&%
     Tímto šedým symbolem se vyznačuje, že na dané místo musíte zapsat tabulátor
     (mezery nestačí).\\%
-{\ttfamily\bfseries\textcolor{seda}?}&%
+{\zaklinadlofamily\bfseries\color{seda}?}&%
     Není-li řešení dané úlohy autorovi při psaní známo, uvede místo řádku zaklínadla
     pouhý otazník. To je podnět k tomu, aby bylo řešení nalezeno a doplněno.
     Hojně se vyskytuje v rozpracovaných kapitolách, ale u náročných úloh na něj
@@ -383,15 +395,7 @@ $\Rightarrow$ Klikněte.&%
 \end{center}\par\vfill\mbox{}%
 %
 % Nastavit znak pro „dělení slov“ v kódu na zpětné lomítko
-{%
-    \fontfamily{qcr}%
-    \fontseries{m}\selectfont\hyphenchar\font=`\\%
-    \fontseries{b}\selectfont\hyphenchar\font=`\\%
-    \fontseries{bx}\selectfont\hyphenchar\font=`\\%
-    \fontshape{it}\fontseries{m}\selectfont\hyphenchar\font=`\\%
-    \fontseries{b}\selectfont\hyphenchar\font=`\\%
-    \fontseries{bx}\selectfont\hyphenchar\font=`\\%
-}%
+{\zaklinadlofamily\mdseries\upshape\hyphenchar\font=`\\}%
 %
 \clearpage%
 \raggedbottom%

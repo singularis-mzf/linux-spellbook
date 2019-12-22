@@ -44,7 +44,7 @@ Jedna z prvních věcí, která mě po otevření linuxového terminálu naštv
 
 ## Definice
 * **Výzva terminálu** (zkráceně „výzva“) je řetězec, který interpret příkazového řádku vypisuje před, během nebo po přijetí příkazu od uživatele (tzn. v interaktivním režimu). V interpretu „bash“ se rozeznávají tři druhy výzvy a jejich šablony jsou uloženy v proměnných PS0, PS1 a PS2: **hlavní výzva** (PS1) značí, že bash očekává příkaz, **vedlejší výzva** (PS2) značí, že bash očekává pokračování příkazu na dalším řádku, **potvrzující výzva** (PS0) se vypisuje po přijetí příkazu a před zahájením jeho vykonávání.
-* **Escape sekvence** je posloupnost bajtů, na kterou terminál zareaguje změnou nastavení (např. barvy písma) či nějakou akci. Escape sekvence začínají netisknutelným znakem „escape“ (ASCII kód 0x1b). V minulosti se zapisovaly ručně a děsily nezkušené uživatele; dnes je však můžeme pohodlně generovat moderním příkazem „tput“, který současně redukuje problémy s kompatibilitou jednotlivých typů terminálů.
+* **Escape sekvence** je posloupnost bajtů, na kterou terminál zareaguje změnou nastavení (např. barvy písma) či nějakou akcí. Escape sekvence začínají netisknutelným znakem „escape“ (ASCII kód 0x1b). V minulosti se zapisovaly ručně a děsily nezkušené uživatele; dnes je však můžeme pohodlně generovat moderním příkazem „tput“, který současně redukuje problémy s kompatibilitou jednotlivých typů terminálů.
 * **Paleta** je v této kapitole pole barev, které daný terminál podporuje, *indexované od nuly*. Typicky se vyskytují pouze dvě palety: s 8 barvami a s 256 barvami, ačkoliv realizace konkrétních barev v těchto paletách se mohou v jednotlivých terminálech mírně lišit.
 
 ## Zaklínadla
