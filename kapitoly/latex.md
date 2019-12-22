@@ -36,6 +36,34 @@ https://creativecommons.org/licenses/by-sa/4.0/
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+*# formát papíru A4 (alternativy)*<br>
+**\\usepackage[**[**showframe,**]**a4paper,inner=top=**{*horní-okraj*}**,bottom=**{*spodní-okraj*}**,inner=**{*vnitřní-okraj*}**,outer=**{*vnější-okraj*}**]{geometry}**
+
+*# deklarovat rodinu písma*<br>
+<!--
+\\usepackage{fontspec}
+-->
+**\\newfontfamily\{**{*\\novýpříkaz*}**\}**[**[**{*vlastnosti,písma*}**]**]**\{**{*Název písma*}**\}**
+
+*# nastavit výchozí písma dokumentu (\\rmfamily, \\sffamily, \\ttfamily)*<br>
+**\\setmainfont\{**{*Název písma*}**\}**[**[**{*vlastnosti,písma*}**]**]<br>
+**\\setsansfont\{**{*Název písma*}**\}**[**[**{*vlastnosti,písma*}**]**]<br>
+**\\setmonofont\{**{*Název písma*}**\}**[**[**{*vlastnosti,písma*}**]**]<br>
+
+*# jednorázově přepnout na nedeklarované písmo*<br>
+**\\fontspec\{**{*Název písma*}**\}**[**[**{*vlastnosti,písma*}**]**]
+
+*# je písmo dostupné?*<br>
+**\\IfFontExistsTF\{**{*Název písma*}**\}\{**{*kód, pokud je*}**\}\{**{*kód, pokud není*}**\}**
+<!--
+[ ] Vyzkoušet!
+-->
+
+<!--
+Nejčastější vlastnosti písma:
+- Scale=MatchLowercase
+-->
+
 ## Parametry příkazů
 <!--
 - Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.

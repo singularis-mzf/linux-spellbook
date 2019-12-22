@@ -26,22 +26,21 @@
 \documentclass[10pt,final]{book}
 % 1. skupina balíčků:
 \usepackage[czech]{babel}
-\usepackage[IL2,TU]{fontenc}
-\usepackage{fontspec}
 %
 {{POKUD JE FORMÁT pdf-a4}}
-\usepackage[xetex,a4paper,inner=2.5cm,outer=2cm,top=1.5cm,bottom=2cm]{geometry} % + showframe pro ladění
-\newcommand{\inicializovatnastaveni}{%
-    \newlength{\sirkakodu}\setlength{\sirkakodu}{0.9\textwidth} % šířka kódu v příkladech
-    \setlength{\columnsep}{16pt}%
-    \setlength{\columnseprule}{1pt}% pro balík {multicols}
-    \renewcommand*{\columnseprulecolor}{\color{sedamezisloupci}}%
+\usepackage[xetex,a4paper,inner=2.5cm,outer=2cm,top=1.5cm,bottom=2cm]{geometry}
+\newcommand*{\inicializovatnastaveni}{%
+    \newlength{\sirkakodu}\setlength{\sirkakodu}{0.9\textwidth} % šířka kódu v příkladech (obvykle odvozena od šířky textu „\textwidth“)
     \newenvironment{odstavce}{\begin{adjustwidth}{}{}\nastavitradkovaniodstavcu{}}{\end{adjustwidth}}
     \newenvironment{obsahdosloupcu}{\begin{multicols*}{2}}{\end{multicols*}}
     \newcommand*{\zapnoutrezimlicence}{\begin{multicols*}{2}\tiny\renewenvironment*{odstavce}{\begin{adjustwidth}{}{}}{\end{adjustwidth}}}
     \newcommand*{\vypnoutrezimlicence}{\end{multicols*}}
     \newcommand*{\nadpisobsahu}{\mbox{PŘEHLED (OBSAH)}}%
     \newcommand*{\nastavitradkovaniodstavcu}{\renewcommand*{\baselinestretch}{1.2}\selectfont}
+    % nastavení pro balík {multicols}:
+    \setlength{\columnsep}{16pt}
+    \setlength{\columnseprule}{1pt}
+    \renewcommand*{\columnseprulecolor}{\color{sedamezisloupci}}
 }%
 {{KONEC POKUD}}
 %
@@ -73,19 +72,15 @@
 %
 
 % 2. skupina balíčků:
-\usepackage{mathabx}        % symboly (zejména \dlsh)
 \usepackage{textcomp}       % musí být načtený přednostně; vyžadovaný balíčkem {gensymb}
 \usepackage[xetex]{xcolor}  % barevné písmo
 
 % 3. skupina balíčků:
-%\let\degree=\undefined      % nouzové řešení konfliktu (použít \degree z {gensymb}, ne z {mathabx})
-\renewcommand*{\degree}{°}%
 \usepackage{changepage}     % prostředí {adjustwidth}
 \usepackage{dashbox}        % příkazy \dbox{} a \dashbox{}
 \usepackage{fancyhdr}       % formátování záhlaví a zápatí
+\usepackage{fontspec}       % {fontspec} musí být načten až po balíčcích s matematickými symboly!
 \usepackage[bottom]{footmisc}% aby se poznámky pod čarou správně umístily
-%\usepackage{gensymb}        % symboly jako např. \degree
-% Poznámka − balíček {gensymb} nefunguje správně v XeLaTeXu; odvolává se na kódování fontů TS1
 \usepackage[xetex]{graphicx}% vkládání obrázků
 \usepackage{ifthen}         % příkaz \ifthenelse a související konstrukce [ ] nahradit modernější alternativou
 \usepackage{multicol}       % prostředí {multicols} a {multicols*}
@@ -99,76 +94,81 @@
 % NASTAVENÍ BALÍČKŮ
 % ============================================================================
 % {dashbox}:
-\setlength{\fboxrule}{0.25pt}   % tloušťka čáry
-\setlength{\dashdash}{1pt}      % délka čárky
-\setlength{\dashlength}{3pt}    % vzdálenost od začátku čárky k začátku další
+    \setlength{\fboxrule}{0.25pt}   % tloušťka čáry
+    \setlength{\dashdash}{1pt}      % délka čárky
+    \setlength{\dashlength}{3pt}    % vzdálenost od začátku čárky k začátku další
 
 % {fancyhdr}:
-\fancypagestyle{normalni}{%
-    \fancyhead{}\fancyfoot{}%
-    \fancyfoot[LE,RO]{\thepage}%
-    \renewcommand*{\headrulewidth}{0pt}%
-    \renewcommand*{\footrulewidth}{0pt}%
-}
+    \fancypagestyle{normalni}{%
+        \fancyhead{}\fancyfoot{}%
+        \fancyfoot[LE,RO]{\thepage}%
+        \renewcommand*{\headrulewidth}{0pt}%
+        \renewcommand*{\footrulewidth}{0pt}%
+    }
 
 % {fontspec}:
-%\renewcommand*{\rmdefault}{cmr}
-%\renewcommand*{\sfdefault}{cmss}
-%\renewcommand*{\ttdefault}{qcr}
-\setmainfont{TeX Gyre Schola}\relax%
-\setsansfont{TeX Gyre Heros}\relax%
-\setmonofont{TeX Gyre Cursor}\relax%
+    \setmainfont{TeX Gyre Schola}\relax%
+    \setsansfont{TeX Gyre Heros}\relax%
+    \setmonofont{TeX Gyre Cursor}\relax%
 
-\newfontfamily{\doplnfamily}[Scale=MatchLowercase]{Latin Modern Mono Slanted} % ?
-\newfontfamily{\urlfamily}[Scale=MatchLowercase]{Latin Modern Mono Light Cond}
-\newfontfamily{\zaklinadlofamily}[Scale=MatchLowercase]{Latin Modern Mono Light}
+    \newfontfamily{\doplnfamily}[Scale=MatchLowercase]{Latin Modern Mono Slanted} % ?
+    \newfontfamily{\urlfamily}[Scale=MatchLowercase]{Latin Modern Mono Light Cond}
+    \newfontfamily{\zaklinadlofamily}[Scale=MatchLowercase,HyphenChar=92]{Latin Modern Mono Light}
 
+    \newfontfamily{\enterfamily}{DejaVu Sans Mono} % speciálně kvůli symbolu šipky č. 8626
+    \newfontfamily{\lmmathfamily}{Latin Modern Math} % matematické symboly
 
 % {titlesec}:
-\titleclass{\chapter}{top}\relax%
-\newcommand{\chapterbreak}{\clearpage}% začínat kapitolu na nové straně
-\titleformat{\chapter}[hang]{\normalfont\LARGE\bfseries}{\settowidthwithminimum{\sirkastitkutmp}{\mbox{\thechapter}}{20pt}\makebox[\sirkastitkutmp][l]{\thechapter}}{0.33em}{}\relax
-\titlespacing*{\chapter}{0pt}{-1ex}{2ex plus2ex minus0.5ex}\relax
+    \titleclass{\chapter}{top}\relax%
+    \newcommand{\chapterbreak}{\clearpage}% začínat kapitolu na nové straně
+    \titleformat{\chapter}[hang]{\normalfont\LARGE\bfseries}%
+        {\settowidthwithminimum{\sirkastitkutmp}{\mbox{\thechapter}}{20pt}\makebox[\sirkastitkutmp][l]{\thechapter}}%
+        {0.33em}{}\relax
+    \titlespacing*{\chapter}{0pt}{-1ex}{2ex plus2ex minus0.5ex}\relax
 
-\titleformat{\section}[hang]{\normalfont\Large\bfseries}{\settowidthwithminimum{\sirkastitkutmp}{\mbox{\thesection}}{20pt}\makebox[\sirkastitkutmp][l]{\thesection}}{0.33em}{}\relax
-\titlespacing*{\section}{0pt}{2ex plus0.5ex minus0ex}{1ex}\relax
+    \titleformat{\section}[hang]{\normalfont\Large\bfseries}%
+        {\settowidthwithminimum{\sirkastitkutmp}{\mbox{\thesection}}{20pt}\makebox[\sirkastitkutmp][l]{\thesection}}%
+        {0.33em}{}\relax
+    \titlespacing*{\section}{0pt}{2ex plus0.5ex minus0ex}{1ex}\relax
 
-\titleformat{\subsection}[hang]{\normalfont\large\bfseries}{}{0pt}{%
-%    \filcenter%
-    \begin{blok}%
-        \setlength{\unitlength}{1em}%
-        \begin{picture}(1.7,1)(0,0.16)\relax%
-            \put(0,-0.2){{\color{svetleseda}\rule{\textwidth}{1.4\unitlength}}}%
-            \put(0.2,0){\makebox(1,1){\arabic{subsection}}}%
-            \put(0.7,0.5){\circle{1.2}}%
-        \end{picture}%
-    \end{blok}%
-%    \filcenter\arabic{subsection}~%
-}\relax
-\titlespacing*{\subsection}{0pt}{4ex plus1ex minus0ex}{1ex}\relax
+    \titleformat{\subsection}[hang]{\normalfont\large\bfseries}%
+        {}%
+        {0pt}{%
+            \begin{blok}%
+                \setlength{\unitlength}{1em}%
+                \begin{picture}(1.7,1)(0,0.16)\relax%
+                    \put(0,-0.2){{\color{svetleseda}\rule{\textwidth}{1.4\unitlength}}}%
+                    \put(0.2,0){\makebox(1,1){\arabic{subsection}}}%
+                    \put(0.7,0.5){\circle{1.2}}%
+                \end{picture}%
+            \end{blok}%
+        }\relax
+    \titlespacing*{\subsection}{0pt}{4ex plus1ex minus0ex}{1ex}\relax
 
-\assignpagestyle{\chapter}{normalni}
+    \assignpagestyle{\chapter}{normalni}
 
 % {tocloft}:
-\setlength{\cftpartindent}{0pt}
-\setlength{\cftchapindent}{0pt}
-\setlength{\cftsecindent}{1em}
-\setlength{\cftsubsecindent}{2em}
-%\setlength{\cftsubsubsecindent}{3em}
-\setlength{\cftchapnumwidth}{1.6em}
-\setlength{\cftsecnumwidth}{2.6em}
-\setlength{\cftsubsecnumwidth}{3.2em}
-% zarovnat titulky vlevo: (jinak se zarovnají do bloku, což nevypadá hezky)
-\makeatletter\renewcommand{\@tocrmarg}{\@pnumwidth plus1fil}\makeatother
+    \setlength{\cftpartindent}{0pt}
+    \setlength{\cftchapindent}{0pt}
+    \setlength{\cftsecindent}{1em}
+    \setlength{\cftsubsecindent}{2em}
+    %\setlength{\cftsubsubsecindent}{3em}
+
+    \setlength{\cftchapnumwidth}{1.6em}
+    \setlength{\cftsecnumwidth}{2.6em}
+    \setlength{\cftsubsecnumwidth}{3.2em}
+
+    % zarovnat titulky vlevo: (jinak se zarovnají do bloku, což nevypadá hezky)
+    \makeatletter\renewcommand{\@tocrmarg}{\@pnumwidth plus1fil}\makeatother
 
 % {xcolor}:
-\definecolor{cervena}{rgb}{1,0,0}
-\definecolor{svetleseda}{gray}{0.9}
-\definecolor{seda}{gray}{0.5}
-\definecolor{sedamezisloupci}{gray}{0.75}
+    \definecolor{cervena}{rgb}{1,0,0}
+    \definecolor{svetleseda}{gray}{0.9}
+    \definecolor{seda}{gray}{0.5}
+    \definecolor{sedamezisloupci}{gray}{0.75}
 
 % Inicializace nastavení závislých na formátu stránky:
-\inicializovatnastaveni
+    \inicializovatnastaveni
 
 %
 % DEFINICE DÉLKOVÝCH REGISTRŮ
@@ -191,6 +191,14 @@
     trou-fne
 }
 %
+% DEFINICE SYMBOLŮ
+% ============================================================================
+\newcommand*{\degree}{°}
+\newcommand*{\dozahlavi}{{\lmmathfamily\color{seda}▲}}% \u25b2 = 9650
+\newcommand*{\konecradku}{{\normalfont\enterfamily\color{seda}↲}}% \u21b2 = 8626
+\newcommand*{\reseninezname}{{\zaklinadlofamily\bfseries\color{seda}?}}
+
+%
 % Další definice
 % ============================================================================
 \newenvironment*{blok}{}{}
@@ -199,33 +207,56 @@
 \newcommand*{\sekce}[2][]{\section{#2}}
 \newcommand*{\podsekce}[2][]{\subsection{#2}}
 
+\newcommand{\nepoprve}[1]{#1}
 \newcommand*{\budepoprve}{%
     \renewcommand{\nepoprve}[1]{%
         \renewcommand{\nepoprve}[1]{####1}%
     }%
 }
-\newcommand*{\dopln}[1]{{\doplnfamily\mdseries\itshape\underline{{#1}}}}%
-\newcommand*{\moznyzlom}{{\mdseries\upshape\textcolor{seda}{\-}}}%
-\newcommand{\nepoprve}[1]{#1}
-\newcommand*{\tritecky}{{\sffamily\mdseries\upshape\normalsize\mbox{...}}}%
+
+\newcommand*{\dopln}[1]{{%
+    \normalfont\doplnfamily\itshape\underline{{#1}}%
+}}%
+\newcommand*{\moznyzlom}{{%
+    \normalfont\zaklinadlofamily\color{seda}%
+    \-%
+}}%
+\newcommand*{\tritecky}{{%
+    \normalfont\sffamily%
+    \mbox{...}%
+}}%
 % {} \big \Big \bigg \Bigg
-\newcommand*{\volitelnyzacatek}{\textcolor{seda}{\ensuremath{\big[}}}%
-\newcommand*{\volitelnykonec}{\textcolor{seda}{\ensuremath{\big]}}}%
-\newcommand*{\carriagereturn}{\mbox{}\dlsh}%
-\newenvironment*{odsazenyodstavec}[1]{\vspace{1ex}\begin{adjustwidth}{#1\odsazeni}{}}{\end{adjustwidth}\vspace{1ex}}%
-% \settowidthwithminimum{\registr}{text}{minimum}
-\newcommand*{\settowidthwithminimum}[3]{\settowidth{#1}{#2}\ifthenelse{\lengthtest{#1<#3}}{\setlength{#1}{#3}}{}}
+\newcommand*{\volitelnyzacatek}{{%
+    \color{seda}%
+    \ensuremath{\big[}%
+}}%
+\newcommand*{\volitelnykonec}{{%
+    \color{seda}%
+    \ensuremath{\big]}%
+}}%
+\newenvironment*{odsazenyodstavec}[1]{%
+    \vspace{1ex}\begin{adjustwidth}{#1\odsazeni}{}%
+}{%
+    \end{adjustwidth}%
+    \vspace{1ex}%
+}%
+
+% \settowidthwithminimum{\registr}{text}{minimum} − nastaví do \registru šířku textu, ne však pod uvedenou minimální hranici
+\newcommand*{\settowidthwithminimum}[3]{%
+    \settowidth{#1}{#2}%
+    \ifthenelse{\lengthtest{#1<#3}}{%
+        \setlength{#1}{#3}%
+    }{}}
+
 \newcommand*{\stitek}[1]{{%
-    \settowidth{\sirkastitkutmp}{#1}%
-    \ifthenelse{\lengthtest{\sirkastitkutmp<\minsirkastitku}}{\setlength{\sirkastitkutmp}{\minsirkastitku}}{}%
+    \settowidthwithminimum{\sirkastitkutmp}{#1}{\minsirkastitku}%
     \mbox{\tcbox[boxrule=0.5pt,size=fbox,arc=1mm]{\makebox[\sirkastitkutmp]{\rule[-0.45ex]{0pt}{1em}#1}}}%
 }}
+
 \newcommand*{\stitekrejstriku}[1]{{%
-    \settowidth{\sirkastitkutmp}{#1}%
-    \ifthenelse{\lengthtest{\sirkastitkutmp<\minsirkastitku}}{\setlength{\sirkastitkutmp}{\minsirkastitku}}{}%
+    \settowidthwithminimum{\sirkastitkutmp}{#1}{\minsirkastitku}%
     \mbox{\tcbox[boxrule=0.5pt,size=fbox,arc=1mm,boxsep=2pt,left=1pt,right=1pt]{\makebox[\sirkastitkutmp][l]{\rule[-0.45ex]{0pt}{1em}#1}}}%
 }}
-\newcommand*{\reseninezname}{{\bfseries\color{seda}?}}
 
 %
 % Přehled podle štítků (pps)
@@ -253,10 +284,7 @@
     % Definovat \radekzaklinadla{text}:
     \newcommand*{\radekzaklinadla}[1]{%
         % Ukončit předchozí řádek:
-        \nepoprve{{%
-            \fontencoding{IL2}\fontfamily{bsk}\fontseries{m}\fontshape{n}\selectfont\color{seda}\ensuremath{\carriagereturn}%
-            \\\relax%
-        }}%
+        \nepoprve{\konecradku\\\relax}%
         % Vypsat samotný řádek zaklínadla (nutný „strut“ kvůli výšce řádku a orámování):
         {\rule{0pt}{1.5ex}##1}%
     }%
@@ -279,15 +307,11 @@
         }\raggedleft%
         \color{seda}%
         \dashbox{\color{black}\parbox{\sirkakodu}{\raggedright%
-            \zaklinadlofamily\mdseries\upshape\budepoprve%
+            \normalfont\zaklinadlofamily\budepoprve%
             #5%
         }}%
     }#4\par\vspace{2ex plus0.5ex minus0.25ex}%
 }}
-
-%\renewcommand*{\rmdefault}{cmr}
-%\renewcommand*{\sfdefault}{cmss}
-%\renewcommand*{\ttdefault}{qcr}
 
 \begin{document}%
 %
@@ -353,18 +377,18 @@ http://creativecommons.org/licenses/by-sa/4.0/
 %
 %
 \clearpage\mbox{}\par\vfill%
-\begin{center}{\normalfont\LARGE\bfseries\makebox[35pt][l]{}Typografické konvence\par}\vspace{2ex}%
-%\titleformat{\chapter}[hang]{\normalfont\LARGE\bfseries}{\makebox[35pt][l]{\thechapter}}{5pt}{}\relax
-%\titlespacing*{\chapter}{0pt}{-1ex}{2ex plus2ex minus0.5ex}\relax
-%\chapter*{\begin{center}Typografické konvence\end{center}}%
-\setlength{\abovetabulinesep}{1ex}\setlength{\belowtabulinesep}{\abovetabulinesep}%
+\begin{center}%
+    {\normalfont\LARGE\bfseries\makebox[35pt][l]{}Typografické konvence\par}%
+    \vspace{2ex}%
+    \setlength{\abovetabulinesep}{1ex}%
+    \setlength{\belowtabulinesep}{\abovetabulinesep}%
 \begin{tabu}{|X[-1,l]|X[2,l]|}%
 {\zaklinadlofamily sudo apt-get update}&%
     Texty tištěné normálním neproporcionálním písmem máte přepsat
     přesně tak, jak jsou napsány.\\%
 {\doplnfamily\itshape\underline{jméno-souboru}}&%
     Za skloněné podtržené části zaklínadla máte doplnit konkrétní hodnoty.\\%
-{\color{seda}\ensuremath{\dlsh}}&%
+{\konecradku}&%
     Dělí-li se zaklínadlo na víc řádků či variant,
     je každá z nich ukončena šedým symbolem odřádkování; není-li na konci řádku tento symbol,
     jde jen o zalomení řádku v knize.\\%
@@ -386,17 +410,14 @@ $\Rightarrow$ Klikněte.&%
 {\color{seda}\guillemotright}&%
     Tímto šedým symbolem se vyznačuje, že na dané místo musíte zapsat tabulátor
     (mezery nestačí).\\%
-{\zaklinadlofamily\bfseries\color{seda}?}&%
+{\zaklinadlofamily\reseninezname}&%
     Není-li řešení dané úlohy autorovi při psaní známo, uvede místo řádku zaklínadla
     pouhý otazník. To je podnět k tomu, aby bylo řešení nalezeno a doplněno.
     Hojně se vyskytuje v rozpracovaných kapitolách, ale u náročných úloh na něj
     můžete příležitostně narazit i ve vydaných verzích.\\%
 \end{tabu}%
-\end{center}\par\vfill\mbox{}%
-%
-% Nastavit znak pro „dělení slov“ v kódu na zpětné lomítko
-{\zaklinadlofamily\mdseries\upshape\hyphenchar\font=`\\}%
-%
+\end{center}%
+\par\vfill\mbox{}%
 \clearpage%
 \raggedbottom%
 {{ZAČÁTEK KAPITOLY}}
