@@ -16,9 +16,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 ## Neznalost a potřeba orientace
 
-*„Prostě příkazový řádek v Linuxu je něco úchvatného, a kdo se neumí v tomto prostředí pohybovat, přichází o hodně.“*<br>— KAMENÍK, Pavel. *Příkazový řádek v Linuxu: praktická řešení.* Brno: Computer Press, 2011. ISBN 978-80-251-2819-0.
-
-&nbsp;
+> *„Prostě příkazový řádek v Linuxu je něco úchvatného, a kdo se neumí v tomto prostředí pohybovat, přichází*
+> *o hodně.“*<br>— KAMENÍK, Pavel. *Příkazový řádek v Linuxu: praktická řešení.* Brno: Computer Press, 2011. ISBN 978-80-251-2819-0.
 
 <neodsadit>Pokud v letech 2018 až 2022 začínáte s Linuxem a troufnete si na
 příkazový řádek/příkazovou řádku, v Linuxu zvaný/ou „terminál“ či „konzole“,
@@ -68,7 +67,7 @@ jak toho dosáhnout, je toto kniha pro vás.
 
 Napadlo vás už někdy, že zadávání příkazů v terminálu se mnoha aspekty podobá
 **sesílání kouzel** ve fantasy světech? Tento příměr je o to děsivější, že zatímco
-fantasy kouzla ovlivňují jen životy smyšlených postav, vaše příkazy budou mít
+fantasy kouzla ovlivňují jen životy smyšlených postav, vaše příkazy terminálu budou mít
 reálné důsledky ve vašem vlastním počítači! Linux: Kniha kouzel je na tomto přirovnání
 založena, a proto se v ní všechny druhy příkladů nazývají „zaklínadla“.
 Můžete si to představit, třeba jako že jste začínající čaroděj ve fantasy světě a dostal/a
@@ -81,9 +80,7 @@ kdyby znal jen kouzla odpovídající svému školnímu ročníku.)
 
 ## Je tato kniha pro váš systém?
 
-*„Když dojdete na místo, kde má být podle mapy studánka, a najdete tam místo ní supermarket, neznamená to, že je mapa chybná, jen je určena pro jinou verzi lesa.“*<br>− Singularis
-
-&nbsp;
+> *„Když dojdete na místo, kde má být podle mapy studánka, a najdete tam místo ní supermarket, neznamená to, že je mapa chybná, jen je určena pro jinou verzi lesa.“*<br>− Singularis
 
 <neodsadit>Verze knihy „vanilková příchuť“ řady 1.x jsou určeny především pro
 **Ubuntu 18.04, Bionic Beaver**, a jeho varianty Kubuntu, Lubuntu, Ubuntu Budgie,
@@ -99,10 +96,10 @@ v příští již může fungovat jinak.
 ## Nejdůležitější zaklínadla
 
 Velmi podstatnou vlastností této knihy je její **organizace**.
-Zaklínadla v kapitolách jsou organizována do logických skupin
+Zaklínadla v kapitolách jsou shromážděna do logických skupin
 a až na odůvodněné výjimky jsou vždy řazena od nejčastějších a nejdůležitějších
-k méně obvyklým, což znamená, že nemusíte kapitolu číst celou − už pouhým přečtením
-několika prvních zaklínadel z několika prvních skupin získáte ty nejužitečnější znalosti.
+k méně obvyklým. Díky tomu nemusíte kapitolu číst celou − ty nejužitečnější znalosti
+získáte hned z několika prvních zaklínadel z několika prvních skupin.
 
 Ačkoliv jsou v knize i kapitoly zaměřené na konkrétní nástroje (např. GNU make),
 důraz kladu spíše na kapitoly tematické, které kombinují vždy ty nejvhodnější

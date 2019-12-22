@@ -33,7 +33,11 @@
     \newlength{\sirkakodu}\setlength{\sirkakodu}{0.9\textwidth} % šířka kódu v příkladech (obvykle odvozena od šířky textu „\textwidth“)
     \newenvironment{odstavce}{\begin{adjustwidth}{}{}\nastavitradkovaniodstavcu{}}{\end{adjustwidth}}
     \newenvironment{obsahdosloupcu}{\begin{multicols*}{2}}{\end{multicols*}}
-    \newcommand*{\zapnoutrezimlicence}{\begin{multicols*}{2}\tiny\renewenvironment*{odstavce}{\begin{adjustwidth}{}{}}{\end{adjustwidth}}}
+    \newcommand*{\zapnoutrezimlicence}{%
+        \begin{multicols*}{2}%
+            \setlength{\odsazeni}{1em}%
+            \tiny%
+            \renewenvironment*{odstavce}{\begin{adjustwidth}{}{}}{\end{adjustwidth}}}
     \newcommand*{\vypnoutrezimlicence}{\end{multicols*}}
     \newcommand*{\nadpisobsahu}{\mbox{PŘEHLED (OBSAH)}}%
     \newcommand*{\nastavitradkovaniodstavcu}{\renewcommand*{\baselinestretch}{1.2}\selectfont}
@@ -50,7 +54,11 @@
     \newlength{\sirkakodu}\setlength{\sirkakodu}{0.95\textwidth}
     \newenvironment{odstavce}{\begin{adjustwidth}{}{}}{\end{adjustwidth}}
     \newenvironment{obsahdosloupcu}{}{}
-    \newcommand*{\zapnoutrezimlicence}{\begin{multicols*}{2}\tiny\renewenvironment*{odstavce}{\begin{adjustwidth}{}{}}{\end{adjustwidth}}}
+    \newcommand*{\zapnoutrezimlicence}{%
+        \begin{multicols*}{2}%
+            \setlength{\odsazeni}{1em}%
+            \tiny%
+            \renewenvironment*{odstavce}{\begin{adjustwidth}{}{}}{\end{adjustwidth}}}
     \newcommand*{\vypnoutrezimlicence}{\end{multicols*}}
     \newcommand*{\nadpisobsahu}{\mbox{PŘEHLED} \mbox{(OBSAH)}}%
     \newcommand*{\nastavitradkovaniodstavcu}{}%
@@ -63,7 +71,11 @@
     \newlength{\sirkakodu}\setlength{\sirkakodu}{0.98\textwidth}
     \newenvironment{odstavce}{\begin{adjustwidth}{}{}}{\end{adjustwidth}}
     \newenvironment{obsahdosloupcu}{}{}
-    \newcommand*{\zapnoutrezimlicence}{\begin{blok}\tiny\renewenvironment*{odstavce}{\begin{adjustwidth}{}{}}{\end{adjustwidth}}}
+    \newcommand*{\zapnoutrezimlicence}{%
+        \begin{blok}%
+        \setlength{\odsazeni}{1em}%
+        \tiny%
+        \renewenvironment*{odstavce}{\begin{adjustwidth}{}{}}{\end{adjustwidth}}}
     \newcommand*{\vypnoutrezimlicence}{\end{blok}}
     \newcommand*{\nadpisobsahu}{\mbox{PŘEHLED} \mbox{(OBSAH)}}%
     \newcommand*{\nastavitradkovaniodstavcu}{}%
@@ -169,13 +181,14 @@
 
 % Inicializace nastavení závislých na formátu stránky:
     \inicializovatnastaveni
+    \setlength{\parindent}{1em}
 
 %
 % DEFINICE DÉLKOVÝCH REGISTRŮ
 % ============================================================================
 \newlength{\sirkacislazaklinadla}\setlength{\sirkacislazaklinadla}{23pt}
 \newlength{\sirkazbytku}
-\newlength{\odsazeni}\setlength{\odsazeni}{1em}
+\newlength{\odsazeni}\setlength{\odsazeni}{2em}
 \newlength{\minsirkastitku}\setlength{\minsirkastitku}{2cm}
 \newlength{\sirkastitkutmp}
 
@@ -235,7 +248,7 @@
     \ensuremath{\big]}%
 }}%
 \newenvironment*{odsazenyodstavec}[1]{%
-    \vspace{1ex}\begin{adjustwidth}{#1\odsazeni}{}%
+    \vspace{1ex}\begin{adjustwidth}{#1\odsazeni}{#1\odsazeni}%
 }{%
     \end{adjustwidth}%
     \vspace{1ex}%

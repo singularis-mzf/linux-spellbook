@@ -119,13 +119,13 @@ h3 .cislo {
     width:1.5em;height:1.5em;
 }
 
-p, ul {
+p, ul, blockquote {
     font-family: "DejaVu Serif", serif;
     margin:0.75em 0;
     max-width:70em;
 }
 
-p {
+p, blockquote {
     hyphens:auto;
     line-height:1.5;
 }
@@ -145,7 +145,11 @@ figure {
 }
 
 blockquote {
-    margin:1ex 0 1ex 2em;
+    margin:2ex 2em;
+}
+blockquote blockquote {
+    margin-top:0;
+    margin-bottom:0;
 }
 
 /* Inline prvky */

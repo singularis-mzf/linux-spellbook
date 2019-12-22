@@ -28,6 +28,31 @@ Normálně se odstavce v PDF verzi odsazují, kromě odstavců, které následu
 
 <neodsadit>Značkou &lt;neodsadit&gt; ale toto odsazení můžete pro konkrétní odstavec vypnout.
 
+Mezi normálními odstavci může být:
+
+> Odsazený odstavec. Text odsazeného odstavce může ve zdrojovém kódu
+> pokračovat na dalším řádku. Je dovolena pouze jedna úroveň odsazení
+> a může obsahovat<br>konec řádku a omezené formátování:
+> **tučně**, *kurzívou*, nebo {*doplň*}, do **tučného textu lze vnořit *kurzívu*,**
+> a do *kurzívy lze vnořit **tučný text**,* ale „doplň“ s nimi nelze kombinovat.
+> Dovolený je i [hypertextový odkaz](http://www.seznam.cz/).
+
+> Toto je další odsazený odstavec,
+> následující po tom prvním.
+
+>> Odstavec může být odsazený o dvě úrovně. V každém případě se odsazuje
+>> současně zleva i zprava.
+
+>>> Nebo o tři úrovně.
+
+>>>> Nebo o čtyři úrovně.
+
+>>>>> Nebo o pět úrovní.
+
+>>>>>> Maximum je šest úrovní. Do takového odstavce se už skoro nic nevejde.
+
+A toto už je obyčejný odstavec.
+
 * Takto vypadají seznamy.
 Položka seznamu může pokračovat na dalším řádku a obsahovat text **tučně**, *kurzívou*, nebo {*na doplnění*}.
 * Další položka seznamu. Může obsahovat také [hypertextový odkaz](http://www.seznam.cz/) a vynucený<br>konec řádku.
