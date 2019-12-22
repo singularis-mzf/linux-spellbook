@@ -288,10 +288,12 @@
         % Vypsat samotný řádek zaklínadla (nutný „strut“ kvůli výšce řádku a orámování):
         {\rule{0pt}{1.5ex}##1}%
     }%
-    % Definovat \akcezaklinadla{text}
     \newcommand*{\akcezaklinadla}[1]{\radekzaklinadla{\ensuremath{\Rightarrow}~\rmfamily\itshape{}##1}}%
+    \newcommand*{\radekzaklinadladopreambule}[1]{\radekzaklinadla{\makebox[0pt][r]{\dozahlavi\hspace*{0.25em}}##1}}%
+    %
     \setlength{\sirkazbytku}{\textwidth}%
     \addtolength{\sirkazbytku}{-\sirkacislazaklinadla}%
+    %
     \noindent%
     \parbox{\textwidth}{\raggedright%
         \ifthenelse{\equal{#2}{0}}{}{%

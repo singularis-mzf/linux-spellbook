@@ -175,14 +175,21 @@ function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, cislaPoznamek, texty
     return vysledek;
 }
 
-# urovenOdsazeni: -1 = akce; 0 = normální řádek; 1, 2, atd. = odsazený řádek
+# urovenOdsazeni: 0 = normální řádek; 1, 2, atd. = odsazený řádek; -1 = UROVEN_AKCE; -2 = UROVEN_PREAMBULE
 function RadekZaklinadla(text, urovenOdsazeni) {
     text = "    RadekZaklinadla(\"" text "\"";
-    if (urovenOdsazeni == -1) {
-        text = text ", JE_AKCE";
-    } else if (urovenOdsazeni > 0) {
+    if (urovenOdsazeni == 0) {
+
+    } else if (0 < urovenOdsazeni && urovenOdsazeni <= 9) {
         text = text ", ODSAZENI=" urovenOdsazeni;
-    } else if (urovenOdsazeni != 0) {
+
+    } else if (urovenOdsazeni == UROVEN_AKCE) {
+        text = text ", JE_AKCE";
+
+    } else if (urovenOdsazeni == UROVEN_PREAMBULE) {
+        text = text ", DO_PREAMBULE";
+
+    } else {
         ShoditFatalniVyjimku("Nepodporovaná úroveň odsazení: " urovenOdsazeni);
     }
     return text ")\n";

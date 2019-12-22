@@ -187,13 +187,24 @@ function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, cislaPoznamek, texty
     return vysledek;
 }
 
-# urovenOdsazeni: -1 = akce; 0 = normální řádek; 1, 2, atd. = odsazený řádek
+# urovenOdsazeni: 0 = normální řádek; 1, 2, atd. = odsazený řádek; -1 = UROVEN_AKCE; -2 = UROVEN_PREAMBULE
 function RadekZaklinadla(text, urovenOdsazeni) {
-    return "<div class=\"radekzaklinadla" \
-        (urovenOdsazeni == -1 ? " akce" : "") \
-        "\"" \
-        (urovenOdsazeni > 0 ? " style=\"padding-left:" (2 * urovenOdsazeni) "ch;\"" : "") \
-        ">" text "</div>\n";
+    if (urovenOdsazeni == 0) {
+        return "<div class=\"radekzaklinadla\">" text "</div>\n"
+
+    } else if (0 < urovenOdsazeni && urovenOdsazeni <= 9) {
+        return "<div class=\"radekzaklinadla\" style=\"padding-left:" (2 * urovenOdsazeni) "ch;\">" text "</div>\n"
+
+    } else if (urovenOdsazeni == UROVEN_AKCE) {
+        return "<div class=\"radekzaklinadla akce\">" text "</div>\n"
+
+    } else if (urovenOdsazeni == UROVEN_PREAMBULE) {
+        return "<div class=\"radekzaklinadla dopreambule\"><span title=\"Takto označený řádek " \
+            "patří do preambule zdrojového kódu či do záhlaví skriptu.\">^</span>" text "</div>\n"
+
+    } else {
+        ShoditFatalniVyjimku("Nepodporovaná úroveň odsazení: " urovenOdsazeni);
+    }
 }
 
 function KonecZaklinadla() {

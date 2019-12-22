@@ -389,12 +389,24 @@ function ZalomitRadekZaklinadla(text,   c, i, slzav, hrzav, lastzlom) {
 }
 
 
-# urovenOdsazeni: -1 = akce; 0 = normální řádek; 1, 2, atd. = odsazený řádek
 function RadekZaklinadla(text, urovenOdsazeni) {
 #    gsub(/=/, "={\\moznyzlom}", text);
-    return "%\n\\" (urovenOdsazeni == -1 ? "akcezaklinadla" : "radekzaklinadla") \
-        "{" (urovenOdsazeni > 0 ? Zopakovat("~", 2 * urovenOdsazeni) : "") \
-        ZalomitRadekZaklinadla(text) "}";
+
+    if (urovenOdsazeni == 0) {
+        return "%\n\\radekzaklinadla{" ZalomitRadekZaklinadla(text) "}";
+
+    } else if (0 < urovenOdsazeni && urovenOdsazeni <= 9) {
+        return "%\n\\radekzaklinadla{" Zopakovat("~", 2 * urovenOdsazeni) ZalomitRadekZaklinadla(text) "}";
+
+    } else if (urovenOdsazeni == UROVEN_AKCE) {
+        return "%\n\\akcezaklinadla{" ZalomitRadekZaklinadla(text) "}";
+
+    } else if (urovenOdsazeni == UROVEN_PREAMBULE) {
+        return "%\n\\radekzaklinadladopreambule{" ZalomitRadekZaklinadla(text) "}";
+
+    } else {
+        ShoditFatalniVyjimku("Nepodporovaná úroveň odsazení: " urovenOdsazeni);
+    }
 }
 
 function KonecZaklinadla() {

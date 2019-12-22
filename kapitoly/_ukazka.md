@@ -44,7 +44,12 @@ Položka seznamu může pokračovat na dalším řádku a obsahovat text **tuč
 *// a toto je ta druhá*<br>
 {*doplnit*} **a musí mít i nějaký řádek**
 
-*# třetí zaklínadlo má:*<br>
+*# třetí zaklínadlo má řádky patřící do preambule:*<br>
+^^**#include &lt;stdio.h&gt;**<br>
+^^**tento tam patří také (kdo by to řekl?)**<br>
+**a tento už ne**
+
+*# čtvrté zaklínadlo má:*<br>
 *// jednu*<br>
 *// druhou*<br>
 *// třetí poznámku pod čarou*<br>

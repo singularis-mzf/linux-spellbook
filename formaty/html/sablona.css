@@ -221,6 +221,14 @@ h2+.zaklinadlo>hr, h3+.zaklinadlo>hr {display:none;visibility:hidden;}
 .zaklinadlo td:nth-child(1) {white-space:nowrap;}
 .zaklinadlo td:nth-child(2) {font:100%/1.2 "DejaVu Serif";padding-left:1em;}
 
+.radekzaklinadla.dopreambule>span:first-child {
+    display:inline-block;
+    width:0pt;
+    position:relative;left:-2.5ch;top:0.5ex;
+    color:#666666;
+    font-weight:bold;
+}
+
 /* zobrazení znaku ↲ na konci každého řádku zaklínadla kromě posledního */
 .radekzaklinadla::after, .radekzaklinadlaafter::after {content:"↲";margin-left:0.5em;color:rgb(120,120,120);}
 .radekzaklinadla:last-child::after {display:none;}

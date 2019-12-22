@@ -309,7 +309,7 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C, priznak) {
                 }
                 break;
         }
-        VYSTUP = VYSTUP ((TYP_RADKU == "RADEK_ZAKLINADLA" && UROVEN != -1 && VelikostZasobniku("format") == 0) ? ZpracujChybnyZnak(C) : ZpracujZnak(C));
+        VYSTUP = VYSTUP ((TYP_RADKU == "RADEK_ZAKLINADLA" && UROVEN != UROVEN_AKCE && VelikostZasobniku("format") == 0) ? ZpracujChybnyZnak(C) : ZpracujZnak(C));
         VSTUP = substr(VSTUP, 2);
     }
 
@@ -486,6 +486,9 @@ BEGIN {
     JE_UVNITR_KOMENTARE = 0;
     JE_ODSTAVEC_K_UKONCENI = 0;
     TEXT_ZAKLINADLA = NULL_STRING;
+    UROVEN = 0;
+    UROVEN_AKCE = -1;
+    UROVEN_PREAMBULE = -2;
     delete ppc;
     delete ppt;
     delete ppcall;
@@ -514,6 +517,7 @@ BEGIN {
     PREDCHOZI_TYP_RADKU = TYP_RADKU;
     TYP_RADKU = "";
     ZPRACOVANO = 0;
+    PATRI_DO_PREAMBULE = 0;
 }
 
 #
@@ -708,10 +712,14 @@ TYP_RADKU == "RADEK_ZAKLINADLA" {
         if ($0 ~ /^!: ?/) {
             ShoditFatalniVyjimku("Odsazení akcí není umožněno!");
         }
+
+    } else if ($0 ~ /^\^\^./) {
+        UROVEN = UROVEN_PREAMBULE;
+        $0 = substr($0, 3);
     } else if (match($0, /^<odsadit[0-9]+>./)) {
         ShoditFatalniVyjimku("Nepodporovaná úroveň odsazení: " substr($0, RSTART, RLENGTH) "!");
     } else if (match($0, /^!: ?/)) {
-        UROVEN = -1;
+        UROVEN = UROVEN_AKCE;
         $0 = substr($0, 1 + RLENGTH);
     } else {
         UROVEN = 0;
