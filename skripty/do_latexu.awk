@@ -193,6 +193,9 @@ function ZpracujZnak(znak) {
             return "~";
         case "×":
             return "\\ensuremath{\\times}";
+        case "≤":
+        case "≥":
+            return znak;
 # speciality
         case "⫽":
             return "//";

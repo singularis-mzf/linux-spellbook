@@ -102,31 +102,31 @@ varianta pro rozšířený regulární výraz.
 
 ### Kvantifikátory (operátory opakování)
 
-*# **jednou nebo vůbec** (&lt;= 1)(rozšířený/základní)*<br>
+*# **jednou nebo vůbec** (≤ 1)(rozšířený/základní)*<br>
 {*atom*}**?**<br>
 {*atom*}**\\?**
 
-*# **libovolněkrát** (&gt;= 0)(rozšířený/základní)*<br>
+*# **libovolněkrát** (≥ 0)(rozšířený/základní)*<br>
 {*atom*}**\***<br>
 {*atom*}**\***
 
-*# **jednou nebo víckrát** (&gt;= 1)(rozšířený/základní)*<br>
+*# **jednou nebo víckrát** (≥ 1)(rozšířený/základní)*<br>
 {*atom*}**+**<br>
 {*atom*}**\\+**
 
-*# přesně N-krát (rozšířený/základní)*<br>
+*# přesně N-krát (= N)(rozšířený/základní)*<br>
 {*atom*}**\{**{*N*}**\}**<br>
 {*atom*}**\\\{**{*N*}**\\\}**
 
-*# M- až N-krát včetně (rozšířený/základní)*<br>
+*# M- až N-krát včetně (M ≤ počet ≤ N)(rozšířený/základní)*<br>
 {*atom*}**\{**{*M*}**,**{*N*}**\}**<br>
 {*atom*}**\\\{**{*M*}**,**{*N*}**\\\}**
 
-*# M- nebo víckrát (rozšířený/základní)*<br>
+*# M- nebo víckrát (≥ M)(rozšířený/základní)*<br>
 {*atom*}**\{**{*M*}**,}**<br>
 {*atom*}**\\\{**{*M*}**,\\}**
 
-*# maximálně N-krát (rozšířený/základní)*<br>
+*# maximálně N-krát (≤ N)(rozšířený/základní)*<br>
 {*atom*}**{,**{*N*}**\}**<br>
 {*atom*}**\\{,**{*N*}**\\\}**
 
