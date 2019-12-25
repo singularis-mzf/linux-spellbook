@@ -20,7 +20,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 Tato kapitola je jen ukázka dovoleného formátování. Je zatím poměrně omezené.
 Běžné odstavce mohou pokračovat na dalším řádku.
 Mohou také obsahovat vynucený<br>konec řádku a omezené formátování:
-**tučně**, *kurzívou*, nebo {*doplň*}, do **tučného textu lze vnořit *kurzívu*,**
+**tučně**, *kurzívou*, {*doplň*} nebo {_Klávesa_}, do **tučného textu lze vnořit *kurzívu*,**
 a do *kurzívy lze vnořit **tučný text**,* ale „doplň“ s nimi nelze kombinovat.
 Dovolený je i [hypertextový odkaz](http://www.seznam.cz/).
 
@@ -61,7 +61,7 @@ Položka seznamu může pokračovat na dalším řádku a obsahovat text **tuč
 
 *# zvláštním typem záznamu je takzvané zaklínadlo; to může obsahovat tučně zvýrazněná **klíčová slova**, a to i **na konci***<br>
 *// může mít poznámku pod čarou, která vypadá takto*<br>
-**tučné části v řádcích zaklínadla má uživatel zadat tak, jak jsou** {*toto-má-doplnit*} [**nepovinná část**]...<br>
+**tučné části v řádcích zaklínadla má uživatel zadat tak, jak jsou** {*toto-má-doplnit*} [**nepovinná část**] {_Klávesa_}...<br>
 **příklad může mít i víc řádků**
 
 *# druhé zaklínadlo, které...*<br>
@@ -114,6 +114,7 @@ Poznámka: ve Firefoxu se nezlomitelné mezery zkopírují do schránky jako oby
 **takový příklad nemůže mít poznámky pod čarou,**<br>
 ^^**ale může mít řádky určené do záhlaví**<br>
 !: A také může obsahovat akce.
+
 
 ## Obrázky
 

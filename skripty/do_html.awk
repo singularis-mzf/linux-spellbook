@@ -243,6 +243,10 @@ function FormatDopln(jeZacatek, jePoJinemDopln) {
     return jeZacatek ? "<i class=\"dopln\">" : "</i>";
 }
 
+function FormatKlavesa(jeZacatek, jePoJineKlavese) {
+    return jeZacatek ? "<kbd>" : "</kbd>";
+}
+
 function FormatVolitelny(jeZacatek) {
     return "<span class=\"volznak\">" (jeZacatek ? "[" : "]") "</span>";
 }

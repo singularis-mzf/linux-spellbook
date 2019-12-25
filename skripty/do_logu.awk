@@ -224,6 +224,10 @@ function FormatDopln(jeZacatek, jePoJinemDopln) {
     return "FormatDopln[" (jeZacatek ? "zacatek" : "konec") (jePoJinemDopln ? " po jinem Dopln" : "") "]";
 }
 
+function FormatKlavesa(jeZacatek, jePoJineKlavese) {
+    return "FormatKlavesa[" (jeZacatek ? "zacatek" : "konec") (jePoJineKlavese ? " po jine Klavese" : "") "]";
+}
+
 function FormatVolitelny(jeZacatek) {
     return "FormatVolitelny[" (jeZacatek ? "zacatek" : "konec") "]";
 }

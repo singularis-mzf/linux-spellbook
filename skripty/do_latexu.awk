@@ -442,6 +442,10 @@ function FormatDopln(jeZacatek, jePoJinemDopln) {
     return jeZacatek ? (jePoJinemDopln ? "\\hspace{0.2em}" : "") "\\dopln{" : "}";
 }
 
+function FormatKlavesa(jeZacatek, jePoJineKlavese) {
+    return jeZacatek ? (jePoJineKlavese ? "\\hspace{0.2em}" : "") "\\kbd{" : "}";
+}
+
 function FormatVolitelny(jeZacatek) {
     return jeZacatek ? "\\volitelnyzacatek{}" : "\\volitelnykonec{}";
 }

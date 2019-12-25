@@ -226,6 +226,24 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C, priznak) {
                 VSTUP = substr(VSTUP, 3);
                 priznak = substr(VSTUP, 1, 2) == "{*";
                 continue;
+            case "{_":
+                if (VelikostZasobniku("format") != 0)
+                    break;
+                VYSTUP = VYSTUP FormatKlavesa(1, priznak);
+                priznak = 0;
+                Push("format", "{_");
+                VSTUP = substr(VSTUP, 3);
+                continue;
+            case "_}":
+                if (VelikostZasobniku("format") != 1)
+                    break;
+                if (Pop("format") != "{_") {
+                    ShoditFatalniVyjimku("Uzavřena neotevřená formátovací značka: {_.._}");
+                }
+                VYSTUP = VYSTUP FormatKlavesa(0, 0);
+                VSTUP = substr(VSTUP, 3);
+                priznak = substr(VSTUP, 1, 2) == "{_";
+                continue;
             case "$$":
                 ShoditFatalniVyjimku("Funkce $$ není v této verzi podporována. Při opakování znaku $ musí být tyto znaky escapovány zpětným lomítkem.");
                 break;
