@@ -309,6 +309,18 @@ function KonecSeznamu(uroven) {
     return "\\end{itemize}}";
 }
 
+function ZacatekParametruPrikazu() {
+    return "\\begin{parametryprikazu}"
+}
+
+function ParametrPrikazu(parametr, text) {
+    return "\\parametrprikazu{" parametr "}{" text "}%\\n";
+}
+
+function KonecParametruPrikazu() {
+    return "\\end{parametryprikazu}\n"
+}
+
 function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, cislaPoznamek, textyPoznamek,   i, ax, base) {
     ax = "%\n";
     if (DO_LATEXU_ODSTAVEC_PRED_ZAKLINADLEM && cisloZaklinadla == 1 && textZaklinadla != "") {

@@ -152,6 +152,19 @@ function KonecSeznamu(uroven) {
     return "KonecSeznamu(" uroven ");\n";;
 }
 
+function ZacatekParametruPrikazu() {
+    return "ZacatekParametruPrikazu();\n"
+}
+
+function ParametrPrikazu(parametr, text) {
+#    print "LADĚNÍ: ParametrPrikazu(\"" parametr "\", \"" text "\");" > "/dev/stderr";
+    return "ParametrPrikazu(\"" parametr "\", \"" text "\");";
+}
+
+function KonecParametruPrikazu() {
+    return "KonecParametruPrikazu();\n"
+}
+
 function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, cislaPoznamek, textyPoznamek,   vysledek) {
     if (!isarray(cislaPoznamek) || !isarray(textyPoznamek)) {
         ShoditFatalniVyjimku("ZacatekZaklinadla(): Očekáváno pole!");

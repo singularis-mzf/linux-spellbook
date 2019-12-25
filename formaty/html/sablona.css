@@ -296,6 +296,21 @@ h2+.zaklinadlo>hr, h3+.zaklinadlo>hr {display:none;visibility:hidden;}
     padding-bottom:0;
 }
 
+/* .parametryprikazu */
+.parametryprikazu td {
+    padding-top:0.25em;
+}
+
+.parametryprikazu td:first-child {
+    font-family:"DejaVu Sans Mono", monospace;
+    color:rgba(0,0,0,0.7);
+    padding-right:1em;
+}
+
+.parametryprikazu td:last-child {
+    font-family:"DejaVu Serif", serif;
+}
+
 /* header .right ikony */
 header .right span {
     display:inline-block;

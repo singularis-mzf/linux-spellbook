@@ -194,6 +194,7 @@
 \newlength{\zaklinadlotabcolsep}\setlength{\zaklinadlotabcolsep}{3pt}
 
 % Výpočetní registry pro dočasné hodnoty:
+\newlength{\tmpsirka}
 \newlength{\tmpsirkastitku}
 
 % Vypočtené registry:
@@ -304,6 +305,24 @@
 }{%
     \end{list}%
 }
+%
+% Parametry příkazu
+% ============================================================================
+\newlength{\odsazeniparametruprikazu}
+\setlength{\odsazeniparametruprikazu}{2cm}
+\newenvironment{parametryprikazu}{%
+    \begin{adjustwidth}{\odsazeniparametruprikazu}{}%
+        \newcommand*{\parametrprikazuvnitrni}[2]{%
+            \nepoprve{\\\relax}%
+            \settowidthwithminimum{\tmpsirka}{{##1}}{\odsazeniparametruprikazu}%
+            \hspace*{-\odsazeniparametruprikazu}%
+            \makebox[\tmpsirka][l]{##1}~~{##2}%
+        }%
+        \newcommand*{\parametrprikazu}[2]{\parametrprikazuvnitrni{\zaklinadlofamily\zaklinadlosize{}##1}{##2}}%
+        \budepoprve\relax%
+}{%
+    \end{adjustwidth}%
+}%
 %
 % \zaklinadlo[#1=(rezervováno)]{#2=číslo zaklínadla}{#3=titulek (volitelný) + \footnotemark}{#4=\footnotetext...}{#5=řádky a akce zaklínadla}
 % ====================================

@@ -216,49 +216,66 @@ Kotvy a řetězce odpovídají fiktivnímu prázdnému řetězci na určité po
 
 ## Parametry příkazů
 
-*# egrep*<br>
+### egrep
+
+*# *<br>
 **egrep** {*parametry*} [**-e**] **'**{*regulární výraz*}**'** [{*soubor*}]...
 
-* **\-v** \:\: Logická negace; hledat řádky, které nevyhovují výrazu.
-* **\-x** \:\: Regulárnímu výrazu musí odpovídat celá řádka (výchozí chování: jakýkoliv podřetězec řádku).
-* **\-q** \:\: Žádný normální výstup, jen otestuje, zda by našel alespoň jeden vyhovující řádek. Parametr **-s** zase potlačí chybová hlášení.
-* **\-i** \:\: Nerozlišovat velká a malá písmena.
-* **\-C** {*počet*} \:\: „kontext“ Kromě vyhovujícího řádku vypíše zadaný počet předchozích a následujících. (Samostatně lze tyto počty nastavit parametry **-A** a **-B**.)
-* **\-o** \:\: Místo celých řádků vypisuje jednotlivé podřetězce vyhovující výrazu, každý podřetězec na samostatný řádek.
-* **\-h** \:\: Vyhledává-li se ve více souborech, neuvede se jako prefix řádky název souboru.
-* **\-H** \:\: Vždy uvede jako prefix řádku název souboru.
-* **\-n** \:\: Jako prefix bude vypisovat číslo řádky.
-* **\-m** {*N*} \:\: Ukončí hledání po nalezení N vyhovujících řádků.
-* **\-z** \:\: Řádky vstupních souborů jsou ukončeny nulovým bajtem; znak \\n bude považovat za za normální znak.
+!parametry:
+
+* -v :: Logická negace; hledat řádky, které nevyhovují výrazu.
+* -x :: Regulárnímu výrazu musí odpovídat celá řádka (výchozí chování: jakýkoliv podřetězec řádku).
+* -q :: Žádný normální výstup, jen otestuje, zda by našel alespoň jeden vyhovující řádek. Parametr **-s** zase potlačí chybová hlášení.
+* -i :: Nerozlišovat velká a malá písmena.
+* -C {*počet*} :: „kontext“ Kromě vyhovujícího řádku vypíše zadaný počet předchozích a následujících. (Samostatně lze tyto počty nastavit parametry **-A** a **-B**.)
+* -o :: Místo celých řádků vypisuje jednotlivé podřetězce vyhovující výrazu, každý podřetězec na samostatný řádek.
+* -h :: Vyhledává-li se ve více souborech, neuvede se jako prefix řádky název souboru.
+* -H :: Vždy uvede jako prefix řádku název souboru.
+* -n :: Jako prefix bude vypisovat číslo řádky.
+* -m {*N*} :: Ukončí hledání po nalezení N vyhovujících řádků.
+* -z :: Řádky vstupních souborů jsou ukončeny nulovým bajtem; znak \\n bude považovat za za normální znak.
 
 Poznámka: příkaz „grep“ má tytéž parametry jako „egrep“, ale pracuje se základními regulárními výrazy.
 
-*# gawk*<br>
+### gawk
+
+*# *<br>
 **gawk** [{*parametry*}] **'/**{*regulární výraz*}**/**[**\{**{*příkazy*}**\}**]**'** {*soubor*}...
 
-* **\-F** {*hodnota*} \:\: Nastaví systémovou proměnnou „FS“ (field separator) na uvedenou hodnotu.
-* **\-v** {*proměnná*}**=**{*hodnota*} \:\: Nastaví proměnnou na uvedenou hodnotu.
-* **\-S** \:\: Spustí skript v „bezpečném režimu“, kdy nemůže volat příkazy bashe, spouštět jiné programy ani otevírat další soubory.
+!parametry:
 
-*# perl*<br>
+* -F {*hodnota*} :: Nastaví systémovou proměnnou „FS“ (field separator) na uvedenou hodnotu.
+* -v {*proměnná*}**=**{*hodnota*} :: Nastaví proměnnou na uvedenou hodnotu.
+* -S :: Spustí skript v „bezpečném režimu“, kdy nemůže volat příkazy bashe, spouštět jiné programy ani otevírat další soubory.
+
+### perl
+
+*# *<br>
 **perl -nwe 'if ($\_ =~ /**{*regulární výraz Perlu*}**/) {print $\_}' &lt;**{*vstupní-soubor*}<br>
 **perl -pwe 's/**{*regulární výraz Perlu*}**/**{*výraz náhrady*}**/**[**g**]**' &lt;**{*vstupní-soubor*}
 
-* **\-n** \:\: Vykoná program v cyklu pro každý řádek vstupu.
-* **\-p** \:\: Vykoná program v cyklu pro každý řádek vstupu a na konci každého cyklu vypíše proměnnou „$\_“.
-* **\-w** \:\: Zapne užitečná varování. (**-W** zapne všechna varování.)
-* **\-e** {*program*} \:\: Vykoná tento program místo načtení programu ze souboru.
-* **\-X** \:\: Vypne všechna varování.
+!parametry:
 
-*# sed*<br>
+* -n :: Vykoná program v cyklu pro každý řádek vstupu.
+* -p :: Vykoná program v cyklu pro každý řádek vstupu a na konci každého cyklu vypíše proměnnou „$\_“.
+* -w :: Zapne užitečná varování. (**-W** zapne všechna varování.)
+* -e {*program*} :: Vykoná tento program místo načtení programu ze souboru.
+* -X :: Vypne všechna varování.
+
+### sed
+
+*# *<br>
 **sed** {*parametry*} [[**-e** {*příkazy*}]...  **-e**] {*příkazy*} [{*vstupní-soubor*}]...
 
-* **\-E** \:\: Používá rozšířené regulární výrazy místo základních.
-* **\-i** \:\: „in-place“ Výstupem přepíše původní soubor.
-* **\-z** \:\: Řádek končí nulovým bajtem, ne znakem \\n.
-* **\-u** \:\: „unbuffered“ Čte a zapisuje data po jednotlivých řádcích. (Normálně je kvůli výkonu načítá po delších blocích.)
+!parametry:
+
+* -E :: Používá rozšířené regulární výrazy místo základních.
+* -i :: „in-place“ Výstupem přepíše původní soubor.
+* -z :: Řádek končí nulovým bajtem, ne znakem \\n.
+* -u :: „unbuffered“ Čte a zapisuje data po jednotlivých řádcích. (Normálně je kvůli výkonu načítá po delších blocích.)
 
 ## Instalace na Ubuntu
+
 Příkazy „egrep“, „grep“, „perl“ a „sed“ jsou základními součástmi
 Ubuntu. Příkaz „gawk“ je nutné doinstalovat, nebo místo něj použít méně
 schopný příkaz „awk“, který je základní součástí Ubuntu.

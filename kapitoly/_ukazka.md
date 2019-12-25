@@ -121,6 +121,17 @@ Obrázky je dovoleno vkládat pouze jako samostatné odstavce:
 
 ![alternativní text](../obrazky/ve-vystavbe.png)
 
+## Parametry příkazů
+
+Pro parametry příkazů existuje zvláštní režim zapnutý metapříkazem:
+
+!parametry:
+
+* -a :: Krátký parametr bez hodnoty. V těchto textech lze použít formátování: **tučně**, *kurzívou*, {*doplň*}.
+* -b {*hodnota*} :: Krátký parametr s hodnotou.
+* --dlouhy :: Dlouhý parametr bez hodnoty.
+* --dlouhy {*hodnota*} :: Dlouhý parametr s hodnotou.
+
 ## Zvláštní znaky a jejich escapování
 
 „Escapování“ znamená zapsání speciálního znaku za dodatečné zpětné lomítko

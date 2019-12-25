@@ -158,6 +158,18 @@ function KonecSeznamu(uroven) {
     return "</ul>";
 }
 
+function ZacatekParametruPrikazu() {
+    return "<table class=\"parametryprikazu\"><tbody>"
+}
+
+function ParametrPrikazu(parametr, text) {
+    return "<tr><td>" parametr "</td><td>" text "</td></tr>\n";
+}
+
+function KonecParametruPrikazu() {
+    return "</tbody></table>\n"
+}
+
 function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, cislaPoznamek, textyPoznamek,   prvni) {
     if (!isarray(cislaPoznamek) || !isarray(textyPoznamek)) {
         ShoditFatalniVyjimku("ZacatekZaklinadla(): Očekáváno pole!");

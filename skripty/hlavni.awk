@@ -350,6 +350,10 @@ function ZacitTypRadku(   bylPredel) {
         case "ODSAZENY_6":
             printf("%s", ZacatekOdsazenehoOdstavce(substr(TYP_RADKU, 10)));
             break;
+        case "PARAMETR_PRIKAZU":
+            printf("%s", ZacatekParametruPrikazu());
+            BUDOU_PARAMETRY_PRIKAZU = 2;
+            break;
         case "POLOZKA_SEZNAMU":
             if (PREDCHOZI_TYP_RADKU != "POKRACOVANI_POLOZKY_SEZNAMU") {
                 printf("%s", ZacatekSeznamu(1, tolower(SEKCE) ~ /^(tipy a.zkušenosti|definice)/ || tolower(KAPITOLA) ~ /^(koncepce projektu)/));
@@ -379,6 +383,17 @@ function UkoncitPredchoziTypRadku() {
         case "ODSAZENY_5":
         case "ODSAZENY_6":
             printf("%s", KonecOdsazenehoOdstavce(substr(PREDCHOZI_TYP_RADKU, 10)));
+            break;
+
+        case "PARAMETR_PRIKAZU":
+            if (BUDOU_PARAMETRY_PRIKAZU != 2) {
+                ShoditFatalniVyjimku("Interní chyba: nečekaná hodnota BUDOU_PARAMETRY_PRIKAZU: " BUDOU_PARAMETRY_PRIKAZU);
+            }
+            if (TYP_RADKU != "PRAZDNY") {
+                ShoditFatalniVyjimku("Parametry příkazů musejí být ukončeny prázdným řádkem!");
+            }
+            printf("%s", KonecParametruPrikazu());
+            BUDOU_PARAMETRY_PRIKAZU = 0;
             break;
 
         case "POLOZKA_SEZNAMU":
@@ -485,6 +500,7 @@ BEGIN {
     JE_UVNITR_ZAKLINADLA = 0;
     JE_UVNITR_KOMENTARE = 0;
     JE_ODSTAVEC_K_UKONCENI = 0;
+    BUDOU_PARAMETRY_PRIKAZU = 0; # 0 = normální, 1 = očekává začátek parametrů, 2 = očekává další parametry a konec
     TEXT_ZAKLINADLA = NULL_STRING;
     UROVEN = 0;
     UROVEN_AKCE = -1;
@@ -564,7 +580,7 @@ BEGIN {
         TYP_RADKU = "ODSAZENY_" UROVEN;
         $0 = substr($0, UROVEN + 2);
     } else if (PREDCHOZI_TYP_RADKU != "NORMALNI" && $0 ~ /^\* .+/) {
-        TYP_RADKU = "POLOZKA_SEZNAMU";
+        TYP_RADKU = (BUDOU_PARAMETRY_PRIKAZU == 0) ? "POLOZKA_SEZNAMU" : "PARAMETR_PRIKAZU";
         $0 = substr($0, 3);
     } else if (PREDCHOZI_TYP_RADKU != "NORMALNI" && $0 ~ /^\*# .*\*<br>$/) {
         TYP_RADKU = "ZAKLINADLO";
@@ -656,6 +672,19 @@ TYP_RADKU == "POLOZKA_SEZNAMU" {
     next;
 }
 
+TYP_RADKU == "PARAMETR_PRIKAZU" {
+    i = index($0, "::");
+    if (i == 0) {
+        ShoditFatalniVyjimku("Parametr příkazů musí obsahovat oddělovač „::“!");
+    }
+    s = substr($0, 1, substr($0, i - 1, 1) ~ /\s/ ? i - 2 : i - 1);
+    gsub("\f", "", s);
+    gsub(/\\-/, "\f", s);
+    gsub("-|\f", "\\-", s);
+    printf("%s\n", ParametrPrikazu(FormatovatRadek(s), FormatovatRadek(substr($0, substr($0, i + 2, 1) ~ /\s/ ? i + 3 : i + 2))));
+    next;
+}
+
 TYP_RADKU == "POKRACOVANI_POLOZKY_SEZNAMU" {
     printf("%s\n", FormatovatRadek($0));
     next;
@@ -668,7 +697,18 @@ TYP_RADKU == "DIREKTIVA" {
     if (HODNOTA_DIREKTIVY ~ /^ /) {
         HODNOTA_DIREKTIVY = substr(HODNOTA_DIREKTIVY, 2);
     }
+    if (DIREKTIVA == "PARAMETRY") {
+        if (HODNOTA_DIREKTIVY != "") {
+            ShoditFatalniVyjimku("Direktiva !PARAMETRY nepřijímá žádný parametr!");
+        }
+        if (BUDOU_PARAMETRY_PRIKAZU != 0) {
+            ShoditFatalniVyjimku("Neočekávaný stav direktivy !PARAMETRY: " BUDOU_PARAMETRY_PRIKAZU);
+        }
+        BUDOU_PARAMETRY_PRIKAZU = 1;
+    }
+#
 #    print "LADĚNÍ: Direktiva „" DIREKTIVA "“ = \"" HODNOTA_DIREKTIVY "\"" > "/dev/stderr";
+#
     next;
 }
 
