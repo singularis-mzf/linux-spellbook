@@ -195,7 +195,7 @@ pomocná propojení filtrů, kterým musíte vymyslet nové, v grafu filtrů do
 
 *# **naskládat** videa stejné výšky vedle sebe/videa stejné šířky pod sebe*<br>
 *// Všechny použité vstupy musejí mít kromě stejné výšky/šířky také stejný formát pixelu (pixel-format).*<br>
-**[**{*vi*}**]**... **hstack=inputs=**{*počet-vstupů*}[**:shortest=1**] **[**{*vo*}**]**
+**[**{*vi*}**]**... **hstack=inputs=**{*počet-vstupů*}[**:shortest=1**] **[**{*vo*}**]**<br>
 **[**{*vi*}**]**... **vstack=inputs=**{*počet-vstupů*}[**:shortest=1**] **[**{*vo*}**]**
 
 *# **prolnout** několik vstupů*<br>

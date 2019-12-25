@@ -197,9 +197,14 @@ function ZpracujZnak(znak) {
         case "≥":
             return znak;
 # speciality
+        case "○":
+        case "◉":
+        case "☐":
+        case "☑":
+        case "☒":
+            return znak;
         case "⫽":
             return "//";
-            # možná použít \sslash z balíčku {stix}
         case "␣":
             return "\\textvisiblespace{}";
 
@@ -309,11 +314,11 @@ function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, cislaPoznamek, texty
     if (DO_LATEXU_ODSTAVEC_PRED_ZAKLINADLEM && cisloZaklinadla == 1 && textZaklinadla != "") {
         ax = ax "\\vspace{2ex}";
     }
-    ax = ax "\\zaklinadlo{";
-    # #2 = číslo zaklínadla
-    ax = ax cisloZaklinadla "}{";
-    # #3 = text zaklínadla + \footnotemark
     if (textZaklinadla != "") {
+        ax = ax "\\zaklinadlo{";
+        # #2 = číslo zaklínadla
+        ax = ax cisloZaklinadla "}{";
+        # #3 = titulek zaklínadla + \footnotemark
         ax = ax textZaklinadla;
         if (length(cislaPoznamek) > 0) {
             base = AlokovatPoznamkuPodCarou();
@@ -322,15 +327,15 @@ function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, cislaPoznamek, texty
                 ax = ax "\\footnotemark[" AlokovatPoznamkuPodCarou() "]";
             }
         }
-    }
-    ax = ax "}%\n{";
-    # #4 = \footnotetext
-    if (textZaklinadla != "") {
+        ax = ax "}%\n{";
+        # #4 = \footnotetext
         for (i = 0; i < length(cislaPoznamek); ++i) {
             ax = ax "\\footnotetext[" (base + i) "]{" textyPoznamek[cislaPoznamek[i]] "}";
         }
+        ax = ax "}{%\n";
+    } else {
+        ax = ax "\\ukazka{";
     }
-    ax = ax "}{%\n";
     # #5 = řádky zaklínadla
     return ax;
 }
@@ -393,16 +398,16 @@ function RadekZaklinadla(text, urovenOdsazeni) {
 #    gsub(/=/, "={\\moznyzlom}", text);
 
     if (urovenOdsazeni == 0) {
-        return "%\n\\radekzaklinadla{" ZalomitRadekZaklinadla(text) "}";
+        return "%\n\\radekzaklinadla{\\lmmathfamily{}󠁞∘\\hspace*{0.1em}}{" ZalomitRadekZaklinadla(text) "}";
 
     } else if (0 < urovenOdsazeni && urovenOdsazeni <= 9) {
-        return "%\n\\radekzaklinadla{" Zopakovat("~", 2 * urovenOdsazeni) ZalomitRadekZaklinadla(text) "}";
+        return "%\n\\radekzaklinadla{󠁞\\lmmathfamily{}∘\\hspace*{0.1em}}{" Zopakovat("~", 2 * urovenOdsazeni) ZalomitRadekZaklinadla(text) "}";
 
     } else if (urovenOdsazeni == UROVEN_AKCE) {
-        return "%\n\\akcezaklinadla{" ZalomitRadekZaklinadla(text) "}";
+        return "%\n\\radekzaklinadla{\\lmmathfamily{}⇒{}}{\\rmfamily{}" ZalomitRadekZaklinadla(text) "}";
 
     } else if (urovenOdsazeni == UROVEN_PREAMBULE) {
-        return "%\n\\radekzaklinadladopreambule{" ZalomitRadekZaklinadla(text) "}";
+        return "%\n\\radekzaklinadla{\\lmmathfamily{}↟\\hspace{0.04em}}{" ZalomitRadekZaklinadla(text) "}";
 
     } else {
         ShoditFatalniVyjimku("Nepodporovaná úroveň odsazení: " urovenOdsazeni);

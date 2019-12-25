@@ -43,6 +43,18 @@ Odkomentujte a vyplňte štítky, zejména rozlišení na {program} a {tematic
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+*# získat kód znaku (desítkový/hexadecimální)*<br>
+*// Poznámka: díky použitému escapování by tento tvar měl fungovat pro všechny znaky s výjimkou apostrofu (znak č. 39, resp. 0027).*<br>
+**printf %d\\\\n \\''**{*znak*}**'**<br>
+**printf %04x\\\\n \\''**{*znak*}**'**
+
+*# vypsat znak podle kódu (desítkového/hexadecimálního)*<br>
+**printf \\\\U$(printf %08x** {*desítkový-kód*}**)**[**\\\\n**]<br>
+**printf \\\\U$(printf %08x 0x**{*hexadecimální-kód*}**)**[**\\\\n**]<br>
+
+*# rozdělit řetězec po znacích a ke každému vypsat desítkový a hexadecimální kód*<br>
+?
+
 ## Parametry příkazů
 <!--
 - Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.

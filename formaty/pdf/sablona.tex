@@ -28,7 +28,7 @@
 \usepackage[czech]{babel}
 %
 {{POKUD JE FORMÁT pdf-a4}}
-\usepackage[xetex,a4paper,inner=2.5cm,outer=2cm,top=1.5cm,bottom=2cm]{geometry}
+\usepackage[xetex,a4paper,inner=1.5cm,outer=1cm,top=1.5cm,bottom=2cm]{geometry}
 \newcommand*{\inicializovatnastaveni}{%
     \newlength{\sirkakodu}\setlength{\sirkakodu}{0.9\textwidth} % šířka kódu v příkladech (obvykle odvozena od šířky textu „\textwidth“)
     \newenvironment{odstavce}{\begin{adjustwidth}{}{}\nastavitradkovaniodstavcu{}}{\end{adjustwidth}}
@@ -84,7 +84,6 @@
 %
 
 % 2. skupina balíčků:
-\usepackage{textcomp}       % musí být načtený přednostně; vyžadovaný balíčkem {gensymb}
 \usepackage[xetex]{xcolor}  % barevné písmo
 
 % 3. skupina balíčků:
@@ -126,20 +125,21 @@
     \newfontfamily{\doplnfamily}[Scale=MatchLowercase]{Latin Modern Mono Slanted} % ?
     \newfontfamily{\urlfamily}[Scale=MatchLowercase]{Latin Modern Mono Light Cond}
     \newfontfamily{\zaklinadlofamily}[Scale=MatchLowercase,HyphenChar=92]{Latin Modern Mono Light}
+    \newcommand*{\zaklinadlosize}{\fontsize{8pt}{8pt}\selectfont}
 
-    \newfontfamily{\enterfamily}{DejaVu Sans Mono} % speciálně kvůli symbolu šipky č. 8626
+    \newfontfamily{\dejavusansfamily}{DejaVu Sans}
     \newfontfamily{\lmmathfamily}{Latin Modern Math} % matematické symboly
 
 % {titlesec}:
     \titleclass{\chapter}{top}\relax%
     \newcommand{\chapterbreak}{\clearpage}% začínat kapitolu na nové straně
     \titleformat{\chapter}[hang]{\normalfont\LARGE\bfseries}%
-        {\settowidthwithminimum{\sirkastitkutmp}{\mbox{\thechapter}}{20pt}\makebox[\sirkastitkutmp][l]{\thechapter}}%
+        {\settowidthwithminimum{\tmpsirkastitku}{\mbox{\thechapter}}{20pt}\makebox[\tmpsirkastitku][l]{\thechapter}}%
         {0.33em}{}\relax
     \titlespacing*{\chapter}{0pt}{-1ex}{2ex plus2ex minus0.5ex}\relax
 
     \titleformat{\section}[hang]{\normalfont\Large\bfseries}%
-        {\settowidthwithminimum{\sirkastitkutmp}{\mbox{\thesection}}{20pt}\makebox[\sirkastitkutmp][l]{\thesection}}%
+        {\settowidthwithminimum{\tmpsirkastitku}{\mbox{\thesection}}{20pt}\makebox[\tmpsirkastitku][l]{\thesection}}%
         {0.33em}{}\relax
     \titlespacing*{\section}{0pt}{2ex plus0.5ex minus0ex}{1ex}\relax
 
@@ -186,12 +186,27 @@
 %
 % DEFINICE DÉLKOVÝCH REGISTRŮ
 % ============================================================================
-\newlength{\sirkacislazaklinadla}\setlength{\sirkacislazaklinadla}{23pt}
 \newlength{\sirkazbytku}
 \newlength{\odsazeni}\setlength{\odsazeni}{2em}
 \newlength{\minsirkastitku}\setlength{\minsirkastitku}{2cm}
-\newlength{\sirkastitkutmp}
+\newlength{\sirkaikony}\setlength{\sirkaikony}{10pt}
+\newlength{\sirkacislazaklinadla}\setlength{\sirkacislazaklinadla}{23pt}
+\newlength{\zaklinadlotabcolsep}\setlength{\zaklinadlotabcolsep}{3pt}
 
+% Výpočetní registry pro dočasné hodnoty:
+\newlength{\tmpsirkastitku}
+
+% Vypočtené registry:
+\newlength{\sirkatitulkuzaklinadla}
+\newlength{\sirkaradkuzaklinadla}
+
+\setlength{\sirkatitulkuzaklinadla}{\textwidth}
+\addtolength{\sirkatitulkuzaklinadla}{-\sirkaikony}
+\addtolength{\sirkatitulkuzaklinadla}{-\sirkacislazaklinadla}
+\addtolength{\sirkatitulkuzaklinadla}{-8\zaklinadlotabcolsep}
+\addtolength{\sirkatitulkuzaklinadla}{-1.5pt}
+\setlength{\sirkaradkuzaklinadla}{0.6\sirkatitulkuzaklinadla}
+\setlength{\sirkatitulkuzaklinadla}{0.4\sirkatitulkuzaklinadla}
 
 %
 % KOREKCE DĚLENÍ SLOV
@@ -208,7 +223,6 @@
 % ============================================================================
 \newcommand*{\degree}{°}
 \newcommand*{\dozahlavi}{{\lmmathfamily\color{seda}▲}}% \u25b2 = 9650
-\newcommand*{\konecradku}{{\normalfont\enterfamily\color{seda}↲}}% \u21b2 = 8626
 \newcommand*{\reseninezname}{{\zaklinadlofamily\bfseries\color{seda}?}}
 
 %
@@ -262,13 +276,13 @@
     }{}}
 
 \newcommand*{\stitek}[1]{{%
-    \settowidthwithminimum{\sirkastitkutmp}{#1}{\minsirkastitku}%
-    \mbox{\tcbox[boxrule=0.5pt,size=fbox,arc=1mm]{\makebox[\sirkastitkutmp]{\rule[-0.45ex]{0pt}{1em}#1}}}%
+    \settowidthwithminimum{\tmpsirkastitku}{#1}{\minsirkastitku}%
+    \mbox{\tcbox[boxrule=0.5pt,size=fbox,arc=1mm]{\makebox[\tmpsirkastitku]{\rule[-0.45ex]{0pt}{1em}#1}}}%
 }}
 
 \newcommand*{\stitekrejstriku}[1]{{%
-    \settowidthwithminimum{\sirkastitkutmp}{#1}{\minsirkastitku}%
-    \mbox{\tcbox[boxrule=0.5pt,size=fbox,arc=1mm,boxsep=2pt,left=1pt,right=1pt]{\makebox[\sirkastitkutmp][l]{\rule[-0.45ex]{0pt}{1em}#1}}}%
+    \settowidthwithminimum{\tmpsirkastitku}{#1}{\minsirkastitku}%
+    \mbox{\tcbox[boxrule=0.5pt,size=fbox,arc=1mm,boxsep=2pt,left=1pt,right=1pt]{\makebox[\tmpsirkastitku][l]{\rule[-0.45ex]{0pt}{1em}#1}}}%
 }}
 
 %
@@ -294,39 +308,70 @@
 % \zaklinadlo[#1=(rezervováno)]{#2=číslo zaklínadla}{#3=titulek (volitelný) + \footnotemark}{#4=\footnotetext...}{#5=řádky a akce zaklínadla}
 % ====================================
 \newcommand{\zaklinadlo}[5][]{{%
-    % Definovat \radekzaklinadla{text}:
-    \newcommand*{\radekzaklinadla}[1]{%
-        % Ukončit předchozí řádek:
-        \nepoprve{\konecradku\\\relax}%
-        % Vypsat samotný řádek zaklínadla (nutný „strut“ kvůli výšce řádku a orámování):
-        {\rule{0pt}{1.5ex}##1}%
+    \setlength{\tabcolsep}{\zaklinadlotabcolsep}%
+    % \radekzaklinadla{symbol}{text}
+    \newcommand{\radekzaklinadla}[2]{%
+        \nepoprve{\par}%
+        % strut (vertikální roztažení řádku)
+        %%\rule{0pt}{1.5ex}%
+        % symbol řádku (vykreslí se před sloupec)
+        \makebox[0pt][r]{{##1}~}%
+        % text řádku (může dojít k zalomení)
+        {##2}%
+        }%
+    \newcommand*{\akcezaklinadla}[1]{\radekzaklinadla{\ensuremath{\Rightarrow}}{##1}}%
+    \newcommand*{\radekzaklinadladopreambule}[1]{\radekzaklinadla{\dozahlavi}{##1}}%
+
+    \noindent\begin{tabular}{%
+        % číslo zaklínadla:
+        >{\raggedright\fontsize{9pt}{0pt}\selectfont}p{\sirkacislazaklinadla}@{}%
+        % ikona zaklínadla:
+        >{\centering}p{\sirkaikony}@{\hspace{2pt}}%
+        % titulek zaklínadla + mezera před řádky zaklínadla:
+        >{\raggedright\fontsize{10pt}{10pt}\selectfont}p{\sirkatitulkuzaklinadla}%
+        @{\hspace{10pt}}%
+        % řádky zaklínadla:
+        |>{\raggedright\zaklinadlofamily\zaklinadlosize}p{\sirkaradkuzaklinadla}%
     }%
-    \newcommand*{\akcezaklinadla}[1]{\radekzaklinadla{\ensuremath{\Rightarrow}~\rmfamily\itshape{}##1}}%
-    \newcommand*{\radekzaklinadladopreambule}[1]{\radekzaklinadla{\makebox[0pt][r]{\dozahlavi\hspace*{0.25em}}##1}}%
-    %
-    \setlength{\sirkazbytku}{\textwidth}%
-    \addtolength{\sirkazbytku}{-\sirkacislazaklinadla}%
-    %
-    \noindent%
-    \parbox{\textwidth}{\raggedright%
-        \ifthenelse{\equal{#2}{0}}{}{%
-            % Vygenerovat vodicí čáru nad zaklínadlem:
-            \ifthenelse{\equal{#2}{1}}{}{%
-                \makebox[0pt][l]{{\color{seda}\rule[2ex]{5cm}{0.25pt}}}%
-            }%
-            % Vygenerovat číslo zaklínadla:
-            \makebox[\sirkacislazaklinadla][l]{\##2}%
-            % Titulek zaklínadla:
-            \parbox[t]{\sirkazbytku}{\raggedright{#3}}%
-            \par\vspace{1ex}%
-        }\raggedleft%
-        \color{seda}%
-        \dashbox{\color{black}\parbox{\sirkakodu}{\raggedright%
-            \normalfont\zaklinadlofamily\budepoprve%
-            #5%
-        }}%
-    }#4\par\vspace{2ex plus0.5ex minus0.25ex}%
-}}
+    % číslo zaklínadla:
+    \##2%
+    % ikona zaklínadla:
+    &{\lmmathfamily{}♣}%
+    % titulek zaklínadla:
+    &{#3}%
+    % řádky zaklínadla:
+    &{\budepoprve{}#5}%
+    \tabularnewline%
+    \end{tabular}#4\par\vspace{4pt plus5pt minus5pt}%
+    }}
+
+% \ukazka{#1 = řádky a akce zaklínadla}
+\newcommand{\ukazka}[2][]{{%
+    \setlength{\tabcolsep}{\zaklinadlotabcolsep}%
+    \setlength{\sirkaradkuzaklinadla}{\textwidth}%
+    \addtolength{\sirkaradkuzaklinadla}{-10pt}%
+    % \radekzaklinadla{symbol}{text}
+    \newcommand{\radekzaklinadla}[2]{%
+        \nepoprve{\par}%
+        % strut (vertikální roztažení řádku)
+        %%\rule{0pt}{1.5ex}%
+        % symbol řádku (vykreslí se před sloupec)
+        \makebox[0pt][r]{{##1}~}%
+        % text řádku (může dojít k zalomení)
+        {##2}%
+        }%
+    \newcommand*{\akcezaklinadla}[1]{\radekzaklinadla{\ensuremath{\Rightarrow}}{##1}}%
+    \newcommand*{\radekzaklinadladopreambule}[1]{\radekzaklinadla{\dozahlavi}{##1}}%
+
+    \raggedleft\begin{tabular}{%
+        % řádky zaklínadla:
+        |>{\raggedright\zaklinadlofamily\zaklinadlosize}p{\sirkaradkuzaklinadla}%
+    }%
+    {\budepoprve{}#2}%
+    \tabularnewline%
+    \end{tabular}\par\vspace{4pt plus5pt minus5pt}%
+    }}
+%\par\vspace{2ex plus0.5ex minus0.25ex}%
 
 \begin{document}%
 %
@@ -403,10 +448,6 @@ http://creativecommons.org/licenses/by-sa/4.0/
     přesně tak, jak jsou napsány.\\%
 {\doplnfamily\itshape\underline{jméno-souboru}}&%
     Za skloněné podtržené části zaklínadla máte doplnit konkrétní hodnoty.\\%
-{\konecradku}&%
-    Dělí-li se zaklínadlo na víc řádků či variant,
-    je každá z nich ukončena šedým symbolem odřádkování; není-li na konci řádku tento symbol,
-    jde jen o zalomení řádku v knize.\\%
 {\zaklinadlofamily ABC=\,{\fontfamily{qcr}\fontseries{m}\fontshape{n}\selectfont\color{seda}\char`\\}}&%
     Ve výjimečných případech, kdy bylo nutno řádek zalomit v místě,
     kam napatří žádné bílé znaky, je tato skutečnost vyznačena nepatrným šedým zpětným lomítkem.

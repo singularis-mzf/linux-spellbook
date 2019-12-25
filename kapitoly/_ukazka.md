@@ -110,8 +110,10 @@ Poznámka: ve Firefoxu se nezlomitelné mezery zkopírují do schránky jako oby
 **012345670**
 
 *# *<br>
-*pro samostatné ukázky kódu je také podporován příklad bez záhlaví*<br>
-*takový příklad nemůže mít poznámky pod čarou*
+**pro samostatné ukázky kódu je také podporován příklad bez záhlaví**<br>
+**takový příklad nemůže mít poznámky pod čarou,**<br>
+^^**ale může mít řádky určené do záhlaví**<br>
+!: A také může obsahovat akce.
 
 ## Obrázky
 
@@ -163,6 +165,7 @@ Všechny tisknutelné znaky ASCII jsou podporovány a uvedeny v následující
 * (á), (č), (ď), (é), (ě), (í), (ň), (ó), (ř), (š), (ť), (ú), (ů), (ý), (ž); příklad: „žluťoučký kůň příšerně úpěl ďábelské ódy“
 * (Á), (Č), (Ď), (É), (Ě), (Í), (Ň), (Ó), (Ř), (Š), (Ť), (Ú), (Ů), (Ý), (Ž); příklad: „ŽLUŤOUČKÝ KŮŇ PŘÍŠERNĚ ÚPĚL ĎÁBELSKÉ ÓDY“
 * „m-dash“ (—), „n-dash“ (−), „times“ (×), „degree“ (°), „menší nebo rovno“ (≤), „větší nebo rovno“ (≥)
+* „neaktivní přepínač“ (○), „aktivní přepínač“ (◉), „nezaškrtnuté políčko“ (☐), „zatržené políčko“ (☑), „škrtnuté políčko“ (☒)
 * „nezlomitelná mezera“ (&nbsp;)
 * „české uvozovky“ („) a (“)
 

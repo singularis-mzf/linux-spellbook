@@ -51,7 +51,7 @@ JMENO := Sid $(shell date +%Y%m%d)
 
 .PHONY: all clean html log pdf-a4 pdf-b5 pdf-a5 pomocne-funkce
 
-all: html log pdf-a4 pdf-b5 pdf-a5 pomocne-funkce
+all: html log pdf-a4 pomocne-funkce
 
 clean:
 	$(RM) -Rv $(SOUBORY_PREKLADU) $(VYSTUP_PREKLADU) kapitoly.lst
