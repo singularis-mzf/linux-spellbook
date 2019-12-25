@@ -156,6 +156,9 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C, priznak) {
                 VYSTUP = VYSTUP ZpracujZnak("'");
                 VSTUP = substr(VSTUP, 6);
                 continue;
+            case "<nic>":
+                VSTUP = substr(VSTUP, 6);
+                continue;
             case "<tab>":
                 VYSTUP = VYSTUP Tabulator(8);
                 VSTUP = substr(VSTUP, 6);
@@ -248,7 +251,7 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C, priznak) {
                 ShoditFatalniVyjimku("Funkce $$ není v této verzi podporována. Při opakování znaku $ musí být tyto znaky escapovány zpětným lomítkem.");
                 break;
             case "--":
-                ShoditFatalniVyjimku("Kombinace -- musí být ve zdrojovém kódu povinné escapovaná.");
+                ShoditFatalniVyjimku("Kombinace " C " musí být ve zdrojovém kódu povinné escapovaná.");
                 break;
             default:
                 break;

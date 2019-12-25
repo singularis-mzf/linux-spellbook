@@ -28,7 +28,7 @@
 <head profile="http://www.w3.org/2005/10/profile">
 <meta charset="UTF-8">
 <title>Linux: Kniha kouzel</title>
-<link rel="stylesheet" type="text/css" href="lkk.css">
+<link rel="stylesheet" type="text/css" href="lkk-{{DATUMSESTAVENÍ}}.css">
 <link rel="icon" type="image/png" href="obrazky/favicon.png">
 </head>
 <body>
@@ -119,7 +119,7 @@ uvést víckrát, jsou vyznačeny šedou trojtečkou.</td></tr>
 <head profile="http://www.w3.org/2005/10/profile">
 <meta charset="UTF-8">
 <title>{{NÁZEV KAPITOLY}} − Linux: Kniha kouzel</title>
-<link rel="stylesheet" type="text/css" href="lkk.css">
+<link rel="stylesheet" type="text/css" href="lkk-{{DATUMSESTAVENÍ}}.css">
 <link rel="icon" type="image/png" href="obrazky/favicon.png">
 </head>
 <body>

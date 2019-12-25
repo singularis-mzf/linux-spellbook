@@ -34,6 +34,9 @@ BEGIN {
     if (JMENOVERZE == "") {
         ShoditFatalniVyjimku("Vyžadovaná proměnná JMENOVERZE není nastavena pomocí parametru -v!");
     }
+    if (DATUMSESTAVENI == "") {
+        ShoditFatalniVyjimku("Vyžadovaná proměnná DATUMSESTAVENI není nastavena pomocí parametru -v!");
+    }
     prikaz = "egrep '^[^\t]*\t" IDKAPITOLY "\t' soubory_prekladu/fragmenty.tsv";
     prikaz | getline zaznam;
     close(prikaz);
@@ -189,6 +192,7 @@ VYTISKNOUT {
     gsub(/\{\{ČÍSLO KAPITOLY\}\}/, CISLO_KAPITOLY);
     gsub(/\{\{JMÉNO VERZE\}\}/, EscapovatKNahrade(JMENOVERZE));
     gsub(/\{\{PŘEDEVŚIM PRO\}\}/, EscapovatKNahrade(PREDEVSIM_PRO));
+    gsub(/\{\{DATUMSESTAVENÍ\}\}/, DATUMSESTAVENI);
     print $0;
 }
 

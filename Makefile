@@ -22,10 +22,14 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
+# Nástroje
+# ============================================================================
 SHELL := /bin/sh
 AWK := gawk
 CONVERT := convert
 
+# Dodatky a kapitoly
+# ============================================================================
 VSECHNY_DODATKY := predmluva koncepce-projektu plan-vyvoje test licence
 
 # _ A, B, C, D, E, F, G
@@ -39,15 +43,22 @@ VSECHNY_KAPITOLY += sprava-balicku sprava-uzivatelu stahovani-videi
 # T, U, V, W, X, Y, Z
 VSECHNY_KAPITOLY += unicode x zpracovani-obrazku zpracovani-textovych-souboru zpracovani-videa-a-zvuku
 
+# Obrázky (bitmapové a SVG)
+# ============================================================================
 OBRAZKY := favicon.png by-sa.png logo-knihy-velke.png make.png barvy.png ve-vystavbe.png marsh.jpg banner.png
-
 SVG_OBRAZKY := kalendar.svg tritecky.svg graf-filtru.svg
 
+
+# Další nastavení
+# ============================================================================
 SOUBORY_PREKLADU := soubory_prekladu
 VYSTUP_PREKLADU := vystup_prekladu
 
+DATUM_SESTAVENI := $(shell date +%Y%m%d)
+DATUM_SESTAVENI_SOUBOR := $(SOUBORY_PREKLADU)/datum-$(DATUM_SESTAVENI).txt
+
 # Výchozí jméno buildu
-JMENO := Sid $(shell date +%Y%m%d)
+JMENO := Sid $(DATUM_SESTAVENI)
 
 .PHONY: all clean html log pdf-a4 pdf-b5 pdf-a5 pomocne-funkce
 
@@ -57,7 +68,7 @@ clean:
 	$(RM) -Rv $(SOUBORY_PREKLADU) $(VYSTUP_PREKLADU) kapitoly.lst
 
 # Podporované formáty:
-html: $(addprefix $(VYSTUP_PREKLADU)/html/, lkk.css index.htm _autori.htm)
+html: $(addprefix $(VYSTUP_PREKLADU)/html/, lkk-$(DATUM_SESTAVENI).css index.htm _autori.htm)
 log: $(VYSTUP_PREKLADU)/log/index.log
 pdf-a4: $(VYSTUP_PREKLADU)/pdf-a4/kniha.pdf
 pdf-b5: $(VYSTUP_PREKLADU)/pdf-b5/kniha.pdf
@@ -98,6 +109,11 @@ $(SOUBORY_PREKLADU)/postprocess.tsv:
 	-test -r postprocess.tsv && cat postprocess.tsv >"$@"
 	touch "$@"
 
+# 4. soubory_prekladu/datum-*.txt
+# ============================================================================
+$(DATUM_SESTAVENI_SOUBOR):
+	printf $(DATUM_SESTAVENI)\\n >"$@"
+
 # HTML:
 
 # 1A. kapitoly/{kapitola}.md => soubory_prekladu/html/{kapitola}
@@ -114,14 +130,15 @@ $(addprefix $(SOUBORY_PREKLADU)/html/,$(VSECHNY_DODATKY)): $(SOUBORY_PREKLADU)/h
 
 # 2. soubory_prekladu/html/{id} => vystup_prekladu/html/{id}.htm
 # ============================================================================
-$(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY))): $(VYSTUP_PREKLADU)/%.htm: $(SOUBORY_PREKLADU)/% skripty/kapitola.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
+$(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY))): $(VYSTUP_PREKLADU)/%.htm: $(SOUBORY_PREKLADU)/% skripty/kapitola.awk $(SOUBORY_PREKLADU)/fragmenty.tsv $(DATUM_SESTAVENI_SOUBOR)
 	mkdir -pv $(VYSTUP_PREKLADU)/html
-	cut -f 2 $(SOUBORY_PREKLADU)/fragmenty.tsv | fgrep -qx $(basename $(notdir $<)) && exec $(AWK) -f skripty/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=$(basename $(notdir $@)) -v TELOKAPITOLY=$< formaty/html/sablona_kapitoly > $@ || true
+	cut -f 2 $(SOUBORY_PREKLADU)/fragmenty.tsv | fgrep -qx $(basename $(notdir $<)) && exec $(AWK) -f skripty/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=$(basename $(notdir $@)) -v TELOKAPITOLY=$< -v DATUMSESTAVENI=$(DATUM_SESTAVENI) formaty/html/sablona_kapitoly > $@ || true
 
 # 3. formaty/html/sablona.css => vystup_prekladu/html/lkk.css
 # ============================================================================
-$(VYSTUP_PREKLADU)/html/lkk.css: formaty/html/sablona.css
+$(VYSTUP_PREKLADU)/html/lkk-$(DATUM_SESTAVENI).css: formaty/html/sablona.css
 	mkdir -pv $(dir $@)
+	$(RM) $(VYSTUP_PREKLADU)/html/lkk-2*.css
 	cat $< > $@
 
 # 4. obrazky/{obrazek} => vystup_prekladu/html/obrazky/{obrazek}
@@ -140,8 +157,9 @@ $(VYSTUP_PREKLADU)/html/index.htm: $(SOUBORY_PREKLADU)/fragmenty.tsv \
   skripty/generovat-index-html.awk \
   $(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY)))   $(SOUBORY_PREKLADU)/fragmenty.tsv \
   $(OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%) \
-  $(SVG_OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%)
-	$(AWK) -f skripty/generovat-index-html.awk -F \\t -v JMENOVERZE='$(JMENO)' $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/html/sablona_kapitoly > $@
+  $(SVG_OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%) \
+  $(DATUM_SESTAVENI_SOUBOR)
+	$(AWK) -f skripty/generovat-index-html.awk -F \\t -v JMENOVERZE='$(JMENO)' -v DATUMSESTAVENI=$(DATUM_SESTAVENI) $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/html/sablona_kapitoly > $@
 
 # 6. sepsat copyrighty ke kapitolám
 # ============================================================================
@@ -157,8 +175,12 @@ $(SOUBORY_PREKLADU)/html/obr-copys.htm: COPYING skripty/sepsat-copykobr.awk
 
 # 8. shromáždit copyrighty na stránku _autori.htm
 # ============================================================================
-$(VYSTUP_PREKLADU)/html/_autori.htm: $(addprefix $(SOUBORY_PREKLADU)/html/, kap-copys.htm obr-copys.htm) skripty/kapitola.awk formaty/html/sablona_licinfo
-	$(AWK) -f skripty/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=_autori -v TELOKAPITOLY=/dev/null -v COPYRIGHTY_KAPITOL=$(SOUBORY_PREKLADU)/html/kap-copys.htm -v COPYRIGHTY_OBRAZKU=$(SOUBORY_PREKLADU)/html/obr-copys.htm formaty/html/sablona_licinfo > $@ || true
+$(VYSTUP_PREKLADU)/html/_autori.htm: \
+  $(addprefix $(SOUBORY_PREKLADU)/html/, kap-copys.htm obr-copys.htm) \
+  skripty/kapitola.awk \
+  formaty/html/sablona_licinfo \
+  $(DATUM_SESTAVENI_SOUBOR)
+	$(AWK) -f skripty/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=_autori -v TELOKAPITOLY=/dev/null -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v COPYRIGHTY_KAPITOL=$(SOUBORY_PREKLADU)/html/kap-copys.htm -v COPYRIGHTY_OBRAZKU=$(SOUBORY_PREKLADU)/html/obr-copys.htm formaty/html/sablona_licinfo > $@ || true
 
 
 # LOG:
@@ -177,9 +199,9 @@ $(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_DODATKY)): $(SOUBORY_PREKLADU)/lo
 
 # 2. soubory_prekladu/log/{id} => soubory_prekladu/log/{id}.kap
 # ============================================================================
-$(addsuffix .kap,$(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY))): %.kap: % skripty/kapitola.awk $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/log/sablona_kapitoly
+$(addsuffix .kap,$(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY))): %.kap: % skripty/kapitola.awk $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/log/sablona_kapitoly $(DATUM_SESTAVENI_SOUBOR)
 	mkdir -pv $(SOUBORY_PREKLADU)/log
-	$(AWK) -f skripty/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=$(basename $(notdir $@)) -v TELOKAPITOLY=$< formaty/log/sablona_kapitoly > $@
+	$(AWK) -f skripty/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=$(basename $(notdir $@)) -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v TELOKAPITOLY=$< formaty/log/sablona_kapitoly > $@
 
 # 3. soubory_prekladu/log/{id}.kap => vystup_prekladu/log/index.log
 # ============================================================================
@@ -207,8 +229,8 @@ $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%): $(SOUBORY_PREKLADU)/pdf
 # ============================================================================
 $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap) $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap): \
   %.kap: \
-  % skripty/kapitola.awk $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/pdf/sablona.tex
-	$(AWK) -f skripty/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=$(basename $(notdir $@)) -v TELOKAPITOLY=$< formaty/pdf/sablona.tex > $@
+  % skripty/kapitola.awk $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/pdf/sablona.tex $(DATUM_SESTAVENI_SOUBOR)
+	$(AWK) -f skripty/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=$(basename $(notdir $@)) -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v TELOKAPITOLY=$< formaty/pdf/sablona.tex > $@
 
 # 3. obrazky/{obrazek} => soubory_prekladu/pdf-spolecne/_obrazky/{obrazek}
 # ============================================================================

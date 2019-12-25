@@ -29,7 +29,7 @@
 <head profile="http://www.w3.org/2005/10/profile">
 <meta charset="UTF-8">
 <title>Přehled autorů − Linux: Kniha kouzel</title>
-<link rel="stylesheet" type="text/css" href="lkk.css">
+<link rel="stylesheet" type="text/css" href="lkk-{{DATUMSESTAVENÍ}}.css">
 <link rel="icon" type="image/png" href="obrazky/favicon.png">
 </head>
 <body>

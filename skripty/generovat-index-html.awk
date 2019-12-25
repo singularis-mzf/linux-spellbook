@@ -25,19 +25,22 @@
 @include "skripty/utility.awk"
 
 BEGIN {
-    CAS = systime();
-    DATUM = strftime("%-d. ", CAS) MesicVDruhemPade(strftime("%-m", CAS)) strftime(" %Y", CAS);
+    if (JMENOVERZE == "") {
+        ShoditFatalniVyjimku("Vyžadovaná proměnná JMENOVERZE není nastavena pomocí parametru -v!");
+    }
+    if (DATUMSESTAVENI == "") {
+        ShoditFatalniVyjimku("Vyžadovaná proměnná DATUMSESTAVENI není nastavena pomocí parametru -v!");
+    }
+    if (IDFORMATU == "") {
+        IDFORMATU = "html";
+    }
+
+    DATUM = sprintf("%d. %s %s", substr(DATUMSESTAVENI, 7, 2), MesicVDruhemPade(sprintf("%d", substr(DATUMSESTAVENI, 5, 2))), substr(DATUMSESTAVENI, 1, 4));
 
     if (FS != "\t") {
         ShoditFatalniVyjimku("Chybně nastavený field separator. Musí být tabulátor. Použijte parametr -F \\\\t při spouštění awk!");
     }
 
-    if (JMENOVERZE == "") {
-        ShoditFatalniVyjimku("Vyžadovaná proměnná JMENOVERZE není nastavena pomocí parametru -v!");
-    }
-    if (IDFORMATU == "") {
-        IDFORMATU = "html";
-    }
 
     delete ADRESAR;
     delete CISLO;
@@ -173,8 +176,9 @@ function VypsatOdkazNaKapitolu(i, vyclenit) {
 }
 
 
-/\{\{(DATUM SESTAVENÍ|JMÉNO VERZE|PŘEDEVŠÍM PRO)\}\}/ {
+/\{\{(DATUM ?SESTAVENÍ|JMÉNO VERZE|PŘEDEVŠÍM PRO)\}\}/ {
     gsub(/\{\{DATUM SESTAVENÍ\}\}/, DATUM);
+    gsub(/\{\{DATUMSESTAVENÍ\}\}/, DATUMSESTAVENI);
     gsub(/\{\{JMÉNO VERZE\}\}/, EscapovatKNahrade(JMENOVERZE));
     gsub(/\{\{PŘEDEVŠÍM PRO\}\}/, EscapovatKNahrade(PREDEVSIM_PRO));
 }

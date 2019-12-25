@@ -133,6 +133,8 @@ Pro parametry příkazů existuje zvláštní režim zapnutý metapříkazem:
 * --dlouhy :: Dlouhý parametr bez hodnoty.
 * --dlouhy {*hodnota*} :: Dlouhý parametr s hodnotou.
 
+Každý řádek tohoto zvláštního režimu musí obsahovat oddělovač \:\: a před tímto oddělovačem nemusí být escapován znak -, a to ani když se opakuje.
+
 ## Zvláštní znaky a jejich escapování
 
 „Escapování“ znamená zapsání speciálního znaku za dodatečné zpětné lomítko
