@@ -64,6 +64,81 @@ Nejčastější vlastnosti písma:
 - Scale=MatchLowercase
 -->
 
+### Přepínače
+
+*# deklarovat nový přepínač/jen pokud neexistuje*<br>
+*// Výchozí hodnota nového přepínače je nepravda.*<br>
+^^**\\usepackage{etoolbox}**<br>
+**\\newtoggle{<nic>**{*názevpřepínače*}**<nic>}**<br>
+**\\providetoggle{<nic>**{*názevpřepínače*}**<nic>}**
+
+*# přepnout do stavu pravda/nepravda*<br>
+^^**\\usepackage{etoolbox}**<br>
+**\\toggletrue{<nic>**{*názevpřepínače*}**<nic>}**<br>
+**\\togglefalse{<nic>**{*názevpřepínače*}**<nic>}**
+
+*# přepnout do opačného stavu*<br>
+^^**\\usepackage{etoolbox}**<br>
+**\\iftoggle{<nic>**{*názevpřepínače*}**<nic>}{\\togglefalse}{\\toggletrue}{<nic>**{*názevpřepínače*}**<nic>}**
+
+### Podmíněný překlad
+
+*# je řetězec prázdný?*<br>
+^^**\\usepackage{etoolbox}**<br>
+**\\ifstrempty{<nic>**{*řetězec*}**<nic>}**{*tělo*}
+
+*# jsou dva řetězce shodné?*<br>
+^^**\\usepackage{etoolbox}**<br>
+**\\ifstrequal{<nic>**{*jeden řetězec*}**<nic>}{<nic>**{*druhý řetězec*}**<nic>}**{*tělo*}
+
+*# porovnání číselných výrazů*<br>
+*// Výrazy mohou obsahovat: uzávorkování, čeločíselné konstanty, operátory +, -, \*, /, příkaz \\value{} k získání hodnoty počítadla.*<br>
+^^**\\usepackage{etoolbox}**<br>
+**\\ifnumcomp{<nic>**{*levý výraz*}**<nic>}{<nic>**{*operátor-&lt;-=-nebo-&gt;*}**<nic>}{<nic>**{*pravý výraz*}**<nic>}**{*tělo*}
+
+*# je číslo sudé?*<br>
+^^**\\usepackage{etoolbox}**<br>
+**\\ifnumodd{<nic>**{*celočíselný výraz*}**<nic>}**{*tělo*}
+
+*# porovnání délek*<br>
+*// Výrazy mohou obsahovat: uzávorkování, délkové konstanty (např. „0.5pt“) a jejich součty a rozdíly, násobení či dělení číslem (např. „\* 2.5“), délkové registry (např. „\\parskip“).*<br>
+^^**\\usepackage{etoolbox}**<br>
+**\\ifdimcomp{ **{*levý výraz*}** }{<nic>**{*operátor-&lt;-=-nebo-&gt;*}**<nic>}{ **{*pravý výraz*}** }**{*tělo*}
+
+*# je přepínač ve stavu „pravda“/„nepravda“?*<br>
+**\\iftoggle{<nic>**{*názevpřepínače*}**<nic>}**{*tělo*}<br>
+**\\nottoggle{<nic>**{*názevpřepínače*}**<nic>}**{*tělo*}
+
+
+
+<!--
+Příkazy \ifnumcomp a \ifdimcomp prý fungují i ve vyhodnocovaném kontextu.
+-->
+
+### Obecný podmíněný překlad
+
+*# obecný tvar*<br>
+*// Logický výraz může obsahovat: uzávorkování a operátory uvedené níže.*<br>
+^^**\\usepackage{etoolbox}**<br>
+**\\ifboolexpr{ **{*logický výraz*}** }**{*tělo*}
+
+*# opakovat kód, dokud je/není podmínka splněna*<br>
+**\\whileboolexpr{ **{*logický výraz*}** }{<nic>**{*kód*}**<nic>}**
+
+*# operátor pro přečtení přepínače*<br>
+**togl{<nic>**{*názevpřepínače*}**<nic>}**
+
+*# operátor logické negace*<br>
+**not** {*negovaný test*}
+
+*# operátor logického součinu/součtu*<br>
+{*jeden logický výraz*} **and** {*druhý logický výraz*}<br>
+{*jeden logický výraz*} **or** {*druhý logický výraz*}
+
+*# vnořený test**
+**test{<nic>** {*vnořený test s parametry, ale bez těla*} **<nic>}**
+
+
 ## Parametry příkazů
 <!--
 - Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.
