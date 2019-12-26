@@ -15,6 +15,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 Poznámky:
 
 [ ] Zamyslet se nad formátováním formátu date/strftime.
+
+⊨
 -->
 
 # Datum, čas a kalendář
@@ -31,100 +33,96 @@ kalendářů (čínský apod.).
 
 Plánovní úloh na konkrétní čas do této kapitoly nespadá.
 
-<!--
 ## Definice
 
-- Uveďte výčet specifických pojmů pro použití v této kapitole a tyto pojmy definujte co nejprecizněji.
--->
+* **Časová známka Unixu** je číselná reprezentace okamžiku v čase daná počtem sekund od 00:00:00 UTC 1. ledna 1970. Čas před tímto milníkem se reprezentuje zápornými čísly, pozdější čas kladnými. Obvykle se uvažují celá čísla, ale některé implementace pracují i s desetinnými. Časová známka Unixu se uvádí téměř výhradně v desítkové soustavě.
 
 ## Zaklínadla
 
 ### Výstupní formát („date +“ a „strftime“)
 
-V následujících zaklínadlech následuje na každém řádku příklad s vysvětlením,
-oddělený znakem „=“.
-Číselné hodnoty se automaticky zarovnávají nulami (např. leden je měsíc 01);
+Číselné hodnoty (kromě %s) se automaticky zarovnávají nulami (např. leden je měsíc 01),
 potlačit to můžete vložením „-“ za %, např. „%-m“ vrátí pro leden „1“;
-pro zarovnání mezerami tam vložte „\_“, např. „%\_m“ vrátí pro leden „&blank;1“.
+pro zarovnání mezerami místo nulami tam vložte „\_“, např. „%\_m“ vrátí pro leden „&blank;1“.
 
 *# lokalizované celky*<br>
-**%x = datum = 31.12.2019**<br>
-**%X = čas (24hodinový) = 23:59:59**<br>
-**%r = čas (12hodinový) = 11:59:59**<br>
-**%c = datum a čas (24hodinový) = Út 31. prosince 2019, 23:59:59 CET**
+**%x** ⊨ datum = 31.12.2019<br>
+**%X** ⊨ čas (24hodinový) = 23:59:59<br>
+**%r** ⊨ čas (12hodinový) = 11:59:59<br>
+**%c** ⊨ datum a čas (24hodinový) = Út 31. prosince 2019, 23:59:59 CET
 
 *# nelokalizované celky*<br>
-**%D = %m/%d/%y = 12/31/19**<br>
-**%F = %Y-%m-%d = 2019-12-31**<br>
-**%R = %H:%M = 23:59**<br>
-**%T = %H:%M:%S = 23:59:59**
+**%D** ⊨ %m/%d/%y = 12/31/19<br>
+**%F** ⊨ %Y-%m-%d = 2019-12-31<br>
+**%R** ⊨ %H:%M = 23:59<br>
+**%T** ⊨ %H:%M:%S = 23:59:59
 
 *# den v týdnu (alternativy)*<br>
-**%A = Úterý (plný název, lokalizovaný)**<br>
-**%a = Út (zkratka, lokalizovaná)**<br>
-**%u = 2 (číslo 1..7, kde 1 je pondělí)**<br>
-**%w = 2 (číslo 0..6, kde 0 je neděle)**
+**%A** ⊨ Úterý (plný název, lokalizovaný)<br>
+**%a** ⊨ Út (zkratka, lokalizovaná)<br>
+**%u** ⊨ 2 (číslo 1..7, kde 1 je pondělí)<br>
+**%w** ⊨ 2 (číslo 0..6, kde 0 je neděle)
 
 *# **rok** (alternativy)*<br>
-**%Y = 2010 (4 číslice)**<br>
-**%C = 20 (století)**<br>
-**%y = 10 (dvojčíslí roku)**
+**%Y** ⊨ 2010 (4 číslice)<br>
+**%C** ⊨ 20 (století)<br>
+**%y** ⊨ 10 (dvojčíslí roku)
 
 *# čtvrtletí (ne strftime)*<br>
-**%q = 3 (číslo 1..4)**
+**%q** ⊨ 3 (číslo 1..4)
 
 *# **měsíc** (alternativy)*<br>
-**%m = 03 (číslo)**<br>
-**%B = listopad (plný název, lokalizovaný)**<br>
-**%b = lis (zkratka, lokalizovaná)**
+**%m** ⊨ 03 (číslo)<br>
+**%B** ⊨ listopad (plný název, lokalizovaný)<br>
+**%b** ⊨ lis (zkratka, lokalizovaná)
 
 *# den v měsíci (alternativy)*<br>
-**%d = 03 (číslo)**<br>
-**%e = &blank;3 (číslo zarovnané mezerou)**
+**%d** ⊨ 03 (číslo)<br>
+**%e** ⊨ &blank;3 (číslo zarovnané mezerou)
 
 *# **hodina** + období dne (alternativy)*<br>
-**%H = 15 (číslo 00..23)**<br>
-**%I = 03 (číslo 01..12)**<br>
-**%p = AM/PM (lokalizovaně)**<br>
-**%P = am/pm (lokalizovaně)**
+**%H** ⊨ 15 (číslo 00..23)<br>
+**%I** ⊨ 03 (číslo 01..12)<br>
+**%p** ⊨ AM/PM (lokalizovaně)<br>
+**%P** ⊨ am/pm (lokalizovaně)
 
 *# **minuta***<br>
-**%M = 59 (číslo 00..59)**
+**%M** ⊨ 59 (číslo 00..59)
 
 *# **sekunda***<br>
-**%S = 59 (číslo 00..61)**
+**%S** ⊨ 59 (číslo 00..61)
 
 *# zlomky sekundy (ne strftime)*<br>
 *// Počet „číslic“ by měl být v rozsahu 1 až 9.*<br>
-**%**[{*číslic*}]**N = 123456789 (počítadlo nanosekund)**
+**%**[{*číslic*}]**N** ⊨ 123456789 (počítadlo nanosekund)
 
 *# **časová zóna***<br>
 *// strftime jen %z a %Z.*<br>
-**%Z = CET (zkratka časové zóny)**<br>
-**%z = +0100**<br>
-**%:z = +01:00**<br>
-**%::z = +01:00:00**<br>
-**%:::z = +01 (nejkratší přesné vyjádření)**<br>
+**%Z** ⊨ CET (zkratka časové zóny)<br>
+**%z** ⊨ +0100<br>
+**%:z** ⊨ +01:00<br>
+**%::z** ⊨ +01:00:00<br>
+**%:::z** ⊨ +01 (nejkratší přesné vyjádření)
 
 *# číslo týdne podle ISO normy (týden začíná pondělím)*<br>
-**%G = 2010 (celé číslo roku)**<br>
-**%g = 10 (dvojčíslí roku)**<br>
-**%V = 03 (číslo týdne 01..53)**
+**%G** ⊨ 2010 (celé číslo roku)<br>
+**%g** ⊨ 10 (dvojčíslí roku)<br>
+**%V** ⊨ 03 (číslo týdne 01..53)
 
 *# číslo týdne v roce*<br>
-**%W = 07 (00..53, týden začíná pondělím)**<br>
-**%U = 07 (00..53, týden začíná nedělí)**
+**%W** ⊨ 07 (00..53, týden začíná pondělím)<br>
+**%U** ⊨ 07 (00..53, týden začíná nedělí)
 
 *# escapované znaky (alternativy)*<br>
-**%% = %**<br>
-**%n = konec řádku**<br>
-**%t = tabulátor**
+**%%** ⊨ %<br>
+**%n** ⊨ konec řádku<br>
+**%t** ⊨ tabulátor
 
-*# časová známka Unixu (počet sekund od 00:00:00 1. ledna 1970 UTC)(ne strftime)*<br>
-**%s**
+*# časová známka Unixu (ne strftime)*<br>
+**%s** ⊨ 1577833199
 
 *# číslo dne v roce*<br>
-**%**[**-**]**j**
+**%**[**-**]**j** ⊨ 001
 
 ### Doporučené vstupní formáty času („date -d“)
 
@@ -158,7 +156,7 @@ pro zarovnání mezerami tam vložte „\_“, např. „%\_m“ vrátí pro led
 **TZ="UTC"&blank;**{*rok*}**-**{*měsíc*}**-**{*den*}**&blank;**{*hodina*}**:**{*minuta*}**:**{*sekunda*}[**.**{*f*}]<br>
 
 *# **časová známka Unixu***<br>
-*// „číslo“ může být kladné i záporné, celé i s desetinnou tečkou. Výsledkem bude čas posunutý od začátku unixové éry (UTC půlnoc 1. ledna 1970) o zadaný počet sekund. Odpovídá formátu „%s“, resp. „%s.%N“*<br>
+*// „číslo“ může být kladné i záporné, celé i s desetinnou tečkou. Odpovídá formátu „%s“, resp. „%s.%N“*<br>
 **@**{*číslo*}<br>
 **@1577750400**<br>
 **@-12345.6789**
@@ -225,22 +223,22 @@ pro zarovnání mezerami tam vložte „\_“, např. „%\_m“ vrátí pro led
 **printf %s\\\\n $(($(date -ud** {*datum*} **+%s) / 86400))**<br>
 **date -ud "@$((**{*číslo-dne*}** \* 86400))" +%F**
 
-*# **přičíst** k datu N dní/**odečíst** od data N dní*<br>
+*# **přičíst/odečíst** N dní*<br>
 **date -ud @$((**{*N*} **\* 86400 + $(date -ud "**{*datum*}**" +%s))) +%F**<br>
 **date -ud @$((-**{*N*} **\* 86400 + $(date -ud "**{*datum*}**" +%s))) +%F**
 
-*# **rozdíl** dvou dat ve dnech*<br>
+*# **rozdíl** ve dnech*<br>
 **printf %s\\\\n $((($(date -ud** {*datum*} **+%s) - $(date -ud** {*odečítané-datum*} **+%s)) / 86400))**
 
 *# je **rok přestupný**?*<br>
 **test 61 -eq $(date -d** {*rok*}**-03-01 +%-j)**
 
 ### Artimetika s časem
-*# konverze lokálního/UTC času na „časovou známku Unixu“*<br>
+*# konverze lokálního/UTC času na časovou známku Unixu*<br>
 **date -d "**{*čas*}**" +%s**<br>
 **date -ud "**{*čas*}**" +%s**
 
-*# konverze „časové známky“ na lokální čas/UTC*<br>
+*# konverze časové známky Unixu na lokální čas/UTC*<br>
 **date -d %**{*časová-známka*} **"+%F %T**[**&blank;%z**]**"**<br>
 **date -ud %**{*časová-známka*} **"+%F %T"**
 
@@ -259,7 +257,7 @@ pro zarovnání mezerami tam vložte „\_“, např. „%\_m“ vrátí pro led
 
 *# přepnout časovou zónu systému*<br>
 **sudo dpkg-reconfigure tzdata**<br>
-!: V dialogu zvolit požadovanou oblast a konkrétní časovou zónu.
+!: V dialogu zvolte požadovanou oblast a konkrétní časovou zónu.
 
 *# ručně synchronizovat systémový čas*<br>
 ?

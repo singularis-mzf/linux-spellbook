@@ -406,20 +406,20 @@ function ZalomitRadekZaklinadla(text,   c, i, slzav, hrzav, lastzlom) {
 }
 
 
-function RadekZaklinadla(text, urovenOdsazeni) {
+function RadekZaklinadla(text, urovenOdsazeni, prikladHodnoty) {
 #    gsub(/=/, "={\\moznyzlom}", text);
 
     if (urovenOdsazeni == 0) {
-        return "%\n\\radekzaklinadla{\\lmmathfamily{}󠁞∘\\hspace*{0.1em}}{" ZalomitRadekZaklinadla(text) "}";
+        return "%\n\\radekzaklinadla{\\lmmathfamily{}󠁞∘\\hspace*{0.1em}}{" ZalomitRadekZaklinadla(text) (prikladHodnoty != "" ? "\\priklad{}" prikladHodnoty : "") "}";
 
     } else if (0 < urovenOdsazeni && urovenOdsazeni <= 9) {
-        return "%\n\\radekzaklinadla{󠁞\\lmmathfamily{}∘\\hspace*{0.1em}}{" Zopakovat("~", 2 * urovenOdsazeni) ZalomitRadekZaklinadla(text) "}";
+        return "%\n\\radekzaklinadla{󠁞\\lmmathfamily{}∘\\hspace*{0.1em}}{" Zopakovat("~", 2 * urovenOdsazeni) ZalomitRadekZaklinadla(text) (prikladHodnoty != "" ? "\\priklad{}" prikladHodnoty : "") "}";
 
     } else if (urovenOdsazeni == UROVEN_AKCE) {
         return "%\n\\radekzaklinadla{\\lmmathfamily{}⇒{}}{\\rmfamily{}" ZalomitRadekZaklinadla(text) "}";
 
     } else if (urovenOdsazeni == UROVEN_PREAMBULE) {
-        return "%\n\\radekzaklinadla{\\lmmathfamily{}↟\\hspace{0.04em}}{" ZalomitRadekZaklinadla(text) "}";
+        return "%\n\\radekzaklinadla{\\lmmathfamily{}↟\\hspace{0.04em}}{" ZalomitRadekZaklinadla(text) (prikladHodnoty != "" ? "\\priklad{}" prikladHodnoty : "") "}";
 
     } else {
         ShoditFatalniVyjimku("Nepodporovaná úroveň odsazení: " urovenOdsazeni);

@@ -113,7 +113,9 @@ Poznámka: ve Firefoxu se nezlomitelné mezery zkopírují do schránky jako oby
 **pro samostatné ukázky kódu je také podporován příklad bez záhlaví**<br>
 **takový příklad nemůže mít poznámky pod čarou,**<br>
 ^^**ale může mít řádky určené do záhlaví**<br>
-!: A také může obsahovat akce.
+!: A také může obsahovat akce.<br>
+**a příklad hodnoty** ⊨ jako je **tento**.<br>
+^^**i určený do záhlaví** ⊨ jako je **tento**.
 
 
 ## Obrázky

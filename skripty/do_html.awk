@@ -200,19 +200,23 @@ function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, cislaPoznamek, texty
 }
 
 # urovenOdsazeni: 0 = normální řádek; 1, 2, atd. = odsazený řádek; -1 = UROVEN_AKCE; -2 = UROVEN_PREAMBULE
-function RadekZaklinadla(text, urovenOdsazeni) {
+function RadekZaklinadla(text, urovenOdsazeni, prikladHodnoty) {
+    if (prikladHodnoty != "") {
+        prikladHodnoty = "<span class=\"prikladhodnoty\">⊨ " prikladHodnoty "</span>";
+    }
+
     if (urovenOdsazeni == 0) {
-        return "<div class=\"radekzaklinadla\">" text "</div>\n"
+        return "<div class=\"radekzaklinadla\">" text prikladHodnoty "</div>\n"
 
     } else if (0 < urovenOdsazeni && urovenOdsazeni <= 9) {
-        return "<div class=\"radekzaklinadla\" style=\"padding-left:" (2 * urovenOdsazeni) "ch;\">" text "</div>\n"
+        return "<div class=\"radekzaklinadla\" style=\"padding-left:" (2 * urovenOdsazeni) "ch;\">" text prikladHodnoty "</div>\n"
 
     } else if (urovenOdsazeni == UROVEN_AKCE) {
         return "<div class=\"radekzaklinadla akce\">" text "</div>\n"
 
     } else if (urovenOdsazeni == UROVEN_PREAMBULE) {
         return "<div class=\"radekzaklinadla dopreambule\"><span title=\"Takto označený řádek " \
-            "patří do preambule zdrojového kódu či do záhlaví skriptu.\">^</span>" text "</div>\n"
+            "patří do preambule zdrojového kódu či do záhlaví skriptu.\">^</span>" text prikladHodnoty "</div>\n"
 
     } else {
         ShoditFatalniVyjimku("Nepodporovaná úroveň odsazení: " urovenOdsazeni);

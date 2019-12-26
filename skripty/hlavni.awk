@@ -76,8 +76,9 @@ function ZpracujZnaky(text,     VSTUP, VYSTUP, ZNAK) {
 #
 # Může využívat globálních proměnných TYP_RADKU a PREDCHOZI_TYP_RADKU.
 # Lokálně používá zásobník "format".
-function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C, priznak) {
+function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C, priznak, stav) {
     priznak = 0; # příznak použitelný k zachování kontextu
+    stav = (TYP_RADKU == "RADEK_ZAKLINADLA" ? 0 : -1); # -1 = mimo zaklínadlo; 0 = v řádku zakl.; 1 = v textu příkladu hodnoty
     VSTUP = text;
     VYSTUP = "";
     VyprazdnitZasobnik("format");
@@ -199,12 +200,12 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C, priznak) {
         switch (C = substr(VSTUP, 1, 2)) {
             case "**":
                 if (Vrchol("format") != "**") {
-                    if (TYP_RADKU != "RADEK_ZAKLINADLA") {
+                    if (stav != 0) {
                         VYSTUP = VYSTUP FormatTucne(1);
                     }
                     Push("format", "**");
                 } else {
-                    if (TYP_RADKU != "RADEK_ZAKLINADLA") {
+                    if (stav != 0) {
                         VYSTUP = VYSTUP FormatTucne(0);
                     }
                     Pop("format");
@@ -315,6 +316,19 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C, priznak) {
                 VYSTUP = VYSTUP ZpracujZnak("/") ZpracujZnak("/");
                 VSTUP = substr(VSTUP, 2);
                 continue;
+            case "⊨":
+                if (stav == -1) {
+                    ShoditFatalniVyjimku("Znak ⊨ není povolen mimo jeho zvláštní použití v řádku zaklínadla!");
+                } else if (stav != 0) {
+                    ShoditFatalniVyjimku("Znak ⊨ se v řádku zaklínadla nesmí opakovat!");
+                } else if (VelikostZasobniku("format") != 0) {
+                    ShoditFatalniVyjimku("Znak ⊨ před uzavřením formátování (značka " Vrchol("format") ")!");
+                } else {
+                    stav = 1;
+                    VYSTUP = VYSTUP "⊨";
+                    VSTUP = substr(VSTUP, 2);
+                    continue;
+                }
             case "`":
             case "_":
                 ShoditFatalniVyjimku("Neescapovaný znak " C "! Všechny výskyty tohoto znaku musejí být escapovány zpětným lomítkem.");
@@ -330,7 +344,7 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C, priznak) {
                 }
                 break;
         }
-        VYSTUP = VYSTUP ((TYP_RADKU == "RADEK_ZAKLINADLA" && UROVEN != UROVEN_AKCE && VelikostZasobniku("format") == 0) ? ZpracujChybnyZnak(C) : ZpracujZnak(C));
+        VYSTUP = VYSTUP ((stav == 0 && UROVEN != UROVEN_AKCE && VelikostZasobniku("format") == 0) ? ZpracujChybnyZnak(C) : ZpracujZnak(C));
         VSTUP = substr(VSTUP, 2);
     }
 
@@ -787,9 +801,18 @@ TYP_RADKU == "RADEK_ZAKLINADLA" {
     }
     VypsatZahlaviZaklinadla();
     if (UROVEN == 0 && $0 == "?") {
-        printf("%s", RadekZaklinadla(ReseniNezname(), 0));
+        printf("%s", RadekZaklinadla(ReseniNezname(), 0, ""));
     } else {
-        printf("%s", RadekZaklinadla(FormatovatRadek($0), UROVEN));
+        gsub(/\s*⊨\s*/, "⊨");
+        s = FormatovatRadek($0);
+        i = index(s, "⊨");
+        if (i == 0) {
+            printf("%s", RadekZaklinadla(s, UROVEN, ""));
+        } else if (UROVEN != UROVEN_AKCE) {
+            printf("%s", RadekZaklinadla(substr(s, 1, i - 1), UROVEN, substr(s, i + 1)));
+        } else {
+            ShoditFatalniVyjimku("Dělení akce znakem ⊨ není podporováno!");
+        }
     }
     next;
 }

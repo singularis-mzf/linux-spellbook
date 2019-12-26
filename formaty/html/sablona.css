@@ -249,6 +249,12 @@ h2+.zaklinadlo>hr, h3+.zaklinadlo>hr {display:none;visibility:hidden;}
 .radekzaklinadla:last-child::after {display:none;}
 .radekzaklinadla:empty::after {margin-left:0;}
 
+.radekzaklinadla .prikladhodnoty {
+    margin-left:2rem;
+    border-left:0.2rem solid #bf4a4a;
+    background:#ffffff;
+    font-family:Arimo,Helvetica,Arial,sans-serif;
+}
 
 .zaklinadlo .akce, .radekzaklinadla.akce {font-family:serif;font-style:italic;}
 .zaklinadlo .akce::before, .zaklinadloakcebefore::before {content:"\2192 ";font-weight:bold;}

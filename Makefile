@@ -197,15 +197,28 @@ $(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_DODATKY)): $(SOUBORY_PREKLADU)/lo
 	mkdir -pv $(SOUBORY_PREKLADU)/log
 	$(AWK) -f skripty/do_logu.awk $< > $@
 
-# 2. soubory_prekladu/log/{id} => soubory_prekladu/log/{id}.kap
+# 2. soubory_prekladu/log/{id} => soubory_prekladu/log/{id}.kap + vystup_prekladu/log/{id}.log
 # ============================================================================
 $(addsuffix .kap,$(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY))): %.kap: % skripty/kapitola.awk $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/log/sablona_kapitoly $(DATUM_SESTAVENI_SOUBOR)
 	mkdir -pv $(SOUBORY_PREKLADU)/log
 	$(AWK) -f skripty/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=$(basename $(notdir $@)) -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v TELOKAPITOLY=$< formaty/log/sablona_kapitoly > $@
 
-# 3. soubory_prekladu/log/{id}.kap => vystup_prekladu/log/index.log
+# 3. soubory_prekladu/log/{id}.kap => vystup_prekladu/log/{id}.log
 # ============================================================================
-$(VYSTUP_PREKLADU)/log/index.log: $(addsuffix .kap,$(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY))) skripty/kniha.awk $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/log/sablona_kapitoly
+$(addsuffix .log,$(addprefix $(VYSTUP_PREKLADU)/log/,$(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY))): $(VYSTUP_PREKLADU)/log/%.log: $(SOUBORY_PREKLADU)/log/%.kap
+	mkdir -pv $(VYSTUP_PREKLADU)/log
+	cat $< > $@
+
+# 4. soubory_prekladu/log/{id}.kap => vystup_prekladu/log/index.log
+# ============================================================================
+$(VYSTUP_PREKLADU)/log/index.log: \
+  $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/log/%.kap) \
+  $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/log/%.kap) \
+  $(VSECHNY_KAPITOLY:%=$(VYSTUP_PREKLADU)/log/%.log) \
+  $(VSECHNY_DODATKY:%=$(VYSTUP_PREKLADU)/log/%.log) \
+  skripty/kniha.awk \
+  $(SOUBORY_PREKLADU)/fragmenty.tsv \
+  formaty/log/sablona_kapitoly
 	mkdir -pv $(VYSTUP_PREKLADU)/log
 	$(AWK) -f skripty/kniha.awk -v IDFORMATU=log -v JMENOVERZE='$(JMENO)' -v VSTUPPREFIX=$(SOUBORY_PREKLADU)/log/ -v VSTUPSUFFIX=.kap formaty/log/sablona_kapitoly > $@
 

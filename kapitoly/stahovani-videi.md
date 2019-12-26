@@ -41,45 +41,45 @@ ke stažení (např. z Ulož.to nebo z různých FTP serverů).
 ## Zaklínadla (youtube-dl)
 
 ### Parametry ve formátovacím řetězci (-o)
-*# **identifikátor** videa (např. „CvhJWKtBLn4“)*<br>
-**%(id)s**
+*# **identifikátor** videa*<br>
+**%(id)s** ⊨ CvhJWKtBLn4
 
-*# **název** videa (např. „Oficiální ASMR booktrailer seriálu Ester Krejčí 1.0“)*<br>
-**%(title)s**
+*# **název** videa*<br>
+**%(title)s** ⊨ Oficiální ASMR booktrailer seriálu Ester Krejčí 1.0
 
-*# správná **přípona** výstupního souboru (např. „mkv“)*<br>
-**%(ext)s**
+*# správná **přípona** výstupního souboru*<br>
+**%(ext)s** ⊨ mkv
 
-*# **šířka/výška** videa (např. „1920“ a „1080“)*<br>
-**%(width)d**<br>
-**%(height)d**
+*# **šířka/výška** videa*<br>
+**%(width)d** ⊨ 1920<br>
+**%(height)d** ⊨ 1080
 
 *# **formát** videa (ve formátu pro parametr -f/podrobný popis)*<br>
 **%(format\_id)s**<br>
 **%(format)s**
 
-*# **datum uploadu** videa (např. 20190618)*<br>
-**%(upload\_date)s**
+*# **datum uploadu** videa*<br>
+**%(upload\_date)s** ⊨ 20190618
 
-*# **počítadlo** (pět míst, např. „00001“/jen číslo, např. „1“)*<br>
+*# **počítadlo** (pět míst/jen číslo)*<br>
 *// Počáteční hodnota počítadla je 1, ale lze ji změnit parametrem „\-\-autonumber-start“.*<br>
-**%(autonumber)s**<br>
-**%(autonumber)d**
+**%(autonumber)s** ⊨ 00001<br>
+**%(autonumber)d** ⊨ 1
 
-*# index v playlistu (doplněný nulami, např. „001“/jen číslo, např. „1“)*<br>
-**%(playlist\_index)s**<br>
-**%(playlist\_index)d**
+*# index v playlistu (doplněný nulami/jen číslo)*<br>
+**%(playlist\_index)s** ⊨ 001<br>
+**%(playlist\_index)d** ⊨ 1
 
-*# název kanálu (např. „Mikoláš Štrajt“)*<br>
-**%(uploader)s**
+*# název kanálu*<br>
+**%(uploader)s** ⊨ Mikoláš Štrajt
 
 *# délka videa v sekundách*<br>
 **%(duration)d**
 
-*# počet zhlédnutí (např. 12)/liků (např. 1)/disliků (např. 0)*<br>
-**%(view\_count)d**<br>
-**%(like\_count)d**<br>
-**%(dislike\_count)d**
+*# počet zhlédnutí/liků/disliků*<br>
+**%(view\_count)d** ⊨ 12<br>
+**%(like\_count)d** ⊨ 1<br>
+**%(dislike\_count)d** ⊨ 0
 
 ### Výběr formátu (-f)
 *# stáhnout **nejlepší** dostupný formát*<br>
@@ -177,16 +177,20 @@ ke stažení (např. z Ulož.to nebo z různých FTP serverů).
 
 Začíná-li zaklínadlo v této kapitole příkazem „youtube-dl“, uvádí úplný příkaz; jinak uvádí jen parametry příkazu „youtube-dl“, které je třeba skombinovat s dalšími parametry.
 
+### youtube-dl
+
 *# *<br>
 **youtube-dl** {*parametry*} {*URL-videa*}...<br>
 **youtube-dl** {*parametry*} **-a** {*soubor-se-seznamem-URL*}<br>
 
-* **\-o "**{*formátovací řetězec*}**"** \:\: Specifikuje cestu a název cílového souboru; viz zaklínadla v podsekci „Parametry ve formátovacím řetězci (-o)“.
-* **\-f** {*volba-formátu*} \:\: Definuje, který z dostupných formátů videa či zvuku bude zvolen ke stažení.
-* **\-\-no-mtime** \:\: Ponechá čas modifikace staženého souboru aktuální. (Jinak se po stažení nastaví na čas uploadu videa.)
-* **\-i** \:\: Při stahování ignoruje chyby.
-* **\-\-ignore-config** \:\: Nečte konfigurační soubor. Vhodné, pokud všechna potřebná nastavení uvádíte jako parametry.
-* **\-\-no-continue** \:\: Začne stahování od začátku, i když už byla část videa stažena.
+!parametry:
+
+* -o "{*formátovací řetězec*}" :: Specifikuje cestu a název cílového souboru; viz zaklínadla v podsekci „Parametry ve formátovacím řetězci (-o)“.
+* -f "{*volba-formátu*}" :: Definuje, který z dostupných formátů videa či zvuku bude zvolen ke stažení.
+* --no-mtime :: Ponechá čas modifikace staženého souboru aktuální. (Jinak se po stažení nastaví na čas uploadu videa.)
+* -i :: Při stahování ignoruje chyby.
+* --ignore-config :: Nečte konfigurační soubor. Vhodné, pokud všechna potřebná nastavení uvádíte jako parametry.
+* --no-continue :: Začne stahování od začátku, i když už byla část videa stažena.
 
 ## Instalace na Ubuntu
 
@@ -214,6 +218,10 @@ Zde uvádím trochu složitější postup, který sestává z následujících 
 **chmod 700 youtube-dl**<br>
 **mv youtube-dl ~/bin/**
 
+*# vytvoření konfiguračního souboru (volitelné)*<br>
+**mkdir -pv ~/.config/youtube-dl**<br>
+**touch ~/.config/youtube-dl/config**
+
 V repozitáři Ubuntu sice je balíček „youtube-dl“, ale zpravidla zastaralý a již nefunkční, protože rozhraní streamovacích služeb se často mění.
 
 ## Ukázka
@@ -224,7 +232,7 @@ V repozitáři Ubuntu sice je balíček „youtube-dl“, ale zpravidla zastara
 ## Tipy a zkušenosti
 
 * Pokud stahování z některé služby přestane fungovat, první, co je třeba vyzkoušet, je aktualizovat program.
-* Některé parametry (zejména -f a -o) budete pravděpodobně používat velmi často. Proto se vyplatí je buď umístit do konfiguračního souboru („~/.config/youtube-dl/config“) nebo si na ně zřídit skripty či funkce.
+* Budete-li příkaz „youtube-dl“ používat často, doporučuji si na jeho volání vytvořit skripty, funkce či aliasy, které předvyplní nejčastěji používané parametry (zejména -f a -o, popř. \-\-no-mtime). Parametry sice můžete vložit také do konfiguračního souboru, ale budete-li používat youtube-dl více různými způsoby, skripty či aliasy jsou praktičtější.
 * Je-li video v playlistu nedostupné, youtube-dl na něm skončí s chybou. Přimějete-li ho pokračovat parametrem **-i**, přeskočí nedostupné video, jako by v playlistu nebylo.
 
 ## Jak získat nápovědu

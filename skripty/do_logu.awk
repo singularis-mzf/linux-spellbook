@@ -189,7 +189,7 @@ function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, cislaPoznamek, texty
 }
 
 # urovenOdsazeni: 0 = normální řádek; 1, 2, atd. = odsazený řádek; -1 = UROVEN_AKCE; -2 = UROVEN_PREAMBULE
-function RadekZaklinadla(text, urovenOdsazeni) {
+function RadekZaklinadla(text, urovenOdsazeni, prikladHodnoty) {
     text = "    RadekZaklinadla(\"" text "\"";
     if (urovenOdsazeni == 0) {
 
@@ -204,6 +204,9 @@ function RadekZaklinadla(text, urovenOdsazeni) {
 
     } else {
         ShoditFatalniVyjimku("Nepodporovaná úroveň odsazení: " urovenOdsazeni);
+    }
+    if (prikladHodnoty != "") {
+        text = text ", PRIKLAD_HODNOTY = \"" prikladHodnoty "\"";
     }
     return text ")\n";
 }
