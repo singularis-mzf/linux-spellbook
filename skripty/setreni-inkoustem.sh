@@ -1,5 +1,5 @@
 #!/bin/bash -e
-# Linux Kniha kouzel, skript precist_konfig.sh
+# Linux Kniha kouzel, skript setreni-inkoustem.sh
 # Copyright (c) 2019 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -24,19 +24,19 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 # Volání:
-# precist_konfig.sh {sekce} {klíč} [výchozí-hodnota] <
+# setreni-inkoustem.sh {vstupní-obrázek} {cílový-obrázek}
 
 VYCHOZI=""
-if test $# -eq 3
+if test $# -ne 2
 then
-    VYCHOZI="$3"
-elif test $# -ne 2
-then
-    echo -e "Chybný počet parametrů\! Správné volání:\\n$0 {sekce} {klíč} [výchozí-hodnota] < {konfigurační-soubor}" >&2
+    echo -e "Chybný počet parametrů\! Správné volání:\\n$0 {vstupní-obrázek} {cílový-obrázek}" >&2
     exit 1
 fi
 
-export SEKCE="$1"
-export KLIC="$2"
-export VYCHOZI
-exec gawk -f "skripty/precist_konfig.awk"
+HODNOTA="$(convert "$1" -resize 1x1\! -alpha off -colorspace Gray txt: | egrep -i -m 1 -o 'gray\([0-9]+\)' | egrep -o '[0-9]+')"
+if test "$HODNOTA" -lt 128
+then
+    convert "$1" -colorspace Gray -negate "$2"
+else
+    convert "$1" -colorspace Gray "$2"
+fi
