@@ -110,11 +110,11 @@ Poznámka: ve Firefoxu se nezlomitelné mezery zkopírují do schránky jako oby
 **012345670**
 
 *# *<br>
-**pro samostatné ukázky kódu je také podporován příklad bez záhlaví**<br>
-**takový příklad nemůže mít poznámky pod čarou,**<br>
+**pro samostatné ukázky kódu je také podporováno zaklínadlo bez titulku**<br>
+**takové zaklínadlo nemůže mít poznámky pod čarou,**<br>
 ^^**ale může mít řádky určené do záhlaví**<br>
 !: A také může obsahovat akce.<br>
-**a příklad hodnoty** ⊨ jako je **tento**.<br>
+**a příklad hodnoty či komentář** ⊨ jako je **tento**.<br>
 ^^**i určený do záhlaví** ⊨ jako je **tento**.
 
 

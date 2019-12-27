@@ -135,7 +135,7 @@ Příkazy \ifnumcomp a \ifdimcomp prý fungují i ve vyhodnocovaném kontextu.
 {*jeden logický výraz*} **and** {*druhý logický výraz*}<br>
 {*jeden logický výraz*} **or** {*druhý logický výraz*}
 
-*# vnořený test**
+*# vnořený test*<br>
 **test{<nic>** {*vnořený test s parametry, ale bez těla*} **<nic>}**
 
 

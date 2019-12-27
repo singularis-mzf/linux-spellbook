@@ -202,7 +202,7 @@ function ZpracujZnak(znak) {
         case "☐":
         case "☑":
         case "☒":
-            return znak;
+            return "{\\dejavusansfamily{}" znak "}";
         case "⫽":
             return "//";
         case "␣":
@@ -294,7 +294,7 @@ function HypertextovyOdkaz(adresa, text,   cisloPoznamky) {
 }
 
 function ZacatekSeznamu(uroven, zarovatDoBloku) {
-    return "{" (zarovatDoBloku ? "" : "\\raggedright") "\\nastavitradkovaniodstavcu\\begin{itemize}\\relax{}";
+    return "{" (zarovatDoBloku ? "" : "\\raggedright") "\\begin{odrazky}\\relax{}";
 }
 
 function ZacatekPolozkySeznamu(uroven) {
@@ -306,7 +306,7 @@ function KonecPolozkySeznamu(uroven) {
 }
 
 function KonecSeznamu(uroven) {
-    return "\\end{itemize}}";
+    return "\\end{odrazky}}";
 }
 
 function ZacatekParametruPrikazu() {
@@ -410,10 +410,10 @@ function RadekZaklinadla(text, urovenOdsazeni, prikladHodnoty) {
 #    gsub(/=/, "={\\moznyzlom}", text);
 
     if (urovenOdsazeni == 0) {
-        return "%\n\\radekzaklinadla{\\lmmathfamily{}󠁞∘\\hspace*{0.1em}}{" ZalomitRadekZaklinadla(text) (prikladHodnoty != "" ? "\\priklad{}" prikladHodnoty : "") "}";
+        return "%\n\\radekzaklinadla{\\lmmathfamily{}∘\\hspace*{0.1em}}{" ZalomitRadekZaklinadla(text) (prikladHodnoty != "" ? "\\priklad{}" prikladHodnoty : "") "}";
 
     } else if (0 < urovenOdsazeni && urovenOdsazeni <= 9) {
-        return "%\n\\radekzaklinadla{󠁞\\lmmathfamily{}∘\\hspace*{0.1em}}{" Zopakovat("~", 2 * urovenOdsazeni) ZalomitRadekZaklinadla(text) (prikladHodnoty != "" ? "\\priklad{}" prikladHodnoty : "") "}";
+        return "%\n\\radekzaklinadla{\\lmmathfamily{}∘\\hspace*{0.1em}}{" Zopakovat("~", 2 * urovenOdsazeni) ZalomitRadekZaklinadla(text) (prikladHodnoty != "" ? "\\priklad{}" prikladHodnoty : "") "}";
 
     } else if (urovenOdsazeni == UROVEN_AKCE) {
         return "%\n\\radekzaklinadla{\\lmmathfamily{}⇒{}}{\\rmfamily{}" ZalomitRadekZaklinadla(text) "}";
