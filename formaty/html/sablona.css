@@ -125,18 +125,23 @@ p, ul, blockquote {
     max-width:70em;
 }
 
-p, blockquote {
+p, blockquote, ul {
     hyphens:auto;
     line-height:1.5;
 }
 
 ul {
     margin-left:7rem;
-    line-height:1.5;
+    text-align:justify;
 }
 
 ul > li + li {
     margin-top:0.5em;
+}
+
+ul.kompaktni {
+    line-height:1.2;
+    text-align:left;
 }
 
 figure {

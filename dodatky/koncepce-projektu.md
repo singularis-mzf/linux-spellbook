@@ -14,6 +14,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 # Koncepce projektu Linux: Kniha kouzel
 
+!ÚzkýRežim: zap
+
 ## Základní cíle projektu (heslovitě)
 
 * Ukázat začátečníkům v Ubuntu, jaké možnosti jim jejich operační systém nabízí.
@@ -44,3 +46,4 @@ jak zmenšit všechny svoje fotografie a odstranit z nich EXIF data,
 nebo jak otočit svoje oblíbené video o 180° a všít do něj titulky, je toto kniha pro vás.
 
 -->
+!ÚzkýRežim: vyp

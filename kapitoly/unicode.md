@@ -22,6 +22,7 @@ Poznámky:
 Odkomentujte a vyplňte štítky, zejména rozlišení na {program} a {tematický okruh}:
 -- !Štítky: {...}{...}
 -->
+!ÚzkýRežim: zap
 
 ## Úvod
 <!--
@@ -36,6 +37,8 @@ Odkomentujte a vyplňte štítky, zejména rozlišení na {program} a {tematic
 - Uveďte výčet specifických pojmů pro použití v této kapitole a tyto pojmy definujte co nejprecizněji.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+!ÚzkýRežim: vyp
 
 ## Zaklínadla
 <!--
@@ -77,6 +80,8 @@ Odkomentujte a vyplňte štítky, zejména rozlišení na {program} a {tematic
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+!ÚzkýRežim: zap
+
 ## Tipy a zkušenosti
 <!--
 - Do odrážek uveďte konkrétní zkušenosti, které jste při práci s nástrojem získali; zejména případy, kdy vás chování programu překvapilo nebo očekáváte, že by mohlo překvapit začátečníky.
@@ -85,13 +90,13 @@ Odkomentujte a vyplňte štítky, zejména rozlišení na {program} a {tematic
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-## Jak získat nápovědu
+## Další zdroje informací
 <!--
-- Uveďte, které informační zdroje jsou pro začátečníka nejlepší k získání rychlé a obsáhlé nápovědy. Typicky jsou to manuálové stránky, vestavěná nápověda programu nebo webové zdroje (ale neuvádějte konkrétní odkazy, ty patří do sekce „Odkazy“).
+- Uveďte, které informační zdroje jsou pro začátečníka nejlepší k získání rychlé a obsáhlé nápovědy. Typicky jsou to manuálové stránky, vestavěná nápověda programu nebo webové zdroje. Můžete uvést i přímé odkazy.
+- V seznamu uveďte další webové zdroje, knihy apod.
+- Pokud je vestavěná dokumentace programů (typicky v adresáři /usr/share/doc) užitečná, zmiňte ji také.
+- Poznámka: Protože se tato sekce tiskne v úzkém režimu, zaklínadla smíte uvádět pouze bez titulku a bez poznámek pod čarou!
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-
-## Odkazy
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 Co hledat:
@@ -105,3 +110,5 @@ Co hledat:
 * Různé další praktické stránky, recenze, videa, tutorialy, blogy, ...
 * Publikované knihy
 * [Stránky TL;DR](https://github.com/tldr-pages/tldr/tree/master/pages/common)
+
+!ÚzkýRežim: vyp

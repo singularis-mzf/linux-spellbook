@@ -22,6 +22,7 @@ Poznámky:
 # Datum, čas a kalendář
 
 !Štítky: {tematický okruh}{čas}
+!ÚzkýRežim: zap
 
 ## Úvod
 
@@ -36,6 +37,8 @@ Plánovní úloh na konkrétní čas do této kapitoly nespadá.
 ## Definice
 
 * **Časová známka Unixu** je číselná reprezentace okamžiku v čase daná počtem sekund od 00:00:00 UTC 1. ledna 1970. Čas před tímto milníkem se reprezentuje zápornými čísly, pozdější čas kladnými. Obvykle se uvažují celá čísla, ale některé implementace pracují i s desetinnými. Časová známka Unixu se uvádí téměř výhradně v desítkové soustavě.
+
+!ÚzkýRežim: vyp
 
 ## Zaklínadla
 
@@ -298,15 +301,25 @@ Veškeré použité nástroje jsou základními součástmi Ubuntu dostupnými v
 **TZ="America/New\_York" date -d "TZ=\\"America/New\_York\\"&blank;2000-02-29 12:01:02.123" "+%FT%T.%9N%z"**<br>
 **printf %s\\\\n $((($(date -ud 2001-01-01 +%s) - $(date -ud 2000-01-01 +%s)) / 86400))**
 
+!ÚzkýRežim: zap
+
 ## Tipy a zkušenosti
 
 * Specifikace časové zóny či posunu mají následující prioritu: 1) parametr **-d**; 2) parametr **-u**; 3) proměnná prostředí **TZ**.
 
-## Jak získat nápovědu
+## Další zdroje informací
 
 *# *<br>
 **man date**<br>
 **man ncal**
+
+* [Reference funkce strftime](https://en.cppreference.com/w/c/chrono/strftime) (anglicky)
+* [Manuálová stránka „date“](http://manpages.ubuntu.com/manpages/bionic/en/man1/date.1.html) (anglicky)
+* [Manuálová stránka „ncal“](http://manpages.ubuntu.com/manpages/bionic/en/man1/ncal.1.html) (anglicky)
+* [Video Linux Operating System \| Commands \| Date And Time](https://www.youtube.com/watch?v=FMrV5FdmBVI) (anglicky)
+* [TL;DR stránka „date“](https://github.com/tldr-pages/tldr/blob/master/pages/common/date.md) (anglicky)
+
+!ÚzkýRežim: vyp
 
 ## Pomocné funkce a skripty
 
@@ -317,11 +330,3 @@ Veškeré použité nástroje jsou základními součástmi Ubuntu dostupnými v
 <odsadit1>**exec cat**<br>
 **fi**<br>
 **exec egrep "^($(echo Africa America Antarctica Asia Atlantic Australia Etc Europe Indian Pacific \| tr "&blank;" \\\|))") \| LC\_ALL=C sort -i**
-
-## Odkazy
-
-* [Reference funkce strftime](https://en.cppreference.com/w/c/chrono/strftime) (anglicky)
-* [Manuálová stránka „date“](http://manpages.ubuntu.com/manpages/bionic/en/man1/date.1.html) (anglicky)
-* [Manuálová stránka „ncal“](http://manpages.ubuntu.com/manpages/bionic/en/man1/ncal.1.html) (anglicky)
-* [Video Linux Operating System \| Commands \| Date And Time](https://www.youtube.com/watch?v=FMrV5FdmBVI) (anglicky)
-* [TL;DR stránka „date“](https://github.com/tldr-pages/tldr/blob/master/pages/common/date.md) (anglicky)

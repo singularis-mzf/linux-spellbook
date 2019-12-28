@@ -18,6 +18,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 # Správa balíčků
 
 !Štítky: {tematický okruh}{systém}{apt}{Snap}{Flatpak}
+!ÚzkýRežim: zap
 
 ## Úvod
 Tématem této kapitoly jsou balíčkovací systémy dpkg, apt, PPA, Flatpak a Snap, používáné
@@ -65,6 +66,8 @@ výchozí práva aplikace zúžit nebo rozšířit).
 <!--
 Offline instalací se rozumí stažení balíčků, jejich přenesení na počítač nepřipojený k síti a instalace tam.
 -->
+
+!ÚzkýRežim: vyp
 
 ## Zaklínadla (DPKG a APT)
 
@@ -544,6 +547,7 @@ Instalace, spuštění a odinstalování GIMPu různými způsoby:
 **flatpak remove org.gimp.GIMP**<br>
 !: Potvrďte.
 
+!ÚzkýRežim: zap
 
 ## Tipy a zkušenosti
 
@@ -555,11 +559,9 @@ Instalace, spuštění a odinstalování GIMPu různými způsoby:
 jen v případě ověření.
 -->
 
-## Jak získat nápovědu
+## Další zdroje informací
 
 Pro APT: „man apt-get“ apod. (ale není příliš přehledná) Pro Flatpak: „man flatpak“ a všechny odtud odkazované manuálové stránky, např. „man flatpak-install“. Pro Snap: „snap \-\-help“ a „snap help {*podpříkaz*}“.
-
-## Odkazy
 
 * [Wikipedie: APT](https://cs.wikipedia.org/wiki/Advanced_Packaging_Tool)
 * [Wikipedie: aptitude](https://cs.wikipedia.org/wiki/Aptitude)
@@ -582,3 +584,5 @@ Pro APT: „man apt-get“ apod. (ale není příliš přehledná) Pro Flatpak: 
 Podrobněji o aptitude, včetně TUI:
 https://www.youtube.com/watch?v=xca3Ywf54N0
 -->
+
+!ÚzkýRežim: vyp

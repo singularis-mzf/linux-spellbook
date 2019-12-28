@@ -15,10 +15,13 @@ https://creativecommons.org/licenses/by-sa/4.0/
 # Ostatní
 
 !Štítky: {interní kapitola}{ostatní}
+!ÚzkýRežim: zap
 
 ## Úvod
 Tato kapitola slouží jako „skládka“ pro dosud nezařazené příklady.
 Neměla by být součástí výsledné knihy.
+
+!ÚzkýRežim: vyp
 
 ## Zaklínadla
 
@@ -177,8 +180,12 @@ https://github.com/dbro/csvquote
 ## Parametry příkazů
 ...
 
-## Odkazy
+!ÚzkýRežim: zap
+
+## Další zdroje informací
 ...
+
+!ÚzkýRežim: vyp
 
 <!--
 How to Add Swap Space:

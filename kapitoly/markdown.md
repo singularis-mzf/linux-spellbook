@@ -21,6 +21,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 # Markdown
 
 !Štítky: {syntaxe}
+!ÚzkýRežim: zap
 
 ## Úvod
 Markdown je jednoduchý a praktický značkovací jazyk pro pohodlné psaní i čtení textů s jednoduchým formátováním v editorech prostého textu. Je primárně určen k převodu do HTML, kde se na výsledek aplikují kaskádové styly.
@@ -33,6 +34,8 @@ Tato verze kapitoly nepokrývá GFM (GitHub Flavoured Markdown), nicméně všec
 -- Definice nejsou v této kapitole třeba.
 ## Definice
 -->
+
+!ÚzkýRežim: vyp
 
 ## Zaklínadla (Markdown)
 
@@ -225,6 +228,8 @@ Existuje i modernější a propracovanější editor [Remarkable](https://rema
 **\| :\-\-\- \| \-\-\- \| \-\-\-:**<br>
 **\| vlevo \| na střed \| vpravo**
 
+!ÚzkýRežim: zap
+
 ## Tipy a zkušenosti
 * Asi nejhorším problémem v Markdownu je escapování. Speciální znaky se totiž escapují zpětným lomítkem pouze tehdy, když mají speciální význam; v ostatních případech se zpětné lomítko před takovým znakem exportuje jako normální znak. Problém však je, že inteprety Markdownu se velmi značně liší v tom, které znaky a v jakých kontextech považují za speciální. Proto nelze dosáhnout zcela jednotných výsledků. Standardní Markdown však zaručuje možnost zpětným lomíkem escapovat: \!, \#, \*, \+, \-, \., \\, \_, \` a všechny tři druhy závorek. Markdown Extra k tomu přidává znaky \: a \|.
 * Identifikátory předdefinovaných odkazů a obrázků jsou prakticky obecné řetězce. Vhodný identifikátor je i např. „3.12;Dobrý den/Žlutoučký kůň\*“. Jejich maximální délka je ale omezena implementací.
@@ -233,11 +238,11 @@ Existuje i modernější a propracovanější editor [Remarkable](https://rema
 * Markdown neumožňuje vloženému obrázku definovat rozměry. Toto můžete učinit buď pomocí CSS, nebo místo syntaxe Markdownu přímo použít značku &lt;img&gt;.
 * Po prvním spuštění ReTextu doporučuji otevřít Úpravy / Nastavení a zaškrtnout políčka „Vždy použít živý náhled“, „Zvýrazňovat aktuální řádek“ a „Zobrazovat čísla řádků“ a restartovat ReText. S těmito nastaveními mi připadne práce pohodlnější.
 
-## Jak získat nápovědu
-Doporučuji prohledat online zdroje v sekci „Odkazy“ této kapitoly nebo prostě experimentovat.
+## Další zdroje informací
+
+Doporučuji prohledat online zdroje nebo prostě experimentovat.
 Velmi obsáhlým a formálně přesným zdrojem je „Specifikace GitHub Flavored Markdown“.
 
-## Odkazy
 * [Stránka na Wikipedii](https://cs.wikipedia.org/wiki/Markdown)
 * [Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) (anglicky)
 * [Oficiální stránky: Markdown Syntax](https://daringfireball.net/projects/markdown/syntax) (anglicky)
@@ -252,3 +257,5 @@ Velmi obsáhlým a formálně přesným zdrojem je „Specifikace GitHub Flavor
 * [Balíček pandoc](https://packages.ubuntu.com/bionic/pandoc) (anglicky)
 * [Balíček retext](https://packages.ubuntu.com/bionic/retext) (anglicky)
 * [Balíček Remarkable v ALUR](https://aur.archlinux.org/packages/remarkable/) (anglicky)
+
+!ÚzkýRežim: vyp

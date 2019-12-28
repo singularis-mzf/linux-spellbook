@@ -19,6 +19,7 @@ Poznámky:
 # Správa uživatelů
 
 !Štítky: {tematický okruh}{systém}
+!ÚzkýRežim: zap
 
 ## Úvod
 <!--
@@ -41,6 +42,8 @@ Poznámky:
 - shell (příkazový interpret)
 
 -->
+
+!ÚzkýRežim: vyp
 
 ## Zaklínadla
 <!--
@@ -202,6 +205,8 @@ Vzít obrázek, zkonvertovat na 480x480 PNG 8bit RGB a uložit do souboru
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+!ÚzkýRežim: zap
+
 ## Tipy a zkušenosti
 <!--
 - Do odrážek uveďte konkrétní zkušenosti, které jste při práci s nástrojem získali; zejména případy, kdy vás chování programu překvapilo nebo očekáváte, že by mohlo překvapit začátečníky.
@@ -214,18 +219,10 @@ Vzít obrázek, zkonvertovat na 480x480 PNG 8bit RGB a uložit do souboru
 [ ] Proč nikdy nezadávat heslo na příkazové řádce či ve skriptu a neukládat do proměnných prostředí.
 -->
 
-## Jak získat nápovědu
-<!--
-- Uveďte, které informační zdroje jsou pro začátečníka nejlepší k získání rychlé a obsáhlé nápovědy. Typicky jsou to manuálové stránky, vestavěná nápověda programu nebo webové zdroje (ale neuvádějte konkrétní odkazy, ty patří do sekce „Odkazy“).
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+## Další zdroje informací
 
 *# *<br>
 **man 5 passwd**
-
-
-## Odkazy
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 Co hledat:
 
@@ -238,3 +235,5 @@ Co hledat:
 * různé další praktické stránky, recenze, videa, tutorialy, blogy, ...
 * publikované knihy
 * [TL;DR stránka „adduser“](https://github.com/tldr-pages/tldr/blob/master/pages/linux/adduser.md) (anglicky)
+
+!ÚzkýRežim: vyp

@@ -26,6 +26,9 @@
 
 BEGIN {
     #
+    # Do tohoto pole se ukládá při otevření odrážkovaného seznamu kód k jeho uzavření.
+    delete DO__KONEC_SEZNAMU;
+    #
     # Autonomní číslování poznámek pod čarou (oddělené kvůli hypertextovým odkazům).
     DO_LATEXU_CISLO_POZN_POD_CAROU = 0;
     #
@@ -293,8 +296,9 @@ function HypertextovyOdkaz(adresa, text,   cisloPoznamky) {
     return text "\\footnotemark[" cisloPoznamky "]\\footnotetext[" cisloPoznamky "]{" adresa "}";
 }
 
-function ZacatekSeznamu(uroven, zarovatDoBloku) {
-    return "{" (zarovatDoBloku ? "" : "\\raggedright") "\\begin{odrazky}\\relax{}";
+function ZacatekSeznamu(uroven, kompaktni) {
+    DO__KONEC_SEZNAMU[uroven] = "\\end{" (kompaktni ? "kompaktniodrazky" : "odrazky") "}\n";
+    return "\\begin{" (kompaktni ? "kompaktniodrazky" : "odrazky") "}";
 }
 
 function ZacatekPolozkySeznamu(uroven) {
@@ -306,7 +310,7 @@ function KonecPolozkySeznamu(uroven) {
 }
 
 function KonecSeznamu(uroven) {
-    return "\\end{odrazky}}";
+    return DO__KONEC_SEZNAMU[uroven];
 }
 
 function ZacatekParametruPrikazu() {
@@ -327,6 +331,9 @@ function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, cislaPoznamek, texty
         ax = ax "\\vspace{2ex}";
     }
     if (textZaklinadla != "") {
+        if (DO__UZKY_REZIM) {
+            ShoditFatalniVyjimku("Zaklínadla s titulkem jsou v úzkém režimu zakázána!");
+        }
         ax = ax "\\zaklinadlo{";
         # #2 = číslo zaklínadla
         ax = ax cisloZaklinadla "}{";
@@ -477,6 +484,16 @@ function ZapnoutRezimLicence() {
 function VypnoutRezimLicence() {
     DO__REZIM_LICENCE = 0;
     return "\\vypnoutrezimlicence{}";
+}
+
+function ZapnoutUzkyRezim() {
+    DO__UZKY_REZIM = 1;
+    return "\\begin{uzkyrezim}";
+}
+
+function VypnoutUzkyRezim() {
+    DO__UZKY_REZIM = 0;
+    return "\\end{uzkyrezim}";
 }
 
 @include "skripty/hlavni.awk"

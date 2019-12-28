@@ -23,6 +23,7 @@ Náměty k vylepšení:
 # Regulární výrazy
 
 !Štítky: {syntaxe}{zpracování textu}
+!ÚzkýRežim: zap
 
 ## Úvod
 Regulární výraz je řetězec speciálních a obyčejných znaků, který slouží
@@ -49,6 +50,8 @@ varianta pro rozšířený regulární výraz.
 * **Kotva** a **hranice** jsou speciální atomy k testování pozice, např. „^“ nebo „\\&lt;“. Odpovídají fiktivnímu prázdnému podřetězci na jednoznačné pozici (u kotvy) nebo na všech pozicích splňujících dané podmínky (u hranice). Zvláštním případem hranice je **vyhlížení**.
 * **Shoda** (match) je podřetězec testovaného řetězce, který celý vyhovuje požadavkům daného regulárního výrazu. Pokud na stejné pozici řetězce začíná víc takových podřetězců, shodou s regulárním výrazem je pouze ten nejdelší z nich. Proto např. regulární výraz „.\*“ má v každém testovaném řetězci pouze jedinou shodu − celý řetězec, přestože by jeho požadavkům odpovídal i jakýkoliv podřetězec.
 * Řetězec **odpovídá** regulárnímu výrazu, pokud s ním má alespoň jednu shodu, a to i tehdy, pokud jako celek požadavky regulárního výrazu nesplňuje. Tzn. řetězec „abc“ regulárnímu výrazu „b“ odpovídá. Prázdnému regulárnímu výrazu odpovídá každý řetězec.
+
+!ÚzkýRežim: vyp
 
 ## Zaklínadla
 
@@ -303,7 +306,9 @@ Regulární výrazy jsou používány i v mnoha dalších programech.
 * Regulární výrazy jsou přezdívány „write-only language“, protože bývá výrazně snazší je napsat než přečíst a pochopit. Než začnete rozumět cizím regulárním výrazům, musíte získat značné zkušenosti s psaním svých vlastních.
 * Ve výrazech typu „"[^"]\*"“ často zapomínám kvantifikátor + či \*.
 
-## Jak získat nápovědu
+!ÚzkýRežim: zap
+
+## Další zdroje informací
 
 Pro samotné regulární výrazy je k dispozici velké množství webových stránek (viz Odkazy),
 ale většinou jsou zbytečné, protože s referenční příručkou (resp. s touto kapitolou)
@@ -316,7 +321,6 @@ Pro zmíněné programy:
 **man gawk**<br>
 **perl \-\-help**
 
-## Odkazy
 * [Web regularnivyrazy.info](https://www.regularnivyrazy.info/)
 * [Přednáška Lukáše Bařinky: Bash a regulární výrazy vs shellovské vzory](https://youtu.be/dOKydwMDYUU)
 * [Seriál Regulární výrazy v PHP (Perl-compatible)](https://www.regularnivyrazy.info/serial-php-pcre-perl-compatible.html)
@@ -336,3 +340,5 @@ Pro zmíněné programy:
 * [Balíček „gawk“](https://packages.ubuntu.com/bionic/gawk) (anglicky)
 * [Balíček „perl“](https://packages.ubuntu.com/bionic/perl) (anglicky)
 * [Balíček „sed“](https://packages.ubuntu.com/bionic/sed) (anglicky)
+
+!ÚzkýRežim: vyp

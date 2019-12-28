@@ -142,8 +142,8 @@ function HypertextovyOdkaz(adresa, text) {
     return "<a href=\"" adresa "\">" text "</a>";
 }
 
-function ZacatekSeznamu(uroven, zarovatDoBloku) {
-    return "<ul style=\"text-align:" (zarovatDoBloku ? "justify" : "left") "\">";
+function ZacatekSeznamu(uroven, kompaktni) {
+    return kompaktni ? "<ul class=\"kompaktni\">" : "<ul>";
 }
 
 function ZacatekPolozkySeznamu(uroven) {
@@ -280,18 +280,13 @@ function VypnoutRezimLicence() {
     return "</div>\n";
 }
 
+function ZapnoutUzkyRezim() {
+    return "";
+}
 
-# dostává text poznámek v cílovém formátu
-#function OdkazyNaPoznamkyPodCarou(cisla, texty,   i, vysledek) {
-#    if (!isarray(cisla) || !isarray(texty)) {
-#        ShoditFatalniVyjimku("OdkazyNaPoznamkyPodCarou(): Očekáváno pole!");
-#    }
-#    vysledek = "";
-#    for (i in cisla) {
-#        vysledek = vysledek "<sup><a href=\"#ppc" i "\">" i "</a></sup>";
-#    }
-#    return vysledek;
-#}
+function VypnoutUzkyRezim() {
+    return "";
+}
 
 
 @include "skripty/hlavni.awk"

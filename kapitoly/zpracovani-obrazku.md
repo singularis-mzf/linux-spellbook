@@ -20,6 +20,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 # Zpracování obrázků
 
 !Štítky: {tematický okruh}{bitmapová grafika}
+!ÚzkýRežim: zap
 
 ## Úvod
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
@@ -27,6 +28,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 ## Definice
 * **Barva** je barevná vlastnost pixelu. ImageMagick pravděpodobně podporuje všechny syntaxe CSS, zejména vyjádření názvem (např. „green“), #RRGGBB, #RRGGBBAA, rgb(r,g,b) a rgba(r,g,b,a). Pro bližší referenci viz dokumentaci kaskádových stylů.
 * **Seznam** je druh pracovního zásobníku, se kterým pracuje příkaz „convert“. Obrázky v seznamu jsou číslovány nezápornými čísly od začátku do konce (0, 1, 2 atd.) a současně zápornými čísly od konce do začátku (-1, -2, -3 atd.). Nové obrázky se vždy ukládají na konec seznamu a poslední obrázek („vrchol zásobníku“) má v některých operacích zvláštní postavení. Většina operátorů pracuje se všemi obrázky v seznamu současně. Při práci s animovanými GIFy odpovídá seznam jednotlivým polím animace.
+
+!ÚzkýRežim: vyp
 
 ## Zaklínadla
 
@@ -299,17 +302,20 @@ https://creativecommons.org/licenses/by-sa/4.0/
 Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
 -->
 
+!ÚzkýRežim: zap
+
 ## Tipy a zkušenosti
 * Některé operátory (např. „-crop“ či „-resize“) se chovají výrazně odlišně od toho, co by začátečník očekával.
 * ImageMagick podporuje i typy .pdf, .ps, .eps, .xps, ale je nutno je zapnout v globálním konfiguračním souboru „/etc/ImageMagick-6/policy.xml“: Najděte prvek &lt;policy&gt; s atributem „pattern“ obsahujícím např. PDF a atribut „rights“ změňte z hodnoty **"none"** na hodnotu **"read\|write"**. Účinek změny je okamžitý. Důvodem, proč je zpracování těchto formátů ve výchozím nastavení vypnuto, jsou bezpečnostní díry; podrobný popis na [webové stránce](https://cromwell-intl.com/open-source/pdf-not-authorized.html).
 
-## Jak získat nápovědu
+## Další zdroje informací
 Jediným zdrojem, který se mi osvědčil, je web „Examples of ImageMagick Usage“ (v angličtině). Jeho obsah je ale komplexní a studium pracné a příkaz „convert“ není přátelský k nováčkům. Mnohdy s ním není možné dosáhnout požadovaného výsledku bez detailní znalosti problematiky a způsobu, jakým dochází ke zpracování obrázků. Proto doporučuji začátečníkům, kteří nestojí o podrobné znalosti, aby se raději drželi příkladů uvedených v této kapitole a kontrolovali, zda udělaly to, co od nich očekávali.
 
-## Odkazy
 * [Stránka na Wikipedii](https://cs.wikipedia.org/wiki/ImageMagick)
 * [Examples of ImageMagick Usage](https://www.imagemagick.org/Usage/) (anglicky)
 * [Referenční příručka](https://www.imagemagick.org/Usage/reference.html) (anglicky)
 * [Oficiální stránka ImageMagick](https://imagemagick.org/) (anglicky)
 * [TL;DR stránka „convert“](https://github.com/tldr-pages/tldr/blob/master/pages/common/convert.md) (anglicky)
 * [Balíček Bionic](https://packages.ubuntu.com/bionic/imagemagick) (anglicky)
+
+!ÚzkýRežim: vyp

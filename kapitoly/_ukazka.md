@@ -126,7 +126,7 @@ Obrázky je dovoleno vkládat pouze jako samostatné odstavce:
 
 ## Parametry příkazů
 
-Pro parametry příkazů existuje zvláštní režim zapnutý metapříkazem:
+Pro parametry příkazů existuje zvláštní režim zapnutý direktivou „!parametry:“:
 
 !parametry:
 
@@ -163,6 +163,44 @@ znak přeložen na obyčejnou sekvenci //, a to i v URL adresách.
 Unicode Character 'DOUBLE SOLIDUS OPERATOR' (U+2AFD)
 https://www.fileformat.info/info/unicode/char/2afd/index.htm
 -->
+
+!ÚzkýRežim: zap
+
+## Úzký režim
+### Ukázka úzkého režimu
+
+Direktivou „!ÚzkýRežim:&blank;zap“ lze zapnout takzvaný úzký režim. V úzkém režimu se nesmí
+používat zaklínadla s titulky a direktiva „!parametry:“, ale jinak je dovoleno veškeré formátování
+jako např. **tučný text**, *kurzíva*, {*doplň*}, {_Kláv_}.
+
+> Jsou dovoleny také odsazené odstavce první úrovně,
+>> druhé úrovně,
+>>> třetí úrovně,
+>>>> čtvrté úrovně,
+>>>>> páté úrovně
+>>>>>> i šesté úrovně, ale ta už může být problematická.
+
+![alternativní text](../obrazky/ve-vystavbe.png)
+
+Dovolený je i [hypertextový odkaz](http://www.seznam.cz/).
+
+*# *<br>
+**Zaklínadla bez titulku jsou dovolena,**<br>
+**ale měla by být co nejkratší, jinak mohou dělat potíže.**
+
+### Nadpis podsekce
+
+Výstupní formát může úzký režim ignorovat a vypsat jej stejně jako normální režim.
+Formát PDF A4 ale vysází části v úzkém režimu do dvou sloupců.
+
+## Úzký režim 2
+
+Blok úzkého režimu může zahnout víc sekcí.
+
+*Poznámka:* Existuje také zvláštní „režim licence“, který zde není dokumentovaný.
+Je použit v dodatku „Licence“.
+
+!ÚzkýRežim: vyp
 
 ## Podporované znaky
 

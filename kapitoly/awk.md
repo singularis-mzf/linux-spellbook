@@ -22,6 +22,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 # AWK
 
 !Štítky: {program}{syntaxe}{zpracování textu}
+!ÚzkýRežim: zap
 
 ## Úvod
 
@@ -47,6 +48,8 @@ a navíc nedokáže správně zpracovat vstupní soubory obsahující nulový b
 * **Záznam** (record) je typicky řádek vstupního souboru. Nastavením speciální proměnné „RS“ (record separator) na jiný oddělovač lze pracovat s jinak definovaným záznamem.
 * Záznam se po načtení rozdělí do **sloupců** (fields) $1, $2 atd. Ve výchozím nastavení se za oddělovač sloupců považuje jakákoliv sekvence bílých znaků, lze to však změnit nastavením speciální proměnné „FS“ (field separator).
 * Regulární výraz může být zadán buď jako **literál** do lomítek, např. „/^a/“, nebo jako **dynamický regulární výraz**, kterým může být jakýkoliv řetězec či řetězcový výraz (např. "^a"). Ve většině kontextu jsou tyto dva způsoby zadání rovnocenné, ale liší se v detailech (např. v dynamickém regulárním výrazu není nutno escapovat obyčejná lomítka).
+
+!ÚzkýRežim: vyp
 
 ## Zaklínadla
 
@@ -126,7 +129,7 @@ a navíc nedokáže správně zpracovat vstupní soubory obsahující nulový b
 *# příkaz **switch** (jen gawk)*<br>
 *// Přepínač switch pracuje v gawk stejně jako v jazyce C, včetně implicitního „propadání větví“.*<br>
 **switch (**{*výraz*}**) \{**<br>
-[[**case** {*hodnota*}**:**] [**default:**] {*příkazy*}]...
+[[**case** {*hodnota*}**:**] <nic>[**default:**] {*příkazy*}]...
 **\}**
 
 *# cyklus **do-while** (alternativy)*<br>
@@ -347,7 +350,7 @@ TODO: Test.
 
 *# implementovat načítání řádků rozdělených znakem \\ před znakem konce řádku (tento kód vložit na začátek skriptu)*<br>
 {*proměnná*} **!= "" {$0 =** {*proměnná*}**;** {*proměnná*} **= "";}**<br>
-**/(^|[^\\\\])(\\\\\\\\)\*\\\\$/ {**{*proměnná*} **= substr($0, 1, length($0) - 1); next;}**
+**/(^|[<nic>^\\\\])(\\\\\\\\)\*\\\\$/ {**{*proměnná*} **= substr($0, 1, length($0) - 1); next;}**
 
 ## Parametry příkazů
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
@@ -368,6 +371,8 @@ TODO: Test.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+!ÚzkýRežim: zap
+
 ## Tipy a zkušenosti
 <!--
 - Do odrážek uveďte konkrétní zkušenosti, které jste při práci s nástrojem získali; zejména případy, kdy vás chování programu překvapilo nebo očekáváte, že by mohlo překvapit začátečníky.
@@ -384,22 +389,13 @@ TODO: Test.
 * Skalární proměnné se do funkcí předávají hodnotou, pole odkazem. Pole však nelze přiřazovat do jiných polí.
 
 
-## Jak získat nápovědu
+## Další zdroje informací
 <!--
-- Uveďte, které informační zdroje jsou pro začátečníka nejlepší k získání rychlé a obsáhlé nápovědy. Typicky jsou to manuálové stránky, vestavěná nápověda programu nebo webové zdroje (ale neuvádějte konkrétní odkazy, ty patří do sekce „Odkazy“).
+- Uveďte, které informační zdroje jsou pro začátečníka nejlepší k získání rychlé a obsáhlé nápovědy. Typicky jsou to manuálové stránky, vestavěná nápověda programu nebo webové zdroje. Můžete uvést i přímé odkazy.
+- V seznamu uveďte další webové zdroje, knihy apod.
+- Pokud je vestavěná dokumentace programů (typicky v adresáři /usr/share/doc) užitečná, zmiňte ji také.
+- Poznámka: Protože se tato sekce tiskne v úzkém režimu, zaklínadla smíte uvádět pouze bez titulku a bez poznámek pod čarou!
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-
-## Pomocné funkce
-
-*# \~/bin/nabufferuj − načte všechny řádky vstupu do paměti a po uzavření vstupu je vypíše nezměněné*<br>
-*// Poznámka: má poměrně značnou spotřebu paměti. Vyžaduje cca 8x víc paměti, než kolik dat má uchovat. Pro velké soubory je vhodnější implementace v C++.*<br>
-**#!/usr/bin/mawk -f**<br>
-**BEGIN {i = 0}**<br>
-**{A[++i] = $0}**<br>
-**END {for (j = 1; j &lt;= i; ++j) print A[j]}**
-
-## Odkazy
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 Co hledat:
@@ -413,6 +409,17 @@ Co hledat:
 * různé další praktické stránky, recenze, videa, blogy, ...
 * [oficiální manuál od GNU](https://www.gnu.org/software/gawk/manual/) (anglicky)
 * [TL;DR stránka](https://github.com/tldr-pages/tldr/blob/master/pages/common/awk.md) (anglicky)
+
+!ÚzkýRežim: vyp
+
+## Pomocné funkce
+
+*# \~/bin/nabufferuj − načte všechny řádky vstupu do paměti a po uzavření vstupu je vypíše nezměněné*<br>
+*// Poznámka: má poměrně značnou spotřebu paměti. Vyžaduje cca 8x víc paměti, než kolik dat má uchovat. Pro velké soubory je vhodnější implementace v C++.*<br>
+**#!/usr/bin/mawk -f**<br>
+**BEGIN {i = 0}**<br>
+**{A[++i] = $0}**<br>
+**END {for (j = 1; j &lt;= i; ++j) print A[j]}**
 
 <!--
 ### Pomocné funkce

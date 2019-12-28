@@ -19,6 +19,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 # Docker
 
 !Štítky: {program}{kontejnery}{virtualizace}
+!ÚzkýRežim: zap
 
 ## Úvod
 Docker je nástroj pro odlehčenou virtualizaci formou takzvaných kontejnerů. Kontejner obsahuje vlastní podstrom procesů, který je izolovaný od zbytku systému (má vlastní souborový systém, konfiguraci, knihovny, démony, síťové rozhraní a IP adresu), ale sdílí s ním jádro a výpočetní prostředky. To umožňuje bezpečný a snadno přenositelný běh programů určených pro jiné distribuce (můžete např. na nejnovější Fedoře spouštět program ze staré verze Debianu apod.). Nevýhodou Dockeru je, že jeho používání vyžaduje oprávnění superuživatele a nepodporuje přímo spouštění grafických aplikací nebo přímý přístup k hardwaru (i barvy v terminálu je tam podtřeba zprovoznit). Nejčastěji se používá na provozování databází.
@@ -33,6 +34,8 @@ Tato verze kapitoly pokrývá pouze základy Dockeru; nezmiňuje se o nástoji 
 * **Obraz** je neměnný, opakovaně použitelný výchozí stav kontejneru.
 * **Repozitář** je soubor obrazů se společným označením (např. „ubuntu“ či „mysql“). Jednotlivé obrazy se pak identifikují pomocí **tagu** uvedeného za název repozitáře a dvojtečku (např. „ubuntu:18.04“). Není-li tag uveden, Docker automaticky doplní „latest“.
 * **Dockerfile** je textový soubor s názvem „Dockerfile“, obsahující instrukce k vytvoření obrazu.
+
+!ÚzkýRežim: vyp
 
 ## Zaklínadla (docker)
 
@@ -181,6 +184,8 @@ Tato verze kapitoly pokrývá pouze základy Dockeru; nezmiňuje se o nástoji 
 **sudo docker build -t midnight-commander .**<br>
 **sudo docker run \-\-rm -it midnight-commander**
 
+!ÚzkýRežim: zap
+
 ## Tipy a zkušenosti
 
 * Přidání uživatele do skupiny „docker“, které některé stránky doporučují, mu umožňuje spouštět Docker bez sudo. Z bezpečnostního hlediska to ale není dobrý nápad, protože jak ukazuje podsekce zaklínadel „Eskalace práv“, spouštění Dockeru je prakticky ekvivalentem přidělení práv superuživatele. Proto raději příkaz „docker“ spouštím z bashe spuštěného pomocí „sudo bash“.
@@ -191,7 +196,8 @@ Tato verze kapitoly pokrývá pouze základy Dockeru; nezmiňuje se o nástoji 
 * Hash kontejneru se v kontejneru používá jako název počítače, takže se zobrazuje ve výzvě příkazového interpretu a lze ji snadno zjistit příkazem „hostname“.
 * Ačkoliv by spuštění grafických aplikací v Dockeru mělo být také možné, vyžaduje specializovaný postup a nikdy jsem se o ně nepokoušel/a.
 
-## Jak získat nápovědu
+## Další zdroje informací
+
 Pro sestavení Dockerfilu je asi nejlepším informačním zdrojem online „Referenční příručka pro Dockerfile“. Pro spouštění je pak vhodná „Oficiální referenční příručka“. Oba zdroje jsou bohužel v angličtině.
 
 Pro základní přehled lze použít i příkazy:
@@ -199,8 +205,6 @@ Pro základní přehled lze použít i příkazy:
 *# *<br>
 **docker \-\-help**<br>
 **docker** {*příkaz*} **\-\-help**
-
-## Odkazy
 
 * [Praktický úvod do Docker a kontejnerů](http://www.cloudsvet.cz/?series=docker)
 * [Video: Jakub Kratina − Docker 101](https://www.youtube.com/watch?v=cV0HFt0QGEA)
@@ -216,3 +220,5 @@ Pro základní přehled lze použít i příkazy:
 * [TL;DR stránka „docker-compose“](https://github.com/tldr-pages/tldr/blob/master/pages/common/docker-compose.md) (anglicky)
 * [Oficiální stránka programu](https://www.docker.com/) (anglicky)
 * [Balíček Bionic „docker.io“](https://packages.ubuntu.com/bionic/docker.io) (anglicky)
+
+!ÚzkýRežim: vyp

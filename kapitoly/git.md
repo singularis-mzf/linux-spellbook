@@ -23,6 +23,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 # Git
 
 !Štítky: {program}{správa verzí}
+!ÚzkýRežim: zap
 
 ## Úvod
 Git je systém správy verzí. Umožňuje vám zachytit přesný stav souborů v určitém
@@ -42,6 +43,8 @@ a příkaz „git stash“.
 * **Větev** je proměnný symbolický název odkazující na určitou revizi v repozitáři (s výjimkou takzvané prázdné větve, která na žádnou revizi neodkazuje). Součástí operace „**commit**“ je přiřazení nové revize větvi. (Větev je v gitu analogií proměnné v programování.)
 * **HEAD** je „aktuální revize“. Nejčastěji je to prostě revize, která byla do pracovního adresáře načtena jako poslední.
 * **Index** (také zvaný „staging area“) je myšlená kopie revize HEAD příslušná pracovnímu adresáři, do které lze průběžně zapisovat změny a pak z ní operací „commit“ vytvořit novou revizi. Do indexu se rovněž provádí slučování větví (merge). Doporučuji představovat si index jako skrytý adresář určený k tvorbě nových revizí.
+
+!ÚzkýRežim: vyp
 
 ### Označení revize
 
@@ -363,11 +366,14 @@ Celé jméno a e-mail se používají k označení autorství revizí. Musíte
 **git commit -a -m "Alternativní verze"**<br>
 **git diff master nova-vetev**
 
+!ÚzkýRežim: zap
+
 ## Tipy a zkušenosti
 * Normální repozitář je jednodušší než bare repozitář. Má vlastní pracovní adresář, se kterým pracuje. Normální repozitář můžete použít jako vzdálený repozitář, ale pouze ke čtení − nelze do něj zapisovat příkazem „git push“. Naopak bare repozitář slouží výhradně jako vzdálený repozitář.
 * Revize vzniklé sloučením větví (merge) mají za předky všechny revize, ze kterých byly sloučeny.
+* Soubor .gitignore může být v každém podadresáři pracovního adresáře; deklarace z každého souboru .gitignore platí v daném adresáři a rekurzivně ve všech jeho podadresářích, ne však nutně v celém pracovním adresáři.
 
-## Jak získat nápovědu
+## Další zdroje informací
 *# *<br>
 **git \-\-help**<br>
 **git** {*příkaz-gitu*} **\-\-help**
@@ -388,3 +394,5 @@ Přehled podporovaných konfiguračních voleb pro příkaz „git config“ naj
 * [Manuálová stránka](http://manpages.ubuntu.com/manpages/bionic/en/man1/git.1.html) (anglicky)
 * [Balíček Bionic „git“](https://packages.ubuntu.com/bionic/git) (anglicky)
 * [Balíček Bionic „gitk“](https://packages.ubuntu.com/bionic/gitk) (anglicky)
+
+!ÚzkýRežim: vyp

@@ -23,6 +23,7 @@ Poznámky:
 # Základy Perlu
 
 !Štítky: {program}{zpracování textu}{syntaxe}{Perl}
+!ÚzkýRežim: zap
 
 ## Úvod
 <!--
@@ -64,6 +65,8 @@ Proměnné každého z těchto typů mají svůj vlastní jmenný prostor, tak�
 
 * **Ukazatel** (reference, v češtině obvykle nazývaný „odkaz“) je skalár, který odkazuje na nějaký objekt v paměti. **Dereferencí** ukazatele můžeme získat přístup k odkazovanému objektu pro čtení i přiřazení.
 * **Seznam** je literál pole zadaný do kulatých závorek, např. „(1, 2, 3)“ nebo „($a, $b, $c)“. Má-li sudý počet prvků, lze s ním inicializovat i asociativní pole.
+
+!ÚzkýRežim: vyp
 
 ## Zaklínadla
 <!--
@@ -431,6 +434,8 @@ https://www.tutorialspoint.com/perl/perl_special_variables.htm
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+!ÚzkýRežim: zap
+
 ## Tipy a zkušenosti
 <!--
 - Do odrážek uveďte konkrétní zkušenosti, které jste při práci s nástrojem získali; zejména případy, kdy vás chování programu překvapilo nebo očekáváte, že by mohlo překvapit začátečníky.
@@ -442,29 +447,13 @@ https://www.tutorialspoint.com/perl/perl_special_variables.htm
 * *Předávání parametrů do funkcí:* Parametry se do funkce předají pomocí pole „@\_“, které má tu speciální vlastnost, že ty jeho prvky, které byly v místě předání *přiřaditelnými* hodnotami (včetně např. prvků jiných polí) se do něj předají odkazem. To znamená, že skalární proměnné se do všech funkcí předávají odkazem, nikdy hodnotou. Pole (včetně seznamů) se při předávání do funkce rozloží na všechny svoje prvky v náležitém pořadí a ty se předají odkazem. Asociativní pole se rozloží na posloupnost dvojic „klíč,hodnota“, příčemž klíče se předají hodnotou (jsou nepřiřaditelné), zatímco hodnoty se předají odkazem. Perl neprovádí žádnou automatickou kontrolu počtu, typu či hodnoty předaných parametrů; ta je výhradně zodpovědností volané funkce.
 * Seznam (na rozdíl od pole) obsahuje svoje prvky odkazem (pozor, neplést s ukazatelem) a přiřazuje se do něj po prvcích; to znamená, že např. výrazem **($a, $b) = (1, 2)** přiřadíte do proměnné **$a** hodnotu 1 a do proměnné **$b** hodnotu 2; podobně výrazem „($a, $b) = @x“ načtete do proměnných $a a $b první dva prvky pole @x. Uvedete-li do seznamu pole nebo vnořený seznam, ten se „rozbalí“ na svoje prvky, proto např. výrazem „(@x) = (1, 2)“ přiřadíte hodnoty do prvních dvou prvků pole, aniž byste ho zkrátili; oproti tomu příkazem „@x = (1, 2)“ přiřadíte do proměnné „@x“ nové, dvouprvkové pole.
 
-## Jak získat nápovědu
+## Další zdroje informací
 <!--
-- Uveďte, které informační zdroje jsou pro začátečníka nejlepší k získání rychlé a obsáhlé nápovědy. Typicky jsou to manuálové stránky, vestavěná nápověda programu nebo webové zdroje (ale neuvádějte konkrétní odkazy, ty patří do sekce „Odkazy“).
+- Uveďte, které informační zdroje jsou pro začátečníka nejlepší k získání rychlé a obsáhlé nápovědy. Typicky jsou to manuálové stránky, vestavěná nápověda programu nebo webové zdroje. Můžete uvést i přímé odkazy.
+- V seznamu uveďte další webové zdroje, knihy apod.
+- Pokud je vestavěná dokumentace programů (typicky v adresáři /usr/share/doc) užitečná, zmiňte ji také.
+- Poznámka: Protože se tato sekce tiskne v úzkém režimu, zaklínadla smíte uvádět pouze bez titulku a bez poznámek pod čarou!
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-
-## Pomocné funkce (Perl)
-
-*# vzorek\_parametru − xxx*<br>
-**sub vzorek\_parametru \{**<br>
-<odsadit1>**return join("", map \{**<br>
-<odsadit2>**my $r;**<br>
-<odsadit2>**!defined($ARG) ? "u" :**<br>
-<odsadit2>**!($r = ref($ARG)) ? "s" :**<br>
-<odsadit2>**$r =~ /^(SCALAR\|ARRAY\|HASH\|Regexp)$/ ? substr($r, 0, 1) :**<br>
-<odsadit2>**":".$r.":";**<br>
-<odsadit1>**\} @\_);**<br>
-**\}**
-
-
-
-
-## Odkazy
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 Co hledat:
@@ -478,3 +467,18 @@ Co hledat:
 * Různé další praktické stránky, recenze, videa, tutorialy, blogy, ...
 * Publikované knihy
 * [Stránky TL;DR](https://github.com/tldr-pages/tldr/tree/master/pages/common)
+
+!ÚzkýRežim: vyp
+
+## Pomocné funkce (Perl)
+
+*# vzorek\_parametru − xxx*<br>
+**sub vzorek\_parametru \{**<br>
+<odsadit1>**return join("", map \{**<br>
+<odsadit2>**my $r;**<br>
+<odsadit2>**!defined($ARG) ? "u" :**<br>
+<odsadit2>**!($r = ref($ARG)) ? "s" :**<br>
+<odsadit2>**$r =~ /^(SCALAR\|ARRAY\|HASH\|Regexp)$/ ? substr($r, 0, 1) :**<br>
+<odsadit2>**":".$r.":";**<br>
+<odsadit1>**\} @\_);**<br>
+**\}**

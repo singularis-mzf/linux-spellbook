@@ -391,7 +391,7 @@ function ZacitTypRadku(   bylPredel) {
             break;
         case "POLOZKA_SEZNAMU":
             if (PREDCHOZI_TYP_RADKU != "POKRACOVANI_POLOZKY_SEZNAMU") {
-                printf("%s", ZacatekSeznamu(1, tolower(SEKCE) ~ /^(tipy a.zkušenosti|definice)/ || tolower(KAPITOLA) ~ /^(koncepce projektu)/));
+                printf("%s", ZacatekSeznamu(1, tolower(SEKCE) !~ /^(tipy a.zkušenosti|definice|další zdroje informací)/ && tolower(KAPITOLA) !~ /^(koncepce projektu)/));
                 printf("%s", ZacatekPolozkySeznamu(1));
             }
             break;
@@ -624,7 +624,7 @@ BEGIN {
         TYP_RADKU = "POZNAMKA";
     } else if (PREDCHOZI_TYP_RADKU != "NORMALNI" && $0 ~ /^!\[.+\]\(.+\)$/) {
         TYP_RADKU = "OBRAZEK";
-    } else if (PREDCHOZI_TYP_RADKU != "NORMALNI" && $0 ~ /^![A-Za-z0-9ÁČĎÉĚÍŇÓŘŠŤŮÝŽáčďéěíňóřšťůýž]+:( |$)/) {
+    } else if (PREDCHOZI_TYP_RADKU != "NORMALNI" && $0 ~ /^![A-Za-z0-9ÁČĎÉĚÍŇÓŘŠŤÚŮÝŽáčďéěíňóřšťúůýž]+:( |$)/) {
         TYP_RADKU = "DIREKTIVA";
     } else if (JE_UVNITR_ZAKLINADLA) {
         TYP_RADKU = "RADEK_ZAKLINADLA";
@@ -740,6 +740,14 @@ TYP_RADKU == "DIREKTIVA" {
             ShoditFatalniVyjimku("Neočekávaný stav direktivy !PARAMETRY: " BUDOU_PARAMETRY_PRIKAZU);
         }
         BUDOU_PARAMETRY_PRIKAZU = 1;
+    } else if (DIREKTIVA == "ÚZKÝREŽIM") {
+        if (toupper(HODNOTA_DIREKTIVY) == "ZAP") {
+            printf("%s\n", ZapnoutUzkyRezim());
+        } else if (toupper(HODNOTA_DIREKTIVY) == "VYP") {
+            printf("%s\n", VypnoutUzkyRezim());
+        } else {
+            ShoditFatalniVyjimku("Neznámá hodnota direktivy ÚZKÝREŽIM: \"" HODNOTA_DIREKTIVY "\"");
+        }
     }
 #
 #    print "LADĚNÍ: Direktiva „" DIREKTIVA "“ = \"" HODNOTA_DIREKTIVY "\"" > "/dev/stderr";

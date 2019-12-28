@@ -22,6 +22,7 @@ Poznámky:
 # Práce s archivy
 
 !Štítky: {tematický okruh}{komprese}{zip}
+!ÚzkýRežim: zap
 
 ## Úvod
 
@@ -51,6 +52,8 @@ U softwarových balíčků (např. deb či rpm) to není zcela jednotné, proto
 -->
 * **Vybalení souboru** je získání obsahu souboru s metadaty či bez nich z archivu.
 * **Rozbalení archivu** je vybalení všech souborů a adresářů z archivu do adresáře.
+
+!ÚzkýRežim: vyp
 
 ## Zaklínadla
 
@@ -278,6 +281,8 @@ Nástroje tar, gzip a zip jsou již součástí minimální instalace Ubuntu. N
 !: Zadejte vámi zvolené heslo.<br>
 **ls -l "Žluťoučký kůň"**
 
+!ÚzkýRežim: zap
+
 ## Tipy a zkušenosti
 
 * U formátů, které dobře neznáte, doporučuji omezit se jen na vytvoření archivu z adresářové struktury, jeho vypsání a kompletní rozbalení. Ostatní operace mají v různých formátech svoje specifika, která musíte znát, abyste daný archivní formát použili efektivně.
@@ -286,14 +291,12 @@ Nástroje tar, gzip a zip jsou již součástí minimální instalace Ubuntu. N
 * Při práci s velkými archivy typu TAR je třeba mít na paměti, že většina operací si vynutí sekvenční průchod celým archivem.
 * U svobodné implementace vybalování formátu RAR (unrar-free) jsem měl/a problémy s rozbalením některých archivů; pokud selže, doporučuji zkusit nesvobodný balíček.
 
-## Jak získat nápovědu
+## Další zdroje informací
 *# *<br>
 **man 7z**<br>
 **man atool**<br>
 **man zip**<br>
 **man unzip**
-
-## Odkazy
 
 * [Manuálová stránka „atool“](http://manpages.ubuntu.com/manpages/bionic/en/man1/atool.1.html) (anglicky)
 * [Manuálová stránka „7z“](http://manpages.ubuntu.com/manpages/bionic/en/man1/7z.1.html) (anglicky)
@@ -301,3 +304,5 @@ Nástroje tar, gzip a zip jsou již součástí minimální instalace Ubuntu. N
 * [Oficiální stránka 7-Zip](https://www.7-zip.org/) (anglicky)
 * [Balíček „atool“](https://packages.ubuntu.com/bionic/atool) (anglicky)
 * [Balíček „p7zip-full“](https://packages.ubuntu.com/bionic/p7zip-full) (anglicky)
+
+!ÚzkýRežim: vyp

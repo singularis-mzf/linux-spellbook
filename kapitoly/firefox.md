@@ -15,12 +15,23 @@ https://creativecommons.org/licenses/by-sa/4.0/
 # Firefox
 
 !Štítky: {program}
+!ÚzkýRežim: zap
 
 ## Úvod
+<!--
+- Vymezte, co je předmětem této kapitoly.
+- Obecně popište základní principy, na kterých fungují používané nástroje.
+- Uveďte, co kapitola nepokrývá, ačkoliv by to čtenář mohl očekávat.
+-->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 ## Definice
+<!--
+- Uveďte výčet specifických pojmů pro použití v této kapitole a tyto pojmy definujte co nejprecizněji.
+-->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+!ÚzkýRežim: vyp
 
 ## Zaklínadla (about:config)
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
@@ -70,21 +81,35 @@ Běžná aktuální verze Firefoxu je ve většině variant Ubuntu předinstalov
 [ ] Prozkoumat transplantaci Firefoxu ESR z Debianu.
 -->
 
+!ÚzkýRežim: zap
+
 ## Tipy a zkušenosti
+<!--
+- Do odrážek uveďte konkrétní zkušenosti, které jste při práci s nástrojem získali; zejména případy, kdy vás chování programu překvapilo nebo očekáváte, že by mohlo překvapit začátečníky.
+- Popište typické chyby nových uživatelů a jak se jim vyhnout.
+- Buďte co nejstručnější; neodbíhejte k popisování čehokoliv vedlejšího, co je dost možné, že už čtenář zná.
+-->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-## Jak získat nápovědu
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-
-## Odkazy
+## Další zdroje informací
+<!--
+- Uveďte, které informační zdroje jsou pro začátečníka nejlepší k získání rychlé a obsáhlé nápovědy. Typicky jsou to manuálové stránky, vestavěná nápověda programu nebo webové zdroje. Můžete uvést i přímé odkazy.
+- V seznamu uveďte další webové zdroje, knihy apod.
+- Pokud je vestavěná dokumentace programů (typicky v adresáři /usr/share/doc) užitečná, zmiňte ji také.
+- Poznámka: Protože se tato sekce tiskne v úzkém režimu, zaklínadla smíte uvádět pouze bez titulku a bez poznámek pod čarou!
+-->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 Co hledat:
 
-* [https://cs.wikipedia.org/wiki/Hlavn%C3%AD_strana](stránku na Wikipedii)
-* oficiální stránku programu
-* oficiální dokumentaci
-* [http://manpages.ubuntu.com/](manuálovou stránku)
-* [https://packages.ubuntu.com/](balíček Bionic)
-* online referenční příručky
-* různé další praktické stránky, recenze, videa, blogy, ...
+* [Článek na Wikipedii](https://cs.wikipedia.org/wiki/Hlavn%C3%AD_strana)
+* Oficiální stránku programu
+* Oficiální dokumentaci
+* [Manuálovou stránku](http://manpages.ubuntu.com/)
+* [Balíček](https://packages.ubuntu.com/)
+* Online referenční příručky
+* Různé další praktické stránky, recenze, videa, tutorialy, blogy, ...
+* Publikované knihy
+* [Stránky TL;DR](https://github.com/tldr-pages/tldr/tree/master/pages/common)
+
+!ÚzkýRežim: vyp

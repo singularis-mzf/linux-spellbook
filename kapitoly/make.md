@@ -14,6 +14,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 # GNU make
 
 !Štítky: {program}{programování}
+!ÚzkýRežim: zap
 
 ## Úvod
 GNU make je nástroj k automatizaci procesu sestavování určitých cílových souborů ze souborů zdrojových. Vykonává podobnou úlohu jako např. skript napsaný v bashi, ale na rozdíl od něj umí:
@@ -31,6 +32,8 @@ jemuž se bude věnovat většina této kapitoly.
 * **Zdroj** (často nazýváný „závislost“) je název souboru, na kterém určitý cíl závisí. Příkazy stanovené pravidlem se vykonají jen tehdy, pokud cíl neexistuje nebo je alespoň jeden jeho z jeho zdrojů novější. (Vychází se z času poslední změny souborů.) Zdrojem může být také název akce.
 * **Slovo** je posloupnost nebílých znaků v řetězci. Jednotlivá slova v řetězci jsou od sebe oddělena bílými znaky, nejčastěji jednotlivou mezerou.
 * **%-vzor** je řetězec sloužící k filtrování, vyhledávání a nahrazování slov. Jde o velice praktickou věc. Může obsahovat nejvýše jeden znak **%**, který slouží jako náhrada za libovolné množství znaků (včetně lomítek oddělujících adresáře). (Např. %-vzoru **a%** odpovídají právě ta slova, která začínají malým písmenem **a**.) Slouží-li %-vzor k záměně, slova, která mu neodpovídají, projdou záměnou nezměněna. %-vzor nemusí obsahovat znak %; v takovém případě mu odpovídají pouze slova, která se s ním přesně shodují.
+
+!ÚzkýRežim: vyp
 
 ## Zaklínadla (v souboru Makefile)
 ### Nastavení proměnných
@@ -286,6 +289,8 @@ jemuž se bude věnovat většina této kapitoly.
 **clean:**<br>
 **<tab>$(RM) hello.o**
 
+!ÚzkýRežim: zap
+
 ## Tipy a zkušenosti
 * Dlouhé řádky Makefilu můžete rozdělit, pokud před každý konec řádku, který má make ignorovat, vložíte zpětné lomítko. Rozdělíte-li řádek s příkazem, make toto rozdělení předá volanému interpretu příkazové řádky, což však u běžně používaných „sh“ a „bash“ nezpůsobí problémy.
 * Nebojte se definovat více cílů v jednom pravidle. Funguje to stejně jako definovat stejné pravidlo pro každý uvedený cíl zvlášť a ušetří vám to spoustu práce s údržbou. Ze stejného důvodu se vyplatí naučit se syntaxi pravidla s %-vzorem.
@@ -297,12 +302,9 @@ jemuž se bude věnovat většina této kapitoly.
 * Použitý interpret v příkazech a volání funkce $(shell) určuje proměnná **SHELL**. Kvůli přenositelnosti se doporučuje ji na začátku Makefile výslovně nastavit: **SHELL := /bin/sh** nebo **SHELL := /bin/bash**.
 * Akce může mít jako zdroje soubory a další akce; ty budou přeloženy před vykonáním vlastní akce.
 
-## Jak získat nápovědu
-* **make \-\-help**
-* Online GNU manuál (viz sekce Odkazy) (anglicky)
-* **man make** (anglicky)
+## Další zdroje informací
 
-## Odkazy
+* **make \-\-help**
 * [Makefile na sallyx.org](https://www.sallyx.org/sally/c/linux/makefile)
 * [Stránka na Wikipedii](https://cs.wikipedia.org/wiki/Make)
 * [Rychlo-školička pro Makefile](http://www.linux.cz/noviny/1999-0304/clanek12.html)
@@ -312,6 +314,8 @@ jemuž se bude věnovat většina této kapitoly.
 * [Balíček Ubuntu Bionic Beaver](https://packages.ubuntu.com/bionic/make) (anglicky)
 * [Oficiální stránka GNU make](https://www.gnu.org/software/make/) (anglicky)
 * [TL;DR stránka „make“](https://github.com/tldr-pages/tldr/blob/master/pages/common/make.md) (anglicky)
+
+!ÚzkýRežim: vyp
 
 ## Snímek obrazovky
 

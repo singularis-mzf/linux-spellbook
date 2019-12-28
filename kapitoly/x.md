@@ -19,6 +19,7 @@ Poznámky:
 # X (ovládání oken)
 
 !Štítky: {tematický okruh}{GUI}{automatizace}{klávesnice}{myš}
+!ÚzkýRežim: zap
 
 ## Úvod
 <!--
@@ -46,6 +47,8 @@ Zdroj roku: https://en.wikipedia.org/wiki/X_Window_System#Release_history
 * Okno (+ titulek + pozice(počítá se od levého horního rohu plochy)) Zmínit také speciální okna jako plochu, panely, doky apod.
 * Virtuální plocha
 * Zaměřené okno
+
+!ÚzkýRežim: vyp
 
 ## Zaklínadla
 <!--
@@ -278,6 +281,8 @@ https://github.com/Wh1t3Rh1n0/xinput-keylog-decoder
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+!ÚzkýRežim: zap
+
 ## Tipy a zkušenosti
 <!--
 - Do odrážek uveďte konkrétní zkušenosti, které jste při práci s nástrojem získali; zejména případy, kdy vás chování programu překvapilo nebo očekáváte, že by mohlo překvapit začátečníky.
@@ -287,14 +292,13 @@ https://github.com/Wh1t3Rh1n0/xinput-keylog-decoder
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 
-## Jak získat nápovědu
+## Další zdroje informací
 <!--
-- Uveďte, které informační zdroje jsou pro začátečníka nejlepší k získání rychlé a obsáhlé nápovědy. Typicky jsou to manuálové stránky, vestavěná nápověda programu nebo webové zdroje (ale neuvádějte konkrétní odkazy, ty patří do sekce „Odkazy“).
+- Uveďte, které informační zdroje jsou pro začátečníka nejlepší k získání rychlé a obsáhlé nápovědy. Typicky jsou to manuálové stránky, vestavěná nápověda programu nebo webové zdroje. Můžete uvést i přímé odkazy.
+- V seznamu uveďte další webové zdroje, knihy apod.
+- Pokud je vestavěná dokumentace programů (typicky v adresáři /usr/share/doc) užitečná, zmiňte ji také.
+- Poznámka: Protože se tato sekce tiskne v úzkém režimu, zaklínadla smíte uvádět pouze bez titulku a bez poznámek pod čarou!
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-
-
-## Odkazy
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 Co hledat:
@@ -307,6 +311,8 @@ Co hledat:
 * online referenční příručky
 * různé další praktické stránky, recenze, videa, tutorialy, blogy, ...
 * publikované knihy
+
+!ÚzkýRežim: vyp
 
 <!--
 Příkazy ke zpracování:

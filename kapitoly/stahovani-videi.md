@@ -21,6 +21,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 # Stahování videí
 
 !Štítky: {tematický okruh}{internet}{video}
+!ÚzkýRežim: zap
 
 ## Úvod
 Tato kapitola se zabývá stahováním videí a zvuku ze služeb jako YouTube,
@@ -37,6 +38,8 @@ ke stažení (např. z Ulož.to nebo z různých FTP serverů).
 <!--
 ## Definice
 -->
+
+!ÚzkýRežim: vyp
 
 ## Zaklínadla (youtube-dl)
 
@@ -229,19 +232,20 @@ V repozitáři Ubuntu sice je balíček „youtube-dl“, ale zpravidla zastara
 *# *<br>
 **youtube-dl "https://www.youtube.com/watch?v=CvhJWKtBLn4"**
 
+!ÚzkýRežim: zap
+
 ## Tipy a zkušenosti
 
 * Pokud stahování z některé služby přestane fungovat, první, co je třeba vyzkoušet, je aktualizovat program.
 * Budete-li příkaz „youtube-dl“ používat často, doporučuji si na jeho volání vytvořit skripty, funkce či aliasy, které předvyplní nejčastěji používané parametry (zejména -f a -o, popř. \-\-no-mtime). Parametry sice můžete vložit také do konfiguračního souboru, ale budete-li používat youtube-dl více různými způsoby, skripty či aliasy jsou praktičtější.
 * Je-li video v playlistu nedostupné, youtube-dl na něm skončí s chybou. Přimějete-li ho pokračovat parametrem **-i**, přeskočí nedostupné video, jako by v playlistu nebylo.
 
-## Jak získat nápovědu
+## Další zdroje informací
 *# *<br>
-**youtube-dl \-\-help**
+**youtube-dl \-\-help**<br>
+**test a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01**
 
 Pro podrobný popis formátovacího řetězce a mechanismu automatického výběru formátu ke stažení navštivte oficiální dokumentaci. Bohužel, veškerá oficiální nápověda je jen v angličtině.
-
-## Odkazy
 
 * [Článek: Pět tipů pro přehrávání webového videa](https://www.root.cz/clanky/pet-tipu-pro-prehravani-weboveho-videa/)
 * [Oficiální dokumentace](https://github.com/ytdl-org/youtube-dl/blob/master/README.md) (anglicky)
@@ -252,3 +256,5 @@ Pro podrobný popis formátovacího řetězce a mechanismu automatického výb�
 * [Manuálová stránka](http://manpages.ubuntu.com/manpages/bionic/en/man1/youtube-dl.1.html) (anglicky)
 * [TL;DR stránka „youtube-dl“](https://github.com/tldr-pages/tldr/blob/master/pages/common/youtube-dl.md) (anglicky)
 * [Návod na vypsání playlistu](https://archive.zhimingwang.org/blog/2014-11-05-list-youtube-playlist-with-youtube-dl.html) (anglicky)
+
+!ÚzkýRežim: vyp

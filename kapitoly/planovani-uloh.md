@@ -15,6 +15,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 # Plánování úloh
 
 !Štítky: {tematický okruh}{čas}
+!ÚzkýRežim: zap
 
 ## Úvod
 V této kapitole se dozvíte, jak spouštět příkazy automaticky v určený čas.
@@ -40,6 +41,8 @@ spouštěné pod účtem superuživatele, ty však nejsou touto verzí kapitoly 
 ## Definice
 
 * **Úloha** je příkaz naplánovaný k jednorázovému spuštění, jde-li o **jednorázovou úlohu**, nebo k pravidelnému spouštění, jde-li o **pravidelnou úlohu**. Tímto příkazem bývá nejčastěji volání uživatelem definovaného skriptu.
+
+!ÚzkýRežim: vyp
 
 ## Zaklínadla
 
@@ -204,6 +207,8 @@ distribucí, proto zpravidla není třeba ho instalovat.
 
 Poznámka: ukázka vyžaduje nainstalovaný balíček „mplayer“ (a pochopitelně nainstalovaný pomocný skript „~/bin/spustit-v-x“).
 
+!ÚzkýRežim: zap
+
 ## Tipy a zkušenosti
 * Pro jakoukoliv netriviální pravidelnou úlohu doporučuji vytvořit samostatný skript a funkci „pridat\_ulohu“ předat volání tohoto skriptu místo vlastních příkazů. Má to celou řadu výhod, např. možnost obsah úlohy editovat, možnost mít víc řádků a použít bash místo /bin/sh. Další výhodou je, že definice se v případě smazání úlohy neztratí a je ji možno použít opakovaně.
 * Naplánované úlohy jsou spouštěny mimo terminál a mimo grafické prostředí, což komplikuje jejich ladění.
@@ -211,11 +216,24 @@ Poznámka: ukázka vyžaduje nainstalovaný balíček „mplayer“ (a pochopit
 * Cron spustí další instanci úlohy i v případě, že předchozí instance ještě běží.
 * Pokud se pravidelná úloha nespustila, zkuste prozkoumat logy, které zobrazíte příkazem:<br>„fgrep CRON /var/log/syslog“. Mohou obsahovat odpovídající chybové hlášení.
 
-## Jak získat nápovědu
+## Další zdroje informací
 *# *<br>
 **man 5 crontab**<br>
 **man 1 crontab**<br>
 **man at**
+
+* [Stránka na Wikipedii: Cron](https://cs.wikipedia.org/wiki/Cron)
+* [Stránka na Wikipedii: At](https://cs.wikipedia.org/wiki/At\_(Unix\))
+* [Článek na Root.cz: Cron: naplánovanie opakujúcich sa procesov](https://www.root.cz/clanky/cron-naplanovanie-opakujucich-sa-procesov/) (slovensky)
+* [Článek Cron − správca úloh](https://www.linuxexpres.cz/praxe/cron-spravca-uloh) (slovensky)
+* [Video „Linux/Mac Tutorial: Cron Jobs“](https://www.youtube.com/watch?v=QZJ1drMQz1A) (anglicky)
+* [Video „Crontab Command − 15 Cronjob Scheduling Examples in Linux“](https://www.youtube.com/watch?v=6dJlp133iYg) (anglicky)
+* [Manuálová stránka „at“](http://manpages.ubuntu.com/manpages/bionic/en/man1/at.1posix.html) (anglicky)
+* [Bionic: balíček „at“](https://packages.ubuntu.com/bionic/at) (anglicky)
+* [Bionic: balíček „bcron-run“](https://packages.ubuntu.com/bionic/bcron-run) (anglicky)
+* [TL;DR stránka „crontab“](https://github.com/tldr-pages/tldr/blob/master/pages/common/crontab.md) (anglicky)
+
+!ÚzkýRežim: vyp
 
 ## Pomocné funkce a skripty
 
@@ -236,16 +254,3 @@ Poznámka: ukázka vyžaduje nainstalovaný balíček „mplayer“ (a pochopit
 **\}**<br>
 **f**<br>
 **exec "$@"**
-
-## Odkazy
-
-* [Stránka na Wikipedii: Cron](https://cs.wikipedia.org/wiki/Cron)
-* [Stránka na Wikipedii: At](https://cs.wikipedia.org/wiki/At\_(Unix\))
-* [Článek na Root.cz: Cron: naplánovanie opakujúcich sa procesov](https://www.root.cz/clanky/cron-naplanovanie-opakujucich-sa-procesov/) (slovensky)
-* [Článek Cron − správca úloh](https://www.linuxexpres.cz/praxe/cron-spravca-uloh) (slovensky)
-* [Video „Linux/Mac Tutorial: Cron Jobs“](https://www.youtube.com/watch?v=QZJ1drMQz1A) (anglicky)
-* [Video „Crontab Command − 15 Cronjob Scheduling Examples in Linux“](https://www.youtube.com/watch?v=6dJlp133iYg) (anglicky)
-* [Manuálová stránka „at“](http://manpages.ubuntu.com/manpages/bionic/en/man1/at.1posix.html) (anglicky)
-* [Bionic: balíček „at“](https://packages.ubuntu.com/bionic/at) (anglicky)
-* [Bionic: balíček „bcron-run“](https://packages.ubuntu.com/bionic/bcron-run) (anglicky)
-* [TL;DR stránka „crontab“](https://github.com/tldr-pages/tldr/blob/master/pages/common/crontab.md) (anglicky)

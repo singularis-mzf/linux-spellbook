@@ -26,6 +26,7 @@ virtuálními konzolemi a X.
 # Systém
 
 !Štítky: {tematický okruh}{systém}{démoni}{klávesnice}
+!ÚzkýRežim: zap
 
 ## Úvod
 <!--
@@ -35,16 +36,22 @@ virtuálními konzolemi a X.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+Tato verze kapitoly nepokrývá nastavení automatického přihlašování do X
+a nastavení synchronizace systémového času s NTP servery. Rovněž nepokrývá
+ovládání kontejnerů příkazem „machinectl“ a zjišťování informací o systému (uname, lsb\_release, neofetch, hostname).
+
 ## Definice
 <!--
 - Uveďte výčet specifických pojmů pro použití v této kapitole a tyto pojmy definujte co nejprecizněji.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-* **Systemd** čili **král démonů** či proces číslo 1 je ústřední proces systému, který řídí jeho start, restart či vypnutí a spouští a zastavuje démony. V některých linuxových komunitách má špatnou pověst, protože jeho předchůdce Upstart kdysi nevybíravě převzal „vládu“ od tehdy oblíbeného procesu „init“ (zvaného také „sysvinit“) a sjednotil mnoho funkcí systému. Jako uživatele vás od něj nečeká žádné nebezpečí, pokud mu nebudete překážet.
+* **Systemd** čili **král démonů** (také známý jako první proces či proces číslo 1) je ústřední proces systému, který řídí jeho start, restart či vypnutí a spouští a zastavuje démony. V některých linuxových komunitách má špatnou pověst, protože jeho předchůdce Upstart kdysi nevybíravě převzal „vládu“ od tehdy oblíbeného procesu „init“ (zvaného také „sysvinit“) a systemd pak pod svoji kontrolu sjednotil mnoho do té doby nezávisle řešených funkcí systému. Jako uživatele vás však od něj nečeká žádné nebezpečí, pokud mu nebudete překážet.
 * **Démon** je systémový proces, který běží či čeká na pozadí bez přímého uživatelského rozhraní a je přímým potomkem systemd.
 * **Systémová jednotka** (unit) je datová struktura krále démonů. Systemd rozeznává jedenáct druhů systémových jednotek, z nichž nejznámější a nejdůležitější jsou **služby** („service“), reprezentující démony. Další významné jsou **časovače** („timer“, v nastavený čas probouzejí a ruší démony) a **cíle** („target“, cosi jako seznamy, co všechno je potřeba udělat).
 * **Sezení** je instance přihlášení uživatele k systému ve víceuživatelském režimu; vzniká přihlášením uživatele a zaniká jeho odhlášením, resp. ukončením všech procesů daného sezení.
+
+!ÚzkýRežim: vyp
 
 ## Zaklínadla
 
@@ -355,6 +362,8 @@ sudo systemctl restart keyboard-setup.service
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+!ÚzkýRežim: zap
+
 ## Tipy a zkušenosti
 <!--
 - Do odrážek uveďte konkrétní zkušenosti, které jste při práci s nástrojem získali; zejména případy, kdy vás chování programu překvapilo nebo očekáváte, že by mohlo překvapit začátečníky.
@@ -363,13 +372,13 @@ sudo systemctl restart keyboard-setup.service
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-## Jak získat nápovědu
+## Další zdroje informací
 <!--
-- Uveďte, které informační zdroje jsou pro začátečníka nejlepší k získání rychlé a obsáhlé nápovědy. Typicky jsou to manuálové stránky, vestavěná nápověda programu nebo webové zdroje (ale neuvádějte konkrétní odkazy, ty patří do sekce „Odkazy“).
+- Uveďte, které informační zdroje jsou pro začátečníka nejlepší k získání rychlé a obsáhlé nápovědy. Typicky jsou to manuálové stránky, vestavěná nápověda programu nebo webové zdroje. Můžete uvést i přímé odkazy.
+- V seznamu uveďte další webové zdroje, knihy apod.
+- Pokud je vestavěná dokumentace programů (typicky v adresáři /usr/share/doc) užitečná, zmiňte ji také.
+- Poznámka: Protože se tato sekce tiskne v úzkém režimu, zaklínadla smíte uvádět pouze bez titulku a bez poznámek pod čarou!
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-
-## Odkazy
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 Co hledat:
@@ -384,6 +393,7 @@ Co hledat:
 * Publikované knihy
 * [Stránky TL;DR](https://github.com/tldr-pages/tldr/tree/master/pages/common)
 
+!ÚzkýRežim: vyp
 <!--
 systemd Basics
 (anglicky)

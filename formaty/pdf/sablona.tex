@@ -34,14 +34,21 @@
 \usepackage[czech]{babel}
 %
 {{POKUD JE FORMÁT pdf-a4}}
+
+%% A4 = 21.0cm ⨉ 29.7cm
 \usepackage[xetex,a4paper,inner=1.5cm,outer=1cm,top=1.5cm,bottom=2cm]{geometry}
 {{KONEC POKUD}}
 {{POKUD JE FORMÁT pdf-b5}}
-\usepackage[xetex,b5paper,inner=2cm,outer=1.5cm,top=1.5cm,bottom=2cm]{geometry}
+
+%% B5 = 17.6cm ⨉ 25.0cm
+\usepackage[xetex,b5paper,inner=1.5cm,outer=1cm,top=1.5cm,bottom=2cm]{geometry}
 {{KONEC POKUD}}
 {{POKUD JE FORMÁT pdf-a5}}
-\usepackage[xetex,a5paper,inner=1.5cm,outer=1cm,top=1.5cm,bottom=1.5cm]{geometry}
+
+%% A5 = 14.8cm ⨉ 21.0cm
+\usepackage[xetex,a5paper,inner=1cm,outer=0.75cm,top=1cm,bottom=1.5cm]{geometry}
 {{KONEC POKUD}}
+
 % geometry: + showframe pro ladění
 
 % 2. skupina balíčků:
@@ -116,7 +123,7 @@
             \begin{blok}%
                 \setlength{\unitlength}{1em}%
                 \begin{picture}(2.25,1)(0,0.16)\relax%
-                    \put(0,-0.2){{\color{svetleseda}\rule{\textwidth}{1.4\unitlength}}}%
+                    \put(0,-0.2){{\color{svetleseda}\rule{\columnwidth}{1.4\unitlength}}}%
                     \put(0.7,0){\makebox(1,1){\arabic{subsection}}}%
                     \put(1.2,0.5){\circle{1.2}}%
                 \end{picture}%
@@ -197,13 +204,21 @@
 % ============================================================================
 %
 \newenvironment*{obsahdosloupcu}{}{}
+\newenvironment*{uzkyrezim}{}{}
 \newcommand*{\nadpisobsahu}{\mbox{PŘEHLED (OBSAH)}}%
 
 {{POKUD JE FORMÁT pdf-a4}}
 \setlength{\sirkakodu}{0.9\textwidth} % šířka kódu v řádcích zaklínadel (obvykle odvozena od šířky textu „\textwidth“)
 \setlength{\omezeniodstavce}{4cm}
 
-\renewenvironment{obsahdosloupcu}{\begin{multicols*}{2}}{\end{multicols*}}
+\renewenvironment*{obsahdosloupcu}{\begin{multicols*}{2}}{\end{multicols*}}
+\renewenvironment*{uzkyrezim}{%
+    \setlength{\omezeniodstavce}{0pt}%
+    \setlength{\odsazeni}{0.5\odsazeni}% zmenšit odsazení odsazených odstavců na polovinu
+    \begin{multicols}{2}%
+}{%
+    \end{multicols}%
+}
 
 % {\zapnoutrezimlicence}
 \newcommand*{\zapnoutrezimlicence}{%
@@ -281,18 +296,25 @@
 }
 
 \newenvironment*{odsazenyodstavec}[1]{%
-    \vspace{1ex}%
+    \vspace{0.1\odsazeni}%
     \setlength{\parskip}{0.5ex plus1ex minus0pt}%
     \setlength{\tmpsirka}{\omezeniodstavce}%
     \addtolength{\tmpsirka}{#1\odsazeni}%
     \begin{adjustwidth}{#1\odsazeni}{\tmpsirka}%
 }{%
     \end{adjustwidth}%
-    \vspace{1ex}%
+    \vspace{0.1\odsazeni}%
 }%
 
 \newenvironment*{odrazky}{%
-    \begin{itemize}[rightmargin=\omezeniodstavce]\renewcommand*{\baselinestretch}{1.2}\selectfont%
+    \begin{itemize}[leftmargin=12pt,rightmargin=\omezeniodstavce]%
+        \renewcommand*{\baselinestretch}{1.2}\selectfont%
+}{%
+    \end{itemize}%
+}
+\newenvironment*{kompaktniodrazky}{%
+    \begin{itemize}[leftmargin=12pt,rightmargin=\omezeniodstavce,nosep]%
+        \renewcommand*{\baselinestretch}{1.2}\raggedright\selectfont%
 }{%
     \end{itemize}%
 }
@@ -393,9 +415,6 @@
         % text řádku (může dojít k zalomení)
         {##2}%
         }%
-    \newcommand*{\akcezaklinadla}[1]{\radekzaklinadla{\ensuremath{\Rightarrow}}{##1}}%
-    \newcommand*{\radekzaklinadladopreambule}[1]{\radekzaklinadla{\dozahlavi}{##1}}%
-
     \noindent\begin{tabular}{%
         % číslo zaklínadla:
         >{\raggedright\fontsize{9pt}{0pt}\selectfont}p{\sirkacislazaklinadla}@{}%
@@ -422,7 +441,7 @@
 % \ukazka{#1 = řádky a akce zaklínadla}
 \newcommand{\ukazka}[2][]{{%
     \setlength{\tabcolsep}{\zaklinadlotabcolsep}%
-    \setlength{\sirkaradkuzaklinadla}{\textwidth}%
+    \setlength{\sirkaradkuzaklinadla}{\columnwidth}%
     \addtolength{\sirkaradkuzaklinadla}{-10pt}%
     % \radekzaklinadla{symbol}{text}
     \newcommand{\radekzaklinadla}[2]{%
@@ -434,9 +453,6 @@
         % text řádku (může dojít k zalomení)
         {##2}%
         }%
-    \newcommand*{\akcezaklinadla}[1]{\radekzaklinadla{\ensuremath{\Rightarrow}}{##1}}%
-    \newcommand*{\radekzaklinadladopreambule}[1]{\radekzaklinadla{\dozahlavi}{##1}}%
-
     \raggedleft\begin{tabular}{%
         % řádky zaklínadla:
         |>{\raggedright\zaklinadlofamily\zaklinadlosize}p{\sirkaradkuzaklinadla}%

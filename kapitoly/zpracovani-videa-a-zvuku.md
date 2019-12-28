@@ -39,6 +39,7 @@ Poznámky:
 # Zpracování videa a zvuku
 
 !Štítky: {tematický okruh}{video}{zvuk}
+!ÚzkýRežim: zap
 
 ## Úvod
 FFmpeg je nástroj pro konverzi, úpravu a streamování videa, zvuku a titulků.
@@ -68,6 +69,8 @@ vzorků za sekundu.
 * **Filtr** je objekt v grafu filtrů, který očekává určitý počet vstupů určitého typu v určitém pořadí (toto očekávání se může lišit v závislosti na parametrech). Na tyto vstupy je pak potřeba připojit buď stopy vstupů ffmpegu (typicky vstupních souborů) nebo výstupy jiných filtrů. Filtr mívá také výstupy, které je pak nutno připojit na vstupy jiných filtrů nebo na stopy výstupů ffmpegu.
 
 * **Graf filtrů** je orientovaný graf definovaný uživatelem, který popisuje tok dat různého typu přes ffmpeg ze vstupů na výstupy. Každý vstup každého filtru v grafu filtrů musí být připojen na výstup jiného, případně na konkrétní stopu některého ze vstupních souborů; analogicky každý výstup každého filtru musí být připojen na vstup jiného nebo namapován na stopu některého z výstupních souborů.
+
+!ÚzkýRežim: vyp
 
 ![Obrázek: ukázka grafu filtrů](../obrazky/graf-filtru.svg)
 
@@ -693,6 +696,7 @@ Ukázka vyžaduje, abyste v aktuálním adresáři měl/a video „video.mp4“
 **ffmpeg -nostdin -filter\_complex '[0:v]scale=2\*trunc(iw/4):2\*trunc(ih/4),split[a\][b];[a]hue=s=0[a2];[a2\][b]hstack[vv]' -i video.mp4 -c:v h264 -b:v 2048k -an -map '[vv]' bez-zvuku.mp4**<br>
 **ffmpeg -nostdin -hide\_banner -filter\_complex '[0:v]hflip,vflip,swaprect=100:150:10:15:200:50[vv];[0:a]afade=in:st=1:d=5:curve=exp,aecho=0.6:0.3:250|500:0.8|0.6[av]' -i video.mp4 -c:v h264 -b:v 2048k -c:a libmp3lame -b:a 64k -map '[vv]' -map '[av]' -to 20 hratky.mp4**
 
+!ÚzkýRežim: zap
 
 ## Tipy a zkušenosti
 
@@ -710,14 +714,12 @@ Podle https://superuser.com/questions/435941/which-codecs-are-most-suitable-for-
 - přidat **-pix_fmt yuv420p** má umožnit přehrání videa v microsoftích přehravačích
 -->
 
-## Jak získat nápovědu
+## Další zdroje informací
 *# *<br>
 **man ffmpeg**<br>
 **man ffmpeg-filters**
 
 <neodsadit>Dalším dobrým zdrojem je oficiální dokumentace k filtrům, ale ta je podstatně novější než verze ffmpegu v Ubuntu 18.04, takže váš ffmpeg nepodporuje vše, co je v online dokumentaci uvedeno.
-
-## Odkazy
 
 * [Ffmprovisr](https://amiaopensource.github.io/ffmprovisr/) (anglicky)
 * [FFmpeg Wiki](https://trac.ffmpeg.org/) (anglicky)
@@ -726,3 +728,5 @@ Podle https://superuser.com/questions/435941/which-codecs-are-most-suitable-for-
 * [Manuálová stránka ffmpeg-filters](http://manpages.ubuntu.com/manpages/bionic/en/man1/ffmpeg-filters.1.html) (anglicky)
 * [Playlist videí: FFMPEG &amp; Command Line](https://www.youtube.com/playlist?list=PLJse9iV6Reqiy8wP0rXTgFQkMNutRMN0j) (anglicky)
 * [Oficiální stránky](https://ffmpeg.org/) (anglicky)
+
+!ÚzkýRežim: vyp

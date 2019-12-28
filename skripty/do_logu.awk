@@ -136,8 +136,8 @@ function HypertextovyOdkaz(adresa, text) {
     return "HypertextovyOdkaz(adresa = \"" adresa "\", text = \"" text "\");\n";
 }
 
-function ZacatekSeznamu(uroven, zarovnatDoBloku) {
-    return "ZacatekSeznamu(" uroven ", zarovnat=" (zarovnatDoBloku ? "DO_BLOKU" : "VLEVO") ");\n";
+function ZacatekSeznamu(uroven, kompaktni) {
+    return "ZacatekSeznamu(" uroven ", kompaktni=" (kompaktni ? "ANO" : "NE") ");\n";
 }
 
 function ZacatekPolozkySeznamu(uroven) {
@@ -261,6 +261,22 @@ function VypnoutRezimLicence() {
     }
     DO__REZIM_LICENCE = 0;
     return "VypnoutRezimLicence();\n";
+}
+
+function ZapnoutUzkyRezim() {
+    if (DO__UZKY_REZIM) {
+        ShoditFatalniVyjimku("Úzký režim opakovaně zapnut!");
+    }
+    DO__UZKY_REZIM = 1;
+    return "ZapnoutUzkyRezim();\n";
+}
+
+function VypnoutUzkyRezim() {
+    if (!DO__UZKY_REZIM) {
+        ShoditFatalniVyjimku("Úzký režim vypnut bez zapnutí!!");
+    }
+    DO__UZKY_REZIM = 0;
+    return "VypnoutUzkyRezim();\n";
 }
 
 @include "skripty/hlavni.awk"
