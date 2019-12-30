@@ -164,6 +164,8 @@ ARGIND < 2 {
     next;
 }
 
+# vynechat zakomentované úseky
+/^<!--$/,/^-->$/ {next}
 
 # pro jakýkoliv nadpis druhé úrovně vypnout načítání funkcí a skriptů
 /^## / {

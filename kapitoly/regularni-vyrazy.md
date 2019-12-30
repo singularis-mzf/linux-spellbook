@@ -103,6 +103,10 @@ varianta pro rozšířený regulární výraz.
 **[^[:alnum:]]**<br>
 **\\W**
 
+*# libovolné malé/velké písmeno, i národní abecedy*<br>
+**[[:lower:]]**<br>
+**[[:upper:]]**
+
 ### Kvantifikátory (operátory opakování)
 
 *# **jednou nebo vůbec** (≤ 1)(rozšířený/základní)*<br>
