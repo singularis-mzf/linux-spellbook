@@ -32,7 +32,7 @@ Zatímco grafické uživatelské rozhraní, na jaké jste nejspíš zvyklý/á, 
 menu, barevné ikony, panely nástrojů, zvuky, dialogová okna a další příjemné věci,
 terminál takový není. Vypadá, že jen očekává příkazy, a nedává vám žádné vodítko,
 jaké příkazy to mohou být, a čeho se s nimi dá dosáhnout.
-Nemáte žádnou šanci se dozvědět, že můžete zadat příkaz „tput sgr0“,
+Nemáte žádnou šanci se dozvědět, že můžete zadat příkaz „tput sgr0“,
 ani co dělá nebo k čemu vám může být dobrý.
 Cílem této knihy je to napravit a učinit úžasný „svět“ terminálu
 a konfiguračních souborů podobně přehledným a srozumitelným,

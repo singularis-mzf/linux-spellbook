@@ -462,7 +462,7 @@ function ReseniNezname() {
 }
 
 function TriTecky() {
-    return "\\textcolor{seda}{\\tritecky}";
+    return "{\\color{seda}\\bfseries\\tritecky}";
 }
 
 function Obrazek(src, alt, rawSrc, rawAlt,   sirka) {

@@ -290,7 +290,7 @@
     \begin{adjustwidth}{}{\omezeniodstavce}%
         \setlength{\parindent}{1em}%
         \setlength{\parskip}{0pt plus1ex minus0pt}%
-        \renewcommand*{\baselinestretch}{1.2}\selectfont%
+        \renewcommand*{\baselinestretch}{1.15}\selectfont%
 }{%
     \end{adjustwidth}%
 }
@@ -379,6 +379,7 @@
     \newcommand*{\ppspolozka}[4][]{\item\relax{\bfseries\makebox[1.4em][l]{\ref{##4}}##2}~##3\dotfill\pageref{##4}}%
     \newcommand*{\ppsstitekpolozky}[1]{\mbox{((##1))}\ }%
     \raggedright%
+    \vspace{0pt plus5mm minus0pt}\pagebreak[2]% <= pomáhá zabránit zlomu stránky za štítkem
     \begin{itemize}[label={},nosep,leftmargin=2em,labelwidth=0pt,topsep=5pt]%
     \item\relax\hspace*{-\leftmargin}\stitekrejstriku{#1}%
 }{%

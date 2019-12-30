@@ -221,26 +221,74 @@ a navíc nedokáže správně zpracovat vstupní soubory obsahující nulový b
 
 ### Příkazy výstupu
 
-**printf(**{*formátovací-řetězec*}[**,**{*parametry*}]**)** [{*přesměrování-výstupu*}]**;**
+**printf(**{*formátovací-řetězec*}[**,**{*parametr*}]...**)** [{*přesměrování-výstupu*}]**;**
 **print** [{*přesměrování-výstupu*}]**;**<br>
 **print** {*hodnota*}[**,** {*další-hodnota*}]... [{*přesměrování-výstupu*}]**;**
 
 ### Uzavření
 
-*# *<br>
-**close(**{*název-souboru-nebo-příkazová-řádka*}**)**
+*# uzavřít soubor otevřený ke čtení či zápisu*<br>
+**close(**{*"řetězec/reprezentující/soubor"*}**)**
+
+*# uzavřít čtení výstupu příkazu*<br>
+**close(**{*"příkaz"*}**)**
+
+
 
 ### Výstup (přesměrování)
 
-*# poslat na vstup*<br>
-{*příkaz-výstupu*} **\|** {*řetězec*}**;**
+Poznámky k přesměrování výstupu: Prvním zápisem do souboru, který ještě není otevřen, se tento soubor automaticky otevře pro zápis a zůstane otevřený pro další zápisy, dokud ho neuzavřete funkcí close() nebo do konce programu. Pokud chcete, aby se soubor otevřel pro přidávání na konec (místo aby se původní obsah smazal), použijte místo operátoru „&gt;“ operátor „&gt;&gt;“ (princip je stejný jako v bashi).
+
+*# výstup do souboru (print/printf)*<br>
+*// Pro zápis na standardní chybový výstup použijte speciální název souboru "/dev/stderr".*<br>
+**print "A:", A &gt; "../seznam.txt";**<br>
+**printf("%s: %d\\n", I, POLE[I]) &gt; "hodnoty.txt";**
+
+*# poslat na (standardní) vstup jiného příkazu (print/printf)*<br>
+*// Odkazovaný příkaz se spustí v interpretu /bin/sh a svoje vstupy a výstupy zdědí od instance GNU awk, kterou byl spuštěn, pokud je výslovně nepřesměrujete.*<br>
+**print** {*parametr*}[**,** {*další parametr*}]... **\|** {*"řetězec s příkazem"*} **;**<br>
+**printf(**{*formátovací-řetězec*}[**,**{*parametr*}]...**) \|** {*"řetězec s příkazem"*} **;**<br>
+
+*# poslat na vstup jiného příkazu (příklad)*<br>
+**print I, S, "." \| "sort -n";**
+
+*# zapsat do souboru jeden znak (přepsat/připojit)*<br>
+**printf("** {*znak*} **") &gt;** {*"řetězec/s/cestou/souboru"*}**)**
 
 ### Vstup
 
+*# přečíst řádek ze souboru (do zadané proměnné/do proměnné $0)*<br>
+[**if (**]**getline** {*PROMĚNNÁ*} &lt; {*"řetězec/s/cestou/souboru"*}**)** {*tělo příkazu if*}<br>
+[**if (**]**getline** &lt; {*"řetězec/s/cestou/souboru"*}**)** {*tělo příkazu if*}
+
+*# přečíst jeden znak ze souboru*<br>
+?
+
+*# přečíst celý soubor do zadané proměnné*<br>
+**normalni\_RS = RS; RS = "^$";** {*PROMĚNNÁ*} **= "";**<br>
+**getline** {*PROMĚNNÁ*} &lt; {*"řetězec/s/cestou/souboru"*}**;**<br>
+**RS = normalni\_RS;**<br>
+[**close(**{*"řetězec/s/cestou/souboru"*}**);**]
+
+*# načíst řádek z výstupu příkazu*<br>
+[**if (**]{*"příkaz"*} **\| getline** [{*PROMĚNNÁ*}]**)** {*tělo příkazu if*}
 
 ### Koprocesy
 
 
+*# zapsat na standardní vstup koprocesu (alternativy)*<br>
+{*příkaz print*} **\|&amp;** {*koproces*}**;**
+
+*# přečíst řádek z výstupu koprocesu*<br>
+[**if (**]{*koproces*} **\|&amp; getline** [{*PROMĚNNÁ*}]**)** {*tělo příkazu if*}
+
+*# uzavřít jen vstup koprocesu*<br>
+*// Po uzavření vstupu koprocesu můžete pouze číst z jeho výstupu. Pokus o další zápis před úplným ukončením koprocesu je fatální chyba.*<br>
+**close(**{*koproces*}**, "to");**
+
+*# vyčkat na ukončení koprocesu*<br>
+*// Funkce close() v tomto případě vrátí návratovou hodnotu koprocesu vynásobenou 256.*<br>
+**close(**{*koproces*}**)**
 
 ### Bash
 
@@ -387,6 +435,8 @@ TODO: Test.
 * Konec řádku normálně končí příkaz; chcete-li pokračovat na dalším řádku, vložte před konec řádku „\\“.
 * Hodnoty ARGC a ARGV je možno za běhu skriptu měnit, a tím ovlivňovat, které další soubory gawk či mawk otevře. Na již otevřené soubory to ale nemá vliv.
 * Skalární proměnné se do funkcí předávají hodnotou, pole odkazem. Pole však nelze přiřazovat do jiných polí.
+* Vstupní i výstupní soubory a příkazy jsou v GNU awk identifikovány řetězci, kterými byly zadány. Soubor otevřete prvním zápisem do něj a uzavře se automaticky po skončení programu, nebo ho můžete uzavřít dřív funkcí „close()“. Uzavřete-li soubor funkcí close(), můžete ho dalším zápisem znovu otevřít, jako byste ho předtím otevřený neměli. Totéž platí u příkazů, ale pozor − funkce close() je u nich blokující, takže GNU awk počká s vykonáváním programu, dokud takto uzavíraný příkaz skutečně neskončí.
+* Používání koprocesů vyžaduje pečlivou synchronizaci mezi procesy. Existuje dvě situace, které vedou k zamrznutí programu a musíte se jim vyhnout: 1) Pokus o přečtení řádku z výstupu koprocesu, zatímco koproces nezapisuje, ale sám čeká na další vstup. 2) Zapsání velkého množství dat (cca od desítek kilobajtů) na vstup koprocesu, která koproces nenačte. (V takovém případě se naplní buffer roury.)
 
 
 ## Další zdroje informací

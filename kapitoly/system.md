@@ -16,11 +16,15 @@ Poznámky:
 [ ] Stane se proces spuštěný pomocí nohup démonem?
 [ ] Automatické přihlašování (GDM/SDDM/Lightdm)
 [ ] Synchronizace času (zapnout/vypnout/ručné provést)
+[ ] Chybí ukázka.
 
 - machinectl ovládá kontejnery, ale musí se doinstalovat.
 
 Při přechodu na vyšší verzi Ubuntu nutno otestovat zkratky pro přepínání mezi
 virtuálními konzolemi a X.
+
+
+
 -->
 
 # Systém
@@ -29,40 +33,93 @@ virtuálními konzolemi a X.
 !ÚzkýRežim: zap
 
 ## Úvod
-<!--
-- Vymezte, co je předmětem této kapitoly.
-- Obecně popište základní principy, na kterých fungují používané nástroje.
-- Uveďte, co kapitola nepokrývá, ačkoliv by to čtenář mohl očekávat.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-Tato verze kapitoly nepokrývá nastavení automatického přihlašování do X
-a nastavení synchronizace systémového času s NTP servery. Rovněž nepokrývá
-ovládání kontejnerů příkazem „machinectl“ a zjišťování informací o systému (uname, lsb\_release, neofetch, hostname).
+Tato kapitola se zabývá vybranými aspekty běhu operačního systému a jeho ovládání,
+zejména ovládáním démonů, systémovými logy, odkládacími oddíly a restartem či vypnutím počítače.
+Také se zabývá rozložením klávesnice.
+
+Když zavaděč GRUB spustí jádro systému, to pak vytvoří dva první procesy: systemd (PID 1)
+a kthreadd (PID 2). Systemd pak na základě tzv. výchozího cíle a dalších nastavení
+spustí další démony a také správce příhlášení, kteří umožní uživatelům přihlašovat
+se do systému (popř. automaticky přihlásí výchozího uživatele). Když se uživatel přihlásí,
+vznikne takzvané „sezení“, které zanikne, až se uživatel odhlásí
+(včetně případů, kdy je odhlášení součástí restartu či vypnutí počítače).
+
+Tato kapitola se nezabývá samotným zaváděním operačního systému a diskovými oddíly (kromě odkládacích).
+Rovněž se nezabývá zjišťováním informací o hardwaru počítače (s výjimkou procesoru).
+
+Tato verze kapitoly nepokrývá nastavení automatického přihlašování do X,
+nastavování cílů, nastavení synchronizace systémového času s NTP servery
+ani vytváření vlastních služeb a démonů.
+Rovněž nepokrývá ovládání kontejnerů příkazem „machinectl“.
+
+<!--
+Poznámka: jádro si ponechává možnost spouštět svoje vlastní, nezávislé procesy prostřednictvím
+svého vlastního démona „kthreadd“ (PID 2).
+
+Proces kthreadd je první jaderný démon, který slouží jádru k zakládání dalších jaderných démonů;
+jaderní démoni jsou nedotknutelní a mimo kontrolu uživatele (i krále démonů),
+zodpovídají se pouze přímo jádru.
+
+Poznámka: správci přihlášení se nepočítají mezi démony, protože mají přímé uživatelské rozhraní.
+-->
 
 ## Definice
-<!--
-- Uveďte výčet specifických pojmů pro použití v této kapitole a tyto pojmy definujte co nejprecizněji.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-* **Systemd** čili **král démonů** (také známý jako první proces či proces číslo 1) je ústřední proces systému, který řídí jeho start, restart či vypnutí a spouští a zastavuje démony. V některých linuxových komunitách má špatnou pověst, protože jeho předchůdce Upstart kdysi nevybíravě převzal „vládu“ od tehdy oblíbeného procesu „init“ (zvaného také „sysvinit“) a systemd pak pod svoji kontrolu sjednotil mnoho do té doby nezávisle řešených funkcí systému. Jako uživatele vás však od něj nečeká žádné nebezpečí, pokud mu nebudete překážet.
-* **Démon** je systémový proces, který běží či čeká na pozadí bez přímého uživatelského rozhraní a je přímým potomkem systemd.
-* **Systémová jednotka** (unit) je datová struktura krále démonů. Systemd rozeznává jedenáct druhů systémových jednotek, z nichž nejznámější a nejdůležitější jsou **služby** („service“), reprezentující démony. Další významné jsou **časovače** („timer“, v nastavený čas probouzejí a ruší démony) a **cíle** („target“, cosi jako seznamy, co všechno je potřeba udělat).
-* **Sezení** je instance přihlášení uživatele k systému ve víceuživatelském režimu; vzniká přihlášením uživatele a zaniká jeho odhlášením, resp. ukončením všech procesů daného sezení.
+* **Systemd** čili **král démonů** (také známý jako první proces či proces číslo 1) je ústřední démon systému, který řídí jeho start, restart či vypnutí a spouští a zastavuje ostatní démony (kromě tzv. jaderných). V některých linuxových komunitách má špatnou pověst, protože jeho předchůdce Upstart kdysi nevybíravě převzal „vládu“ od tehdy oblíbeného procesu „init“ (zvaného také „sysvinit“) a systemd pak pod svoji kontrolu sjednotil mnoho do té doby nezávisle řešených funkcí systému. Jako uživatele vás však od něj nečeká žádné nebezpečí, pokud mu nebudete překážet.
+* **Démon** je systémový proces, který čeká (popř. běží) na pozadí bez přímého uživatelského rozhraní a má hodnotu PPID rovnu 0, 1 nebo 2.
+* **Systémová jednotka** (unit) je datová struktura krále démonů. Systemd rozeznává jedenáct druhů systémových jednotek, z nichž nejznámější a nejdůležitější jsou **služby** („service“), reprezentující démony. Další významné jsou **sokety** („socket“, souvisí se službami a umožňují démonům nabízet svoje služby ostatním démonům), **cíle** („target“, seskupení jednotek pro určité situace) a **časovače** („timer“, pravidelně probouzejí a ruší démony). Také se pravděpodobně setkáte se **sokety**, které slouží k vzájemné komunikaci různých démonů.
+* **Sezení** je instance přihlášení uživatele k systému ve víceuživatelském režimu; vzniká přihlášením uživatele a zaniká jeho odhlášením, resp. ukončením všech procesů daného sezení. Sezení může být grafické či textové a může být místní nebo vzdálené.
 
 !ÚzkýRežim: vyp
 
 ## Zaklínadla
 
+### Informace o systému (zjistit)
+
+*# obecné informace (pro člověka)*<br>
+**neofetch**
+
+*# verze a varianta **jádra***<br>
+**uname -r** ⊨ 5.0.0-37-generic
+
+*# jméno procesoru*<br>
+**LC\_ALL=C lscpu \| egrep '^Model name:' | sed -E 's/^[<nic>^:]\*:\\s\*//'**
+
+*# informace o **frekvenci procesoru** (pro člověka)*<br>
+**LC\_ALL=C lscpu \| egrep '^CPU[<nic>^:]+MHz:'**
+
+*# informace o velikosti a využití **paměti** a odkládacího prostoru*<br>
+**free -h**
+
+*# čas od spuštění systému (**uptime**)*<br>
+**uptime \-\-pretty**
+
+*# kódové jméno verze **distribuce***<br>
+**lsb\_release -sc** ⊨ bionic
+
+*# jméno/verze **distribuce***<br>
+**lsb\_release -si** ⊨ Ubuntu<br>
+**lsb\_release -sr** ⊨ 18.04
+
+*# **jméno počítače***<br>
+**hostname** ⊨ mojepc
+
+*# jméno jádra/druh operačního systému*<br>
+**uname -n** ⊨ Linux<br>
+**uname -o** ⊨ GNU/Linux
+
+*# architektura systému*<br>
+**arch** ⊨ x86\_64
+
 ### Restart a vypnutí počítače
 
-*# restartovat počítač (normálně/drasticky/velmi drasticky)*<br>
+*# **restartovat** počítač (normálně/drasticky/velmi drasticky)*<br>
 **reboot**<br>
 **sudo systemctl reboot \-\-force**<br>
 **sudo systemctl reboot \-\-force \-\-force**
 
-*# vypnout počítač (normálně/drasticky/velmi drasticky)*<br>
+*# **vypnout** počítač (normálně/drasticky/velmi drasticky)*<br>
 **poweroff**<br>
 **sudo systemctl poweroff \-\-force**<br>
 **sudo systemctl poweroff \-\-force \-\-force**
@@ -72,10 +129,10 @@ ovládání kontejnerů příkazem „machinectl“ a zjišťování informací
 **sudo systemctl rescue**<br>
 **sudo systemctl emergency**
 
-*# uspat systém*<br>
+*# **uspat** systém*<br>
 **systemctl suspend**
 
-*# hibernovat systém*<br>
+*# **hibernovat** systém*<br>
 **sudo systemctl hibernate**
 
 *# **zastavit** systém bez vypnutí počítače (normálně/drasticky/velmi drasticky)*<br>
@@ -85,20 +142,13 @@ ovládání kontejnerů příkazem „machinectl“ a zjišťování informací
 
 ### Ovládání systémových jednotek
 
-*# zjistit stav systémové jednotky (pro člověka/pro skript)*<br>
-**systemctl status** {*jednotka.typ*}<br>
-**systemctl show** {*jednotka.typ*}
-<!--
-**systemctl show** {*jednotka.typ*} **\| egrep '^((Active|Load|Sub)State|Description|Id|Names)='**<br>
--->
-
-*# spustit neběžící*<br>
+*# **spustit** neběžící*<br>
 **sudo systemctl start** {*jednotka.typ*}...
 
-*# zastavit běžící*<br>
+*# **zastavit** běžící*<br>
 **sudo systemctl stop** {*jednotka.typ*}...
 
-*# restartovat běžící*<br>
+*# **restartovat** běžící*<br>
 **sudo systemctl restart** {*jednotka.typ*}...
 
 *# nastavit automatické spouštění jednotky/zrušit toto nastavení*<br>
@@ -113,7 +163,18 @@ ovládání kontejnerů příkazem „machinectl“ a zjišťování informací
 
 ### Informace o systémových jednotkách
 
-*# vypsat jednotky všech typů*<br>
+*# **zjistit stav** (pro člověka/pro skript)*<br>
+**systemctl status** {*jednotka.typ*}<br>
+**systemctl show** {*jednotka.typ*}
+<!--
+**systemctl show** {*jednotka.typ*} **\| egrep '^((Active|Load|Sub)State|Description|Id|Names)='**<br>
+-->
+
+*# zjistit, zda jednotka běží*<br>
+*// Pro každou zadanou systémovou jednotku vypíše řádek „active“ nebo „inactive“; uspěje, pokud alespoň jeden řádek bude „active“.*<br>
+**systemctl is-active** [**\-\-quiet**] {*jednotka.typ-nebo-vzorek*}...
+
+*# **vypsat** jednotky všech typů*<br>
 **systemctl list-units** [**\-\-all**] <nic>[{*filtrovací-vzorek*}]
 
 *# vypsat časovače*<br>
@@ -125,35 +186,32 @@ ovládání kontejnerů příkazem „machinectl“ a zjišťování informací
 *# vypsat cíle*<br>
 **systemctl list-units \-\-all -t target**
 
-*# zjistit, zda jednotka běží*<br>
-*// Je-li zadáno víc jednotek, uspěje, pokud běží kterákoliv z nich.*<br>
-**systemctl is-running** [**\-\-quiet**] {*jednotka.typ-nebo-vzorek*}...
-
-*# zjistit PID příslušné dané jednotce (je-li definováno)*<br>
+*# zjistit **PID** příslušné dané jednotce (je-li definováno)*<br>
+*// Poznámka: pokud dané jednotce neodpovídá žádný běžící démon, vypíše tento příkaz „0“.*<br>
 **systemctl show \-\-property=MainPID** {*jednotka.typ*} **\| sed -E 's/.\*=//'**
 
-*# vypsat manuálovou stránku příslušnou jednotce, je-li známa*<br>
+*# vypsat **manuálovou stránku** příslušnou jednotce, je-li známa*<br>
 **systemctl help** {*jednotka.typ*}
 
 *# vypsat dynamické závislosti jednotky (na kterých jednotka závisí/které závisí na jednotce)*<br>
-*// Poznámka: dynamické závislosti mezi jednotkami jsou obtížně pochopitelná věc, protože mohou vznikat a zanikat za běhu v reakci na změnu stavu systému.*<br>
+*// Poznámka: dynamické závislosti mezi jednotkami jsou obtížně pochopitelná věc, protože mohou vznikat a zanikat za běhu v reakci na změnu stavu systému. Nepředpokládejte, že je chápete, pokud jste podrobně nestudovali dokumentaci systemd.*<br>
 **systemctl list-dependencies**<br>
 **systemctl list-dependencies \-\-reverse**
 
 ### Logy
 
-*# vypsat log krále démonů*<br>
+*# **vypsat log** krále démonů*<br>
 **journalctl** [{*parametry*}]<br>
 
-*# vypsat log jádra (pro skript/pro člověka)*<br>
+*# **vypsat log** jádra (pro skript/pro člověka)*<br>
 **dmesg** [**\-\-time-format iso**]<br>
 **dmesg -H**[**x**] <nic>[**\-\-time-format iso**]
 
-*# sledovat log krále démonů/log jádra*<br>
+*# **sledovat** log krále démonů/log jádra*<br>
 **journalctl -fqn 0** [{*parametry*}]<br>
 **dmesg -w**[**H**]<nic>[**x**]<nic>[**\-\-time-format iso**]
 
-*# vypsat seznam časů posledních nabootování*<br>
+*# vypsat seznam **časů posledních nabootování***<br>
 **journalctl \-\-list-boots \| sed -E $'s/.\*([A-Z]<nic>[a-z]{2}.\*)\\u2014.\*/\\\\1/' \| date -f - "+%F %T %z"**
 
 *# zjistit, kolik místa na disku zabírají logy krále démonů*<br>
@@ -197,7 +255,7 @@ ovládání kontejnerů příkazem „machinectl“ a zjišťování informací
 
 ### Sezení
 
-*# vypsat seznam sezení/přihlášených uživatelů*<br>
+*# vypsat **seznam sezení**/přihlášených uživatelů*<br>
 **loginctl** [**list-sessions**]<br>
 **loginctl list-users**
 
@@ -205,35 +263,33 @@ ovládání kontejnerů příkazem „machinectl“ a zjišťování informací
 **loginctl show-session** {*ID-sezení*}<br>
 **loginctl show-user** {*uživatel*}
 
-*# přepnout na uvedené sezení*<br>
+*# **přepnout** na uvedené sezení*<br>
 *// Poznámka: tento příkaz dokáže přepnout i mezi X a virtuální konzolí!*<br>
 **loginctl activate** {*ID-sezení*}
 
-*# násilně ukončit sezení/všecha sezení uživatele*<br>
+*# **násilně ukončit** sezení/všechna sezení uživatele*<br>
 **loginctl terminate-session** {*ID-sezení*}<br>
 **loginctl terminate-user** {*uživatel*}
 
 
 ### Ostatní
 
-*# který cíl je výchozí?*<br>
-**systemctl get-default**
-
-*# nastavit výchozí cíl startu systému*<br>
-**sudo systemctl set-default** {*cíl.target*}
+*# nastavit jméno počítače*<br>
+**sudo sed -i -E "s/(\\\\s)$(hostname)\\$/\\\\1**{*novéjméno*}**/" /etc/hosts &amp;&amp; sudo hostname** {*novéjméno*}<br>
+!: Restartujte počítač.
 
 *# nastavit proměnnou prostředí krále démonů/smazat ji*<br>
 **sudo systemctl set-environment** {*PROMĚNNÁ*}**="**{*hodnota*}**"** [{*DALŠÍ\_PROMĚNNÁ*}**="**{*její hodnota*}**"**]...<br>
 **sudo systemctl unset-environment** {*PROMĚNNÁ*}...
 
+*# který cíl je pro start systému výchozí?*<br>
+**systemctl get-default**
+
+*# nastavit výchozí cíl*<br>
+**sudo systemctl set-default** {*cíl.target*}
 <!--
-sudo systemctl daemon-reload
-systemctl is-system-running
-sudo? systemctl hibernate
-sudo? systemctl suspend
+[ ] Zjistit, jak lze použít k nastavení systému, aby naběhl do textového prostředí místo grafického...
 -->
-
-
 
 ## Zaklínadla (klávesnice)
 
@@ -258,23 +314,27 @@ sudo? systemctl suspend
 <!--
 *# přímý příkaz jádru systému k vyprázdnění vyrovnávací paměti zápisu (**flush**)*<br>
 !: Klávesová zkratka „Alt“+„PrintScreen“+„S“
+
+Poznámka: Někde jsem četl/a, že na některých noteboocích může být nutné ke kombinaci
+Alt+PrintScreen držet navíc i klávesu Fn; je-li to pravda, výrobci takových notebooků
+museli mít podivnou představu o tom, kolik mají jejich uživatelé rukou.
 -->
 
 ### Ovládání klávesnice počítačem
 
 Poznámka: příkazy v této sekci jsou určeny výhradně pro X; téméř jistě nebudou fungovat v textových virtuálních konzolích ani na Waylandu.
 
-*# zapnout/vypnout/přepnout Num Lock*<br>
+*# zapnout/vypnout/přepnout **Num Lock***<br>
 **numlockx on**<br>
 **numlockx off**<br>
 **numlockx toggle**
 
-*# zapnout/vypnout/přepnout Caps Lock*<br>
+*# zapnout/vypnout/přepnout **Caps Lock***<br>
 ?<br>
 ?<br>
 **xdotool key Caps\_Lock**
 
-*# zapnout/vypnout/přepnout Scroll Lock*<br>
+*# zapnout/vypnout/přepnout **Scroll Lock***<br>
 ?<br>
 ?<br>
 **xdotool key Scroll\_Lock**
@@ -283,11 +343,9 @@ Poznámka: příkazy v této sekci jsou určeny výhradně pro X; téméř jist
 **xinput \-\-disable $(xinput \-\-list \-\-short \| egrep '\\[.\*keyboard.\*\\]' \| egrep -iv 'virtual\|(power\|sleep)&blank;button' \| tail -n 1 \| sed -E 's/.\*id=([0-9]+)[<nic>^0-9].\*/\\1/')**<br>
 **xinput \-\-enable $(xinput \-\-list \-\-short \| egrep '\\[.\*keyboard.\*\\]' \| egrep -iv 'virtual\|(power\|sleep)&blank;button' \| tail -n 1 \| sed -E 's/.\*id=([0-9]+)[<nic>^0-9].\*/\\1/')**
 
-
-
 ### Rozložení klávesnice
 
-*# změnit systémové rozložení*<br>
+*# trvale změnit systémové rozložení*<br>
 **sudo dpkg-reconfigure keyboard-configuration**<br>
 **sudoedit /etc/default/keyboard**<br>
 !: Zkontrolujte hodnoty XKBLAYOUT a XKBVARIANT, zda jsou nastaveny podle vaších představ; pokud ne, opravte je a uložte soubor.<br>
@@ -321,12 +379,6 @@ sudo systemctl restart keyboard-setup.service
 
 
 ## Parametry příkazů
-<!--
-- Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.
-- Jinak by zde měl být přehled nejužitečnějších parametrů používaných nástrojů.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-
 ### journalctl
 
 *# *<br>
@@ -344,62 +396,46 @@ sudo systemctl restart keyboard-setup.service
 * ☐ -a :: Vypíše přesně a úplně i zprávy obsahující netisknutelné znaky či zprávy mimořádně dlouhé (nezkoušeno).
 
 ## Instalace na Ubuntu
-<!--
-- Jako zaklínadlo bez titulku uveďte příkazy (popř. i akce) nutné k instalaci a zprovoznění všech nástrojů požadovaných kterýmkoliv zaklínadlem uvedeným v kapitole. Po provedení těchto činností musí být nástroje plně zkonfigurované a připravené k práci.
-- Ve výčtu balíků k instalaci vycházejte z minimální instalace Ubuntu.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+Většina použitých příkazů je základní součástí Ubuntu, pouze příkazy numlockx a xdotool si musíte doinstalovat, chcete-li je použít:
 
 *# *<br>
 **sudo apt-get install numlockx xdotool**
 
-
-## Ukázka
 <!--
+## Ukázka
+<!- -
 - Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
 - Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti − ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
 - Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
--->
+- ->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
+-->
 
 !ÚzkýRežim: zap
 
 ## Tipy a zkušenosti
-<!--
-- Do odrážek uveďte konkrétní zkušenosti, které jste při práci s nástrojem získali; zejména případy, kdy vás chování programu překvapilo nebo očekáváte, že by mohlo překvapit začátečníky.
-- Popište typické chyby nových uživatelů a jak se jim vyhnout.
-- Buďte co nejstručnější; neodbíhejte k popisování čehokoliv vedlejšího, co je dost možné, že už čtenář zná.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+* Systemd se ve výpisech procesů představuje jako „/sbin/init“, což je ve skutečnosti symbolický odkaz na „/lib/systemd/systemd“.
+* Volba „enable“/„disable“ je nezávislá na tom, zda démon právě běží. Nastavení na „enable“ ho okamžitě nespustí a nastavení na „disable“ neukončí (ledaže uvedete parametr „\-\-now“).
 
 ## Další zdroje informací
-<!--
-- Uveďte, které informační zdroje jsou pro začátečníka nejlepší k získání rychlé a obsáhlé nápovědy. Typicky jsou to manuálové stránky, vestavěná nápověda programu nebo webové zdroje. Můžete uvést i přímé odkazy.
-- V seznamu uveďte další webové zdroje, knihy apod.
-- Pokud je vestavěná dokumentace programů (typicky v adresáři /usr/share/doc) užitečná, zmiňte ji také.
-- Poznámka: Protože se tato sekce tiskne v úzkém režimu, zaklínadla smíte uvádět pouze bez titulku a bez poznámek pod čarou!
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-Co hledat:
-
-* [Článek na Wikipedii](https://cs.wikipedia.org/wiki/Hlavn%C3%AD_strana)
-* Oficiální stránku programu
-* Oficiální dokumentaci
-* [Manuálovou stránku](http://manpages.ubuntu.com/)
-* [Balíček](https://packages.ubuntu.com/)
-* Online referenční příručky
-* Různé další praktické stránky, recenze, videa, tutorialy, blogy, ...
-* Publikované knihy
-* [Stránky TL;DR](https://github.com/tldr-pages/tldr/tree/master/pages/common)
+* [Článek na Wikipedii](https://cs.wikipedia.org/wiki/Systemd)
+* [Seriál článků na ABC Linuxu](http://www.abclinuxu.cz/serialy/systemd)
+* [Systemd cheat sheet](https://www.thegeekdiary.com/centos-rhel-7-systemd-command-line-reference-cheat-sheet/) (anglicky)
+* [Oficiální stránka systemd pro uživatele](https://www.freedesktop.org/wiki/Software/systemd/) (anglicky)
+* [Oficiální stránka systemd pro vývojáře](https://systemd.io/) (anglicky)
+* [Repozitář systemd na GitHubu](https://github.com/systemd/systemd) (anglicky)
+* [Video Creating systemd Service Files](https://www.youtube.com/watch?v=fYQBvjYQ63U) (anglicky)
+* [Video systemd Basics](https://www.youtube.com/watch?v=AtEqbYTLHfs) (anglicky)
+* *man 1 systemctl* (anglicky)
+* *man 5 systemd.service* (anglicky)
+* [Balíček systemd](https://packages.ubuntu.com/bionic/systemd) (anglicky)
+* [TL;DR systemctl](https://github.com/tldr-pages/tldr/blob/master/pages/linux/systemctl.md) (anglicky)
 
 !ÚzkýRežim: vyp
 <!--
-systemd Basics
-(anglicky)
-https://www.youtube.com/watch?v=AtEqbYTLHfs
-
-Creating systemd Service Files
-(anglicky)
-https://www.youtube.com/watch?v=fYQBvjYQ63U
+sudo systemctl daemon-reload
+systemctl is-system-running
 -->

@@ -54,6 +54,7 @@ SVG_OBRAZKY := kalendar.svg tritecky.svg graf-filtru.svg
 SOUBORY_PREKLADU := soubory_prekladu
 VYSTUP_PREKLADU := vystup_prekladu
 
+# Datum sestavení ve formátu %Y%m%d a odpovídající soubor.
 DATUM_SESTAVENI := $(shell date +%Y%m%d)
 DATUM_SESTAVENI_SOUBOR := $(SOUBORY_PREKLADU)/datum-$(DATUM_SESTAVENI).txt
 
@@ -62,7 +63,7 @@ JMENO := Sid $(DATUM_SESTAVENI)
 
 .PHONY: all clean html log pdf-a4 pdf-b5 pdf-a5 pomocne-funkce
 
-all: html log pdf-a4 pomocne-funkce
+all: html log pdf-a4 pdf-b5 pomocne-funkce
 
 clean:
 	$(RM) -Rv $(SOUBORY_PREKLADU) $(VYSTUP_PREKLADU) kapitoly.lst
@@ -112,6 +113,7 @@ $(SOUBORY_PREKLADU)/postprocess.tsv:
 # 4. soubory_prekladu/datum-*.txt
 # ============================================================================
 $(DATUM_SESTAVENI_SOUBOR):
+	$(RM) -v $(SOUBORY_PREKLADU)/datum-*.txt
 	printf $(DATUM_SESTAVENI)\\n >"$@"
 
 # HTML:

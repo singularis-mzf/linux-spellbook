@@ -242,8 +242,7 @@ V repozitáři Ubuntu sice je balíček „youtube-dl“, ale zpravidla zastara
 
 ## Další zdroje informací
 *# *<br>
-**youtube-dl \-\-help**<br>
-**test a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01 a01**
+**youtube-dl \-\-help**
 
 Pro podrobný popis formátovacího řetězce a mechanismu automatického výběru formátu ke stažení navštivte oficiální dokumentaci. Bohužel, veškerá oficiální nápověda je jen v angličtině.
 
