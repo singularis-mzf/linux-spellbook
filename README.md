@@ -49,13 +49,14 @@ Pro tisk jsou určeny varianty ve formátu PDF, které jsou rovněž ke stažen�
 
 ## Návod k sestavení
 
-K sestavení příručky ze zdrojového kódu budete potřebovat Git, GNU make, GNU awk, ImageMagick, rsvg-convert a LaTeX
-a kvůli řazení české locale „cs\_CZ.UTF-8“ (musí fungovat české řazení příkazem „sort“).
-V Ubuntu 18.04 LTS, Debianu 10 a Linuxu Mint 17.2 můžete tyto nástroje nainstalovat příkazem:
+K sestavení příručky ze zdrojového kódu budete potřebovat Git, GNU make,
+GNU awk, ImageMagick, rsvg-convert a XeLaTeX a kvůli řazení české locale
+„cs\_CZ.UTF-8“ (musí fungovat české řazení příkazem „sort“). Také budete
+potřebovat písma „DejaVu Sans“, „Latin Modern Math“, „Latin Modern Mono Slanted“,
+„Latin Modern Mono Light Cond“, „TeX Gyre Schola“, „TeX Gyre Heros“ a „TeX Gyre Cursor“.
+V Ubuntu 18.04 LTS a Linuxu Mint 17.3 můžete tyto nástroje nainstalovat příkazem:
 
-> ``sudo apt-get install git make gawk imagemagick librsvg2-bin texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra texlive-lang-czechslovak hunspell-cs``
-
-Předpokládám, že používáte českou lokalizaci daného systému. Pokud ne, v Ubuntu a Linuxu Mint to můžete napravit doinstalováním balíčku „language-pack-cs“ (na českou lokalizaci není nutno přepínat, stačí když bude nainstalovaná). Řešení pro Debian neznám.
+> ``sudo apt-get install git make gawk imagemagick librsvg2-bin texlive-xetex texlive-lang-czechslovak fonts-texgyre``
 
 Pak budete potřebovat stáhnout si repozitář:
 
@@ -69,6 +70,17 @@ A nakonec stačí spustit make:
 Pro urychlení můžete programu „make“ předat parametr **„-j4“**.
 
 Výstup ve všech podporovaných formátech najdete v podadresářích adresáře ``vystup_prekladu``.
+
+Předpokládám použití **české lokalizace** daného systému; používáte-li jinou (např. anglickou),
+spusťte prosím před překladem tento příkaz:
+
+> `printf %s\\n žába čádor tábor chalupa | LC_ALL="cs_CZ.UTF-8" sort`
+
+a zkontrolujte, že vypsal řádky v tomto pořadí:
+
+> čádor<br>chalupa<br>tábor<br>žába
+
+Pokud je vypsané pořadí odlišné, můžete se to pokusit napravit instalací balíčků „language-pack-cs“ a „hunspell-cs“, ale neručím za to, že to bude fungovat. Doporučený postup je použít českou lokalizaci systému.
 
 ## Návod k zapojení se
 
@@ -103,8 +115,8 @@ Kapitoly ani dodatky se však nesmějí opakovat.
 
 ### Kapitoly-děti
 
+* [awk](kapitoly/awk.md) (80%)
 * [sprava-uzivatelu](kapitoly/sprava-uzivatelu.md) (80%)
-* [awk](kapitoly/awk.md) (60%)
 * [zpracovani-obrazku](kapitoly/zpracovani-obrazku.md) (40%)
 * [x](kapitoly/x.md) (40%)
 * [odkazy](kapitoly/odkazy.md) (20%)
