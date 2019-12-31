@@ -37,10 +37,11 @@ BEGIN {
     if (DATUMSESTAVENI == "") {
         ShoditFatalniVyjimku("Vyžadovaná proměnná DATUMSESTAVENI není nastavena pomocí parametru -v!");
     }
+    DATUM = sprintf("%d. %s %s", substr(DATUMSESTAVENI, 7, 2), MesicVDruhemPade(sprintf("%d", substr(DATUMSESTAVENI, 5, 2))), substr(DATUMSESTAVENI, 1, 4));
+
     prikaz = "egrep '^[^\t]*\t" IDKAPITOLY "\t' soubory_prekladu/fragmenty.tsv";
     prikaz | getline zaznam;
     close(prikaz);
-
     if (zaznam != "") {
         split(zaznam, zaznam2, "\t");
         if (zaznam2[2] != IDKAPITOLY) {
@@ -193,6 +194,7 @@ VYTISKNOUT {
     gsub(/\{\{JMÉNO VERZE\}\}/, EscapovatKNahrade(JMENOVERZE));
     gsub(/\{\{PŘEDEVŚIM PRO\}\}/, EscapovatKNahrade(PREDEVSIM_PRO));
     gsub(/\{\{DATUMSESTAVENÍ\}\}/, DATUMSESTAVENI);
+    gsub(/\{\{DATUM SESTAVENÍ\}\}/, DATUM);
     print $0;
 }
 
