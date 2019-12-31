@@ -134,9 +134,12 @@ nechtěný řádek.
 
 ## Konfigurace
 
-To, které kapitoly a v jakém pořadí budou vygenerovány, se určuje v souboru
-„kapitoly.lst“. Pokud tento soubor chybí, vytvoří se z „kapitoly.lst.vychozi“;
-pokud chybí i ten, vytvoří se jako seznam všech kapitol a dodatků z Makefilu.
+To, které kapitoly a v jakém pořadí budou vygenerovány, se zaznamená do souboru
+„soubory\_prekladu/poradi-kapitol.lst“; tento soubor se získá následovně:
+
+1. Existuje-li soubor poradi-kapitol.lst, zkopíruje se ten.
+2. Existuje-li soubor poradi-kapitol.vychozi.lst, zkopíruje se ten.
+3. Jinak se seřadí podle abecedy všechny kapitoly a za ně všechny dodatky podle Makefile, s výjimkou předmluvy, která se umístí jako první, a použije se výsledek.
 
 Druhým místem ke konfiguraci je soubor „konfig.ini“, který v současnosti
 obsahuje pouze sekci [Obrázky], která určuje šířku vložených obrázků
@@ -163,7 +166,7 @@ Toto je poměrně snadný úkol.
 1. Vytvořte ze šablony [\_sablona.md](../kapitoly/_sablona.md) nový zdrojový soubor v adresáři „kapitoly“. Jeho název bez přípony „.md“ bude sloužit jako ID kapitoly.
 2. Doplňte do souboru název kapitoly (na 2 místa) a vlastní copyright do hlavičky (původní ponechejte).
 3. ID nové kapitoly doplňte v Makefilu do proměnné „VSECHNY\_KAPITOLY“.
-4. ID nové kapitoly doplňte jako nový řádek do souboru „kapitoly.lst“, aby se kapitola generovala na výstup.
+4. ID nové kapitoly doplňte jako nový řádek do souboru „poradi-kapitol.lst“, aby se kapitola generovala na výstup.
 5. Zkuste vše přeložit příkazem „make“ a zkontrolujte, že se nová kapitola přeložila.
 
 Pak už můžete novou kapitolu začít plnit obsahem.
@@ -174,7 +177,7 @@ Pak už můžete novou kapitolu začít plnit obsahem.
 2. Ve skriptu [do\_latexu.awk](../skripty/do_latexu.awk) ve funkci ZpracujZnak() přidejte novou větev přepínače pro obsluhu vámi zvoleného znaku.
 3. Pokud daný znak vyžaduje zvláštní zacházení ve formátu HTML, učiňte totéž i ve skriptu [do\_html.awk](../skripty/do_html.awk), většinu znaků však bude možno do HTML zkopírovat přímo.
 4. Do speciální kapitoly [\_ukazka](../kapitoly/_ukazka.md) doplňte nový znak do seznamu podporovaných znaků.
-5. Pokud kapitola „\_ukazka“ není uvedena v souboru „kapitoly.lst“, doplňte ji tam.
+5. Pokud kapitola „\_ukazka“ není uvedena v souboru „poradi-kapitol.lst“, doplňte ji tam.
 6. Zkuste přeložit všechny výstupní formáty příkazem „make“ a zkontrolujte překlad kapitoly „Ukázka“, zda v každém výstupním formátu, kromě formátu LOG, obsahuje korektně vysázený nový znak.
 
 Pokud má být nový znak zadávaný HTML entitou nebo jiným nestandardním způsobem,

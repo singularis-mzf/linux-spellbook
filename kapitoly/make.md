@@ -107,11 +107,11 @@ jemuž se bude věnovat většina této kapitoly.
 
 ### Obecný tvar pravidel
 *# normální (**pevné**) pravidlo*<br>
-{*cíle oddělené mezerami*}**:** [{*zdroje oddělené mezerami*}] [**;**{*příkaz*}]<br>
+{*cíle oddělené mezerami*}**:** [{*zdroje oddělené mezerami*}] <nic>[**;**{*příkaz*}]<br>
 [<tab>[{*prefix-příkazu*}]{*příkaz*}]...
 
 *# zobecněné (**generované**) pravidlo (zdroje lze odvodit od cíle)*<br>
-{*cíle oddělené mezerami*}**:** {*%-vzor-pro-cíle*}: {*cesta-nebo-%-vzor-zdroje*}... [**;**{*příkaz*}]<br>
+{*cíle oddělené mezerami*}**:** {*%-vzor-pro-cíle*}**:** {*cesta-nebo-%-vzor-zdroje*}... [**;**{*příkaz*}]<br>
 [<tab>[{*prefix-příkazu*}]{*příkaz*}]...
 
 *# obecné (**implicitní**) pravidlo (zdroje lze odvodit od cíle)*<br>
@@ -126,6 +126,11 @@ jemuž se bude věnovat většina této kapitoly.
 *// Uvedený příklad předpokládá předdefinované proměnné CXX a CXXFLAGS, které GNU make předdefinovává, takže je nemusíte sami nastavovat.*<br>
 **$(patsubst kod/%.cc,obj/%.o,$(filter kod/%.cc,$(ZDROJE))): obj/%.o: kod/%.cc**<br>
 **<tab>$(CXX) $(CXXFLAGS) -c -o $@ $&lt;**
+
+*# cíl závisí na zdroji, jen pokud zdroj existuje (**nepovinný zdroj**)*<br>
+*// Poznámka: nepovinné zdroje se zadávají jako vzorky interpretu oddělené mezerami, což znamená, že „?“, „\*“ a „&blank;“ jsou v nich znaky se speciální významem.*<br>
+{*cíle oddělené mezerami*}**: $(wildcard** {*nepovinný-zdroj*}...**)**<br>
+[<tab>[{*prefix-příkazu*}]{*příkaz*}]...
 
 ### Textové funkce
 *# **připojit** text před/za každé slovo v řetězci/v rozvoji proměnné*<br>

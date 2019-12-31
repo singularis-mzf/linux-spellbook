@@ -25,7 +25,7 @@
 @include "skripty/utility.awk"
 
 BEGIN {
-    delete VYSKYTY; # [id] -> 1; slouží ke kontrole duplicity v kapitoly.lst
+    delete VYSKYTY; # [id] -> 1; slouží ke kontrole duplicity v poradi-kapitol.lst
     delete ID;      # [index] -> id
     delete ADRESAR; # [index] -> dodatky|kapitoly
     delete NAZEV;   # [index] -> název dodatku či kapitoly (ne id)
@@ -35,7 +35,7 @@ BEGINFILE {
     INDEX = (ARGIND < 2) ? 0 : ARGIND - 1;
 }
 
-# zpracování kapitoly.lst
+# zpracování poradi-kapitol.lst
 ARGIND < 2 {
     if ($0 == "" || substr($0, 1, 1) == "#") {
         next;
@@ -44,7 +44,7 @@ ARGIND < 2 {
         ShoditFatalniVyjimku("Řádek obsahuje znak, který není povolený v ID kapitoly či dodatku! Povoleny jsou pouze znaky [A-Za-z0-9], - a _.");
     }
     if ($0 in VYSKYTY) {
-        print "VAROVÁNÍ: ID dodatku či kapitoly \"" $0 "\" se v souboru kapitoly.lst opakuje! Bude použit pouze první výskyt." > "/dev/stderr";
+        print "VAROVÁNÍ: ID dodatku či kapitoly \"" $0 "\" se v souboru poradi-kapitol.lst opakuje! Bude použit pouze první výskyt." > "/dev/stderr";
         next;
     }
 

@@ -53,6 +53,7 @@ SVG_OBRAZKY := kalendar.svg tritecky.svg graf-filtru.svg
 # ============================================================================
 SOUBORY_PREKLADU := soubory_prekladu
 VYSTUP_PREKLADU := vystup_prekladu
+PORADI_KAPITOL := $(SOUBORY_PREKLADU)/poradi-kapitol.lst
 
 # Datum sestavení ve formátu %Y%m%d a odpovídající soubor.
 DATUM_SESTAVENI := $(shell date +%Y%m%d)
@@ -66,7 +67,7 @@ JMENO := Sid $(DATUM_SESTAVENI)
 all: html log pdf-a4 pdf-b5 pomocne-funkce
 
 clean:
-	$(RM) -Rv $(SOUBORY_PREKLADU) $(VYSTUP_PREKLADU) kapitoly.lst
+	$(RM) -Rv $(SOUBORY_PREKLADU) $(VYSTUP_PREKLADU) $(PORADI_KAPITOL)
 
 # Podporované formáty:
 html: $(addprefix $(VYSTUP_PREKLADU)/html/, lkk-$(DATUM_SESTAVENI).css index.htm _autori.htm)
@@ -77,24 +78,13 @@ pdf-a5: $(VYSTUP_PREKLADU)/pdf-a5/kniha.pdf
 pomocne-funkce: $(VYSTUP_PREKLADU)/bin/pomocne-funkce.sh
 
 # POMOCNÉ SOUBORY:
-# 1. kapitoly.lst (není-li, použít kapitoly.lst.vychozi; není-li ani ten, vygenerovat)
+# 1. soubory_prekladu/fragmenty.tsv
 # ============================================================================
-kapitoly.lst.vychozi:
-	printf %s\\n "# Seznam kapitol a dodatků k vygenerování" "predmluva" "" "# Kapitoly" > $@
-	printf %s\\n $(strip $(sort $(VSECHNY_KAPITOLY))) >> $@
-	printf %s\\n "" "# Dodatky" >> $@
-	printf %s\\n $(strip $(sort $(filter-out predmluva,$(VSECHNY_DODATKY)))) >> $@
-
-kapitoly.lst: kapitoly.lst.vychozi
-	test -e $@ && touch $@ || cat $< >$@
-
-# 2. kapitoly.lst => soubory_prekladu/fragmenty.tsv
-# ============================================================================
-$(SOUBORY_PREKLADU)/fragmenty.tsv: kapitoly.lst skripty/sepsat-fragmenty.awk
+$(SOUBORY_PREKLADU)/fragmenty.tsv: $(wildcard poradi-kapitol.lst poradi-kapitol.vychozi.lst) skripty/sepsat-fragmenty.awk
 	mkdir -pv $(SOUBORY_PREKLADU)
-	$(AWK) -f skripty/sepsat-fragmenty.awk $< > $@
+	(cat poradi-kapitol.lst 2>/dev/null || cat poradi-kapitol.vychozi.lst 2>/dev/null || printf %s\\n "# Seznam kapitol a dodatků k vygenerování" "predmluva" "" "# Kapitoly" $(strip $(sort $(VSECHNY_KAPITOLY))) "" "# Dodatky" $(strip $(sort $(filter-out predmluva,$(VSECHNY_DODATKY))))) | $(AWK) -f skripty/sepsat-fragmenty.awk > $@
 
-# 3. soubory_prekladu/fragmenty.tsv + *.md => soubory_prekladu/osnova/*.tsv
+# 2. soubory_prekladu/fragmenty.tsv + *.md => soubory_prekladu/osnova/*.tsv
 # ============================================================================
 $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/osnova/%.tsv): $(SOUBORY_PREKLADU)/osnova/%.tsv: kapitoly/%.md $(SOUBORY_PREKLADU)/fragmenty.tsv skripty/sepsat-osnovu.awk
 	mkdir -pv $(SOUBORY_PREKLADU)/osnova

@@ -69,6 +69,8 @@ A nakonec stačí spustit make:
 
 Pro urychlení můžete programu „make“ předat parametr **„-j4“**.
 
+Varování „*fontspec warning: "only-xetex-feature"*“ ignorujte; jde o chybu v balíčku „fontspec“, které již [byla nahlášena](https://github.com/wspr/fontspec/issues/382).
+
 Výstup ve všech podporovaných formátech najdete v podadresářích adresáře ``vystup_prekladu``.
 
 Předpokládám použití **české lokalizace** daného systému; používáte-li jinou (např. anglickou),
@@ -84,49 +86,63 @@ Pokud je vypsané pořadí odlišné, můžete se to pokusit napravit instalací
 
 ## Návod k zapojení se
 
-(ve výstavbě)
+Bude k dispozici v souboru [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ### Výběr a pořadí kapitol
 
-Pořadí a přítomnost kapitol a dodatků ve výstupu se nastavuje v souboru „kapitoly.lst“,
-který se při prvním překladu automaticky vygeneruje jako kopie souboru „kapitoly.lst.vychozi“.
-Kapitoly ani dodatky se však nesmějí opakovat.
-
+Chcete-li si sám/a vybrat, které kapitoly se sestaví do výstupního adresáře, zkopírujte soubor
+[poradi-kapitol.vychozi.lst](poradi-kapitol.vychozi.lst) na „poradi-kapitol.lst“ a upravte.
+Píše se jedno id kapitoly či dodatku na řádek (id je název souboru bez adresářové cesty a bez přípony)
+a kapitoly ani dodatky se nesmějí opakovat.
 
 ## Stav vývoje kapitol (podle ID)
-### Vydané kapitoly
 
-* [barvy-a-titulek](kapitoly/barvy-a-titulek.md)
-* [datum-cas-kalendar](kapitoly/datum-cas-kalendar.md)
-* [docker](kapitoly/docker.md)
-* [git](kapitoly/git.md)
-* [make](kapitoly/make.md)
-* [markdown](kapitoly/markdown.md)
-* [planovani-uloh](kapitoly/planovani-uloh.md)
-* [prace-s-archivy](kapitoly/prace-s-archivy.md)
-* [regularni-vyrazy](kapitoly/regularni-vyrazy.md)
-* [sprava-balicku](kapitoly/sprava-balicku.md)
-* [stahovani-videi](kapitoly/stahovani-videi.md)
-* [zpracovani-videa-a-zvuku](kapitoly/zpracovani-videa-a-zvuku.md)
+| ID | Název kapitoly | Růst | Stav |
+| :--- | :--- | ---: | :--- |
+| [barvy-a-titulek](kapitoly/barvy-a-titulek.md) | Barvy, titulek a výzva terminálu | 100% | vydána (od verze 1.0) |
+| [datum-cas-kalendar](kapitoly/datum-cas-kalendar.md) | Datum, čas a kalendář | 100% | vydána (od verze 1.1) |
+| [docker](kapitoly/docker.md) | Docker | 100% | vydána (od verze 1.0) |
+| [git](kapitoly/git.md) | Git | 100% | vydána (od verze 1.0) |
+| [make](kapitoly/make.md) | GNU make | 100% | vydána (od verze 1.0) |
+| [markdown](kapitoly/markdown.md) | Markdown | 100% | vydána (od verze 1.0) |
+| [planovani-uloh](kapitoly/planovani-uloh.md) | Plánování úloh | 100% | vydána (od verze 1.0) |
+| [prace-s-archivy](kapitoly/prace-s-archivy.md) | Práce s archivy | 100% | vydána (od verze 1.1) |
+| [regularni-vyrazy](kapitoly/regularni-vyrazy.md) | Regulární výrazy | 100% | vydána (od verze 1.1) |
+| [sprava-balicku](kapitoly/sprava-balicku.md) | Správa balíčků | 100% | vydána (od verze 1.1) |
+| [stahovani-videi](kapitoly/stahovani-videi.md) | Stahování videí | 100% | vydána (od verze 1.0) |
+| [zpracovani-videa-a-zvuku](kapitoly/zpracovani-videa-a-zvuku.md) | Zpracování videa a zvuku | 100% | vydána (od verze 1.0) |
+| [awk](kapitoly/awk.md) | AWK | 100% | připravena k vydání ve verzi 1.2 |
+| [system](kapitoly/system.md) | Systém | 100% | připravena k vydání ve verzi 1.2 |
+| [sprava-uzivatelu](kapitoly/sprava-uzivatelu.md) | Správa uživatelů | 80% | dítě |
+| [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
+| [zpracovani-obrazku](kapitoly/zpracovani-obrazku.md) | Zpracování obrázků | 40% | dítě |
+| [odkazy](kapitoly/odkazy.md) | Pevné a symbolické odkazy | 20% | dítě |
+| [perl](kapitoly/perl.md) | Základy Perlu | 20% | dítě |
+| [latex](kapitoly/latex.md) | LaTeX | 5% | dítě |
+| [konverze-formatu](kapitoly/konverze-formatu.md) | Konverze formátů | 0% | embryo |
+| [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) | Zpracování textových souborů | 0% | embryo |
+| [unicode](kapitoly/unicode.md) | Unicode a emotikony | 0% | embryo |
+| [hledani-souboru](kapitoly/hledani-souboru.md) | Hledání souborů | 0% | embryo |
+| [firefox](kapitoly/firefox.md) | Firefox | 0% | embryo |
+| prehravani-videa | Přehrávání videa, zvuku a obrázků | - | přál/a bych si |
+| sifrovani | Šifrování a kryptografie | - | přál/a bych si |
+| zpracovani-binarnich-souboru | Zpracování binárních souborů - | přál/a bych si |
+| diskove-oddily | Diskové oddíly | - | přál/a bych si |
+| firewall | Firewall | - | přál/a bych si |
+| grub | GRUB | - | přál/a bych si |
+| vim | Vim | - | přál/a bych si |
+| zaznam-x | Záznam obrazovky | - | přál/a bych si |
+| soubory-a-adresare | Soubory a adresáře | - | přál/a bych si |
+| bash | Bash | - | přál/a bych si |
+| sql | SQL | - | přál/a bych si |
+| ascii-art | ASCII art | - | přál/a bych si |
+| wine | Wine | - | přál/a bych si |
+| sprava-balicku-2 | Správa balíčků 2 | - | přál/a bych si |
+| sprava-procesu | Správa procesů | - | přál/a bych si |
+| prostredi | Proměnné prostředí | - | přál/a bych si |
+| matematicke-vypocty | Matematické výpočty | - | přál/a bych si |
 
-### Dospělé nevydané kapitoly
-
-*Zatím nejsou.*
-
-### Kapitoly-děti
-
-* [awk](kapitoly/awk.md) (80%)
-* [sprava-uzivatelu](kapitoly/sprava-uzivatelu.md) (80%)
-* [zpracovani-obrazku](kapitoly/zpracovani-obrazku.md) (40%)
-* [x](kapitoly/x.md) (40%)
-* [odkazy](kapitoly/odkazy.md) (20%)
-* [perl](kapitoly/perl.md) (20%)
-* [latex](kapitoly/latex.md) (5%)
-* [konverze-formatu](kapitoly/konverze-formatu.md) (0%)
-* [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) (0%)
-* [unicode](kapitoly/unicode.md) (0%)
-
-### Zvláštní kapitoly
+Zvláštní kapitoly:
 
 * [_ostatni](kapitoly/_ostatni.md) − Slouží k dočasnému shromážďování dosud nezařazených zaklínadel.
 * [_sablona](kapitoly/_sablona.md) − Nepřekládá se. Slouží jako výchozí podoba pro nově založené kapitoly.

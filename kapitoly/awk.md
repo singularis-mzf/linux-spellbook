@@ -629,7 +629,6 @@ Poznámka: Parametry -f a -e můžete kombinovat a zadávat opakovaně. Každ�
 * [Oficiální manuál od GNU](https://www.gnu.org/software/gawk/manual/) (anglicky)
 * *man 1 gawk* (anglicky)
 * [Balíček gawk](https://packages.ubuntu.com/bionic/gawk)
-* různé další praktické stránky, recenze, videa, blogy, ...
 * [Video „Using AWK to filter Data from Fields in Linux“](https://www.youtube.com/watch?v=i67fbJNfihU) (anglicky)
 * [Video „Controlling Array Sorting in AWK“](https://www.youtube.com/watch?v=88oVSJMm8xI) (anglicky)
 * [Awk tutorial](https://www.grymoire.com/Unix/Awk.html) (anglicky)
