@@ -41,7 +41,7 @@ VSECHNY_KAPITOLY += odkazy perl planovani-uloh prace-s-archivy regularni-vyrazy
 # S
 VSECHNY_KAPITOLY += sprava-balicku sprava-uzivatelu stahovani-videi system
 # T, U, V, W, X, Y, Z
-VSECHNY_KAPITOLY += unicode x zpracovani-obrazku zpracovani-textovych-souboru zpracovani-videa-a-zvuku
+VSECHNY_KAPITOLY += unicode x zpracovani-binarnich-souboru zpracovani-obrazku zpracovani-textovych-souboru zpracovani-videa-a-zvuku
 
 # Obrázky (bitmapové a SVG)
 # ============================================================================

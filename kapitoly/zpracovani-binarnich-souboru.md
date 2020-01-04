@@ -1,6 +1,6 @@
 <!--
 
-Linux Kniha kouzel, kapitola [DOPLNIT NÁZEV]
+Linux Kniha kouzel, kapitola Zpracování binárních souborů
 Copyright (c) 2019 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -17,12 +17,9 @@ Poznámky:
 ⊨
 -->
 
-# Název
+# Zpracování binárních souborů
 
-<!--
-Odkomentujte a vyplňte štítky, zejména rozlišení na {program} a {tematický okruh}:
--- !Štítky: {...}{...}
--->
+!Štítky: {tematický okruh}{kontrolní součet}
 
 !ÚzkýRežim: zap
 
@@ -47,6 +44,31 @@ Odkomentujte a vyplňte štítky, zejména rozlišení na {program} a {tematic
 - Rozdělte na podsekce a naplňte „zaklínadly“.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+### Kontrolní součty a heše
+
+*# vypočítat hexidecimální haše souborů, každou hash na nový řádek (CRC32/MD5/SHA1/SHA256)*<br>
+**crc32** {*soubor*}... **\| cut -c -8**<br>
+**md5sum** {*soubor*}... **\| cut -c -32**<br>
+**sha1sum** {*soubor*}... **\| cut -c -40**<br>
+**sha256sum** {*soubor*}... **\| cut -c -64**
+
+*# vypočítat/ověřit kontrolní součty (MD5)*<br>
+*// Heše souborů a jejich názvy (včetně cesty) se uloží do uvedeného souboru.*<br>
+**md5sum** {*soubor*}... **&gt;** {*cílový-soubor.md5*}<br>
+**md5sum -c** {*soubor.md5*}
+
+*# vypočítat/ověřit kontrolní součty (SHA256)*<br>
+*// Analogicky můžete také použít příkazy „sha1sum“, „sha224sum“, „sha384sum“ a „sha512sum“. Existuje také obecný „shasum“.*<br>
+**sha256sum** {*soubor*}... **&gt;** {*cílový-soubor.sha256*}<br>
+**sha256sum -c** {*soubor.sha256*}
+
+### Ostatní
+
+*# zkrátit či prodloužit soubor na uvedenou velikost (obecně/příklady...)*<br>
+*// Prodlužuje se nulovými bajty.*<br>
+**truncate -s** {*velikost*} {*soubor*}...<br>
+?
 
 ## Parametry příkazů
 <!--

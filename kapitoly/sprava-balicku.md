@@ -145,10 +145,10 @@ aptitude search --disable-columns -F %p "?upgradable"
 ### Podrobné informace o balíčku
 
 *# vypsat podrobné informace o balíčku*<br>
-**apt-cache show** {*balík*}...
+**apt-cache show** {*balíček*}...
 
 *# vypsat seznam souborů a adresářů v systému, které kontroluje daný (nainstalovaný/dostupný) balíček*<br>
-*// Poznámka: Ve výpisu „dpkg-query -L“ se typicky objevují také společné adresáře jako /etc či /usr; není příliš spolehnutí na to, že jde pouze o soubory příslušné danému balíku.*<br>
+*// Poznámka: Ve výpisu „dpkg-query -L“ se typicky objevují také společné adresáře jako /etc či /usr; není příliš spolehnutí na to, že jde pouze o soubory příslušné danému balíčku.*<br>
 **dpkg-query -L** {*balíček*}<br>
 **apt-file list** {*balíček*}...
 <!--
@@ -156,7 +156,7 @@ aptitude search --disable-columns -F %p "?upgradable"
 -->
 
 *# vypsat závislosti balíčku*<br>
-**apt-cache depends** {*balík*}...
+**apt-cache depends** {*balíček*}...
 
 ### Zákaz aktualizace a označení „automaticky“
 
@@ -318,8 +318,8 @@ Za znakem „=“ následuje příklad hodnoty pro balíček „gimp“.
 *# **vypsat** seznam odklonů*<br>
 **dpkg-divert \-\-list \\\***
 
-*# odklonit soubor pro všechny balíky kromě zadaného*<br>
-**sudo dpkg-divert \-\-package** {*balík*} [**\-\-move**] **\-\-divert** {*/nové/umístění*} {*/původní/umístění*}
+*# odklonit soubor pro všechny balíčky kromě zadaného*<br>
+**sudo dpkg-divert \-\-package** {*balíček*} [**\-\-move**] **\-\-divert** {*/nové/umístění*} {*/původní/umístění*}
 
 ### Ostatní
 

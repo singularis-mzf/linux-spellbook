@@ -29,7 +29,7 @@ virtuálními konzolemi a X.
 
 # Systém
 
-!Štítky: {tematický okruh}{systém}{démoni}{klávesnice}
+!Štítky: {tematický okruh}{systém}{démoni}{klávesnice}{odkládací prostor}
 !ÚzkýRežim: zap
 
 ## Úvod
@@ -223,7 +223,7 @@ Poznámka: správci přihlášení se nepočítají mezi démony, protože mají
 
 ### Odkládací oddíly a soubory
 
-*# **připojit** odkládací oddíl/soubor*<br>
+*# **připojit** odkládací oddíl/soubor (platí jen do restartu)*<br>
 **sudo swapon** {*/dev/oddíl*}...<br>
 **sudo swapon** {*/cesta/název-souboru*}...
 

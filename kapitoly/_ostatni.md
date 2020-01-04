@@ -33,26 +33,6 @@ Neměla by být součástí výsledné knihy.
 **uuid**<br>
 **uuidgen -r**
 
-*# vypočítat hexidecimální hashe souborů, každý hash na nový řádek (CRC32/MD5/SHA1/SHA256)*<br>
-**crc32** {*soubor*}... **\| cut -d '&blank;' -f 1**<br>
-**md5sum** {*soubor*}... **\| cut -d '&blank;' -f 1**<br>
-**sha1sum** {*soubor*}... **\| cut -d '&blank;' -f 1**<br>
-**sha256sum** {*soubor*}... **\| cut -d '&blank;' -f 1**
-
-*# vypočítat/ověřit kontrolní součty (MD5)*<br>
-*// Hashe souborů a jejich názvy se uloží do souboru „soubory.md5“.*<br>
-**md5sum** {*soubor*}... **&gt; soubory.md5**<br>
-**md5sum -c soubory.md5**
-
-*# vypočítat/ověřit kontrolní součty (SHA256)*<br>
-*// Analogicky můžete také použít příkazy „sha1sum“, „sha224sum“, „sha384sum“ a „sha512sum“. Existuje také obecný „shasum“.*<br>
-**sha256sum** {*soubor*}... **&gt; soubory.sha256**<br>
-**sha256sum -c soubory.sha256**
-
-*# zkrátit či prodloužit soubor na uvedenou velikost*<br>
-*// Prodlužuje se nulovými bajty.*<br>
-**truncate -s** {*velikost*} {*soubor*}...
-
 *# konvertovat obrázek na „data URL“/z „data URL“*<br>
 **printf "data:%s;base64," "$(file -b \-\-mime-type "**{*soubor*}**")"; base64 -w 0** {*soubor*}<br>
 **printf "%s\\n" "**{*data-url*}**" \| cut -d , -f 2- -s \| base64 -d &gt;** {*výstupní-soubor*}
@@ -70,29 +50,11 @@ TODO: Vylepšit řazení; první pokus: | LC_ALL=C sort -k 6
 
 *# zobrazit „oznámení“ operačního systému*<br>
 *// Vhodné ikony jsou např.: dialog-warning, dialog-error, dialog-information, ale můžete použít jakékoliv ikony nainstalované v systému (např. ikony nainstalovaných aplikací, zkuste „-i firefox“).*<br>
-**notify-send** [**-i** {*ikona*}] [**-u** {*význam*}] **"**{*Titulek oznámení*}**"** [**"**{*Text oznámení*}**"**]
+**notify-send** [**-i** {*ikona*}] <nic>[**-u** {*význam*}] **"**{*Titulek oznámení*}**"** [**"**{*Text oznámení*}**"**]
 
 <!--
 Kategorie: http://www.galago-project.org/specs/notification/0.9/x211.html
 -->
-
-*# vytvořit použitelný odkládací soubor*<br>
-[**sudo**] **fallocate -vl** {*velikost*} {*odkládací-soubor*}<br>
-**sudo chown root:root** {*odkládací-soubor*}<br>
-**sudo chmod 600** {*odkládací-soubor*}<br>
-**sudo mkswap** {*odkládací-soubor*}
-
-*# zapnout existující odkládací soubor (platí jen do restartu)*<br>
-**sudo swapon** {*odkládací-soubor*}
-
-*# vypnout existující odkládací soubor*<br>
-**sudo swapoff** {*odkládací-soubor*}
-
-*# smazat vypnutý odkládací soubor*<br>
-**sudo rm** {*odkládací-soubor*}
-
-*# konverze časové zóny*<br>
-**TZ="**{*cílová-zóna*}**" date -d 'TZ="**{*zdrojová-zóna*}**"** {*zdrojový-čas*}**'** [**"+**{*formát*}**"**]
 
 *# vypsat banán*<br>
 **printf \\\\U0001f34c\\\\n**
@@ -115,7 +77,7 @@ Kategorie: http://www.galago-project.org/specs/notification/0.9/x211.html
 **command** {*příkaz*} {*parametry*}
 
 *# spustit příkaz v odlišném prostředí a s jiným aktuálním adresářem*<br>
-**env** [**-C** {*nový/aktuální/adresář*}] [**-i**] [**-u** {*PROMĚNNÁ*}]... [{*PROMĚNNÁ*}**='**{*nová hodnota*}**'**]... {*příkaz*}
+**env** [**-C** {*nový/aktuální/adresář*}] <nic>[**-i**] <nic>[**-u** {*PROMĚNNÁ*}]... [{*PROMĚNNÁ*}**='**{*nová hodnota*}**'**]... {*příkaz*}
 
 *# spustit příkaz jako superuživatel/jiný uživatel (varianta pro GUI)*<br>
 **pkexec** {*příkaz*} {*parametry*}<br>
@@ -133,8 +95,8 @@ Kategorie: http://www.galago-project.org/specs/notification/0.9/x211.html
 
 *# vygenerovat QR kód (zadat text/ze standardního vstupu)*<br>
 *// Typ obrázku může být PNG, SVG, ASCII a některé další. Výstupu na standardní výstup lze dosáhnout zadáním „-“ místo výstupního souboru.*<br>
-**qrencode** [**-o** {*výstupní-soubor*}] [**-t** {*typ-obrázku*}] [**-s** {*rozměr-čtverečku*}] [**\-\-foreground=**{*barva*}] [**\-\-background=**{*barva*}] **"**{*text*}**"**<br>
-**qrencode** [**-o** {*výstupní-soubor*}] [**-t** {*typ-obrázku*}] [**-s** {*rozměr-čtverečku*}] [**\-\-foreground=**{*barva*}] [**\-\-background=**{*barva*}]
+**qrencode** [**-o** {*výstupní-soubor*}] <nic>[**-t** {*typ-obrázku*}] <nic>[**-s** {*rozměr-čtverečku*}] <nic>[**\-\-foreground=**{*barva*}] <nic>[**\-\-background=**{*barva*}] **"**{*text*}**"**<br>
+**qrencode** [**-o** {*výstupní-soubor*}] <nic>[**-t** {*typ-obrázku*}] <nic>[**-s** {*rozměr-čtverečku*}] <nic>[**\-\-foreground=**{*barva*}] <nic>[**\-\-background=**{*barva*}]
 <!--
 Vyžaduje balík: qrencode
 -->

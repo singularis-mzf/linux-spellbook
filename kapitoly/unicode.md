@@ -14,6 +14,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 <!--
 Poznámky:
 
+https://unix.stackexchange.com/questions/198849/how-can-i-find-the-common-name-for-a-particular-glyph
+
 -->
 
 # Unicode a emotikony

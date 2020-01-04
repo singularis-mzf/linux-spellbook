@@ -113,15 +113,15 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [zpracovani-videa-a-zvuku](kapitoly/zpracovani-videa-a-zvuku.md) | Zpracování videa a zvuku | 100% | vydána (od verze 1.0) |
 | [awk](kapitoly/awk.md) | AWK | 100% | připravena k vydání ve verzi 1.2 |
 | [system](kapitoly/system.md) | Systém | 100% | připravena k vydání ve verzi 1.2 |
+| [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) | Zpracování textových souborů | 90% | dítě |
 | [sprava-uzivatelu](kapitoly/sprava-uzivatelu.md) | Správa uživatelů | 80% | dítě |
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
 | [zpracovani-obrazku](kapitoly/zpracovani-obrazku.md) | Zpracování obrázků | 40% | dítě |
 | [odkazy](kapitoly/odkazy.md) | Pevné a symbolické odkazy | 20% | dítě |
 | [perl](kapitoly/perl.md) | Základy Perlu | 20% | dítě |
+| [unicode](kapitoly/unicode.md) | Unicode a emotikony | 10% | dítě |
 | [latex](kapitoly/latex.md) | LaTeX | 5% | dítě |
 | [konverze-formatu](kapitoly/konverze-formatu.md) | Konverze formátů | 0% | embryo |
-| [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) | Zpracování textových souborů | 0% | embryo |
-| [unicode](kapitoly/unicode.md) | Unicode a emotikony | 0% | embryo |
 | [hledani-souboru](kapitoly/hledani-souboru.md) | Hledání souborů | 0% | embryo |
 | [firefox](kapitoly/firefox.md) | Firefox | 0% | embryo |
 | prehravani-videa | Přehrávání videa, zvuku a obrázků | - | přál/a bych si |
@@ -132,7 +132,7 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | grub | GRUB | - | přál/a bych si |
 | vim | Vim | - | přál/a bych si |
 | zaznam-x | Záznam obrazovky | - | přál/a bych si |
-| soubory-a-adresare | Soubory a adresáře | - | přál/a bych si |
+| soubory-a-adresare | Soubory a adresáře | - | přál/a bych si |
 | bash | Bash | - | přál/a bych si |
 | sql | SQL | - | přál/a bych si |
 | ascii-art | ASCII art | - | přál/a bych si |
@@ -141,6 +141,8 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | sprava-procesu | Správa procesů | - | přál/a bych si |
 | prostredi | Proměnné prostředí | - | přál/a bych si |
 | matematicke-vypocty | Matematické výpočty | - | přál/a bych si |
+| css | Kaskádové styly CSS | - | přál/a bych si |
+| sed | Sed | - | přál/a bych si |
 
 Zvláštní kapitoly:
 
