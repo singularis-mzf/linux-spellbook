@@ -11,171 +11,489 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
+<!--
+Poznámky:
+
+[ ] Chybí ukázka.
+[ ] Nepokrývá formát CSV.
+
+⊨
+-->
 
 # Zpracování textových souborů
 
-!Štítky: {tematický okruh}
+!Štítky: {tematický okruh}{zpracování textových souborů}
+
 !ÚzkýRežim: zap
 
 ## Úvod
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+<!--
+- Vymezte, co je předmětem této kapitoly.
+- Obecně popište základní principy, na kterých fungují používané nástroje.
+- Uveďte, co kapitola nepokrývá, ačkoliv by to čtenář mohl očekávat.
+-->
+
+Tato kapitola se zabývá nástroji pro řazení, filtrování a záplatování textových souborů. Nezabývá se podrobně komplexními nástroji jako GNU awk, sed či Perl,
+přestože jsou v některých zaklínadlech použity.
+
+Tato verze kapitoly nepokrývá zpracování formátu CSV.
+
+Tato kapitola se nezabývá zpracováním textových formátů se složitější strukturou jako např. JSON či XML.
 
 ## Definice
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-* **Záznam** je...
-* **Pole** je...
+* **Znak** (character) je posloupnost jedho nebo více bajtů v textovém souboru,
+která má význam definovaný kódováním znaků (typicky UTF-8).
+* **Řetězec** (string) je libovolná posloupnost znaků, i prázdná či tvořená jedním znakem.
+* **Záznam** je zobecnění pojmu „řádek“ v textovém souboru. Textový soubor se dělí na jednotlivé záznamy podle jejich zakončení **ukončovačem záznamu** (record separator), což je typicky znak konce řádku „\\n“ nebo nulový bajt „\\0“. Záznamy se číslují od 1.
+* Záznam může být brán jako celek, nebo může být dál rozdělen na **sloupce** (fields). Existuje několik metod dělení záznamu na sloupce, nejčastější je použití určitého znaku ASCII jako „oddělovače sloupců“ (field separator). Sloupce se v každém záznamu číslují od 1.
+* **Odstavec** je posloupnost záznamů v souboru ukončená více než jedním ukončovačem záznamu (tzn. v praxi typicky jedním či více prázdnými řádky).
+* **Záplata** je speciální textový soubor, který obsahuje záznam o změnách mezi dvěma verzemi jednoho nebo více textových souborů. Využití záplat je v dnešní době zřídkavé.
+
+V této kapitole rozlišuji následující formáty textových souborů:
+
+* TXT − záznamy ukončeny „\\n“, na sloupce se nedělí.
+* TXTZ − záznamy ukončeny „\\0“, na sloupce se nedělí.
+* TSV − záznamy ukončeny „\\n“, sloupce se dělí tabulátorem („\\t“) nebo jiným znakem ASCII (např. v /etc/passwd se dělí znakem „:“).
+* TSVZ − záznamy ukončený „\\0“, sloupce se oddělují tabulátorem („\\t“) nebo jiným znakem ASCII.
+* pevná šířka sloupců − záznamy ukončeny „\\n“, sloupce (kromě posledního) jsou zarovnány na pevný počet znaků pomocí mezer.
 
 !ÚzkýRežim: vyp
 
-## Zaklínadla
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+## Zaklínadla (txt, txtz)
 
-*# vytvořit prázdný soubor (existuje-li, vyprázdnit)*<br>
+**Důležitá poznámka pro všechna zaklínadla v této sekci:** Kde je v zaklínadle volitelný parametr „z“ (resp. „-z“), tento parametr funguje jako přepínač mezi formáty txt a txtz. Při použití formátu txt tento přepínač vynechejte, při použití txtz ho naopak vždy zařaďte.
+
+### Vytvoření a smazání
+
+*# vytvořit **prázdný soubor** (existuje-li, vyprázdnit)*<br>
 **&gt;** {*soubor*} [**&gt;** {*další-soubor*}]...
 
-*# vytvořit prázdný soubor (existuje-li, jen aktualizovat čas změny)*<br>
+*# vytvořit prázdný soubor (existuje-li, jen aktualizovat čas „změněno“)*<br>
 **touch** {*soubor*}...
 
-*# smazat soubor*<br>
-**rm** [**-f**] [**-v**] {*soubor*}...
-
-*# vzít maximálně N prvních řádků*<br>
-**head -**{*N*} [{*soubor*}]...<br>
-**head -n **{*N*} [{*soubor*}]...
-
-*# vzít maximálně N posledních řádků*<br>
-**tail -**{*N*} [{*soubor*}]...
-
-*# vynechat N prvních řádků, zbytek vzít*<br>
-**tail -n +**{*N*} [{*soubor*}]...
-
-*# vzít všechny řádky kromě N posledních*<br>
-**head -n -**{*N*} [{*soubor*}]...
-
-*# vzít řádky obsahující podřetězec vyhovující regulárnímu výrazu*<br>
-**grep** [**-e**]  **'**{*regulární-výraz*}**'** [{*soubor*}]...
-
-*# vzít řádky vyhovující regulárnímu výrazu*<br>
-**grep -x** [**-e**]  **'**{*regulární-výraz*}**'** [{*soubor*}]...
-
-*# vzít řádky nevyhovující regulárnímu výrazu*<br>
-**grep -vx** [**-e**]  **'**{*regulární-výraz*}**'** [{*soubor*}]...
-
-*# vypsat ty ze souborů, které neobsahují řádek s podřetězcem vyhovujícím danému regulárnímu výrazu*<br>
-**grep -L** [**-e**]  **'**{*regulární-výraz*}**'** {*soubor*}...
-
-*# seřadit řádky souboru*<br>
-**sort** [{*soubor*}]...<br>
-**LC\_ALL=C sort** [{*soubor*}]...
-
-*# seřadit a vyloučit duplicity*<br>
-**LC\_ALL=C sort -u** [{*soubor*}]...
-
 <!--
--r : opačné pořadí
+*# **smazat** soubor*<br>
+**rm** [**-f**] <nic>[**-v**] {*soubor*}...
 -->
 
-*# náhodně permutovat řádky*<br>
-**sort -R** [{*soubor*}]...
+*# N-krát zopakovat určitý záznam (txt/txtz)*<br>
+*// Výchozí hodnota textu záznamu je „y“.*<br>
+**yes** [[**\-\-**] {*text-záznamu*}] **\| head -n** {*N*}<br>
+**printf %s\\0 $'**{*text-záznamu*}**' \| sed -z ':x;p;b&blank;x' \| head -zn** {*N*}
 
-*# obrátit pořadí znaků na každém řádku*<br>
-**rev**
+### Filtrace záznamů podle pořadí
 
-*# obrátit pořadí řádků v každém souboru*<br>
-**tac** [{*soubor*}]...
+*# vzít/vynechat N **prvních***<br>
+**head -**[**z**]**n** {*N*} [{*soubor*}]...<br>
+**tail -**[**z**]**n +**{*N+1*} [{*soubor*}]...
 
+*# vzít/vynechat N **posledních***<br>
+**tail -**[**z**]**n** {*N*} [{*soubor*}]...<br>
+**head -**[**z**]**n -**{*N*} [{*soubor*}]...
 
-*# spojit řádky z více souborů do sloupců vedle sebe*<br>
-*// je-li některý soubor kratší, program ho nadstaví prázdnými řádky*<br>
-**paste** [**-d** {*oddělovací-znaky*}] {*soubor*}...
+*# vzít/vynechat **konkrétní** záznam*<br>
+**sed -**[**z**]**n** {*číslo-záznamu*}**p** [{*soubor*}]...<br>
+**sed** [**-z**] {*číslo-záznamu*}**d** [{*soubor*}]...
 
-*# generovat soubor s nekonečně se opakujícím řádkem*<br>
-*// výchozí text řádeku je "y"*<br>
-**yes** [{*text-řádku*}]
+*# vzít/vynechat **rozsah** záznamů*<br>
+**sed -**[**z**]**n** {*první-ponechaný*}**,**{*poslední-ponechaný*}**p** [{*soubor*}]...
+**sed** [**-z**] {*první-vynechaný*}**,**{*poslední-vynechaný*}**d** [{*soubor*}]
 
-*# donekonečna opakovat obsah souboru (krátkého/dlouhého)*<br>
-**yes \-\- "$(cat** {*soubor*} **)"**<br>
+*# vzít pouze **liché/sudé** záznamy*<br>
+**sed -**[**z**]**n $'p\\nn'** [{*soubor*}]...<br>
+**sed -**[**z**]**n $'n\\np'** [{*soubor*}]...
+
+### Filtrace záznamů podle obsahu
+
+*# vzít/vynechat záznamy odpovídající **regulárnímu výrazu***<br>
+**egrep** [**-z**] <nic>[**-x**] <nic>[{*parametry*}] {*regulární-výraz*} [{*soubor*}]...<br>
+**egrep** [**-z**] **-v** [**-x**] <nic>[{*parametry*}] {*regulární-výraz*} [{*soubor*}]...
+
+*# vzít/vynechat záznamy obsahující **podřetězec***<br>
+*// Poznámka: V hledaném podřetězci se nesmí vyskytovat znak \\n, a to ani u formátu txtz, protože fgrep tento znak používá k oddělení více různých hledaných podřetězců. Pokud váš podřetězec tento znak obsahuje, existuje několik řešení, nejjednodušším je pomocí příkazu „tr“ na vstupu i výstupu příkazu fgrep prohodit znak \\n s jiným ASCII znakem, který se v hledaném podřetězci nevyskytuje.*<br>
+**fgrep** [**-z**] **'**{*podřetězec*}**'** [{*soubor*}]...<br>
+**fgrep** [**-z**] **-v '**{*podřetězec*}**'** [{*soubor*}]...
+
+*# vzít/vynechat záznamy shodné s **řetězcem***<br>
+**fgrep** [**-z**] **'**{*podřetězec*}**'** [{*soubor*}]...<br>
+**fgrep -**[**z**]**x '**{*řetězec*}**'** [{*soubor*}]...
+
+*# vzít/vynechat záznamy od prvního vyhovění regulárnímu výrazu*<br>
+**sed -**[**z**]**En '/**{*regulární výraz*}**/,$p'** [{*soubor*}]...<br>
+**sed -**[**z**]**E '/**{*regulární výraz*}**/,$d'** [{*soubor*}]...
+
+<!--
+Příliš složité:
+
+*# vzít záznamy v každém rozsahu definovaném regulárními výrazy (txt/txtz)*<br>
+**sed -En '/**{*reg. výraz první zázn.*}**/,/**{*reg. výraz posl. zázn.*}**/p'** [{*soubor*}]...<br>
+**sed -zEn '/**{*reg. výraz první zázn.*}**/,/**{*reg. výraz posl. zázn.*}**/p'** [{*soubor*}]...
+
+*# vynechat záznamy v každém rozsahu definovaném regulárním výrazy (txt/txtz)*<br>
+**sed -E '/**{*reg. výraz první vynechaný*}**/,/**{*reg. výraz posl. vynechaný*}**/d'** [{*soubor*}]...<br>
+**sed -zE '/**{*reg. výraz první vynechaný*}**/,/**{*reg. výraz posl. vynechaný*}**/d'** [{*soubor*}]...
+-->
+
+<!--
+Hledání souborů podle obsahu:
+
+egrep -Lr {*regulární-výraz*} {*soubor-či adresář*}...
+
+-->
+
+### Filtrace záznamů podle počtu výskytů
+
+*# vybrat ty, které se vysktují **pouze jednou***<br>
+**LC\_ALL=C sort** [**-z**] <nic>[{*soubor*}]... **\| uniq -**[**z**]**u**
+
+*# vybrat ty, které se vyskytují více než jednou (**duplicity**); vypsat jeden na skupinu/všechny*<br>
+**LC\_ALL=C sort** [**-z**] <nic>[{*soubor*}]... **\| uniq -**[**z**]**d**<br>
+**LC\_ALL=C sort** [**-z**] <nic>[{*soubor*}]... **\| uniq -**[**z**]**D**
+
+*# vybrat ty, které se vyskytují N-krát*<br>
+**LC\_ALL=C sort** [**-z**] <nic>[{*soubor*}]... **\| uniq -**[**z**]**c \| sed -**[**z**]**E 's/^\\s\***{*N*}**\\s//;t;d'**
+
+*# seřadit a **vypsat počet výskytů** (především pro člověka)*<br>
+**LC\_ALL=C sort** [**-z**] <nic>[{*soubor*}]... **\| uniq -**[**z**]**c \| sort -**[**z**]**n**[**r**]
+
+### Řazení a přeskládání záznamů
+
+*# **obrátit** pořadí (txt/txtz)*<br>
+**tac** [{*soubor*}]...<br>
+**tac -s \\\\0** [{*soubor*}]...
+
+*# **náhodně** přeskládat*<br>
+**shuf** [**-z**] <nic>[{*soubor*}]
+
+*# **seřadit***<br>
+[**LC\_ALL=C**] **sort** [**-z**] <nic>[{*parametry*}] <nic>[{*soubor*}]...
+
+*# seřadit a **vyloučit duplicity***<br>
+[**LC\_ALL=C**] **sort -**[**z**]**u** <nic>[{*soubor*}]...
+
+*# seskupit k sobě shodné záznamy a tyto skupiny náhodně přeskládat*<br>
+**sort -**[**z**]**R** [{*soubor*}]...
+
+*# seřadit, s výjimkou prvních N záznamů*<br>
+[**cat** {*soubor*}... **\|**] **(sed -**[**z**]**u** {*N*}**q;** [**LC\_ALL=C**] **sort** [**-z**] <nic>[{*parametry*}]**)**
+
+### Množinové operace (nad seřazenými záznamy)
+
+*# **předzpracování** textového souboru pro množinové operace (vyžadované!)*<br>
+**LC\_ALL=C sort -**[**z**]**u** [{*soubor*}]
+
+*# množinové sjednocení (**or**)*<br>
+**LC\_ALL=C sort -**[**z**]**mu** {*první-soubor*} {*další-soubor*}...
+
+*# množinový průnik dvou souborů (**and**)*<br>
+**LC\_ALL=C join** [**-z**] **-t "" -j 1** {*první-soubor*} {*druhý-soubor*}
+
+*# množinový rozdíl dvou souborů (**and not**)*<br>
+**LC\_ALL=C join** [**-z**] **-t "" -j 1 -v 1** {*hlavní-soubor*} {*odečítaný-soubor*}
+
+*# exkluzivní sjednocení dvou souborů (**xor**)*<br>
+**LC\_ALL=C join** [**-z**] **-t "" -j 1 -v 1 -v 2** {*soubor1*} {*soubor2*}
+
+*# množinový průnik více souborů (and)*<br>
+*// Tip: nejlepšího výkonu této varianty dosáhnete tak, že začnete od nejmenšího vstupního souboru.*<br>
+**cat** {*první-soubor*} [**\| LC\_ALL=C join** [**-z**] **-t "" -j 1 -** {*další-soubor*}]...
+
+### Ostatní
+
+*# **spojit** soubory za sebe*<br>
+*// Standardní vstup můžete mezi soubory vřadit parametrem „-“ místo názvu souboru. Neprázdné soubory musejí být řádně ukončeny ukončovačem záznamu, jinak se poslední záznam spojí s prvním záznamem následujícího souboru.*<br>
+**cat** {*soubor*}...
+
+*# **rozdělit** soubor na díly s uvedeným maximálním počtem záznamů (txt/txtz/příklad)*<br>
+*// Přípona výstupních souborů nesmí obsahovat oddělovač adresářů „/“. Číslování výstupních souborů začíná od nuly; jinou hodnotu lze nastavit, když místo parametru -d použijete parametr \-\-numeric-suffixes=číslo. Uvedený příklad rozdělí soubor „vse.txt“ po sto řádcích na soubory „rozdelene-zaznamy/s00000dil.txt“, „rozdelene-zaznamy/s00001dil.txt“ atd.*<br>
+**split -d -a** {*počet-číslic*} **-l** {*maximální-počet-záznamů*} <nic>[**\-\-additional-suffix='**{*přípona výstupních souborů*}**'**] {*vstupní-soubor*} **"**{*předpona výstupních souborů*}**"**<br>
+**split -d -a** {*počet-číslic*} **-l** {*maximální-počet-záznamů*} **-t \\\\0** [**\-\-additional-suffix='**{*přípona výstupních souborů*}**'**] {*vstupní-soubor*} **"**{*předpona výstupních souborů*}**"**<br>
+**split -d -a 5 -l 100 \-\-additional-suffix='dil.txt' vse.txt "rozdelene-zaznamy/s"**
+
+*# zapisovat na standardní výstup a současně do souborů*<br>
+[{*zdroj vstupu*} **\|**] **tee** [**-a**] {*výstupní-soubor*}...
+
+*# obrátit **pořadí znaků** v každém záznamu (txt/txtz)*<br>
+**rev** [{*soubor*}]...<br>
 ?
 
-*# rozdělit vstupní soubor na díly o uvedené maximální velikosti, s uvedeným prefixem, číslováním a suffixem*<br>
-**split -d -a** {*počet-číslic*} **-b** {*velikost-dílu*} [**\-\-additional-suffix='**{*suffix-výstupních-souborů*}**'**] {*vstupní-soubor*} {*prefix-výstupních-souborů*}
+*# ke každému záznamu přidat **předponu/příponu***<br>
+*// Příkaz „sed“ vyžaduje v příponě i předponě další úroveň escapování znaků „\\“ a „\\n“. Proto v uvedeném případě zadávejte zpětné lomítko jako „\\\\\\\\“ a konec řádku jako „\\\\\\n“. Konec řádku se navíc může vyskytnout pouze při použití formátu txtz, u formátu txt pravděpodobně nebude fungovat správně.*<br>
+**sed** [**-z**] **$'i\\\\\\n**{*předpona*}**'** [{*soubor*}]... **\| paste** [**-z**] **-d "" - -**<br>
+**sed** [**-z**] **$'a\\\\\\n**{*přípona*}**'** [{*soubor*}]... **\| paste** [**-z**] **-d "" - -**
 
-*# zapsat vstup do více souborů*<br>
-**tee** [**-a**] {*soubor*}... [**&gt;/dev/null**]
+*# ke každému záznamu přidat předponu i příponu (alternativy)*<br>
+*// Uvedené varianty se liší požadavky na escapování v příponě: v první variantě sed požaduje dodatečné escapování znaků „\\“ a (případně) konce řádku; v druhé variantě požaduje sed escapování znaků „\\“, „/“ a „&amp;“.*<br>
+**sed** [**-z**] **$'i\\\\\\n**{*předpona*}**\\np\\nc\\\\\\n**{*přípona*}**'** [{*soubor*}]... **\| paste** [**-z**] **-d "" - - -**<br>
+**sed** [**-z**] **'s/.\*/**{*předpona*}**&amp;**{*přípona*}**/'**
 
-*# zakódovat vstup algoritmem UUENCODE*<br>
+*# přidat **číslo záznamu** pro člověka (txt/txtz)*<br>
+**nl** [{*parametry*}] {*soubor*}...<br>
 ?
 
-
-### Množinové operace nad řádky souborů
-
-*# množinové sjednocení (OR)*<br>
-**cat** {*soubor*}... **\| LC\_ALL=C sort \| LC\_ALL=C uniq**
-
-*# množinový průnik (AND)*<br>
+*# přeformátovat text do řádků určité šířky*<br>
+*// Běžně se k tomu používá příkaz „fmt“, ale ten nerespektuje vícebajtové znaky, takže pro texty v UTF-8 funguje nekorektně.*<br>
 ?
 
-*# množinový rozdíl dvou souborů (AND NOT)*<br>
-?
+## Zaklínadla (tsv, tsvz)
 
-*# exkluzivní sjednocení dvou souborů (XOR)*<br>
+**Důležité poznámka pro všechna zaklínadla v této sekci:** Kde je v zaklínadle volitelný parametr „z“ (resp. „-z“), tento parametr funguje jako přepínač mezi formáty tsv a tsvz. Při použití formátu tsv tento přepínač vynechejte, při použití tsvz ho naopak vždy zařaďte.
+
+### Vybrat/spojit sloupce
+
+*# vzít/vynechat určité sloupce*<br>
+*// Specifikace sloupců specifikuje množinu (tzn. ne výčet) sloupců. Má tvar jednotlivých čísel oddělených čárkami, např. „7,3,2,5,2“ vypíše sloupce 2, 3, 5 a 7. Místo jednotlivého čísla lze zadat rozsah ve tvaru „číslo-číslo“, „číslo-“ nebo „-číslo“, který se rozvine na všechny odpovídající sloupce, takže např. specifikace „7,3-5,-4“ odpovídá sloupcům 1, 2, 3, 4, 5 a 7.*<br>
+**cut** [**-z**] <nic>[**-d** {*oddělovač*}] **-f** {*specifikace,sloupců*} [{*soubor*}]...
+**cut \-\-complement** [**-z**] <nic>[**-d** {*oddělovač*}] **-f** {*specifikace,sloupců*} [{*soubor*}]...<br>
+
+*# vzít určité sloupce (bez omezení)*<br>
+*// Pro čtení ze standarního vstupu zadejte místo souboru „-“.*<br>
+**join** [**-z**] **\-\-nocheck-order -j 1 -a 2 -t $'\\t' -o 2.**{*číslo-prvního-sloupce*}[**,2.**{*číslo-dalšího-sloupce*}]... **/dev/null** {*soubor*}
+
+*# spojit sloupce ze dvou či více souborů podle čísla záznamu*<br>
+**paste** [**-z**] <nic>[**-d** {*oddělovač*}] {*soubor1*} {*soubor2*} [{*další-soubor*}]...
+
+*# spojit sloupce ze dvou souborů podle společného sloupce (komplikované)*<br>
+*// Chování příkazu „join“ je smysluplné, ale poměrně komplikované. Před použitím tohoto zaklínadla prosím nastudujte manuálovou stránku příkazu join!*<br>
+[**LC\_ALL=C**] **join** [**-z**] <nic>[{*další parametry*}] **-t $'\\t' -1** {*číslo-sloupce-v-prvním-souboru*} **-2** {*číslo-sloupce-v-druhém-souboru*} [**-a 1**] <nic>[**-a 2**] <nic>[**-o** {*definice-výstupu*}] {*soubor1*} {*soubor2*}
+
+### Filtrace podle obsahu sloupců
+
+Pro tsvz uveďte část „;RS=ORS="\\0";“.
+
+*# vzít/vynechat záznamy, kde N-tý sloupec odpovídá **regulárnímu výrazu***<br>
+**gawk 'BEGIN {FS=OFS="\\t"**[**;RS=ORS="\\0";**]**\} $**{*N*} **~ /**{*regulární výraz*}**/'** [{*soubor*}]...<br>
+**gawk 'BEGIN {FS=OFS="\\t"**[**;RS=ORS="\\0";**]**\} $**{*N*} **!~ /**{*regulární výraz*}**/'** [{*soubor*}]...
+
+*# vzít/vynechat záznamy, kde N-tý sloupec obsahuje **podřetězec** (tsv/tsvz)*<br>
+**gawk 'BEGIN {FS=OFS="\\t"**[**;RS=ORS="\\0";**]**\} index($**{*N*}**, "**{*podřetězec*}**")'** [{*soubor*}]...<br>
+**gawk 'BEGIN {FS=OFS="\\t"**[**;RS=ORS="\\0";**]**\} !index($**{*N*}**, "**{*podřetězec*}**")'** [{*soubor*}]...
+
+*# vzít/vynechat záznamy, kde N-tý sloupec je **řetězec** (tsv/tsvz)*<br>
+**gawk 'BEGIN {FS=OFS="\\t"**[**;RS=ORS="\\0";**]**\} $**{*N*}** == "**{*podřetězec*}**"'** [{*soubor*}]...<br>
+**gawk 'BEGIN {FS=OFS="\\t"**[**;RS=ORS="\\0";**]**\} $**{*N*}** != "**{*podřetězec*}**"'** [{*soubor*}]...
+
+<!--
+**egrep '^([<nic>^\t]\t)\{{*N-1*}\}[<nic>^\t]\***{*regulární výraz*}**'**
+-->
+
+### Řazení záznamů podle obsahu sloupců
+
+*# seřadit podle N-tého sloupce*<br>
+[**LC\_ALL=C**] **sort** [**-z**] **-t $'\\t' -k** {*N*}**,**{*N*}[{*druh-a-příznaky-řazení*}]
+
+*# seřadit podle sloupců M až N*<br>
+[**LC\_ALL=C**] **sort** [**-z**] **-t $'\\t' -k** {*M*}**,**{*N*}[{*druh-a-příznaky-řazení*}]
+
+*# seřadit podle více kritérií*<br>
+[**LC\_ALL=C**] **sort** [**-z**] <nic>[**-s**] **-t $'\\t' -k** {*jedno-kritérium*} <nic>[**-k** {*další-kritérium*}]...
+
+*# příklad: seřadit vzestupně podle číselné hodnoty 7. sloupce a pak sestupně podle 3. sloupce, bez ohledu na velikost písmen*<br>
+**sort** [**-z**] **-t $'\\t' -k 7,7n -k 3,3ri**
+
+<!--
+Parametry řazení mohou být: bdfgiMhnRrV
+-->
+
+<!--
+sort -t '\t' -k ''
+-->
+
+### Ostatní
+
+*# naformátovat záznamy jako tabulku s pevnou šířkou sloupců (tsv/tsvz)*<br>
+**column -nt**[**e**]**s** [{*soubor*}]...<br>
+[**cat** {*soubor*}... **\|**] **tr '\\0\\n' '\\n&blank;' \| column -n**[**e**]**ts \| tr \\\\n \\\\0**
+
+*# vložit sloupec s **číslem záznamu** před první sloupec*<br>
+*// Poznámka: zadáte-li víc souborů, počítadlo záznamů se nebude restartovat na začátku každého z nich.*<br>
+**sed** [**-z**] **=** [{*soubor*}]... **\| paste** [**-z**] <nic>[**-d** {*oddělovač*}] **- -**
+
+*# vložit sloupec s **číslem záznamu** před N-tý sloupec*<br>
 ?
+<!--
+**nl -s $'\\t' -w 1** [{*soubor*}]... **\| sed -E 's/^([0-9]+)(\\t[<nic>^\\t]\*)(.*$)/\\2\\1\\3/'**
+-->
+
+
+## Zaklínadla (pevná šířka sloupců)
+
+### Vybrat/spojit sloupce
+
+*# vzít určité sloupce (obecně/příklad)*<br>
+**cut -c** {*specifikace-množiny*} [{*soubor*}]...<br>
+**cut -c 25-37,41-46**
+
+*# vynechat určité sloupce*<br>
+**cut \-\-complement -c** {*specifikace-množiny*} [{*soubor*}]...<br>
+
+*# vynechat prvních/posledních deset znaků každého řádku*<br>
+**cut -c 11-**<br>
+**rev \| cut -c 11- \| rev**
+
+### Filtrace podle obsahu sloupců
+
+Pro tsvz uveďte část „BEGIN {RS=ORS="\\0"}“.
+
+*# vzít/vynechat záznamy, jejichž podřetězec na indexech M až N odpovídá **regulárnímu výrazu***<br>
+**gawk '**[**BEGIN {RS=ORS="\\0"}**] **substr($0,** {*M*}**,** {*N*} **-** {*M*} **+ 1) ~ /**{*regulární výraz*}**/'** [{*soubor*}]...<br>
+**gawk '**[**BEGIN {RS=ORS="\\0"}**] **substr($0,** {*M*}**,** {*N*} **-** {*M*} **+ 1) !~ /**{*regulární výraz*}**/'** [{*soubor*}]...
+
+*# vzít/vynechat záznamy, jejichž podřetězec na indexech M až N obsahuje **podřetězec***<br>
+**gawk '**[**BEGIN {RS=ORS="\\0"}**] **index(substr($0,** {*M*}**,** {*N*} **-** {*M*} **+ 1), "**{*podřetězec*}**")'** [{*soubor*}]...<br>
+**gawk '**[**BEGIN {RS=ORS="\\0"}**] **!index(substr($0,** {*M*}**,** {*N*} **-** {*M*} **+ 1), "**{*podřetězec*}**")'** [{*soubor*}]...
+
+*# vzít/vynechat záznamy, jejichž podřetězec na indexech M až N je daný **řetězec***<br>
+**gawk '**[**BEGIN {RS=ORS="\\0"}**] **substr($0,** {*M*}**,** {*N*} **-** {*M*} **+ 1) == "**{*řetězec*}**"'** [{*soubor*}]...<br>
+**gawk '**[**BEGIN {RS=ORS="\\0"}**] **substr($0,** {*M*}**,** {*N*} **-** {*M*} **+ 1) != "**{*řetězec*}**"'** [{*soubor*}]...
+
+### Řazení
+
+*# řadit podle znaků na indexech M až N*<br>
+[**LC\_ALL=C**] **sort** [{*další parametry*}] **-k 1.**{*M*}**,1.**{*N*}{*parametry-řazení*} [{*soubor*}]...
+
+## Zaklínadla (záplatování)
+
+*# vytvořit záplatu adresáře*<br>
+*// Aby záplata fungovala, označení starého a nového adresáře nesmějí obsahovat žádná lomítka, musejí to být jen holá jména podadresářů aktuálního adresáře.*<br>
+**diff -Nar -U 3** {*starý-adresář*} {*nový-adresář*} **&gt;** {*soubor.pdiff*} **\|\| test $? -eq 1**
+
+*# aplikovat záplatu adresáře*<br>
+**patch -N -p 1 -d** {*adresář*} **&lt;** {*soubor.pdiff*}
+
+*# vytvořit záplatu souboru*<br>
+**LC\_ALL=C TZ=UTC diff -Na -U 3** {*starý-soubor*} {*nový-soubor*} **&gt;** {*soubor.pdiff*} **\|\| test $? -eq 1**
+
+*# aplikovat záplatu souboru*<br>
+**patch -NZ**[**t**] {*cílový-soubor*} {*soubor.pdiff*}
 
 ## Parametry příkazů
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+### cut
+
+*# *<br>
+**cut** {*parametry*} [{*soubor*}]...
+
+!parametry:
+
+* ☐ -d {*oddělovač*} :: Nastaví oddělovač sloupců pro parametr -f; výchozí je "\\t", což znamená tabulátor.
+* ○ -f {*sloupce*} ○ -c {*znaky*} ○ -b {*bajty*} :: Definuje množinu sloupců, znaků či bajtů každého záznamu, které mají být propuštěny. Pozor, pořadí ani duplicity nemají vliv na výstup! Příklad specifikace: „7,13-15,-3,20-“
+* ☐ --complement :: Neguje definovanou množinu − vybrané sloupce, znaky či bajty vypustí a vezme zbytek.
+* ☐ -z :: Ukončovač záznamu je \\0 místo \\n.
+
+### join
+
+*# *<br>
+[**LC\_ALL=C**] **join** {*parametry*} {*soubor1*} {*soubor2*}
+
+!parametry:
+
+* ○ -1 {*sloupec*} -2 {*sloupec*} ○ -j {*sloupec-pro-oba*} :: Určuje společný sloupec ve vstupních souborech.
+* ☐ -t {*znak*} :: Definuje oddělovač sloupců. Prázdný argument značí, že se soubory na sloupce nedělí.
+* ○ -a {*1-nebo-2*} ○ -v {*1-nebo-2*} :: Dovolí vypsání nespárovaných záznamů ze souboru 1 nebo 2. Varianta „-v“ navíc potlačí vypsání spárovaných záznamů.
+* ☐ -o {*formát*} :: Definuje pořadí sloupců na výstupu. Jednotlivé specifikace mohou mít tvar „0“ (společný sloupec), „1.{*číslo*}“ pro sloupec prvního souboru nebo „2.{*číslo*}“ pro sloupec druhého souboru. Specifikace se oddělují čárkami nebo mezerami. Příklad specifikace: „0,1.1,1.2,2.1,2.2,0“.
+* ☐ -z :: Ukončovač záznamu je \\0 místo \\n.
+* ○ --check-order ○ --nocheck-order :: Zapne, resp. vypne kontrolu uspořádání vstupního souboru.
+
+### paste
+
+*# *<br>
+**paste** [{*parametry*}] <nic>[{*soubor*}]...
+
+!parametry:
+
+* ☐ -d {*oddělovače*} :: Definuje znaky vkládané v místech spojení záznamů. Je-li předaný řetězec prázdný, použijí se prázdné řetězce, jinak se budou cyklicky používat jednotlivé znaky ze zadaného řetězce.
+* ☐ -z :: Ukončovač záznamu je \\0 místo \\n.
+* ☐ -s :: Ukončovače záznamu kromě posledního interpretuje jako oddělovače sloupců, tím pádem spojí všechny záznamy do jednoho.
+
+### sed
+
+*# *<br>
+**sed** [{*parametry-kromě-e-či-f*}] {*skript-sedu*} [{*soubor*}]...<br>
+**sed** {*parametry-včetně-e-či-f*} [{*soubor*}]...
+
+!parametry:
+
+* ☐ -E :: Použije rozšířené regulární výrazy místo základních (doporučuji vždy, když skript obsahuje regulární výraz).
+* ☐ -n :: Potlačí automatické vypsání „pracovní paměti“ po každém cyklu skriptu.
+* ☐ -z :: Ukončovač záznamu je \\0 místo \\n.
+* ○ -e {*skript-sedu*} ○ -f {*soubor*} :: Načte skript z parametru, resp. ze souboru; oba parametry lze kombinovat či použít opakovaně.
+* ☐ -u :: Načítá jen nezbytný počet bajtů a vypisuje na výstup co nejdřív.
+
+### sort
+
+*# *<br>
+[**LC\_ALL=C**] **sort** [{*parametry*}] <nic>[{*soubor*}]...
+
+!parametry:
+
+* ☐ -u :: Po seřazení vyloučí duplicity (z každé skupiny duplicitních řádků ponechá pouze jeden).
+* ○ -c ○ -C :: Neřadí; jen zkontroluje, zda je vstup seřazený. Varianta „-c“ navíc vypíše první chybně seřazený řádek.
+* ☐ -k {*definice-řadicího-klíče*}{*druh-a-příznaky-řazení*} :: Definuje řadicí klíč, podle kterého se má řadit. Podrobněji − viz manuálová stránka příkazu *sort*.
+* ☐ -t {*oddělovač*} :: Definuje oddělovač polí při řazení podle klíčů.
+* ☐ -m :: Místo řazení pouze slučuje již seřazené soubory do jednoho.
+* ☐ -s :: Stabilní řazení. Zachová relativní pořadí řádků, jejichž všechny řadicí klíče se rovnají.
+* ○ -{*druh-řazení*} :: Přepne na jiný druh řazení než obyčejné řetězcové.
+* ☐ -{*příznak-řazení*} :: Nastaví příslušný příznak ovlivňující řazení.
+
+<neodsadit>Druhy řazení jsou: g, h, M, n, R, V. Za zmínku z nich stojí jen „n“ − řazení podle číselné hodnoty (včetně případných desetinných míst) a „h“ − totéž, ale s rozpoznáváním přípon K (kilo), M (mega) atd.
+
+Příznaky řazení jsou tyto:
+
+!parametry:
+
+* r :: Řadit sestupně (normálně se řadí vzestupně).
+* f :: Nerozlišovat velká a malá písmena.
+* d :: „Řazení jako ve slovníku“ − zohledňovat jen písmena, čísla a bílé znaky.
+* b :: Ignorovat bílé znaky na začátku klíče (při řazení podle číselné hodnoty se ignorují vždy).
+* i :: Ignorovat netisknutelné znaky.
 
 ## Instalace na Ubuntu
-<!--
-- Jako zaklínadlo bez titulku uveďte příkazy (popř. i akce) nutné k instalaci a zprovoznění všech nástrojů požadovaných kterýmkoliv zaklínadlem uvedeným v kapitole. Po provedení těchto činností musí být nástroje plně zkonfigurované a připravené k práci.
-- Ve výčtu balíků k instalaci vycházejte z minimální instalace Ubuntu.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-## Ukázka
+Všechny použité nástroje jsou základními součástmi Ubuntu, s výjimkou gawk, které, pokud je potřebujete, je nutno doinstalovat:
+
+*# *<br>
+**sudo apt-get install gawk**
+
 <!--
+## Ukázka
+<!- -
 - Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
 - Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti − ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
 - Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
--->
+- ->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
+-->
 
 !ÚzkýRežim: zap
 
 ## Tipy a zkušenosti
-<!--
-- Do odrážek uveďte konkrétní zkušenosti, které jste při práci s nástrojem získali; zejména případy, kdy vás chování programu překvapilo nebo očekáváte, že by mohlo překvapit začátečníky.
-- Popište typické chyby nových uživatelů a jak se jim vyhnout.
-- Buďte co nejstručnější; neodbíhejte k popisování čehokoliv vedlejšího, co je dost možné, že už čtenář zná.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+* Nastavení „LC\_ALL=C“ zapíná řazení po bajtech podle jejich číselné hodnoty. Je rychlé, spolehlivé a dokonale přenositelné, nejde však o řazení pro člověka.
+* Pozor, „sort -k 2“ znamená řadit podle sloupců 2, 3, 4 atd. až do konce; řazení podle sloupce číslo 2 je „sort -k 2,2“!
+* Řazení podle klíčů může být pro začátečníka záludné. Doporučuji zvolený klíč nejprve otestovat na krátkém vstupním souboru s parametrem „\-\-debug“.
+
 
 ## Další zdroje informací
-<!--
-- Uveďte, které informační zdroje jsou pro začátečníka nejlepší k získání rychlé a obsáhlé nápovědy. Typicky jsou to manuálové stránky, vestavěná nápověda programu nebo webové zdroje. Můžete uvést i přímé odkazy.
-- V seznamu uveďte další webové zdroje, knihy apod.
-- Pokud je vestavěná dokumentace programů (typicky v adresáři /usr/share/doc) užitečná, zmiňte ji také.
-- Poznámka: Protože se tato sekce tiskne v úzkém režimu, zaklínadla smíte uvádět pouze bez titulku a bez poznámek pod čarou!
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-Co hledat:
+Nejlepším zdrojem podrobnějších informací o jednotlivých použitých příkazech (s výjimkou příkazu „column“) jsou jejich manuálové stránky.
 
-* [https://cs.wikipedia.org/wiki/Hlavn%C3%AD_strana](stránku na Wikipedii)
-* oficiální stránku programu
-* oficiální dokumentaci
-* [http://manpages.ubuntu.com/](manuálovou stránku)
-* [https://packages.ubuntu.com/](balíček Bionic)
-* online referenční příručky
-* různé další praktické stránky, recenze, videa, blogy, ...
+* [Wikipedie: paste](https://cs.wikipedia.org/wiki/Paste)
+* [Compute Hope o příkazu sort](https://www.computerhope.com/unix/usort.htm) (anglicky)
+* [Linux column Command Tutorial for Beginners](https://www.howtoforge.com/linux-column-command/) (anglicky)
+* [Linux Join Command Tutorial for Beginners](https://www.howtoforge.com/tutorial/linux-join-command/) (anglicky)
+* [man 1 cut](http://manpages.ubuntu.com/manpages/bionic/en/man1/cut.1.html) (anglicky)
+* [man 1 join](http://manpages.ubuntu.com/manpages/bionic/en/man1/join.1.html) (anglicky)
+* [man 1 paste](http://manpages.ubuntu.com/manpages/bionic/en/man1/paste.1.html) (anglicky)
+* [man 1 sort](http://manpages.ubuntu.com/manpages/bionic/en/man1/sort.1.html) (anglicky)
+* [Balíček coreutils](https://packages.ubuntu.com/bionic/coreutils) (anglicky)
+* [Video: Joining files and together with join](https://www.youtube.com/watch?v=TygQo1m\_sZo) (anglicky)
+* [TL;DR cut](https://github.com/tldr-pages/tldr/blob/master/pages/common/cut.md) (anglicky)
+* [TL;DR join](https://github.com/tldr-pages/tldr/blob/master/pages/common/join.md) (anglicky)
+* [TL;DR paste](https://github.com/tldr-pages/tldr/blob/master/pages/common/paste.md) (anglicky)
+* [TL;DR sed](https://github.com/tldr-pages/tldr/blob/master/pages/common/sed.md) (anglicky)
+* [TL;DR shuf](https://github.com/tldr-pages/tldr/blob/master/pages/common/shuf.md) (anglicky)
+* [TL;DR sort](https://github.com/tldr-pages/tldr/blob/master/pages/common/sort.md) (anglicky)
 
 !ÚzkýRežim: vyp
-
-## Pomocné funkce a skripty
-
-*# propustit\_radku() − Propustí N řádků přímo a zbytek nechá projít zadaným příkazem*<br>
-**function propustit\_radku() \{**<br>
-**sed -u "$1q"**<br>
-**shift**<br>
-**"$@"**<br>
-**\}**
