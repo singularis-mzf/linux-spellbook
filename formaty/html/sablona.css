@@ -312,6 +312,31 @@ h2+.zaklinadlo>hr, h3+.zaklinadlo>hr {display:none;visibility:hidden;}
     padding-top:1.5rem;
     padding-bottom:1.5rem;
 }
+.ppc .zpetdotextu {display:none}
+.ppc :target + .zpetdotextu,
+.ppc :target + script + .zpetdotextu {
+    display:block;
+    padding:1rem 0 1rem 4rem;
+    background:#cccccc;
+
+    color:#1644d9;
+    cursor:pointer;
+    font-family:sans-serif;
+    font-weight:bold;
+}
+.ppc :target + .zpetdotextu::before,
+.ppc :target + script + .zpetdotextu::before {
+    content:"^ ";
+}
+.ppc :target + .zpetdotextu::after,
+.ppc :target + script + .zpetdotextu::after {
+    content:" ^";
+}
+
+.ppc :target + .zpetdotextu:hover,
+.ppc :target + script + .zpetdotextu:hover {
+    text-decoration:underline;
+}
 .ppc .zrusitzvyrazneni:target {
     background:none;
     padding-top:0;
@@ -586,6 +611,10 @@ span.chybny {
     opacity:0.75;
     padding:0 4pt;
 }
+
+/* odkazy „zpět do textu“ */
+
+
 
 @media print {
     html, body {

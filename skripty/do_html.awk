@@ -99,9 +99,9 @@ function KonecKapitoly(kapitola, cislaPoznamek, textyPoznamek,   i, vysledek) {
     if (length(cislaPoznamek) > 0) {
         vysledek = "<div class=\"ppc\">";
         for (i = 0; i < length(cislaPoznamek); ++i) {
-            vysledek = vysledek "<div id=\"kap" ID_KAPITOLY_OMEZENE "ppc" cislaPoznamek[i] "\"><a href=\"#kap" ID_KAPITOLY_OMEZENE "ppcr" cislaPoznamek[i] "\" class=\"cislopozn\">" cislaPoznamek[i] "</a>&nbsp;" textyPoznamek[cislaPoznamek[i]] "</div>\n";
+            vysledek = vysledek "<div id=\"kap" ID_KAPITOLY_OMEZENE "ppc" cislaPoznamek[i] "\"><a href=\"#kap" ID_KAPITOLY_OMEZENE "ppcr" cislaPoznamek[i] "\" class=\"cislopozn\">" cislaPoznamek[i] "</a>&nbsp;" textyPoznamek[cislaPoznamek[i]] "</div>\n<script>document.write(\"<div class=\\\"zpetdotextu\\\" onclick=\\\"window.history.back()\\\">zpět do textu</div>\");</script>\n";
         }
-        vysledek = vysledek "<div class=\"zrusitzvyrazneni\" id=\"zzv\"><a href=\"#zzv\">zrušit zvýraznění poznámky pod čarou</a></div></div>\n";
+        #vysledek = vysledek "<div class=\"zrusitzvyrazneni\" id=\"zzv\"><a href=\"#zzv\">zrušit zvýraznění poznámky pod čarou</a></div></div>\n";
     }
     return vysledek;
 }
