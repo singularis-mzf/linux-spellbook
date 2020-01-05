@@ -554,6 +554,39 @@ span.chybny {
     border:1px solid red;
 }
 
+/* odkazy nahoru a dolů */
+#odkaznahoru, #odkazdolu {
+    position:fixed;
+    left:2%;
+    z-index:256;
+    background:rgba(0,102,0,0.75);
+    color:rgb(100,204,100);
+    font:20pt/1 sans-serif;
+    border:5pt outset rgb(100,204,100);
+    border-radius:50%;
+}
+#odkaznahoru:hover, #odkazdolu:hover {
+    background-color:rgb(0,102,0);
+    border-color:yellow;
+    text-decoration:none;
+    opacity:1;
+}
+#odkaznahoru:active, #odkazdolu:active {
+    border-color:yellow;
+    color:yellow;
+    opacity:1;
+}
+#odkaznahoru {
+    top:10pt;
+    box-shadow:0 0 0 2pt rgb(33,33,33);
+    padding:0 6pt 3pt;
+}
+#odkazdolu {
+    bottom:10pt;
+    opacity:0.75;
+    padding:0 4pt;
+}
+
 @media print {
     html, body {
         background:none !important;
