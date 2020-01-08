@@ -124,9 +124,10 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [konverze-formatu](kapitoly/konverze-formatu.md) | Konverze formátů | 0% | embryo |
 | [hledani-souboru](kapitoly/hledani-souboru.md) | Hledání souborů | 0% | embryo |
 | [firefox](kapitoly/firefox.md) | Firefox | 0% | embryo |
+| uzivatelske-rozhrani | Uživatelské rozhraní skriptů | - | přál/a bych si |
 | prehravani-videa | Přehrávání videa, zvuku a obrázků | - | přál/a bych si |
 | sifrovani | Šifrování a kryptografie | - | přál/a bych si |
-| zpracovani-binarnich-souboru | Zpracování binárních souborů - | přál/a bych si |
+| zpracovani-binarnich-souboru | Zpracování binárních souborů | - | přál/a bych si |
 | diskove-oddily | Diskové oddíly | - | přál/a bych si |
 | firewall | Firewall | - | přál/a bych si |
 | grub | GRUB | - | přál/a bych si |
@@ -143,6 +144,7 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | matematicke-vypocty | Matematické výpočty | - | přál/a bych si |
 | css | Kaskádové styly CSS | - | přál/a bych si |
 | sed | Sed | - | přál/a bych si |
+| nabidka-aplikaci | Nabídka aplikací | - | přál/a bych si |
 
 Zvláštní kapitoly:
 
