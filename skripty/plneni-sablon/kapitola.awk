@@ -106,7 +106,7 @@ function Pokud(podminka) {
 
 # RidiciRadek()
 #       − Obsluhuje obecné řídicí řádky, např. „{{XYZ}}“.
-#       − Neobsluhuje {{ZAČÁTEK}}, {{KONEC}}, {{POKUD *}}, {{KONEC POKUD}}.
+#       − Neobsluhuje {{ZAČÁTEK}}, {{KONEC}}, {{POKUD *}}, {{KONEC POKUD}}, {{VARIANTA *}}, {{VARIANTY *}}.
 #       − Na návratové hodnotě nezáleží.
 #
 function RidiciRadek(text) {

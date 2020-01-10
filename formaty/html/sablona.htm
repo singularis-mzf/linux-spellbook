@@ -22,21 +22,72 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
+Varianty:
+
+- autori :: Pro stránku s přehledem autorství (x-autori.htm)
+- index :: Pro úvodní stránku (index.htm)
+- kapitola :: Obyčejná kapitola či dodatek
+
 {{ZAČÁTEK}}
+{{VARIANTY autori,index,kapitola}}
 <!doctype html>
 <html lang="cs">
 <head profile="http://www.w3.org/2005/10/profile">
 <meta charset="UTF-8">
+
+{{VARIANTY autori}}
+<title>Přehled autorů − Linux: Kniha kouzel</title>
+{{VARIANTA index}}
 <title>Linux: Kniha kouzel</title>
+{{VARIANTA kapitola}}
+<title>{{NÁZEV KAPITOLY}} − Linux: Kniha kouzel</title>
+
+{{VARIANTY autori,index,kapitola}}
+
 <link rel="stylesheet" type="text/css" href="lkk-{{DATUMSESTAVENÍ}}.css">
 <link rel="icon" type="image/png" href="obrazky/favicon.png">
 </head>
-<body>
+<body id="nahore">
 <header>
 <span class="left"><img src="obrazky/favicon.png" width="16" height="16" alt=""> Linux: Kniha kouzel, {{JMÉNO VERZE}} ({{DATUM SESTAVENÍ}})</span>
 <span class="right"><span class="ico1"></span><span class="ico2"></span><span class="ico3"></span></span>
 </header>
+
+{{VARIANTY autori,kapitola}}
+
+<nav class="horni">
+<div class="slogan">Veškerá moc příkazové řádky/příkazového řádku přehledně, pro začátečníky i&nbsp;pokročilé</div>
+<span class="prev">
+{{POKUD NENÍ PRVNÍ}}
+<a href="{{PŘEDCHOZÍ ID}}.htm" rel="prev" title="{{PŘEDCHOZÍ ČÍSLO}}. {{PŘEDCHOZÍ NÁZEV}}" accesskey="p">Předchozí&nbsp;kapitola</a>&nbsp;|
+{{KONEC POKUD}}
+</span><a href="index.htm" accesskey="i">Přehled</a><span class="next"><!--
+{{POKUD NENÍ POSLEDNÍ}}
+-->&nbsp;| <a href="{{NÁSLEDUJÍCÍ ID}}.htm" rel="next" title="{{NÁSLEDUJÍCÍ ČÍSLO}}. {{NÁSLEDUJÍCÍ NÁZEV}}" accesskey="n">Následující&nbsp;kapitola</a>
+{{KONEC POKUD}}
+{{POKUD JE POSLEDNÍ}}
+-->
+{{KONEC POKUD}}
+</span>
+</nav>
+
+{{VARIANTY autori,index,kapitola}}
+
 <article>
+{{VARIANTA autori}}
+
+<h1>Přehled autorů</h1>
+<h2>Seznam autorů kapitol</h2>
+<ul>
+{{COPYRIGHTY KAPITOL}}
+</ul>
+<h2>Seznam autorů a licencí obrázků</h2>
+<dl class="copyrights">
+{{COPYRIGHTY OBRÁZKŮ}}
+</dl>
+
+
+{{VARIANTA index}}
 <div class="zahlavistranky">
 <div class="logo"><img src="obrazky/logo-knihy-velke.png" alt=""></div>
 <div class="zbytek">
@@ -113,14 +164,44 @@ uvést víckrát, jsou vyznačeny šedou trojtečkou.</td></tr>
 <tr><td><div class="radekzaklinadla">?</div></td><td>Samostatný otazník značí, že řešení dané úlohy není dosud známo. Hojně se vyskytuje v rozpracovaných kapitolách.<td></tr>
 </tbody></table>
 
+
+{{VARIANTA kapitola}}
+
+<h1>{{ČÍSLO KAPITOLY}}. {{NÁZEV KAPITOLY}}</h1>
+{{TĚLO KAPITOLY}}
+
+{{VARIANTY autori,kapitola}}
+
+<nav class="spodni"><span class="prev">
+{{POKUD NENÍ PRVNÍ}}
+<a href="{{PŘEDCHOZÍ ID}}.htm" rel="prev" title="{{PŘEDCHOZÍ ČÍSLO}}. {{PŘEDCHOZÍ NÁZEV}}">Předchozí&nbsp;kapitola</a>&nbsp;|
+{{KONEC POKUD}}
+</span><a href="index.htm">Přehled</a><span class="next"><!--
+{{POKUD NENÍ POSLEDNÍ}}
+-->&nbsp;| <a href="{{NÁSLEDUJÍCÍ ID}}.htm" rel="next" title="{{NÁSLEDUJÍCÍ ČÍSLO}}. {{NÁSLEDUJÍCÍ NÁZEV}}">Následující&nbsp;kapitola</a>
+{{KONEC POKUD}}
+{{POKUD JE POSLEDNÍ}}
+-->
+{{KONEC POKUD}}
+</span>
+<a href="#nahore" id="odkaznahoru" title="NAHORU − na začátek stránky">▴<!--⤒--></a>
+<a href="#dole" id="odkazdolu" title="DOLŮ − na konec stránky">▾<!--⤓--></a>
+</nav>
+
+{{VARIANTY autori,index,kapitola}}
+
 </article>
-<footer>
+<footer id="dole">
 <img src="obrazky/by-sa.png" width="88" height="31" alt="[BY-SA]">
 <p>Veškerý obsah této stránky (text, obrázky, zdrojový kód) je možno upravovat a šířit pod podmínkami licence
 <a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a>.
 Upozorňuji, že uvedená licence vyžaduje uvedení seznamu autorů, licence a zdroje a poskytnutí stejné
 či kompatibilní licence k provedeným změnám, jsou-li nějaké. Příslušné údaje jsou dostupné
+{{VARIANTA autori}}
+na této stránce.
+{{VARIANTY index,kapitola}}
 na stránce „<a href="x-autori.htm">Přehled autorů</a>“.
+{{VARIANTY autori,index,kapitola}}
 Šíření obsahu bez těchto údajů nebo šíření upravené verze bez poskytnutí adekvátní
 licence k provedeným úpravám je pravděpodobně porušení licenčních podmínek a může být postihováno.
 Poskytování zdrojového kódu při šíření není touto licencí vyžadováno.</p><p>Pro nové verze, další informace, aktuální zdrojový kód
@@ -130,4 +211,3 @@ a možnost se zapojit do projektu „Linux: Kniha kouzel“ navštivte jeho
 </body>
 </html>
 {{KONEC}}
-

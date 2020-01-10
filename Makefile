@@ -127,9 +127,9 @@ $(addprefix $(SOUBORY_PREKLADU)/html/,$(VSECHNY_DODATKY)): \
 # ============================================================================
 $(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY))): \
   $(VYSTUP_PREKLADU)/%.htm: \
-  $(SOUBORY_PREKLADU)/% skripty/plneni-sablon/kapitola.awk formaty/html/sablona_kapitoly.htm $(SOUBORY_PREKLADU)/fragmenty.tsv $(DATUM_SESTAVENI_SOUBOR)
+  $(SOUBORY_PREKLADU)/% skripty/plneni-sablon/kapitola.awk formaty/html/sablona.htm $(SOUBORY_PREKLADU)/fragmenty.tsv $(DATUM_SESTAVENI_SOUBOR)
 	mkdir -pv $(VYSTUP_PREKLADU)/html
-	cut -f 2 $(SOUBORY_PREKLADU)/fragmenty.tsv | fgrep -qx $(basename $(notdir $<)) && exec $(AWK) -f skripty/plneni-sablon/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=$(basename $(notdir $@)) -v TELOKAPITOLY=$< -v DATUMSESTAVENI=$(DATUM_SESTAVENI) formaty/html/sablona_kapitoly.htm > $@ || true
+	cut -f 2 $(SOUBORY_PREKLADU)/fragmenty.tsv | fgrep -qx $(basename $(notdir $<)) && exec $(AWK) -f skripty/plneni-sablon/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=$(basename $(notdir $@)) -v TELOKAPITOLY=$< -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v VARIANTA=kapitola formaty/html/sablona.htm > $@ || true
 
 # 3. formaty/html/sablona.css => vystup_prekladu/html/lkk.css
 # ============================================================================
@@ -152,12 +152,12 @@ $(SVG_OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%): $(VYSTUP_PREKLADU)/html/obra
 # ============================================================================
 $(VYSTUP_PREKLADU)/html/index.htm: $(SOUBORY_PREKLADU)/fragmenty.tsv \
   skripty/plneni-sablon/index-html.awk \
-  formaty/html/sablona_specialni.htm \
+  formaty/html/sablona.htm \
   $(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY)))   $(SOUBORY_PREKLADU)/fragmenty.tsv \
   $(OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%) \
   $(SVG_OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%) \
   $(DATUM_SESTAVENI_SOUBOR)
-	$(AWK) -f skripty/plneni-sablon/index-html.awk -v JMENOVERZE='$(JMENO)' -v DATUMSESTAVENI=$(DATUM_SESTAVENI) $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/html/sablona_specialni.htm > $@
+	$(AWK) -f skripty/plneni-sablon/index-html.awk -v JMENOVERZE='$(JMENO)' -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v VARIANTA=index $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/html/sablona.htm > $@
 
 # 6. sepsat copyrighty ke kapitolám
 # ============================================================================
@@ -176,9 +176,9 @@ $(SOUBORY_PREKLADU)/html/obr-copys.htm: COPYING skripty/extrakce/copykobr.awk
 $(VYSTUP_PREKLADU)/html/x-autori.htm: \
   $(addprefix $(SOUBORY_PREKLADU)/html/, kap-copys.htm obr-copys.htm) \
   skripty/plneni-sablon/kapitola.awk \
-  formaty/html/sablona_autori.htm \
+  formaty/html/sablona.htm \
   $(DATUM_SESTAVENI_SOUBOR)
-	$(AWK) -f skripty/plneni-sablon/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=_autori -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v COPYRIGHTY_KAPITOL=$(SOUBORY_PREKLADU)/html/kap-copys.htm -v COPYRIGHTY_OBRAZKU=$(SOUBORY_PREKLADU)/html/obr-copys.htm formaty/html/sablona_autori.htm > $@
+	$(AWK) -f skripty/plneni-sablon/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=_autori -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v COPYRIGHTY_KAPITOL=$(SOUBORY_PREKLADU)/html/kap-copys.htm -v COPYRIGHTY_OBRAZKU=$(SOUBORY_PREKLADU)/html/obr-copys.htm -v VARIANTA=autori formaty/html/sablona.htm > $@
 
 # 9. shromáždit štítky na stránku _stitky.htm
 # ============================================================================

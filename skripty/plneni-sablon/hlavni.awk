@@ -26,6 +26,7 @@ BEGIN {
     FS = OFS = "\t";
     RS = ORS = "\n";
     BYL_ZACATEK = 0;
+    if (VARIANTA == "") {VARIANTA = "bez-nazvu"}
     STAV_PODMINENENO_PREKLADU = 0;
 }
 
@@ -44,15 +45,41 @@ function VyzadujePromennou(nazev, popisChyby) {
     return 1;
 }
 
-/^\{\{[^{}]+\}\}$/ && !BYL_ZACATEK && $0 != "{{ZAČÁTEK}}" {
+$0 == "{{ZAČÁTEK}}" {
+    if (!BYL_ZACATEK) {
+        BYL_ZACATEK = 1;
+        $0 = "";
+        Zacatek();
+        STAV_PODMINENENO_PREKLADU = (VARIANTA == "bez-nazvu" ? 0 : 3);
+        next;
+    } else {
+        ShoditFatalniVyjimku("Opakovaný {{ZAČÁTEK}}!");
+    }
+}
+
+!BYL_ZACATEK && /^\{\{[^{}]+\}\}$/ {
     ShoditFatalniVyjimku("První řídicí řádek šablony musí být {{ZAČÁTEK}}!");
 }
+
+# Zpracování variant ({{VARIANT[AY] ...}})
+# ====================================================
+(s = gensub(/^\{\{VARIANT[AY] ([^{}]+)\}\}$/, ",\\1,", 1)) != $0 {
+    if (STAV_PODMINENENO_PREKLADU != 0 && STAV_PODMINENENO_PREKLADU != 3) {
+        ShoditFatalniVyjimku("Uvnitř bloku {{POKUD ...}} nelze přepínat variantu!");
+    }
+    STAV_PODMINENENO_PREKLADU = (index(s, "," VARIANTA ",") ? 0 : 3);
+    #print $0 ": Měním STAV_PODMINENENO_PREKLADU na " STAV_PODMINENENO_PREKLADU > "/dev/stderr";
+    next;
+}
+
+STAV_PODMINENENO_PREKLADU == 3 {next}
 
 # Podmíněný překlad
 # ====================================================
 # 0 - mimo podmíněný blok
 # 1 - v podmíněném bloku, ale tiskne se
 # 2 - v podmíněném bloku, přeskakuje se
+# 3 - mimo podmíněný blok, ale řádek nepřísluší aktivní variantě šablony
 #
 /^\{\{POKUD .*\}\}$/ {
     if (STAV_PODMINENENO_PREKLADU != 0) {
@@ -71,22 +98,12 @@ function VyzadujePromennou(nazev, popisChyby) {
     }
 }
 
-STAV_PODMINENENO_PREKLADU == 2 {
-    next;
-}
+STAV_PODMINENENO_PREKLADU == 2 {next}
 
 # Řídicí řádky
 # ====================================================
 /^\{\{[^{}]+\}\}$/ {
     $0 = substr($0, 3, length($0) - 4);
-
-    if ($0 == "ZAČÁTEK") {
-        if (BYL_ZACATEK) {ShoditFatalniVyjimku("Opakovaný {{ZAČÁTEK}}!")}
-        BYL_ZACATEK = 1;
-        $0 = "";
-        Zacatek();
-        next;
-    }
     if ($0 == "KONEC") {exit}
     RidiciRadek($0);
     next;
