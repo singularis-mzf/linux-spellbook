@@ -127,7 +127,7 @@ $(addprefix $(SOUBORY_PREKLADU)/html/,$(VSECHNY_DODATKY)): \
 # ============================================================================
 $(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY))): \
   $(VYSTUP_PREKLADU)/%.htm: \
-  $(SOUBORY_PREKLADU)/% skripty/plneni-sablon/kapitola.awk $(SOUBORY_PREKLADU)/fragmenty.tsv $(DATUM_SESTAVENI_SOUBOR)
+  $(SOUBORY_PREKLADU)/% skripty/plneni-sablon/kapitola.awk formaty/html/sablona_kapitoly.htm $(SOUBORY_PREKLADU)/fragmenty.tsv $(DATUM_SESTAVENI_SOUBOR)
 	mkdir -pv $(VYSTUP_PREKLADU)/html
 	cut -f 2 $(SOUBORY_PREKLADU)/fragmenty.tsv | fgrep -qx $(basename $(notdir $<)) && exec $(AWK) -f skripty/plneni-sablon/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=$(basename $(notdir $@)) -v TELOKAPITOLY=$< -v DATUMSESTAVENI=$(DATUM_SESTAVENI) formaty/html/sablona_kapitoly.htm > $@ || true
 
