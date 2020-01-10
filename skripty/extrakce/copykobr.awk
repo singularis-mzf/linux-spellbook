@@ -1,4 +1,4 @@
-# Linux Kniha kouzel, skript sepsat-copykobr.awk
+# Linux Kniha kouzel, skript extrakce/copykobr.awk
 # Copyright (c) 2019 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod

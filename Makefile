@@ -70,7 +70,7 @@ clean:
 	$(RM) -Rv $(SOUBORY_PREKLADU) $(VYSTUP_PREKLADU) $(PORADI_KAPITOL)
 
 # Podporované formáty:
-html: $(addprefix $(VYSTUP_PREKLADU)/html/, lkk-$(DATUM_SESTAVENI).css index.htm _autori.htm)
+html: $(addprefix $(VYSTUP_PREKLADU)/html/, lkk-$(DATUM_SESTAVENI).css index.htm x-autori.htm)
 log: $(VYSTUP_PREKLADU)/log/index.log
 pdf-a4: $(VYSTUP_PREKLADU)/pdf-a4.pdf
 pdf-b5: $(VYSTUP_PREKLADU)/pdf-b5.pdf
@@ -79,19 +79,19 @@ pomocne-funkce: $(VYSTUP_PREKLADU)/bin/pomocne-funkce.sh
 # POMOCNÉ SOUBORY:
 # 1. soubory_prekladu/fragmenty.tsv
 # ============================================================================
-$(SOUBORY_PREKLADU)/fragmenty.tsv: $(wildcard poradi-kapitol.lst poradi-kapitol.vychozi.lst) skripty/sepsat-fragmenty.awk
+$(SOUBORY_PREKLADU)/fragmenty.tsv: $(wildcard poradi-kapitol.lst poradi-kapitol.vychozi.lst) skripty/extrakce/fragmenty.awk
 	mkdir -pv $(SOUBORY_PREKLADU)
-	(cat poradi-kapitol.lst 2>/dev/null || cat poradi-kapitol.vychozi.lst 2>/dev/null || printf %s\\n "# Seznam kapitol a dodatků k vygenerování" "predmluva" "" "# Kapitoly" $(strip $(sort $(VSECHNY_KAPITOLY))) "" "# Dodatky" $(strip $(sort $(filter-out predmluva,$(VSECHNY_DODATKY))))) | $(AWK) -f skripty/sepsat-fragmenty.awk > $@
+	(cat poradi-kapitol.lst 2>/dev/null || cat poradi-kapitol.vychozi.lst 2>/dev/null || printf %s\\n "# Seznam kapitol a dodatků k vygenerování" "predmluva" "" "# Kapitoly" $(strip $(sort $(VSECHNY_KAPITOLY))) "" "# Dodatky" $(strip $(sort $(filter-out predmluva,$(VSECHNY_DODATKY))))) | $(AWK) -f skripty/extrakce/fragmenty.awk > $@
 
 # 2. soubory_prekladu/fragmenty.tsv + *.md => soubory_prekladu/osnova/*.tsv
 # ============================================================================
-$(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/osnova/%.tsv): $(SOUBORY_PREKLADU)/osnova/%.tsv: kapitoly/%.md $(SOUBORY_PREKLADU)/fragmenty.tsv skripty/sepsat-osnovu.awk
+$(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/osnova/%.tsv): $(SOUBORY_PREKLADU)/osnova/%.tsv: kapitoly/%.md $(SOUBORY_PREKLADU)/fragmenty.tsv skripty/extrakce/osnova.awk
 	mkdir -pv $(SOUBORY_PREKLADU)/osnova
-	$(AWK) -f skripty/sepsat-osnovu.awk -v IDKAPITOLY=$(<:kapitoly/%.md=%) $< >$@
+	$(AWK) -f skripty/extrakce/osnova.awk -v IDKAPITOLY=$(<:kapitoly/%.md=%) $< >$@
 
-$(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/osnova/%.tsv): $(SOUBORY_PREKLADU)/osnova/%.tsv: dodatky/%.md $(SOUBORY_PREKLADU)/fragmenty.tsv skripty/sepsat-osnovu.awk
+$(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/osnova/%.tsv): $(SOUBORY_PREKLADU)/osnova/%.tsv: dodatky/%.md $(SOUBORY_PREKLADU)/fragmenty.tsv skripty/extrakce/osnova.awk
 	mkdir -pv $(SOUBORY_PREKLADU)/osnova
-	$(AWK) -f skripty/sepsat-osnovu.awk -v IDKAPITOLY=$(<:dodatky/%.md=%) $< >$@
+	$(AWK) -f skripty/extrakce/osnova.awk -v IDKAPITOLY=$(<:dodatky/%.md=%) $< >$@
 
 # 3. soubory_prekladu/postprocess.tsv
 # ============================================================================
@@ -161,19 +161,19 @@ $(VYSTUP_PREKLADU)/html/index.htm: $(SOUBORY_PREKLADU)/fragmenty.tsv \
 
 # 6. sepsat copyrighty ke kapitolám
 # ============================================================================
-$(SOUBORY_PREKLADU)/html/kap-copys.htm: $(SOUBORY_PREKLADU)/fragmenty.tsv skripty/sepsat-copyrighty.awk $(VSECHNY_DODATKY:%=dodatky/%.md) $(VSECHNY_KAPITOLY:%=kapitoly/%.md)
+$(SOUBORY_PREKLADU)/html/kap-copys.htm: $(SOUBORY_PREKLADU)/fragmenty.tsv skripty/extrakce/copyrighty.awk $(VSECHNY_DODATKY:%=dodatky/%.md) $(VSECHNY_KAPITOLY:%=kapitoly/%.md)
 	mkdir -pv $(SOUBORY_PREKLADU)/html
-	$(AWK) -f skripty/sepsat-copyrighty.awk $(shell cut -f 1,2 --output-delimiter=/ $< | sed 's/$$/.md/') >$@
+	$(AWK) -f skripty/extrakce/copyrighty.awk $(shell cut -f 1,2 --output-delimiter=/ $< | sed 's/$$/.md/') >$@
 
 # 7. sepsat copyrighty k obrázkům
 # ============================================================================
-$(SOUBORY_PREKLADU)/html/obr-copys.htm: COPYING skripty/sepsat-copykobr.awk
+$(SOUBORY_PREKLADU)/html/obr-copys.htm: COPYING skripty/extrakce/copykobr.awk
 	mkdir -pv $(dir $@)
-	$(AWK) -f skripty/sepsat-copykobr.awk $< $(OBRAZKY:%=obrazky/%) $(SVG_OBRAZKY:%=obrazky/%) >$@
+	$(AWK) -f skripty/extrakce/copykobr.awk $< $(OBRAZKY:%=obrazky/%) $(SVG_OBRAZKY:%=obrazky/%) >$@
 
-# 8. shromáždit copyrighty na stránku _autori.htm
+# 8. shromáždit copyrighty na stránku x-autori.htm
 # ============================================================================
-$(VYSTUP_PREKLADU)/html/_autori.htm: \
+$(VYSTUP_PREKLADU)/html/x-autori.htm: \
   $(addprefix $(SOUBORY_PREKLADU)/html/, kap-copys.htm obr-copys.htm) \
   skripty/plneni-sablon/kapitola.awk \
   formaty/html/sablona_autori.htm \
@@ -317,6 +317,6 @@ $(VYSTUP_PREKLADU)/pdf-b5.pdf: $(SOUBORY_PREKLADU)/pdf-b5/kniha.tex $(OBRAZKY:%=
 
 
 # Pomocné funkce a skripty:
-$(VYSTUP_PREKLADU)/bin/pomocne-funkce.sh: $(VSECHNY_KAPITOLY:%=kapitoly/%.md) $(SOUBORY_PREKLADU)/fragmenty.tsv skripty/extrahovat-pomocne-funkce.awk
+$(VYSTUP_PREKLADU)/bin/pomocne-funkce.sh: $(VSECHNY_KAPITOLY:%=kapitoly/%.md) $(SOUBORY_PREKLADU)/fragmenty.tsv skripty/extrakce/pomocne-funkce.awk
 	mkdir -pv $(VYSTUP_PREKLADU)/bin
-	$(AWK) -f skripty/extrahovat-pomocne-funkce.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
+	$(AWK) -f skripty/extrakce/pomocne-funkce.awk $(SOUBORY_PREKLADU)/fragmenty.tsv

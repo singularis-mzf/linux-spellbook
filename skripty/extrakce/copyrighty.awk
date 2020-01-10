@@ -1,4 +1,4 @@
-# Linux Kniha kouzel, skript sepsat-copyrighty.awk
+# Linux Kniha kouzel, skript extrakce/copyrighty.awk
 # Copyright (c) 2019 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -22,29 +22,16 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-BEGINFILE {
-	ZAP=0;
-}
-
-/^<!--$/ {
-	ZAP=1;
-}
-
-/^-->$/ {
-	nextfile;
-}
-
-ZAP && match($0, /Copyright \(c\)/) {
-	COPYS[substr($0, RSTART)] = 1;
-}
-
+BEGINFILE {zap = 0}
+/^<!--$/ {zap = 1}
+/^-->$/ {nextfile}
+zap && match($0, /Copyright \(c\)/) {copys[substr($0, RSTART)] = 1}
 END {
-	for (s in COPYS) {
-		gsub(/&/, "\\&amp;", s);
-		gsub(/</, "\\&lt;", s);
-		gsub(/>/, "\\&gt;", s);
-		gsub(/ /, "\\&nbsp;", s);
-		print "<li>" s "</li>";
-	}
+    for (s in copys) {
+        gsub(/&/, "\\&amp;", s);
+        gsub(/</, "\\&lt;", s);
+        gsub(/>/, "\\&gt;", s);
+        gsub(/ /, "\\&nbsp;", s);
+        print "<li>" s "</li>";
+    }
 }
-

@@ -1,4 +1,4 @@
-# Linux Kniha kouzel, skript sepsat-fragmenty.awk
+# Linux Kniha kouzel, skript extrakce/fragmenty.awk
 # Copyright (c) 2019 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -25,14 +25,14 @@
 @include "skripty/utility.awk"
 
 BEGIN {
-    delete VYSKYTY; # [id] -> 1; slouží ke kontrole duplicity v poradi-kapitol.lst
-    delete ID;      # [index] -> id
-    delete ADRESAR; # [index] -> dodatky|kapitoly
-    delete NAZEV;   # [index] -> název dodatku či kapitoly (ne id)
-    delete STITKY;  # [index] -> štítky, nebo ""
+    delete vyskyty; # [id] -> 1; slouží ke kontrole duplicity v poradi-kapitol.lst
+    delete id;      # [index] -> id
+    delete adresar; # [index] -> dodatky|kapitoly
+    delete nazev;   # [index] -> název dodatku či kapitoly (ne id)
+    delete stitky;  # [index] -> štítky, nebo ""
 }
 BEGINFILE {
-    INDEX = (ARGIND < 2) ? 0 : ARGIND - 1;
+    ind = (ARGIND < 2) ? 0 : ARGIND - 1;
 }
 
 # zpracování poradi-kapitol.lst
@@ -43,46 +43,46 @@ ARGIND < 2 {
     if (/[^-_A-Za-z0-9]/) {
         ShoditFatalniVyjimku("Řádek obsahuje znak, který není povolený v ID kapitoly či dodatku! Povoleny jsou pouze znaky [A-Za-z0-9], - a _.");
     }
-    if ($0 in VYSKYTY) {
+    if ($0 in vyskyty) {
         print "VAROVÁNÍ: ID dodatku či kapitoly \"" $0 "\" se v souboru poradi-kapitol.lst opakuje! Bude použit pouze první výskyt." > "/dev/stderr";
         next;
     }
 
-    VYSKYTY[$0] = 1;
-    EXISTUJE_KAPITOLA = !system("test -r kapitoly/" $0 ".md");
-    EXISTUJE_DODATEK = !system("test -r dodatky/" $0 ".md");
+    vyskyty[$0] = 1;
+    existuje_kapitola = Test("-r kapitoly/" $0 ".md");
+    existuje_dodatek = Test("-r dodatky/" $0 ".md");
 
-    ID[++INDEX] = $0;
-    if (EXISTUJE_DODATEK && !EXISTUJE_KAPITOLA) {
-        ADRESAR[INDEX] = "dodatky";
-    } else if (!EXISTUJE_DODATEK && EXISTUJE_KAPITOLA) {
-        ADRESAR[INDEX] = "kapitoly";
-    } else if (EXISTUJE_DODATEK) {
+    id[++ind] = $0;
+    if (existuje_dodatek && !existuje_kapitola) {
+        adresar[ind] = "dodatky";
+    } else if (!existuje_dodatek && existuje_kapitola) {
+        adresar[ind] = "kapitoly";
+    } else if (existuje_dodatek) {
         ShoditFatalniVyjimku("ID \"" $0 "\" existuje jako dodatek i jako kapitola!");
     } else {
         ShoditFatalniVyjimku("Dodatek ani kapitola " $0 ".md neexistuje!");
     }
-    ARGC = INDEX + 2;
-    ARGV[INDEX + 1] = ADRESAR[INDEX] "/" $0 ".md";
-    NAZEV[INDEX] = "";
-    STITKY[INDEX] = "";
+    ARGC = ind + 2;
+    ARGV[ind + 1] = adresar[ind] "/" $0 ".md";
+    nazev[ind] = "";
+    stitky[ind] = "";
     next;
 }
 
 # následuje zpracování pro jednotlivé kapitoly a dodatky:
-NAZEV[INDEX] == "" && /^# ./ \
+nazev[ind] == "" && /^# ./ \
 {
-    if (NAZEV[INDEX] != "") {
+    if (nazev[ind] != "") {
         print "VAROVÁNÍ: Soubor " FILENAME " obsahuje víc nadpisů první úrovně. Pouze první bude použit jako název!" > "/dev/stderr";
         next;
     }
-    NAZEV[INDEX] = substr($0, 3);
-    if (NAZEV[INDEX] ~ /\t/) {
+    nazev[ind] = substr($0, 3);
+    if (nazev[ind] ~ /\t/) {
         ShoditFatalniVyjimku("Název v souboru " FILENAME " obsahuje tabulátor, což není dovoleno!");
     }
 }
 
-ADRESAR[INDEX] == "kapitoly" && match(toupper($0), /^!ŠTÍTKY:( |$)/) {
+adresar[ind] == "kapitoly" && match(toupper($0), /^!ŠTÍTKY:( |$)/) {
     s = substr($0, 1 + RLENGTH);
     if (s !~ /^({[A-Za-z0-9ÁČĎÉĚÍŇÓŘŠŤŮÝŽáčďéěíňóřšťůýž ]+})*$/) {
         ShoditFatalniVyjimku("Chybný formát štítků v " FILENAME ": " $0);
@@ -92,16 +92,16 @@ ADRESAR[INDEX] == "kapitoly" && match(toupper($0), /^!ŠTÍTKY:( |$)/) {
     close(prikaz, "to");
     prikaz |& getline s;
     close(prikaz);
-    STITKY[INDEX] = STITKY[INDEX] s;
+    stitky[ind] = stitky[ind] s;
 }
 
 ENDFILE {
     if (ARGIND >= 2) {
-        if (NAZEV[INDEX] == "") {
+        if (nazev[ind] == "") {
             ShoditFatalniVyjimku("Nepodařilo se zjistit název kapitoly či dodatku ze souboru " FILENAME "!");
         }
-        if (!(STITKY[INDEX] ~ /^({[^{}]+})*$/)) {
-            ShoditFatalniVyjimku("Chybné uzávorkování štítků ve " FILENAME ": " STITKY[INDEX]);
+        if (!(stitky[ind] ~ /^({[^{}]+})*$/)) {
+            ShoditFatalniVyjimku("Chybné uzávorkování štítků ve " FILENAME ": " stitky[ind]);
         }
     }
 }
@@ -117,10 +117,10 @@ END {
 #
 # Prázdná hodnota se nahrazuje „NULL“.
     for (i = 1; i < ARGC - 1; ++i) {
-        print ADRESAR[i], ID[i], NAZEV[i], \
-            i == 1 ? "NULL\tNULL" : ID[i - 1] "\t" NAZEV[i - 1], \
-            i + 1 == ARGC - 1 ? "NULL\tNULL" : ID[i + 1] "\t" NAZEV[i + 1], \
+        print adresar[i], id[i], nazev[i], \
+            i == 1 ? "NULL\tNULL" : id[i - 1] "\t" nazev[i - 1], \
+            i + 1 == ARGC - 1 ? "NULL\tNULL" : id[i + 1] "\t" nazev[i + 1], \
             i, \
-            STITKY[i] == "" ? "NULL" : STITKY[i];
+            stitky[i] == "" ? "NULL" : stitky[i];
     }
 }

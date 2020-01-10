@@ -1,4 +1,4 @@
-# Linux Kniha kouzel, skript extrahovat-pomocne-funkce.awk
+# Linux Kniha kouzel, skript extrakce/pomocne-funkce.awk
 # Copyright (c) 2019 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -155,7 +155,7 @@ BEGINFILE {
 ARGIND < 2 {
     if ($1 == "kapitoly") {
         f = "kapitoly/" $2 ".md";
-        if (system("test -r " f)) {
+        if (!Test("-r " f)) {
             ShoditFatalniVyjimku("Nemohu číst ze souboru " f "!");
         }
         idkapitol[ARGC] = $2;
