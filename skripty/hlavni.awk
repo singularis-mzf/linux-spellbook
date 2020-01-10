@@ -250,10 +250,10 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C, priznak, stav) {
                 continue;
             case "$$":
                 ShoditFatalniVyjimku("Funkce $$ není v této verzi podporována. Při opakování znaku $ musí být tyto znaky escapovány zpětným lomítkem.");
-                break;
             case "--":
                 ShoditFatalniVyjimku("Kombinace " C " musí být ve zdrojovém kódu povinné escapovaná.");
-                break;
+            case "\\0":
+                ShoditFatalniVyjimku("Sekvence \\0 v tomto zdrojovém kódu není platná. Nemyslel/a jste \\\\0?");
             default:
                 break;
         }
@@ -349,7 +349,7 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C, priznak, stav) {
     }
 
     if (VelikostZasobniku("format") > 0) {
-        ShoditFatalniVyjimku("Formátovací značka neuzavřena do konce řádku: " Vrchol("format") "\nVstup: <" text ">\nVýstup: <" VYSTUP ">\n\n");
+        ShoditFatalniVyjimku("Formátovací značka neuzavřena do konce řádku " ZACATEK_ZVYRAZNENI FNR KONEC_ZVYRAZNENI ": " Vrchol("format") "\nVstup: <" text ">\nVýstup: <" VYSTUP ">\n\n");
     }
     return VYSTUP;
 }
@@ -519,6 +519,19 @@ BEGIN {
         STITKY = "";
     }
 
+    # Načíst zvýraznění
+    ZACATEK_ZVYRAZNENI = "";
+    KONEC_ZVYRAZNENI = "";
+    prikaz = "exec 2>/dev/null; tput setaf 1; tput bold";
+    prikaz | getline ZACATEK_ZVYRAZNENI;
+    close(prikaz);
+    if (ZACATEK_ZVYRAZNENI != "") {
+        prikaz = "exec 2>/dev/null; tput sgr0";
+        prikaz | getline KONEC_ZVYRAZNENI;
+        close(prikaz);
+    }
+
+    # Inicializovat globální proměnné:
     ID_KAPITOLY_OMEZENE = IDKAPITOLY;
     gsub(/[^A-Za-z0-9]/, "", ID_KAPITOLY_OMEZENE);
     NULL_STRING = "\x01\x02";

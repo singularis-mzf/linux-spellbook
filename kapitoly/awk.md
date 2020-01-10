@@ -13,7 +13,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 -->
 <!--
 ÚKOLY:
-[ ] Vysvětlit použití znaku & v druhém parametru gsub(); viz https://www.gnu.org/software/gawk/manual/html_node/Gory-Details.html.
+[X] Vysvětlit použití znaku & v druhém parametru gsub(); viz https://www.gnu.org/software/gawk/manual/html_node/Gory-Details.html.
 
 
 
@@ -444,6 +444,44 @@ Nevyzkoušeno:
 *# nepřímé volání funkce*<br>
 **@**{*proměnná*}**(**[{*parametr*}[**,** {*další parametr*}]]**)**
 
+### Řetězcové funkce (regulární výrazy)
+
+Poznámka k řetězci náhrady: V tomto řetězci je nutno escapovat znaky „\\“ a „&amp;“, protože mají speciální význam: Funkce sub(), gensub() a gsub() za neescapovaný znak „&amp;“ dosadí text shody s nahrazovaným regulárním výrazem. Funkce „gensub()“ navíc za značky „\\1“ až „\\9“ (do řetězce nutno zadávat jako "\\\\1" atd.) dosadí text číslovaného záchytu (podřetězec odpovídající seskupení v regulárním výrazu).
+
+*# **vyhovuje**/nevyhovuje regulárnímu výrazu?*<br>
+{*řetězec*} **~** {*regulární-výraz*}<br>
+{*řetězec*} **!~** {*regulární-výraz*}
+
+*# **nahradit** první výskyt/N-tý výskyt/všechny výskyty regulárního výrazu v proměnné*<br>
+**sub(**{*regulární výraz*}**,** {*řetězec-náhrady*}**,** {*proměnná*}**)** ⊨ počet náhrad (0, nebo 1)<br>
+{*proměnná*} **= gensub(**{*regulární výraz*}**,** {*řetězec-náhrady*}**,** {*N*}**,** {*proměnná*}**)** ⊨ řetězec po náhradě (nezměněný, pokud k náhradě nedošlo)<br>
+**gsub(**{*regulární výraz*}**,** {*řetězec-náhrady*}**,** {*proměnná*}**)** ⊨ počet náhrad
+
+*# nahradit první výskyt/N-tý výskyt/všechny shody v $0*<br>
+**sub(**{*regulární výraz*}**,** {*řetězec-náhrady*}**)** ⊨ počet náhrad (0, nebo 1)<br>
+**$0 = gensub(**{*regulární výraz*}**,** {*řetězec-náhrady*}**,** {*N*}**)** ⊨ řetězec po náhradě (nezměněný, pokud k náhradě nedošlo)<br>
+**gsub(**{*regulární výraz*}**,** {*řetězec-náhrady*}**)** ⊨ počet náhrad
+
+*# nahradit první výskyt/N-tý výskyt/všechny výskyty regulárního výrazu v řetězci*<br>
+**gensub(**{*regulární výraz*}**,** {*řetězec-náhrady*}**, 1,** {*řetězec*}**)**<br>
+**gensub(**{*regulární výraz*}**,** {*řetězec-náhrady*}**,** {*N*}*,* {*řetězec*}**)**<br>
+**gensub(**{*regulární výraz*}**,** {*řetězec-náhrady*}**, "g",** {*řetězec*}**)**
+
+*# najít a vypsat **první shodu** s regulárním výrazem*<br>
+*// Nebyla-li shoda s regulárním výrazem nalezena, funkce match() vrací 0; jinak nastaví proměnné RSTART a RLENGTH na pozici a délku nalezeného podřetězce a vrátí hodnotu RSTART. Vždy vybírá nejlevější a nejdelší shodu.*<br>
+**if (match(**{*řetězec*}**,** {*regulární-výraz*}**)) \{**<br>
+<odsadit1>**print substr(**{*řetězec*}**, RSTART, RLENGTH);**<br>
+**\}**
+
+*# najít **všechny shody** s regulárním výrazem a sestavit z nich číslované pole*<br>
+*// Funkce „patsplit()“ vyhledá všechny shody řetězce s regulárním výrazem a vrátí jejich počet (N). Předané pole pak smaže a naplní těmito shodami. Zadáte-li i pole pro oddělovače, pak ho tato funkce vyplní podřetězci, které zbyly mezi jednotlivými shodami, přičemž řetězec před první shodou bude umístěn na indexu 0 a řetězec za poslední shodou na indexu N.*<br>
+**patsplit(**{*řetězec*}**,** {*pole*}**,** {*regulární-výraz*} [**,**{*pole-pro-oddělovače*}]**)** ⊨ počet shod (např. „3“)
+
+*# **rozdělit** řetězec do pole, oddělovač je definovaný regulárním výrazem*<br>
+**split(**{*řetězec*}**,** {*pole*}**,** {*regulární-výraz*}<nic>[**,**{*pole\_pro\_oddělovače*}]**)**
+
+*# příklad: v řetězci „a=15:b=79“ v proměnné „x“ vyměnit čísla*<br>
+**x = gensub(/^a=([0-9]+):b=([0-9]+)$/, "a=\\\\2:b=\\\\1", 1, x);** ⊨ a=79:b=15
 
 ### Řetězcové funkce (základní)
 
@@ -453,13 +491,6 @@ Nevyzkoušeno:
 *# získat **podřetězec** podle pozice*<br>
 **substr(**{*řetězec*}**,** {*počáteční-pozice*}[**,** {*maximální-délka*}]**)**
 
-*# **nahradit** jeden výskyt/N-tý výskyt/všechny výskyty regulárního výrazu*<br>
-*// V „řetězci k náhradě“ se rozeznává speciální znak „&amp;“, za který se při náhradě dosadí podřetězec, který vyhověl regulárnímu výrazu. Proto je zde nutno znaky \\ a &amp; escapovat zpětnými lomítky.*<br>
-*// Funkce „gsub()“ vrací počet provedených náhrad.*<br>
-**sub(**{*regulární výraz*}**,** {*řetězec-k-náhradě*}[**,** {*proměnná*}]**);**<br>
-**gensub(**{*regulární výraz*}**,** {*řetězec-k-náhradě*}**,** {*N*}[**,** {*proměnná*}]**);**<br>
-**gsub(**{*regulární výraz*}**,** {*řetězec-k-náhradě*}[**,** {*proměnná*}]**);**
-
 *# najít pozici prvního výskytu **podřetězce***<br>
 *// Vrátí 0, nebyl-li podřetězec nalezen; jinak vrátí pozici podřetězce (číslovanou od 1).*<br>
 **index(**{*řetězec*}**,** {*hledaný-podřetězec*}**)**
@@ -467,24 +498,9 @@ Nevyzkoušeno:
 *# zjistit **délku řetězce***<br>
 **length(**{*řetězec*}**)**
 
-*# vyhovuje/nevyhovuje regulárnímu výrazu?*<br>
-{*řetězec*} **~** {*regulární-výraz*}<br>
-{*řetězec*} **!~** {*regulární-výraz*}
-
-*# najít a vypsat shodu s regulárním výrazem*<br>
-*// Nebyla-li shoda s regulárním výrazem nalezena, funkce match() vrací 0; jinak nastaví proměnné RSTART a RLENGTH na pozici a délku nalezeného podřetězce a vrátí hodnotu RSTART. Vždy vybírá nejlevější a nejdelší shodu.*<br>
-**if (match(**{*řetězec*}**,** {*regulární-výraz*}**)) \{**<br>
-<odsadit1>**print substr(**{*řetězec*}**, RSTART, RLENGTH);**<br>
-**\}**
-
-*# **rozdělit** řetězec do pole (podle FS/určitým znakem/regulárním výrazem)*<br>
+*# **rozdělit** řetězec do pole (podle FS/určitým znakem)*<br>
 **split(**{*řetězec*}**,** {*pole*}**)**<br>
-**split(**{*řetězec*}**,** {*pole*}**, "**{*znak*}**"**[**,**{*pole\_pro\_oddělovače*}]**)**<br>
-**split(**{*řetězec*}**,** {*pole*}**,** {*regulární-výraz*}<nic>[**,**{*pole\_pro\_oddělovače*}]**)**
-
-*# najít všechny shody s regulárním výrazem a sestavit z nich číslované pole*<br>
-*// Funkce „patsplit()“ vyhledá všechny shody řetězce s regulárním výrazem a vrátí jejich počet (N). Předané pole pak smaže a naplní těmito shodami. Zadáte-li i pole pro oddělovače, pak ho tato funkce vyplní podřetězci, které zbyly mezi jednotlivými shodami, přičemž řetězec před první shodou bude umístěn na indexu 0 a řetězec za poslední shodou na indexu N.*<br>
-**patsplit(**{*řetězec*}**,** {*pole*}**,** {*regulární-výraz*} [**,**{*pole-pro-oddělovače*}]**)**
+**split(**{*řetězec*}**,** {*pole*}**, "**{*znak*}**"**[**,**{*pole\_pro\_oddělovače*}]**)**
 
 *# naformátovat řetězec (funkce **sprintf** známá z jazyka C)*<br>
 **sprintf(**{*formátovací-řetězec*}[**,** {*parametr*}]...**)**
@@ -506,7 +522,6 @@ Nevyzkoušeno:
 *# desítkové číslo na osmičkové/osmičkové na desítkové*<br>
 **sprintf("**[**0**]**%o",** {*číslo*}**)**<br>
 **strtonum("0**{*osmičkové-číslo*}**)**
-
 
 ### Číselné funkce
 
@@ -626,6 +641,7 @@ Poznámka: Parametry -f a -e můžete kombinovat a zadávat opakovaně. Každ�
 * [Článek na Wikipedii](https://cs.wikipedia.org/wiki/AWK)
 * [Přednáška Lukáše Bařinky „(g)awk in a nutshell“](https://www.youtube.com/watch?v=y8klNyswPfo)
 * [Článek na ABC Linuxu](http://www.abclinuxu.cz/clanky/unixove-nastroje-21-awk)
+* [Oficiální manuál: Řetězcové funkce (reference)](https://www.gnu.org/software/gawk/manual/html_node/String-Functions.html) (anglicky)
 * [Oficiální manuál od GNU](https://www.gnu.org/software/gawk/manual/) (anglicky)
 * *man 1 gawk* (anglicky)
 * [Balíček gawk](https://packages.ubuntu.com/bionic/gawk)

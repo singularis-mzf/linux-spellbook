@@ -69,11 +69,11 @@ varianta pro rozšířený regulární výraz.
 **[**{*znaky*}**]**
 
 *# libovolný znak **kromě uvedených***<br>
-**[^**{*znaky*}**]**
+**[<nic>^**{*znaky*}**]**
 
 *# všechny znaky po první výskyt některého z uvedených/případně až do konce řetězce*<br>
-**[^**{*znaky*}**]\*[**{*znaky*}**]**<br>
-**[^**{*znaky*}**]\***
+**[<nic>^**{*znaky*}**]\*[**{*znaky*}**]**<br>
+**[<nic>^**{*znaky*}**]\***
 
 *# **bílý znak**/nebílý znak*<br>
 **\\s**<br>
@@ -85,8 +85,8 @@ varianta pro rozšířený regulární výraz.
 **\\d**
 
 *# jiný znak než desítková číslice (rozšířený/základní/Perl)*<br>
-**[^0-9]**<br>
-**[^0-9]**<br>
+**[<nic>^0-9]**<br>
+**[<nic>^0-9]**<br>
 **\\D**
 
 *# závorky „()[]{}“ (rozšířený/ základní)*<br>
@@ -99,8 +99,8 @@ varianta pro rozšířený regulární výraz.
 **\\w**
 
 *# libovolný znak kromě alfanumerických (rozšířený/základní/Perl)*<br>
-**[^[:alnum:]]**<br>
-**[^[:alnum:]]**<br>
+**[<nic>^[:alnum:]]**<br>
+**[<nic>^[:alnum:]]**<br>
 **\\W**
 
 *# libovolné malé/velké písmeno, i národní abecedy*<br>
@@ -188,14 +188,15 @@ Kotvy a řetězce odpovídají fiktivnímu prázdnému řetězci na určité po
 ### Paměť (omezená podpora)
 
 *# původní podřetězec odpovídající celému regulárnímu výrazu (rozšířený a základní/Perl)*<br>
-*// Tato konstrukce je v programech „gawk“ a „perl“ rozeznávána jako speciální pouze v řetězci pro náhradu, nikoliv přímo v regulárním výrazu.*<br>
+*// Platí jen v rámci řetězce náhrady, ne v samotném regulárním výrazu.*<br>
 **&amp;**<br>
 **$&amp;**
 
-*# podřetězec původního řetězce odpovídající seskupení (rozšířený i základní/Perl)*<br>
-*// Poznámka: gawk tuto funkci nepodporuje vůbec. V Perlu se syntaxe liší mezi regulárním výrazem (\\číslo) a řetězcem pro náhradu ($číslo), v sedu se v obou případech používá jen syntaxe „\\číslo“.*<br>
-**\\**{*pořadové-číslo-1-až-9*}<br>
-**$**{*pořadové-číslo-1-až-9*}
+*# **záchyt** − podřetězec původního řetězce odpovídající seskupení (varianty) gawk − gensub(), řetězec náhrady/sed obojí/Perl v regulárním výrazu/Perl rozšířený i základní/Perl)*<br>
+*// Zdvojení zpětného lomítka v GNU awk vyplývá ze skutečnosti, že ho (obvykle) zadáváte jako řetězec v programovacím jazyce. Pokud byste náhodou např. načítali řetězec náhrady ze souboru, bude tam zpětné lomítko patřit pouze jedno!*<br>
+**\\**{*pořadové-číslo-1-až-9*} ⊨ v reg. výrazu: Sed a Perl; v řetězci náhrady: Sed<br>
+**\\\\**{*pořadové-číslo-1-až-9*} ⊨ v řetězci náhrady: GNU awk (jen funkce gensub())<br>
+**$**{*pořadové-číslo-1-až-9*} ⊨ v řetězci náhrady: Perl
 
 *# totéž, ale první písmeno malé/velké*<br>
 *// Tuto variantu podporuje pravděpodobně jen Perl a sed a smí se vyskytnout pouze v řetězci pro náhradu, nikoliv přímo ve vlastním regulárním výrazu.*<br>

@@ -63,6 +63,34 @@ Poznámky:
 **sha256sum** {*soubor*}... **&gt;** {*cílový-soubor.sha256*}<br>
 **sha256sum -c** {*soubor.sha256*}
 
+### Vytváření souboru
+
+*# vytvořit prázdný soubor*<br>
+**&gt;** {*soubor*} [**&gt;** {*další-soubor*}]...
+
+*# vytvořit soubor tvořený nulovými/jinými bajty*<br>
+**head -c** {*velikost-P*} **/dev/zero &gt;** {*soubor*}
+**head -c** {*velikost-P*} **/dev/zero \| tr \\\\0 \\\\**{*osmičková-hodnota*} **&gt;** {*soubor*}
+
+*# pseudonáhodná data (libovolné bajty/bajty v určitém rozsahu)*<br>
+**head -c** {*velikost-P*} **/dev/urandom &gt;** {*soubor*}<br>
+**tr -cd '\\**{*osm.-min*}**-**{*osm.-max*}**' &lt; /dev/urandom \| head -c** {*velikost-P*} **&gt;** {*soubor*}
+
+*# soubor s bajty 0 až 255*<br>
+**seq 0 255 \| xargs printf %02x \| xxd -r -p &gt;~/ram/bytes.dat**
+
+
+
+### Kódování
+
+*# zakódovat do/dekódovat z base64*<br>
+**base64 -w 0** [{*soubor*}]<br>
+**base64 -d** [{*soubor*}] **&gt;** {*cíl*}
+
+*# zakódovat do/dekódovat z uuencode*<br>
+**uuencode /dev/stdout &lt;** {*soubor*} **\| sed -n 'x;3,$p'**<br>
+**sed $'1i\\\\\\nbegin 644 /dev/stdout\\n$a\\\\\\nend' temp.dat \| uudecode &gt;** {*cíl*}
+
 ### Ostatní
 
 *# zkrátit či prodloužit soubor na uvedenou velikost (obecně/příklady...)*<br>
@@ -70,12 +98,83 @@ Poznámky:
 **truncate -s** {*velikost*} {*soubor*}...<br>
 ?
 
+*# nastavit bajt na určité adrese*<br>
+**printf %08x:%02x** {*adresa*} {*hodnota-bajtu*} **\| xxd -r -** {*soubor*}
+
+*# spojit soubory*<br>
+**cat** {*soubor*}... **&gt;**{*cíl*}
+
+*# rozdělit soubor na díly po určitém počtu bajtů*<br>
+?
+
+*# rozdělit soubor na N přibližně stejně velkých dílů*<br>
+?
+
+*# vzít/vynechat prvních N bajtů*<br>
+?<br>
+?
+
+*# vyjmout úsek bajtů*<br>
+?
+
+*# přepsat úsek bajtů v souboru*<br>
+?
+
+*# určit MIME typ souboru*<br>
+**file** [**-b**] <nic>[**-L**] **\-\-mime-type** {*soubor*}...
+
+*# určit typ souboru (zejména pro člověka*<br>
+**file** {*soubor*}...
+
+*# určit velikost souboru v bajtech*<br>
+**wc -c** [{*soubor*}]...
+
+*# určit počet bajtů určité hodnoty v daném souboru*<br>
+**tr -cd \\\\**{*osmičková-hodnota*} **&lt;**{*soubor*} **\| wc -c**
+
+*# vypsat hexadecimálně (pro člověka)*<br>
+**xxd** [**-c** {*bajtů-na-řádek*}] <nic>[**-g** {*bajtů-na-skupinu*}] <nic>[**-s** {*počáteční-adresa*}] <nic>[**-l** {*max-počet-bajtů*}] <nic>[**-u**] {*soubor*}
+
+*# jsou dva soubory po bajtech shodné?*<br>
+**cmp** [**-s**] {*soubor*} {*soubor*}
+
+*# jsou shodné zadané úseky?*<br>
+**cmp** [**-s**] **-n** {*bajtů-k-porovnání-P*} {*soubor1*} {*soubor2*} {*začátek1-P*} {*začátek2-P*}
+
+*# obrátit každou dvojici/čtveřici/osmici bajtů*<br>
+**dd** [**if=**{*vstupní-soubor*}] <nic>[**of=**{*výstupní-soubor*}] **conv=swab**<br>
+**xxd -e -g 4** [{*soubor*}] **\| xxd -r &gt;** {*cíl*}<br>
+**xxd -e -g 8** [{*soubor*}] **\| xxd -r &gt;** {*cíl*}
+
+<!--
+?
+gawk -b 'BEGIN {RS="....";OFS=ORS="";} {print substr(RT, 4, 1), substr(RT, 3, 1), substr(RT, 2, 1), substr(RT, 1, 1), $0}'
+-->
+
+*# nahradit bajty jedné hodnoty bajty jiné hodnoty*<br>
+**tr '\\**{*osm.-původní1*}[**\\**{*osm.původníx*}]...**' '\\**{*osm.-nová1*}[**\\**{*osm.-nováx*}]...**' &lt;** {*zdroj*} **&gt;** {*cíl*}
+
+
+
+<!--
+
+Délka je nezáporný počet bajtů, případně s násobící příponou „K“ (2^10), „M“ (2^20), „G“ (2^30), „T“ (2^40) či „P“ (2^50).
+
+-->
+
 ## Parametry příkazů
 <!--
 - Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.
 - Jinak by zde měl být přehled nejužitečnějších parametrů používaných nástrojů.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+### xxd
+
+*# *<br>
+**xxd**
+
+
 
 ## Instalace na Ubuntu
 <!--

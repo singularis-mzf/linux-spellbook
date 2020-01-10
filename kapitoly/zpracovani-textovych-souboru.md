@@ -16,6 +16,7 @@ Poznámky:
 
 [ ] Chybí ukázka.
 [ ] Nepokrývá formát CSV.
+[ ] Nedobré pokrytí formátu PSV.
 
 ⊨
 -->
@@ -36,14 +37,13 @@ Poznámky:
 Tato kapitola se zabývá nástroji pro řazení, filtrování a záplatování textových souborů. Nezabývá se podrobně komplexními nástroji jako GNU awk, sed či Perl,
 přestože jsou v některých zaklínadlech použity.
 
-Tato verze kapitoly nepokrývá zpracování formátu CSV.
+Tato verze kapitoly nepokrývá zpracování formátu CSV. Formát PSV (záznamy v odstavcích) je pokryt nedostatečně.
 
 Tato kapitola se nezabývá zpracováním textových formátů se složitější strukturou jako např. JSON či XML.
 
 ## Definice
 
-* **Znak** (character) je posloupnost jedho nebo více bajtů v textovém souboru,
-která má význam definovaný kódováním znaků (typicky UTF-8).
+* **Znak** (character) je posloupnost jedho nebo více bajtů v textovém souboru, která má význam definovaný kódováním znaků (typicky UTF-8).
 * **Řetězec** (string) je libovolná posloupnost znaků, i prázdná či tvořená jedním znakem.
 * **Záznam** je zobecnění pojmu „řádek“ v textovém souboru. Textový soubor se dělí na jednotlivé záznamy podle jejich zakončení **ukončovačem záznamu** (record separator), což je typicky znak konce řádku „\\n“ nebo nulový bajt „\\0“. Záznamy se číslují od 1.
 * Záznam může být brán jako celek, nebo může být dál rozdělen na **sloupce** (fields). Existuje několik metod dělení záznamu na sloupce, nejčastější je použití určitého znaku ASCII jako „oddělovače sloupců“ (field separator). Sloupce se v každém záznamu číslují od 1.
@@ -55,7 +55,8 @@ V této kapitole rozlišuji následující formáty textových souborů:
 * TXT − záznamy ukončeny „\\n“, na sloupce se nedělí.
 * TXTZ − záznamy ukončeny „\\0“, na sloupce se nedělí.
 * TSV − záznamy ukončeny „\\n“, sloupce se dělí tabulátorem („\\t“) nebo jiným znakem ASCII (např. v /etc/passwd se dělí znakem „:“).
-* TSVZ − záznamy ukončený „\\0“, sloupce se oddělují tabulátorem („\\t“) nebo jiným znakem ASCII.
+* TSVZ − záznamy ukončeny „\\0“, sloupce se oddělují tabulátorem („\\t“) nebo jiným znakem ASCII.
+* PSV − komplikovaný textový formát s pojmenovanými sloupci; záznamy jsou ukončeny sekvencemi více než jednoho znaku „\\n“; sloupce jsou pojmenovány.
 * pevná šířka sloupců − záznamy ukončeny „\\n“, sloupce (kromě posledního) jsou zarovnány na pevný počet znaků pomocí mezer.
 
 !ÚzkýRežim: vyp
@@ -116,8 +117,8 @@ V této kapitole rozlišuji následující formáty textových souborů:
 **fgrep** [**-z**] **-v '**{*podřetězec*}**'** [{*soubor*}]...
 
 *# vzít/vynechat záznamy shodné s **řetězcem***<br>
-**fgrep** [**-z**] **'**{*podřetězec*}**'** [{*soubor*}]...<br>
-**fgrep -**[**z**]**x '**{*řetězec*}**'** [{*soubor*}]...
+**fgrep -**[**z**]**x '**{*řetězec*}**'** [{*soubor*}]...<br>
+**fgrep -**[**z**]**xv '**{*řetězec*}**'** [{*soubor*}]...
 
 *# vzít/vynechat záznamy od prvního vyhovění regulárnímu výrazu*<br>
 **sed -**[**z**]**En '/**{*regulární výraz*}**/,$p'** [{*soubor*}]...<br>
@@ -201,6 +202,14 @@ egrep -Lr {*regulární-výraz*} {*soubor-či adresář*}...
 
 ### Ostatní
 
+*# **počet záznamů** (txt/txtz)*<br>
+**wc -l &lt;** {*soubor*}<br>
+**tr -cd \\\\0 &lt;** {*soubor*} **\| wc -c**
+
+*# maximální **délka záznamu** (txt/txtz)*<br>
+**tr '\\t' x &lt;** {*soubor*} **\| wc -L**<br>
+**tr '\\0\\n\\t' '\\nxx' &lt;** {*soubor*} **\| wc -L**
+
 *# **spojit** soubory za sebe*<br>
 *// Standardní vstup můžete mezi soubory vřadit parametrem „-“ místo názvu souboru. Neprázdné soubory musejí být řádně ukončeny ukončovačem záznamu, jinak se poslední záznam spojí s prvním záznamem následujícího souboru.*<br>
 **cat** {*soubor*}...
@@ -266,11 +275,11 @@ Pro tsvz uveďte část „;RS=ORS="\\0";“.
 **gawk 'BEGIN {FS=OFS="\\t"**[**;RS=ORS="\\0";**]**\} $**{*N*} **~ /**{*regulární výraz*}**/'** [{*soubor*}]...<br>
 **gawk 'BEGIN {FS=OFS="\\t"**[**;RS=ORS="\\0";**]**\} $**{*N*} **!~ /**{*regulární výraz*}**/'** [{*soubor*}]...
 
-*# vzít/vynechat záznamy, kde N-tý sloupec obsahuje **podřetězec** (tsv/tsvz)*<br>
+*# vzít/vynechat záznamy, kde N-tý sloupec obsahuje **podřetězec***<br>
 **gawk 'BEGIN {FS=OFS="\\t"**[**;RS=ORS="\\0";**]**\} index($**{*N*}**, "**{*podřetězec*}**")'** [{*soubor*}]...<br>
 **gawk 'BEGIN {FS=OFS="\\t"**[**;RS=ORS="\\0";**]**\} !index($**{*N*}**, "**{*podřetězec*}**")'** [{*soubor*}]...
 
-*# vzít/vynechat záznamy, kde N-tý sloupec je **řetězec** (tsv/tsvz)*<br>
+*# vzít/vynechat záznamy, kde N-tý sloupec je **řetězec***<br>
 **gawk 'BEGIN {FS=OFS="\\t"**[**;RS=ORS="\\0";**]**\} $**{*N*}** == "**{*podřetězec*}**"'** [{*soubor*}]...<br>
 **gawk 'BEGIN {FS=OFS="\\t"**[**;RS=ORS="\\0";**]**\} $**{*N*}** != "**{*podřetězec*}**"'** [{*soubor*}]...
 
@@ -281,16 +290,16 @@ Pro tsvz uveďte část „;RS=ORS="\\0";“.
 ### Řazení záznamů podle obsahu sloupců
 
 *# seřadit podle N-tého sloupce*<br>
-[**LC\_ALL=C**] **sort** [**-z**] **-t $'\\t' -k** {*N*}**,**{*N*}[{*druh-a-příznaky-řazení*}]
+[**LC\_ALL=C**] **sort** [**-z**] **-t $'\\t' -k** {*N*}**,**{*N*}[{*druh-a-příznaky-řazení*}] <nic>[{*soubor*}]...
 
 *# seřadit podle sloupců M až N*<br>
-[**LC\_ALL=C**] **sort** [**-z**] **-t $'\\t' -k** {*M*}**,**{*N*}[{*druh-a-příznaky-řazení*}]
+[**LC\_ALL=C**] **sort** [**-z**] **-t $'\\t' -k** {*M*}**,**{*N*}[{*druh-a-příznaky-řazení*}] <nic>[{*soubor*}]...
 
 *# seřadit podle více kritérií*<br>
-[**LC\_ALL=C**] **sort** [**-z**] <nic>[**-s**] **-t $'\\t' -k** {*jedno-kritérium*} <nic>[**-k** {*další-kritérium*}]...
+[**LC\_ALL=C**] **sort** [**-z**] <nic>[**-s**] **-t $'\\t' -k** {*jedno-kritérium*} <nic>[**-k** {*další-kritérium*}]... [{*soubor*}]...
 
 *# příklad: seřadit vzestupně podle číselné hodnoty 7. sloupce a pak sestupně podle 3. sloupce, bez ohledu na velikost písmen*<br>
-**sort** [**-z**] **-t $'\\t' -k 7,7n -k 3,3ri**
+**sort** [**-z**] **-t $'\\t' -k 7,7n -k 3,3ri** [{*soubor*}]...
 
 <!--
 Parametry řazení mohou být: bdfgiMhnRrV
@@ -302,19 +311,31 @@ sort -t '\t' -k ''
 
 ### Ostatní
 
+Pro formát tsvz použijte „RS="\\0";“, pro tsv jej vynechejte.
+
+*# **počet sloupců** prvního záznamu*<br>
+**head** [**-z**] {*soubor*} **\| tr -cd \\\\t \| wc -c**
+
+*# maximální počet sloupců (tsv/tsvz)*<br>
+**gawk 'BEGIN {FS="\t";** [**RS="\\0";**] **r=0;} NR == 1 \|\| NF &gt; r {r = NF} END {print r}'** [{*soubor*}]...
+
+*# minimální počet sloupců*<br>
+*// Poznámka: prázdný řádek se počítá jako 0 sloupců, proto pokud ho vstup obsahuje, výsledek bude 0.*<br>
+**gawk 'BEGIN {FS="\t";** [**RS="\\0";**] **r=0;} NR == 1 \|\| NF &lt; r {r = NF} END {print r}'** [{*soubor*}]...
+
 *# naformátovat záznamy jako tabulku s pevnou šířkou sloupců (tsv/tsvz)*<br>
 **column -nt**[**e**]**s** [{*soubor*}]...<br>
 [**cat** {*soubor*}... **\|**] **tr '\\0\\n' '\\n&blank;' \| column -n**[**e**]**ts \| tr \\\\n \\\\0**
 
 *# vložit sloupec s **číslem záznamu** před první sloupec*<br>
 *// Poznámka: zadáte-li víc souborů, počítadlo záznamů se nebude restartovat na začátku každého z nich.*<br>
-**sed** [**-z**] **=** [{*soubor*}]... **\| paste** [**-z**] <nic>[**-d** {*oddělovač*}] **- -**
-
-*# vložit sloupec s **číslem záznamu** před N-tý sloupec*<br>
-?
+**gawk 'BEGIN {** [**RS = ORS = "\\0";**] **OFS = "\t";} {print NR, $0}'** [{*soubor*}]...
 <!--
-**nl -s $'\\t' -w 1** [{*soubor*}]... **\| sed -E 's/^([0-9]+)(\\t[<nic>^\\t]\*)(.*$)/\\2\\1\\3/'**
+**sed** [**-z**] **=** [{*soubor*}]... **\| paste** [**-z**] <nic>[**-d** {*oddělovač*}] **- -**
 -->
+
+*# vložit sloupec s **číslem záznamu** před N-tý sloupec, kde N není 1*<br>
+**gawk** [**-v 'RS=\\0'**] **'{print gensub(/\\t/, "\\t" NR "\\t",** {*N*}** - 1);}'** [{*soubor*}]...
 
 
 ## Zaklínadla (pevná šířka sloupců)
@@ -352,6 +373,87 @@ Pro tsvz uveďte část „BEGIN {RS=ORS="\\0"}“.
 
 *# řadit podle znaků na indexech M až N*<br>
 [**LC\_ALL=C**] **sort** [{*další parametry*}] **-k 1.**{*M*}**,1.**{*N*}{*parametry-řazení*} [{*soubor*}]...
+
+## Zaklínadla (psv)
+
+### Filtrace záznamů podle pořadí
+
+*# vzít/vynechat N **prvních***<br>
+**gawk 'BEGIN {RS = ""; ORS = "\\n\\n"; FS = "\\n";} NR &gt;** {*N*} **{exit} {print}'** [{*soubor*}]...<br>
+**gawk 'BEGIN {RS = ""; ORS = "\\n\\n"; FS = "\\n";} NR &gt;** {*N*} **{print}'** [{*soubor*}]...
+
+*# vzít/vynechat N **posledních***<br>
+?<br>
+?
+
+*# vzít/vynechat **konkrétní** záznam*<br>
+**gawk 'BEGIN {RS = ""; ORS = "\\n\\n"; FS = "\\n";} NR ==** {*N*} **{print; exit;}'** [{*soubor*}]...<br>
+**gawk 'BEGIN {RS = ""; ORS = "\\n\\n"; FS = "\\n";} NR !=** {*N*} **{print}'** [{*soubor*}]...
+
+*# vzít/vynechat **rozsah** záznamů*<br>
+**gawk 'BEGIN {RS = ""; ORS = "\\n\\n"; FS = "\\n";} NR &gt;=** {*první-ponechaný*} **{print} NR ==** {*poslední-ponechaný*} **{exit}'** [{*soubor*}]...<br>
+**gawk 'BEGIN {RS = ""; ORS = "\\n\\n"; FS = "\\n";} NR &lt;** {*první-vynechaný*} **\|\| NR &gt;** {*poslední-vynechaný*} **{print}'** [{*soubor*}]...
+
+*# vzít pouze **liché/sudé** záznamy*<br>
+**gawk 'BEGIN {RS = ""; ORS = "\\n\\n"; FS = "\\n";} NR % 2 {print}'** [{*soubor*}]...<br>
+**gawk 'BEGIN {RS = ""; ORS = "\\n\\n"; FS = "\\n";} !(NR % 2) {print}'** [{*soubor*}]...
+
+### Vybrat/sloučit sloupce
+
+*# vzít jen/vynechat určité sloupce*<br>
+?<br>
+?
+
+*# sloučit záznamy ze dvou souborů podle čísla záznamu*<br>
+?
+
+*# sloučit záznamy ze dvou souborů podle společného sloupce*<br>
+?
+
+### Filtrace záznamů podle obsahu sloupců
+
+Vzít/vynechat záznamy,...
+
+*# které **obsahují určitý sloupec***<br>
+?<br>
+?
+
+*# kde určitý sloupec odpovídá **regulárnímu výrazu***<br>
+?<br>
+?
+
+*# kde určitý sloupec obsahuje **podřetězec***<br>
+?<br>
+?
+
+*# kde určitý sloupec je **řetězec***<br>
+?<br>
+?
+
+### Řazení a přeskládání záznamů
+
+*# **obrátit** pořadí*<br>
+**tac -rs $'\\n\\n\\n\*'**
+
+*# **náhodně** přeskládat*<br>
+?
+
+*# seřadit podle určitého sloupce*<br>
+?
+
+*# seřadit podle více kritérií*<br>
+?
+
+### Ostatní
+
+*# **počet záznamů***<br>
+**tr '\\na' ab** [**&lt;** {*soubor*}] **\| fgrep -o aa \| wc -l**
+
+*# **rozdělit** soubory na díly s uvedeným maximálním počtem záznamů*<br>
+?
+
+*# ke každému záznamu přidat sloupec*<br>
+?
 
 ## Zaklínadla (záplatování)
 
