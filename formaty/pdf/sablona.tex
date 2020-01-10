@@ -43,11 +43,6 @@
 %% B5 = 17.6cm ⨉ 25.0cm
 \usepackage[xetex,b5paper,inner=1.5cm,outer=1cm,top=1.5cm,bottom=2cm]{geometry}
 {{KONEC POKUD}}
-{{POKUD JE FORMÁT pdf-a5}}
-
-%% A5 = 14.8cm ⨉ 21.0cm
-\usepackage[xetex,a5paper,inner=1cm,outer=0.75cm,top=1cm,bottom=1.5cm]{geometry}
-{{KONEC POKUD}}
 
 % geometry: + showframe pro ladění
 
@@ -243,20 +238,6 @@
 
 {{KONEC POKUD}}
 %
-{{POKUD JE FORMÁT pdf-a5}}
-\setlength{\sirkakodu}{0.98\textwidth}
-
-% {\zapnoutrezimlicence}
-\newcommand*{\zapnoutrezimlicence}{%
-    \begin{blok}%
-        \setlength{\odsazeni}{1em}%
-        \setlength{\omezeniodstavce}{0pt}%
-        \tiny%
-        \newcommand*{\vypnoutrezimlicence}{\end{blok}}}
-
-{{KONEC POKUD}}
-
-
 %
 % KOREKCE DĚLENÍ SLOV
 % ============================================================================
