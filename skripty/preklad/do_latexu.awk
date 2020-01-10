@@ -496,4 +496,4 @@ function VypnoutUzkyRezim() {
     return "\\end{uzkyrezim}";
 }
 
-@include "skripty/hlavni.awk"
+@include "skripty/preklad/hlavni.awk"

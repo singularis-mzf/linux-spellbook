@@ -289,4 +289,4 @@ function VypnoutUzkyRezim() {
 }
 
 
-@include "skripty/hlavni.awk"
+@include "skripty/preklad/hlavni.awk"

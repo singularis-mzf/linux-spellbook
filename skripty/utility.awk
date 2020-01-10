@@ -99,6 +99,8 @@ function MesicVDruhemPade(cislo) {
 function Escapovat(s) {gsub(/[\\|.*+?{}\\/^$]/, "\\\\&", s);return s;}
 function EscapovatKNahrade(s) {gsub(/[\\&]/, "\\\\&", s);return s;}
 
+function Test(parametry) {return !system("test " parametry);}
+
 #
 # PRÁCE SE ZÁSOBNÍKY
 # ============================================================================

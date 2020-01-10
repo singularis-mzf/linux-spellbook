@@ -109,21 +109,27 @@ $(DATUM_SESTAVENI_SOUBOR):
 
 # 1A. kapitoly/{kapitola}.md => soubory_prekladu/html/{kapitola}
 # ============================================================================
-$(addprefix $(SOUBORY_PREKLADU)/html/,$(VSECHNY_KAPITOLY)): $(SOUBORY_PREKLADU)/html/%: kapitoly/%.md $(SOUBORY_PREKLADU)/osnova/%.tsv skripty/do_html.awk skripty/hlavni.awk skripty/utility.awk formaty/html/sablona_kapitoly $(SOUBORY_PREKLADU)/fragmenty.tsv
+$(addprefix $(SOUBORY_PREKLADU)/html/,$(VSECHNY_KAPITOLY)): \
+  $(SOUBORY_PREKLADU)/html/%: \
+  kapitoly/%.md $(SOUBORY_PREKLADU)/osnova/%.tsv skripty/preklad/do_html.awk skripty/preklad/hlavni.awk skripty/utility.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(SOUBORY_PREKLADU)/html
-	$(AWK) -f skripty/do_html.awk $< > $@
+	$(AWK) -f skripty/preklad/do_html.awk $< > $@
 
 # 1B. dodatky/{dodatek}.md => soubory_prekladu/html/{dodatek}
 # ============================================================================
-$(addprefix $(SOUBORY_PREKLADU)/html/,$(VSECHNY_DODATKY)): $(SOUBORY_PREKLADU)/html/%: dodatky/%.md $(SOUBORY_PREKLADU)/osnova/%.tsv skripty/do_html.awk skripty/hlavni.awk skripty/utility.awk formaty/html/sablona_kapitoly $(SOUBORY_PREKLADU)/fragmenty.tsv
+$(addprefix $(SOUBORY_PREKLADU)/html/,$(VSECHNY_DODATKY)): \
+  $(SOUBORY_PREKLADU)/html/%: \
+  dodatky/%.md $(SOUBORY_PREKLADU)/osnova/%.tsv skripty/preklad/do_html.awk skripty/preklad/hlavni.awk skripty/utility.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(SOUBORY_PREKLADU)/html
-	$(AWK) -f skripty/do_html.awk $< > $@
+	$(AWK) -f skripty/preklad/do_html.awk $< > $@
 
 # 2. soubory_prekladu/html/{id} => vystup_prekladu/html/{id}.htm
 # ============================================================================
-$(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY))): $(VYSTUP_PREKLADU)/%.htm: $(SOUBORY_PREKLADU)/% skripty/kapitola.awk $(SOUBORY_PREKLADU)/fragmenty.tsv $(DATUM_SESTAVENI_SOUBOR)
+$(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY))): \
+  $(VYSTUP_PREKLADU)/%.htm: \
+  $(SOUBORY_PREKLADU)/% skripty/plneni-sablon/kapitola.awk $(SOUBORY_PREKLADU)/fragmenty.tsv $(DATUM_SESTAVENI_SOUBOR)
 	mkdir -pv $(VYSTUP_PREKLADU)/html
-	cut -f 2 $(SOUBORY_PREKLADU)/fragmenty.tsv | fgrep -qx $(basename $(notdir $<)) && exec $(AWK) -f skripty/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=$(basename $(notdir $@)) -v TELOKAPITOLY=$< -v DATUMSESTAVENI=$(DATUM_SESTAVENI) formaty/html/sablona_kapitoly > $@ || true
+	cut -f 2 $(SOUBORY_PREKLADU)/fragmenty.tsv | fgrep -qx $(basename $(notdir $<)) && exec $(AWK) -f skripty/plneni-sablon/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=$(basename $(notdir $@)) -v TELOKAPITOLY=$< -v DATUMSESTAVENI=$(DATUM_SESTAVENI) formaty/html/sablona_kapitoly.htm > $@ || true
 
 # 3. formaty/html/sablona.css => vystup_prekladu/html/lkk.css
 # ============================================================================
@@ -145,12 +151,13 @@ $(SVG_OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%): $(VYSTUP_PREKLADU)/html/obra
 # 5. vystup_prekladu/html/{id}.htm => vystup_prekladu/html/index.htm
 # ============================================================================
 $(VYSTUP_PREKLADU)/html/index.htm: $(SOUBORY_PREKLADU)/fragmenty.tsv \
-  skripty/generovat-index-html.awk \
+  skripty/plneni-sablon/index-html.awk \
+  formaty/html/sablona_specialni.htm \
   $(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY)))   $(SOUBORY_PREKLADU)/fragmenty.tsv \
   $(OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%) \
   $(SVG_OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%) \
   $(DATUM_SESTAVENI_SOUBOR)
-	$(AWK) -f skripty/generovat-index-html.awk -F \\t -v JMENOVERZE='$(JMENO)' -v DATUMSESTAVENI=$(DATUM_SESTAVENI) $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/html/sablona_kapitoly > $@
+	$(AWK) -f skripty/plneni-sablon/index-html.awk -v JMENOVERZE='$(JMENO)' -v DATUMSESTAVENI=$(DATUM_SESTAVENI) $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/html/sablona_specialni.htm > $@
 
 # 6. sepsat copyrighty ke kapitolám
 # ============================================================================
@@ -168,31 +175,36 @@ $(SOUBORY_PREKLADU)/html/obr-copys.htm: COPYING skripty/sepsat-copykobr.awk
 # ============================================================================
 $(VYSTUP_PREKLADU)/html/_autori.htm: \
   $(addprefix $(SOUBORY_PREKLADU)/html/, kap-copys.htm obr-copys.htm) \
-  skripty/kapitola.awk \
-  formaty/html/sablona_licinfo \
+  skripty/plneni-sablon/kapitola.awk \
+  formaty/html/sablona_autori.htm \
   $(DATUM_SESTAVENI_SOUBOR)
-	$(AWK) -f skripty/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=_autori -v TELOKAPITOLY=/dev/null -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v COPYRIGHTY_KAPITOL=$(SOUBORY_PREKLADU)/html/kap-copys.htm -v COPYRIGHTY_OBRAZKU=$(SOUBORY_PREKLADU)/html/obr-copys.htm formaty/html/sablona_licinfo > $@ || true
+	$(AWK) -f skripty/plneni-sablon/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=_autori -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v COPYRIGHTY_KAPITOL=$(SOUBORY_PREKLADU)/html/kap-copys.htm -v COPYRIGHTY_OBRAZKU=$(SOUBORY_PREKLADU)/html/obr-copys.htm formaty/html/sablona_autori.htm > $@
 
+# 9. shromáždit štítky na stránku _stitky.htm
+# ============================================================================
+#$(VYSTUP_PREKLADU)/html/_stitky.htm: \
+#  formaty/html/sablona
+#  $(DATUM_SESTAVENI_SOUBOR)
 
 # LOG:
 
 # 1A. kapitoly/{kapitola}.md => soubory_prekladu/log/{kapitola}
 # ============================================================================
-$(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_KAPITOLY)): $(SOUBORY_PREKLADU)/log/%: kapitoly/%.md $(SOUBORY_PREKLADU)/osnova/%.tsv skripty/do_logu.awk skripty/hlavni.awk skripty/utility.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
+$(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_KAPITOLY)): $(SOUBORY_PREKLADU)/log/%: kapitoly/%.md $(SOUBORY_PREKLADU)/osnova/%.tsv skripty/preklad/do_logu.awk skripty/preklad/hlavni.awk skripty/utility.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(SOUBORY_PREKLADU)/log
-	$(AWK) -f skripty/do_logu.awk $< > $@
+	$(AWK) -f skripty/preklad/do_logu.awk $< > $@
 
 # 1B. dodatky/{dodatek}.md => soubory_prekladu/log/{dodatek}
 # ============================================================================
-$(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_DODATKY)): $(SOUBORY_PREKLADU)/log/%: dodatky/%.md $(SOUBORY_PREKLADU)/osnova/%.tsv skripty/do_logu.awk skripty/hlavni.awk skripty/utility.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
+$(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_DODATKY)): $(SOUBORY_PREKLADU)/log/%: dodatky/%.md $(SOUBORY_PREKLADU)/osnova/%.tsv skripty/preklad/do_logu.awk skripty/preklad/hlavni.awk skripty/utility.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(SOUBORY_PREKLADU)/log
-	$(AWK) -f skripty/do_logu.awk $< > $@
+	$(AWK) -f skripty/preklad/do_logu.awk $< > $@
 
-# 2. soubory_prekladu/log/{id} => soubory_prekladu/log/{id}.kap + vystup_prekladu/log/{id}.log
+# 2. soubory_prekladu/log/{id} => soubory_prekladu/log/{id}.kap
 # ============================================================================
-$(addsuffix .kap,$(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY))): %.kap: % skripty/kapitola.awk $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/log/sablona_kapitoly $(DATUM_SESTAVENI_SOUBOR)
+$(addsuffix .kap,$(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY))): %.kap: % skripty/plneni-sablon/kapitola.awk $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/log/sablona $(DATUM_SESTAVENI_SOUBOR)
 	mkdir -pv $(SOUBORY_PREKLADU)/log
-	$(AWK) -f skripty/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=$(basename $(notdir $@)) -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v TELOKAPITOLY=$< formaty/log/sablona_kapitoly > $@
+	$(AWK) -f skripty/plneni-sablon/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=$(basename $(notdir $@)) -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v TELOKAPITOLY=$< formaty/log/sablona > $@
 
 # 3. soubory_prekladu/log/{id}.kap => vystup_prekladu/log/{id}.log
 # ============================================================================
@@ -205,13 +217,9 @@ $(addsuffix .log,$(addprefix $(VYSTUP_PREKLADU)/log/,$(VSECHNY_KAPITOLY) $(VSECH
 $(VYSTUP_PREKLADU)/log/index.log: \
   $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/log/%.kap) \
   $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/log/%.kap) \
-  $(VSECHNY_KAPITOLY:%=$(VYSTUP_PREKLADU)/log/%.log) \
-  $(VSECHNY_DODATKY:%=$(VYSTUP_PREKLADU)/log/%.log) \
-  skripty/kniha.awk \
-  $(SOUBORY_PREKLADU)/fragmenty.tsv \
-  formaty/log/sablona_kapitoly
+  $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(VYSTUP_PREKLADU)/log
-	$(AWK) -f skripty/kniha.awk -v IDFORMATU=log -v JMENOVERZE='$(JMENO)' -v VSTUPPREFIX=$(SOUBORY_PREKLADU)/log/ -v VSTUPSUFFIX=.kap formaty/log/sablona_kapitoly > $@
+	cd $(SOUBORY_PREKLADU)/log; cut -f 2 ../fragmenty.tsv | sed -E 's/$$/.kap/' | xargs -r fgrep --color=always -Hn '' >../../$@ || true
 
 # PDF (společná část):
 
@@ -219,22 +227,23 @@ $(VYSTUP_PREKLADU)/log/index.log: \
 # ============================================================================
 $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%): \
   $(SOUBORY_PREKLADU)/pdf-spolecne/%: \
-  kapitoly/%.md $(SOUBORY_PREKLADU)/osnova/%.tsv skripty/do_latexu.awk skripty/hlavni.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
+  kapitoly/%.md $(SOUBORY_PREKLADU)/osnova/%.tsv skripty/preklad/do_latexu.awk skripty/preklad/hlavni.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(dir $@)
-	$(AWK) -f skripty/do_latexu.awk $< > $@
+	$(AWK) -f skripty/preklad/do_latexu.awk $< > $@
 
 # 1B. dodatky/{dodatek}.md => soubory_prekladu/pdf-spolecne/{dodatek}
 # ============================================================================
-$(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%): $(SOUBORY_PREKLADU)/pdf-spolecne/%: dodatky/%.md $(SOUBORY_PREKLADU)/osnova/%.tsv skripty/do_latexu.awk skripty/hlavni.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
+$(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%): $(SOUBORY_PREKLADU)/pdf-spolecne/%: dodatky/%.md $(SOUBORY_PREKLADU)/osnova/%.tsv skripty/preklad/do_latexu.awk skripty/preklad/hlavni.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(dir $@)
-	$(AWK) -f skripty/do_latexu.awk $< > $@
+	$(AWK) -f skripty/preklad/do_latexu.awk $< > $@
 
 # 2. soubory_prekladu/pdf-spolecne/{id} => soubory_prekladu/pdf-spolecne/{id}.kap
 # ============================================================================
 $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap) $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap): \
   %.kap: \
-  % skripty/kapitola.awk $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/pdf/sablona.tex $(DATUM_SESTAVENI_SOUBOR)
-	$(AWK) -f skripty/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=$(basename $(notdir $@)) -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v TELOKAPITOLY=$< formaty/pdf/sablona.tex > $@
+  %
+	cat $< >$@
+	#$(AWK) -f skripty/plneni-sablon/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=$(basename $(notdir $@)) -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v TELOKAPITOLY=$< formaty/pdf/sablona.tex > $@
 
 # 3. obrazky/{obrazek} => soubory_prekladu/pdf-spolecne/_obrazky/{obrazek}
 # ============================================================================
@@ -260,12 +269,18 @@ $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-a4/%.kap) $(VSECHNY_DODATKY:%=$(SOU
 	touch $(SOUBORY_PREKLADU)/postprocess.log
 	$(AWK) -v IDFORMATU=pdf-a4 -v IDKAPITOLY=$(<:$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap=%) -v LOGSOUBOR=$(SOUBORY_PREKLADU)/postprocess.log -f skripty/postprocess.awk $< >$@
 
-# 5. soubory_prekladu/pdf-a4/{kapitola}.kap => soubory_prekladu/pdf-a4/kniha.tex
+# 5. soubory_prekladu/pdf-a4/{id}.kap => soubory_prekladu/pdf-a4/_all.kap
 # ============================================================================
-$(SOUBORY_PREKLADU)/pdf-a4/kniha.tex: $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-a4/%.kap) $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-a4/%.kap) $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/pdf/sablona.tex
-	$(AWK) -f skripty/kniha.awk -v IDFORMATU=pdf-a4 -v JMENOVERZE='$(JMENO)' -v VSTUPPREFIX=$(SOUBORY_PREKLADU)/pdf-a4/ -v VSTUPSUFFIX=.kap formaty/pdf/sablona.tex >$@
+$(SOUBORY_PREKLADU)/pdf-a4/_all.kap: $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-a4/%.kap) $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-a4/%.kap) $(SOUBORY_PREKLADU)/fragmenty.tsv
+	mkdir -pv $(dir $@)
+	cut -f 2 $(SOUBORY_PREKLADU)/fragmenty.tsv | sed 's/.*/$(SOUBORY_PREKLADU)\/pdf-a4\/&.kap/' | xargs -r cat >$@
 
-# 6. soubory_prekladu/pdf-a4/kniha.tex => vystup_prekladu/pdf-a4.pdf
+# 6. soubory_prekladu/pdf-a4/_all.kap => soubory_prekladu/pdf-a4/kniha.tex
+# ============================================================================
+$(SOUBORY_PREKLADU)/pdf-a4/kniha.tex: $(SOUBORY_PREKLADU)/pdf-a4/_all.kap formaty/pdf/sablona.tex
+	$(AWK) -f skripty/plneni-sablon/specialni.awk -v IDFORMATU=pdf-a4 -v JMENOVERZE='$(JMENO)' -v TELO=$< formaty/pdf/sablona.tex >$@
+
+# 7. soubory_prekladu/pdf-a4/kniha.tex => vystup_prekladu/pdf-a4.pdf
 # ============================================================================
 $(VYSTUP_PREKLADU)/pdf-a4.pdf: $(SOUBORY_PREKLADU)/pdf-a4/kniha.tex $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%) $(SVG_OBRAZKY:%.svg=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%.pdf)
 	mkdir -pv $(dir $@)
@@ -281,12 +296,18 @@ $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-b5/%.kap) $(VSECHNY_DODATKY:%=$(SOU
 	touch $(SOUBORY_PREKLADU)/postprocess.log
 	$(AWK) -v IDFORMATU=pdf-b5 -v IDKAPITOLY=$(<:$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap=%) -v LOGSOUBOR=$(SOUBORY_PREKLADU)/postprocess.log -f skripty/postprocess.awk $< >$@
 
-# 5. soubory_prekladu/pdf-spolecne/{kapitola}.kap => soubory_prekladu/pdf-a4/kniha.tex
+# 5. soubory_prekladu/pdf-b5/{id}.kap => soubory_prekladu/pdf-b5/_all.kap
 # ============================================================================
-$(SOUBORY_PREKLADU)/pdf-b5/kniha.tex: $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-b5/%.kap) $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-b5/%.kap) $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/pdf/sablona.tex
-	$(AWK) -f skripty/kniha.awk -v IDFORMATU=pdf-b5 -v JMENOVERZE='$(JMENO)' -v VSTUPPREFIX=$(SOUBORY_PREKLADU)/pdf-b5/ -v VSTUPSUFFIX=.kap formaty/pdf/sablona.tex >$@
+$(SOUBORY_PREKLADU)/pdf-b5/_all.kap: $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-b5/%.kap) $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-b5/%.kap) $(SOUBORY_PREKLADU)/fragmenty.tsv
+	mkdir -pv $(dir $@)
+	cut -f 2 $(SOUBORY_PREKLADU)/fragmenty.tsv | sed 's/.*/$(SOUBORY_PREKLADU)\/pdf-b5\/&.kap/' | xargs -r cat >$@
 
-# 6. soubory_prekladu/pdf-b5/kniha.tex => vystup_prekladu/pdf-b5.pdf
+# 6. soubory_prekladu/pdf-b5/_all.kap => soubory_prekladu/pdf-b5/kniha.tex
+# ============================================================================
+$(SOUBORY_PREKLADU)/pdf-b5/kniha.tex: $(SOUBORY_PREKLADU)/pdf-b5/_all.kap formaty/pdf/sablona.tex
+	$(AWK) -f skripty/plneni-sablon/specialni.awk -v IDFORMATU=pdf-b5 -v JMENOVERZE='$(JMENO)' -v TELO=$< formaty/pdf/sablona.tex >$@
+
+# 7. soubory_prekladu/pdf-b5/kniha.tex => vystup_prekladu/pdf-b5.pdf
 # ============================================================================
 $(VYSTUP_PREKLADU)/pdf-b5.pdf: $(SOUBORY_PREKLADU)/pdf-b5/kniha.tex $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%) $(SVG_OBRAZKY:%.svg=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%.pdf)
 	mkdir -pv $(dir $@)
