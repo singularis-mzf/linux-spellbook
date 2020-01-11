@@ -169,28 +169,41 @@ function Konec() {
 # Soukromé funkce a proměnné:
 # ============================================================================
 
-function VypsatPrehledStitku(format,   i, nazvy_kapitol, cisla_kapitol) {
+function VypsatPrehledStitku(format,   i, n, s, nazvy_kapitol, cisla_kapitol, stitky_kapitol, stitky_kapitoly) {
     if (format != "html") {
         ShoditFatalniVyjimku("Přehled štítků pro formát " format " není podporován!");
     }
 
     delete nazvy_kapitol; # $8
     delete cisla_kapitol; # $3
+    delete stitky_kapitol; # $9
     while (getline < FRAGMENTY_TSV) { # id = $2
         cisla_kapitol[$2] = $8;
         nazvy_kapitol[$2] = $3;
+        stitky_kapitol[$2] = $9;
     }
     close(FRAGMENTY_TSV);
 
     # Načíst štítky ze stitky.tsv:
     stitky_tsv = gensub(/fragmenty/, "stitky", 1, FRAGMENTY_TSV);
     while (getline < stitky_tsv) {
+        # obrazky/ik-vychozi.png 64x64
         if (NF < 3) {ShoditFatalniVyjimku("Chyba formátu stitky.tsv: očekávány alespoň tři sloupce!")}
         # $1 = štítek $2 = omezené id štítku $3..$NF = id kapitol
-        print "<dt id=\"" $2 "\" class=\"stitky\"><span>" $1 "</span></dt><dd>";
+        print "<dt id=\"" $2 "\" class=\"stitky\"><a href=\"#" $2 "\">" $1 "</a></dt><dd>";
         for (i = 3; i <= NF; ++i) {
             if (!($i in cisla_kapitol)) {ShoditFatalniVyjimku("Nečekané id kapitoly: " $i)}
-            print "<div><span class=\"cislo\">" cisla_kapitol[$i] "</span><a href=\"" $i ".htm\">" nazvy_kapitol[$i] "</a></div>";
+
+            print "<div><a href=\"" $i ".htm\"><span class=\"cislo\">" cisla_kapitol[$i] ".</span>\n<img src=\"obrazky/ik-vychozi.png\" width=\"64\" height=\"64\" alt=\"\">\n<span class=\"nazev\">" nazvy_kapitol[$i] "</span></a><span class=\"dalsistitky\">";
+            n = split(gensub(/^\{|\}$/, "", "g", stitky_kapitol[$i]), stitky_kapitoly, "\\}\\{");
+            for (j = 1; j <= n; ++j) {
+                print "<a href=\"#" GenerovatOmezeneId("s", stitky_kapitoly[j]) "\">" stitky_kapitoly[j] "</a>";
+            }
+            print "</span></div>";
+
+            #print "<tr><td>" cisla_kapitol[$i] ".</td><td><img src=\"obrazky/ik-vychozi.png\" width=\"64\" height=\"64\" alt=\"\"></td><td><a href=\"" $i "\">" nazvy_kapitol[$i] "</a></td></tr>";
+
+            #print "<div><span class=\"cislo\">" cisla_kapitol[$i] "</span><a href=\"" $i ".htm\">" nazvy_kapitol[$i] "</a></div>";
         }
         print "</dd>";
     }

@@ -23,7 +23,7 @@ Poznámky:
 
 # Zpracování textových souborů
 
-!Štítky: {tematický okruh}{zpracování textových souborů}
+!Štítky: {tematický okruh}{zpracování textu}
 
 !ÚzkýRežim: zap
 

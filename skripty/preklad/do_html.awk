@@ -66,15 +66,21 @@ function Tabulator(delka,  i, vysledek) {
 
 # + OSNOVA, DELKA_OSNOVY
 
-function ZacatekKapitoly(kapitola, cisloKapitoly, stitky, osnova,   vysledek, polozky, jePrvni) {
+function ZacatekKapitoly(kapitola, cisloKapitoly, stitky, osnova,   vysledek, polozky, jePrvni, poleStitku, i, n) {
 # Generování prvku <h1> obstarává šablona kapitoly (formaty/html/sablona_kapitoly).
 #    return "<h1>" kapitola "</h1>\n";
     vysledek = "";
     delete polozky;
 
     if (stitky != "") {
-        gsub(/\|/, "</span>\n<span>", stitky);
-        vysledek = "<div class=\"stitky\"><span>" stitky "</span></div>";
+        vysledek = "";
+        n = split(stitky, poleStitku, "|");
+        for (i = 1; i <= n; ++i) {
+            vysledek = vysledek "<a href=\"x-stitky.htm#" GenerovatOmezeneId("s", poleStitku[i]) "\">" poleStitku[i] "</a>\n";
+        }
+        vysledek = "<div class=\"stitky\">" vysledek "</div>";
+    } else {
+        vysledek = "";
     }
 
     jePrvni = 1;

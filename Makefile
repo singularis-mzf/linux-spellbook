@@ -43,9 +43,13 @@ VSECHNY_KAPITOLY += sprava-balicku sprava-uzivatelu stahovani-videi system
 # T, U, V, W, X, Y, Z
 VSECHNY_KAPITOLY += unicode x zpracovani-binarnich-souboru zpracovani-obrazku zpracovani-textovych-souboru zpracovani-videa-a-zvuku
 
+VSECHNY_KAPITOLY_A_DODATKY = $(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY)
+VSECHNY_KAPITOLY_A_DODATKY_MD = $(VSECHNY_KAPITOLY:%=kapitoly/%.md) $(VSECHNY_DODATKY:%=dodatky/%.md)
+
 # Obrázky (bitmapové a SVG)
 # ============================================================================
 OBRAZKY := favicon.png by-sa.png logo-knihy-velke.png make.png barvy.png ve-vystavbe.png marsh.jpg banner.png
+OBRAZKY += ik-vychozi.png
 SVG_OBRAZKY := kalendar.svg tritecky.svg graf-filtru.svg
 
 
@@ -79,7 +83,8 @@ pomocne-funkce: $(VYSTUP_PREKLADU)/bin/pomocne-funkce.sh
 # POMOCNÉ SOUBORY:
 # 1. soubory_prekladu/fragmenty.tsv + soubory_prekladu/stitky.tsv
 # ============================================================================
-$(SOUBORY_PREKLADU)/fragmenty.tsv: $(wildcard poradi-kapitol.lst poradi-kapitol.vychozi.lst) skripty/extrakce/fragmenty.awk
+$(SOUBORY_PREKLADU)/fragmenty.tsv: $(wildcard poradi-kapitol.lst poradi-kapitol.vychozi.lst) \
+  skripty/extrakce/fragmenty.awk $(VSECHNY_KAPITOLY_A_DODATKY_MD)
 	mkdir -pv $(SOUBORY_PREKLADU)
 	(cat poradi-kapitol.lst 2>/dev/null || cat poradi-kapitol.vychozi.lst 2>/dev/null || printf %s\\n "# Seznam kapitol a dodatků k vygenerování" "predmluva" "" "# Kapitoly" $(strip $(sort $(VSECHNY_KAPITOLY))) "" "# Dodatky" $(strip $(sort $(filter-out predmluva,$(VSECHNY_DODATKY))))) | $(AWK) -f skripty/extrakce/fragmenty.awk 3>$(SOUBORY_PREKLADU)/fragmenty.tsv 4>$(SOUBORY_PREKLADU)/stitky.tsv
 

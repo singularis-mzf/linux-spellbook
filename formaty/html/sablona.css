@@ -510,11 +510,11 @@ nav .next {text-align:left;}
 .stitky span, .stitky a {
     display:inline-block;
     background:#cccccc;
+    color:inherit;
     margin:0 0.5em;
     border-color:rgba(0,0,0,0.25) rgba(0,0,0,0.25) rgba(0,0,0,0.25) #508080;
     border-style:solid;
     border-width:thin thin thin 1.5rem;
-/*    border:thin solid rgba(0,0,0,0.25);*/
     border-radius:0.4em;
     padding:0.25em 0.5em;
     min-width:5em;
@@ -527,9 +527,43 @@ nav .next {text-align:left;}
 }
 .prehledstitku div {
     margin-left:10em;
+    border-radius:3rem;
 }
-.prehledstitku .cislo {margin-right:1em;}
-.prehledstitku .cislo::after {content:"."}
+.prehledstitku div:nth-child(even) {background:rgba(180,180,180,1)}
+.prehledstitku div:nth-child(odd) {background:rgba(200,200,200,1)}
+.prehledstitku div>a {
+    display:inline-block;
+    width:50%;
+    text-decoration:none;
+}
+.prehledstitku div>a:hover .nazev {
+    text-decoration:underline;
+}
+.prehledstitku .cislo {
+    display:inline-block;
+    width:3em;
+    padding:0 0.5em;
+    text-align:right;
+}
+.prehledstitku img {
+    margin:0.5rem;
+    vertical-align:middle;
+}
+.prehledstitku .nazev {
+    display:inline-block;
+    text-align:left;
+    font-weight:bold;
+}
+.prehledstitku .dalsistitky {
+    display:inline-block;
+    width:50%;
+    vertical-align:middle;
+    line-height:2;
+}
+.prehledstitku .dalsistitky a {
+    margin:0 0.5em;
+    padding:0.5em 0;
+}
 
 /* .prehledy */
 .prehledy {

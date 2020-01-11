@@ -501,19 +501,7 @@ BEGIN {
         # číslo kapitoly
         C_KAPITOLY = $8 - 1;
         # štítky
-        if ($9 != "NULL") {
-            prikaz = "sort -iu | tr \\\\n \\|";
-            STITKY = $9;
-            gsub(/^\{|\}$|'/, "", STITKY);
-            gsub(/\}\{/, "\n", STITKY);
-            print STITKY |& prikaz;
-            close(prikaz, "to");
-            prikaz |& getline STITKY;
-            close(prikaz);
-            gsub(/\|$/, "", STITKY);
-        } else {
-            STITKY = "";
-        }
+        STITKY = gensub(/\}\{/, "|", "g", gensub(/^\{|\}$|^NULL$/, "", "g", $9));
     } else {
         C_KAPITOLY = 0;
         STITKY = "";
