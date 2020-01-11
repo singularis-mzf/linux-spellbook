@@ -27,9 +27,10 @@ Varianty:
 - autori :: Pro stránku s přehledem autorství (x-autori.htm)
 - index :: Pro úvodní stránku (index.htm)
 - kapitola :: Obyčejná kapitola či dodatek
+- stitky :: Pro stránku s přehledem štítků (x-stitky.htm)
 
 {{ZAČÁTEK}}
-{{VARIANTY autori,index,kapitola}}
+{{VARIANTY autori,index,kapitola,stitky}}
 <!doctype html>
 <html lang="cs">
 <head profile="http://www.w3.org/2005/10/profile">
@@ -41,8 +42,10 @@ Varianty:
 <title>Linux: Kniha kouzel</title>
 {{VARIANTA kapitola}}
 <title>{{NÁZEV KAPITOLY}} − Linux: Kniha kouzel</title>
+{{VARIANTA stitky}}
+<title>Přehled štítků − Linux: Kniha kouzel</title>
 
-{{VARIANTY autori,index,kapitola}}
+{{VARIANTY autori,index,kapitola,stitky}}
 
 <link rel="stylesheet" type="text/css" href="lkk-{{DATUMSESTAVENÍ}}.css">
 <link rel="icon" type="image/png" href="obrazky/favicon.png">
@@ -53,7 +56,7 @@ Varianty:
 <span class="right"><span class="ico1"></span><span class="ico2"></span><span class="ico3"></span></span>
 </header>
 
-{{VARIANTY autori,kapitola}}
+{{VARIANTY autori,kapitola,stitky}}
 
 <nav class="horni">
 <div class="slogan">Veškerá moc příkazové řádky/příkazového řádku přehledně, pro začátečníky i&nbsp;pokročilé</div>
@@ -71,7 +74,7 @@ Varianty:
 </span>
 </nav>
 
-{{VARIANTY autori,index,kapitola}}
+{{VARIANTY autori,index,kapitola,stitky}}
 
 <article>
 {{VARIANTA autori}}
@@ -170,7 +173,14 @@ uvést víckrát, jsou vyznačeny šedou trojtečkou.</td></tr>
 <h1>{{ČÍSLO KAPITOLY}}. {{NÁZEV KAPITOLY}}</h1>
 {{TĚLO KAPITOLY}}
 
-{{VARIANTY autori,kapitola}}
+{{VARIANTA stitky}}
+
+<h1>Přehled štítků</h1>
+<dl class="prehledstitku">
+{{PŘEHLED ŠTÍTKŮ}}
+</dl>
+
+{{VARIANTY autori,kapitola,stitky}}
 
 <nav class="spodni"><span class="prev">
 {{POKUD NENÍ PRVNÍ}}
@@ -188,7 +198,7 @@ uvést víckrát, jsou vyznačeny šedou trojtečkou.</td></tr>
 <a href="#dole" id="odkazdolu" title="DOLŮ − na konec stránky">▾<!--⤓--></a>
 </nav>
 
-{{VARIANTY autori,index,kapitola}}
+{{VARIANTY autori,index,kapitola,stitky}}
 
 </article>
 <footer id="dole">
@@ -199,9 +209,9 @@ Upozorňuji, že uvedená licence vyžaduje uvedení seznamu autorů, licence a�
 či kompatibilní licence k provedeným změnám, jsou-li nějaké. Příslušné údaje jsou dostupné
 {{VARIANTA autori}}
 na této stránce.
-{{VARIANTY index,kapitola}}
+{{VARIANTY index,kapitola,stitky}}
 na stránce „<a href="x-autori.htm">Přehled autorů</a>“.
-{{VARIANTY autori,index,kapitola}}
+{{VARIANTY autori,index,kapitola,stitky}}
 Šíření obsahu bez těchto údajů nebo šíření upravené verze bez poskytnutí adekvátní
 licence k provedeným úpravám je pravděpodobně porušení licenčních podmínek a může být postihováno.
 Poskytování zdrojového kódu při šíření není touto licencí vyžadováno.</p><p>Pro nové verze, další informace, aktuální zdrojový kód

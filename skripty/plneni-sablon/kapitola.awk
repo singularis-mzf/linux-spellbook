@@ -65,7 +65,7 @@ function Zacatek() {
             id_nasledujici = nazev_nasledujici = "";
         }
         cislo_kapitoly = $8;
-    } else if (IDKAPITOLY == "_autori") {
+    } else if (IDKAPITOLY ~ /^_(autori|stitky)$/) {
         id_predchozi = id_nasledujici = nazev_predchozi = nazev_nasledujici = "";
         cislo_kapitoly = 0;
     } else {
@@ -126,6 +126,11 @@ function RidiciRadek(text) {
             system("cat '" COPYRIGHTY_OBRAZKU "'");
             return 0;
 
+        case "PŘEHLED ŠTÍTKŮ":
+            VyzadujePromennou("IDFORMATU", "Kapitola požaduje {{PŘEHLED ŠTÍTKŮ}}, ale není nastavena proměnná IDFORMATU!");
+            VypsatPrehledStitku(IDFORMATU);
+            return 0;
+
         default:
             ShoditFatalniVyjimku("Neznámý řídicí řádek: {{" text "}}!");
     }
@@ -164,8 +169,33 @@ function Konec() {
 # Soukromé funkce a proměnné:
 # ============================================================================
 
+function VypsatPrehledStitku(format,   i, nazvy_kapitol, cisla_kapitol) {
+    if (format != "html") {
+        ShoditFatalniVyjimku("Přehled štítků pro formát " format " není podporován!");
+    }
 
+    delete nazvy_kapitol; # $8
+    delete cisla_kapitol; # $3
+    while (getline < FRAGMENTY_TSV) { # id = $2
+        cisla_kapitol[$2] = $8;
+        nazvy_kapitol[$2] = $3;
+    }
+    close(FRAGMENTY_TSV);
 
+    # Načíst štítky ze stitky.tsv:
+    stitky_tsv = gensub(/fragmenty/, "stitky", 1, FRAGMENTY_TSV);
+    while (getline < stitky_tsv) {
+        if (NF < 3) {ShoditFatalniVyjimku("Chyba formátu stitky.tsv: očekávány alespoň tři sloupce!")}
+        # $1 = štítek $2 = omezené id štítku $3..$NF = id kapitol
+        print "<dt id=\"" $2 "\" class=\"stitky\"><span>" $1 "</span></dt><dd>";
+        for (i = 3; i <= NF; ++i) {
+            if (!($i in cisla_kapitol)) {ShoditFatalniVyjimku("Nečekané id kapitoly: " $i)}
+            print "<div><span class=\"cislo\">" cisla_kapitol[$i] "</span><a href=\"" $i ".htm\">" nazvy_kapitol[$i] "</a></div>";
+        }
+        print "</dd>";
+    }
+    return close(stitky_tsv);
+}
 
 # ============================================================================
 @include "skripty/plneni-sablon/hlavni.awk"

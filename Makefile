@@ -70,18 +70,20 @@ clean:
 	$(RM) -Rv $(SOUBORY_PREKLADU) $(VYSTUP_PREKLADU) $(PORADI_KAPITOL)
 
 # Podporované formáty:
-html: $(addprefix $(VYSTUP_PREKLADU)/html/, lkk-$(DATUM_SESTAVENI).css index.htm x-autori.htm)
+html: $(addprefix $(VYSTUP_PREKLADU)/html/, lkk-$(DATUM_SESTAVENI).css index.htm x-autori.htm x-stitky.htm)
 log: $(VYSTUP_PREKLADU)/log/index.log
 pdf-a4: $(VYSTUP_PREKLADU)/pdf-a4.pdf
 pdf-b5: $(VYSTUP_PREKLADU)/pdf-b5.pdf
 pomocne-funkce: $(VYSTUP_PREKLADU)/bin/pomocne-funkce.sh
 
 # POMOCNÉ SOUBORY:
-# 1. soubory_prekladu/fragmenty.tsv
+# 1. soubory_prekladu/fragmenty.tsv + soubory_prekladu/stitky.tsv
 # ============================================================================
 $(SOUBORY_PREKLADU)/fragmenty.tsv: $(wildcard poradi-kapitol.lst poradi-kapitol.vychozi.lst) skripty/extrakce/fragmenty.awk
 	mkdir -pv $(SOUBORY_PREKLADU)
-	(cat poradi-kapitol.lst 2>/dev/null || cat poradi-kapitol.vychozi.lst 2>/dev/null || printf %s\\n "# Seznam kapitol a dodatků k vygenerování" "predmluva" "" "# Kapitoly" $(strip $(sort $(VSECHNY_KAPITOLY))) "" "# Dodatky" $(strip $(sort $(filter-out predmluva,$(VSECHNY_DODATKY))))) | $(AWK) -f skripty/extrakce/fragmenty.awk > $@
+	(cat poradi-kapitol.lst 2>/dev/null || cat poradi-kapitol.vychozi.lst 2>/dev/null || printf %s\\n "# Seznam kapitol a dodatků k vygenerování" "predmluva" "" "# Kapitoly" $(strip $(sort $(VSECHNY_KAPITOLY))) "" "# Dodatky" $(strip $(sort $(filter-out predmluva,$(VSECHNY_DODATKY))))) | $(AWK) -f skripty/extrakce/fragmenty.awk 3>$(SOUBORY_PREKLADU)/fragmenty.tsv 4>$(SOUBORY_PREKLADU)/stitky.tsv
+
+$(SOUBORY_PREKLADU)/stitky.tsv: $(SOUBORY_PREKLADU)/fragmenty.tsv
 
 # 2. soubory_prekladu/fragmenty.tsv + *.md => soubory_prekladu/osnova/*.tsv
 # ============================================================================
@@ -178,13 +180,18 @@ $(VYSTUP_PREKLADU)/html/x-autori.htm: \
   skripty/plneni-sablon/kapitola.awk \
   formaty/html/sablona.htm \
   $(DATUM_SESTAVENI_SOUBOR)
+	mkdir -pv $(dir $@)
 	$(AWK) -f skripty/plneni-sablon/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=_autori -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v COPYRIGHTY_KAPITOL=$(SOUBORY_PREKLADU)/html/kap-copys.htm -v COPYRIGHTY_OBRAZKU=$(SOUBORY_PREKLADU)/html/obr-copys.htm -v VARIANTA=autori formaty/html/sablona.htm > $@
 
-# 9. shromáždit štítky na stránku _stitky.htm
+# 9. shromáždit štítky na stránku x-stitky.htm
 # ============================================================================
-#$(VYSTUP_PREKLADU)/html/_stitky.htm: \
-#  formaty/html/sablona
-#  $(DATUM_SESTAVENI_SOUBOR)
+$(VYSTUP_PREKLADU)/html/x-stitky.htm: \
+  skripty/plneni-sablon/kapitola.awk \
+  formaty/html/sablona.htm \
+  $(SOUBORY_PREKLADU)/fragmenty.tsv \
+  $(DATUM_SESTAVENI_SOUBOR)
+	mkdir -pv $(dir $@)
+	$(AWK) -f skripty/plneni-sablon/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=_stitky -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v FRAGMENTY_TSV=$(SOUBORY_PREKLADU)/fragmenty.tsv -v IDFORMATU=html -v VARIANTA=stitky formaty/html/sablona.htm >$@
 
 # LOG:
 

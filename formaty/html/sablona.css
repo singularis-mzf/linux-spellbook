@@ -507,7 +507,7 @@ nav .next {text-align:left;}
 .stitky {
     margin:2em 0;
 }
-.stitky span {
+.stitky span, .stitky a {
     display:inline-block;
     background:#cccccc;
     margin:0 0.5em;
@@ -522,6 +522,14 @@ nav .next {text-align:left;}
     text-align:center;
     white-space:nowrap;
 }
+.prehledstitku .stitky {
+    margin:1em 0 0.5em;
+}
+.prehledstitku div {
+    margin-left:10em;
+}
+.prehledstitku .cislo {margin-right:1em;}
+.prehledstitku .cislo::after {content:"."}
 
 /* .prehledy */
 .prehledy {

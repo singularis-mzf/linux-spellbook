@@ -99,6 +99,14 @@ function MesicVDruhemPade(cislo) {
 function Escapovat(s) {gsub(/[\\|.*+?{}\\/^$]/, "\\\\&", s);return s;}
 function EscapovatKNahrade(s) {gsub(/[\\&]/, "\\\\&", s);return s;}
 
+function GenerovatOmezeneId(prefix, id) {
+    gsub(/č/, "c", id);
+    gsub(/š/, "s", id);
+    gsub(/ť/, "t", id);
+    gsub(/ž/, "z", id);
+    return prefix substr(tolower(gensub(/[^B-Zb-z0-9]/, "", "g", id)), 1, 16);
+}
+
 function Test(parametry) {return !system("test " parametry);}
 
 #
