@@ -565,6 +565,21 @@ nav .next {text-align:left;}
     padding:0.5em 0;
 }
 
+/* .odkazydole */
+.odkazydole {
+    margin:3rem auto;
+    text-align:center;
+}
+.odkazydole a {
+    display:inline-block;
+    margin:0 2em;
+    white-space:nowrap;
+}
+.odkazydole img {
+    margin:0.5rem;
+    vertical-align:middle;
+}
+
 /* .prehledy */
 .prehledy {
     display:flex;

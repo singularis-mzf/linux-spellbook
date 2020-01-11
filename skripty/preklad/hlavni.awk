@@ -482,10 +482,14 @@ function VypsatZahlaviZaklinadla(   i, maPoznamky) {
 }
 
 BEGIN {
-    FS = "\t";
-    OFS = "\t";
+    FS = OFS = "\t";
+    RS = ORS = "\n";
     if (ARGC != 2) {
         ShoditFatalniVyjimku("Chybný počet parametrů (ARGC=" ARGC ")");
+    }
+
+    if (FRAGMENTY_TSV == "") {
+        ShoditFatalniVyjimku("Vyžadovaná proměnná FRAGMENTY_TSV není nastavena!");
     }
 
     # Určit ID kapitoly
@@ -494,7 +498,7 @@ BEGIN {
 
     # Načíst a zpracovat údaje z fragmenty.tsv, jsou-li k dispozici:
     $0 = "";
-    prikaz = "egrep '^[^\t]*\t" IDKAPITOLY "\t' soubory_prekladu/fragmenty.tsv";
+    prikaz = "egrep '^[^\t]*\t" IDKAPITOLY "\t' '" FRAGMENTY_TSV "'";
     prikaz | getline;
     close(prikaz);
     if ($0 != "") {

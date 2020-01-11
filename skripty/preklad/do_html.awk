@@ -100,7 +100,7 @@ function ZacatekKapitoly(kapitola, cisloKapitoly, stitky, osnova,   vysledek, po
     return vysledek;
 }
 
-function KonecKapitoly(kapitola, cislaPoznamek, textyPoznamek,   i, vysledek) {
+function KonecKapitoly(kapitola, cislaPoznamek, textyPoznamek,   i, vysledek, prikaz, pole) {
     vysledek = "";
     if (length(cislaPoznamek) > 0) {
         vysledek = "<div class=\"ppc\">";
@@ -108,7 +108,19 @@ function KonecKapitoly(kapitola, cislaPoznamek, textyPoznamek,   i, vysledek) {
             vysledek = vysledek "<div id=\"kap" ID_KAPITOLY_OMEZENE "ppc" cislaPoznamek[i] "\"><a href=\"#kap" ID_KAPITOLY_OMEZENE "ppcr" cislaPoznamek[i] "\" class=\"cislopozn\">" cislaPoznamek[i] "</a>&nbsp;" textyPoznamek[cislaPoznamek[i]] "</div>\n<script>document.write(\"<div class=\\\"zpetdotextu\\\" onclick=\\\"window.history.back()\\\">zpět do textu</div>\");</script>\n";
         }
         #vysledek = vysledek "<div class=\"zrusitzvyrazneni\" id=\"zzv\"><a href=\"#zzv\">zrušit zvýraznění poznámky pod čarou</a></div></div>\n";
+        vysledek = vysledek "</div>\n";
     }
+    #
+    prikaz = "egrep -v '^(dodatky|kapitoly\t" IDKAPITOLY ")\t' '" FRAGMENTY_TSV "' | cut -f 2,3 | sort -Ru | head -n 3";
+    i = 1;
+    while (i <= 3 && (prikaz | getline)) {
+        if (i == 1) {vysledek = vysledek "<div class=\"odkazydole\">"}
+        vysledek = vysledek "<a href=\"" $1 ".htm\"><img src=\"obrazky/ik-vychozi.png\" alt=\"\" width=\"32\" height=\"32\">" $2 "</a>";
+        ++i;
+    }
+    if (i != 1) {vysledek = vysledek "</div>"}
+    close(prikaz);
+
     return vysledek;
 }
 

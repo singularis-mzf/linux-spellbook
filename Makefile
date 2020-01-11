@@ -120,7 +120,7 @@ $(addprefix $(SOUBORY_PREKLADU)/html/,$(VSECHNY_KAPITOLY)): \
   $(SOUBORY_PREKLADU)/html/%: \
   kapitoly/%.md $(SOUBORY_PREKLADU)/osnova/%.tsv skripty/preklad/do_html.awk skripty/preklad/hlavni.awk skripty/utility.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(SOUBORY_PREKLADU)/html
-	$(AWK) -f skripty/preklad/do_html.awk $< > $@
+	$(AWK) -v FRAGMENTY_TSV=$(SOUBORY_PREKLADU)/fragmenty.tsv -f skripty/preklad/do_html.awk $< > $@
 
 # 1B. dodatky/{dodatek}.md => soubory_prekladu/html/{dodatek}
 # ============================================================================
@@ -128,7 +128,7 @@ $(addprefix $(SOUBORY_PREKLADU)/html/,$(VSECHNY_DODATKY)): \
   $(SOUBORY_PREKLADU)/html/%: \
   dodatky/%.md $(SOUBORY_PREKLADU)/osnova/%.tsv skripty/preklad/do_html.awk skripty/preklad/hlavni.awk skripty/utility.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(SOUBORY_PREKLADU)/html
-	$(AWK) -f skripty/preklad/do_html.awk $< > $@
+	$(AWK) -v FRAGMENTY_TSV=$(SOUBORY_PREKLADU)/fragmenty.tsv -f skripty/preklad/do_html.awk $< > $@
 
 # 2. soubory_prekladu/html/{id} => vystup_prekladu/html/{id}.htm
 # ============================================================================
@@ -204,13 +204,13 @@ $(VYSTUP_PREKLADU)/html/x-stitky.htm: \
 # ============================================================================
 $(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_KAPITOLY)): $(SOUBORY_PREKLADU)/log/%: kapitoly/%.md $(SOUBORY_PREKLADU)/osnova/%.tsv skripty/preklad/do_logu.awk skripty/preklad/hlavni.awk skripty/utility.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(SOUBORY_PREKLADU)/log
-	$(AWK) -f skripty/preklad/do_logu.awk $< > $@
+	$(AWK) -v FRAGMENTY_TSV=$(SOUBORY_PREKLADU)/fragmenty.tsv -f skripty/preklad/do_logu.awk $< > $@
 
 # 1B. dodatky/{dodatek}.md => soubory_prekladu/log/{dodatek}
 # ============================================================================
 $(addprefix $(SOUBORY_PREKLADU)/log/,$(VSECHNY_DODATKY)): $(SOUBORY_PREKLADU)/log/%: dodatky/%.md $(SOUBORY_PREKLADU)/osnova/%.tsv skripty/preklad/do_logu.awk skripty/preklad/hlavni.awk skripty/utility.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(SOUBORY_PREKLADU)/log
-	$(AWK) -f skripty/preklad/do_logu.awk $< > $@
+	$(AWK) -v FRAGMENTY_TSV=$(SOUBORY_PREKLADU)/fragmenty.tsv -f skripty/preklad/do_logu.awk $< > $@
 
 # 2. soubory_prekladu/log/{id} => soubory_prekladu/log/{id}.kap
 # ============================================================================
@@ -241,13 +241,13 @@ $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%): \
   $(SOUBORY_PREKLADU)/pdf-spolecne/%: \
   kapitoly/%.md $(SOUBORY_PREKLADU)/osnova/%.tsv skripty/preklad/do_latexu.awk skripty/preklad/hlavni.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(dir $@)
-	$(AWK) -f skripty/preklad/do_latexu.awk $< > $@
+	$(AWK) -v FRAGMENTY_TSV=$(SOUBORY_PREKLADU)/fragmenty.tsv -f skripty/preklad/do_latexu.awk $< > $@
 
 # 1B. dodatky/{dodatek}.md => soubory_prekladu/pdf-spolecne/{dodatek}
 # ============================================================================
 $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%): $(SOUBORY_PREKLADU)/pdf-spolecne/%: dodatky/%.md $(SOUBORY_PREKLADU)/osnova/%.tsv skripty/preklad/do_latexu.awk skripty/preklad/hlavni.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(dir $@)
-	$(AWK) -f skripty/preklad/do_latexu.awk $< > $@
+	$(AWK) -v FRAGMENTY_TSV=$(SOUBORY_PREKLADU)/fragmenty.tsv -f skripty/preklad/do_latexu.awk $< > $@
 
 # 2. soubory_prekladu/pdf-spolecne/{id} => soubory_prekladu/pdf-spolecne/{id}.kap
 # ============================================================================
