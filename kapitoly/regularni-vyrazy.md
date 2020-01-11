@@ -26,15 +26,14 @@ Náměty k vylepšení:
 !ÚzkýRežim: zap
 
 ## Úvod
-Regulární výraz je řetězec speciálních a obyčejných znaků, který slouží
-k formálnímu popsání množiny textových řetězců splňujících určité
-syntaktické parametry. Např. celá čísla můžeme popsat výrazem
-„0|-?[1-9][0-9]\*“ a poštovní směrovací čísla výrazem „[0-9]{3} [0-9]{2}“.
+Regulární výrazy představují velmi silný nástroj k vyhledávání, analýze,
+filtrování, kontrole syntaxe, extrakci a transformaci textů a textových dat.
+Slouží k formálnímu popisu (obvykle nekonečné) množiny řetězců a následné
+vyhledávání řetězců z této množiny v textu. S takto vyhledanými řetězci
+(tzv. výskyty či shodami) můžeme dále pracovat.
 
-Regulární výrazy se používají při vyhledávání, filtrování, zpracování textu
-a kontrole syntaxe; objevují se ve většině programovacích jazyků,
-ale neprogramátoři je využijí např. při nastavení filtrování e-mailů
-či při vyhledávání komplikovanějších konstrukcí v textových editorech.
+Regulární výrazy se objevují se ve většině programovacích jazyků,
+ale také v textových editorech či manuálním nastavení e-mailových filtrů.
 
 V Linuxu se bohužel vyskytují tři různé syntaxe regulárních výrazů − základní
 regulární výrazy, rozšířené regulární výrazy a regulární výrazy jazyka Perl.
@@ -45,11 +44,12 @@ upřesněno; kde není uvedena samostatná varianta pro Perl, platí pro Perl
 varianta pro rozšířený regulární výraz.
 
 ## Definice
-* Jako **atom** z praktických důvodů označuji nejkratší část regulárního výrazu, která končí na dané pozici a tvořila by syntakticky správný regulární výraz sama o sobě. Atomem je např. „a“, „[abc]“, „(a|b)?“ či „\\s+“, ale ne „a|b“, protože „b“ je kratší a samo o sobě tvoří syntakticky platný regulární výraz.
+* Řetězec se **shoduje** s daným regulárním výrazem, pokud patří do množiny řetězců, kterou regulární výraz definuje, tedy pokud odpovídá požadavkům regulárního výrazu jako celek, od začátku do konce. Např. s regulárním výrazem „a.c“ se shoduje řetězec „abc“, protože „a“ v regulárním výrazu přijímá „a“ z řetězce; tečka z regulárního výrazu přijímá jakýkoliv znak, tedy i „b“ v řetězci a „c“ v regulárním výrazu přijme „c“ z řetězce. S tímtéž regulárním výrazem se už ale neshodují řetězce „Abc“ (pokud nevypnete rozlišování velkých a malých písmen), „abb“, „abbc“ či „abcc“ (protože k poslednímu „c“ už v regulárním výrazu není nic, co by ho přijalo).
+* **Shoda** (match) je nejlevější a nejdelší (u tzv. „nehladového prohledávání“ naopak nejkratší) podřetězec prohledávaného řetězce, který se shoduje s daným regulárním výrazem, a totéž rekurzívně pro zbytek řetězce za koncem shody. Takže shody jsou vlastně podřetězce shodující se s regulárním výrazem, ale jen tak, aby se nepřekrývaly. Shodou může být i celý prohledávaný řetězec (protože každý řetězec je sám svým podřetězcem).
+* Řetězec **odpovídá** danému regulárnímu výrazu, pokud s ním má nějakou shodu. Takže regulárnímu výrazu „a.c“ odpovídají např. řetězce „*abc*“, „a*abc*“, „x*axc*x“, „x*axc*x*axc*x“ apod., ale ne „xaxbxc“.
+* Jako **atom** označuji nejkratší část (podřetězec) regulárního výrazu, která končí na dané pozici a tvořila by syntakticky správný regulární výraz sama o sobě. Atomem je např. „a“, „[abc]“, „(a|b)?“ či „\\s+“, ale ne „a|b“, protože „b“ je kratší a samo o sobě tvoří syntakticky správný regulární výraz.
 * **Kvantifikátor** je speciální podřetězec, který se zapisuje za atom a určuje dovolený počet opakování.
-* **Kotva** a **hranice** jsou speciální atomy k testování pozice, např. „^“ nebo „\\&lt;“. Odpovídají fiktivnímu prázdnému podřetězci na jednoznačné pozici (u kotvy) nebo na všech pozicích splňujících dané podmínky (u hranice). Zvláštním případem hranice je **vyhlížení**.
-* **Shoda** (match) je podřetězec testovaného řetězce, který celý vyhovuje požadavkům daného regulárního výrazu. Pokud na stejné pozici řetězce začíná víc takových podřetězců, shodou s regulárním výrazem je pouze ten nejdelší z nich. Proto např. regulární výraz „.\*“ má v každém testovaném řetězci pouze jedinou shodu − celý řetězec, přestože by jeho požadavkům odpovídal i jakýkoliv podřetězec.
-* Řetězec **odpovídá** regulárnímu výrazu, pokud s ním má alespoň jednu shodu, a to i tehdy, pokud jako celek požadavky regulárního výrazu nesplňuje. Tzn. řetězec „abc“ regulárnímu výrazu „b“ odpovídá. Prázdnému regulárnímu výrazu odpovídá každý řetězec.
+* **Kotva** a **hranice** jsou speciální atomy k testování pozice, např. „^“ nebo „\\&lt;“. Z prohledávaného řetězce přijímají fiktivní prázdný podřetězec na jednoznačné pozici (u kotvy) nebo na všech pozicích splňujících určité podmínky (u hranice). Zvláštním případem hranice je **vyhlížení**.
 
 !ÚzkýRežim: vyp
 
@@ -103,6 +103,9 @@ varianta pro rozšířený regulární výraz.
 **[<nic>^[:alnum:]]**<br>
 **\\W**
 
+*# libovolné písmeno, i národní abecedy*<br>
+**[[:alpha:]]**
+
 *# libovolné malé/velké písmeno, i národní abecedy*<br>
 **[[:lower:]]**<br>
 **[[:upper:]]**
@@ -121,7 +124,7 @@ varianta pro rozšířený regulární výraz.
 {*atom*}**+**<br>
 {*atom*}**\\+**
 
-*# přesně N-krát (= N)(rozšířený/základní)*<br>
+*# přesně **N-krát** (= N)(rozšířený/základní)*<br>
 {*atom*}**\{**{*N*}**\}**<br>
 {*atom*}**\\\{**{*N*}**\\\}**
 
@@ -129,15 +132,15 @@ varianta pro rozšířený regulární výraz.
 {*atom*}**\{**{*M*}**,**{*N*}**\}**<br>
 {*atom*}**\\\{**{*M*}**,**{*N*}**\\\}**
 
-*# M- nebo víckrát (≥ M)(rozšířený/základní)*<br>
+*# **minimálně** M-krát (≥ M)(rozšířený/základní)*<br>
 {*atom*}**\{**{*M*}**,}**<br>
 {*atom*}**\\\{**{*M*}**,\\}**
 
-*# maximálně N-krát (≤ N)(rozšířený/základní)*<br>
+*# **maximálně** N-krát (≤ N)(rozšířený/základní)*<br>
 {*atom*}**{,**{*N*}**\}**<br>
 {*atom*}**\\{,**{*N*}**\\\}**
 
-*# snažit se opakovat co nejméně (non-greedy)(jen Perl)*<br>
+*# snažit se opakovat co nejméně (**nehladové** prohledávání)(jen Perl)*<br>
 {*atom*}{*kvantifikátor*}**?**
 
 ### Operátor „nebo“
@@ -147,8 +150,6 @@ varianta pro rozšířený regulární výraz.
 {*výraz 1*}[**\\\|**{*další výraz*}]...
 
 ### Kotvy a hranice (pozice)
-
-Kotvy a řetězce odpovídají fiktivnímu prázdnému řetězci na určité pozici.
 
 *# začátek/konec testovaného řetězce (rozšířený i základní, mimo víceřádkový režim)*<br>
 **^**<br>
@@ -192,9 +193,9 @@ Kotvy a řetězce odpovídají fiktivnímu prázdnému řetězci na určité po
 **&amp;**<br>
 **$&amp;**
 
-*# **záchyt** − podřetězec původního řetězce odpovídající seskupení (varianty) gawk − gensub(), řetězec náhrady/sed obojí/Perl v regulárním výrazu/Perl rozšířený i základní/Perl)*<br>
+*# **záchyt** − podřetězec původního řetězce odpovídající seskupení (varianty)*<br>
 *// Zdvojení zpětného lomítka v GNU awk vyplývá ze skutečnosti, že ho (obvykle) zadáváte jako řetězec v programovacím jazyce. Pokud byste náhodou např. načítali řetězec náhrady ze souboru, bude tam zpětné lomítko patřit pouze jedno!*<br>
-**\\**{*pořadové-číslo-1-až-9*} ⊨ v reg. výrazu: Sed a Perl; v řetězci náhrady: Sed<br>
+**\\**{*pořadové-číslo-1-až-9*} ⊨ v reg. výrazu: GNU sed a Perl; v řetězci náhrady: GNU sed<br>
 **\\\\**{*pořadové-číslo-1-až-9*} ⊨ v řetězci náhrady: GNU awk (jen funkce gensub())<br>
 **$**{*pořadové-číslo-1-až-9*} ⊨ v řetězci náhrady: Perl
 
@@ -233,15 +234,15 @@ Kotvy a řetězce odpovídají fiktivnímu prázdnému řetězci na určité po
 
 * -v :: Logická negace; hledat řádky, které nevyhovují výrazu.
 * -x :: Regulárnímu výrazu musí odpovídat celá řádka (výchozí chování: jakýkoliv podřetězec řádku).
-* -q :: Žádný normální výstup, jen otestuje, zda by našel alespoň jeden vyhovující řádek. Parametr **-s** zase potlačí chybová hlášení.
-* -i :: Nerozlišovat velká a malá písmena.
+* -z :: Řádky vstupních souborů jsou ukončeny nulovým bajtem; znak \\n bude považovat za za normální znak.
 * -C {*počet*} :: „kontext“ Kromě vyhovujícího řádku vypíše zadaný počet předchozích a následujících. (Samostatně lze tyto počty nastavit parametry **-A** a **-B**.)
 * -o :: Místo celých řádků vypisuje jednotlivé podřetězce vyhovující výrazu, každý podřetězec na samostatný řádek.
 * -h :: Vyhledává-li se ve více souborech, neuvede se jako prefix řádky název souboru.
 * -H :: Vždy uvede jako prefix řádku název souboru.
 * -n :: Jako prefix bude vypisovat číslo řádky.
+* -q :: Žádný normální výstup, jen otestuje, zda by našel alespoň jeden vyhovující řádek. Parametr **-s** zase potlačí chybová hlášení.
 * -m {*N*} :: Ukončí hledání po nalezení N vyhovujících řádků.
-* -z :: Řádky vstupních souborů jsou ukončeny nulovým bajtem; znak \\n bude považovat za za normální znak.
+* -i :: Nerozlišovat velká a malá písmena.
 
 Poznámka: příkaz „grep“ má tytéž parametry jako „egrep“, ale pracuje se základními regulárními výrazy.
 
