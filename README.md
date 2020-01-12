@@ -15,7 +15,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 „Linux: Kniha kouzel“ je open source sbírka velmi krátkých řešených příkladů pro příkazovou řádku/příkazový řádek systému Linux, především distribuce Ubuntu. V současnosti je dostupná ve formátu HTML pro zobrazení na počítači a ve formátu PDF pro tisk na papír.
 
-Verze 1.1 je cílena na *Ubuntu 18.04 Bionic Beaver* a jeho deriváty.
+Verze 1.2 je cílena na *Ubuntu 18.04 Bionic Beaver* a jeho deriváty.
 
 Příručka podléhá licenci [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 Podrobné údaje o autorství zdrojových souborů jsou uvedeny v komentářích v jejich záhlaví;
@@ -99,6 +99,7 @@ a kapitoly ani dodatky se nesmějí opakovat.
 
 | ID | Název kapitoly | Růst | Stav |
 | :--- | :--- | ---: | :--- |
+| [awk](kapitoly/awk.md) | AWK | 100% | vydána (od verze 1.2) |
 | [barvy-a-titulek](kapitoly/barvy-a-titulek.md) | Barvy, titulek a výzva terminálu | 100% | vydána (od verze 1.0) |
 | [datum-cas-kalendar](kapitoly/datum-cas-kalendar.md) | Datum, čas a kalendář | 100% | vydána (od verze 1.1) |
 | [docker](kapitoly/docker.md) | Docker | 100% | vydána (od verze 1.0) |
@@ -110,10 +111,9 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [regularni-vyrazy](kapitoly/regularni-vyrazy.md) | Regulární výrazy | 100% | vydána (od verze 1.1) |
 | [sprava-balicku](kapitoly/sprava-balicku.md) | Správa balíčků | 100% | vydána (od verze 1.1) |
 | [stahovani-videi](kapitoly/stahovani-videi.md) | Stahování videí | 100% | vydána (od verze 1.0) |
+| [system](kapitoly/system.md) | Systém | 100% | vydána (od verze 1.2) |
+| [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) | Zpracování textových souborů | 100% | vydána (od verze 1.2) |
 | [zpracovani-videa-a-zvuku](kapitoly/zpracovani-videa-a-zvuku.md) | Zpracování videa a zvuku | 100% | vydána (od verze 1.0) |
-| [awk](kapitoly/awk.md) | AWK | 100% | připravena k vydání ve verzi 1.2 |
-| [system](kapitoly/system.md) | Systém | 100% | připravena k vydání ve verzi 1.2 |
-| [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) | Zpracování textových souborů | 90% | dítě |
 | [sprava-uzivatelu](kapitoly/sprava-uzivatelu.md) | Správa uživatelů | 80% | dítě |
 | [hledani-souboru](kapitoly/hledani-souboru.md) | Hledání souborů | 70% | dítě |
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
