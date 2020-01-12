@@ -1,6 +1,6 @@
 <!--
 
-Linux Kniha kouzel, část Plán budoucího vývoje
+Linux Kniha kouzel, dodatek Plán budoucího vývoje
 Copyright (c) 2019 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -14,12 +14,11 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 # Plán budoucího vývoje
 
-Podle mých představ v době vydání této verze knihy by do její příští verze měly přibýt některé z následujících kapitol:
+## Chystané kapitoly
 
 * „Unicode a emotikony“ („mapa znaků“, vzorníky a různé symboly)
-* „GNU awk“ (vzorky, příkazy, funkce, syntaxe, použití, zkušenosti)
 * „Základy Perlu“ (jednoduše, konzistentně)
-* „Zpracování textových souborů“ (prohledávání, filtrování, řazení, CSV, TSV, JSON, XML apod.)
+* „Komplexní textové formáty“ (JSON, XML apod.)
 * „Přehrávání videa, zvuku a obrázků“ (mplayer, feh, gpicview, ristretto)
 * „Šifrování a kryptografie“ (gpg, šifrování archivů, elektronické podpisy, HTTPS certifikáty)
 * „X (správce oken)“ (práce s okny, se schránkou, oznámení a další)
@@ -48,17 +47,25 @@ Podle mých představ v době vydání této verze knihy by do její příští
 * „HTTP, FTP, MySQL a spol. (servery)“
 -->
 
-Pokud máte nějaké osobní preference, které z nich byste tam chtěl/a vidět, nebo byste rád/a dostal/a zpracované jiné téma, napište mi váš názor e-mailem nebo komentářem na GitHubu. Váš zájem mě určitě potěší a povzbudí.
+<neodsadit>Aktuální vývoj chystaných kapitol můžete sledovat na GitHubu.
 
-Kromě toho mám v plánu rozvíjet i formátování a mechanismus překladu.
-V plánu mám následující vlastnosti:
+Pokud máte nějaké osobní preference, které z kapitol byste chtěl/a dostat co nejdřív,
+nebo návrh na zpracování jiného tématu, napište mi váš názor e-mailem
+nebo komentářem na GitHubu. Váš zájem mě určitě potěší a povzbudí.
 
-* Pomocné funkce a skripty by měly být k dispozici také ve formě .deb balíčku.
+## Chystaný vývoj formátování a mechanismu překladu
+
+* Balíček „.deb“, který nainstaluje příkaz „lkk“ pro spouštění pomocných skriptů.
+* Ikony pro kapitoly i v PDF variantách a na zbytku míst v HTML variantě.
 * Podpora poznámek pod čarou i mimo zaklínadla.
-* Ikony pro kapitoly.
 * Rozdílné ikony pro jednotlivá zaklínadla.
 * Vylepšovat design a přehlednost HTML varianty.
 * Vylepšovat design a přehlednost PDF variant.
 
-Uvažoval/a jsem o přechodu z Awk na Perl, ale vzhledem k tomu, že mechanismus překladu
-je značně založený na příkazech „switch“, které Perl implicitně dobře neumí, zatím to není aktuální.
+## Možný přechod na jazyk Perl
+
+Přechod projektu z AWK na Perl v nejbližší budoucnosti *nenastane*.
+Mechanismus překladu je značně založený na příkazech „switch“,
+které Perl sám o sobě dobře neumí a náhražky v něm vypadají ošklivě
+nebo dobře nefungují. Proto bude další vývoj mechanismu překladu probíhat
+i nadále v AWK.

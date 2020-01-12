@@ -634,7 +634,7 @@ Poznámka: Parametry -f a -e můžete kombinovat a zadávat opakovaně. Každ�
 * V literálech regulárních výrazů je nutno escapovat obyčejná lomítka, a to dokonce i uvnitř hranatých závorek, např. „a\*[x\\/y]+“, v dynamických regulárních výrazech je není nutno escapovat.
 * Chcete-li příkaz pokračovat na dalším řádku, vložte před konec řádku „\\“.
 * Obsahuje-li skript pouze vzorky BEGIN a žádné jiné, AWK nebude otevírat vstupní soubory a po vykonání průchodu BEGIN okamžitě skončí. Toho lze využít k napsání programu, který vstup nezpracovává.
-
+* Nestojí-li za sekvencí zpětných lomítek v řetězci náhrady funkcí sub() a gsub() „&amp;“, chová se toto escapování nelogicky − méně než tři zpětná lomítka se použijí tak, jak jsou, a každá čtveřice zpětných lomítek se zredukuje na dvě zpětná lomítka a zbytek sekvence se bere jako od začátku, takže např. 6 zpětných lomítek (v řetězci zapsaných jako 12) zapíše při náhradě čtyři zpětná lomítka, protože první čtyři lomítka se zredukovala na dvě a zbylá dvě se vzala tak, jak jsou. Toto neplatí ve funkci gensub(), ta se chová konzistentně a každou dvojici zpětných lomítek zredukuje na jedno, ať za ní následuje ampresand nebo ne. Pokud tedy potřebujete nahrazovat shody regulárního výrazu zpětnými lomítky, doporučuji vždy řetězec náhrady předem otestovat a pamatovat, že funkce sub() a gsub() zachází se zpětnými lomítky, za kterými nenásleduje ampresand, jinak než funkce gensub().
 
 ## Další zdroje informací
 

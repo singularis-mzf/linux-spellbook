@@ -158,12 +158,38 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 <neodsadit>Všechen software potřebný k sestavení projektu je svobodný.
 Pokud některá kapitola odkazuje na nesvobodný software, vždy na to výslovně upozorní.
 
-## Aktuální poznámka k verzi „vanilková příchuť 1.1“
+## Aktuální poznámka k verzi „vanilková příchuť 1.2“
 
-V této verzi přibyly čtyři nové kapitoly; stále však nejsem spokojen/a s designem,
-především u verze pro tisk, takže se pravděpodobně zaměřím na něj. V pokročilé fázi
-jsou již také kapitoly o Awk a Perlu a rád/a bych je ještě doplnil/a o obecnou kapitolu
-o zpracování textu, případně ještě o kapitolu o „sedu“. Vydání verze 1.2 očekávám ke konci ledna 2020.
+Ve verzi 1.2 přibyly tři nové kapitoly: AWK, Systém a Zpracování textových souborů.
+
+U PDF variant jsem přešel/a z LaTeXu na XeLaTeX a kompletně
+přepracoval/a formátování, což si vynutilo opuštění formátu papíru A5.
+Možná ho do budoucna vrátím, ale zatím to pro mě nemá vysokou prioritu, spíš je potřeba
+vyladit detaily a velikosti okrajů. Uvažuji také o podpoře formátu B5 na A4
+s ořezovými značkami.
+
+U varianty v HTML jsem značně vylepšil/a design. Štítky kapitol jsou nyní klikací
+a vedou na stránku s přehledem kapitol podle štítků. Kapitoly nyní mají ikony
+(ale zatím všechny stejnou). Na stránkách kapitol jsou nová „úniková“ tlačítka
+pro okamžitý přesun na horní nebo spodní konec stránky (na horním konci je navigace
+na další kapitoly). Má-li uživatel zapnutý JavaScript, může se po kliknutí
+na poznámku pod čarou snadno vrátit na původní místo kliknutím na dynamický odkaz
+„zpět do textu“. (Pokročilí uživatelé bez JavaScriptu se mohou vrátit tlačítkem Zpět.)
+
+Řádky zaklínadel nyní mohou mít „příklady hodnot“. Ty jsem zavedl/a kvůli kapitole
+Datum, čas a kalendář, která je přímo vyžadovala, ale budou se hodit i v mnoha dalších.
+
+Součástí odstavců a zaklínadel nyní mohou být klávesy jako např. {_Ctrl_}.
+Ty se vyskytují v nové kapitole Systém.
+
+Řádky zaklínadel mohou být nově označeny jako „patřící do preambule“,
+což se bude hodit u výkladů o programovacích jazycích.
+
+Do příští verze bude nutně potřeba udělat pořádek v pomocných funkcích a skriptech.
+Plánuji vydávat balíček „.deb“, který po instalaci zpřístupní příkaz „lkk“
+ke spouštění pomocných skriptů.
+
+Vydání verze 1.3 očekávám ke konci února 2020.
 
 &nbsp;
 

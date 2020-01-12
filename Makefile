@@ -71,7 +71,7 @@ JMENO := Sid $(DATUM_SESTAVENI)
 all: html log pdf-a4 pdf-b5 pomocne-funkce
 
 clean:
-	$(RM) -Rv $(SOUBORY_PREKLADU) $(VYSTUP_PREKLADU) $(PORADI_KAPITOL)
+	$(RM) -Rv $(SOUBORY_PREKLADU) $(VYSTUP_PREKLADU)
 
 # Podporované formáty:
 html: $(addprefix $(VYSTUP_PREKLADU)/html/, lkk-$(DATUM_SESTAVENI).css index.htm x-autori.htm x-stitky.htm)

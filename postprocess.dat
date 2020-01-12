@@ -1,0 +1,74 @@
+# Linux Kniha kouzel, postprocess.dat
+# Copyright (c) 2019 Singularis <singularis@volny.cz>
+#
+# Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
+# podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
+# vydané neziskovou organizací Creative Commons. Text licence je přiložený
+# k tomuto projektu nebo ho můžete najít na webové adrese:
+#
+# https://creativecommons.org/licenses/by-sa/4.0/
+
+# Tento soubor obsahuje definice náhrad pro závěrečnou fázi překladu ve formátech pdf-*.
+# Cílem je umožnit ruční doladění sazby při zachování upravitelnosti a automatického překladu.
+# Formát je popsán ve skriptu skripty/postprocess.awk.
+
+10
+pdf-b5
+awk
+\zaklinadlo{9}{sinus/kosinus/tangens/contangens}%
+\zaklinadlo{9}{sinus/kosinus/\\tangens/contangens}%
+
+20
+pdf-b5
+markdown
+\zaklinadlo{1}{nadpis první/druhé/třetí/čtvrté/páté/šesté úrovně}%
+\zaklinadlo{1}{nadpis první/druhé/třetí/\\čtvrté/páté/šesté úrovně}%
+
+30
+pdf-b5
+sprava-balicku
+\zaklinadlo{2}{\bfseries{}aktualizovat\mdseries{} všechny aktualizovatelné balíčky (normálně/drasticky/normálně/drasticky)}%
+\zaklinadlo{2}{\bfseries{}aktualizovat\mdseries{} všechny aktualizovatelné balíčky (normálně/drasticky/\\normálně/drasticky)}%
+
+40
+pdf-b5
+stahovani-videi
+\radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{{-}f \textquotedbl{}bestvideo[height{<}=?480]+bestaudio/best[height{<}=?480]/best\textquotedbl{}}%
+\radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{{-}f \textquotedbl{}bestvideo[height{<}=?480]+\-bestaudio/best[height{<}=?480]/best\textquotedbl{}}%
+
+50
+pdf-b5
+system
+{\footnotetext[10]{Ne, opravdu to není Ctrl+Alt+Delete...}\footnotetext[11]{Poznámka: Skutečně důležitá je pouze poslední klávesa \quotedblbase{}B\textquotedblleft{}; ty předchozí pouze vykonávají operace, díky nimž nebude restart tak drastický. Pokud chcete opravdu drastický reset, stačí na to klávesová zkratka \quotedblbase{}Alt\textquotedblleft{}+\quotedblbase{}PrintScreen\textquotedblleft{}+\quotedblbase{}B\textquotedblleft{}.}}{%
+{\footnotetext[10]{Ne, opravdu to není Ctrl+Alt+Delete...}\footnotetext[11]{\raggedright Poznámka: Skutečně důležitá je pouze poslední klávesa \quotedblbase{}B\textquotedblleft{}; ty předchozí pouze vykonávají operace, díky nimž nebude restart tak drastický. Pokud chcete opravdu drastický reset, stačí na to klávesová zkratka \quotedblbase{}Alt\textquotedblleft{}+\quotedblbase{}PrintScreen\textquotedblleft{}+\quotedblbase{}B\textquotedblleft{}.}}{%
+
+60
+pdf-b5
+zpracovani-videa-a-zvuku
+pomocí globálního parametru \bfseries{}{-}filter\_complex\mdseries{} (resp. \bfseries{}{-}filter\_complex\_script\mdseries{}),
+pomocí globálního parametru\\\bfseries{}{-}filter\_complex\mdseries{} (resp. \bfseries{}{-}filter\_complex\_script\mdseries{}),
+
+70
+pdf-b5
+zpracovani-videa-a-zvuku
+\zaklinadlo{9}{\bfseries{}rozmazat\mdseries{} obraz (normálně/maximálně/minimálně/obecně)}%
+\zaklinadlo{9}{\bfseries{}rozmazat\mdseries{} obraz (normálně/\\maximálně/minimálně/obecně)}%
+
+110
+pdf-a4
+predmluva
+příkazový řádek/příkazovou řádku, v~Linuxu zvaný/ou \quotedblbase{}terminál\textquotedblleft{} či \quotedblbase{}konzole\textquotedblleft{},
+příkazový řádek/pří\-ka\-zovou řádku, v~Linuxu zvaný/ou \quotedblbase{}terminál\textquotedblleft{} či \quotedblbase{}konzole\textquotedblleft{},
+
+120
+pdf-a4
+git
+\item{}Jednoznačný prefix heše (Nebude{-}li uvedený prefix jednoznačný, git vyvolá chybu a~umožní vám situaci napravit, takže se nebojte používat ani velmi krátké prefixy.)
+\item{}\raggedright Jednoznačný prefix heše (Nebude{-}li uvedený prefix jednoznačný, git vyvolá chybu a~umožní vám situaci napravit, takže se nebojte používat ani velmi krátké prefixy.)
+
+130
+pdf-a4
+markdown
+\item{}Po prvním spuštění ReTextu doporučuji otevřít Úpravy / Nastavení a~zaškrtnout políčka \quotedblbase{}Vždy použít živý náhled\textquotedblleft{}, \quotedblbase{}Zvýrazňovat aktuální řádek\textquotedblleft{} a~\quotedblbase{}Zobrazovat čísla řádků\textquotedblleft{} a~restartovat ReText. S~těmito nastaveními mi připadne práce pohodlnější.
+\item\raggedright Po prvním spuštění ReTextu doporučuji otevřít Úpravy / Nastavení a~zaškrtnout políčka \quotedblbase{}Vždy použít živý náhled\textquotedblleft{}, \quotedblbase{}Zvýrazňovat aktuální řádek\textquotedblleft{} a~\quotedblbase{}Zobrazovat čísla řádků\textquotedblleft{} a~restartovat ReText. S~těmito nastaveními mi připadne práce pohodlnější.
+
