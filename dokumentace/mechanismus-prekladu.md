@@ -13,6 +13,9 @@ https://creativecommons.org/licenses/by-sa/4.0/
 -->
 # Dokumentace mechanismu překladu
 
+*Dokumentace je neaktuální, protože neodráží nejnovější úpravy v mechanismu překladu. Vyčkejte prosím na aktualizaci.*
+
+<!--
 Zdrojový kód kapitol a dodatků knihy *Linux: Kniha kouzel* je v omezeném
 (a na druhou stranu mírně rozšířeném) Markdownu. Kompletní a aktuální přehled
 *všech* podporovaných konstrukcí najdete ve speciální kapitole
@@ -185,3 +188,4 @@ budete muset navíc navštívit skript [hlavni.awk](../skripty/hlavni.awk)
 a doplnit interpretaci nové entity do funkce FormatovatRadek(), případně
 i do funkce ZpracujZnaky(), pokud má být entita interpretována v kontextech
 nepodporujících formátování jako např. URL adresy.
+-->

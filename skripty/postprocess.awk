@@ -24,120 +24,128 @@
 
 @include "skripty/utility.awk"
 
-function ZacitLog() {
-    if (LOG_SOUBOR != "") {
-        system("date \"+Otevřeno %F %T %z\" > '" LOG_SOUBOR "'");
-    }
-    return 0;
-}
-
-function Log(text) {
-    if (LOG_SOUBOR != "") {
-        print text >> LOG_SOUBOR;
-    }
-    return 0;
-}
-
 BEGIN {
-    OFS = "";
-    ORS = "\n";
-    POSTPROCESS_TSV = "soubory_prekladu/postprocess.tsv";
-    if (system("test -r " POSTPROCESS_TSV) != 0) {
-        ShoditFatalniVyjimku("Nemohu číst ze souboru " POSTPROCESS_TSV "!");
+    if (ARGC != 3) {
+        ShoditFatalniVyjimku("Chybný počet parametrů: " (ARGC - 1));
+    }
+    if (ARGV[2] !~ /\/[-_A-Za-z0-9]+\.[a-z]+$/) {
+        ShoditFatalniVyjimku("Druhý parametr má chybný tvar: nedokážu vyextrahovat id z \"" ARGV[2] "\"!");
     }
     if (IDFORMATU == "") {
         ShoditFatalniVyjimku("Vyžadovaná proměnná IDFORMATU není nastavena pomocí parametru -v!");
     }
-    if (IDKAPITOLY == "") {
-        ShoditFatalniVyjimku("Vyžadovaná proměnná IDKAPITOLY není nastavena pomocí parametru -v!");
+
+    LOG_SOUBOR = gensub(/[^\/]*$/, "postprocess.log", 1, ARGV[1]);
+    IDKAPITOLY = gensub(/^.*\/|\.[a-z]*$/, "", "g", ARGV[2]);
+    prikaz = "date \"+%F %T %z\"";
+    cas = "";
+    prikaz | getline cas;
+    close(prikaz);
+
+    OFS = "";
+    ORS = "\n";
+
+    pocet_nahrad = 0;
+    delete nahrady;         # [pův.text] = id-náhrady
+    delete nahrady_cil;     # [id-náhrady] = opravený text
+    delete nahrady_vyskyty; # [id-náhrady] = počet nahrazení
+}
+
+BEGINFILE {
+    switch (ARGIND) {
+        case 1: # postprocess.dat
+            Log("Inicializace postprocessingu \"" cas "\" zahájena.");
+            FS = "\n";
+            RS = "";
+            break;
+        case 2: # {id}.md
+            if (pocet_nahrad == 0) {
+                Log("\"" cas "\" − nenalezeny žádné odpovídající náhrady.");
+            }
+            FS = "\t";
+            RS = "\n";
+            switch (pocet_nahrad) {
+                case 1:
+                    Log("Postprocessing spuštěn. Bude vyhledávána 1 náhrada.");
+                    break;
+                case 2: case 3: case 4:
+                    Log("Postprocessing spuštěn. Budou vyhledávány " pocet_nahrad " náhrady.");
+                    break;
+                default:
+                    Log("Postprocessing spuštěn. Bude vyhledáváno " pocet_nahrad " náhrad.");
+            }
+            break;
+        default:
+            ShoditFatalniVyjimku("Neplatná hodnota ARGIND: " ARGIND);
     }
+}
 
-    #
-    # Logování
-    #
-    LOG_SOUBOR = "";
-    # odkomentujte následující řádek pro zapnutí logování:
-    #LOG_SOUBOR = "soubory_prekladu/" IDFORMATU "/" IDKAPITOLY ".postprocess.log";
-    ZacitLog();
+ARGIND == 2 { # {id}.md
+    if (pocet_nahrad != 0 && $0 in nahrady) {
+        idnahrady = nahrady[$0];
+        ++nahrady_vyskyty[idnahrady];
+        print nahrady_cil[idnahrady];
+        Log("[" nahrady_vyskyty[idnahrady] "] Na řádku " FNR " použita náhrada id " idnahrady " (" length($0) " >> " length(nahrady_cil[idnahrady]) ").");
+    } else {
+        print $0;
+    }
+    posledni_radek = FNR;
+    next;
+}
 
-    #
-    split("", NAHRADY); # zdroj-text => id-náhrady
-    split("", TEXT_NAHRADY_ZDROJ); # id-náhrady => zdroj-text
-    split("", TEXT_NAHRADY_CIL); # id-náhrady => cíl-text
-    split("", POCET_NAHRAD); # id-náhrady => počítadlo
-
-    while (getline < POSTPROCESS_TSV) {
-        # formát: <id-náhrady>[TAB]<id-formátu>[TAB]<id-kapitoly>[TAB]<původní řádek>[TAB]<nový řádek>
-        # řádky začínající # a prázdné řádky se vynechávají
-        split($0, sloupce, "\t");
-        Log("Načtena náhrada: id<<" sloupce[1] ">>, formát<<" sloupce[2] ">>, kapitola<<" sloupce[3] ">>");
-        Log("F:" sloupce[4]);
-        Log("T:" sloupce[5]);
-        if ($0 != "" && substr($0, 1, 1) != "#" && sloupce[2] == IDFORMATU && sloupce[3] == IDKAPITOLY) {
-            idnahrady = sloupce[1];
-            z = sloupce[4];
-            na = sloupce[5];
-
-            if (idnahrady == "") {
-                ShoditFatalniVyjimku("Prázdné id náhrady!");
-            }
-            if (z == na) {
-                ShoditFatalniVyjimku("Neplatná náhrada id " idnahrady ": řádek se nemění.");
-            }
-            if (idnahrady in POCET_NAHRAD) {
-                ShoditFatalniVyjimku("ID náhrady se opakuje: " idnahrady);
-            }
-            if (z in NAHRADY) {
-                ShoditFatalniVyjimku("Víceznačná náhrada pro stejný text: id " NAHRADY[z] " a " idnahrady "!");
-            }
-            NAHRADY[z] = idnahrady;
-            TEXT_NAHRADY_ZDROJ[idnahrady] = z;
-            TEXT_NAHRADY_CIL[idnahrady] = na;
-            POCET_NAHRAD[idnahrady] = 0;
-            Log("Náhrada id " idnahrady "přijata.");
+ENDFILE {
+    if (ARGIND == 2) {
+        for (nahrada in nahrady) {
+            idnahrady = nahrady[nahrada];
+            Log("Náhrada id=" idnahrady ": počet použití = " nahrady_vyskyty[idnahrady] (nahrady_vyskyty[idnahrady] == 1 ? "." : "!!!!!!!!"));
         }
+        Log("Končím − postprocessing \"" cas "\" proběhl úspěšně (počet řádků: " posledni_radek ").");
     }
-    close(POSTPROCESS_TSV);
 }
 
-$0 in NAHRADY {
-    idnahrady = NAHRADY[$0];
-    $0 = TEXT_NAHRADY_CIL[idnahrady];
-    ++POCET_NAHRAD[idnahrady];
-    Log("Nalezena shoda na řádku " FNR " s náhradou id " idnahrady "!!! Počítadlo stoupne na hodnotu " POCET_NAHRAD[idnahrady] ".");
-}
+# Formát postprocess.dat:
+#
+# $1 = id opravy
+# $2 = formát (musí odpovídat IDFORMATU)
+# $3 = id kapitoly (musí odpovídat IDKAPITOLY)
+# $4 = původní řádek
+# $5 = opravený řádek
+# záznamy, jejichž $1 začíná znakem # jsou při načítání ignorovány
 
-!($0 in NAHRADY) {
-    Log("BN#" FNR ":" $0);
+$0 ~ /^$|^#/ {next}
+NF < 5 {
+    ShoditFatalniVyjimku("Chybný záznam v konfiguraci postprocessingu: NF = " NF ", ID = \"" $1 "\"");
 }
+NF > 5 {print "VAROVÁNÍ: ", "NF = ", NF, "!" > "/dev/stderr"}
+$4 == $5 {ShoditFatalniVyjimku("Chybná náhrada id " $1 ": řádek se nemění!")}
 
-{
-    print;
-}
-
-function Popis(z, na,   i) {
-    if (z == na) {
-        ShoditFatalniVyjimku("Interní chyba: z == na nesmí nastat.");
+$2 == IDFORMATU && $3 == IDKAPITOLY {
+    if ($4 in nahrady) {
+        ShoditFatalniVyjimku("Víceznačná náhrada pro stejný text: id " nahrady[$4] " a " $1 "!");
     }
-    gsub(/\t/, "\\t", z);
-    gsub(/\t/, "\\t", na);
-    for (i = 1; substr(z, i, 1) == substr(na, i, 1); ++i) {
+    if ($1 in nahrady_cil) {
+        ShoditFatalniVyjimku("ID náhrady se opakuje: " $1);
     }
-    i = i > 8 ? i - 8 : 1;
-    return "..." substr(z, i, 16) "... => ..." substr(na, i, 16) "...";
+    # Přidat náhradu:
+    nahrady[$4] = idnahrady = $1;
+    nahrady_cil[$1] = $5;
+    nahrady_vyskyty[$1] = 0;
+    ++pocet_nahrad;
 }
 
 END {
-    if (LOGSOUBOR != "" && length(POCET_NAHRAD) > 0) {
-        prikaz = "sort -n >>\"" LOGSOUBOR "\"";
-        for (idnahrady in POCET_NAHRAD) {
-            # <počet-použití>[TAB]<id-náhrady>[TAB]<id-kapitoly>@<formát>[TAB]popis
-            print POCET_NAHRAD[idnahrady] "\t" idnahrady "\t" IDKAPITOLY "@" IDFORMATU "\t" Popis(TEXT_NAHRADY_ZDROJ[idnahrady], TEXT_NAHRADY_CIL[idnahrady]) | prikaz;
-        }
-        close(prikaz);
-    }
-
     if (FATALNI_VYJIMKA) {
         exit FATALNI_VYJIMKA;
     }
+}
+
+function Log(text, jenSoubor,   s) {
+    s = sprintf("* %s:%s: %s\n", IDFORMATU, IDKAPITOLY, text);
+    if (!jenSoubor || LOG_SOUBOR == "") {
+        printf("%s", s) > "/dev/stderr";
+    }
+    if (LOG_SOUBOR != "") {
+        printf("%s", s) >> LOG_SOUBOR;
+    }
+    return 0;
 }

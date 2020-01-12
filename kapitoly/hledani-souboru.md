@@ -49,7 +49,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 *# symbolický odkaz (jakýkoliv/na soubor/na adresář/absolutní/relativní)*<br>
 **\-type l**<br>
-**\-type l \-xtype f<br>
+**\-type l \-xtype f**<br>
 **\-type l \-xtype d**<br>
 **\-lname "/\*"**<br>
 **\-type l \\! -lname "/\*"**
@@ -62,7 +62,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 *# pojmenovaná roura*<br>
 **\-type p**
 
-*# soket**<br>
+*# soket*<br>
 **\-type s**
 
 ### Název souboru a cesta
@@ -172,7 +172,7 @@ xxx , xxx # priorita?
 *# soubor je přístupný pro **čtení***<br>
 **\-readable**
 
-*# soubor je přístupný pro **zápis**<br>
+*# soubor je přístupný pro **zápis***<br>
 **\-writable**
 
 *# soubor je fakticky **spustitelný***<br>
