@@ -29,11 +29,6 @@ __git_ps1
 !ÚzkýRežim: ZAP
 
 ## Úvod
-<!--
-- Vymezte, co je předmětem této kapitoly.
-- Obecně popište základní principy, na kterých fungují používané nástroje.
-- Uveďte, co kapitola nepokrývá, ačkoliv by to čtenář mohl očekávat.
--->
 
 Tato kapitola pokrývá ovládání barvy písma, barvy pozadí, použitého fontu, titulku terminálového okna a pozice a vlastností kurzoru. Rovněž pokrývá nastavování výzev interpretu bash (PS1 a dalších). Logicky by patřila do kapitoly o příkazovém interpretu bash, ale ta bude velmi rozsáhlá a náročná na zpracování, proto jsem toto téma vydělil/a do samostatné kapitoly.
 
@@ -44,6 +39,7 @@ Tato verze kapitoly nepokrývá zvláštní schopnosti konkrétních terminálov
 Jedna z prvních věcí, která mě po otevření linuxového terminálu naštvala, bylo to, že neustále barevně zdůrazňoval moje uživatelské jméno a uváděl ho do titulku snad každého terminálového okna. Když si v Xubuntu ve výchozím nastavení poprvé otevřete Terminator a rozdělíte ho na čtyři podokna, svoje uživatelské jméno uvidíte na *deseti* místech a zopakuje se pokaždé, když máte zadat další příkaz. Mám z toho pocit, že toto nastavení musel navrhovat někdo s narcistickou poruchou osobnosti... Pokud si to chcete předělat, tato kapitola vám poradí jak.
 
 ## Definice
+
 * **Výzva terminálu** (zkráceně „výzva“) je řetězec, který interpret příkazového řádku vypisuje před, během nebo po přijetí příkazu od uživatele (tzn. v interaktivním režimu). V interpretu „bash“ se rozeznávají tři druhy výzvy a jejich šablony jsou uloženy v proměnných PS0, PS1 a PS2: **hlavní výzva** (PS1) značí, že bash očekává příkaz, **vedlejší výzva** (PS2) značí, že bash očekává pokračování příkazu na dalším řádku, **potvrzující výzva** (PS0) se vypisuje po přijetí příkazu a před zahájením jeho vykonávání.
 * **Escape sekvence** je posloupnost bajtů, na kterou terminál zareaguje změnou nastavení (např. barvy písma) či nějakou akcí. Escape sekvence začínají netisknutelným znakem „escape“ (ASCII kód 0x1b). V minulosti se zapisovaly ručně a děsily nezkušené uživatele; dnes je však můžeme pohodlně generovat moderním příkazem „tput“, který současně redukuje problémy s kompatibilitou jednotlivých typů terminálů.
 * **Paleta** je v této kapitole pole barev, které daný terminál podporuje, *indexované od nuly*. Typicky se vyskytují pouze dvě palety: s 8 barvami a s 256 barvami, ačkoliv realizace konkrétních barev v těchto paletách se mohou v jednotlivých terminálech mírně lišit.
@@ -123,11 +119,11 @@ Jedna z prvních věcí, která mě po otevření linuxového terminálu naštv
 Zde uvedené příkazy nevypisují escape sekvence, ale konkrétní hodnoty.
 
 *# počet sloupců/řádků terminálu*<br>
-**tput cols**<br>
-**tput lines**
+**tput cols** ⊨ 98<br>
+**tput lines** ⊨ 30
 
 *# počet podporovaných barev (velikost palety)*<br>
-**tput colors**
+**tput colors** ⊨ 256
 
 *# aktuální sloupec/řádek kurzoru/obojí do proměnných $Y (řádek) a $X (sloupec)*<br>
 **read -rsd R -p $'\\e[6n' &lt;/dev/tty &amp;&amp; printf %s\\\\n $\(\($(printf %s\\\\n "$REPLY" \| sed -E 's/.\*\\[([0-9]+);([0-9]+)/\\1/') - 1\)\)**<br>
@@ -179,7 +175,7 @@ Zde uvedené příkazy nevypisují escape sekvence, ale konkrétní hodnoty.
 Poznámka: escapování zaklínadel v této sekci je upraveno pro uvedení uvnitř dvojitých uvozovek v bashi. Při uvedení jiným způsobem (např. v jednoduchých uvozovkách nebo při načítání ze souboru) je nutno escapování zpětnými lomítky přizpůsobit.
 
 *# **znak $** pro normálního uživatele a # pro uživatele „root“*<br>
-**\\\\\\$**
+**\\\\\\$** ⊨ $
 
 *# provedení příkazu a vypsání jeho výstupu (vyhodnotit hned/vyhodnotit při každém vypsání dané výzvy)*<br>
 *// U druhé varianty (vyhodnotit při každém vypsání výzvy) musíte v příkazu escapovat znaky ", \\, $ a !, aby se do příslušné proměnné uložil přesně tak, jak má být vykonán.*<br>
@@ -188,51 +184,54 @@ Poznámka: escapování zaklínadel v této sekci je upraveno pro uvedení uvni
 
 *# **návratový kód** posledního příkazu (viz poznámka!)*<br>
 *// Poznámka: Aby tento výraz fungoval, musíte do proměnné PROMPT\_COMMAND (ideálně na začátek) přidat příkaz „navr\_hodn=$?“, např. příkazem „PROMPT\_COMMAND="navr\_hodn=\\$?;$PROMPT\_COMMAND"“.*<br>
-**\\${navr\_hodn}**
+**\\${navr\_hodn}** ⊨ 0
 
 *# cesta/název **aktuálního adresáře** (v obou případech se domovský adresář nahrazuje znakem „~“)*<br>
-**\\\\w**<br>
-**\\\\W**
+**\\\\w** ⊨ ~/Dokumenty<br>
+**\\\\W** ⊨ Dokumenty
 
 *# **číslo příkazu** (podle historie/pořadové)*<br>
-**\\\\!""**<br>
-**\\\\\#**
+**\\\\!""** ⊨ 1984<br>
+**\\\\\#** ⊨ 9
 
 *# **hodnota proměnné** při každém vypsání výzvy*<br>
 **\\\\\\$\{**{*název proměnné*}**\}**
 
 *# aktuální **čas** ve formátu HH:MM/HH:MM:SS*<br>
-**\\\\A**<br>
-**\\\\t**
+**\\\\A** ⊨ 15:35<br>
+**\\\\t** ⊨ 15:35:38
 
 *# aktuální **datum** ve formátu YYYY-MM-DD*<br>
-**\\\\D{%F}**
+**\\\\D{%F}** ⊨ 2020-01-29
 
 *# aktuální datum a čas ve vlastním formátu*<br>
 *// Pro popis formátu viz „man strftime“.*<br>
 **\\\\D\{**{*formát*}**\}**
 
 *# **název počítače** (úplný/jen před první „.“)*<br>
-**\\\\H**<br>
-**\\\\h**
+**\\\\H** ⊨ mars.podnik<br>
+**\\\\h** ⊨ mars
 
 *# konec řádku/tabulátor*<br>
 **\\\\n**<br>
 **$(printf \\\\t)**
 
 *# **uživatelské jméno** přihlášeného uživatele/jeho celé jméno*<br>
-**\\\\u**<br>
-?
+**\\\\u** ⊨ novakova<br>
+**$(getent passwd $UID \| cut -d : -f 5 \| cut -d , -f 1)** ⊨ Jarmila Nováková
+
+*# označení **terminálu***<br>
+**$(ps -p \$\$ -o tty:1=)** ⊨ pts/3
 
 *# počet úloh běžících na pozadí (těch, které lze vypsat příkazem „jobs“)*<br>
-**\\\\j**
+**\\\\j** ⊨ 0
 
 *# cesta/název aktuálního adresáře (bez zkracování znakem „~“)*<br>
-**\\$(pwd)**<br>
-**\\$(basename \\$(pwd))**
+**\\$(pwd)** ⊨ /home/novakova/Dokumenty<br>
+**\\$(basename \\$(pwd))** ⊨ Dokumenty
 
 *# znak „$“ pro všechny (i pro uživatele root)*<br>
-**\\$(printf \\$)**
+**\\$(printf \\$)** ⊨ $
 <!--
 Další možnost: \\044\\[\\]
 -->

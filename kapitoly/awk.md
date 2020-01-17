@@ -144,7 +144,8 @@ Pozor! V AWK se řádky v souboru, indexy sloupců v záznamu, indexy čísly
 **length(**{*pole*}**)**
 
 *# zkopírovat celé pole*<br>
-?
+**delete** {*cílové\_pole*}**;**<br>
+**for (**{*pomocná\_proměnná*} **in** {*pole*}**) \{**{*cílové\_pole*}**[**{*pomocná\_proměnná*}**] =** {*pole*}**[**{*pomocná\_proměnná*}**]\}**
 
 *# je proměnná pole?*<br>
 *// Tato funkce je nejužitečnější u parametrů funkcí; díky ní může funkce ověřit, že jí v určitém parametru bylo předáno pole, nebo naopak skalární hodnota.*<br>

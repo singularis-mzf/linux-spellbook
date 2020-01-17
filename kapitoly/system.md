@@ -68,7 +68,7 @@ Poznámka: správci přihlášení se nepočítají mezi démony, protože mají
 
 * **Systemd** čili **král démonů** (také známý jako první proces či proces číslo 1) je ústřední démon systému, který řídí jeho start, restart či vypnutí a spouští a zastavuje ostatní démony (kromě tzv. jaderných). V některých linuxových komunitách má špatnou pověst, protože jeho předchůdce Upstart kdysi nevybíravě převzal „vládu“ od tehdy oblíbeného procesu „init“ (zvaného také „sysvinit“) a systemd pak pod svoji kontrolu sjednotil mnoho do té doby nezávisle řešených funkcí systému. Jako uživatele vás však od něj nečeká žádné nebezpečí, pokud mu nebudete překážet.
 * **Démon** je systémový proces, který čeká (popř. běží) na pozadí bez přímého uživatelského rozhraní a má hodnotu PPID rovnu 0, 1 nebo 2.
-* **Systémová jednotka** (unit) je datová struktura krále démonů. Systemd rozeznává jedenáct druhů systémových jednotek, z nichž nejznámější a nejdůležitější jsou **služby** („service“), reprezentující démony. Další významné jsou **sokety** („socket“, souvisí se službami a umožňují démonům nabízet svoje služby ostatním démonům), **cíle** („target“, seskupení jednotek pro určité situace) a **časovače** („timer“, pravidelně probouzejí a ruší démony). Také se pravděpodobně setkáte se **sokety**, které slouží k vzájemné komunikaci různých démonů.
+* **Systémová jednotka** (unit) je datová struktura krále démonů. Systemd rozeznává jedenáct druhů systémových jednotek, z nichž nejznámější a nejdůležitější jsou **služby** („service“), reprezentující démony. Další významné jsou **sokety** („socket“, souvisí se službami a umožňují démonům nabízet svoje služby ostatním démonům), **cíle** („target“, seskupení jednotek pro určité situace) a **časovače** („timer“, pravidelně probouzejí a ruší démony).
 * **Sezení** je instance přihlášení uživatele k systému ve víceuživatelském režimu; vzniká přihlášením uživatele a zaniká jeho odhlášením, resp. ukončením všech procesů daného sezení. Sezení může být grafické či textové a může být místní nebo vzdálené.
 
 !ÚzkýRežim: vyp
@@ -397,10 +397,10 @@ sudo systemctl restart keyboard-setup.service
 
 ## Instalace na Ubuntu
 
-Většina použitých příkazů je základní součástí Ubuntu, pouze příkazy numlockx a xdotool si musíte doinstalovat, chcete-li je použít:
+Většina použitých příkazů je základní součástí Ubuntu, pouze příkazy numlockx, xdotool a neofetch si musíte doinstalovat, chcete-li je použít:
 
 *# *<br>
-**sudo apt-get install numlockx xdotool**
+**sudo apt-get install numlockx xdotool neofetch**
 
 <!--
 ## Ukázka
@@ -423,6 +423,7 @@ Většina použitých příkazů je základní součástí Ubuntu, pouze příka
 
 * [Článek na Wikipedii](https://cs.wikipedia.org/wiki/Systemd)
 * [Seriál článků na ABC Linuxu](http://www.abclinuxu.cz/serialy/systemd)
+* [Video: The Magic SysRQ Key on the Keyboard](https://www.youtube.com/watch?v=ZiX327d8Ys0)
 * [Systemd cheat sheet](https://www.thegeekdiary.com/centos-rhel-7-systemd-command-line-reference-cheat-sheet/) (anglicky)
 * [Oficiální stránka systemd pro uživatele](https://www.freedesktop.org/wiki/Software/systemd/) (anglicky)
 * [Oficiální stránka systemd pro vývojáře](https://systemd.io/) (anglicky)
