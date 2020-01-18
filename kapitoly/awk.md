@@ -657,7 +657,7 @@ Poznámka: Parametry -f a -e můžete kombinovat a zadávat opakovaně. Každ�
 
 ## Pomocné funkce a skripty
 
-*# \~/bin/nabufferuj.sh − načte celý standardní vstup do paměti a po uzavření vstupu jej vypíše na výstup*<br>
+*# lkk nabufferuj − načte celý standardní vstup do paměti a po uzavření vstupu jej vypíše na výstup*<br>
 **#!/bin/bash**<br>
 **exec gawk -b -e 'BEGIN {RS = FS = "^$"; ORS = "";} {print}'**
 

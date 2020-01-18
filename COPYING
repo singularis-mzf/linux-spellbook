@@ -127,6 +127,9 @@ Files: konfig.ini
 Copyright: 2019, Singularis <singularis@volny.cz>
 License: CC0
 
+Files: skripty/lkk/awkvolby.awk
+License: CC-BY-SA-4.0 or MIT
+
 Files: zdroje_obrazku/vmezera.png
 License: PD
  Public domain, because there is no originality in this file and it's nor photography nor computer program.

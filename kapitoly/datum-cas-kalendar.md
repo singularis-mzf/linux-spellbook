@@ -323,7 +323,7 @@ Veškeré použité nástroje jsou základními součástmi Ubuntu dostupnými v
 
 ## Pomocné funkce a skripty
 
-*# \~/bin/vypsat-casove-zony − vypíše seznam podporovaných časových zón*<br>
+*# lkk vypsat-casove-zony − vypíše seznam podporovaných časových zón*<br>
 **#!/bin/bash -e**<br>
 **find -L /usr/share/zoneinfo -type f \| cut -d / -f 5- \| (if test "$1" = "vsechny"**<br>
 **then**<br>

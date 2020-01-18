@@ -56,6 +56,9 @@ jemuž se bude věnovat většina této kapitoly.
 {*víceřádkový obsah*}<br>
 **endef**
 
+*# nastavit **proměnnou prostředí** pro všechny podprocesy*<br>
+**export** {*NÁZEV\_PROMĚNNÉ*} **:=** {*hodnota včetně mezer*}
+
 ### Rozvoj proměnných
 *# rozvinout proměnnou*<br>
 **$(**{*NÁZEV\_PROMĚNNÉ*}**)**
@@ -132,6 +135,12 @@ jemuž se bude věnovat většina této kapitoly.
 {*cíle oddělené mezerami*}**: $(wildcard** {*nepovinný-zdroj*}...**)**<br>
 [<tab>[{*prefix-příkazu*}]{*příkaz*}]...
 
+*# v případě chyby odstranit cílový soubor*<br>
+**.DELETE\_ON\_ERROR:** {*cíl*} [{*další-cíl*}]...
+
+*# v případě chyby pokračovat dál, jako by nenastala*<br>
+**.IGNORE:** {*cíl*} [{*další-cíl*}]...
+
 ### Textové funkce
 *# **připojit** text před/za každé slovo v řetězci/v rozvoji proměnné*<br>
 *// Při použití poslední uvedené varianty nesmějí text-před a text-za obsahovat znak %.*<br>
@@ -194,11 +203,14 @@ jemuž se bude věnovat většina této kapitoly.
 **$(wildcard** {*vzorek*}...**)**
 
 ### Příkazy v pravidlech
-*# vykonat příkaz bez vypsání*<br>
+*# vykonat příkaz **bez vypsání***<br>
 <tab>**@**{*příkaz*}
 
 *# vykonat příkaz a ignorovat návratovou hodnotu*<br>
 <tab>**\-**{*příkaz*}
+
+*# u určitých cílů **nevypisovat** příkazy před vykonáním*<br>
+**.SILENT:** {*cíl*} [{*další-cíl*}]...
 
 ### Logické funkce
 *# podmíněný výraz*<br>
@@ -249,8 +261,8 @@ jemuž se bude věnovat většina této kapitoly.
 
 ## Parametry příkazů
 *# make*<br>
-**make** [{*parametry*}] [{*cíl*}]...<br>
-**$(MAKE)** [{*parametry*}] [{*cíl*}]...
+**make** [{*parametry*}] <nic>[{*cíl*}]...<br>
+**$(MAKE)** [{*parametry*}] <nic>[{*cíl*}]...
 
 * **\-j** {*počet*} \:\: umožní paralelní běh více úloh najednou
 * **\-C** {*adresář*} \:\: před děláním čehokoliv (dokonce i hledání Makefilu) vstoupí do zadaného adresáře

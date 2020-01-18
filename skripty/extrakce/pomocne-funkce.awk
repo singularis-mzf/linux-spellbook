@@ -130,11 +130,16 @@ function ZpracujZnaky(text,     VSTUP, VYSTUP, C) {
 }
 
 BEGIN {
-    delete idkapitol;
-    delete funkce_puvod;
-    delete funkce_definice;
-    delete skripty_puvod;
-    delete skripty_definice;
+    FS = "\t";
+    OFS = "";
+    RS = ORS = "\n";
+
+    delete idkapitol;       # [ARGIND] => "id-kapitoly"
+    delete funkce_puvod;    # [jméno_funkce] => "id-kapitoly"
+    delete funkce_definice; # [jméno_funkce] => "definice\n"
+    delete skripty_puvod;   # [jméno-skriptu] => "id-kapitoly"
+    delete skripty_definice;# [jméno-skriptu] => "definice\n"
+    delete skripty_x;       # [jméno-skriptu] => 0 (jen k vypsání) nebo 1 (ke spuštění)
 
     typ = "";
     jmeno = "";
@@ -167,33 +172,43 @@ ARGIND < 2 {
 # vynechat zakomentované úseky
 /^<!--$/,/^-->$/ {next}
 
-# pro jakýkoliv nadpis druhé úrovně vypnout načítání funkcí a skriptů
 /^## / {
-    zapnuto = 0;
+    bylo_zapnuto = zapnuto;
+    zapnuto = /^\043\043 Pomocné (funkce|skripty)( *a( | |&nbsp;)(funkce|skripty))?(\s+\([^)]*\))?$/;
     if (LADENI) {
-        print "LADĚNÍ: vypínám pro řádek \"" $0 "\"." > "/dev/stderr";
-    }
-}
-
-# pro vybrané nadpisy druhé úrovně zapnout načítání funkcí a skriptů
-/^## Pomocné (funkce|skripty)( *a( | |&nbsp;)(funkce|skripty))?$/ {
-    zapnuto = 1;
-    if (LADENI) {
-        print "LADĚNÍ: zapínám pro řádek \"" $0 "\"." > "/dev/stderr";
+        if (!zapnuto != !bylo_zapnuto) {
+            print "LADĚNÍ: " (bylo_zapnuto ? "vypínám" : "zapínám") " pro řádek \"" $0 "\"." > "/dev/stderr";
+        } else {
+            printf("(=%s)\n", $0);
+        }
     }
 }
 
 # dál pokračovat, jen je-li načítání zapnuté
-!zapnuto {next;}
+!zapnuto {next}
 
-/^\*# ([-A-Za-z~/.]|\\.)+.*\*<br>$/ {
-    $0 = ZpracujZnaky(substr($0, 4, length($0) - 8));
-    match($0, /^([-A-Za-z~/._]|\\.)*/);
-    jmeno = substr($0, 1, RLENGTH);
-    typ = (substr($0, 1 + RLENGTH, 2) == "()" ? "FUNKCE" : "SKRIPT");
-    telo = "";
+# pomocný skript: /^\*#\s*lkk\s+([-A-Za-z0-9]+)\s*−\s*(\S.*\S)\s*\*<br>$/
+# pomocná funkce: /^\*#\s*(([A-Za-z0-9]|\\_)+)\(\)\s*−\s*(\S.*\S)\s*\*<br>$/
 
-#    print "DEBUG: " typ " \"" jmeno "\".";
+# kvůli zvýrazňování syntaxe používám v regulárních výrazech \043 jako náhradu za znak „#“
+
+# SKRIPTY:
+(data_retezec = gensub(/^\*\043\s*lkk\s+(-p\s+)?([A-Za-z0-9][-A-Za-z0-9]*)\s*−\s*(\S[^\t]*\S)\s*\*<br>$/, "\\1\t\\2\t\\3", 1)) != $0 {
+    split(data_retezec, data_pole);
+    jmeno = data_pole[2];
+    popis = data_pole[3];
+    typ = data_pole[1] == "" ? "SKRIPT" : "URYVEK";
+    if (LADENI) {print "LADÉNÍ: " typ " \"" jmeno "\" = \"" popis "\"" > "/dev/stderr"}
+    next;
+}
+
+# FUNKCE:
+(data_retezec = gensub(/^\*\043\s*(([A-Za-z0-9]|\\_)+)\(\)\s*−\s*(\S.*\S)\s*\*<br>$/, "\\1\t\\3", 1)) != $0 {
+    i = index(data, "\t");
+    jmeno = gensub(/\\_/, "_", "g", substr(data, 1, i - 1));
+    popis = substr(data, i + 1);
+    typ = "FUNKCE";
+    if (LADENI) {print "LADĚNÍ: " typ " \"" jmeno "\" = \"" popis "\"" > "/dev/stderr"}
     next;
 }
 
@@ -216,9 +231,6 @@ jmeno != "" && /^(<odsadit[1-8]>)?\*\*.*\*\*(<br>)?$/ {
             funkce_puvod[jmeno] = idkapitol[ARGIND];
             funkce_definice[jmeno] = telo;
         } else {
-            if (!(jmeno ~ /^~\/bin\/[-A-Za-z_.]+$/)) {
-                ShoditFatalniVyjimku("Nepodporované jméno pomocného skriptu \"" jmeno "\"; jméno skriptu musí začínat ~/bin/ a být tvořeno pouze znaky [-A-Za-z_.] (bez hranatých závorek).");
-            }
             if (jmeno in skripty_puvod) {
                 if (skripty_definice[jmeno] == telo) {
                     print "VAROVÁNÍ: Opakovaná (ale identická) definice pomocného skriptu " jmeno " v kapitole " idkapitol[ARGIND] ", původně definován v kapitole " skripty_puvod[jmeno] "." > "/dev/stderr";
@@ -228,12 +240,13 @@ jmeno != "" && /^(<odsadit[1-8]>)?\*\*.*\*\*(<br>)?$/ {
             }
             skripty_puvod[jmeno] = idkapitol[ARGIND];
             skripty_definice[jmeno] = telo;
+            skripty_x[jmeno] = (typ == "SKRIPT" ? 1 : 0);
         }
-        delka = telo;
-        gsub(/[^\n]/, "", delka);
-        delka = length(delka);
-        print "V kapitole " idkapitol[ARGIND] " nalezen" (typ == "FUNKCE" ? "a funkce " jmeno "()" : " skript " jmeno) "; definici tvoří " (delka == 1 ? "1 řádek" : delka " řádk" (1 < delka && delka < 5 ? "y" : "ů")) ".";
+        delka = length(gensub(/[^\n]/, "", "g", telo));
+        print "V kapitole " idkapitol[ARGIND] " nalezen" (typ == "FUNKCE" ? "a funkce " jmeno "()" : typ == "SKRIPT" ? " skript " jmeno : " úryvek " jmeno) "; definici tvoří " (delka == 1 ? "1 řádek" : delka " řádk" (1 < delka && delka < 5 ? "y" : "ů")) ".";
         jmeno = "";
+        popis = "";
+        telo = "";
     }
 }
 
@@ -243,20 +256,18 @@ END {
     }
     if (length(funkce_puvod) + length(skripty_puvod) > 0) {
         for (s in skripty_puvod) {
-            fn = s;
-            gsub("^~", "vystup_prekladu", fn);
+            fn = "soubory_prekladu/deb/usr/share/lkk/skripty/" s;
             printf("%s", skripty_definice[s]) > fn;
             close(fn);
-            system("chmod u+x " fn);
+            system("chmod " (skripty_x[s] ? "755" : "644") " " fn);
         }
         asorti(funkce_puvod, jmena_funkci);
-        fn = "vystup_prekladu/bin/pomocne-funkce.sh";
+        fn = "soubory_prekladu/deb/usr/share/lkk/skripty/pomocne-funkce";
         print "# Pomocné funkce pro projekt Linux: Kniha kouzel. Tento soubor byl automaticky vygenerován.\n#" > fn;
         for (i = 1; i <= length(jmena_funkci); ++i) {
-            print "" > fn;
-            print funkce_definice[jmena_funkci[i]] > fn;
+            printf("#začátek %s\n%s#konec %s\n", jmena_funkci[i], funkce_definice[jmena_funkci[i]], jmena_funkci[i]) > fn;
         }
         close(fn);
     }
-    print "=== Extrakce pomocných funkcí a skriptů dokončena. ===\nPočty nalezených funkcí a skriptů: " length(funkce_puvod) " a " length(skripty_puvod) ".";
+    print "=== Extrakce pomocných funkcí a skriptů dokončena. ===\nPočty nalezených funkcí a skriptů+úryvků: " length(funkce_puvod) " a " length(skripty_puvod) ".";
 }

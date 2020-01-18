@@ -472,7 +472,7 @@ Co hledat:
 
 ## Pomocné funkce (Perl)
 
-*# vzorek\_parametru − xxx*<br>
+*# lkk -p perl-vzorek-parametru − xxx*<br>
 **sub vzorek\_parametru \{**<br>
 <odsadit1>**return join("", map \{**<br>
 <odsadit2>**my $r;**<br>

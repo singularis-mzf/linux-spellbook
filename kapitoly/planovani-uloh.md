@@ -244,7 +244,7 @@ Poznámka: ukázka vyžaduje nainstalovaný balíček „mplayer“ (a pochopit
 **(tmp="$2 %s #$1\\\\n"; crontab -l 2&gt;/dev/null \| egrep -v "#$1\\$"; shift 2; printf "$tmp" "$@" \| sed -e 's/\\\\/\\\\\\\\/g' -e 's/%/\\\\%/g') \| crontab -**<br>
 **\}**
 
-*# \~/bin/spustit-v-x − slouží ke spouštění grafických aplikací z naplánovaných úloh*<br>
+*# lkk spustit-v-x − slouží ke spouštění grafických aplikací z naplánovaných úloh*<br>
 *// Tento skript je vyžadován pro spouštění grafických aplikací z naplánovaných úloh. Pro správný běh takto spuštěných aplikací může být nutno doplnit do seznamu u příkazu „egrep“ mnoho dalších proměnných.*<br>
 **#!/bin/bash -e**<br>
 **function f () \{**<br>
