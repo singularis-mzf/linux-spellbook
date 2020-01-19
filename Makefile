@@ -39,7 +39,7 @@ VSECHNY_KAPITOLY += hledani-souboru konverze-formatu latex make markdown
 # N, O, P, Q, R, S
 VSECHNY_KAPITOLY += odkazy perl planovani-uloh prace-s-archivy regularni-vyrazy
 # S
-VSECHNY_KAPITOLY += sprava-balicku sprava-uzivatelu stahovani-videi system
+VSECHNY_KAPITOLY += sed sprava-balicku sprava-uzivatelu stahovani-videi system
 # T, U, V, W, X, Y, Z
 VSECHNY_KAPITOLY += unicode uzivatelska-rozhrani x zpracovani-binarnich-souboru zpracovani-obrazku zpracovani-textovych-souboru zpracovani-videa-a-zvuku
 

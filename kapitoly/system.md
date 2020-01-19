@@ -140,6 +140,10 @@ Poznámka: správci přihlášení se nepočítají mezi démony, protože mají
 **sudo systemctl halt \-\-force**<br>
 **sudo systemctl halt \-\-force \-\-force**
 
+*# **vypnout** počítač za N minut/zrušit naplánované vypnutí*<br>
+**sudo shutdown -P** [**\-\-no-wall**] {*N*}<br>
+**sudo shutdown -c**
+
 ### Ovládání systémových jednotek
 
 *# **spustit** neběžící*<br>

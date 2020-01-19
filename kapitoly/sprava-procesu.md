@@ -1,6 +1,6 @@
 <!--
 
-Linux Kniha kouzel, kapitola Diskové oddíly
+Linux Kniha kouzel, kapitola Správa procesů
 Copyright (c) 2019 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -14,18 +14,20 @@ https://creativecommons.org/licenses/by-sa/4.0/
 <!--
 Poznámky:
 
-+ mount
-+ LVM
-+ BTRFS
-+ tmpfs
+ps
+pgrep
+pstree
+kill
+/proc/PID
 
-+ přesunout odkládací oddíly
+PID v Linuxu neznamená Pražská integrovaná doprava...
 
+⊨
 -->
 
-# Diskové oddíly
+# Správa procesů
 
-!Štítky: {tematický okruh}{systém}{LVM}
+!Štítky: {tematický okruh}
 
 !ÚzkýRežim: zap
 
@@ -51,24 +53,70 @@ Poznámky:
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-## Zaklínadla (fstab)
+### Zjistit informace o procesu podle PID
 
-*# připojit kořenový systém souborů (obecně/příklad)*<br>
-{*diskový-oddíl*} **/** {*soub-systém*} {*nastavení*} **0 1**<br>
-**/dev/sda2<tab7>/<tab7>ext4<tab7>errors=remount-ro,discard,nouser\_xattr<tab3>0<tab7>1**
+*# PPID*<br>
+*// Pro procesy zřízené jádrem (systemd a kthreadd) vrací „0“.*<br>
+**ps -p** {*PID*} **-o ppid:1=** ⊨ 3077
 
-*# připojit jiný než kořenový systém souborů (obecně/příklad)*<br>
-*// 2 v posledním poli zapne automatickou kontrolu souboru systémů při startu; tato volba je vhodná pro místní souborové systémy. 0 v posledním poli automatickou kontrolu vypne, ta je vhodná především pro výměnná média a síťové systémy souborů. Rovněž je vhodná pro místní systémy souborů připojované výhradně pro čtení.*<br>
-{*co-připojit*} {*soub-systém*} {*nastavení*} **0** {*2-nebo-0*}<br>
-**UUID="61bbd562-0694-4561-a8e2-4ccfd004a660" ext4 defaults 0 2**
+*# označení příslušného terminálu*<br>
+*// Nepříluší-li proces žádnému terminálu ani konzoli, vypíše „?“.*<br>
+**ps -p** {*PID*} **-o tty:1=** ⊨ pts/1
 
-<!--
-3 možnosti „co připojit“:
+*# pracovní adresář*<br>
+[**sudo**] **readlink /proc/**{*PID*}**/cwd**
 
-1) oddíl (např. /dev/sda1)
-2) UUID (např. UUID="61bbd562-0694-4561-a8e2-4ccfd004a660")
-3) jmenovka (např. LABEL="MojeData")
--->
+*# příkazový řádek (txtz pro skript/pro člověka)*<br>
+**cat /proc/**{*PID*}**/cmdline** [**\|** {*zpracování*}]<br>
+
+*# spuštěný proces (zkrácený název/plná cesta)*<br>
+**ps -p** {*PID*} **-o comm:1=**<br>
+[**sudo**] **readlink /proc/**{*PID*}**/exe**
+
+*# ARGV[0]*<br>
+**head -zn 1 /proc/**{*PID*}/**cmdline \| tr \\\\0 \\\\n**
+
+*# vypsat prostředí procesu ve formátu txtz*<br>
+*// Každý záznam začíná názvem proměnné prostředí a znakem „=“, za ním následuje obsah proměnné.*<br>
+[**sudo**] **cat /proc/**{*PID*}**/environ** [**\|** {*zpracování*}]
+
+*# spotřebovaný čas procesoru*<br>
+**ps -p** {*PID*} **-o cputime:1=** ⊨ 00:01:13
+
+*# aktuální (pracovní) adresář procesu*<br>
+[**sudo**] **readlink /proc/**{*PID*}**/cwd** ⊨ /home/pavel
+
+*# % zatížení CPU*<br>
+**ps -p** {*PID*} **-o %cpu=  \| tr -d "&blank;"** ⊨ 10.1
+
+*# % paměti RAM*<br>
+**ps -p** {*PID*} **-o %mem= \| tr -d "&blank;"** ⊨ 0.1
+
+*# čas od spuštění procesu (v sekundách/ve formátu [[DD-]hh:]mm:ss)*<br>
+**ps -p** {*PID*} **-o etimes:1=** ⊨ 271<br>
+**ps -p** {*PID*} **-o etime:1=** ⊨ 04:31
+
+*# čas, od kdy proces existuje*<br>
+**date -d "$(ps -p** {*PID*} **-o lstart=)" "+%F %T %z"**
+
+*# označení sezení podle systemd*<br>
+**ps -p** {*PID*} **-o lsession:1=** ⊨ 00:01:13
+
+*# efektivní uživatel (jméno/EUID)*<br>
+?<br>
+?
+
+*# efektivní skupina (jméno/EGID)*<br>
+?<br>
+?
+
+*# přihlášený (reálný) uživatel (jméno/RUID)*<br>
+?<br>
+?
+
+*# přihlašovací skupina (jméno/RGID)*<br>
+?<br>
+?
 
 ## Parametry příkazů
 <!--
@@ -80,7 +128,7 @@ Poznámky:
 ## Instalace na Ubuntu
 <!--
 - Jako zaklínadlo bez titulku uveďte příkazy (popř. i akce) nutné k instalaci a zprovoznění všech nástrojů požadovaných kterýmkoliv zaklínadlem uvedeným v kapitole. Po provedení těchto činností musí být nástroje plně zkonfigurované a připravené k práci.
-- Ve výčtu balíků k instalaci vycházejte z minimální instalace Ubuntu.
+- Ve výčtu balíčků k instalaci vycházejte z minimální instalace Ubuntu.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 

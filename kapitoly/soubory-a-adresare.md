@@ -1,6 +1,6 @@
 <!--
 
-Linux Kniha kouzel, kapitola Diskové oddíly
+Linux Kniha kouzel, kapitola Soubory a adresáře
 Copyright (c) 2019 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -14,18 +14,17 @@ https://creativecommons.org/licenses/by-sa/4.0/
 <!--
 Poznámky:
 
-+ mount
-+ LVM
-+ BTRFS
-+ tmpfs
++ atributy
++ rsync
++ který soubor je větší/novější/...
++ touch
 
-+ přesunout odkládací oddíly
-
+⊨
 -->
 
-# Diskové oddíly
+# Soubory a adresáře
 
-!Štítky: {tematický okruh}{systém}{LVM}
+!Štítky: {tematický okruh}{adresáře}{soubory}
 
 !ÚzkýRežim: zap
 
@@ -51,25 +50,6 @@ Poznámky:
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-## Zaklínadla (fstab)
-
-*# připojit kořenový systém souborů (obecně/příklad)*<br>
-{*diskový-oddíl*} **/** {*soub-systém*} {*nastavení*} **0 1**<br>
-**/dev/sda2<tab7>/<tab7>ext4<tab7>errors=remount-ro,discard,nouser\_xattr<tab3>0<tab7>1**
-
-*# připojit jiný než kořenový systém souborů (obecně/příklad)*<br>
-*// 2 v posledním poli zapne automatickou kontrolu souboru systémů při startu; tato volba je vhodná pro místní souborové systémy. 0 v posledním poli automatickou kontrolu vypne, ta je vhodná především pro výměnná média a síťové systémy souborů. Rovněž je vhodná pro místní systémy souborů připojované výhradně pro čtení.*<br>
-{*co-připojit*} {*soub-systém*} {*nastavení*} **0** {*2-nebo-0*}<br>
-**UUID="61bbd562-0694-4561-a8e2-4ccfd004a660" ext4 defaults 0 2**
-
-<!--
-3 možnosti „co připojit“:
-
-1) oddíl (např. /dev/sda1)
-2) UUID (např. UUID="61bbd562-0694-4561-a8e2-4ccfd004a660")
-3) jmenovka (např. LABEL="MojeData")
--->
-
 ## Parametry příkazů
 <!--
 - Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.
@@ -80,7 +60,7 @@ Poznámky:
 ## Instalace na Ubuntu
 <!--
 - Jako zaklínadlo bez titulku uveďte příkazy (popř. i akce) nutné k instalaci a zprovoznění všech nástrojů požadovaných kterýmkoliv zaklínadlem uvedeným v kapitole. Po provedení těchto činností musí být nástroje plně zkonfigurované a připravené k práci.
-- Ve výčtu balíků k instalaci vycházejte z minimální instalace Ubuntu.
+- Ve výčtu balíčků k instalaci vycházejte z minimální instalace Ubuntu.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 

@@ -91,6 +91,18 @@ Poznámky:
 **uuencode /dev/stdout &lt;** {*soubor*} **\| sed -n 'x;3,$p'**<br>
 **sed $'1i\\\\\\nbegin 644 /dev/stdout\\n$a\\\\\\nend' temp.dat \| uudecode &gt;** {*cíl*}
 
+### Srovnání souborů
+
+*# jsou dva soubory po bajtech **shodné**?*<br>
+**cmp** [**-s**] {*soubor*} {*soubor*}
+
+*# jsou po bajtech shodné zadané úseky?*<br>
+**cmp** [**-s**] **-n** {*bajtů-k-porovnání-P*} {*soubor1*} {*soubor2*} {*začátek1-P*} {*začátek2-P*}
+
+
+*# který ze dvou souborů je větší?*<br>
+?
+
 ### Ostatní
 
 *# zkrátit či prodloužit soubor na uvedenou velikost (obecně/příklady...)*<br>
@@ -134,12 +146,6 @@ Poznámky:
 
 *# vypsat hexadecimálně (pro člověka)*<br>
 **xxd** [**-c** {*bajtů-na-řádek*}] <nic>[**-g** {*bajtů-na-skupinu*}] <nic>[**-s** {*počáteční-adresa*}] <nic>[**-l** {*max-počet-bajtů*}] <nic>[**-u**] {*soubor*}
-
-*# jsou dva soubory po bajtech shodné?*<br>
-**cmp** [**-s**] {*soubor*} {*soubor*}
-
-*# jsou shodné zadané úseky?*<br>
-**cmp** [**-s**] **-n** {*bajtů-k-porovnání-P*} {*soubor1*} {*soubor2*} {*začátek1-P*} {*začátek2-P*}
 
 *# obrátit každou dvojici/čtveřici/osmici bajtů*<br>
 **dd** [**if=**{*vstupní-soubor*}] <nic>[**of=**{*výstupní-soubor*}] **conv=swab**<br>

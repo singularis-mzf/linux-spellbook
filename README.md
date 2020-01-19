@@ -114,6 +114,7 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [system](kapitoly/system.md) | Systém | 100% | vydána (od verze 1.2) |
 | [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) | Zpracování textových souborů | 100% | vydána (od verze 1.2) |
 | [zpracovani-videa-a-zvuku](kapitoly/zpracovani-videa-a-zvuku.md) | Zpracování videa a zvuku | 100% | vydána (od verze 1.0) |
+| [sed](kapitoly/sed.md) | Sed | 80% | dítě |
 | [sprava-uzivatelu](kapitoly/sprava-uzivatelu.md) | Správa uživatelů | 80% | dítě |
 | [hledani-souboru](kapitoly/hledani-souboru.md) | Hledání souborů | 70% | dítě |
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
@@ -123,17 +124,19 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [perl](kapitoly/perl.md) | Základy Perlu | 20% | dítě |
 | [unicode](kapitoly/unicode.md) | Unicode a emotikony | 10% | dítě |
 | [zpracovani-binarnich-souboru](kapitoly/zpracovani-binarnich-souboru.md) | Zpracování binárních souborů | 10% | dítě |
+| [uzivatelska-rozhrani](kapitoly/uzivatelska-rozhrani.md) | Uživatelská rozhraní skriptů | 5% | dítě |
 | [latex](kapitoly/latex.md) | LaTeX | 5% | dítě |
+| [diskove-oddily](kapitoly/diskove-oddily.md) | Diskové oddíly | 1% | dítě |
 | [konverze-formatu](kapitoly/konverze-formatu.md) | Konverze formátů | 0% | embryo |
+| [soubory-a-adresare](kapitoly/soubory-a-adresare.md) | Soubory a adresáře | 0% | embryo |
+| [promenne](kapitoly/promenne.md) | Proměnné prostředí a interpretu | 0% | embryo |
+| [lkk](kapitoly/lkk.md) | Linux: Kniha kouzel | 0% | embryo |
 | [firefox](kapitoly/firefox.md) | Firefox | 0% | embryo |
-| uzivatelske-rozhrani | Uživatelské rozhraní skriptů | - | přál/a bych si |
 | prehravani-videa | Přehrávání videa, zvuku a obrázků | - | přál/a bych si |
 | sifrovani | Šifrování a kryptografie | - | přál/a bych si |
-| diskove-oddily | Diskové oddíly | - | přál/a bych si |
 | firewall | Firewall | - | přál/a bych si |
 | grub | GRUB | - | přál/a bych si |
 | vim | Vim | - | přál/a bych si |
-| soubory-a-adresare | Soubory a adresáře | - | přál/a bych si |
 | bash | Bash | - | přál/a bych si |
 | sql | SQL | - | přál/a bych si |
 | ascii-art | ASCII art | - | přál/a bych si |
@@ -143,7 +146,6 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | matematicke-vypocty | Matematické výpočty | - | přál/a bych si |
 | zaznam-x | Záznam obrazovky | - | přál/a bych si |
 | css | Kaskádové styly CSS | - | přál/a bych si |
-| sed | Sed | - | přál/a bych si |
 | nabidka-aplikaci | Nabídka aplikací | - | přál/a bych si |
 
 Zvláštní kapitoly:

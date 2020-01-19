@@ -564,6 +564,7 @@ jen v případě ověření.
 Pro APT: „man apt-get“ apod. (ale není příliš přehledná) Pro Flatpak: „man flatpak“ a všechny odtud odkazované manuálové stránky, např. „man flatpak-install“. Pro Snap: „snap \-\-help“ a „snap help {*podpříkaz*}“.
 
 * [Wikipedie: APT](https://cs.wikipedia.org/wiki/Advanced_Packaging_Tool)
+* [Příspěvek na fóru od „Sešívaného“](https://forum.ubuntu.cz/index.php/topic,83160.msg560223.html#msg560223)
 * [Wikipedie: aptitude](https://cs.wikipedia.org/wiki/Aptitude)
 * [Wikipedie: dpkg](https://cs.wikipedia.org/wiki/Dpkg)
 * [Video „How to Use Flatpak“ (Chris Titus Tech)](https://youtu.be/bvybMVRaND0?t=75) (anglicky)
