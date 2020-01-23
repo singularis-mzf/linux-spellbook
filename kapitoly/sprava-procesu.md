@@ -55,42 +55,35 @@ PID v Linuxu neznamená Pražská integrovaná doprava...
 
 ### Zjistit informace o procesu podle PID
 
-*# PPID*<br>
-*// Pro procesy zřízené jádrem (systemd a kthreadd) vrací „0“.*<br>
-**ps -p** {*PID*} **-o ppid:1=** ⊨ 3077
+*# spuštěný **proces** (zkrácený název/plná cesta)*<br>
+**ps -o comm:1= -p** {*PID*} ⊨ bash<br>
+[**sudo**] **readlink /proc/**{*PID*}**/exe** ⊨ /bin/bash
 
-*# označení příslušného terminálu*<br>
+*# **příkazový řádek** (pro člověka/txtz pro skript)*<br>
+**tr \\\\0 \\\\40 &lt;/proc/**{*PID*}**/cmdline \| sed -E '$s/ ?$/\\n/' | cat -v**<br>
+**cat /proc/**{*PID*}**/cmdline** [**\|** {*zpracování*}]
+
+*# ARGV[0]*<br>
+**head -zn1 /proc/**{*PID*}**/cmdline \| tr \\\\0 \\\\n**
+
+*# **PPID***<br>
+*// Pro procesy zřízené jádrem (systemd a kthreadd) vrací „0“.*<br>
+**ps -o ppid:1= -p** {*PID*} ⊨ 3077
+
+*# příslušný **terminál***<br>
 *// Nepříluší-li proces žádnému terminálu ani konzoli, vypíše „?“.*<br>
 **ps -p** {*PID*} **-o tty:1=** ⊨ pts/1
 
-*# pracovní adresář*<br>
-[**sudo**] **readlink /proc/**{*PID*}**/cwd**
-
-*# příkazový řádek (txtz pro skript/pro člověka)*<br>
-**cat /proc/**{*PID*}**/cmdline** [**\|** {*zpracování*}]<br>
-
-*# spuštěný proces (zkrácený název/plná cesta)*<br>
-**ps -p** {*PID*} **-o comm:1=**<br>
-[**sudo**] **readlink /proc/**{*PID*}**/exe**
-
-*# ARGV[0]*<br>
-**head -zn 1 /proc/**{*PID*}/**cmdline \| tr \\\\0 \\\\n**
-
-*# vypsat prostředí procesu ve formátu txtz*<br>
-*// Každý záznam začíná názvem proměnné prostředí a znakem „=“, za ním následuje obsah proměnné.*<br>
-[**sudo**] **cat /proc/**{*PID*}**/environ** [**\|** {*zpracování*}]
-
-*# spotřebovaný čas procesoru*<br>
-**ps -p** {*PID*} **-o cputime:1=** ⊨ 00:01:13
-
-*# aktuální (pracovní) adresář procesu*<br>
+*# aktuální **adresář***<br>
 [**sudo**] **readlink /proc/**{*PID*}**/cwd** ⊨ /home/pavel
 
-*# % zatížení CPU*<br>
-**ps -p** {*PID*} **-o %cpu=  \| tr -d "&blank;"** ⊨ 10.1
+*# efektivní **uživatel** (jméno/EUID)*<br>
+?<br>
+?
 
-*# % paměti RAM*<br>
-**ps -p** {*PID*} **-o %mem= \| tr -d "&blank;"** ⊨ 0.1
+*# efektivní **skupina** (jméno/EGID)*<br>
+?<br>
+?
 
 *# čas od spuštění procesu (v sekundách/ve formátu [[DD-]hh:]mm:ss)*<br>
 **ps -p** {*PID*} **-o etimes:1=** ⊨ 271<br>
@@ -99,16 +92,29 @@ PID v Linuxu neznamená Pražská integrovaná doprava...
 *# čas, od kdy proces existuje*<br>
 **date -d "$(ps -p** {*PID*} **-o lstart=)" "+%F %T %z"**
 
+*# spotřebovaný čas procesoru*<br>
+**ps -p** {*PID*} **-o cputime:1=** ⊨ 00:01:13
+
+*# % zatížení CPU*<br>
+**ps -p** {*PID*} **-o %cpu=  \| tr -d "&blank;"** ⊨ 10.1
+
+*# % paměti RAM*<br>
+**ps -p** {*PID*} **-o %mem= \| tr -d "&blank;"** ⊨ 0.1
+
+*# množství paměti RAM*<br>
+?
+
+*# seznam otevřených deskriptorů (jen čísla/s cestami k souborům)*<br>
+?<br>
+?
+
+*# vypsat prostředí procesu ve formátu txtz*<br>
+*// Každý záznam začíná názvem proměnné prostředí a znakem „=“, za ním následuje obsah proměnné.*<br>
+[**sudo**] **cat /proc/**{*PID*}**/environ** [**\|** {*zpracování*}]
+
 *# označení sezení podle systemd*<br>
 **ps -p** {*PID*} **-o lsession:1=** ⊨ 00:01:13
 
-*# efektivní uživatel (jméno/EUID)*<br>
-?<br>
-?
-
-*# efektivní skupina (jméno/EGID)*<br>
-?<br>
-?
 
 *# přihlášený (reálný) uživatel (jméno/RUID)*<br>
 ?<br>
@@ -117,6 +123,24 @@ PID v Linuxu neznamená Pražská integrovaná doprava...
 *# přihlašovací skupina (jméno/RGID)*<br>
 ?<br>
 ?
+
+*# číslo přiděleného procesoru*<br>
+?
+
+### TUI
+
+*# procesy nejvíc zatěžující CPU*<br>
+?
+
+*# procesy zabírající nejvíc paměti RAM*<br>
+?
+
+*# procesy nejvíc vytěžující pevný disk*<br>
+?
+
+*# procesy spotřebovávající nejvíc elektřiny*<br>
+?
+
 
 ## Parametry příkazů
 <!--

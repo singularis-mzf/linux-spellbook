@@ -21,6 +21,11 @@ Poznámky:
 
 + přesunout odkládací oddíly
 
+Článek o btrfs: https://www.root.cz/clanky/souborovy-system-btrfs-vlastnosti-a-vyhody-moderniho-ukladani-dat/
+
+Zpracovat také:
+https://www.root.cz/clanky/pripojeni-obrazu-disku-pod-beznym-uzivatelem-bez-opravneni-roota/
+
 -->
 
 # Diskové oddíly

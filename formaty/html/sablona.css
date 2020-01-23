@@ -38,7 +38,7 @@ z-index:auto;font:inherit;}
 
 /* Blokové prvky */
 html {
-    background:#213112 url("obrazky/marsh.jpg") 100% 0%/cover repeat fixed;
+    background:#d2e0eb url("obrazky/marsh.jpg") 100% 0%/cover repeat fixed;
     color:#333333;
     font:62.5%/1.2 sans-serif;
 /*    padding:1rem 2% 5rem;*/
@@ -159,7 +159,8 @@ blockquote blockquote {
 
 /* Inline prvky */
 a:link {color:#1644d9;}
-a:visited {color:#1338b3;}
+a:visited {color:#542e99;}
+/* a:visited {color:#1338b3;} */
 a[href^="http://"]::before, a[href^="https://"]::before {content:"[";color:#666666;}
 a[href^="http://"]::after, a[href^="https://"]::after {content:"]( " attr(href) " )";color:#666666;}
 a:hover {text-decoration:underline;}
@@ -175,6 +176,12 @@ kbd {
     background:#dddddd;
     color:#000000;
     font-family:"DejaVu Sans", sans-serif;
+}
+
+/* Sebeodkazy nadpisů */
+h1>a:link, h1>a:visited, h2>a:link, h2>a:visited, h3>a:link, h3>a:visited, h4>a:link, h4>a:visited, h5>a:link, h5>a:visited, h6>a:link, h6>a:visited {
+    display:block;
+    color:inherit;
 }
 
 /* Formátování odkazů v navigaci */
@@ -490,18 +497,22 @@ nav .next {text-align:left;}
     border-radius:1em;
     padding:0.5em 1em;
     text-align:left;
-    line-height:2;
+    line-height:1.6;
 }
 .rozcestnikkapitol a {
     white-space:nowrap;
+    color:#166644;
+}
+.rozcestnikkapitol a.sekce {
+    font-weight:bold;
 }
 .rozcestnikkapitol .oddelovac {
     padding:0 0.2em;
     color:rgba(0,0,0,0.4);
 }
-.rozcestnikkapitol .oddelovac:last-child {
+/*.rozcestnikkapitol .oddelovac:last-child {
     display:none;
-}
+}*/
 
 /* .stitky */
 .stitky {
@@ -639,7 +650,7 @@ span.chybny {
 /* odkazy nahoru a dolů */
 #odkaznahoru, #odkazdolu {
     position:fixed;
-    left:2%;
+    right:2%;
     z-index:256;
     background:rgba(0,102,0,0.75);
     color:rgb(100,204,100);

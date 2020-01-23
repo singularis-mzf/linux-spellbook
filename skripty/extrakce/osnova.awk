@@ -96,15 +96,15 @@ BEGIN {
         # Neznámé ID kapitoly, pravděpodobně se daná kapitola nebude generovat.
         exit;
     }
-    C_KAPITOLY = $8;
+    c_kapitoly = $8;
     SOUBOR = $1 "/" $2 ".md";
     ZARAZKA = "\x01\x02XYZ";
 
 #    ID_KAPITOLY_OMEZENE = IDKAPITOLY;
 #    gsub(/[^A-Za-z0-9]/, "", ID_KAPITOLY_OMEZENE);
-    C_SEKCE = 0;
-    C_PODSEKCE = 0;
-    C_ZAKLINADLA = 0;
+    c_sekce = 0;
+    c_podsekce = 0;
+    c_zaklinadla = 0;
     FATALNI_VYJIMKA = 0;
     JE_UVNITR_KOMENTARE = 0;
 }
@@ -126,16 +126,16 @@ BEGIN {
 /^#{1,3} .+/ {
     switch (index($0, " ")) {
     case 2:
-        VypsatPolozkuOsnovy("KAPITOLA", C_KAPITOLY, FNR, ZpracujZnaky(substr($0, 3)), ZARAZKA);
+        VypsatPolozkuOsnovy("KAPITOLA", c_kapitoly, FNR, ZpracujZnaky(substr($0, 3)), ZARAZKA);
         c_sekce = 0;
         c_podsekce = 0;
         break;
     case 3:
-        VypsatPolozkuOsnovy("SEKCE", ++C_SEKCE, FNR, ZpracujZnaky(substr($0, 4)), ZARAZKA);
+        VypsatPolozkuOsnovy("SEKCE", ++c_sekce, FNR, ZpracujZnaky(substr($0, 4)), ZARAZKA);
         c_podsekce = 0;
         break;
     case 4:
-        VypsatPolozkuOsnovy("PODSEKCE", C_SEKCE "x" (++C_PODSEKCE), FNR, ZpracujZnaky(substr($0, 5)), ZARAZKA);
+        VypsatPolozkuOsnovy("PODSEKCE", c_sekce "x" (++c_podsekce), FNR, ZpracujZnaky(substr($0, 5)), ZARAZKA);
         break;
     }
 }

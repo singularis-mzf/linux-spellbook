@@ -11,6 +11,16 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
+<!--
+
+http://kb.mozillazine.org/About:config_entries
+
+Oficiální reference: https://developer.mozilla.org/en-US/docs/Mozilla/Preferences/Preference_reference (ale značně neúplná)
+about protocol:
+https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/The_about_protocol
+
+
+-->
 
 # Firefox
 

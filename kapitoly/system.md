@@ -67,7 +67,7 @@ Poznámka: správci přihlášení se nepočítají mezi démony, protože mají
 ## Definice
 
 * **Systemd** čili **král démonů** (také známý jako první proces či proces číslo 1) je ústřední démon systému, který řídí jeho start, restart či vypnutí a spouští a zastavuje ostatní démony (kromě tzv. jaderných). V některých linuxových komunitách má špatnou pověst, protože jeho předchůdce Upstart kdysi nevybíravě převzal „vládu“ od tehdy oblíbeného procesu „init“ (zvaného také „sysvinit“) a systemd pak pod svoji kontrolu sjednotil mnoho do té doby nezávisle řešených funkcí systému. Jako uživatele vás však od něj nečeká žádné nebezpečí, pokud mu nebudete překážet.
-* **Démon** je systémový proces, který čeká (popř. běží) na pozadí bez přímého uživatelského rozhraní a má hodnotu PPID rovnu 0, 1 nebo 2.
+* **Démon** je systémový proces, který čeká (popř. běží) na pozadí bez přímého uživatelského rozhraní a má hodnotu PPID rovnu 0, 1 nebo 2. (Pozor − nespleťte si PPID s PID!)
 * **Systémová jednotka** (unit) je datová struktura krále démonů. Systemd rozeznává jedenáct druhů systémových jednotek, z nichž nejznámější a nejdůležitější jsou **služby** („service“), reprezentující démony. Další významné jsou **sokety** („socket“, souvisí se službami a umožňují démonům nabízet svoje služby ostatním démonům), **cíle** („target“, seskupení jednotek pro určité situace) a **časovače** („timer“, pravidelně probouzejí a ruší démony).
 * **Sezení** je instance přihlášení uživatele k systému ve víceuživatelském režimu; vzniká přihlášením uživatele a zaniká jeho odhlášením, resp. ukončením všech procesů daného sezení. Sezení může být grafické či textové a může být místní nebo vzdálené.
 

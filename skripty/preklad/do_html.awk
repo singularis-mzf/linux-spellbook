@@ -66,7 +66,7 @@ function Tabulator(delka,  i, vysledek) {
 
 # + OSNOVA, DELKA_OSNOVY
 
-function ZacatekKapitoly(kapitola, cisloKapitoly, stitky, osnova,   vysledek, polozky, jePrvni, poleStitku, i, n) {
+function ZacatekKapitoly(kapitola, cisloKapitoly, stitky, osnova,   vysledek, polozky, jePrvni, melaPodsekce, maPodsekce, poleStitku, i, n) {
 # Generování prvku <h1> obstarává šablona kapitoly (formaty/html/sablona_kapitoly).
 #    return "<h1>" kapitola "</h1>\n";
     vysledek = "";
@@ -84,19 +84,36 @@ function ZacatekKapitoly(kapitola, cisloKapitoly, stitky, osnova,   vysledek, po
     }
 
     jePrvni = 1;
+    melaPodsekce = 1;
     for (i = 1; i <= length(osnova); ++i) {
-        split(osnova[i], polozky);
-        if (polozky[1] == "SEKCE") {
+        if (osnova[i] ~ /^SEKCE\t/) {
+            split(osnova[i], polozky);
+            maPodsekce = i < length(osnova) && osnova[i + 1] ~ /^PODSEKCE\t/;
             if (jePrvni) {
-                jePrvni = 0;
                 vysledek = vysledek "<div class=\"rozcestnikkapitol\">\n";
+            } else if (melaPodsekce || maPodsekce) {
+                vysledek = vysledek "<br>\n";
+            } else {
+                vysledek = vysledek "<span class=\"oddelovac\">&nbsp;|</span>\n";
             }
-            vysledek = vysledek "<a href=\"#cast" polozky[2] "\">" polozky[4] "</a><span class=\"oddelovac\">&nbsp;|</span>\n";
+            vysledek = vysledek "<a href=\"#cast" polozky[2] "\" class=\"sekce\">" polozky[4] "</a>";
+            if (maPodsekce) {
+                vysledek = vysledek ": ";
+                jePrvni = 1;
+                do {
+                    if (osnova[++i] ~ /^PODSEKCE\t/) {
+                        split(osnova[i], polozky);
+                        if (!jePrvni) {vysledek = vysledek "<span class=\"oddelovac\">&nbsp;|</span>\n"}
+                        vysledek = vysledek "<a href=\"#cast" polozky[2] "\">" polozky[4] "</a>";
+                        jePrvni = 0;
+                    }
+                } while (i < length(osnova) && osnova[i + 1] !~ /^SEKCE\t/);
+            }
+            jePrvni = 0;
+            melaPodsekce = maPodsekce;
         }
     }
-    if (!jePrvni) {
-        vysledek = vysledek "</div>";
-    }
+    if (!jePrvni) {vysledek = vysledek "</div>"}
     return vysledek;
 }
 
@@ -125,7 +142,7 @@ function KonecKapitoly(kapitola, cislaPoznamek, textyPoznamek,   i, vysledek, pr
 }
 
 function ZacatekSekce(kapitola, sekce, cisloKapitoly, cisloSekce) {
-    return "\n<h2 id=\"cast" cisloSekce "\"><span class=\"cislo\">" cisloSekce ".</span> " sekce "</h2>\n";
+    return "\n<h2><a href=\"#cast" cisloSekce "\" id=\"cast" cisloSekce "\"><span class=\"cislo\">" cisloSekce ".</span> " sekce "</a></h2>\n";
 }
 
 function KonecSekce(kapitola, sekce) {
@@ -133,7 +150,7 @@ function KonecSekce(kapitola, sekce) {
 }
 
 function ZacatekPodsekce(kapitola, sekce, podsekce, cisloKapitoly, cisloSekce, cisloPodsekce) {
-    return "\n<h3 id=\"cast" cisloSekce "x" cisloPodsekce "\"><span class=\"cislo\">" cisloPodsekce "</span> " podsekce "</h3>\n";
+    return "\n<h3><a href=\"#cast" cisloSekce "x" cisloPodsekce "\" id=\"cast" cisloSekce "x" cisloPodsekce "\"><span class=\"cislo\">" cisloPodsekce "</span> " podsekce "</a></h3>\n";
 }
 
 function KonecPodsekce(kapitola, sekce, podsekce) {

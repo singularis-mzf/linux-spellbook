@@ -12,10 +12,6 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
 <!--
-ÚKOLY:
-[X] Vysvětlit použití znaku & v druhém parametru gsub(); viz https://www.gnu.org/software/gawk/manual/html_node/Gory-Details.html.
-
-
 
 >> Ve verzi 5.0 prý jsou „namespaces“.
 
@@ -246,7 +242,7 @@ nevyzkoušeno
 **FS = "&blank;";**
 
 *# dělit sloupce tabulátorem*<br>
-**FS = "\t";**
+**FS = "\\t";**
 
 *# dělit sloupce regulárním výrazem*<br>
 **FS =** {*"regulární výraz"*}**;**
@@ -657,7 +653,7 @@ Poznámka: Parametry -f a -e můžete kombinovat a zadávat opakovaně. Každ�
 
 ## Pomocné funkce a skripty
 
-*# lkk nabufferuj − načte celý standardní vstup do paměti a po uzavření vstupu jej vypíše na výstup*<br>
+*# lkk retence − načte celý standardní vstup do paměti a po uzavření vstupu jej vypíše na výstup*<br>
 **#!/bin/bash**<br>
 **exec gawk -b -e 'BEGIN {RS = FS = "^$"; ORS = "";} {print}'**
 
