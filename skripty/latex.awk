@@ -39,6 +39,16 @@ function ZiskejHashTocSouboru(  prikaz, vysledek) {
     return close(prikaz) == 0 ? vysledek : "(not found)";
 }
 
+function ZiskejCisloZnaku(znak,   prikaz, vysledek) {
+    if (znak == "") {return 0}
+    znak = substr(znak, 1, 1);
+    if (znak == "'") {return 39}
+    prikaz = "printf %d\\n \\''" znak "'";
+    vysledek = "";
+    while (prikaz | getline vysledek) {}
+    return close(prikaz) == 0 ? vysledek : 0;
+}
+
 function ZaradZpravu(hlavicka, text,   i) {
     i = 1 + length(hlavickyZprav);
     hlavickyZprav[i] = hlavicka;
@@ -66,9 +76,8 @@ BEGIN {
     # Globální nastavení
     FS = "\t";
     OFS = "";
-    ORS = "\n";
-    ARGC = 2;
-    ARGV[1] = "/dev/null";
+    RS = ORS = "\n";
+    ARGC = 1;
 
     # Načíst barvy
     if (ENVIRON["TERM"] != "" && system("test -t 1") == 0) {
@@ -89,15 +98,13 @@ BEGIN {
     beh = 0;
     puvodni_toc_hash = ZiskejHashTocSouboru();
 
-    do {
+    for (;;) {
         # Inicializovat lokální proměnné
         pamet = ""; # pokud se zdá, že řádek ještě neskončil, uloží se sem
-        znovu = 0;  # pokud je třeba spustit LaTeX znovu, nastaví se tento příznak.
-        po_varovani = 0;
-#        zprava = "Spouštím LaTeX (" (++beh) ". běh)(heš toc souboru: " puvodni_toc_hash "):";
-#        hranice = Zopakovat("#", length(zprava) + 2);
         delete dulezite_radky;
-        po_full_hboxu = 0;
+        dulezitych_radku = 0;
+        typ_radku = "PRÁZDNÝ";
+        radek = "";
 
         ZaradZpravu("Spouštím LaTeX", "(" (++beh) ". běh)");
         ZaradZpravu("Heš toc souboru", puvodni_toc_hash);
@@ -106,43 +113,38 @@ BEGIN {
 
         # Spustit LaTeX a zpracovat výstup
         while (prikaz | getline) {
-            if (length($0) == 79) {
-                pamet = pamet $0;
-                continue;
-            }
-            if (pamet != "") {
-                $0 = pamet $0;
-                pamet = "";
-            }
-            if (po_varovani && $0 == "") {
-                po_varovani = 0;
-                continue;
-            }
-            if (po_full_hboxu) {
-                po_full_hboxu = 0;
-                dulezite_radky[1 + length(dulezite_radky)] = $0;
-            }
-            if ($0 ~ /^(Over|Under)full \\[hv]box /) {
-                dulezite_radky[1 + length(dulezite_radky)] = $0;
-                po_full_hboxu = $0 ~ /^(Over|Under)full \\h/;
-            }
+            while (length($0) == 79 && (pamet = pamet $0) != "" && ((prikaz | getline) || ($0 = ""))) {}
+            predchozi_radek = radek;
+            predchozi_typ_radku = typ_radku;
+            radek = pamet $0;
+            pamet = "";
 
-            if ($0 ~ /^LaTeX Warning: /) {
-                print zluta, $0, resetbarvy;
-                po_varovani = 1;
+            # Určit typ řádku
+            if (radek == "") {
+                typ_radku = "PRÁZDNÝ";
+            } else if (radek ~ /^(Over|Under)full \\[hv]box /) {
+                typ_radku = radek ~ /^[^\\]*\\h/ ? "FULL_HBOX" : "FULL_VBOX";
+            } else if (radek ~ /^LaTeX Warning: /) {
+                typ_radku = "VAROVÁNÍ";
             } else {
-                gsub(/\[[0-9]+\]/, zelena "&" resetbarvy);
-                print $0;
-                po_varovani = 0;
+                typ_radku = "NORMALNI";
             }
 
-#            if (match($0, /^Document Class: [a-zA-Z0-9]+/)) {
-#                $0 = "Document Class: " zluta substr($0, 16, RLENGTH - 16) resetbarvy substr($0, RLENGTH);
-#            }
+            if (predchozi_typ_radku == "VAROVÁNÍ" && typ_radku == "PRÁZDNÝ") {
+                predchozi_typ_radku = typ_radku;
+                continue;
+            }
+            if (typ_radku ~ /^FULL_[HV]BOX$/) {
+                dulezite_radky[++dulezitych_radku] = radek;
+            } else if (predchozi_typ_radku == "FULL_HBOX") {
+                dulezite_radky[++dulezitych_radku] = radek;
+            }
 
-#            if ($0 == "LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.") {
-#                znovu = 1;
-#            }
+            if (typ_radku == "VAROVÁNÍ") {
+                print zluta, radek, resetbarvy;
+            } else {
+                print gensub(/\[[0-9]+\]/, zelena "&" resetbarvy, "g", radek);
+            }
         }
         if (pamet != "") {
             print pamet;
@@ -152,20 +154,49 @@ BEGIN {
         # Závěr
         vysledek = close(prikaz) / 256;
         if (vysledek > 0) {
-            print "CHYBA: LaTeX skončil s chybovým kódem ", vysledek, "!" > "/dev/stderr";
-            FATALNI_VYJIMKA = vysledek;
-            exit;
+            print cervena, "CHYBA: LaTeX skončil s chybovým kódem ", vysledek, "!", resetbarvy > "/dev/stderr";
+            exit vysledek;
         }
 
         nova_toc_hash = ZiskejHashTocSouboru();
-        znovu = nova_toc_hash != puvodni_toc_hash;
+        if (nova_toc_hash == puvodni_toc_hash) {break}
         puvodni_toc_hash = nova_toc_hash;
-    } while (znovu);
+    }
 
-    if (length(dulezite_radky) != 0) {
+    # Zpracovat log z posledního běhu
+    while (getline < "kniha.log") {
+            if (length($0) == 79) {
+                pamet = pamet $0;
+                continue;
+            }
+            predchozi_radek = radek;
+            predchozi_typ_radku = typ_radku;
+            radek = pamet $0;
+            pamet = "";
+
+            if (radek ~ /^Missing character: There is no . in font [^/]+\//) {
+                typ_radku = "CHYBĚJÍCÍ_ZNAK";
+            } else {
+                typ_radku == "NORMALNI";
+            }
+
+            if (typ_radku == "CHYBĚJÍCÍ_ZNAK") {
+                i = ZiskejCisloZnaku(substr(radek, 32, 1));
+                font = gensub(/\/.*/, "", 1, substr(radek, 42));
+                dulezite_radky[++dulezitych_radku] = sprintf("%s\\u%04x%s", substr(radek, 1, 31), i, substr(radek, 33));
+            }
+    }
+    close("kniha.log");
+
+    if (dulezitych_radku != 0) {
         print zluta, "Důležité řádky:";
-        for (i = 1; i <= length(dulezite_radky); ++i) {
-            print zelena, "- ", resetbarvy, dulezite_radky[i];
+        for (i = 1; i <= dulezitych_radku; ++i) {
+            s = dulezite_radky[i];
+            if (s ~ /^(Over|Under)full [^(]*\([^)]*\)/) {
+                sub(/\([^)]*\)/, zelena "&" resetbarvy, s);
+            }
+            s = zelena "- " resetbarvy s;
+            print s;
         }
         print resetbarvy;
     }
@@ -176,11 +207,5 @@ BEGIN {
 # /^\(Font\)              using `T1\/[a-z]+\/[a-z]+\/n' instead on input line [0-9]+\.$/
 #
 # LaTeX Warning: Reference `kapxbarvyatitulek' on page 3 undefined on input line 284.
-#LaTeX Warning: Reference `kapxzpracovanivideaazvuku' on page 4 undefined on input line 355.
 
-END {
-    # Končíme-li s fatální výjimkou, skončit hned.
-    if (FATALNI_VYJIMKA) {
-        exit FATALNI_VYJIMKA;
-    }
-}
+# Missing character: There is no  in font DejaVu Sans/OT:script=latn;language=DFLT;mapping=tex-text;!

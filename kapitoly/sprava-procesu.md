@@ -95,6 +95,9 @@ PID v Linuxu neznamená Pražská integrovaná doprava...
 *# spotřebovaný čas procesoru*<br>
 **ps -p** {*PID*} **-o cputime:1=** ⊨ 00:01:13
 
+*# priorita*<br>
+?
+
 *# % zatížení CPU*<br>
 **ps -p** {*PID*} **-o %cpu=  \| tr -d "&blank;"** ⊨ 10.1
 
@@ -140,6 +143,22 @@ PID v Linuxu neznamená Pražská integrovaná doprava...
 
 *# procesy spotřebovávající nejvíc elektřiny*<br>
 ?
+
+### Ovládání procesů
+
+*# požádat o ukončení/násilně ukončit*<br>
+[**sudo**] **kill** {*PID*}...<br>
+[**sudo**] **kill -9** {*PID*}...
+
+*# zaslat procesu signál*<br>
+[**sudo**] **kill -**[{*signál*}] {*PID*}...
+
+*# spustit proces s nastavenou prioritou*<br>
+?
+
+*# změnit prioritu běžícího procesu*<br>
+*// Priorita je číslo v rozsahu -20 (nejvyšší) až 19 (nejnižší); normální priorita je 0. Obyčejný uživatel (tzn. bez sudo) může pouze snižovat prioritu vlastních procesů.*<br>
+[**sudo**] **renice** {*priorita*} {*PID*}...
 
 
 ## Parametry příkazů
