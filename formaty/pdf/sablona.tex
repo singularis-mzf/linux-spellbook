@@ -51,6 +51,7 @@
 
 % 3. skupina balíčků:
 \usepackage{changepage}     % prostředí {adjustwidth}
+\usepackage{colortbl}       % barevné pozadí prostředí {tabular}
 \usepackage{dashbox}        % příkazy \dbox{} a \dashbox{}
 \usepackage{enumitem}       % nastavení {enumerable} a {itemize}
 \usepackage{etoolbox}       % podmíněný překlad apod.
@@ -118,7 +119,7 @@
             \begin{blok}%
                 \setlength{\unitlength}{1em}%
                 \begin{picture}(2.25,1)(0,0.16)\relax%
-                    \put(0,-0.2){{\color{svetleseda}\rule{\columnwidth}{1.4\unitlength}}}%
+                    %\put(0,-0.2){{\color{svetleseda}\rule{\columnwidth}{1.4\unitlength}}}%
                     \put(0.7,0){\makebox(1,1){\arabic{subsection}}}%
                     \put(1.2,0.5){\circle{1.2}}%
                 \end{picture}%
@@ -147,6 +148,8 @@
     \definecolor{svetleseda}{gray}{0.9}
     \definecolor{seda}{gray}{0.5}
     \definecolor{sedamezisloupci}{gray}{0.75}
+    \definecolor{pozadizaklinadelA}{gray}{0.925}
+    \definecolor{pozadizaklinadelB}{gray}{1.0}
 
 %
 % DEFINICE DÉLKOVÝCH REGISTRŮ
@@ -398,16 +401,24 @@
         % text řádku (může dojít k zalomení)
         {##2}%
         }%
-    \noindent\begin{tabular}{%
-        % číslo zaklínadla:
-        >{\raggedright\fontsize{9pt}{0pt}\selectfont}p{\sirkacislazaklinadla}@{}%
-        % ikona zaklínadla:
-        >{\centering}p{\sirkaikony}@{\hspace{2pt}}%
-        % titulek zaklínadla + mezera před řádky zaklínadla:
-        >{\raggedright\fontsize{10pt}{10pt}\selectfont}p{\sirkatitulkuzaklinadla}%
-        @{\hspace{10pt}}%
-        % řádky zaklínadla:
-        |>{\raggedright\zaklinadlofamily\zaklinadlosize}p{\sirkaradkuzaklinadla}%
+    \newcommand*{\zacatek}[1]{%
+        \noindent\begin{tabular}{%
+            % číslo zaklínadla:
+            >{\raggedright##1\fontsize{9pt}{0pt}\selectfont}p{\sirkacislazaklinadla}@{}%
+            % ikona zaklínadla:
+            >{\centering##1}p{\sirkaikony}@{\hspace{2pt}}%
+            % titulek zaklínadla + mezera před řádky zaklínadla:
+            >{\raggedright##1\fontsize{10pt}{10pt}\selectfont}p{\sirkatitulkuzaklinadla}%
+            @{\hspace{10pt}}%
+            % řádky zaklínadla:
+            |>{\raggedright\zaklinadlofamily\zaklinadlosize}p{\sirkaradkuzaklinadla}%
+        }%
+    }%
+    \newcommand*{\konec}{\tabularnewline\end{tabular}}%
+    \ifnumodd{#2}{%
+        \zacatek{\columncolor{pozadizaklinadelA}}%
+    }{%
+        \zacatek{\columncolor{pozadizaklinadelB}}%
     }%
     % číslo zaklínadla:
     \##2%
@@ -417,8 +428,7 @@
     &{#3}%
     % řádky zaklínadla:
     &{\raggedright\budepoprve{}#5}%
-    \tabularnewline%
-    \end{tabular}#4\par\vspace{4pt plus5pt minus5pt}%
+    \konec{}#4\par\vspace{4pt plus5pt minus5pt}%
     }}
 
 % \ukazka{#1 = řádky a akce zaklínadla}
