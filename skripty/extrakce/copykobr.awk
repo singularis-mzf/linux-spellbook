@@ -22,118 +22,131 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
+@include "skripty/utility.awk";
+
 BEGIN {
-	AKT = 0;
-	split("", DOVOLENE_OBRAZKY);
-	if (ARGC > 2) {
-		for (i = 2; i < ARGC; ++i) {
-			DOVOLENE_OBRAZKY[ARGV[i]] = 1;
-		}
-		ARGC = 2;
-	}
+    FS = "\n";
+    RS = "";
+    OFS = "";
+    ORS = "\n";
+
+    delete hledane_obrazky;
+    for (i = 2; i < ARGC; ++i) {hledane_obrazky[ARGV[i]] = 1}
+    ARGC = 2;
+
+    #for (i in hledane_obrazky) {print "LADĚNÍ: hledaný obrázek \"" i "\"." > "/dev/stderr"}
+
+    delete zaznamy; # [číslo-záznamu] => záznam (dělený \n)
+    delete zaznamy_k_obrazkum; # [cesta/obrázku] => číslo-záznamu
+    pocet_zaznamu = 0;
 }
 
-function Uzavrit() {
-	POLE = "";
-	DATA[AKT ":OK"] = (DATA[AKT ":Files"] != "" && DATA[AKT ":Copyright"] != "" && DATA[AKT ":License"] != "");
-	++AKT;
-}
+# Přeskočit úvodní odstavec
+NR == 1 {next}
 
-/^$/ {
-	Uzavrit();
-	next;
-}
-/^(Files|Copyright|License|Source): / {
-	if (/^Files: / && !/^Files: obrazky\//) {
-		next;
-	}
-	POLE = substr($0, 1, index($0, ":") - 1);
-	match($0, /^[A-Za-z]*: */);
-	$0 = substr($0, RLENGTH + 1);
-}
+/^(.*\n)?Files:/ {
+    i_files = i_copyright = i_license = i_copyright_e = i_license_e = 0;
+    last_i = "";
+    for (i = 1; i <= NF; ++i) {
+        if (match($i, /^Files: ?/)) {
+            i_files = i;
+            n_files = split(substr($i, 1 + RLENGTH), pole_files, "\\s+");
+        } else if ($i ~ /^Copyright: ?/) {
+            i_copyright = i_copyright_e = i;
+            last_i = "i_copyright_e";
+        } else if ($i ~ /^License: ?/) {
+            i_license = i_license_e = i;
+            last_i = "i_license_e";
+        } else if ($i ~ /^[ \t]/) {
+            SYMTAB[last_i] = i;
+        } else {
+            ShoditFatalniVyjimku("Chyba syntaxe v záznamu " FNR "!");
+        }
+    }
 
-/^ [^ ]/ {
-	POLE = "Info";
-	$0 = substr($0, 2);
-	if ($0 == ".") {
-		$0 = "";
-	}
+    if (i_files == 0) {ShoditFatalniVyjimku("Chybí pole „Files:“!")}
+    if (i_license == 0 || i_license_e == 0) {ShoditFatalniVyjimku("Chybí pole License (" i_license ".." i_license_e ")")}
+    if ((i_copyright == 0 || i_copyright_e == 0) && $i_license !~ /^License:\s+public-domain$/) {
+        ShoditFatalniVyjimku("Chybí pole Copyright (" i_copyright ".." i_copyright_e ")");
+    }
+    if (n_files <= 0) {ShoditFatalniVyjimku("Chybí soubory v poli Files!")}
+
+    # Sestavit záznam
+    s = "";
+    if (i_copyright_e != 0) {
+        s = gensub(/^Copyright:\s*/, "Copyright (c) ", 1, $i_copyright);
+        for (i = i_copyright + 1; i <= i_copyright_e; ++i) {
+            s = s gensub(/^\s*/, "\nCopyright (c) ", 1, $i);
+        }
+    }
+    s = s gensub(/^License:\s*/, "\nLicence: ", 1, $i_license);
+    for (i = i_license + 1; i <= i_license_e; ++i) {
+        s = s gensub(/^\s*(.$)?/, "\n", 1, $i);
+    }
+    zaznamy[++pocet_zaznamu] = s;
+    #print "LADĚNÍ: ULOŽENO: zaznamy[" pocet_zaznamu "] = {" s "}";
+
+    # Identifikovat obrázky, ke kterým by záznam mohl patřit
+    for (i = 1; i <= n_files; ++i) {
+        vzorek = pole_files[i];
+        #print "LADĚNÍ: vzorek \"" vzorek "\"." > "/dev/stderr";
+        if (vzorek ~ /^[^?*]+$/) {
+            if (vzorek in hledane_obrazky) {
+                zaznamy_k_obrazkum[vzorek] = pocet_zaznamu;
+                #print "LADĚNÍ: Přesná shoda: \"" vzorek "\"." > "/dev/stderr";
+            }
+        } else if (vzorek ~ /^[^?*]*\*[^?*]*$/) {
+            pozice = index(vzorek, "*");
+            predpona = substr(vzorek, 1, pozice - 1);
+            pripona = substr(vzorek, pozice + 1);
+            for (obrazek in hledane_obrazky) {
+                #print "LADĚNÍ: Testy: \"" SubstrZleva(obrazek, length(predpona)) "\" ? \"" predpona "\" && \"" SubstrZprava(obrazek, length(pripona)) "\" ? \"" pripona "\"." > "/dev/stderr";
+                if (SubstrZleva(obrazek, length(predpona)) == predpona && SubstrZprava(obrazek, length(pripona)) == pripona) {
+                    zaznamy_k_obrazkum[obrazek] = pocet_zaznamu;
+                    #print "LADĚNÍ: Vzorek \"" vzorek "\": odpovídá \"" i "\"." > "/dev/stderr";
+                }
+            }
+        } else {
+            ShoditFatalniVyjimku("Nepodporovaný tvar vzorku: " vzorek);
+        }
+    }
 }
-
-POLE != "" {
-	if (match($0, /^ */) && RLENGTH > 0) {
-		$0 = substr($0, 1 + RLENGTH);
-	}
-	if (DATA[AKT ":" POLE] != "") {
-		DATA[AKT ":" POLE] = DATA[AKT ":" POLE] "\n";
-	}
-	DATA[AKT ":" POLE] = DATA[AKT ":" POLE] $0;
-}
-
-
-#function Tiskni(i, pole,   key) {
-#	if (pole == "") {
-#		print "---------";
-#		Tiskni(i, "Files");
-#		Tiskni(i, "Copyright");
-#		Tiskni(i, "License");
-#		Tiskni(i, "Info");
-#		Tiskni(i, "Source");
-#	} else {
-#		key = i ":" pole;
-#		print "DATA[" key "] = \"" DATA[key] "\"";
-#	}
-#}
 
 END {
-	Uzavrit();
+    if (FATALNI_VYJIMKA) {exit FATALNI_VYJIMKA}
 
-	for (i = 0; i < AKT; ++i) {
-		if (DATA[i ":OK"]) {
-			split(DATA[i ":Files"], soubory, "\n");
-			for (ind in soubory) {
-				if (soubory[ind] in DOVOLENE_OBRAZKY) {
-					OBRAZKY[soubory[ind]] = i;
-				}
-			}
-		}
-	}
+    #for (i in zaznamy_k_obrazkum) {
+        #print "Záznam " i ":" zaznamy[zaznamy_k_obrazkum[i]];
+    #}
 
-	n = asorti(OBRAZKY, PODLE_ABECEDY);
+    # Nahradit HTML entity
+    for (i in zaznamy_k_obrazkum) {
+        gsub(/&/, "\\&amp;", zaznamy_k_obrazkum[i]);
+        gsub(/</, "\\&lt;", zaznamy_k_obrazkum[i]);
+        gsub(/>/, "\\&gt;", zaznamy_k_obrazkum[i]);
+        gsub(/ /, "\\&nbsp;", zaznamy_k_obrazkum[i]);
+    }
 
-	for (key in DATA) {
-		gsub(/&/, "\\&amp;", DATA[key]);
-		gsub(/</, "\\&lt;", DATA[key]);
-		gsub(/>/, "\\&gt;", DATA[key]);
-		gsub(/ /, "\\&nbsp;", DATA[key]);
-	}
+    # Zkontrolovat chybějící záznamy
+    for (i in hledane_obrazky) {
+        if (!(i in zaznamy_k_obrazkum)) {
+            print "VAROVÁNÍ: Nenalezen záznam k obrázku \"" i "\"!" > "/dev/stderr";
+        }
+    }
 
-	for (i = 1; i <= n; ++i) {
-		soubor = PODLE_ABECEDY[i];
-		j = OBRAZKY[soubor];
-		copyright = DATA[j ":Copyright"];
-		licence = DATA[j ":License"];
-		zdroj = DATA[j ":Source"];
-		info = DATA[j ":Info"];
+    pocet = asorti(zaznamy_k_obrazkum, podle_abecedy, "@ind_str_asc");
 
-		gsub(/^|\n/, "&Copyright (c) ", copyright);
-
-		print "<dt><a href=\"" soubor "\">" soubor "</a></dt>";
-		print "<dd><pre>" copyright "\nLicence: " licence;
-		if (zdroj != "") {
-			print "Zdroj: " zdroj;
-		}
-		if (info != "") {
-			print info;
-		}
-		print "</pre></dd>";
-	}
-
-	exit;
-	for (i = 0; i < AKT; ++i) {
-		if (DATA[i ":OK"]) {
-			Tiskni(i);
-		}
-	}
+    for (i = 1; i <= pocet; ++i) {
+        soubor = podle_abecedy[i];
+        zaznam = zaznamy[zaznamy_k_obrazkum[soubor]];
+        #print "LADĚNÍ: i = " i "; podle_abecedy[i] = " podle_abecedy[i] "; zaznamy_k_obrazkum[soubor] = " zaznamy_k_obrazkum[soubor] " zaznamy[zaznamy_k_obrazkum[soubor]] = " zaznamy[zaznamy_k_obrazkum[soubor]] "." > "/dev/stderr";
+        #exit;
+        gsub(/&/, "\\&amp;", zaznam);
+        gsub(/</, "\\&lt;", zaznam);
+        gsub(/>/, "\\&gt;", zaznam);
+        gsub(/ /, "\\&nbsp;", zaznam);
+        gsub(/^\n+/, "", zaznam);
+        print "<dt><a href=\"", soubor, "\">", soubor, "</a></dt>";
+        print "<dd><pre>", zaznam, "</pre></dd>";
+    }
 }
-

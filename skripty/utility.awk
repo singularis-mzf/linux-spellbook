@@ -49,8 +49,12 @@ function Zopakovat(text, kolikrat,  vysledek) {
     return vysledek;
 }
 
+function SubstrZleva(text, maxDelka) {
+    return length(text) > maxDelka ? substr(text, 1, maxDelka) : text;
+}
+
 function SubstrZprava(text, maxDelka) {
-    return length(text) >= maxDelka ? substr(text, 1 + length(text) - maxDelka) : "";
+    return length(text) > maxDelka ? substr(text, 1 + length(text) - maxDelka) : text;
 }
 
 function PrecistKonfig(sekce, klic, vychoziHodnota,   prikaz, vysledek) {

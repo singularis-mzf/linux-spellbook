@@ -199,7 +199,7 @@ $(SOUBORY_PREKLADU)/html/kap-copys.htm: $(SOUBORY_PREKLADU)/fragmenty.tsv skript
 
 # 7. sepsat copyrighty k obrázkům
 # ----------------------------------------------------------------------------
-$(SOUBORY_PREKLADU)/html/obr-copys.htm: COPYING skripty/extrakce/copykobr.awk
+$(SOUBORY_PREKLADU)/html/obr-copys.htm: COPYRIGHT skripty/extrakce/copykobr.awk
 	mkdir -pv $(dir $@)
 	$(AWK) -f skripty/extrakce/copykobr.awk $< $(OBRAZKY:%=obrazky/%) $(SVG_OBRAZKY:%=obrazky/%) >$@
 
@@ -384,7 +384,7 @@ $(SOUBORY_PREKLADU)/deb/usr/share/lkk/awkvolby.awk: skripty/lkk/awkvolby.awk
 	mkdir -pv $(dir $@)
 	cat $< >$@
 
-# 3. skripty/lkk/lkk.awk => soubory_prekladu/deb/usr/share/lkk.awk
+# 3. skripty/lkk/lkk.awk => soubory_prekladu/deb/usr/share/lkk/lkk.awk
 # ----------------------------------------------------------------------------
 $(SOUBORY_PREKLADU)/deb/usr/share/lkk/lkk.awk: skripty/lkk/lkk.awk $(JMENO_SESTAVENI_SOUBOR)
 	mkdir -pv $(dir $@)
@@ -396,19 +396,17 @@ $(SOUBORY_PREKLADU)/deb/usr/share/lkk/skripty/pomocne-funkce: skripty/extrakce/p
 	mkdir -pv $(dir $@)
 	$(AWK) -f skripty/extrakce/pomocne-funkce.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 
-# 5. [nedoděláno] => soubory_prekladu/deb/usr/share/doc/lkk/copyright
+# 5. COPYRIGHT-DEB => soubory_prekladu/deb/usr/share/doc/lkk/copyright
 # ----------------------------------------------------------------------------
-$(SOUBORY_PREKLADU)/deb/usr/share/doc/lkk/copyright:
+$(SOUBORY_PREKLADU)/deb/usr/share/doc/lkk/copyright: COPYRIGHT-DEB
 	mkdir -pv $(dir $@)
-	touch $@
+	cat $< >$@
 
 # 6. formaty/deb/control => soubory_prekladu/deb/DEBIAN/control
 # ----------------------------------------------------------------------------
 $(SOUBORY_PREKLADU)/deb/DEBIAN/control: formaty/deb/control $(DEB_VERZE_SOUBOR)
 	mkdir -pv $(dir $@)
 	sed -E -e "s/\\{Version\\}/$(DEB_VERZE)/g" -e "s/\\{Installed-Size\\}/$$(du -ks --exclude=DEBIAN $(SOUBORY_PREKLADU)/deb | cut -f 1 | tail -n 1)/g" $< >"$@"
-	mkdir -pv $(SOUBORY_PREKLADU)/deb/usr/share/doc/lkk
-	touch $(SOUBORY_PREKLADU)/deb/usr/share/doc/lkk/copyright
 
 # 7. soubory_prekladu/deb/** => soubory_prekladu/deb/DEBIAN/md5sums
 # ----------------------------------------------------------------------------
