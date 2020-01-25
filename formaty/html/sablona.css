@@ -473,6 +473,19 @@ footer img {float:left;margin:0 1rem 1rem 0;}
     font-weight:normal;
     margin-left:1em;
 }
+.podzahlavim p.informaceoverzi a {
+    display:block;
+    margin:0.3rem 0 0;
+    border-top:thin dotted #666666;
+    padding:0.2rem 0 0 1em;;
+}
+.podzahlavim p.informaceoverzi a::before {
+    content: "📚 ";
+    font-size:150%;
+}
+.podzahlavim p.informaceoverzi a::after {
+    content: normal;
+}
 
 
 nav .slogan {
