@@ -423,7 +423,7 @@ function RadekZaklinadla(text, urovenOdsazeni, prikladHodnoty) {
         return "%\n\\radekzaklinadla{\\lmmathfamily{}∘\\hspace*{0.1em}}{" Zopakovat("~", 2 * urovenOdsazeni) ZalomitRadekZaklinadla(text) (prikladHodnoty != "" ? "\\priklad{}" prikladHodnoty : "") "}";
 
     } else if (urovenOdsazeni == UROVEN_AKCE) {
-        return "%\n\\radekzaklinadla{\\lmmathfamily{}⇒{}}{\\rmfamily{}" ZalomitRadekZaklinadla(text) "}";
+        return "%\n\\radekzaklinadla{\\dejavusansfamily{}➙\\hspace*{-0.15em}}{\\rmfamily{}" ZalomitRadekZaklinadla(text) "}";
 
     } else if (urovenOdsazeni == UROVEN_PREAMBULE) {
         return "%\n\\radekzaklinadla{\\lmmathfamily{}↟\\hspace{0.04em}}{" ZalomitRadekZaklinadla(text) (prikladHodnoty != "" ? "\\priklad{}" prikladHodnoty : "") "}";
@@ -450,7 +450,7 @@ function FormatDopln(jeZacatek, jePoJinemDopln) {
 }
 
 function FormatKlavesa(jeZacatek, jePoJineKlavese) {
-    return jeZacatek ? (jePoJineKlavese ? "\\hspace{0.2em}" : "") "\\kbd{" : "}";
+    return jeZacatek ? (jePoJineKlavese ? "\\hspace{0.2em}" : "") "\\klavesa{" : "}";
 }
 
 function FormatVolitelny(jeZacatek) {
