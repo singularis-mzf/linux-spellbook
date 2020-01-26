@@ -165,12 +165,12 @@ function KonecParametruPrikazu() {
     return "KonecParametruPrikazu();\n"
 }
 
-function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, cislaPoznamek, textyPoznamek,   vysledek) {
+function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, ikona, cislaPoznamek, textyPoznamek,   vysledek) {
     if (!isarray(cislaPoznamek) || !isarray(textyPoznamek)) {
         ShoditFatalniVyjimku("ZacatekZaklinadla(): Očekáváno pole!");
     }
 
-    vysledek = "ZacatekZaklinadla(" cisloZaklinadla ", \"" textZaklinadla "\", {";
+    vysledek = "ZacatekZaklinadla(ikona:<" gensub(/\t.*/, "", 1, ikona) ">(písmo:" gensub(/.*\t/, "", 1, ikona) ")|" cisloZaklinadla ", \"" textZaklinadla "\", {";
     for (i = 0; i < length(cislaPoznamek); ++i) {
         if (!(i in cislaPoznamek)) {
             ShoditFatalniVyjimku("Vnitřní chyba: v poli cislaPoznamek očekáván index [" i "]!");

@@ -244,10 +244,6 @@ Poznámka: escapování zaklínadel v této sekci je upraveno pro uvedení uvni
 Další možnost: \\044\\[\\]
 -->
 
-<!--
-+ počet řádků/sloupců terminálu
--->
-
 ## Zaklínadla (příklady)
 
 *# návratová hodnota, čas, aktuální adresář a dolar*<br>

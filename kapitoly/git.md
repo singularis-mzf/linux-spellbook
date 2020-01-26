@@ -24,6 +24,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 !Štítky: {program}{správa verzí}
 !ÚzkýRežim: zap
+<!-- !FixaceIkon: * -->
 
 ## Úvod
 Git je systém správy verzí. Umožňuje vám zachytit přesný stav souborů v určitém

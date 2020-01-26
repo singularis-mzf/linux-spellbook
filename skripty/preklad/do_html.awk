@@ -205,7 +205,7 @@ function KonecParametruPrikazu() {
     return "</tbody></table>\n"
 }
 
-function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, cislaPoznamek, textyPoznamek,   prvni) {
+function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, ikona, cislaPoznamek, textyPoznamek,   prvni) {
     if (!isarray(cislaPoznamek) || !isarray(textyPoznamek)) {
         ShoditFatalniVyjimku("ZacatekZaklinadla(): Očekáváno pole!");
     }
@@ -214,7 +214,9 @@ function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, cislaPoznamek, texty
     }
     vysledek = "<div class=\"zaklinadlo\">";
     if (textZaklinadla != "") {
-        vysledek = vysledek "<hr><div class=\"zahlavi\"><span class=\"cislo\">#" cisloZaklinadla " </span>" textZaklinadla;
+        if (ikona == "") {ikona = "&nbsp;\tD"}
+        vysledek = vysledek "<hr><div class=\"zahlavi\"><span class=\"cislo\">#" cisloZaklinadla " </span>";
+        vysledek = vysledek gensub(/([^\t]*)\t([^\t]*)/, "<span class=\"\\2\">\\1</span>", 1, ikona) textZaklinadla;
         prvni = 1;
         if (length(cislaPoznamek) > 0) {
             vysledek = vysledek "<sup>";

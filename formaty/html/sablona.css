@@ -426,6 +426,18 @@ nav a[rel="prev"]::after, nav a[rel="next"]::before {content:none;}
     width:3rem;
 }
 
+.zaklinadlo .zahlavi .D, .zaklinadlo .zahlavi .L {
+    display:inline-block;
+    margin-right:0.25em;
+    border:1px solid transparent;
+    border-right:;
+    min-width:1em;
+    text-align:center;
+    white-space:pre;
+}
+.zaklinadlo .zahlavi .D {font-family:"DejaVu Sans", sans-serif;}
+.zaklinadlo .zahlavi .L {font-family:"Latin Modern Math", sans-serif;}
+
 .zaklinadlo .radky {
 # /*    box-shadow:0 0 5pt 0 rgb(200,200,200), -5pt 0 5pt 5pt rgb(200,200,200), 5pt 0 5pt 0 rgb(200,200,200);*/    /*box-shadow:0 0 5pt 1pt rgb(200,200,200);*/
     font-size:80%;

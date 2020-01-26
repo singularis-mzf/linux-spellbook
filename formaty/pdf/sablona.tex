@@ -402,9 +402,9 @@
     \end{adjustwidth}%
 }%
 %
-% \zaklinadlo[#1=(rezervováno)]{#2=číslo zaklínadla}{#3=titulek (volitelný) + \footnotemark}{#4=\footnotetext...}{#5=řádky a akce zaklínadla}
+% \zaklinadlo[#1=(rezervováno)]{#2=číslo zaklínadla}{#3=ikona}{#4=titulek + \footnotemark}{#5=\footnotetext...}{#6=řádky a akce zaklínadla}
 % ====================================
-\newcommand{\zaklinadlo}[5][]{{%
+\newcommand{\zaklinadlo}[6][]{{%
     \setlength{\tabcolsep}{\zaklinadlotabcolsep}%
     % \radekzaklinadla{symbol}{text}
     \newcommand{\radekzaklinadla}[2]{%
@@ -438,12 +438,12 @@
     % číslo zaklínadla:
     \##2%
     % ikona zaklínadla:
-    &{\lmmathfamily{}♣}%
+    &{#3}% \lmmathfamily{}♣
     % titulek zaklínadla:
-    &{#3}%
+    &{#4}%
     % řádky zaklínadla:
-    &{\raggedright\budepoprve{}#5}%
-    \konec{}#4\par\vspace{4pt plus5pt minus5pt}\mbox{}%
+    &{\raggedright\budepoprve{}#6}%
+    \konec{}#5\par\vspace{4pt plus5pt minus5pt}\mbox{}%
     }}
 
 % \ukazka{#1 = řádky a akce zaklínadla}

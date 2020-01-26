@@ -325,7 +325,7 @@ function KonecParametruPrikazu() {
     return "\\end{parametryprikazu}\n"
 }
 
-function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, cislaPoznamek, textyPoznamek,   i, ax, base) {
+function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, ikona, cislaPoznamek, textyPoznamek,   i, ax, base) {
     ax = "%\n";
     if (DO_LATEXU_ODSTAVEC_PRED_ZAKLINADLEM && cisloZaklinadla == 1 && textZaklinadla != "") {
         ax = ax "\\vspace{2ex}";
@@ -337,7 +337,9 @@ function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, cislaPoznamek, texty
         ax = ax "\\zaklinadlo{";
         # #2 = číslo zaklínadla
         ax = ax cisloZaklinadla "}{";
-        # #3 = titulek zaklínadla + \footnotemark
+        # #3 = ikona
+        ax = ax (ikona ~ /^.\t[Dd]$/ ? "\\dejavusansfamily" : ikona ~ /^.\t[Ll]$/ ? "\\lmmathfamily" : ShoditFatalniVyjimku("Nerozpoznaný typ ikony: \"" ikona "\"!")) "{}" substr(ikona, 1, 1) "}{";
+        # #4 = titulek zaklínadla + \footnotemark
         ax = ax textZaklinadla;
         if (length(cislaPoznamek) > 0) {
             base = AlokovatPoznamkuPodCarou();
@@ -347,7 +349,7 @@ function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, cislaPoznamek, texty
             }
         }
         ax = ax "}%\n{";
-        # #4 = \footnotetext
+        # #5 = \footnotetext
         for (i = 0; i < length(cislaPoznamek); ++i) {
             ax = ax "\\footnotetext[" (base + i) "]{" textyPoznamek[cislaPoznamek[i]] "}";
         }
@@ -355,7 +357,7 @@ function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, cislaPoznamek, texty
     } else {
         ax = ax "\\ukazka{";
     }
-    # #5 = řádky zaklínadla
+    # #6 = řádky zaklínadla
     return ax;
 }
 

@@ -464,15 +464,16 @@ function UkoncitPredchoziTypRadku() {
     }
 }
 
-function VypsatZahlaviZaklinadla(   i, maPoznamky) {
+function VypsatZahlaviZaklinadla(   i) {
     if (TYP_RADKU != "RADEK_ZAKLINADLA") {
         ShoditFatalniVyjimku("Zaklínadlo musí mít alespoň jeden řádek!");
     }
     if (TEXT_ZAKLINADLA != NULL_STRING) {
         if (TEXT_ZAKLINADLA != "") {
-            printf("%s", ZacatekZaklinadla(++C_ZAKLINADLA, TEXT_ZAKLINADLA, ppc, ppt));
+            i = Hes(gensub(/[*]/, "", "g", TEXT_ZAKLINADLA)) % length(UCS_IKONY);
+            printf("%s", ZacatekZaklinadla(++C_ZAKLINADLA, TEXT_ZAKLINADLA, substr(UCS_IKONY, 1 + i, 1) "\t" substr(UCS_IKONY_PISMA, 1 + i, 1), ppc, ppt));
         } else {
-            printf("%s", ZacatekZaklinadla(0, "", ppc, ppt));
+            printf("%s", ZacatekZaklinadla(0, "", "", ppc, ppt));
         }
         TEXT_ZAKLINADLA = NULL_STRING;
         delete ppc;
@@ -545,6 +546,8 @@ BEGIN {
     UROVEN = 0;
     UROVEN_AKCE = -1;
     UROVEN_PREAMBULE = -2;
+    UCS_IKONY = VYCHOZI_UCS_IKONA = "♣";
+    UCS_IKONY_PISMA = VYCHOZI_UCS_IKONA_PISMO = "L";
     delete ppc;
     delete ppt;
     delete ppcall;
@@ -737,22 +740,63 @@ TYP_RADKU == "DIREKTIVA" {
     if (HODNOTA_DIREKTIVY ~ /^ /) {
         HODNOTA_DIREKTIVY = substr(HODNOTA_DIREKTIVY, 2);
     }
-    if (DIREKTIVA == "PARAMETRY") {
-        if (HODNOTA_DIREKTIVY != "") {
-            ShoditFatalniVyjimku("Direktiva !PARAMETRY nepřijímá žádný parametr!");
-        }
-        if (BUDOU_PARAMETRY_PRIKAZU != 0) {
-            ShoditFatalniVyjimku("Neočekávaný stav direktivy !PARAMETRY: " BUDOU_PARAMETRY_PRIKAZU);
-        }
-        BUDOU_PARAMETRY_PRIKAZU = 1;
-    } else if (DIREKTIVA == "ÚZKÝREŽIM") {
-        if (toupper(HODNOTA_DIREKTIVY) == "ZAP") {
-            printf("%s\n", ZapnoutUzkyRezim());
-        } else if (toupper(HODNOTA_DIREKTIVY) == "VYP") {
-            printf("%s\n", VypnoutUzkyRezim());
-        } else {
-            ShoditFatalniVyjimku("Neznámá hodnota direktivy ÚZKÝREŽIM: \"" HODNOTA_DIREKTIVY "\"");
-        }
+    #print "LADĚNÍ: Direktiva !" DIREKTIVA "=" HODNOTA_DIREKTIVY "\\n" > "/dev/stderr";
+    switch (DIREKTIVA) {
+        case "FIXACEIKON":
+            if (HODNOTA_DIREKTIVY !~ /^([0123456789]+|\*)$/) {ShoditFatalniVyjimku("Neplatný parametr direktivy !FixaceIkon: \"" HODNOTA_DIREKTIVY "\"!")}
+            UCS_IKONY = VYCHOZI_UCS_IKONA;
+            UCS_IKONY_PISMA = VYCHOZI_UCS_IKONA_PISMO;
+            if (HODNOTA_DIREKTIVY ~ /^0+$/) {break} # "!FixaceIkon: 0 vrací výchozí nastavení"
+
+            if ((getline UCS_IKONY < "soubory_prekladu/ucs_ikony.dat") && (getline UCS_IKONY_PISMA <  "soubory_prekladu/ucs_ikony.dat")) {
+                close("soubory_prekladu/ucs_ikony.dat");
+            } else {
+                ShoditFatalniVyjimku("Nemohu správně načíst soubor soubory_prekladu/ucs_ikony.dat!");
+            }
+            if (length(UCS_IKONY) < 1 || length(UCS_IKONY_PISMA) < 1) {
+                UCS_IKONY = VYCHOZI_UCS_IKONA;
+                UCS_IKONY_PISMA = VYCHOZI_UCS_IKONA_PISMO;
+            }
+            if (length(UCS_IKONY) == length(UCS_IKONY_PISMA)) {
+                #print "LADĚNÍ: Načteno " length(UCS_IKONY) " ikon." > "/dev/stderr";
+            } else {
+                ShoditFatalniVyjimku("Interní chyba: počet ikon neodpovídá počtu informací o písmu! (" length(UCS_IKONY) " != " length(UCS_IKONY_PISMA) ")!");
+            }
+            if (HODNOTA_DIREKTIVY == "*") {break}
+            while (HODNOTA_DIREKTIVY > length(UCS_IKONY)) {
+                UCS_IKONY = UCS_IKONY UCS_IKONY;
+                UCS_IKONY_PISMA = UCS_IKONY_PISMA UCS_IKONY_PISMA;
+            }
+            if (HODNOTA_DIREKTIVY < length(UCS_IKONY)) {
+                UCS_IKONY = substr(UCS_IKONY, 1, HODNOTA_DIREKTIVY);
+                UCS_IKONY_PISMA = substr(UCS_IKONY_PISMA, 1, HODNOTA_DIREKTIVY);
+            }
+            break;
+
+        case "PARAMETRY":
+            if (HODNOTA_DIREKTIVY != "") {
+                ShoditFatalniVyjimku("Direktiva !PARAMETRY nepřijímá žádný parametr!");
+            }
+            if (BUDOU_PARAMETRY_PRIKAZU != 0) {
+                ShoditFatalniVyjimku("Neočekávaný stav direktivy !PARAMETRY: " BUDOU_PARAMETRY_PRIKAZU);
+            }
+            BUDOU_PARAMETRY_PRIKAZU = 1;
+            break;
+
+        case "ŠTÍTKY":
+            break;
+
+        case "ÚZKÝREŽIM":
+            if (toupper(HODNOTA_DIREKTIVY) == "ZAP") {
+                printf("%s\n", ZapnoutUzkyRezim());
+            } else if (toupper(HODNOTA_DIREKTIVY) == "VYP") {
+                printf("%s\n", VypnoutUzkyRezim());
+            } else {
+                ShoditFatalniVyjimku("Neznámá hodnota direktivy ÚZKÝREŽIM: \"" HODNOTA_DIREKTIVY "\"");
+            }
+            break;
+        default:
+            ShoditFatalniVyjimku("Neznámá direktiva na řádku: \"" $0 "\"!");
     }
 #
 #    print "LADĚNÍ: Direktiva „" DIREKTIVA "“ = \"" HODNOTA_DIREKTIVY "\"" > "/dev/stderr";

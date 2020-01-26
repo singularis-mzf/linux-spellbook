@@ -118,7 +118,9 @@ $(JMENO_SESTAVENI_SOUBOR):
 # 1. soubory_prekladu/fragmenty.tsv + soubory_prekladu/stitky.tsv
 # ----------------------------------------------------------------------------
 $(SOUBORY_PREKLADU)/fragmenty.tsv: $(wildcard poradi-kapitol.lst poradi-kapitol.vychozi.lst) \
-  skripty/extrakce/fragmenty.awk $(VSECHNY_KAPITOLY_A_DODATKY_MD)
+  skripty/extrakce/fragmenty.awk \
+  $(VSECHNY_KAPITOLY_A_DODATKY_MD) \
+  $(SOUBORY_PREKLADU)/ucs_ikony.dat
 	mkdir -pv $(SOUBORY_PREKLADU)
 	(cat poradi-kapitol.lst 2>/dev/null || cat poradi-kapitol.vychozi.lst 2>/dev/null || printf %s\\n "# Seznam kapitol a dodatků k vygenerování" "predmluva" "" "# Kapitoly" $(strip $(sort $(VSECHNY_KAPITOLY))) "" "# Dodatky" $(strip $(sort $(filter-out predmluva,$(VSECHNY_DODATKY))))) | $(AWK) -f skripty/extrakce/fragmenty.awk 3>$(SOUBORY_PREKLADU)/fragmenty.tsv 4>$(SOUBORY_PREKLADU)/stitky.tsv
 
@@ -139,6 +141,12 @@ $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/osnova/%.tsv): $(SOUBORY_PREKLADU)/osnov
 $(SOUBORY_PREKLADU)/postprocess.dat: $(wildcard postprocess.dat)
 	-test -r postprocess.dat && cat postprocess.dat >"$@"
 	touch "$@"
+
+# 3. soubory_prekladu/ucs_ikony.dat
+# ----------------------------------------------------------------------------
+$(SOUBORY_PREKLADU)/ucs_ikony.dat: ucs_ikony/ikony.txt skripty/extrakce/ikony-zaklinadel.awk
+	$(AWK) -f skripty/extrakce/ikony-zaklinadel.awk
+	$(AWK) 'BEGIN {ORS = ""} /^[^#]/ {gsub(/\s/, ""); print $0;} END {print "\n"}' $< >$@
 
 # HTML:
 # ============================================================================
