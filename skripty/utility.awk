@@ -172,6 +172,32 @@ function Vrchol(zasobnik) {
 }
 
 #
+# HEŠOVACÍ FUNKCE
+# ============================================================================
+BEGIN {HES_INICITALIZOVANA = 0}
+
+function Hes(s,   c, i, l, vysledek) {
+        if (!HES_INICITALIZOVANA) {
+            vysledek = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrtsuvwxyz";
+            l = length(vysledek);
+            delete HES_PORADOVE_CISLO;
+            for (i = 1; i <= l; ++i) {
+                HES_PORADOVE_CISLO[substr(vysledek, i, 1)] = i;
+            }
+            HES_INICITALIZOVANA = 1;
+        }
+        vysledek = 0;
+        l = length(s);
+        for (i = 1; i <= l; ++i) {
+                c = substr(s, i, 1);
+                c = (c in HES_PORADOVE_CISLO) ? HES_PORADOVE_CISLO[c] : 0;
+                # 514229 je prvočíslo
+                vysledek = and(vysledek * 514229 + c, 2147483647);
+        }
+        return xor(vysledek, l);
+}
+
+#
 # SPECIÁLNÍ FUNKCE PRO TENTO PROJEKT
 # ============================================================================
 

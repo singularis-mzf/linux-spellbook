@@ -19,7 +19,7 @@ Verze 1.2 je cílena na *Ubuntu 18.04 Bionic Beaver* a jeho deriváty.
 
 Příručka podléhá licenci [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 Podrobné údaje o autorství zdrojových souborů jsou uvedeny v komentářích v jejich záhlaví;
-údaje o autorství obrázkových souborů jsou uvedeny v souboru [COPYING](COPYING).
+údaje o autorství obrázkových souborů jsou uvedeny v souboru [COPYRIGHT](COPYRIGHT).
 
 ## Návod k použití
 
@@ -167,4 +167,4 @@ Zvláštní kapitoly:
 Příručka podléhá licenci [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 Podrobné údaje o autorství a konkrétní licenci zdrojových souborů jsou uvedeny v komentářích
 v jejich záhlaví; údaje o autorství obrázkových a datových souborů (včetně formátu .tsv)
-jsou uvedeny v souboru [COPYING](COPYING).
+jsou uvedeny v souboru [COPYRIGHT](COPYRIGHT).

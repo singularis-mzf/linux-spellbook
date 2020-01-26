@@ -50,7 +50,11 @@ VSECHNY_KAPITOLY_A_DODATKY_MD = $(VSECHNY_KAPITOLY:%=kapitoly/%.md) $(VSECHNY_DO
 # ----------------------------------------------------------------------------
 OBRAZKY := favicon.png by-sa.png logo-knihy-velke.png make.png barvy.png ve-vystavbe.png marsh.jpg banner.png
 OBRAZKY += ik-vychozi.png
-SVG_OBRAZKY := kalendar.svg tritecky.svg graf-filtru.svg
+SVG_OBRAZKY := kalendar.svg tritecky.svg tritecky2.svg graf-filtru.svg
+
+# CSS motivy (vedle motivu „hlavní“)
+# ----------------------------------------------------------------------------
+CSS_MOTIVY := vk-svetly vk-tmavy
 
 # Datum sestavení (automaticky generované)
 # ----------------------------------------------------------------------------
@@ -88,7 +92,7 @@ info: $(DATUM_SESTAVENI_SOUBOR) $(DEB_VERZE_SOUBOR) $(JMENO_SESTAVENI_SOUBOR)
 
 # Podporované formáty:
 deb: $(VYSTUP_PREKLADU)/lkk_$(DEB_VERZE)_all.deb
-html: $(addprefix $(VYSTUP_PREKLADU)/html/, lkk-$(DATUM_SESTAVENI).css index.htm x-autori.htm x-stitky.htm)
+html: $(addprefix $(VYSTUP_PREKLADU)/html/, lkk-$(DATUM_SESTAVENI).css $(CSS_MOTIVY:%=lkk-$(DATUM_SESTAVENI)-%.css) index.htm x-autori.htm x-stitky.htm)
 log: $(VYSTUP_PREKLADU)/log/index.log
 pdf-a4: $(VYSTUP_PREKLADU)/pdf-a4.pdf
 pdf-b5: $(VYSTUP_PREKLADU)/pdf-b5.pdf
@@ -165,10 +169,15 @@ $(VSECHNY_KAPITOLY_A_DODATKY:%=$(VYSTUP_PREKLADU)/html/%.htm): \
 
 # 3. formaty/html/sablona.css => vystup_prekladu/html/lkk.css
 # ----------------------------------------------------------------------------
-$(VYSTUP_PREKLADU)/html/lkk-$(DATUM_SESTAVENI).css: formaty/html/sablona.css
+$(VYSTUP_PREKLADU)/html/lkk-$(DATUM_SESTAVENI).css: formaty/html/sablona.css skripty/plneni-sablon/css.awk skripty/plneni-sablon/css2.awk
 	mkdir -pv $(dir $@)
-	$(RM) $(VYSTUP_PREKLADU)/html/lkk-2*.css
-	cat $< > $@
+	$(RM) $(VYSTUP_PREKLADU)/html/lkk-????????.css
+	set -o pipefail; $(AWK) -v MOTIV=hlavni -f skripty/plneni-sablon/css.awk $< | $(AWK) -f skripty/plneni-sablon/css2.awk > $@
+
+$(CSS_MOTIVY:%=$(VYSTUP_PREKLADU)/html/lkk-$(DATUM_SESTAVENI)-%.css): %: formaty/html/sablona.css skripty/plneni-sablon/css.awk skripty/plneni-sablon/css2.awk
+	mkdir -pv $(dir $@)
+	$(RM) $(@:$(VYSTUP_PREKLADU)/html/lkk-$(DATUM_SESTAVENI)%=$(VYSTUP_PREKLADU)/html/lkk-????????)
+	set -o pipefail; $(AWK) -v MOTIV=$(strip $(patsubst lkk-$(DATUM_SESTAVENI)-%.css, %, $(notdir $@))) -f skripty/plneni-sablon/css.awk $< | $(AWK) -f skripty/plneni-sablon/css2.awk > $@
 
 # 4. obrazky/{obrazek} => vystup_prekladu/html/obrazky/{obrazek}
 # ----------------------------------------------------------------------------

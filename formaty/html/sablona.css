@@ -1,7 +1,6 @@
-@charset "UTF-8";
 /*
  * Linux Kniha kouzel, šablona CSS
- * Copyright (c) 2019 Singularis <singularis@volny.cz>
+ * Copyright (c) 2019,2020 Singularis <singularis@volny.cz>
  *
  * Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
  * podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -25,7 +24,210 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-/* CSS reset */
+{{ZAČÁTEK}}
+@charset "UTF-8";
+/*
+ * Linux Kniha kouzel, CSS, motiv {{MOTIV}}
+ * Copyright (c) 2019,2020 Singularis <singularis@volny.cz>
+ *
+ * Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
+ * podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
+ * vydané neziskovou organizací Creative Commons. Text licence je přiložený
+ * k tomuto projektu nebo ho můžete najít na webové adrese:
+ *
+ * https://creativecommons.org/licenses/by-sa/4.0/
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+
+{{MAKRO barva-pozadi=#d2e0eb}}
+{{MAKRO obrazek-pozadi=url("obrazky/marsh.jpg")}}
+{{MAKRO barva-textu=#333333}}
+{{MAKRO pozadi-papir=#d4ddd0}}
+{{MAKRO titulni-lista-barva-pozadi=#006600}}
+{{MAKRO titulni-lista-obrazek-pozadi=url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAABACAYAAADbER1AAAAABmJLR0QAAAAAAAD5Q7t/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4wsCESUxJRQjjAAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAL0lEQVQY093HMQoAIAzAwGv1Kf7/hRYcBCfB3QwhgZGoxDyqW0GH8CWRaIn+rr0LV34IVonVnXgAAAAASUVORK5CYII=")}}
+{{MAKRO titulni-lista-barva-textu=rgba(255,255,255,0.9)}}
+{{MAKRO titulni-lista-barva-ikon-vpravo=#00cc00}}
+{{MAKRO titulni-lista-text-shadow=0 0 0.25em rgba(0,0,0,0.5)}}
+{{MAKRO stavovy-radek-barva-pozadi=#cccccc}}
+
+# odkazy:
+{{MAKRO barva-odkazu=#1644d9}}
+{{MAKRO barva-navstiveneho-odkazu=#542e99}}
+# Původně: #1338b3
+{{MAKRO barva-adresy-odkazu=#666666}}
+
+# „klávesa“:
+{{MAKRO klavesa-barva-pozadi=#dddddd}}
+{{MAKRO klavesa-barva-textu=#000000}}
+
+# „zaklínadlo“:
+{{MAKRO zaklinadlo-barva-textu=#000000}}
+{{MAKRO zaklinadlo-barva-tucneho-textu=#222222}}
+{{MAKRO zaklinadlo-barva-kodu=rgba(0,0,0,0.7)}}
+{{MAKRO zaklinadlo-barva-znaku-dopreambule=#666666}}
+{{MAKRO zaklinadlo-barva-znaku-konec-radku=rgb(120,120,120)}}
+{{MAKRO zaklinadlo-barva-sedych=rgb(127,127,127)}}
+{{MAKRO zaklinadlo-prikladhodnoty-barva-textu=inherit}}
+{{MAKRO zaklinadlo-prikladhodnoty-barva-pozadi=#ffffff}}
+
+# „poznámka pod čarou“:
+{{MAKRO poznpodcarou-aktivni-barva-pozadi=#f2a7e2}}
+{{MAKRO poznpodcarou-zpetdotextu-barva-pozadi=#cccccc}}
+{{MAKRO poznpodcarou-zpetdotextu-barva-textu=#1644d9}}
+
+# „parametry příkazů“:
+{{MAKRO parametryprikazu-levy-sloupec-barva-textu=rgba(0,0,0,0.7)}}
+
+# štítky na začátku kapitoly:
+{{MAKRO stitek-barva-pozadi=#cccccc}}
+{{MAKRO stitek-barva-textu=inherit}}
+{{MAKRO stitek-barva-tenkych-ramecku=rgba(0,0,0,0.25)}}
+{{MAKRO stitek-kryti-tlusteho-ramecku=1.0}}
+{{MAKRO stitek-box-shadow=0.1em 0.15em 0 0 rgba(0,0,0,0.5)}}
+
+# rozcestník na začátku kapitoly:
+{{MAKRO rozcestnikvkapitole-barva-pozadi=#cccccc}}
+{{MAKRO rozcestnikvkapitole-barva-oddelovacu=rgba(0,0,0,0.4)}}
+{{MAKRO rozcestnikvkapitole-barva-odkazu=#166644}}
+
+# chybný znak v kapitole:
+{{MAKRO chybny-znak-barva-textu=red}}
+{{MAKRO chybny-znak-barva-pozadi=white}}
+
+# šipky nahoru a dolů:
+{{MAKRO sipka-odkaz-nahorudolu-barva-pozadi=rgba(0,102,0,0.75)}}
+{{MAKRO sipka-odkaz-nahorudolu-barva-textu=rgb(100,204,100)}}
+{{MAKRO sipka-odkaz-nahorudolu-barva-ramecku=rgb(100,204,100)}}
+
+{{MAKRO sipka-odkaz-nahorudolu-podkurzorem-barva-pozadi=rgb(0,102,0)}}
+{{MAKRO sipka-odkaz-nahorudolu-podkurzorem-barva-textu=rgb(100,204,100)}}
+{{MAKRO sipka-odkaz-nahorudolu-podkurzorem-barva-ramecku=yellow}}
+
+{{MAKRO sipka-odkaz-nahorudolu-aktivni-barva-pozadi=rgba(0,102,0,0.75)}}
+{{MAKRO sipka-odkaz-nahorudolu-aktivni-barva-textu=yellow}}
+{{MAKRO sipka-odkaz-nahorudolu-aktivni-barva-ramecku=yellow}}
+
+# symboly:
+{{MAKRO symboly-tab=url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAUCAYAAACJfM0wAAAACXBIWXMAAAsTAAALEwEAmpwYAAABtklEQVQ4y7XUzUtVURQF8N9+vsxCoSYNGkQfNEmjoKTMiCLDSQQNkqA/sGmfgygnZjgpopAaRF+zDILQICt9u8m5cHt29T2oNbrn7rMXh7XW3pGZICLambmmARHRysyOHtGqfU9ExGREtBruHo2IqYgY7Jd4G85juqG5jdO4HBE7+yGGwAlcjYjhhp4juB4Ru/shrnAYMxGxp6G+FzciYl8vxM/wsat5JiL2l/NrvKrVd+FaRIz91ewqFcX5IVzE8SILfMeDzFyMiDbOYBIDpf4L81iop+YP4ipWOIVzxVBYx1xmPil3xjCNHaWeeIrZKrIbNM7MTmYu4BaWy+8BHKrSkJmLuIkvNdMPYmQr82CrYeigcaDaDVM2XjK9vSbFe6yW+iguYbgmxTusNJk3iAs4WTPvBx5l5vOi/wTOduvfbV67RjqCKzhQe/wy7mfm25KYKRzrSszDzHy5mRTjXaRLuJuZn8p5tMSwwlfcy8wPPWtc9LyTmSsN9SXczszPvZqXeFE0XW3oeVPk+bZZZOrE63iM+Ya9m2XsZzPz51bbLWqLfmiTV1aJWet12W8Y6X+Flv+E39XGp4/1pQSiAAAAAElFTkSuQmCC")}}
+{{MAKRO symboly-tab-barva-pozadi=transparent}}
+{{MAKRO symboly-viditelnamezera=url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAMCAYAAABm+U3GAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAJ0lEQVQ4y2NkQID/DKiAkYE4gFUfEwONwKjBowZjAhYS0udoGJMHAIgjAxkEpU0OAAAAAElFTkSuQmCC")}}
+{{MAKRO symboly-tritecky=url("obrazky/tritecky.svg")}}
+
+#
+# Makra jen pro styl hlavní stránky
+##############################################################################
+{{MAKRO index-podzahlavim-box-shadow=0 0.25rem 1.5rem 0 rgba(50,100,50,0.5)}}
+{{MAKRO index-podzahlavim-oddel-cara-barva=#666666}}
+
+#
+# Makra jen pro přehled štítků
+##############################################################################
+{{MAKRO prehledstitku-liche-barva-pozadi=rgba(200,200,200,1)}}
+{{MAKRO prehledstitku-sude-barva-pozadi=rgba(180,180,180,1)}}
+
+
+#
+# Motiv „vysoký kontrast světlý“
+##############################################################################
+{{POKUD JE MOTIV vk-svetly}}
+{{MAKRO barva-pozadi=#ffffff}}
+{{MAKRO obrazek-pozadi=none}}
+{{MAKRO barva-textu=#000000}}
+{{MAKRO pozadi-papir=#ffffff}}
+{{MAKRO titulni-lista-barva-pozadi=#ffffff}}
+{{MAKRO titulni-lista-obrazek-pozadi=none}}
+{{MAKRO titulni-lista-barva-textu=#000000}}
+{{MAKRO titulni-lista-barva-ikon-vpravo=#000000}}
+{{MAKRO titulni-lista-text-shadow=none}}
+{{MAKRO stavovy-radek-barva-pozadi=#ffffff}}
+
+{{MAKRO index-podzahlavim-box-shadow=0 0.25rem 1.5rem 0 rgba(50,50,50,0.5)}}
+{{MAKRO stitek-barva-pozadi=#ffffff}}
+{{MAKRO rozcestnikvkapitole-barva-pozadi=#ffffff}}
+{{MAKRO rozcestnikvkapitole-barva-odkazu=#0b3322}}
+{{MAKRO barva-adresy-odkazu=#111111}}
+
+{{MAKRO parametryprikazu-levy-sloupec-barva-textu=#000000}}
+
+{{MAKRO sipka-odkaz-nahorudolu-barva-pozadi=rgba(0,0,0,0.75)}}
+{{MAKRO sipka-odkaz-nahorudolu-barva-textu=#ffffff}}
+{{MAKRO sipka-odkaz-nahorudolu-barva-ramecku=rgb(100,204,100)}}
+
+{{MAKRO sipka-odkaz-nahorudolu-podkurzorem-barva-pozadi=rgb(0,0,0)}}
+{{MAKRO sipka-odkaz-nahorudolu-podkurzorem-barva-textu=#ffffff}}
+{{MAKRO sipka-odkaz-nahorudolu-podkurzorem-barva-ramecku=yellow}}
+
+{{MAKRO sipka-odkaz-nahorudolu-aktivni-barva-pozadi=rgb(0,0,0)}}
+{{MAKRO sipka-odkaz-nahorudolu-aktivni-barva-textu=#ffffff}}
+{{MAKRO sipka-odkaz-nahorudolu-aktivni-barva-ramecku=yellow}}
+
+{{MAKRO prehledstitku-liche-barva-pozadi=#ffffff}}
+{{MAKRO prehledstitku-sude-barva-pozadi=#ffffff}}
+{{KONEC POKUD}}
+#
+# Motiv „vysoký kontrast tmavý“
+##############################################################################
+{{POKUD JE MOTIV vk-tmavy}}
+{{MAKRO barva-pozadi=#000000}}
+{{MAKRO obrazek-pozadi=none}}
+{{MAKRO barva-textu=#ffffff}}
+{{MAKRO pozadi-papir=#000000}}
+{{MAKRO titulni-lista-barva-pozadi=#000000}}
+{{MAKRO titulni-lista-obrazek-pozadi=none}}
+{{MAKRO titulni-lista-barva-textu=#ffffff}}
+{{MAKRO titulni-lista-barva-ikon-vpravo=#ffffff}}
+{{MAKRO titulni-lista-text-shadow=none}}
+{{MAKRO stavovy-radek-barva-pozadi=#000000}}
+
+{{MAKRO barva-odkazu=#809eff}}
+{{MAKRO barva-navstiveneho-odkazu=#bd99ff}}
+{{MAKRO barva-adresy-odkazu=#cccccc}}
+
+{{MAKRO stitek-barva-pozadi=#000000}}
+{{MAKRO stitek-barva-textu=inherit}}
+{{MAKRO stitek-barva-tenkych-ramecku=rgba(255,255,255,0.25)}}
+{{MAKRO stitek-box-shadow=0.1em 0.15em 0 0 rgba(255,255,255,0.5)}}
+
+{{MAKRO rozcestnikvkapitole-barva-pozadi=#000000}}
+{{MAKRO rozcestnikvkapitole-barva-oddelovacu=rgba(255,255,255,0.4)}}
+{{MAKRO rozcestnikvkapitole-barva-odkazu=#82f279}}
+
+{{MAKRO klavesa-barva-pozadi=#333333}}
+{{MAKRO klavesa-barva-textu=#ffffff}}
+
+{{MAKRO parametryprikazu-levy-sloupec-barva-textu=#ffffff}}
+
+{{MAKRO zaklinadlo-barva-textu=#ffffff}}
+{{MAKRO zaklinadlo-barva-tucneho-textu=#eeeeee}}
+{{MAKRO zaklinadlo-barva-kodu=rgba(255,255,255,0.7)}}
+{{MAKRO zaklinadlo-barva-znaku-dopreambule=#ffffff}}
+{{MAKRO zaklinadlo-barva-znaku-konec-radku=rgb(120,120,120)}}
+{{MAKRO zaklinadlo-barva-sedych=#e6fffc}}
+{{MAKRO zaklinadlo-prikladhodnoty-barva-textu=inherit}}
+{{MAKRO zaklinadlo-prikladhodnoty-barva-pozadi=#333333}}
+
+{{MAKRO symboly-tab-barva-pozadi=#666666}}
+{{MAKRO symboly-viditelnamezera=url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAMAQMAAABcN9+FAAAABlBMVEUAAAD///+l2Z/dAAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfkARoHKiFliKeMAAAAEklEQVQI12OwYfjAgA/b/0fBAGmbEhlfr2/IAAAAAElFTkSuQmCC")}}
+{{MAKRO symboly-tritecky=url("obrazky/tritecky2.svg")}}
+
+{{KONEC POKUD}}
+
+#
+# CSS reset
+##############################################################################
 *{background:none;border:none;border-collapse:inherit;bottom:auto;
 caption-side:inherit;clear:none;clip:auto;color:inherit;
 empty-cells:inherit;left:auto;letter-spacing:inherit;
@@ -36,12 +238,13 @@ text-decoration:none;text-indent:0;text-transform:inherit;
 top:auto;visibility:inherit;white-space:inherit;word-spacing:inherit;
 z-index:auto;font:inherit;}
 
-/* Blokové prvky */
+#
+# Blokové prvky
+##############################################################################
 html {
-    background:#d2e0eb url("obrazky/marsh.jpg") 100% 0%/cover repeat fixed;
-    color:#333333;
+    background:{{barva-pozadi}} {{obrazek-pozadi}} 100% 0%/cover repeat fixed;
+    color:{{barva-textu}};
     font:62.5%/1.2 sans-serif;
-/*    padding:1rem 2% 5rem;*/
 }
 
 body {
@@ -49,19 +252,18 @@ body {
     border:thin solid #802020;
     padding:0;
     width:90%;min-width:95rem;max-width:120rem;
-    background-color:#d4ddd0;
+    background-color:{{pozadi-papir}};
     font-size:133%;
     box-shadow:1rem 1rem 5rem 0 rgba(0,0,0,0.5);
 }
 
 header {
-/*    position:absolute;left:0;top:0;right:0;bottom:auto;*/
     border-bottom:thin solid black;
     padding:0.4em 0.5em;
-    background:#006600 url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAABACAYAAADbER1AAAAABmJLR0QAAAAAAAD5Q7t/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4wsCESUxJRQjjAAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAL0lEQVQY093HMQoAIAzAwGv1Kf7/hRYcBCfB3QwhgZGoxDyqW0GH8CWRaIn+rr0LV34IVonVnXgAAAAASUVORK5CYII=") 0% 0%/1px 100% repeat-x;
-    color:rgba(255,255,255,0.9);
+    background:{{titulni-lista-barva-pozadi}} {{titulni-lista-obrazek-pozadi}} 0% 0%/1px 100% repeat-x;
+    color:{{titulni-lista-barva-textu}};
     font-weight:bold;
-    text-shadow:0 0 0.25em rgba(0,0,0,0.5);
+    text-shadow:{{titulni-lista-text-shadow}};
 }
 
 nav {
@@ -86,12 +288,11 @@ footer {
     border-top:thin solid purple;
     padding:1rem 3rem;
     font-size:85%;
-    background:#cccccc;
+    background:{{stavovy-radek-barva-pozadi}};
 }
 
 h1 {
     font:bold 175%/1.2 "DejaVu Sans", sans-serif;
-/*    margin:0.5em 0;*/
     margin:0;
 }
 
@@ -108,7 +309,6 @@ h3 {
     padding:0.5rem 0.5rem;
     page-break-after:avoid; /* možná není podporována v současných prohlížečích */
 }
-
 h3 .cislo {
     display:inline-block;
     margin:-0.25em 0.5rem;
@@ -158,11 +358,11 @@ blockquote blockquote {
 }
 
 /* Inline prvky */
-a:link {color:#1644d9;}
-a:visited {color:#542e99;}
-/* a:visited {color:#1338b3;} */
-a[href^="http://"]::before, a[href^="https://"]::before {content:"[";color:#666666;}
-a[href^="http://"]::after, a[href^="https://"]::after {content:"]( " attr(href) " )";color:#666666;}
+a:link {color:{{barva-odkazu}};}
+a:visited {color:{{barva-navstiveneho-odkazu}};}
+/* a:visited {color:;} */
+a[href^="http://"]::before, a[href^="https://"]::before {content:"[";color:{{barva-adresy-odkazu}};}
+a[href^="http://"]::after, a[href^="https://"]::after {content:"]( " attr(href) " )";color:{{barva-adresy-odkazu}};}
 a:hover {text-decoration:underline;}
 b {font-weight:bold;}
 i {font-style:italic;}
@@ -173,8 +373,8 @@ kbd {
     border-radius:0.5em;
     padding:0 0.5em;
     white-space:nowrap;
-    background:#dddddd;
-    color:#000000;
+    background:{{klavesa-barva-pozadi}};
+    color:{{klavesa-barva-textu}};
     font-family:"DejaVu Sans", sans-serif;
 }
 
@@ -186,8 +386,8 @@ h1>a:link, h1>a:visited, h2>a:link, h2>a:visited, h3>a:link, h3>a:visited, h4>a:
 
 /* Formátování odkazů v navigaci */
 nav a {margin:0.25em;}
-/*nav a::before {content:"\2191";margin-right:0rem;}
-nav a::after {content:"\2191";margin-left:0rem;}*/
+# /*nav a::before {content:"\2191";margin-right:0rem;}
+# nav a::after {content:"\2191";margin-left:0rem;}*/
 nav a[rel="prev"]::before {content:"\ab ";margin:0;}
 nav a[rel="next"]::after {content:" \bb";margin:0;}
 nav a[rel="prev"]::after, nav a[rel="next"]::before {content:none;}
@@ -197,19 +397,12 @@ nav a[rel="prev"]::after, nav a[rel="next"]::before {content:none;}
     font-family: "DejaVu Sans Mono", monospace;
     font-size:115%;
     page-break-inside:avoid;
-    color:#000000;
+    color:{{zaklinadlo-barva-textu}};
 }
 
 .zaklinadlo>hr {
-    /* orientační čára nad každým zaklínadlem * /
-    display:block;
-    border-top:1px solid;
-    margin:0 auto 0.5pt 0;
-    max-width:15em;
-    */
-    display:none;
+    display:none !important;
 }
-h2+.zaklinadlo>hr, h3+.zaklinadlo>hr {display:none;visibility:hidden;}
 
 .zaklinadlo + .zaklinadlo {
     /* mezera mezi zaklínadly */
@@ -225,7 +418,7 @@ h2+.zaklinadlo>hr, h3+.zaklinadlo>hr {display:none;visibility:hidden;}
 }
 
 .zaklinadlo .zahlavi b {
-    color:#222222;
+    color:zaklinadlo-barva-tucneho-textu;
 }
 
 .zaklinadlo .zahlavi>.cislo {
@@ -234,15 +427,13 @@ h2+.zaklinadlo>hr, h3+.zaklinadlo>hr {display:none;visibility:hidden;}
 }
 
 .zaklinadlo .radky {
-/*    box-shadow:0 0 5pt 0 rgb(200,200,200), -5pt 0 5pt 5pt rgb(200,200,200), 5pt 0 5pt 0 rgb(200,200,200);*/
-    /*box-shadow:0 0 5pt 1pt rgb(200,200,200);*/
+# /*    box-shadow:0 0 5pt 0 rgb(200,200,200), -5pt 0 5pt 5pt rgb(200,200,200), 5pt 0 5pt 0 rgb(200,200,200);*/    /*box-shadow:0 0 5pt 1pt rgb(200,200,200);*/
     font-size:80%;
     line-height:1.8;
     margin:3pt 5pt 3pt 7rem;
-    /*border:1pt dotted #999999;*/
     border-left:1pt dotted #999999;
     padding:2pt 5pt;
-    color:rgba(0,0,0,0.7);
+    color:{{zaklinadlo-barva-kodu}};
 }
 
 .zaklinadlo td:nth-child(1) {white-space:nowrap;}
@@ -252,19 +443,20 @@ h2+.zaklinadlo>hr, h3+.zaklinadlo>hr {display:none;visibility:hidden;}
     display:inline-block;
     width:0pt;
     position:relative;left:-2.5ch;top:0.5ex;
-    color:#666666;
+    color:{{zaklinadlo-barva-znaku-dopreambule}};
     font-weight:bold;
 }
 
 /* zobrazení znaku ↲ na konci každého řádku zaklínadla kromě posledního */
-.radekzaklinadla::after, .radekzaklinadlaafter::after {content:"↲";margin-left:0.5em;color:rgb(120,120,120);}
+.radekzaklinadla::after, .radekzaklinadlaafter::after {content:"↲";margin-left:0.5em;color:{{zaklinadlo-barva-znaku-konec-radku}};}
 .radekzaklinadla:last-child::after {display:none;}
 .radekzaklinadla:empty::after {margin-left:0;}
 
 .radekzaklinadla .prikladhodnoty {
     margin-left:2rem;
     border-left:0.2rem solid #bf4a4a;
-    background:#ffffff;
+    background:{{zaklinadlo-prikladhodnoty-barva-pozadi}};
+    color:{{zaklinadlo-prikladhodnoty-barva-textu}};
     font-family:Arimo,Helvetica,Arial,sans-serif;
 }
 
@@ -283,13 +475,13 @@ h2+.zaklinadlo>hr, h3+.zaklinadlo>hr {display:none;visibility:hidden;}
 
 .zaklinadlo .volznak {
     display:inline-block;
-    color:rgb(127,127,127);
+    color:{{zaklinadlo-barva-sedych}};
     margin:0 -0.2em;
     transform:scaleY(1.75);
 }
 
 .zaklinadlo .reseninezname {
-    color:rgb(127,127,127);
+    color:{{zaklinadlo-barva-sedych}};
     font-weight:bold;
     text-shadow:0 0 0.5em rgba(0,0,0,0.5);
 }
@@ -315,7 +507,7 @@ h2+.zaklinadlo>hr, h3+.zaklinadlo>hr {display:none;visibility:hidden;}
 .ppc .zrusitzvyrazneni::before {content:"(";}
 .ppc .zrusitzvyrazneni::after {content:")";}
 .ppc :target {
-    background:#f2a7e2;
+    background:{{poznpodcarou-aktivni-barva-pozadi}};
     padding-top:1.5rem;
     padding-bottom:1.5rem;
 }
@@ -324,9 +516,8 @@ h2+.zaklinadlo>hr, h3+.zaklinadlo>hr {display:none;visibility:hidden;}
 .ppc :target + script + .zpetdotextu {
     display:block;
     padding:1rem 0 1rem 4rem;
-    background:#cccccc;
-
-    color:#1644d9;
+    background:{{poznpodcarou-zpetdotextu-barva-pozadi}};
+    color:{{poznpodcarou-zpetdotextu-barva-textu}};
     cursor:pointer;
     font-family:sans-serif;
     font-weight:bold;
@@ -357,7 +548,7 @@ h2+.zaklinadlo>hr, h3+.zaklinadlo>hr {display:none;visibility:hidden;}
 
 .parametryprikazu td:first-child {
     font-family:"DejaVu Sans Mono", monospace;
-    color:rgba(0,0,0,0.7);
+    color:{{parametryprikazu-levy-sloupec-barva-textu}};
     padding-right:1em;
 }
 
@@ -369,7 +560,7 @@ h2+.zaklinadlo>hr, h3+.zaklinadlo>hr {display:none;visibility:hidden;}
 header .right span {
     display:inline-block;
     margin:0 0.25em;
-    color:#00cc00;
+    color:{{titulni-lista-barva-ikon-vpravo}};
 }
 
 header .right .ico1 {
@@ -394,25 +585,24 @@ header .right .ico3::before {content:"\d7";}
 
 /* zbytek */
 header .left img {vertical-align:bottom;margin-right:0.25em;}
-header .right {float:right;color:red;}
+header .right {float:right;}
 footer p {margin:0;padding:0;max-width:none;}
 footer p+p {margin-top:0.75em;}
 footer img {float:left;margin:0 1rem 1rem 0;}
 .tab {
-/*    color:rgb(120,120,120);*/
-    background:transparent url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAUCAYAAACJfM0wAAAACXBIWXMAAAsTAAALEwEAmpwYAAABtklEQVQ4y7XUzUtVURQF8N9+vsxCoSYNGkQfNEmjoKTMiCLDSQQNkqA/sGmfgygnZjgpopAaRF+zDILQICt9u8m5cHt29T2oNbrn7rMXh7XW3pGZICLambmmARHRysyOHtGqfU9ExGREtBruHo2IqYgY7Jd4G85juqG5jdO4HBE7+yGGwAlcjYjhhp4juB4Ru/shrnAYMxGxp6G+FzciYl8vxM/wsat5JiL2l/NrvKrVd+FaRIz91ewqFcX5IVzE8SILfMeDzFyMiDbOYBIDpf4L81iop+YP4ipWOIVzxVBYx1xmPil3xjCNHaWeeIrZKrIbNM7MTmYu4BaWy+8BHKrSkJmLuIkvNdMPYmQr82CrYeigcaDaDVM2XjK9vSbFe6yW+iguYbgmxTusNJk3iAs4WTPvBx5l5vOi/wTOduvfbV67RjqCKzhQe/wy7mfm25KYKRzrSszDzHy5mRTjXaRLuJuZn8p5tMSwwlfcy8wPPWtc9LyTmSsN9SXczszPvZqXeFE0XW3oeVPk+bZZZOrE63iM+Ya9m2XsZzPz51bbLWqLfmiTV1aJWet12W8Y6X+Flv+E39XGp4/1pQSiAAAAAElFTkSuQmCC") 0% 100%/1ch auto no-repeat;
+    background:{{symboly-tab-barva-pozadi}} {{symboly-tab}} 0% 100%/1ch auto no-repeat;
     display:inline-block;
     overflow:hidden;
     width:1ch;height:1.8ch;
     white-space:pre;
 }
 .viditelnamezera {
-    background:transparent url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAMCAYAAABm+U3GAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAJ0lEQVQ4y2NkQID/DKiAkYE4gFUfEwONwKjBowZjAhYS0udoGJMHAIgjAxkEpU0OAAAAAElFTkSuQmCC") 50% 100%/100% auto no-repeat;
+    background:transparent {{symboly-viditelnamezera}} 50% 100%/100% auto no-repeat;
     white-space:pre;
 }
 .tritecky {
     display:inline-block;
-    background-image:url("obrazky/tritecky.svg");
+    background-image:{{symboly-tritecky}};
     background-size:100% 100%;
     width:1em;height:1ex;
 }
@@ -435,7 +625,7 @@ footer img {float:left;margin:0 1rem 1rem 0;}
     padding-left:1.5%;
 }
 .zahlavistranky h1 img {
-/*    position:absolute;top:0;left:auto;right:0;bottom:auto;z-index:2;*/
+# /*    position:absolute;top:0;left:auto;right:0;bottom:auto;z-index:2;*/
     width:95%;
     border:0.1rem solid #802020;
     box-shadow:0.1rem 0.1rem 0.2rem 0 #000000;
@@ -445,14 +635,14 @@ footer img {float:left;margin:0 1rem 1rem 0;}
     font-style:italic;
     line-height:1.5;
 }
-/* .podzahlavim: */
+# /* .podzahlavim: */
 .podzahlavim {
     display:flex;
     flex-flow:row nowrap;
     margin:1em 0;
     border-radius:1rem 1rem;
     padding:1rem 2%;
-    box-shadow:0 0.25rem 1.5rem 0 rgba(50,100,50,0.5);
+    box-shadow:{{index-podzahlavim-box-shadow}};
 }
 .podzahlavim p.ponadpisu {
     margin:1ex auto;
@@ -476,7 +666,7 @@ footer img {float:left;margin:0 1rem 1rem 0;}
 .podzahlavim p.informaceoverzi a {
     display:block;
     margin:0.3rem 0 0;
-    border-top:thin dotted #666666;
+    border-top:thin dotted {{index-podzahlavim-oddel-cara-barva}};
     padding:0.2rem 0 0 1em;;
 }
 .podzahlavim p.informaceoverzi a::before {
@@ -504,7 +694,8 @@ nav .prev {text-align:right;margin-right:0.25em;}
 nav .next {text-align:left;}
 
 .rozcestnikkapitol {
-    background:#cccccc;
+    background:{{rozcestnikvkapitole-barva-pozadi}};
+    color:{{rozcestnikvkapitole-barva-oddelovacu}};
     margin:1rem -1em;
     border:0.1rem solid rgba(0,0,0,0.2);
     border-radius:1em;
@@ -514,18 +705,14 @@ nav .next {text-align:left;}
 }
 .rozcestnikkapitol a {
     white-space:nowrap;
-    color:#166644;
+    color:{{rozcestnikvkapitole-barva-odkazu}};
 }
 .rozcestnikkapitol a.sekce {
     font-weight:bold;
 }
 .rozcestnikkapitol .oddelovac {
     padding:0 0.2em;
-    color:rgba(0,0,0,0.4);
 }
-/*.rozcestnikkapitol .oddelovac:last-child {
-    display:none;
-}*/
 
 /* .stitky */
 .stitky {
@@ -533,16 +720,16 @@ nav .next {text-align:left;}
 }
 .stitky span, .stitky a {
     display:inline-block;
-    background:#cccccc;
-    color:inherit;
+    background:{{stitek-barva-pozadi}};
+    color:{{stitek-barva-textu}};
     margin:0 0.5em;
-    border-color:rgba(0,0,0,0.25) rgba(0,0,0,0.25) rgba(0,0,0,0.25) #508080;
+    border-color:{{stitek-barva-tenkych-ramecku}} {{stitek-barva-tenkych-ramecku}} {{stitek-barva-tenkych-ramecku}} rgba(80, 128, 128, {{stitek-kryti-tlusteho-ramecku}});
     border-style:solid;
     border-width:thin thin thin 1.5rem;
     border-radius:0.4em;
     padding:0.25em 0.5em;
     min-width:5em;
-    box-shadow:0.1em 0.15em 0 0 rgba(0,0,0,0.5);
+    box-shadow:{{stitek-box-shadow}};
     text-align:center;
     white-space:nowrap;
 }
@@ -553,8 +740,8 @@ nav .next {text-align:left;}
     margin-left:10em;
     border-radius:3rem;
 }
-.prehledstitku div:nth-child(even) {background:rgba(180,180,180,1)}
-.prehledstitku div:nth-child(odd) {background:rgba(200,200,200,1)}
+.prehledstitku div:nth-child(even) {background:{{prehledstitku-sude-barva-pozadi}}}
+.prehledstitku div:nth-child(odd) {background:{{prehledstitku-liche-barva-pozadi}}}
 .prehledstitku div>a {
     display:inline-block;
     width:50%;
@@ -654,8 +841,8 @@ dl.copyrights pre {
 }
 
 span.chybny {
-    color:red !important;
-    background:white !important;
+    color:{{chybny-znak-barva-textu}} !important;
+    background:{{chybny-znak-barva-pozadi}} !important;
     font-weight:bold;
     border:1px solid red;
 }
@@ -665,21 +852,23 @@ span.chybny {
     position:fixed;
     right:2%;
     z-index:256;
-    background:rgba(0,102,0,0.75);
-    color:rgb(100,204,100);
+    background:{{sipka-odkaz-nahorudolu-barva-pozadi}};
+    color:{{sipka-odkaz-nahorudolu-barva-textu}};
     font:20pt/1 sans-serif;
-    border:5pt outset rgb(100,204,100);
+    border:5pt outset {{sipka-odkaz-nahorudolu-barva-ramecku}};
     border-radius:50%;
 }
 #odkaznahoru:hover, #odkazdolu:hover {
-    background-color:rgb(0,102,0);
-    border-color:yellow;
+    background-color:{{sipka-odkaz-nahorudolu-podkurzorem-barva-pozadi}};
+    border-color:{{sipka-odkaz-nahorudolu-podkurzorem-barva-ramecku}};
+    color:{{sipka-odkaz-nahorudolu-podkurzorem-barva-textu}};
     text-decoration:none;
     opacity:1;
 }
 #odkaznahoru:active, #odkazdolu:active {
-    border-color:yellow;
-    color:yellow;
+    background-color:{{sipka-odkaz-nahorudolu-aktivni-barva-pozadi}};
+    border-color:{{sipka-odkaz-nahorudolu-aktivni-barva-ramecku}};
+    color:{{sipka-odkaz-nahorudolu-aktivni-barva-textu}};
     opacity:1;
 }
 #odkaznahoru {
@@ -693,18 +882,14 @@ span.chybny {
     padding:0 4pt;
 }
 
-/* odkazy „zpět do textu“ */
-
-
-
 @media print {
-    html, body {
-        background:none !important;
+    html, body, article {
         padding:0;
-        color:#000000;
+        max-width:none;
     }
     .ppc .zrusitzvyrazneni
     {
         display:none;
     }
 }
+{{KONEC}}

@@ -137,7 +137,7 @@ function RidiciRadek(text) {
 }
 
 # PrelozitVystup()
-#       − Má za úkol zpracovat obyčejný řádek, než bude vypsát na výstup.
+#       − Má za úkol zpracovat obyčejný řádek, než bude vypsán na výstup.
 #       − Typicky nahrazuje výskyty speciálních značek.
 #
 function PrelozitVystup(radek) {
