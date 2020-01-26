@@ -296,7 +296,7 @@ a na konci může být sloupec „*“, který přijme libovolné množství da
 **NF**
 
 *# **výstupní oddělovač** sloupců/záznamů příkazu print*<br>
-**// Výchozí hodnota je „ “ (mezera); může být přednastaven také parametrem příkazové řádky „-F“.**<br>
+*// Výchozí hodnota je „ “ (mezera); může být přednastaven také parametrem příkazové řádky „-F“.*<br>
 **OFS = "**[{*řetězec*}]**"**<br>
 
 *# vstupní oddělovač záznamu (jeden znak/regulární výraz)*<br>

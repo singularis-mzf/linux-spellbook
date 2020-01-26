@@ -174,6 +174,7 @@ Zde uvedené příkazy nevypisují escape sekvence, ale konkrétní hodnoty.
 
 Poznámka: escapování zaklínadel v této sekci je upraveno pro uvedení uvnitř dvojitých uvozovek v bashi. Při uvedení jiným způsobem (např. v jednoduchých uvozovkách nebo při načítání ze souboru) je nutno escapování zpětnými lomítky přizpůsobit.
 
+### Častá
 *# **znak $** pro normálního uživatele a # pro uživatele „root“*<br>
 **\\\\\\$** ⊨ $
 
@@ -190,22 +191,13 @@ Poznámka: escapování zaklínadel v této sekci je upraveno pro uvedení uvni
 **\\\\w** ⊨ ~/Dokumenty<br>
 **\\\\W** ⊨ Dokumenty
 
-*# **číslo příkazu** (podle historie/pořadové)*<br>
-**\\\\!""** ⊨ 1984<br>
-**\\\\\#** ⊨ 9
-
-*# **hodnota proměnné** při každém vypsání výzvy*<br>
-**\\\\\\$\{**{*název proměnné*}**\}**
-
 *# aktuální **čas** ve formátu HH:MM/HH:MM:SS*<br>
 **\\\\A** ⊨ 15:35<br>
 **\\\\t** ⊨ 15:35:38
 
-*# aktuální **datum** ve formátu YYYY-MM-DD*<br>
-**\\\\D{%F}** ⊨ 2020-01-29
-
-*# aktuální datum a čas ve vlastním formátu*<br>
-*// Pro popis formátu viz „man strftime“.*<br>
+*# aktuální **datum** ve formátu YYYY-MM-DD/ve vlastním formátu*<br>
+*// Pro popis vlastního formátu viz „man strftime“ nebo kapitolu „Datum, čas a kalendář“.*<br>
+**\\\\D{%F}** ⊨ 2020-01-29<br>
 **\\\\D\{**{*formát*}**\}**
 
 *# **název počítače** (úplný/jen před první „.“)*<br>
@@ -216,15 +208,31 @@ Poznámka: escapování zaklínadel v této sekci je upraveno pro uvedení uvni
 **\\\\n**<br>
 **$(printf \\\\t)**
 
+*# **hodnota proměnné** při každém vypsání výzvy*<br>
+**\\\\\\$\{**{*název proměnné*}**\}**
+
 *# **uživatelské jméno** přihlášeného uživatele/jeho celé jméno*<br>
 **\\\\u** ⊨ novakova<br>
 **$(getent passwd $UID \| cut -d : -f 5 \| cut -d , -f 1)** ⊨ Jarmila Nováková
 
+### Méně častá
+
+*# **číslo příkazu** (podle historie/pořadové)*<br>
+**\\\\!""** ⊨ 1984<br>
+**\\\\\#** ⊨ 9
+
 *# označení **terminálu***<br>
 **$(ps -p \$\$ -o tty:1=)** ⊨ pts/3
 
+*# **PID** příkazového interpretu*<br>
+**\\${\\$}** ⊨ 3338
+
 *# počet úloh běžících na pozadí (těch, které lze vypsat příkazem „jobs“)*<br>
 **\\\\j** ⊨ 0
+
+*# počet řádků/sloupců terminálu*<br>
+**\\${LINES}**<br>
+**\\${COLUMNS}**
 
 *# cesta/název aktuálního adresáře (bez zkracování znakem „~“)*<br>
 **\\$(pwd)** ⊨ /home/novakova/Dokumenty<br>
@@ -234,6 +242,10 @@ Poznámka: escapování zaklínadel v této sekci je upraveno pro uvedení uvni
 **\\$(printf \\$)** ⊨ $
 <!--
 Další možnost: \\044\\[\\]
+-->
+
+<!--
++ počet řádků/sloupců terminálu
 -->
 
 ## Zaklínadla (příklady)

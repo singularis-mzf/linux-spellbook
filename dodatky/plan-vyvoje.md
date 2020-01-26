@@ -55,7 +55,6 @@ nebo komentářem na GitHubu. Váš zájem mě určitě potěší a povzbudí.
 
 ## Chystaný vývoj formátování a mechanismu překladu
 
-* Balíček „.deb“, který nainstaluje příkaz „lkk“ pro spouštění pomocných skriptů.
 * Ikony pro kapitoly i v PDF variantách a na zbytku míst v HTML variantě.
 * Podpora poznámek pod čarou i mimo zaklínadla.
 * Rozdílné ikony pro jednotlivá zaklínadla.

@@ -77,7 +77,7 @@
 % {fancyhdr}:
     \fancypagestyle{normalni}{%
         \fancyhead{}\fancyfoot{}%
-        \fancyhead[LE,LO]{{\ttfamily\thechapter}}
+        \fancyhead[LE,LO]{\ifnumcomp{\value{chapter}}{>}{0}{{\ttfamily\thechapter}}{\mbox{}}}
         \fancyhead[CE,CO]{{\ttfamily LINUX: Kniha kouzel}}%
         \fancyhead[RE,RO]{{\ttfamily\nazevkapitoly}}%
         \fancyfoot[LE,RO]{\thepage}%
@@ -117,7 +117,7 @@
     \titleformat{\section}[hang]{\normalfont\fontsz{12pt}\bfseries}%
         {\settowidthwithminimum{\tmpsirkastitku}{\mbox{\thesection}}{20pt}\makebox[\tmpsirkastitku][l]{\thesection}}%
         {0.33em}{}\relax
-    \titlespacing*{\section}{0pt}{3ex plus0.5ex minus1ex}{1ex}\relax
+    \titlespacing*{\section}{0pt}{3ex plus1ex minus1ex}{1ex}\relax
 
     \titleformat{\subsection}[hang]{\normalfont\fontsz{11pt}}%
         {}%
@@ -143,8 +143,8 @@
     %\setlength{\cftsubsubsecindent}{3em}
 
     \setlength{\cftchapnumwidth}{1.6em}
-    \setlength{\cftsecnumwidth}{2.8em}
-    \setlength{\cftsubsecnumwidth}{3.6em}
+    \setlength{\cftsecnumwidth}{2em}
+    \setlength{\cftsubsecnumwidth}{2em}
 
     % zarovnat titulky vlevo: (jinak se zarovnají do bloku, což nevypadá hezky)
     \makeatletter\renewcommand{\@tocrmarg}{\@pnumwidth plus1fil}\makeatother
@@ -443,7 +443,7 @@
     &{#3}%
     % řádky zaklínadla:
     &{\raggedright\budepoprve{}#5}%
-    \konec{}#4\par\vspace{4pt plus5pt minus5pt}%
+    \konec{}#4\par\vspace{4pt plus5pt minus5pt}\mbox{}%
     }}
 
 % \ukazka{#1 = řádky a akce zaklínadla}
