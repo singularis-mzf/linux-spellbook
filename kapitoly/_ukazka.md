@@ -154,7 +154,8 @@ Pravidla escapování ve zdrojových kódech tohoto projektu jsou následující
 * ({), (})<br>se escapují, jen utvořily-li by nechtěnou formátovací sekvenci „\{\*“ či „\*\}“. Příklad: \\\{\*text kurzívou\*\\}
 * ())<br>se escapuje jen uvnitř adresy hypertextového odkazu. Příklad: [X\](http:⫽pism.cz/Pismeno\\\_(X\\))
 * (.)<br>se escapuje za sekvencí desítkových číslic, které na řádce zdrojového kódu nepředchází žádné nebílé znaky, a to jen v případě, že za danou tečkou následuje mezera.
-* ("), (%), ('), ((), (,), (/), (;), (=), (?), (@), (^)<br>se neescapují nikdy.
+* (()<br>se neescapuje nikdy.
+* ("), (%), ('), (,), (/), (;), (=), (?), (@), (^) a písmena anglické abecedy A až Z a a až z a číslice 0 až 9<br>je striktně zakázáno escapovat; překlad takovou konstrukci odmítne.
 * Nezlomitelnou mezeru lze zadat jak přímo, tak odpovídající entitou &amp;nbsp;.
 
 Potřebujete-li zapsat URL adresu, která nemá být nikde (ani na GitHubu) formátována jako odkaz,

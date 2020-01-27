@@ -317,11 +317,11 @@ Pro formát tsvz použijte „RS="\\0";“, pro tsv jej vynechejte.
 **head** [**-z**] {*soubor*} **\| tr -cd \\\\t \| wc -c**
 
 *# maximální počet sloupců (tsv/tsvz)*<br>
-**gawk 'BEGIN {FS="\t";** [**RS="\\0";**] **r=0;} NR == 1 \|\| NF &gt; r {r = NF} END {print r}'** [{*soubor*}]...
+**gawk 'BEGIN {FS="\\t";** [**RS="\\0";**] **r=0;} NR == 1 \|\| NF &gt; r {r = NF} END {print r}'** [{*soubor*}]...
 
 *# minimální počet sloupců*<br>
 *// Poznámka: prázdný řádek se počítá jako 0 sloupců, proto pokud ho vstup obsahuje, výsledek bude 0.*<br>
-**gawk 'BEGIN {FS="\t";** [**RS="\\0";**] **r=0;} NR == 1 \|\| NF &lt; r {r = NF} END {print r}'** [{*soubor*}]...
+**gawk 'BEGIN {FS="\\t";** [**RS="\\0";**] **r=0;} NR == 1 \|\| NF &lt; r {r = NF} END {print r}'** [{*soubor*}]...
 
 *# naformátovat záznamy jako tabulku s pevnou šířkou sloupců (tsv/tsvz)*<br>
 **column -nt**[**e**]**s** [{*soubor*}]...<br>
@@ -329,7 +329,7 @@ Pro formát tsvz použijte „RS="\\0";“, pro tsv jej vynechejte.
 
 *# vložit sloupec s **číslem záznamu** před první sloupec*<br>
 *// Poznámka: zadáte-li víc souborů, počítadlo záznamů se nebude restartovat na začátku každého z nich.*<br>
-**gawk 'BEGIN {** [**RS = ORS = "\\0";**] **OFS = "\t";} {print NR, $0}'** [{*soubor*}]...
+**gawk 'BEGIN {** [**RS = ORS = "\\0";**] **OFS = "\\t";} {print NR, $0}'** [{*soubor*}]...
 <!--
 **sed** [**-z**] **=** [{*soubor*}]... **\| paste** [**-z**] <nic>[**-d** {*oddělovač*}] **- -**
 -->

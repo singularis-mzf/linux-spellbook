@@ -194,20 +194,29 @@ PID v Linuxu neznamená Pražská integrovaná doprava...
 *// Priorita je číslo v rozsahu -20 (nejvyšší) až 19 (nejnižší); normální priorita je 0. Obyčejný uživatel (tzn. bez sudo) může pouze snižovat prioritu vlastních procesů.*<br>
 [**sudo**] **renice** {*priorita*} {*PID*}...
 
-### Najít procesy
+### Hledání procesů
 
 *# všechny procesy*<br>
 **ps -o pid:1= -e**
 
-*# potomci určitého procesu*<br>
+*# přímí/všichni potomci určitého procesu*<br>
 **ps -o pid:1= \-\-ppid** {*ID-předka*}
 
-*# všichni předci určitého procesu po prvotního démona*<br>
+*# proces a všichni jeho předci v pořadí, až po prvotního démona*<br>
 ?
 
 *# všechny procesy určitého uživatele/určité skupiny*<br>
 **ps -o pid:1= -U** {*uživatel*}[**,**{*další-uživatel*}]...<br>
 **ps -o pid:1= -G** {*skupina*}[**,**{*další-skupina*}]...
+
+*# procesy, které mají otevřený určitý soubor či adresář*<br>
+?
+
+*# procesy podle názvu*<br>
+?
+
+*# sourozenci určitého procesu (včetně procesu samotného)*<br>
+**ps -o pid:1= \-\-ppid $(ps -o ppid:1=** {*PID-procesu*}**)**
 
 ## Parametry příkazů
 <!--

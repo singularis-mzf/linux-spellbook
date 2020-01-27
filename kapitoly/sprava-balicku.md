@@ -114,7 +114,7 @@ Offline instalací se rozumí stažení balíčků, jejich přenesení na počí
 **dpkg-query -l** [**\| less**]<br>
 
 *# vypsat seznam **nainstalovaných balíčků** (pro skript − alternativy)*<br>
-**dpkg-query -Wf '${Package}:${Architecture}/${Version}/${db:Status-Status}\n'** [**'**{*vzorek*}**'**] **\| egrep '/installed$'**<br>
+**dpkg-query -Wf '${Package}:${Architecture}/${Version}/${db:Status-Status}\\n'** [**'**{*vzorek*}**'**] **\| egrep '/installed$'**<br>
 **(apt-mark showauto; apt-mark showmanual) \| LC\_ALL=C sort -u**<br>
 **aptitude \-\-disable-columns -F** {*formát*} **search '?installed'**
 

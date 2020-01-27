@@ -46,8 +46,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 **\-resize** {*šířka*}**x**{*výška*} **-background** {*barva*} **-compose Copy -gravity Center -extent** {*šířka*}**x**{*výška*}
 
 *# pokrýt (**COVER**)/a oříznout na přesný rozměr*<br>
-**\-resize** {*šířka*}**x**{*výška*}**\^**<br>
-**\-resize** {*šířka*}**x**{*výška*}**\^ -gravity Center -crop** {*šířka*}**x**{*výška*}**+0+0 +repage**
+**\-resize** {*šířka*}**x**{*výška*}**^**<br>
+**\-resize** {*šířka*}**x**{*výška*}**^ -gravity Center -crop** {*šířka*}**x**{*výška*}**+0+0 +repage**
 
 *# jen zmenšit (**SHRINK**)/a doplnit pozadím na přesný rozměr*<br>
 **\-resize** {*šířka*}**x**{*výška*}**\\&gt;**<br>

@@ -143,8 +143,8 @@ Tato verze kapitoly nepokrývá GFM (GitHub Flavoured Markdown), nicméně všec
 
 *# **poznámka pod čarou** (odkaz na poznámku/text poznámky)*<br>
 *// Omezení: Na jednu poznámku pod čarou lze odkazovat tímto způsobem pouze jednou!*<br>
-**\[\^**{*id*}**]**<br>
-**\[\^**{*id*}**]:&blank;**{*text poznámky*}
+**\[<nic>^**{*id*}**]**<br>
+**\[<nic>^**{*id*}**]:&blank;**{*text poznámky*}
 
 *# **seznam definic** se dvěma definicemi (druhá má dva pojmy)*<br>
 {*první pojem*}<br>

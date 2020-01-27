@@ -91,8 +91,8 @@ jemuž se bude věnovat většina této kapitoly.
 **$(&lt;)**
 
 *# **všechny zdroje** (alternativy)*<br>
-**$\^**<br>
-**$(\^)**
+**$^**<br>
+**$(^)**
 
 *# mazání souborů (typicky „rm -f“)*<br>
 **$(RM)**
@@ -292,7 +292,7 @@ jemuž se bude věnovat většina této kapitoly.
 **<tab>$(RM) $(OBJS)**<br>
 **main: $(OBJS)**<br>
 **<tab>@echo "Koncové sestavení:"**<br>
-**<tab>$(CXX) $(CXXFLAGS) -o $@ $\^**<br>
+**<tab>$(CXX) $(CXXFLAGS) -o $@ $^**<br>
 **main.o second.o: %.o: %.cc lib/hello.h**<br>
 **<tab>$(CXX) $(CXXFLAGS) -c -o $@ $&lt;**<br>
 **hello.o:**<br>
