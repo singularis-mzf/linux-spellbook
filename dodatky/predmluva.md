@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, předmluva
-Copyright (c) 2019 Singularis <singularis@volny.cz>
+Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -20,19 +20,20 @@ https://creativecommons.org/licenses/by-sa/4.0/
 > *o hodně.“*<br>— KAMENÍK, Pavel. *Příkazový řádek v Linuxu: praktická řešení.* Brno: Computer Press, 2011. ISBN 978-80-251-2819-0.
 
 <neodsadit>Pokud v letech 2018 až 2022 začínáte s Linuxem a troufnete si na
-příkazový řádek/příkazovou řádku, v Linuxu zvaný/ou „terminál“ či „konzole“,
+příkazový řádek/příkazovou řádku, v Linuxu zvaný/ou „terminál“,
 zadat „ls“ a chtěl/a byste toho víc, ale nemáte dobrou představu, co vám může
-to černé okno nabídnout, a frustruje vás to, ale zase nechcete hned pronikat
-do jeho nejhlubších ezoterických tajemství ani trávit dny čtením nudné
-programátorské dokumentace v angličtině a experimentováním a všechno
-vám to připadá nezvladatelně složité a nepochopitelné a přehnaně zdlouhavé
-jako toto souvětí, pak vám tato kniha může být velice užitečná.
+to černé (popř. bílé či jinak jednobarevné) okno nabídnout, a frustruje vás to,
+ale zase nechcete hned pronikat do jeho nejhlubších ezoterických tajemství
+ani trávit dny čtením nudné programátorské dokumentace v angličtině
+a experimentováním a všechno vám to připadá nezvladatelně složité
+a nepochopitelné a přehnaně zdlouhavé jako toto souvětí,
+pak vám tato kniha může být velice užitečná.
 
 Zatímco grafické uživatelské rozhraní, na jaké jste nejspíš zvyklý/á, vám nabízí
-menu, barevné ikony, panely nástrojů, zvuky, dialogová okna a další příjemné věci,
+barevné ikony, panely nástrojů, menu, zvuky, dialogová okna a další příjemné věci,
 terminál takový není. Vypadá, že jen očekává příkazy, a nedává vám žádné vodítko,
 jaké příkazy to mohou být, a čeho se s nimi dá dosáhnout.
-Nemáte žádnou šanci se dozvědět, že můžete zadat příkaz „tput sgr0“,
+Nemáte žádnou šanci se dozvědět, že můžete zadat příkaz „tput sgr0“ nebo „test -t 1“,
 ani co dělá nebo k čemu vám může být dobrý.
 Cílem této knihy je to napravit a učinit úžasný „svět“ terminálu
 a konfiguračních souborů podobně přehledným a srozumitelným,
@@ -53,7 +54,7 @@ jen s nimi strávíte opravdu podstatně méně času; minuty místo dní.
 
 Nejste-li náhodou programátor (což rozhodně nemusíte být), určitě si předem zjistěte,
 co znamenají pojmy ze základů programování jako např. „funkce“, „příkaz“ či „skript“.
-K pochopení funkce terminálu to budete potřebovat vědět.
+K pochopení, jak terminál používat, to budete potřebovat vědět.
 
 ## Tajuplná moc terminálu (shrnutí)
 
@@ -76,7 +77,7 @@ váš zkušený předchůdce. Při sesílání kouzel přesahujících vaši kva
 se sice můžete snadno „spálit“ (a to platí i u této sbírky),
 přesto vám to však prospěje mnohem víc, než kdybyste se omezil/a jen na to,
 co už bezpečně umíte. (Zamyslete se, jak by dopadl takový Harry Potter,
-kdyby znal jen kouzla odpovídající svému školnímu ročníku.)
+kdyby znal jen kouzla odpovídající jeho školnímu ročníku.)
 
 ## Je tato kniha pro váš systém?
 
@@ -105,14 +106,20 @@ Ačkoliv jsou v knize i kapitoly zaměřené na konkrétní nástroje (např. 
 důraz kladu spíše na kapitoly tematické, které kombinují vždy ty nejvhodnější
 nástroje k dosažení daných cílů.
 
-## Potřeba pomocných skriptů
+## Pomocné skripty a funkce
 
-Některé úkoly, přestože zní jednoduše, jsou pro terminál ve skutečnosti dost složité
-(např. vypsat seznam podporovaných časových zón). Možná se jim budete chtít vyhnout
-a nebudu vám to zazlívat. Tato kniha se jim však nevyhýbá, ale jejich složitost ukrývá
-do pomocných funkcí a skriptů, vypsaných ke konci kapitoly. Budete-li chtít využít
-zaklínadla, která na tyto funkce a skripty spoléhají, budete si skripty muset nahrát
-na příslušné místo (nebo si naprogramovat jejich alternativu).
+Některé úkoly, přestože zní jednoduše, jsou pro terminál ve skutečnosti dost složité,
+takže je ve výchozí instalaci není možné vykonat krátkým příkazem. Tradičním a stále
+efektivním linuxovým řešením takových situací je použití skriptů, které lze zavolat
+jednoduchým příkazem a vykonají za vás automaticky mnoho, často i velmi složitých příkazů,
+které danou úlohu vyřeší.
+
+Každá kapitola, která tyto pomocné skripty vyžaduje, obsahuje jejich úplný zdrojový kód,
+což vám umóžňuje si je vytvořit sám/a pouhým zkopírováním či ručním přepsáním
+(což nedoporučuji kvůli riziku překlepů); pro vaše pohodlí je ovšem
+ke každé vydané verzi knihy online distribuován balíček ve formátu „.deb“,
+který si můžete nainstalovat na svůj systém a umožní vám spouštění skriptů z knihy
+příkazem „lkk“, takže je nebudete muset ručně kopírovat.
 
 ## Pro pokročilé uživatele
 
@@ -158,38 +165,17 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 <neodsadit>Všechen software potřebný k sestavení projektu je svobodný.
 Pokud některá kapitola odkazuje na nesvobodný software, vždy na to výslovně upozorní.
 
-## Aktuální poznámka k verzi „vanilková příchuť 1.2“
+## Aktuální poznámka k verzi „vanilková příchuť 1.3“
 
-Ve verzi 1.2 přibyly tři nové kapitoly: AWK, Systém a Zpracování textových souborů.
+Ve verzi 1.3 nepřibyly žádné nové kapitoly.
 
-U PDF variant jsem přešel/a z LaTeXu na XeLaTeX a kompletně
-přepracoval/a formátování, což si vynutilo opuštění formátu papíru A5.
-Možná ho do budoucna vrátím, ale zatím to pro mě nemá vysokou prioritu, spíš je potřeba
-vyladit detaily a velikosti okrajů. Uvažuji také o podpoře formátu B5 na A4
-s ořezovými značkami.
+Hlavní novinkou je spouštěč pomocných skriptů „lkk“ distribuovaný spolu se skripty ve formě balíčku „deb“.
 
-U varianty v HTML jsem značně vylepšil/a design. Štítky kapitol jsou nyní klikací
-a vedou na stránku s přehledem kapitol podle štítků. Kapitoly nyní mají ikony
-(ale zatím všechny stejnou). Na stránkách kapitol jsou nová „úniková“ tlačítka
-pro okamžitý přesun na horní nebo spodní konec stránky (na horním konci je navigace
-na další kapitoly). Má-li uživatel zapnutý JavaScript, může se po kliknutí
-na poznámku pod čarou snadno vrátit na původní místo kliknutím na dynamický odkaz
-„zpět do textu“. (Pokročilí uživatelé bez JavaScriptu se mohou vrátit tlačítkem Zpět.)
+V PDF variantě se mi podařilo další podstatné zlepšení designu. Nadpisy jsou nyní přehlednější, stránky mají název kapitoly v záhlaví a titulky zaklínadel jsou střídavě podbarvené, což jim umožňuje být přehlednější.
 
-Řádky zaklínadel nyní mohou mít „příklady hodnot“. Ty jsem zavedl/a kvůli kapitole
-Datum, čas a kalendář, která je přímo vyžadovala, ale budou se hodit i v mnoha dalších.
+V HTML variantě nastaly jen menší změny, nejvýraznější je nová organizace rozcestníku v záhlaví kapitoly, která nově obsahuje i podsekce. Další výraznou změnou je opatrný začátek podpory ikon zaklínadel (ty se ještě budou vyvíjet).
 
-Součástí odstavců a zaklínadel nyní mohou být klávesy jako např. {_Ctrl_}.
-Ty se vyskytují v nové kapitole Systém.
-
-Řádky zaklínadel mohou být nově označeny jako „patřící do preambule“,
-což se bude hodit u výkladů o programovacích jazycích.
-
-Do příští verze bude nutně potřeba udělat pořádek v pomocných funkcích a skriptech.
-Plánuji vydávat balíček „.deb“, který po instalaci zpřístupní příkaz „lkk“
-ke spouštění pomocných skriptů.
-
-Vydání verze 1.3 očekávám ke konci února 2020.
+Vydání verze 1.4 očekávám již ke konci února 2020, případně na začátku března.
 
 &nbsp;
 

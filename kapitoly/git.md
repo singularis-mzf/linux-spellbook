@@ -104,7 +104,6 @@ Každá revize je jednoznačně identifikována pomocí své MD5 heše. Kromě t
 *// Pozn.: heš commitu se v tomto případě změní, protože revize je neměnná, takže jediný způsob, jak ji upravit, je vytvořit novou revizi a nahradit s ní tu původní.*<br>
 **git commit \-\-amend \-\-no-edit**
 
-
 *# načíst konkrétní soubory z revize v repozitáři do pracovního adresáře a indexu*<br>
 *// Výchozí revize je HEAD. Pozor, bez ptaní přepíše změny v pracovním adresáři!*<br>
 **git checkout** [{*revize*}] [**\-\-**] {*soubor-nebo-adresář*}...
@@ -373,6 +372,8 @@ Celé jméno a e-mail se používají k označení autorství revizí. Musíte
 * Normální repozitář je jednodušší než bare repozitář. Má vlastní pracovní adresář, se kterým pracuje. Normální repozitář můžete použít jako vzdálený repozitář, ale pouze ke čtení − nelze do něj zapisovat příkazem „git push“. Naopak bare repozitář slouží výhradně jako vzdálený repozitář.
 * Revize vzniklé sloučením větví (merge) mají za předky všechny revize, ze kterých byly sloučeny.
 * Soubor .gitignore může být v každém podadresáři pracovního adresáře; deklarace z každého souboru .gitignore platí v daném adresáři a rekurzivně ve všech jeho podadresářích, ne však nutně v celém pracovním adresáři.
+* Vytvoříte-li v podadresáři pracovního adresáře soubor „.gitignore“ obsahující jediný řádek „\*“, git bude tento adresář a veškerý jeho další obsah zcela ignorovat. To je praktické, když chcete mít v pracovním adresáři podadresář, který nikdy nebudete chtít verzovat, ale současně také nechcete tento adresář zapisovat do hlavního souboru „.gitignore“.
+* Soubor „.gitignore“ se obvykle verzuje spolu s normálními soubory.
 
 ## Další zdroje informací
 *# *<br>

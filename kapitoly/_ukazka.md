@@ -221,7 +221,7 @@ Všechny tisknutelné znaky ASCII jsou podporovány a uvedeny v následující
 * ({), (|), (}), (~) (ASCII 0x7b až 0x7e)
 * (á), (č), (ď), (é), (ě), (í), (ň), (ó), (ř), (š), (ť), (ú), (ů), (ý), (ž); příklad: „žluťoučký kůň příšerně úpěl ďábelské ódy“
 * (Á), (Č), (Ď), (É), (Ě), (Í), (Ň), (Ó), (Ř), (Š), (Ť), (Ú), (Ů), (Ý), (Ž); příklad: „ŽLUŤOUČKÝ KŮŇ PŘÍŠERNĚ ÚPĚL ĎÁBELSKÉ ÓDY“
-* „m-dash“ (—), „n-dash“ (−), „times“ (×), „degree“ (°), „menší nebo rovno“ (≤), „větší nebo rovno“ (≥)
+* „m-dash“ (—), „n-dash“ (−), „times“ (×), „degree“ (°), „menší nebo rovno“ (≤), „větší nebo rovno“ (≥), „nerovno“ (≠)
 * „neaktivní přepínač“ (○), „aktivní přepínač“ (◉), „nezaškrtnuté políčko“ (☐), „zatržené políčko“ (☑), „škrtnuté políčko“ (☒)
 * „nezlomitelná mezera“ (&nbsp;)
 * „české uvozovky“ („) a (“)

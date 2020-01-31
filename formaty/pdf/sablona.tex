@@ -31,7 +31,7 @@
 % ============================================================================
 %
 % 1. skupina balíčků:
-\usepackage[czech]{babel}
+\usepackage[english,czech]{babel}
 %
 {{POKUD JE FORMÁT pdf-a4}}
 
@@ -77,9 +77,12 @@
 % {fancyhdr}:
     \fancypagestyle{normalni}{%
         \fancyhead{}\fancyfoot{}%
-        \fancyhead[LE,LO]{\ifnumcomp{\value{chapter}}{>}{0}{{\ttfamily\thechapter}}{\mbox{}}}
-        \fancyhead[CE,CO]{{\ttfamily LINUX: Kniha kouzel}}%
-        \fancyhead[RE,RO]{{\ttfamily\nazevkapitoly}}%
+        \fancyhead[RE,RO]{{\ttfamily%
+            \ifnumcomp{\value{chapter}}{>}{0}{%
+                \nazevkapitoly\makebox[1.5em]{\symbol{126}}\thechapter%
+            }{\mbox{}}%
+        }}
+        \fancyhead[LE,LO]{{\ttfamily LINUX: Kniha kouzel}}%
         \fancyfoot[LE,RO]{\thepage}%
         \renewcommand*{\headrulewidth}{0.2pt}%
         \renewcommand*{\footrulewidth}{\headrulewidth}%
@@ -227,10 +230,11 @@
 % {\zapnoutrezimlicence}
 \newcommand*{\zapnoutrezimlicence}{%
     \begin{multicols*}{2}%
+    \begin{otherlanguage*}{czech}%
         \setlength{\odsazeni}{1em}%
         \setlength{\omezeniodstavce}{0pt}%
         \tiny%
-        \newcommand*{\vypnoutrezimlicence}{\end{multicols*}}}
+        \newcommand*{\vypnoutrezimlicence}{\end{otherlanguage*}\end{multicols*}}}
 
 {{KONEC POKUD}}
 %
@@ -240,10 +244,11 @@
 % {\zapnoutrezimlicence}
 \newcommand*{\zapnoutrezimlicence}{%
     \begin{multicols*}{2}%
+    \begin{otherlanguage*}{czech}
         \setlength{\odsazeni}{1em}%
         \setlength{\omezeniodstavce}{0pt}%
         \tiny%
-        \newcommand*{\vypnoutrezimlicence}{\end{multicols*}}}
+        \newcommand*{\vypnoutrezimlicence}{\end{otherlanguage*}\end{multicols*}}}
 
 {{KONEC POKUD}}
 %

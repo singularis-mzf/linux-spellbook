@@ -33,7 +33,7 @@ CONVERT := convert
 VSECHNY_DODATKY := predmluva koncepce-projektu plan-vyvoje test licence
 
 # _ A, B, C, D, E, F, G
-VSECHNY_KAPITOLY := _ostatni _ukazka awk barvy-a-titulek datum-cas-kalendar diskove-oddily docker firefox git
+VSECHNY_KAPITOLY := _ostatni _ukazka awk barvy-a-titulek bash datum-cas-kalendar diskove-oddily docker firefox git
 # H, I, J, K, L, M
 VSECHNY_KAPITOLY += hledani-souboru konverze-formatu latex lkk make markdown
 # N, O, P, Q, R, S
@@ -145,6 +145,7 @@ $(SOUBORY_PREKLADU)/postprocess.dat: $(wildcard postprocess.dat)
 # 3. soubory_prekladu/ucs_ikony.dat
 # ----------------------------------------------------------------------------
 $(SOUBORY_PREKLADU)/ucs_ikony.dat: ucs_ikony/ikony.txt skripty/extrakce/ikony-zaklinadel.awk
+	mkdir -pv $(dir $@)
 	$(AWK) -f skripty/extrakce/ikony-zaklinadel.awk
 	$(AWK) 'BEGIN {ORS = ""} /^[^#]/ {gsub(/\s/, ""); print $0;} END {print "\n"}' $< >$@
 

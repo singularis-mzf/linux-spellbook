@@ -198,6 +198,7 @@ function ZpracujZnak(znak) {
             return "\\ensuremath{\\times}";
         case "≤":
         case "≥":
+        case "≠":
             return znak;
 # speciality
         case "○":
@@ -340,7 +341,8 @@ function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, ikona, cislaPoznamek
         # #3 = ikona
         ax = ax (ikona ~ /^.\t[Dd]$/ ? "\\dejavusansfamily" : ikona ~ /^.\t[Ll]$/ ? "\\lmmathfamily" : ShoditFatalniVyjimku("Nerozpoznaný typ ikony: \"" ikona "\"!")) "{}" substr(ikona, 1, 1) "}{";
         # #4 = titulek zaklínadla + \footnotemark
-        ax = ax textZaklinadla;
+        # Poznámka: kvůli mechanismu „postprocess“ je potřeba oddělit titulek zaklínadla na víceméně samostatný řádek.
+        ax = ax "%\n" textZaklinadla;
         if (length(cislaPoznamek) > 0) {
             base = AlokovatPoznamkuPodCarou();
             ax = ax "\\footnotemark[" base "]";

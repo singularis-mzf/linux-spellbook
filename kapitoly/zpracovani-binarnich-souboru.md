@@ -74,10 +74,10 @@ Poznámky:
 
 *# pseudonáhodná data (libovolné bajty/bajty v určitém rozsahu)*<br>
 **head -c** {*velikost-P*} **/dev/urandom &gt;** {*soubor*}<br>
-**tr -cd '\\**{*osm.-min*}**-**{*osm.-max*}**' &lt; /dev/urandom \| head -c** {*velikost-P*} **&gt;** {*soubor*}
+**tr -cd '\\**{*osm.-min*}**-\\**{*osm.-max*}**' &lt; /dev/urandom \| head -c** {*velikost-P*} **&gt;** {*soubor*}
 
 *# soubor s bajty 0 až 255*<br>
-**seq 0 255 \| xargs printf %02x \| xxd -r -p &gt;~/ram/bytes.dat**
+**printf %02x {0..255} \| xxd -r -p &gt;~/ram/bytes.dat**
 
 
 
@@ -91,7 +91,7 @@ Poznámky:
 **uuencode /dev/stdout &lt;** {*soubor*} **\| sed -n 'x;3,$p'**<br>
 **sed $'1i\\\\\\nbegin 644 /dev/stdout\\n$a\\\\\\nend' temp.dat \| uudecode &gt;** {*cíl*}
 
-### Srovnání souborů
+### Srovnání souborů podle obsahu
 
 *# jsou dva soubory po bajtech **shodné**?*<br>
 **cmp** [**-s**] {*soubor*} {*soubor*}
@@ -151,6 +151,9 @@ Poznámky:
 **dd** [**if=**{*vstupní-soubor*}] <nic>[**of=**{*výstupní-soubor*}] **conv=swab**<br>
 **xxd -e -g 4** [{*soubor*}] **\| xxd -r &gt;** {*cíl*}<br>
 **xxd -e -g 8** [{*soubor*}] **\| xxd -r &gt;** {*cíl*}
+
+*# obrátit po bajtech celý soubor*<br>
+?
 
 <!--
 ?
