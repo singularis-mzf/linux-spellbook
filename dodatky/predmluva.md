@@ -173,7 +173,7 @@ Hlavní novinkou je spouštěč pomocných skriptů „lkk“ distribuovaný spo
 
 V PDF variantě se mi podařilo další podstatné zlepšení designu. Nadpisy jsou nyní přehlednější, stránky mají název kapitoly v záhlaví a titulky zaklínadel jsou střídavě podbarvené, což jim umožňuje být přehlednější.
 
-V HTML variantě nastaly jen menší změny, nejvýraznější je nová organizace rozcestníku v záhlaví kapitoly, která nově obsahuje i podsekce. Další výraznou změnou je opatrný začátek podpory ikon zaklínadel (ty se ještě budou vyvíjet).
+V HTML variantě je nejvýraznější novinkou nová organizace rozcestníku v záhlaví kapitoly. Další výraznou změnou je opatrný začátek podpory ikon zaklínadel (ty se ještě budou vyvíjet) a rovněž podpora dvou nových barevných motivů pro vysoký kontrast. Do budoucna počítám přidat ještě plnohodnotný tmavý motiv a obě verze motivu Solarized.
 
 Vydání verze 1.4 očekávám již ke konci února 2020, případně na začátku března.
 
