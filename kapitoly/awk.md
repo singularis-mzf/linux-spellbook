@@ -262,6 +262,9 @@ a na konci může být sloupec „*“, který přijme libovolné množství da
 *# **vypnout** dělení na sloupce*<br>
 **FS = RS;**
 
+*# každý znak jako samostatný sloupec*<br>
+**FS = "";**
+
 *# dělit sloupce výhradně mezerou*<br>
 **FS = "[&blank;]";**
 

@@ -45,6 +45,48 @@ Poznámky:
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+### Testy
+
+*# je proměnná definovaná?*<br>
+**test -v** {*název\_proměnné*}
+
+*# jde o proměnnou interpretu?*<br>
+?
+
+*# jde o proměnnou prostředí?*<br>
+?
+
+### Jmenné odkazy
+
+*# vytvořit jmenný odkaz*<br>
+*// Poznámka: jmenným odkazem nelze odkazovat na normální ani asociativní pole!*<br>
+**declare -n** {*název\_odkazu*}**=**{*název\_odkazované\_proměnné*}
+
+*# zrušit jmenný odkaz*<br>
+**unset -n** {*název\_odkazu*}
+
+*# je proměnná jmenný odkaz?*<br>
+**test -R** {*název\_proměnné*}
+
+*# přečíst jmenný odkaz*<br>
+**if test -R** {*název\_odkazu*}**; then declare +n** {*název\_odkazu*}**; echo $**{*název\_odkazu*}**; declare -n** {*název\_odkazu*}**; else false; fi**
+<!--
+[ ] Vyzkoušet.
+-->
+
+### Proměnné prostředí
+
+*# změnit proměnnou interpretu na proměnnou prostředí*<br>
+**export** {*název\_proměnné*}[**=**{*nová-hodnota*}]
+
+*# změnit proměnnou prostředí na proměnnou interpretu*<br>
+?
+
+### Pole
+
+### Asociativní pole
+
+
 ## Parametry příkazů
 <!--
 - Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.

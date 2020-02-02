@@ -42,6 +42,9 @@ Poznámky:
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+* **Adresářová položka** je pojmenovaná položka v adresáři; obvykle je to soubor (přesněji − pevný odkaz na soubor), další adresář či symbolický odkaz, méně často zařízení (např. „/dev/null“), pojmenovaná roura apod. Název každé adresářové položky v jednom adresáři je jedinečný a může obsahovat jakékoliv znaky UTF-8 kromě nulového bajtu a znaku „/“.
+* Adresářová položka je **skrytá**, pokud její název začíná znakem „.“.
+
 !ÚzkýRežim: vyp
 
 ## Zaklínadla
@@ -50,12 +53,55 @@ Poznámky:
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+
+*# přejmenovat adresářovou položku*<br>
+**mv** [{*parametry*}]
+
+*# smazat adresářovou položku (kromě adresáře)*<br>
+**rm** [**-f**] {*cesta*}...
+
+*# smazat prázdný adresář*<br>
+**rmdir** {*cesta*}
+
+*# smazat adresář rekurzívně*<br>
+**rm -r**[**f**]<nic>[**v**] {*cesta*}...
+
+*# vytvořit adresář*<br>
+**mkdir** [**-v**] {*cesta*}...
+
+*# vytvořit adresář a všechny jemu nadřazené, jen pokud neexistují*<br>
+**mkdir -p**[**v**] {*cesta*}...
+
+*# přepnout aktuální adresář*<br>
+**cd** {*cesta*}
+
+*# zjistit aktuální adresář*<br>
+**pwd**
+
+*# přejít do domovského adresáře*<br>
+**cd**
+
+### Kopírování adresářů
+
+
 ## Parametry příkazů
 <!--
 - Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.
 - Jinak by zde měl být přehled nejužitečnějších parametrů používaných nástrojů.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+### mv
+
+*# *<br>
+**mv** [{*parametry*}] {*zdroj*}... {*cíl*}<br>
+**mv** [{*parametry*}] **-t** {*cílový-adresář*} {*zdroj*}...
+
+!Parametry:
+
+* ◉ -f ○ -i ○ -n ○ -b ○ -u :: Existující cílový soubor: přepsat bez ptaní/zeptat se/nepřesouvat/přejmenovat a nahradit/přepsat, pokud je starší.
+* ☐ -v :: Vypisovat provedené operace.
+* ☐ -T :: Cíl musí být soubor; je-li to existující adresář, selže s chybou.
 
 ## Instalace na Ubuntu
 <!--

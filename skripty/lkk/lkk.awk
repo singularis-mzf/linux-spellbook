@@ -134,31 +134,48 @@ BEGIN {
         }
     }
 
-    # akce "f" (najít skript) a "t" (existuje skript?)
-    if (akce ~ /[ft]/) {
-        if (nova_cesta == "") {exit 1}
-        if (akce == "f") {print nova_cesta > stdout}
-        exit;
-    }
-
     # 5. Spustit akci.
     switch (akce) {
         case "e": # editovat
             if (nova_cesta != ENVIRON["HOME"] "/.config/lkk/skripty/" ARGUMENTY[0]) {
-                print "mkdir -pv ~/.config/lkk/skripty && cp -- " DoApostrofu(nova_cesta) " " DoApostrofu(ENVIRON["HOME"] "/.config/lkk/skripty/" ARGUMENTY[0]) " && \\" > bashout;
+                print "mkdir -pv ~/.config/lkk/skripty && \\" > bashout;
+                if (nova_cesta != "") {
+                    print "cp -- " DoApostrofu(nova_cesta) " " DoApostrofu(ENVIRON["HOME"] "/.config/lkk/skripty/" ARGUMENTY[0]) " && \\"
+                } else {
+                    print "touch -- " DoApostrofu(ENVIRON["HOME"] "/.config/lkk/skripty/" ARGUMENTY[0]) " && \\"
+                }
             }
             print "exec sensible-editor " DoApostrofu(ENVIRON["HOME"] "/.config/lkk/skripty/" ARGUMENTY[0]) > bashout;
             exit;
+
+        case "f": # najít skript
+            if (nova_cesta == "") {exit 1}
+            print nova_cesta > stdout;
+            exit;
+
         case "p": # vypsat skript
+            if (nova_cesta == "") {
+                print "lkk: skript či úryvek " ARGUMENTY[0] " nenalezen!" > stderr;
+                exit 1;
+            }
             print "exec cat " DoApostrofu(nova_cesta) > bashout;
             exit;
+
         case "r": # spustit skript
+            if (nova_cesta == "") {
+                print "lkk: skript či úryvek " ARGUMENTY[0] " nenalezen!" > stderr;
+                exit 1;
+            }
             prikaz = "exec " DoApostrofu(nova_cesta);
             for (i = 1; i < POCET_ARGUMENTU; ++i) {
                 prikaz = prikaz " " DoApostrofu(ARGUMENTY[i]);
             }
             print prikaz > bashout;
             exit;
+
+        case "t": # existuje skript?
+            exit nova_cesta == "" ? 1 : 0;
+
         default:
             ShoditFatalniVyjimku("Nepodpovaná akce: " akce);
             exit;

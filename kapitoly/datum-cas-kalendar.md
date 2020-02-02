@@ -14,8 +14,6 @@ https://creativecommons.org/licenses/by-sa/4.0/
 <!--
 Poznámky:
 
-[ ] Zamyslet se nad formátováním formátu date/strftime.
-
 ⊨
 -->
 
@@ -140,7 +138,7 @@ pro zarovnání mezerami místo nulami tam vložte „\_“, např. „%\_m“ v
 
 *# čas s udaným **posunem proti UTC** (obecně/příklady)*<br>
 *// „posun“ je znaménko a čtyři číslice značící posun oproti UTC v hodinách a minutách, např. „+0100“. Odpovídá formátu „%z“.*<br>
-{*rok*}**-**{*měsíc*}**-**{*den*}**&blank;**{*hodina*}**:**{*minuta*}**:**{*sekunda*}[**.**{*f*}][**&blank;**]{*posun*}<br>
+{*rok*}**-**{*měsíc*}**-**{*den*}**&blank;**{*hodina*}**:**{*minuta*}**:**{*sekunda*}[**.**{*f*}]<nic>[**&blank;**]{*posun*}<br>
 {*rok*}**-**{*měsíc*}**-**{*den*}**T**{*hodina*}**:**{*minuta*}**:**{*sekunda*}[**.**{*f*}]{*posun*}<br>
 **2019-12-31 23:59:59.123456789 -0100**<br>
 **2019-12-31T23:59:59.123456+0100**
@@ -154,7 +152,7 @@ pro zarovnání mezerami místo nulami tam vložte „\_“, např. „%\_m“ v
 *# **UTC čas** (alternativy)*<br>
 {*rok*}**-**{*měsíc*}**-**{*den*}**&blank;**{*hodina*}**:**{*minuta*}**:**{*sekunda*}[**.**{*f*}]**Z**<br>
 {*rok*}**-**{*měsíc*}**-**{*den*}**T**{*hodina*}**:**{*minuta*}**:**{*sekunda*}[**.**{*f*}]**Z**<br>
-{*rok*}**-**{*měsíc*}**-**{*den*}**&blank;**{*hodina*}**:**{*minuta*}**:**{*sekunda*}[**.**{*f*}][**&blank;**]**+0000**<br>
+{*rok*}**-**{*měsíc*}**-**{*den*}**&blank;**{*hodina*}**:**{*minuta*}**:**{*sekunda*}[**.**{*f*}]<nic>[**&blank;**]**+0000**<br>
 {*rok*}**-**{*měsíc*}**-**{*den*}**T**{*hodina*}**:**{*minuta*}**:**{*sekunda*}[**.**{*f*}]**+0000**<br>
 **TZ="UTC"&blank;**{*rok*}**-**{*měsíc*}**-**{*den*}**&blank;**{*hodina*}**:**{*minuta*}**:**{*sekunda*}[**.**{*f*}]<br>
 
@@ -180,16 +178,16 @@ pro zarovnání mezerami místo nulami tam vložte „\_“, např. „%\_m“ v
 ### Kalendář
 
 *# zobrazit kalendář měsíce a **dvou okolních***<br>
-**ncal -M3**[**b**][**w**] [{*měsíc-1-až-12*} {*rok*}]
+**ncal -M3**[**b**]<nic>[**w**] <nic>[{*měsíc-1-až-12*} {*rok*}]
 
 *# zobrazit kalendář měsíce*<br>
-**ncal -M**[**b**][**w**] [{*měsíc-1-až-12*}] {*rok*}
+**ncal -M**[**b**]<nic>[**w**] <nic>[{*měsíc-1-až-12*}] {*rok*}
 
 *# zobrazit kalendář všech měsíců **v roce***<br>
 **ncal -Mb**[**w**] {*rok*}
 
 *# zobrazit kalendář měsíce a N následujících*<br>
-**ncal -M**[**b**][**w**] **-A** {*N*} [{*měsíc-1-až-12*}] {*rok*}
+**ncal -M**[**b**]<nic>[**w**] **-A** {*N*} [{*měsíc-1-až-12*}] {*rok*}
 
 ### Aktuální čas a datum
 
@@ -199,7 +197,7 @@ pro zarovnání mezerami místo nulami tam vložte „\_“, např. „%\_m“ v
 **TZ="**{*časová/zóna*}**" date** [**+**{*formát*}]
 
 *# zobrazit kalendář aktuálního měsíce a dvou okolních*<br>
-**ncal -M3**[**b**][**w**]
+**ncal -M3**[**b**]<nic>[**w**]
 
 ### Časové zóny
 *# konverze z UTC na lokální čas/z lokálního času na UTC*<br>
@@ -211,12 +209,11 @@ pro zarovnání mezerami místo nulami tam vložte „\_“, např. „%\_m“ v
 **TZ="**{*cílová/časová/zóna*}**" date -d 'TZ="**{*zdrojová/časová/zóna*}**"&blank;**{*čas*}**' "+%F %T**[**&blank;%z**]**"**<br>
 **TZ="America/New\_York" date -d 'TZ="Asia/Vladivostok" 2019-01-01 12:35:57' "+%F %T %z"**
 
-*# **vypsat** seznam rozumných podporovaných časových zón, seřazený podle jejich aktuální odchylky od UTC*<br>
-**vypsat-casove-zony \| sed 's/.\*/TZ="&amp;" date +%z; echo &amp;/' \| bash \| xargs -rd \\\\n -n 2 printf "%s\\\\t%s\\\\n" \| LC\_ALL=C sort \| sort -ns**
+*# **vypsat** seznam podporovaných časových zón, seřazený podle jejich aktuální odchylky od UTC*<br>
+**timedatectl list-timezones \| sed 's/.\*/TZ="&amp;" date +%z; echo &amp;/' \| bash \| xargs -rd \\\\n -n 2 printf "%s\\\\t%s\\\\n" \| LC\_ALL=C sort \| sort -ns**
 
-*# vypsat seznam podporovaných časových zón (rozumný/naprosto úplný)*<br>
-**vypsat-casove-zony**<br>
-**vypsat-casove-zony vsechny**
+*# vypsat seznam podporovaných časových zón*<br>
+**timedatectl list-timezones**
 
 *# vypsat aktuální časovou zónu nastavenou v systému*<br>
 **cat /etc/timezone**
@@ -256,23 +253,35 @@ pro zarovnání mezerami místo nulami tam vložte „\_“, např. „%\_m“ v
 *# zjistit datum Velikonoční neděle*<br>
 **date -d "$(LC\_ALL=C ncal -e** [{*rok*}]**)" +%F**
 
-### Nastavení systémového času
+### Nastavení systému
 
-*# přepnout časovou zónu systému*<br>
+*# přepnout **časovou zónu** systému (ručně)*<br>
 **sudo dpkg-reconfigure tzdata**<br>
 !: V dialogu zvolte požadovanou oblast a konkrétní časovou zónu.
 
+*# přepnout časovou zónu systému (automaticky)*<br>
+**timedatectl set-timezone "**{*nová/zóna*}**"**<br>
+!: Restartujte počítač, aby všechny programy změnu zaregistrovaly a přijaly.
+
+*# vypnout/zapnout **automatickou synchronizaci** systémového času*<br>
+**timedatectl set-ntp off**<br>
+**timedatectl set-ntp on**
+
+*# **ručně** nastavit systémový čas*<br>
+*// Zadejte čas a datum ve formátu „YYYY-MM-DD HH:MM:SS“. Poznámka: Ve VirtualBoxu .*<br>
+**timedatectl set-ntp off**<br>
+**timedatectl set-time "**{*nový lokální čas*}**"**
+
 *# ručně synchronizovat systémový čas*<br>
 ?
-
-*# vypnout/zapnout automatickou synchronizaci systémového času*<br>
-?<br>
-?
+<!--
+timedatectl set-ntp on && sleep 1 && timedatectl set-ntp off
+-->
 
 ## Parametry příkazů
 
 *# *<br>
-[**TZ="**{*cílová časová zóna*}**"**] **date** [{*parametry*}] [**+**{*formát*}]
+[**TZ="**{*cílová časová zóna*}**"**] **date** [{*parametry*}] <nic>[**+**{*formát*}]
 
 * **-d '**{*datum a čas*}**'** nebo **-d '"**{*původní časová zóna*}**"&blank;**{*datum a čas*}**'** \:\: Použije zadaný čas místo aktuálního.
 * **-u** \:\: Cílová časová zóna bude UTC, bez ohledu na proměnnou prostředí TZ.
@@ -320,13 +329,3 @@ Veškeré použité nástroje jsou základními součástmi Ubuntu dostupnými v
 * [TL;DR stránka „date“](https://github.com/tldr-pages/tldr/blob/master/pages/common/date.md) (anglicky)
 
 !ÚzkýRežim: vyp
-
-## Pomocné funkce a skripty
-
-*# lkk vypsat-casove-zony − vypíše seznam podporovaných časových zón*<br>
-**#!/bin/bash -e**<br>
-**find -L /usr/share/zoneinfo -type f \| cut -d / -f 5- \| (if test "$1" = "vsechny"**<br>
-**then**<br>
-<odsadit1>**exec cat**<br>
-**fi**<br>
-**exec egrep "^($(echo Africa America Antarctica Asia Atlantic Australia Etc Europe Indian Pacific \| tr "&blank;" \\\|))") \| LC\_ALL=C sort -i**

@@ -187,8 +187,9 @@ ARGIND < 2 {
 # dál pokračovat, jen je-li načítání zapnuté
 !zapnuto {next}
 
-# pomocný skript: /^\*#\s*lkk\s+([-A-Za-z0-9]+)\s*−\s*(\S.*\S)\s*\*<br>$/
+# pomocný skript: /^\*#\s*lkk\s+()([-A-Za-z0-9]+)\s*−\s*(\S.*\S)\s*\*<br>$/
 # pomocná funkce: /^\*#\s*(([A-Za-z0-9]|\\_)+)\(\)\s*−\s*(\S.*\S)\s*\*<br>$/
+# pomocný úryvek: /^\*#\s*lkk\s+(-p\s+)([-A-Za-z0-9]+)\s*−\s*(\S.*\S)\s*\*<br>$/
 
 # kvůli zvýrazňování syntaxe používám v regulárních výrazech \043 jako náhradu za znak „#“
 
@@ -204,12 +205,16 @@ ARGIND < 2 {
 
 # FUNKCE:
 (data_retezec = gensub(/^\*\043\s*(([A-Za-z0-9]|\\_)+)\(\)\s*−\s*(\S.*\S)\s*\*<br>$/, "\\1\t\\3", 1)) != $0 {
-    i = index(data, "\t");
-    jmeno = gensub(/\\_/, "_", "g", substr(data, 1, i - 1));
-    popis = substr(data, i + 1);
+    i = index(data_retezec, "\t");
+    jmeno = gensub(/\\_/, "_", "g", substr(data_retezec, 1, i - 1));
+    popis = substr(data_retezec, i + 1);
     typ = "FUNKCE";
     if (LADENI) {print "LADĚNÍ: " typ " \"" jmeno "\" = \"" popis "\"" > "/dev/stderr"}
     next;
+}
+
+/^\*\043\s.*\*<br>$/ {
+    ShoditFatalniVyjimku("Řádek nerozpoznán v režimu pomocných funkcí, skriptů a úryvků: " $0);
 }
 
 jmeno != "" && /^(<odsadit[1-8]>)?\*\*.*\*\*(<br>)?$/ {

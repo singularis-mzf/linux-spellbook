@@ -30,7 +30,7 @@ https://www.root.cz/clanky/pripojeni-obrazu-disku-pod-beznym-uzivatelem-bez-opra
 
 # Diskové oddíly
 
-!Štítky: {tematický okruh}{systém}{LVM}
+!Štítky: {tematický okruh}{systém}{LVM}{ramdisk}
 
 !ÚzkýRežim: zap
 
@@ -74,6 +74,13 @@ https://www.root.cz/clanky/pripojeni-obrazu-disku-pod-beznym-uzivatelem-bez-opra
 2) UUID (např. UUID="61bbd562-0694-4561-a8e2-4ccfd004a660")
 3) jmenovka (např. LABEL="MojeData")
 -->
+
+## Ramdisk
+
+*# připojit ramdisk (fstab)*<br>
+*// Velikost se udává nejčastěji v mebibajtech (s příponou M − např. „256M“) nebo gibibajtech (s příponou G − např. „10G“).*<br>
+**tmpfs** {*/cesta*} **tmpfs size=**{*velikost*}[**,nosuid**]<nic>[**,noexec**]<nic>[**,mode=**{*práva-číselně*}]<nic>[**,uid=**{*UID-vlastníka*}]<nic>[**,gid=**{*GID-skupiny*}]<nic>[**,**{*další,volby*}] **0 0**
+
 
 ## Parametry příkazů
 <!--
