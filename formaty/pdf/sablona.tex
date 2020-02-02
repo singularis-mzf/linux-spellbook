@@ -377,6 +377,15 @@
     \mbox{\tcbox[boxrule=0.5pt,size=fbox,arc=1mm,boxsep=2pt,left=1pt,right=1pt]{\makebox[\tmpsirkastitku][l]{\rule[-0.45ex]{0pt}{1em}#1}}}%
 }}
 
+% #1 = nastavení rodiny písma (např. \lmmathfamily) + znak ikony
+\newcommand*{\ikonazaklinadla}[1]{{%
+    \setlength{\unitlength}{1em}%
+    \begin{picture}(1,0.5)%
+        %\put(0.53,0.35){\circle{1.2}}%
+        \put(0.5,0){\makebox[0pt]{{#1}}}%
+    \end{picture}%
+}}
+
 %
 % Přehled podle štítků (pps)
 % ============================================================================
@@ -443,7 +452,7 @@
     % číslo zaklínadla:
     \##2%
     % ikona zaklínadla:
-    &{#3}% \lmmathfamily{}♣
+    &\ikonazaklinadla{#3}%
     % titulek zaklínadla:
     &{#4}%
     % řádky zaklínadla:

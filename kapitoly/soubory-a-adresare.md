@@ -36,6 +36,9 @@ Poznámky:
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+Tato kapitola se zabývá prací s adresáři a jejich položkami (soubory, podadresáři apod.) včetně jejich metadat (např. přístupových práv či velikosti souborů).
+Nepokrývá činnosti, kde záleží na konkrétním obsahu souborů (tzn. ani určování skutečného typu souborů).
+
 ## Definice
 <!--
 - Uveďte výčet specifických pojmů pro použití v této kapitole a tyto pojmy definujte co nejprecizněji.

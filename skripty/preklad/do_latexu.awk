@@ -339,7 +339,7 @@ function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, ikona, cislaPoznamek
         # #2 = číslo zaklínadla
         ax = ax cisloZaklinadla "}{";
         # #3 = ikona
-        ax = ax (ikona ~ /^.\t[Dd]$/ ? "\\dejavusansfamily" : ikona ~ /^.\t[Ll]$/ ? "\\lmmathfamily" : ShoditFatalniVyjimku("Nerozpoznaný typ ikony: \"" ikona "\"!")) "{}" substr(ikona, 1, 1) "}{";
+        ax = ax DoLatexuIkonaZaklinadla(ikona) "}{";
         # #4 = titulek zaklínadla + \footnotemark
         # Poznámka: kvůli mechanismu „postprocess“ je potřeba oddělit titulek zaklínadla na víceméně samostatný řádek.
         ax = ax "%\n" textZaklinadla;
@@ -498,6 +498,31 @@ function ZapnoutUzkyRezim() {
 function VypnoutUzkyRezim() {
     DO__UZKY_REZIM = 0;
     return "\\end{uzkyrezim}";
+}
+
+function VzornikIkon(pocetIkon, ikony,   i, vysledek) {
+    vysledek = ZacatekOdstavcu(1) "\\raggedright\\renewcommand*{\\baselinestretch}{1.5}\\selectfont%\n";
+    for (i = 1; i <= pocetIkon; ++i) {
+        vysledek = vysledek sprintf("\\mbox{\\makebox[2em][r]{%d:}\\makebox[2em]{\\ikonazaklinadla{%s}}}\n", i - 1, DoLatexuIkonaZaklinadla(ikony[i]));
+    }
+    vysledek = vysledek KonecOdstavcu();
+    return vysledek;
+}
+
+function DoLatexuIkonaZaklinadla(specifikace,   font) {
+    switch (gensub(/.*\t/, "", 1, specifikace)) {
+        case "d":
+        case "D":
+            font = "\\dejavusansfamily";
+            break;
+        case "l":
+        case "L":
+            font = "\\lmmathfamily";
+            break;
+        default:
+            ShoditFatalniVyjimku("Nerozpoznaný typ ikony: \"" specifikace "\"!");
+    }
+    return font "{}" gensub(/\t.*$/, "", 1, specifikace);
 }
 
 @include "skripty/preklad/hlavni.awk"

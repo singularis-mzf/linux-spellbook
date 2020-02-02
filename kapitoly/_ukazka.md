@@ -17,6 +17,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 # Ukázka
 
 !Štítky: {ostatní}{ukázka}
+!FixaceIkon: *
 
 ## Úvod
 Tato kapitola je jen ukázka dovoleného formátování. Je zatím poměrně omezené.
@@ -235,3 +236,7 @@ Všechny tisknutelné znaky ASCII jsou podporovány a uvedeny v následující
 * &amp;lt; (&lt;)
 * &amp;nbsp; (&nbsp;) (Lze zadat i přímo: „ “.)
 * &amp;quot; (&quot;) (Lze zadat i přímo: „"“.)
+
+## Vzorník ikon zaklínadel
+
+!VzorníkIkon:

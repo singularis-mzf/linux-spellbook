@@ -185,7 +185,7 @@ $(VYSTUP_PREKLADU)/html/lkk-$(DATUM_SESTAVENI).css: formaty/html/sablona.css skr
 
 $(CSS_MOTIVY:%=$(VYSTUP_PREKLADU)/html/lkk-$(DATUM_SESTAVENI)-%.css): %: formaty/html/sablona.css skripty/plneni-sablon/css.awk skripty/plneni-sablon/css2.awk
 	mkdir -pv $(dir $@)
-	$(RM) $(@:$(VYSTUP_PREKLADU)/html/lkk-$(DATUM_SESTAVENI)%=$(VYSTUP_PREKLADU)/html/lkk-????????)
+	$(RM) $(@:$(VYSTUP_PREKLADU)/html/lkk-$(DATUM_SESTAVENI)%=$(VYSTUP_PREKLADU)/html/lkk-????????%)
 	set -o pipefail; $(AWK) -v MOTIV=$(strip $(patsubst lkk-$(DATUM_SESTAVENI)-%.css, %, $(notdir $@))) -f skripty/plneni-sablon/css.awk $< | $(AWK) -f skripty/plneni-sablon/css2.awk > $@
 
 # 4. obrazky/{obrazek} => vystup_prekladu/html/obrazky/{obrazek}

@@ -325,5 +325,14 @@ function VypnoutUzkyRezim() {
     return "";
 }
 
+function VzornikIkon(pocetIkon, ikony,   i, vysledek, pole) {
+    vysledek = "<div class=\"vzornikikon\">\n";
+    for (i = 1; i <= pocetIkon; ++i) {
+        split(ikony[i], pole, "\t"); # pole[1] = znak ikony; pole[2] = třída
+        vysledek = vysledek "<span>" (i - 1) ":&nbsp;<span class=\"" pole[2] "\">" pole[1] "</span></span>\n";
+    }
+    vysledek = vysledek "</div>";
+    return vysledek;
+}
 
 @include "skripty/preklad/hlavni.awk"

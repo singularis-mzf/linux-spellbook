@@ -435,8 +435,8 @@ nav a[rel="prev"]::after, nav a[rel="next"]::before {content:none;}
     text-align:center;
     white-space:pre;
 }
-.zaklinadlo .zahlavi .D {font-family:"DejaVu Sans", sans-serif;}
-.zaklinadlo .zahlavi .L {font-family:"Latin Modern Math", sans-serif;}
+.zaklinadlo .zahlavi .D, .vzornikikon .D {font-family:"DejaVu Sans", sans-serif;}
+.zaklinadlo .zahlavi .L, .vzornikikon .L {font-family:"Latin Modern Math", sans-serif;}
 
 .zaklinadlo .radky {
 # /*    box-shadow:0 0 5pt 0 rgb(200,200,200), -5pt 0 5pt 5pt rgb(200,200,200), 5pt 0 5pt 0 rgb(200,200,200);*/    /*box-shadow:0 0 5pt 1pt rgb(200,200,200);*/
@@ -893,6 +893,16 @@ span.chybny {
     opacity:0.75;
     padding:0 4pt;
 }
+
+/* vzorník ikon */
+.vzornikikon>span {
+    display:inline-block;
+    width:4em;height:4ex;
+    text-align:right;
+    white-space:nowrap;
+}
+
+
 
 @media print {
     html, body, article {

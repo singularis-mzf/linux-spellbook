@@ -793,13 +793,28 @@ TYP_RADKU == "DIREKTIVA" {
 
         case "ÚZKÝREŽIM":
             if (toupper(HODNOTA_DIREKTIVY) == "ZAP") {
-                printf("%s\n", ZapnoutUzkyRezim());
+                printf("%s", ZapnoutUzkyRezim());
             } else if (toupper(HODNOTA_DIREKTIVY) == "VYP") {
-                printf("%s\n", VypnoutUzkyRezim());
+                printf("%s", VypnoutUzkyRezim());
             } else {
                 ShoditFatalniVyjimku("Neznámá hodnota direktivy ÚZKÝREŽIM: \"" HODNOTA_DIREKTIVY "\"");
             }
             break;
+
+        case "VZORNÍKIKON":
+            if (JE_ODSTAVEC_K_UKONCENI) {
+                printf("%s", KonecOdstavcu());
+                JE_ODSTAVEC_K_UKONCENI = 0;
+            }
+            n = length(UCS_IKONY);
+            delete ikony;
+            for (i = 1; i <= n; ++i) {
+                ikony[i] = substr(UCS_IKONY, i, 1) "\t" substr(UCS_IKONY_PISMA, i, 1);
+            }
+            printf("%s", VzornikIkon(n, ikony));
+            delete ikony;
+            break;
+
         default:
             ShoditFatalniVyjimku("Neznámá direktiva na řádku: \"" $0 "\"!");
     }

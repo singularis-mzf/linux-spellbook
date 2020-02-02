@@ -279,4 +279,24 @@ function VypnoutUzkyRezim() {
     return "VypnoutUzkyRezim();\n";
 }
 
+function VzornikIkon(pocetIkon, ikony,   i, vysledek) {
+    vysledek = "VzornikIkon {\n";
+    if (pocetIkon < 1) {
+        ShoditFatalniVyjimku("Chybný počet ikon: " pocetIkon);
+    }
+    for (i = 1; i <= pocetIkon; ++i) {
+        if (i in ikony) {
+            if (ikony[i] ~ /^\S\t[A-Z]$/) {
+                vysledek = vysledek sprintf("- (%4d) ikona (%s) třídy (%s)\n", i - 1, substr(ikony[i], 1, 1), substr(ikony[i], 3));
+            } else {
+                ShoditFatalniVyjimku("Neplatný formát ikony číslo " i ": <" ikony[i] ">");
+            }
+        } else {
+            ShoditFatalniVyjimku("Ikona číslo " i " chybí v zadaném poli!");
+        }
+    }
+    vysledek = vysledek "}\n";
+    return vysledek;
+}
+
 @include "skripty/preklad/hlavni.awk"
