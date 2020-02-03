@@ -69,6 +69,9 @@
 # Původně: #1338b3
 {{MAKRO barva-adresy-odkazu=#666666}}
 
+# obrázky:
+{{MAKRO obrazek-barva-pozadi=transparent}}
+
 # „klávesa“:
 {{MAKRO klavesa-barva-pozadi=#dddddd}}
 {{MAKRO klavesa-barva-textu=#000000}}
@@ -124,7 +127,7 @@
 {{MAKRO symboly-tab=url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAUCAYAAACJfM0wAAAACXBIWXMAAAsTAAALEwEAmpwYAAABtklEQVQ4y7XUzUtVURQF8N9+vsxCoSYNGkQfNEmjoKTMiCLDSQQNkqA/sGmfgygnZjgpopAaRF+zDILQICt9u8m5cHt29T2oNbrn7rMXh7XW3pGZICLambmmARHRysyOHtGqfU9ExGREtBruHo2IqYgY7Jd4G85juqG5jdO4HBE7+yGGwAlcjYjhhp4juB4Ru/shrnAYMxGxp6G+FzciYl8vxM/wsat5JiL2l/NrvKrVd+FaRIz91ewqFcX5IVzE8SILfMeDzFyMiDbOYBIDpf4L81iop+YP4ipWOIVzxVBYx1xmPil3xjCNHaWeeIrZKrIbNM7MTmYu4BaWy+8BHKrSkJmLuIkvNdMPYmQr82CrYeigcaDaDVM2XjK9vSbFe6yW+iguYbgmxTusNJk3iAs4WTPvBx5l5vOi/wTOduvfbV67RjqCKzhQe/wy7mfm25KYKRzrSszDzHy5mRTjXaRLuJuZn8p5tMSwwlfcy8wPPWtc9LyTmSsN9SXczszPvZqXeFE0XW3oeVPk+bZZZOrE63iM+Ya9m2XsZzPz51bbLWqLfmiTV1aJWet12W8Y6X+Flv+E39XGp4/1pQSiAAAAAElFTkSuQmCC")}}
 {{MAKRO symboly-tab-barva-pozadi=transparent}}
 {{MAKRO symboly-viditelnamezera=url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAMCAYAAABm+U3GAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAJ0lEQVQ4y2NkQID/DKiAkYE4gFUfEwONwKjBowZjAhYS0udoGJMHAIgjAxkEpU0OAAAAAElFTkSuQmCC")}}
-{{MAKRO symboly-tritecky=url("obrazky/tritecky.svg")}}
+{{MAKRO symboly-tritecky=url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgAQMAAABJtOi3AAAABlBMVEUAAACHh4dGA6zFAAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfkAgMEAAlXoR/CAAAAE0lEQVQI12NgoBeoZ/9QTzQBBwA5FBGeWyCouwAAAABJRU5ErkJggg==")}}
 
 #
 # Makra jen pro styl hlavní stránky
@@ -159,6 +162,8 @@
 {{MAKRO rozcestnikvkapitole-barva-pozadi=#ffffff}}
 {{MAKRO rozcestnikvkapitole-barva-odkazu=#0b3322}}
 {{MAKRO barva-adresy-odkazu=#111111}}
+
+{{MAKRO obrazek-barva-pozadi=transparent}}
 
 {{MAKRO parametryprikazu-levy-sloupec-barva-textu=#000000}}
 
@@ -196,6 +201,8 @@
 {{MAKRO barva-navstiveneho-odkazu=#bd99ff}}
 {{MAKRO barva-adresy-odkazu=#cccccc}}
 
+{{MAKRO obrazek-barva-pozadi=#999999}}
+
 {{MAKRO stitek-barva-pozadi=#000000}}
 {{MAKRO stitek-barva-textu=inherit}}
 {{MAKRO stitek-barva-tenkych-ramecku=rgba(255,255,255,0.25)}}
@@ -221,7 +228,7 @@
 
 {{MAKRO symboly-tab-barva-pozadi=#666666}}
 {{MAKRO symboly-viditelnamezera=url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAMAQMAAABcN9+FAAAABlBMVEUAAAD///+l2Z/dAAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfkARoHKiFliKeMAAAAEklEQVQI12OwYfjAgA/b/0fBAGmbEhlfr2/IAAAAAElFTkSuQmCC")}}
-{{MAKRO symboly-tritecky=url("obrazky/tritecky2.svg")}}
+{{MAKRO symboly-tritecky=url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgAQMAAABJtOi3AAAABlBMVEUAAADw8PC5otm+AAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfkAgMEBxhyUKn3AAAAE0lEQVQI12NgoBeoZ/9QTzQBBwA5FBGeWyCouwAAAABJRU5ErkJggg==")}}
 
 {{KONEC POKUD}}
 
@@ -347,6 +354,10 @@ ul.kompaktni {
 figure {
     margin:2rem 0;
     text-align:center;
+}
+figure img {
+    background:{{obrazek-barva-pozadi}};
+    border:1rem solid {{obrazek-barva-pozadi}};
 }
 
 blockquote {

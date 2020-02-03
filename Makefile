@@ -50,7 +50,7 @@ VSECHNY_KAPITOLY_A_DODATKY_MD = $(VSECHNY_KAPITOLY:%=kapitoly/%.md) $(VSECHNY_DO
 # ----------------------------------------------------------------------------
 OBRAZKY := favicon.png by-sa.png logo-knihy-velke.png make.png barvy.png ve-vystavbe.png marsh.jpg banner.png
 OBRAZKY += ik-vychozi.png
-SVG_OBRAZKY := kalendar.svg tritecky.svg tritecky2.svg graf-filtru.svg
+SVG_OBRAZKY := kalendar.svg graf-filtru.svg
 
 # CSS motivy (vedle motivu „hlavní“)
 # ----------------------------------------------------------------------------
@@ -147,7 +147,6 @@ $(SOUBORY_PREKLADU)/postprocess.dat: $(wildcard postprocess.dat)
 $(SOUBORY_PREKLADU)/ucs_ikony.dat: ucs_ikony/ikony.txt skripty/extrakce/ikony-zaklinadel.awk
 	mkdir -pv $(dir $@)
 	$(AWK) -f skripty/extrakce/ikony-zaklinadel.awk
-	$(AWK) 'BEGIN {ORS = ""} /^[^#]/ {gsub(/\s/, ""); print $0;} END {print "\n"}' $< >$@
 
 # HTML:
 # ============================================================================
