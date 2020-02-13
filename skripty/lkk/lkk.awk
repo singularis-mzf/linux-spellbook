@@ -79,7 +79,7 @@ BEGIN {
     # akce "h" (vypsat nápovědu)
     if (akce == "h") {
         print "„lkk“ − užití:" > stdout;
-        print "\tlkk -e {skript} :: Vytvoří uživatelovu kopii skriptu a otevře ji ve výchozím editoru (sensible-editor)." > stdout;
+        print "\tlkk -e {skript} :: Vytvoří uživatelovu kopii skriptu a otevře ji ve výchozím editoru ($EDITOR, popř. sensible-editor)." > stdout;
         print "\tlkk -f {skript} :: Vypíše úplnou (absolutní) cestu k zadanému skriptu." > stdout;
         print "\tlkk -l          :: Vypíše seznam dostupných skriptů." > stdout;
         print "\tlkk -p {skript} :: Vypíše obsah skriptu na standardní výstup." > stdout;
@@ -145,7 +145,7 @@ BEGIN {
                     print "touch -- " DoApostrofu(ENVIRON["HOME"] "/.config/lkk/skripty/" ARGUMENTY[0]) " && \\"
                 }
             }
-            print "exec sensible-editor " DoApostrofu(ENVIRON["HOME"] "/.config/lkk/skripty/" ARGUMENTY[0]) > bashout;
+            print "exec " ("EDITOR" in ENVIRON ? ENVIRON["EDITOR"] : "sensible-editor") " " DoApostrofu(ENVIRON["HOME"] "/.config/lkk/skripty/" ARGUMENTY[0]) > bashout;
             exit;
 
         case "f": # najít skript

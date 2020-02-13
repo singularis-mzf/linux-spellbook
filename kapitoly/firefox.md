@@ -73,7 +73,8 @@ https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/The_about_protocol
 **javascript.enabled = FALSE**
 
 *# vypnout „obraz v obrazu“*<br>
-**media.videocontrols.picture-in-picture.enabled = FALSE**
+**media.videocontrols.picture-in-picture.enabled = FALSE**<br>
+**media.videocontrols.picture-in-picture.video-toggle.enabled = FALSE**
 
 ### Jsou v GUI
 *# nenašeptávat otevřené panely*<br>

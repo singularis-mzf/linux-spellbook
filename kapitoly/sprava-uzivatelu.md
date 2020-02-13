@@ -14,6 +14,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 <!--
 Poznámky:
 
+⊨
 -->
 
 # Správa uživatelů
@@ -55,8 +56,8 @@ Poznámky:
 *# vytvořit nového uživatele/nového systémového uživatele*<br>
 *// Pozor! Celé jméno uživatele nesmí obsahovat znaky „,“ a „=“ a při použití non-ASCII znaků program vypíše varování (což je ale na dnešních systémech dost absurdní).*<br>
 *// Volbou „\-\-disable-login“ umožníte zadat heslo později, jinak se na něj program hned zeptá.*<br>
-**sudo adduser \-\-gecos "**{*Celé jméno*}**"** [**\-\-disable-login**] [**\-\-debug**] [**\-\-shell** {*shell*}] [**\-\-uid** {*konkrétní-UID*}] {*nový-uživatel*}<br>
-**sudo adduser \-\-system** [**\-\-gid** {*ID-skupiny*}] [**\-\-uid** {*konkrétní-UID*}] {*nový-uživatel*}
+**sudo adduser \-\-gecos "**{*Celé jméno*}**"** [**\-\-disable-login**] <nic>[**\-\-debug**] <nic>[**\-\-shell** {*shell*}] <nic>[**\-\-uid** {*konkrétní-UID*}] {*nový-uživatel*}<br>
+**sudo adduser \-\-system** [**\-\-gid** {*ID-skupiny*}] <nic>[**\-\-uid** {*konkrétní-UID*}] {*nový-uživatel*}
 
 *# smazat uživatele*<br>
 **sudo deluser** [**\-\-remove-home**] {*uživatel*}
@@ -234,6 +235,9 @@ Co hledat:
 * online referenční příručky
 * různé další praktické stránky, recenze, videa, tutorialy, blogy, ...
 * publikované knihy
+* ...
+* [Video: Linux Tip: How to add and delete user accounts](https://www.youtube.com/watch?v=933Uo9T4kfk) (anglicky)
 * [TL;DR stránka „adduser“](https://github.com/tldr-pages/tldr/blob/master/pages/linux/adduser.md) (anglicky)
+
 
 !ÚzkýRežim: vyp

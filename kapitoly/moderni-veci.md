@@ -1,7 +1,7 @@
 <!--
 
-Linux Kniha kouzel, kapitola Diskové oddíly
-Copyright (c) 2019 Singularis <singularis@volny.cz>
+Linux Kniha kouzel, kapitola Moderní věci
+Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -14,32 +14,12 @@ https://creativecommons.org/licenses/by-sa/4.0/
 <!--
 Poznámky:
 
-+ mount
-+ LVM
-+ BTRFS
-+ tmpfs
-[ ] sudo fstrim
-
-+ přesunout odkládací oddíly
-
-Článek o btrfs: https://www.root.cz/clanky/souborovy-system-btrfs-vlastnosti-a-vyhody-moderniho-ukladani-dat/
-
-Zpracovat také:
-https://www.root.cz/clanky/pripojeni-obrazu-disku-pod-beznym-uzivatelem-bez-opravneni-roota/
-
-Volby připojení:
-nodev?
-relatime?
-data=ordered
-uhelper=udisks2
-errors=remount-ro
-umask/fmask/dmask
-
+⊨
 -->
 
-# Diskové oddíly
+# Moderní věci
 
-!Štítky: {tematický okruh}{systém}{LVM}{ramdisk}
+!Štítky: {tematický okruh}{ostatní}
 
 !ÚzkýRežim: zap
 
@@ -65,31 +45,78 @@ umask/fmask/dmask
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-## Zaklínadla (fstab)
+### QR kódy
 
-*# připojit kořenový systém souborů (obecně/příklad)*<br>
-{*diskový-oddíl*} **/** {*soub-systém*} {*nastavení*} **0 1**<br>
-**/dev/sda2<tab7>/<tab7>ext4<tab7>errors=remount-ro,discard,nouser\_xattr<tab3>0<tab7>1**
+*# vygenerovat QR kód (zadat text/ze standardního vstupu)*<br>
+*// Typ obrázku může být PNG, SVG, ASCII a některé další. Výstupu na standardní výstup lze dosáhnout zadáním „-“ místo výstupního souboru.*<br>
+**qrencode** [**-o** {*výstupní-soubor*}] <nic>[**-t** {*typ-obrázku*}] <nic>[**-s** {*rozměr-čtverečku*}] <nic>[**\-\-foreground=**{*barva*}] <nic>[**\-\-background=**{*barva*}] **"**{*text*}**"**<br>
+**qrencode** [**-o** {*výstupní-soubor*}] <nic>[**-t** {*typ-obrázku*}] <nic>[**-s** {*rozměr-čtverečku*}] <nic>[**\-\-foreground=**{*barva*}] <nic>[**\-\-background=**{*barva*}]
 
-*# připojit jiný než kořenový systém souborů (obecně/příklad)*<br>
-*// 2 v posledním poli zapne automatickou kontrolu souboru systémů při startu; tato volba je vhodná pro místní souborové systémy. 0 v posledním poli automatickou kontrolu vypne, ta je vhodná především pro výměnná média a síťové systémy souborů. Rovněž je vhodná pro místní systémy souborů připojované výhradně pro čtení.*<br>
-{*co-připojit*} {*soub-systém*} {*nastavení*} **0** {*2-nebo-0*}<br>
-**UUID="61bbd562-0694-4561-a8e2-4ccfd004a660" ext4 defaults 0 2**
+*# přečíst QR kód (pro skript/pro člověka)*<br>
+**zbarimg -q \-\-raw** {*vstupní-obrázek*}<br>
+**zbarimg** {*vstupní-obrázek*}
 
+*# vygenerovat QR kód (příklad)*<br>
+**qrencode -o test.png -t PNG -s 4 "https://singularis-mzf.github.io"**
+
+### EAN (čárové kódy)
+
+*# přečíst EAN kód (pro skript/pro člověka)*<br>
+*// Výstup obou příkazů je bez pomlček.*<br>
+**zbarimg -q \-\-raw** {*vstupní-obrázek*}<br>
+**zbarimg** {*vstupní-obrázek*}
 <!--
-3 možnosti „co připojit“:
-
-1) oddíl (např. /dev/sda1)
-2) UUID (např. UUID="61bbd562-0694-4561-a8e2-4ccfd004a660")
-3) jmenovka (např. LABEL="MojeData")
+Vyžaduje balík „zbar-tools“.
 -->
 
-## Ramdisk
+*# vygenerovat EAN kód*<br>
+*// Zadané číslo musí být dlouhé 12 nebo 7 číslic, případně 13 nebo 8 číslic s platným kontrolním součtem. Šířka a výška mohou být libovolné, ale pro EAN kódy je vhodné, když jsou v poměru 5:4, např. „1024x819“. Výstupní obrázek bude ve skutečnosti ještě o něco větší, protože kromě samotného kódu zahrnuje i text a okraje.*<br>
+**barcode -b** {*číslobezpomlček*} **-e EAN -E** [**-g** {*šířka-kódu*}**x**{*výška-kódu*}] **\| ps2pdf -dEPSCrop -** {*název-souboru.pdf*}
+<!--
+Vyžaduje balík „barcode“ a povolit čtení formátu EPS.
+Také možno „**epspdf** {*název-souboru*}**.eps**“ a umí konverzi na grayscale, ale vyžaduje balík „texlive-pictures“.
+-->
 
-*# připojit ramdisk (fstab)*<br>
-*// Velikost se udává nejčastěji v mebibajtech (s příponou M − např. „256M“) nebo gibibajtech (s příponou G − např. „10G“).*<br>
-**tmpfs** {*/cesta*} **tmpfs size=**{*velikost*}[**,nosuid**]<nic>[**,noexec**]<nic>[**,mode=**{*práva-číselně*}]<nic>[**,uid=**{*UID-vlastníka*}]<nic>[**,gid=**{*GID-skupiny*}]<nic>[**,**{*další,volby*}] **0 0**
+*# vygenerovat EAN kód pro ISBN*<br>
+**barcode -b** {*ISBN-s-pomlčkami*} **-e ISBN -E** [**-g** {*šířka-kódu*}**x**{*výška-kódu*}] **\| ps2pdf -dEPSCrop -** {*název-souboru.pdf*}
 
+### EXIF (metadata fotografií)
+
+*# přečíst EXIF data z fotografie JPEG*<br>
+**identify -verbose** {*cesta.jpg*} **\| sed -E '1,/^\\s\*Properties:$/d;/^\\s*Artifacts:$/,$d;s/^\\s+//;s/:&blank;/\\t/'**
+
+*# nastavit či změnit EXIF data*<br>
+?
+
+### UUID
+
+*# vygenerovat UUID (náhodné/zahrnující místo a čas/kryptograficky bezpečné)*<br>
+**uuid -v 4**<br>
+**uuid**<br>
+**uuidgen -r**
+
+### Data URL
+
+*# konvertovat obrázek na „data URL“/z „data URL“*<br>
+**printf "data:%s;base64," "$(file -b \-\-mime-type "**{*soubor*}**")"; base64 -w 0** {*soubor*}
+
+*# konvertovat data URL na obrázek*<br>
+**printf "%s\\n" "**{*data-url*}**" \| cut -d , -f 2- -s \| base64 -d &gt;** {*výstupní-soubor*}
+
+### Metadata MP3
+
+![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+### URL encode
+
+*# zakódovat cestu*<br>
+?
+
+*# zakódovat text*<br>
+?
+
+*# dekódovat*<br>
+?
 
 ## Parametry příkazů
 <!--
@@ -101,9 +128,12 @@ umask/fmask/dmask
 ## Instalace na Ubuntu
 <!--
 - Jako zaklínadlo bez titulku uveďte příkazy (popř. i akce) nutné k instalaci a zprovoznění všech nástrojů požadovaných kterýmkoliv zaklínadlem uvedeným v kapitole. Po provedení těchto činností musí být nástroje plně zkonfigurované a připravené k práci.
-- Ve výčtu balíků k instalaci vycházejte z minimální instalace Ubuntu.
+- Ve výčtu balíčků k instalaci vycházejte z minimální instalace Ubuntu.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+*# *<br>
+**sudo apt-get install barcode qrencode zbar-tools**
 
 ## Ukázka
 <!--
@@ -133,6 +163,10 @@ umask/fmask/dmask
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 Co hledat:
+
+* [Video: (QR kódy)](https://www.youtube.com/watch?v=6ov65LrL-Zg)
+
+.
 
 * [Článek na Wikipedii](https://cs.wikipedia.org/wiki/Hlavn%C3%AD_strana)
 * Oficiální stránku programu

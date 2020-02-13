@@ -206,6 +206,10 @@ function ZpracujZnak(znak) {
         case "☐":
         case "☑":
         case "☒":
+        case "←":
+        case "↑":
+        case "→":
+        case "↓":
             return "{\\dejavusansfamily{}" znak "}";
         case "⫽":
             return "//";

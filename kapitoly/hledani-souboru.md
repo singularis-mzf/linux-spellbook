@@ -10,6 +10,7 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 
 https://creativecommons.org/licenses/by-sa/4.0/
 
+⊨
 -->
 
 # Hledání souborů
@@ -33,12 +34,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 !ÚzkýRežim: vyp
 
-## Zaklínadla (testy)
-<!--
-- Rozdělte na podsekce a naplňte „zaklínadly“.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-
+## Zaklínadla (find: testy)
 ### Typ (soubor, adresář, odkaz....)
 
 *# obyčejný soubor*<br>
@@ -225,7 +221,7 @@ xxx , xxx # priorita?
 
 
 
-## Zaklínadla (akce)
+## Zaklínadla (find: akce)
 
 *# smazat soubor či prázdný adresář*<br>
 *// Akce uspěje, pokud se soubor či adresář podaří smazat.*<br>
@@ -236,21 +232,26 @@ xxx , xxx # priorita?
 [ ] -prune − Jde-li o adresář, nezkoumat jeho obsah.
 -->
 
-*# spustit příkaz pro každý soubor zvlášť*<br>
-*// Každý výskyt řetězce „{}“ v parametrech příkazu bude při volání nahrazen řetězcem „./název souboru“ a příkaz bude spuštěn v adresáři, kde se soubor nachází. Akce uspěje, pokud uspěje příkaz.*<br>
-**\-execdir** {*příkaz*} [{*parametry příkazu*}] **\\;**
+*# spustit příkaz po dávkách*<br>
+*// Tato varianta je prakticky ekvivalentem volání příkazu xargs. Použije co největší dávky.*<br>
+**\-exec** {*příkaz*} [{*parametry příkazu*}] **'{}' +**
 
 *# spustit příkaz po dávkách*<br>
 *// Tato akce vždy uspěje. Přitom shromáždí položky z jednotlivých adresářů a najednou je předá ke zpracování uvedenému příkazu. Pouze pokud je souborů velké množství, může je rozdělit na několik dávek. Příkaz se spouští v adresáři, kde jsou vyhledané položky.*<br>
 **\-execdir** {*příkaz*} [{*parametry příkazu*}] **'{}' +**
 
-*# spustit příkaz pro každou cestu*<br>
+
+*# spustit příkaz pro každou cestu zvlášť*<br>
 *// Každý výskyt řetězce „{}“ v parametrech příkazu bude při volání nahrazen cestou testované položky. Akce uspěje, pokud uspěje příkaz.*<br>
 **\-exec** {*příkaz*} [{*parametry příkazu*}] **\\;**
 
-*# spustit příkaz po dávkách*<br>
-*// Tato varianta je prakticky ekvivalentem volání příkazu xargs.*<br>
-**\-exec** {*příkaz*} [{*parametry příkazu*}] **'{}' +**
+
+
+*# spustit příkaz pro každý soubor zvlášť*<br>
+*// Každý výskyt řetězce „{}“ v parametrech příkazu bude při volání nahrazen řetězcem „./název souboru“ a příkaz bude spuštěn v adresáři, kde se soubor nachází. Akce uspěje, pokud uspěje příkaz.*<br>
+**\-execdir** {*příkaz*} [{*parametry příkazu*}] **\\;**
+
+
 
 *# zapsat cestu jako záznam do souboru (txt/txtz)*<br>
 ?<br>

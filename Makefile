@@ -35,7 +35,7 @@ VSECHNY_DODATKY := predmluva koncepce-projektu plan-vyvoje test licence
 # _ A, B, C, D, E, F, G
 VSECHNY_KAPITOLY := _ostatni _ukazka awk barvy-a-titulek bash datum-cas-kalendar diskove-oddily docker firefox git
 # H, I, J, K, L, M
-VSECHNY_KAPITOLY += hledani-souboru konverze-formatu latex lkk make markdown
+VSECHNY_KAPITOLY += hledani-souboru konverze-formatu latex lkk make markdown moderni-veci
 # N, O, P, Q, R, S
 VSECHNY_KAPITOLY += odkazy perl planovani-uloh prace-s-archivy promenne regularni-vyrazy
 # S

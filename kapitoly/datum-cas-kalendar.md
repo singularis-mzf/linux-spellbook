@@ -279,21 +279,25 @@ timedatectl set-ntp on && sleep 1 && timedatectl set-ntp off
 -->
 
 ## Parametry příkazů
-
+### date
 *# *<br>
 [**TZ="**{*cílová časová zóna*}**"**] **date** [{*parametry*}] <nic>[**+**{*formát*}]
 
-* **-d '**{*datum a čas*}**'** nebo **-d '"**{*původní časová zóna*}**"&blank;**{*datum a čas*}**'** \:\: Použije zadaný čas místo aktuálního.
-* **-u** \:\: Cílová časová zóna bude UTC, bez ohledu na proměnnou prostředí TZ.
-* **-f** {*soubor*} \:\: Čte data z řádků zadaného souboru (alternativa k **-d**).
+!Parametry:
 
+* ○ -d '{*datum a čas*}' ○ -d '"{*původní čas. zóna*}" {*datum a čas*}' ○ -f {*soubor*} ○ -f - :: Použije zadaný čas (parametr -d), popř. načte čas z řádků daného souboru či ze standardního vstupu (parametr -f). Výchozí chování: použije aktuální čas.
+* ○ -u :: Cílová časová zóna bude UTC. Výchozí chování: časovou zónu určuje proměnná prostředí TZ, popř. je to lokální čas.
+
+### ncal
 *# *<br>
 **ncal** {*parametry*} [[{*měsíc*}] {*rok*}]
 
-* **-M** \:\: Týden začíná pondělím. (**-S** − začíná nedělí.)
-* **-b** \:\: Týdny tvoří řádky. (Výchozí chování: týdny tvoří sloupce.)
-* **-3** \:\: Zobrazí také předchozí a následující měsíc. (Výchozí chování: zobrazí pouze zadaný měsíc.)
-* **-w** \:\: Do kalendáře zahrne čísla týdnů.
+!Parametry:
+
+* ○ -M ○ -S :: Týden začíná pondělím/nedělí. Výchozí chování určuje lokalizace systému.
+* ○ -b :: Týdny tvoří řádky. Výchozí chování: týdny tvoří sloupce.
+* ☐ -3 :: Zobrazí také předchozí a následující měsíc.
+* ☐ -w :: Do kalendáře zahrne čísla týdnů.
 
 ## Instalace na Ubuntu
 
@@ -314,7 +318,7 @@ Veškeré použité nástroje jsou základními součástmi Ubuntu dostupnými v
 
 ## Tipy a zkušenosti
 
-* Specifikace časové zóny či posunu mají následující prioritu: 1) parametr **-d**; 2) parametr **-u**; 3) proměnná prostředí **TZ**.
+* Specifikace časové zóny či posunu mají následující prioritu: 1) parametr **-d**; 2) parametr **-u**; 3) proměnná prostředí **TZ**; 4) časová zóna systému.
 
 ## Další zdroje informací
 

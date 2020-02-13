@@ -56,6 +56,48 @@ Nepokrývá činnosti, kde záleží na konkrétním obsahu souborů (tzn. ani u
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+### Zjistit údaje o adresářových položkách
+
+*# typ adresářové položky (písmeno/čitelně pro člověka)*<br>
+?<br>
+**stat -c %F** {*cesta*}...
+
+*# přístupová práva (číselně/textově)*<br>
+**stat -c %a** {*cesta*}...<br>
+**stat -c %A** {*cesta*}...
+
+*# počet pevných odkazů*<br>
+**stat -c %h** {*cesta*}...
+
+*# vlastník (název/UID)*<br>
+**stat -c %U** {*cesta*}...<br>
+**stat -c %u** {*cesta*}...
+
+*# skupina (název/GID)*<br>
+**stat -c %G** {*cesta*}...<br>
+**stat -c %g** {*cesta*}...
+
+*# celková velikost (v bajtech/čitelně pro člověka)*<br>
+**stat -c %s** {*cesta*}...<br>
+**stat -c %s** {*cesta*}... **\| numfmt \-\-to iec**
+
+*# skutečně zabraný prostor na disku (v bajtech/čitelně pro člověka)*<br>
+**stat -c '%b*%B'**  {*cesta*}... **\| bc**<br>
+?
+
+*# datum a čas poslední změny (pro člověka/časová známka Unixu)*<br>
+**stat -c %y** {*cesta*}...<br>
+**stat -c %Y** {*cesta*}...
+
+*# příslušný přípojný bod (kořenový adresář souboru systémů, na kterém se položka nachází)*<br>
+**stat -c %m** {*cesta*}...
+
+*# číslo inode*<br>
+**stat -c %i** {*cesta*}...
+
+
+
+### ...
 
 *# přejmenovat adresářovou položku*<br>
 **mv** [{*parametry*}]

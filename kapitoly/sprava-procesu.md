@@ -18,7 +18,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 # Správa procesů
 
-!Štítky: {tematický okruh}
+!Štítky: {tematický okruh}{systém}{procesy}{bash}
 
 !ÚzkýRežim: zap
 

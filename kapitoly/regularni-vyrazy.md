@@ -186,6 +186,9 @@ varianta pro rozšířený regulární výraz.
 *# seskupení bez zapamatování (jen Perl)*<br>
 **(?:**{*podvýraz*}**)**
 
+*# pojmenované seskupení (jen Perl)*<br>
+**(?&lt;**{*název*}**&gt;**{*podvýraz*}**)**
+
 ### Paměť (omezená podpora)
 
 *# původní podřetězec odpovídající celému regulárnímu výrazu (rozšířený a základní/Perl)*<br>
@@ -209,6 +212,11 @@ varianta pro rozšířený regulární výraz.
 **\\L\\**{*pořadové-číslo-1-až-9*}**\\E**<br>
 **\\U\\**{*pořadové-číslo-1-až-9*}**\\E**
 
+*# záchyt v Perlu v rámci regulárního výrazu (číslovaný/pojmenovaný)*<br>
+**\\g\{**{*pořadové-číslo*}**\}**<br>
+**\\g\{**{*název*}**\}**
+
+
 ### Vyhlížení (jen Perl)
 
 *# ověřit, že za aktuální pozicí **následuje** shoda s daným regulárním podvýrazem*<br>
@@ -224,6 +232,20 @@ varianta pro rozšířený regulární výraz.
 **(?&lt;!**{*podvýraz*}**)**
 
 ## Parametry příkazů
+
+### bash
+
+*# *<br>
+**[[** {*řetězec*} **=~** {*regulární-výraz*} **]]**
+
+*Poznámka:* Protože pravidla escapování regulárního výrazu v této konstrukci jsou neintuitivní a nepraktická,
+striktně doporučuji zadávat regulární výraz jako proměnnou, např. takto:
+
+*# *<br>
+**if [[ "$1/$2" =~ $regex ]]**
+
+*Pozor!* Proměnnou s regulárním výrazem v této konstrukci nikdy neuzavírejte do uvozovek!
+Pokud to uděláte, bash ji bude interpretovat jako obyčejný řetězec, ne jako regulární výraz!
 
 ### egrep
 

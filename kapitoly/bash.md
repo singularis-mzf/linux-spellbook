@@ -180,6 +180,44 @@ Poznámky:
 *# ≠*<br>
 **test** {*číslo1*} **-ne** {*číslo2*}
 
+## Zaklínadla (interaktivní ovládání)
+
+*# vyhledávat v historii*<br>
+{_Ctrl_}**+**{_R_}<br>
+!: Zadat vyhledávaný podřetězec. Další ovládání: {_Enter_}, {_Esc_}, {_↑_}, {_↓_}.
+
+*# vyjmout text od začátku řádku před aktuální znak*<br>
+{_Ctrl_}**+**{_U_}
+
+*# vyjmout text od aktuálního znaku do konce řádku*<br>
+{_Ctrl_}**+**{_K_}
+
+*# vložit naposledy vyjmutý text*<br>
+{_Ctrl_}**+**{_Y_}
+
+*# smazat terminál (ponechat aktuální řádek)*<br>
+{_Ctrl_}**+**{_L_}
+
+*# pozastavit výpis na terminál/pokračovat*<br>
+*// Tyto klávesové zkratky lze (velmi výhodně) použít i tehdy, když bash není na popředí!*<br>
+{_Ctrl_}**+**{_S_}<br>
+{_Ctrl_}**+**{_Q_}
+
+*# posun terminálu o stránku nahoru/dolu*<br>
+{_Shift_}**+**{_PageUp_}<br>
+{_Shift_}**+**{_PageDown_}
+
+*# vložit na příkazovou řádku tabulátor*<br>
+{_Ctrl_}**+**{_V_}<br>
+{_Tab_}
+
+*# otevřít zadávaný příkaz v editoru jako skript a po uzavření editoru vykonat*<br>
+{_Ctrl_}**+**{_X_}<br>
+{_Ctrl_}**+**{_E_}
+
+*# vrátit řádek načtený z historie do původního stavu*<br>
+{_Alt_}**+**{_R_}
+
 ## Zaklínadla (automatické doplňování)
 
 ### Základní příkazy
