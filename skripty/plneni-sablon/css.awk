@@ -58,16 +58,14 @@ function Pokud(podminka) {
 #       − Na návratové hodnotě nezáleží.
 #
 function RidiciRadek(text,   pozice) {
-    if (text ~ /^MAKRO [^}=]+=/) {
-        pozice = index(text, "=");
-        MAKRA[substr(text, 7, pozice - 7)] = substr(text, pozice + 1);
-        # print "Definuji makro: <" substr(text, 7, pozice - 7) "> = <" substr(text, pozice + 1) ">";
-        return 0;
-    } else if (text in MAKRA) {
-        print MAKRA[text];
+    if (text ~ /^MAKRO [^}= \t]+[ \t]*=/) {
+        match(text, /[ \t]*=[ \t]*/);
+        MAKRA[substr(text, 7, RSTART - 7)] = substr(text, RSTART + RLENGTH);
+        #print "LADĚNÍ: Definuji makro: <" substr(text, 7, RSTART - 7) "> = <" substr(text, RSTART + RLENGTH) ">" > "/dev/stderr";
         return 0;
     } else {
-        ShoditFatalniVyjimku("Neznámé makro: {{" text "}}");
+        print PrelozitVystup(text);
+        return 0;
     }
 }
 
@@ -75,9 +73,10 @@ function RidiciRadek(text,   pozice) {
 #       − Má za úkol zpracovat obyčejný řádek, než bude vypsát na výstup.
 #       − Typicky nahrazuje výskyty speciálních značek.
 #
-function PrelozitVystup(radek,   makro) {
+function PrelozitVystup(radek,   makro, i) {
     if (radek ~ /^#( |#|$)/) {return ""}
 
+    i = 0;
     /\{/; # prázdný příkaz kvůli zvýrazňování syntaxe
     while (match(radek, /\{\{[^}=]+\}\}/)) {
         makro = substr(radek, RSTART + 2, RLENGTH - 4);
@@ -85,6 +84,9 @@ function PrelozitVystup(radek,   makro) {
             radek = substr(radek, 1, RSTART - 1) MAKRA[makro] substr(radek, RSTART + RLENGTH);
         } else {
             ShoditFatalniVyjimku("Neznámé makro: <" substr(radek, RSTART, RLENGTH) ">");
+        }
+        if (++i > 2048) {
+            ShoditFatalniVyjimku("Limit překročen. Pravděpodobné zacyklení rozvoje makra " makro);
         }
     }
     return radek;

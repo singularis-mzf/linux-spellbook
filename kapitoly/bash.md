@@ -182,15 +182,21 @@ Poznámky:
 
 ## Zaklínadla (interaktivní ovládání)
 
+*# zopakovat poslední příkaz*<br>
+{_↑_}<br>
+{_Enter_}
+
 *# vyhledávat v historii*<br>
 {_Ctrl_}**+**{_R_}<br>
 !: Zadat vyhledávaný podřetězec. Další ovládání: {_Enter_}, {_Esc_}, {_↑_}, {_↓_}.
 
-*# vyjmout text od začátku řádku před aktuální znak*<br>
-{_Ctrl_}**+**{_U_}
+*# vyjmout text od začátku řádku/slova před aktuální znak*<br>
+{_Ctrl_}**+**{_U_}<br>
+{_Ctrl_}**+**{_W_}
 
-*# vyjmout text od aktuálního znaku do konce řádku*<br>
-{_Ctrl_}**+**{_K_}
+*# vyjmout text od aktuálního znaku do konce řádku/slova*<br>
+{_Ctrl_}**+**{_K_}<br>
+{_Alt_}**+**{_K_}
 
 *# vložit naposledy vyjmutý text*<br>
 {_Ctrl_}**+**{_Y_}
@@ -217,6 +223,10 @@ Poznámky:
 
 *# vrátit řádek načtený z historie do původního stavu*<br>
 {_Alt_}**+**{_R_}
+
+*# vložit poslední slovo z posledního řádku v historii*<br>
+*// Opakovaným stiskem lze vložit poslední slovo z předposlední řádky, před-předposlední atd.*<br>
+{_Alt_}**+**{_._}
 
 ## Zaklínadla (automatické doplňování)
 

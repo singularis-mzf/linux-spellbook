@@ -109,6 +109,26 @@ STAV_PODMINENENO_PREKLADU == 2 {next}
     next;
 }
 
+/^\{\{[^{}]+=.*\}\}$/ {
+    # zkontrolovat uzávorkování:
+    l = 0;
+    for (i = index($0, "=") + 1; i <= length($0) - 2; ++i) {
+        switch (substr($0, i, 1)) {
+            case "{":
+                ++l;
+                break;
+            case "}":
+                if (--l < 0) {ShoditFatalniVyjimku("Chybné uzávorkování řídicího řádku: " $0)}
+                break;
+            default:
+                break;
+        }
+    }
+    if (l != 0) {ShoditFatalniVyjimku("Chybné uzávorkování řídicího řádku: " $0)}
+    RidiciRadek($0 = substr($0, 3, length($0) - 4));
+    next;
+}
+
 # Obyčejné řádky
 # ====================================================
 BYL_ZACATEK {

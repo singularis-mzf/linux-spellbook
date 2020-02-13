@@ -48,14 +48,14 @@ VSECHNY_KAPITOLY_A_DODATKY_MD = $(VSECHNY_KAPITOLY:%=kapitoly/%.md) $(VSECHNY_DO
 
 # Obrázky (bitmapové a SVG)
 # ----------------------------------------------------------------------------
-OBRAZKY := favicon.png by-sa.png logo-knihy-velke.png make.png barvy.png ve-vystavbe.png marsh.jpg banner.png
+OBRAZKY := favicon.png by-sa.png logo-knihy-velke.png make.png barvy.png ve-vystavbe.png marsh.jpg udoli.jpg banner.png
 OBRAZKY += ik-vychozi.png
 SVG_OBRAZKY := kalendar.svg graf-filtru.svg
 OBRAZKY_IK := awk.png markdown.png regularni-vyrazy.png sprava-procesu.png
 
 # CSS motivy (vedle motivu „hlavní“)
 # ----------------------------------------------------------------------------
-CSS_MOTIVY := vk-svetly vk-tmavy
+CSS_MOTIVY := vk-svetly vk-tmavy tmavy
 
 # Datum sestavení (automaticky generované)
 # ----------------------------------------------------------------------------

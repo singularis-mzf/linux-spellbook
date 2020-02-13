@@ -52,189 +52,314 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-{{MAKRO barva-pozadi=#d2e0eb}}
-{{MAKRO obrazek-pozadi=url("obrazky/marsh.jpg")}}
-{{MAKRO barva-textu=#333333}}
-{{MAKRO pozadi-papir=#d4ddd0}}
-{{MAKRO titulni-lista-barva-pozadi=#006600}}
-{{MAKRO titulni-lista-obrazek-pozadi=url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAABACAYAAADbER1AAAAABmJLR0QAAAAAAAD5Q7t/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4wsCESUxJRQjjAAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAL0lEQVQY093HMQoAIAzAwGv1Kf7/hRYcBCfB3QwhgZGoxDyqW0GH8CWRaIn+rr0LV34IVonVnXgAAAAASUVORK5CYII=")}}
-{{MAKRO titulni-lista-barva-textu=rgba(255,255,255,0.9)}}
-{{MAKRO titulni-lista-barva-ikon-vpravo=#00cc00}}
-{{MAKRO titulni-lista-text-shadow=0 0 0.25em rgba(0,0,0,0.5)}}
-{{MAKRO stavovy-radek-barva-pozadi=#cccccc}}
-
-# odkazy:
-{{MAKRO barva-odkazu=#1644d9}}
-{{MAKRO barva-navstiveneho-odkazu=#542e99}}
-# Původně: #1338b3
-{{MAKRO barva-adresy-odkazu=#666666}}
-
-# obrázky:
-{{MAKRO obrazek-barva-pozadi=transparent}}
-
-# odsazený odstavec:
-{{MAKRO odsazeny-barva-cary=rgba(0,0,0,0.15)}}
-
-# „klávesa“:
-{{MAKRO klavesa-barva-pozadi=#dddddd}}
-{{MAKRO klavesa-barva-textu=#000000}}
-
-# „zaklínadlo“:
-{{MAKRO zaklinadlo-barva-textu=#000000}}
-{{MAKRO zaklinadlo-barva-tucneho-textu=#222222}}
-{{MAKRO zaklinadlo-barva-kodu=rgba(0,0,0,0.7)}}
-{{MAKRO zaklinadlo-barva-znaku-dopreambule=#666666}}
-{{MAKRO zaklinadlo-barva-znaku-konec-radku=rgb(120,120,120)}}
-{{MAKRO zaklinadlo-barva-sedych=rgb(127,127,127)}}
-{{MAKRO zaklinadlo-prikladhodnoty-barva-textu=inherit}}
-{{MAKRO zaklinadlo-prikladhodnoty-barva-pozadi=#ffffff}}
-
-# „poznámka pod čarou“:
-{{MAKRO poznpodcarou-aktivni-barva-pozadi=#f2a7e2}}
-{{MAKRO poznpodcarou-zpetdotextu-barva-pozadi=#cccccc}}
-{{MAKRO poznpodcarou-zpetdotextu-barva-textu=#1644d9}}
-
-# „parametry příkazů“:
-{{MAKRO parametryprikazu-levy-sloupec-barva-textu=rgba(0,0,0,0.7)}}
-
-# štítky na začátku kapitoly:
-{{MAKRO stitek-barva-pozadi=#cccccc}}
-{{MAKRO stitek-barva-textu=inherit}}
-{{MAKRO stitek-barva-tenkych-ramecku=rgba(0,0,0,0.25)}}
-{{MAKRO stitek-kryti-tlusteho-ramecku=1.0}}
-{{MAKRO stitek-box-shadow=0.1em 0.15em 0 0 rgba(0,0,0,0.5)}}
-
-# rozcestník na začátku kapitoly:
-{{MAKRO rozcestnikvkapitole-barva-pozadi=#cccccc}}
-{{MAKRO rozcestnikvkapitole-barva-oddelovacu=rgba(0,0,0,0.4)}}
-{{MAKRO rozcestnikvkapitole-barva-odkazu=#166644}}
-
-# chybný znak v kapitole:
-{{MAKRO chybny-znak-barva-textu=red}}
-{{MAKRO chybny-znak-barva-pozadi=white}}
-
-# šipky nahoru a dolů:
-{{MAKRO sipka-odkaz-nahorudolu-barva-pozadi=rgba(0,102,0,0.75)}}
-{{MAKRO sipka-odkaz-nahorudolu-barva-textu=rgb(100,204,100)}}
-{{MAKRO sipka-odkaz-nahorudolu-barva-ramecku=rgb(100,204,100)}}
-
-{{MAKRO sipka-odkaz-nahorudolu-podkurzorem-barva-pozadi=rgb(0,102,0)}}
-{{MAKRO sipka-odkaz-nahorudolu-podkurzorem-barva-textu=rgb(100,204,100)}}
-{{MAKRO sipka-odkaz-nahorudolu-podkurzorem-barva-ramecku=yellow}}
-
-{{MAKRO sipka-odkaz-nahorudolu-aktivni-barva-pozadi=rgba(0,102,0,0.75)}}
-{{MAKRO sipka-odkaz-nahorudolu-aktivni-barva-textu=yellow}}
-{{MAKRO sipka-odkaz-nahorudolu-aktivni-barva-ramecku=yellow}}
-
-# symboly:
-{{MAKRO symboly-tab=url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAUCAYAAACJfM0wAAAACXBIWXMAAAsTAAALEwEAmpwYAAABtklEQVQ4y7XUzUtVURQF8N9+vsxCoSYNGkQfNEmjoKTMiCLDSQQNkqA/sGmfgygnZjgpopAaRF+zDILQICt9u8m5cHt29T2oNbrn7rMXh7XW3pGZICLambmmARHRysyOHtGqfU9ExGREtBruHo2IqYgY7Jd4G85juqG5jdO4HBE7+yGGwAlcjYjhhp4juB4Ru/shrnAYMxGxp6G+FzciYl8vxM/wsat5JiL2l/NrvKrVd+FaRIz91ewqFcX5IVzE8SILfMeDzFyMiDbOYBIDpf4L81iop+YP4ipWOIVzxVBYx1xmPil3xjCNHaWeeIrZKrIbNM7MTmYu4BaWy+8BHKrSkJmLuIkvNdMPYmQr82CrYeigcaDaDVM2XjK9vSbFe6yW+iguYbgmxTusNJk3iAs4WTPvBx5l5vOi/wTOduvfbV67RjqCKzhQe/wy7mfm25KYKRzrSszDzHy5mRTjXaRLuJuZn8p5tMSwwlfcy8wPPWtc9LyTmSsN9SXczszPvZqXeFE0XW3oeVPk+bZZZOrE63iM+Ya9m2XsZzPz51bbLWqLfmiTV1aJWet12W8Y6X+Flv+E39XGp4/1pQSiAAAAAElFTkSuQmCC")}}
-{{MAKRO symboly-tab-barva-pozadi=transparent}}
-{{MAKRO symboly-viditelnamezera=url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAMCAYAAABm+U3GAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAJ0lEQVQ4y2NkQID/DKiAkYE4gFUfEwONwKjBowZjAhYS0udoGJMHAIgjAxkEpU0OAAAAAElFTkSuQmCC")}}
-{{MAKRO symboly-tritecky=url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgAQMAAABJtOi3AAAABlBMVEUAAACHh4dGA6zFAAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfkAgMEAAlXoR/CAAAAE0lEQVQI12NgoBeoZ/9QTzQBBwA5FBGeWyCouwAAAABJRU5ErkJggg==")}}
-
+# Sdílené symboly:
 #
-# Makra jen pro styl hlavní stránky
-##############################################################################
-{{MAKRO index-podzahlavim-box-shadow=0 0.25rem 1.5rem 0 rgba(50,100,50,0.5)}}
-{{MAKRO index-podzahlavim-oddel-cara-barva=#666666}}
-
+{{MAKRO sym-raquo-bila      = url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAUCAYAAACJfM0wAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH5AINERcKMRncRgAAAZ5JREFUOMvV1L1rVEEUBfDfNev6QQLaWFiIH9iYiIIGjRGJGEkjgoVB8A+09bMQtdFIGoMoQQtRY2cEQRLBqMlem1l4PPZtdktPN+/MPfM458xQkJktfZCZOwyB6uapzJzuI3AyM2czsz2s8E7MYK5huIXzuJaZe4cRhsAZ3MjM0YaZE7iVmfuHEe7iOOYz80ADfxC3M/PQIMJL+FIbns/Mw2X9Hu8q/D7czMyJXsJRS343ruB0hfuFxxGxXJpzAdMYKfxfLGAxIjo9hSu1OodLJVDYwvOIeFn2TGAOe7pjeIVnEbHZ0+OI6ETEIu5irXwewbFuGyJiGXfwvfKDRzG2XXjQ2aZRHWw2ka2GWzZZOr2rYsVnbBR+HFcxWrHiE9abwmvjMs5WuN94GhGvi/9TuFj3vzG8zBzDdRypnLWGRxHxsTRmFqdqjXkSEW/7WTFZE13Fg4j4WtbjpYZd/MDDiFgZ2OPi5/2IWG/gV3EvIr4NGl7iTfF0o2HmQ7HnZ7/KVIW38AIL1RBqhy6VS/Bn4Ie5hNOPbw/72P9f+AeGb5+ISgoslAAAAABJRU5ErkJggg==")}}
 #
-# Makra jen pro přehled štítků
-##############################################################################
+{{MAKRO sym-raquo-cerna     = url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAUCAYAAACJfM0wAAAACXBIWXMAAAsTAAALEwEAmpwYAAABtklEQVQ4y7XUzUtVURQF8N9+vsxCoSYNGkQfNEmjoKTMiCLDSQQNkqA/sGmfgygnZjgpopAaRF+zDILQICt9u8m5cHt29T2oNbrn7rMXh7XW3pGZICLambmmARHRysyOHtGqfU9ExGREtBruHo2IqYgY7Jd4G85juqG5jdO4HBE7+yGGwAlcjYjhhp4juB4Ru/shrnAYMxGxp6G+FzciYl8vxM/wsat5JiL2l/NrvKrVd+FaRIz91ewqFcX5IVzE8SILfMeDzFyMiDbOYBIDpf4L81iop+YP4ipWOIVzxVBYx1xmPil3xjCNHaWeeIrZKrIbNM7MTmYu4BaWy+8BHKrSkJmLuIkvNdMPYmQr82CrYeigcaDaDVM2XjK9vSbFe6yW+iguYbgmxTusNJk3iAs4WTPvBx5l5vOi/wTOduvfbV67RjqCKzhQe/wy7mfm25KYKRzrSszDzHy5mRTjXaRLuJuZn8p5tMSwwlfcy8wPPWtc9LyTmSsN9SXczszPvZqXeFE0XW3oeVPk+bZZZOrE63iM+Ya9m2XsZzPz51bbLWqLfmiTV1aJWet12W8Y6X+Flv+E39XGp4/1pQSiAAAAAElFTkSuQmCC")}}
+#
+{{MAKRO sym-blank-bila      = url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAMAQMAAABcN9+FAAAABlBMVEUAAAD///+l2Z/dAAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfkAg0RHwOAHO7qAAAAEklEQVQI12OwYfjAgA/b/0fBAGmbEhlfr2/IAAAAAElFTkSuQmCC")}}
+#
+{{MAKRO sym-blank-cerna     = url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAMCAYAAABm+U3GAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAJ0lEQVQ4y2NkQID/DKiAkYE4gFUfEwONwKjBowZjAhYS0udoGJMHAIgjAxkEpU0OAAAAAElFTkSuQmCC")}}
+#
+{{MAKRO sym-tritecky-svetle = url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgAQMAAABJtOi3AAAABlBMVEUAAADw8PC5otm+AAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfkAgMEBxhyUKn3AAAAE0lEQVQI12NgoBeoZ/9QTzQBBwA5FBGeWyCouwAAAABJRU5ErkJggg==")}}
+#
+{{MAKRO sym-tritecky-tmave  = url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgAQMAAABJtOi3AAAABlBMVEUAAACHh4dGA6zFAAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfkAgMEAAlXoR/CAAAAE0lEQVQI12NgoBeoZ/9QTzQBBwA5FBGeWyCouwAAAABJRU5ErkJggg==")}}
+#
+{{MAKRO sym-titliststin     = url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAABACAYAAADbER1AAAAABmJLR0QAAAAAAAD5Q7t/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4wsCESUxJRQjjAAAAB1pVFh0Q29tbWVudAAAAAAAQ3JlYXRlZCB3aXRoIEdJTVBkLmUHAAAAL0lEQVQY093HMQoAIAzAwGv1Kf7/hRYcBCfB3QwhgZGoxDyqW0GH8CWRaIn+rr0LV34IVonVnXgAAAAASUVORK5CYII=")}}
+#
+#
+# Výchozí nastavení (motivy mohou předefinovat):
+# ============================================================================
+# - Pozadí a obrázek značky <html>:
+{{MAKRO html-pozadi-barva   = rgb(255,255,255)}}
+{{MAKRO html-pozadi-obrazek = none}}
+
+# - Krytí všech <img>, které nemají krytí předefinované jinak. Používá se ke snížení jasu v tmavých motivech.
+{{MAKRO kryti-obrazku-globalni          = 1}}
+# - Zvláštní krytí pro ikony kapitol:
+{{MAKRO kryti-obrazku-ikona-kapitoly    = {{kryti-obrazku-globalni}}}}
+
+# - Barva titulní lišty a jejího textu + jeho krytí a krytí jeho stínu:
+{{MAKRO zb-titul-pozadi                 = 0,102,0}}
+{{MAKRO zb-titul-text                   = 255,255,255}}
+{{MAKRO titulni-lista-text-kryti        = 1}}
+{{MAKRO titulni-lista-stin-textu-kryti  = 0}}
+# - Barva ikon na titulní liště vpravo; také použita jako pozadí pro tlačítka „přejít nahoru/dolů“.
+{{MAKRO zb-titul-krizek                 = {{zb-titul-text}}}}
+# - Barva zvýraznění pro tlačítka „přejít nahoru/dolů“, když jsou stisknutá.
+{{MAKRO zb-titul-aktivni                = 255,255,0}}
+# - Stín v horní a spodní části titulní lišty (background-image):
+{{MAKRO titulni-lista-obrazek-pozadi    = none}}
+# - Barva tenkého rámečku okna + krytí stínu okna:
+{{MAKRO zb-okno-ramecek=0,0,0}}
+{{MAKRO okno-stin-kryti=0.5}}
+
+# - Základní barva textu („inkoust“)
+{{MAKRO zb-text                         = 0,0,0}}
+# - Šedý text (méně kontrastní barva textu) (světlejší/tmavší) − tmavě šedá pro světlé motivy, světle šedá pro tmavé
+#   Musí být jasně odlišitelná od obyčejného textu.
+{{MAKRO zb-tmava                        = 60,60,60}}
+# - Méně kontrastní barva pozadí (světlejší/tmavší) − světle šedá pro světlé motivy, tmavě šedá pro tmavé
+{{MAKRO zb-svetla                       = 200,200,200}}
+# - Základní barva pozadí („papír“)
+{{MAKRO zb-pozadi                       = 255,255,255}}
+
+# - Základní barva hypertextových odkazů (ne jejich adresy)
+{{MAKRO zb-odkaz                        = 22,68,217}}
+# - Odlišná barva pro již navštívené hypertextové odkazy
+{{MAKRO zb-navstiveny                   = 84,46,153}}
+# - Barva zvláštních odkazů v rámečku (použita pro rozcestník kapitoly).
+{{MAKRO zb-barevny-text                 = 22,102,68}}
+# - Barva adresy externího odkazu + krytí
+{{MAKRO zb-adresa                       = {{zb-tmava}}}}
+{{MAKRO zb-adresa-kryti                 = 1}}
+
+# - Samostatné nastavení krytí pro metaznaky [ ] a „Enter“ v zaklínadlech.
+{{MAKRO sede-casti-kryti=0.7}}
+
+# - Barva pro barevný štítek + krytí stínu štítku # 191,74,74?
+{{MAKRO zb-barevny-stitek=80,128,128}}
+{{MAKRO stitek-kryti-stinu=0.5}}
+
+# - Samostatné nastavení krytí pro tučný text.
+{{MAKRO zb-tucny-text-kryti             = 0.95}}
+# - Samostatné nastavení krytí pro kód v zaklínadlech.
+{{MAKRO zb-text-kod-kryti               = 0.7)}}
+
+# - Pozadí odstavce s vloženým obrázkem + krytí tohoto pozadí:
+{{MAKRO obrazek-pozadi                  = 0,0,0}}
+{{MAKRO obrazek-pozadi-kryti            = 0}}
+
+# - Samostatné nastavení krytí pro levý sloupec „parametrů příkazů“:
+{{MAKRO parametryprikazu-levy-sloupec-kryti = 1}}
+
+# - Barva textu a pozadí u „chybného znaku“ (doporučuji nepředefinovávat):
+{{MAKRO chybny-znak-text                = 255,0,0}}
+{{MAKRO chybny-znak-pozadi              = 255,255,255}}
+
+# - Šipky „nahoru“ a „dolů“ − celkové krytí + krytí černého rámečku u šipky nahoru.
+{{MAKRO nahorudolu-neaktivni-kryti      = 0.75}}
+{{MAKRO nahorudolu-aktivni-kryti        = 1}}
+{{MAKRO nahorudolu-cernyramecek-kryti   = 0.8}}
+
+# - Symboly:
+{{MAKRO symboly-tab                 = {{sym-raquo-cerna}}}}
+{{MAKRO symboly-tab-barva-pozadi    = transparent}}
+{{MAKRO symboly-tritecky            = {{sym-tritecky-tmave}}}}
+{{MAKRO symboly-viditelnamezera     = {{sym-blank-cerna}}}}
+
+# - Stín boxu na titulní stránce:
+{{MAKRO index-podzahlavim-box-shadow=none}}
+
+# - Barvy pozadí pro přehled štítků: (???) [ ] DOLADIT!!!
 {{MAKRO prehledstitku-liche-barva-pozadi=rgba(200,200,200,1)}}
 {{MAKRO prehledstitku-sude-barva-pozadi=rgba(180,180,180,1)}}
+#
+#
+# Motiv „hlavní“
+##############################################################################
+{{POKUD JE MOTIV hlavni}}
+{{MAKRO html-pozadi-barva           = rgb(210,224,235)}}
+{{MAKRO html-pozadi-obrazek         = url("obrazky/marsh.jpg")}}
+{{MAKRO zb-titul-krizek             = 0,204,0}}
+{{MAKRO zb-text                     = 51,51,51}}
+{{MAKRO zb-tmava                    = 120,120,120}}
+{{MAKRO zb-svetla                   = 204,204,204}}
+{{MAKRO zb-pozadi                   = 212,221,208}}
+{{MAKRO zb-barevny-text             = 22,102,68}}
 
+{{MAKRO titulni-lista-obrazek-pozadi    = {{sym-titliststin}}}}
+{{MAKRO titulni-lista-stin-textu-kryti  = 0.5}}
+{{MAKRO parametryprikazu-levy-sloupec-kryti=0.7}}
+{{MAKRO index-podzahlavim-box-shadow=0 0.25rem 1.5rem 0 rgba(50,100,50,0.5)}}
+{{KONEC POKUD}}
 
 #
 # Motiv „vysoký kontrast světlý“
 ##############################################################################
 {{POKUD JE MOTIV vk-svetly}}
-{{MAKRO barva-pozadi=#ffffff}}
-{{MAKRO obrazek-pozadi=none}}
-{{MAKRO barva-textu=#000000}}
-{{MAKRO pozadi-papir=#ffffff}}
-{{MAKRO titulni-lista-barva-pozadi=#ffffff}}
-{{MAKRO titulni-lista-obrazek-pozadi=none}}
-{{MAKRO titulni-lista-barva-textu=#000000}}
-{{MAKRO titulni-lista-barva-ikon-vpravo=#000000}}
-{{MAKRO titulni-lista-text-shadow=none}}
-{{MAKRO stavovy-radek-barva-pozadi=#ffffff}}
 
+# - Pozadí a obrázek značky <html>:
+{{MAKRO html-pozadi-barva   = rgb(255,255,255)}}
+{{MAKRO html-pozadi-obrazek = none}}
+
+# - Barva titulní lišty a jejího textu + jeho krytí a krytí jeho stínu:
+{{MAKRO zb-titul-pozadi                 = {{zb-pozadi}}}}
+{{MAKRO zb-titul-text                   = {{zb-text}}}}
+{{MAKRO titulni-lista-text-kryti        = 1}}
+{{MAKRO titulni-lista-stin-textu-kryti  = 0}}
+#{{MAKRO okno-stin-kryti=0.5}}
+
+# - Základní barva textu („inkoust“)
+{{MAKRO zb-text                         = 0,0,0}}
+# - Šedý text (méně kontrastní barva textu) (světlejší/tmavší) − tmavě šedá pro světlé motivy, světle šedá pro tmavé
+#   Musí být jasně odlišitelná od obyčejného textu.
+{{MAKRO zb-tmava                        = 51,51,51}}
+# - Méně kontrastní barva pozadí (světlejší/tmavší) − světle šedá pro světlé motivy, tmavě šedá pro tmavé
+{{MAKRO zb-svetla                       = 240,240,240}}
+# - Základní barva pozadí („papír“)
+{{MAKRO zb-pozadi                       = 255,255,255}}
+
+# - Základní barva hypertextových odkazů (ne jejich adresy)
+{{MAKRO zb-odkaz                        = 17,17,17}}
+# - Odlišná barva pro již navštívené hypertextové odkazy
+{{MAKRO zb-navstiveny                   = {{zb-odkaz}}}}
+# - Barva zvláštních odkazů v rámečku (použita pro rozcestník kapitoly).
+{{MAKRO zb-barevny-text                 = 11,51,34}}
+
+# - Samostatné nastavení krytí pro metaznaky [ ] a „Enter“ v zaklínadlech.
+#{{MAKRO sede-casti-kryti=0.7}}
+
+# - Barva pro barevný štítek + krytí stínu štítku # 191,74,74?
+#{{MAKRO zb-barevny-stitek=80,128,128}}
+#{{MAKRO stitek-kryti-stinu=0.5}}
+
+# - Samostatné nastavení krytí pro tučný text.
+#{{MAKRO zb-tucny-text-kryti             = 0.95}}
+# - Samostatné nastavení krytí pro kód v zaklínadlech.
+#{{MAKRO zb-text-kod-kryti               = 0.7)}}
+
+# - Pozadí odstavce s vloženým obrázkem + krytí tohoto pozadí:
+#{{MAKRO obrazek-pozadi                  = 0,0,0}}
+#{{MAKRO obrazek-pozadi-kryti            = 0}}
+
+# - Samostatné nastavení krytí pro levý sloupec „parametrů příkazů“:
+#{{MAKRO parametryprikazu-levy-sloupec-kryti = 1}}
+
+# - Barva textu a pozadí u „chybného znaku“ (doporučuji nepředefinovávat):
+#{{MAKRO chybny-znak-text                = 255,0,0}}
+#{{MAKRO chybny-znak-pozadi              = 255,255,255}}
+
+# - Šipky „nahoru“ a „dolů“ − celkové krytí + krytí černého rámečku u šipky nahoru.
+#{{MAKRO nahorudolu-neaktivni-kryti      = 0.75}}
+#{{MAKRO nahorudolu-aktivni-kryti        = 1}}
+#{{MAKRO nahorudolu-cernyramecek-kryti   = 0.8}}
+
+# - Symboly:
+#{{MAKRO symboly-tab                 = {{sym-raquo-cerna}}}}
+#{{MAKRO symboly-tab-barva-pozadi    = transparent}}
+#{{MAKRO symboly-tritecky            = {{sym-tritecky-tmave}}}}
+#{{MAKRO symboly-viditelnamezera     = {{sym-blank-cerna}}}}
+
+# - Stín boxu na titulní stránce:
 {{MAKRO index-podzahlavim-box-shadow=0 0.25rem 1.5rem 0 rgba(50,50,50,0.5)}}
-{{MAKRO stitek-barva-pozadi=#ffffff}}
-{{MAKRO rozcestnikvkapitole-barva-pozadi=#ffffff}}
-{{MAKRO rozcestnikvkapitole-barva-odkazu=#0b3322}}
-{{MAKRO barva-adresy-odkazu=#111111}}
+{{MAKRO prehledstitku-liche-barva-pozadi=rgb(255,255,255)}}
+{{MAKRO prehledstitku-sude-barva-pozadi=rgb(255,255,255)}}
 
-{{MAKRO obrazek-barva-pozadi=transparent}}
-
-{{MAKRO parametryprikazu-levy-sloupec-barva-textu=#000000}}
-
-{{MAKRO sipka-odkaz-nahorudolu-barva-pozadi=rgba(0,0,0,0.75)}}
-{{MAKRO sipka-odkaz-nahorudolu-barva-textu=#ffffff}}
-{{MAKRO sipka-odkaz-nahorudolu-barva-ramecku=rgb(100,204,100)}}
-
-{{MAKRO sipka-odkaz-nahorudolu-podkurzorem-barva-pozadi=rgb(0,0,0)}}
-{{MAKRO sipka-odkaz-nahorudolu-podkurzorem-barva-textu=#ffffff}}
-{{MAKRO sipka-odkaz-nahorudolu-podkurzorem-barva-ramecku=yellow}}
-
-{{MAKRO sipka-odkaz-nahorudolu-aktivni-barva-pozadi=rgb(0,0,0)}}
-{{MAKRO sipka-odkaz-nahorudolu-aktivni-barva-textu=#ffffff}}
-{{MAKRO sipka-odkaz-nahorudolu-aktivni-barva-ramecku=yellow}}
-
-{{MAKRO prehledstitku-liche-barva-pozadi=#ffffff}}
-{{MAKRO prehledstitku-sude-barva-pozadi=#ffffff}}
 {{KONEC POKUD}}
 #
 # Motiv „vysoký kontrast tmavý“
 ##############################################################################
 {{POKUD JE MOTIV vk-tmavy}}
-{{MAKRO barva-pozadi=#000000}}
-{{MAKRO obrazek-pozadi=none}}
-{{MAKRO barva-textu=#ffffff}}
-{{MAKRO pozadi-papir=#000000}}
-{{MAKRO titulni-lista-barva-pozadi=#000000}}
-{{MAKRO titulni-lista-obrazek-pozadi=none}}
-{{MAKRO titulni-lista-barva-textu=#ffffff}}
-{{MAKRO titulni-lista-barva-ikon-vpravo=#ffffff}}
-{{MAKRO titulni-lista-text-shadow=none}}
-{{MAKRO stavovy-radek-barva-pozadi=#000000}}
+# - Pozadí a obrázek značky <html>:
+{{MAKRO html-pozadi-barva   = rgb(0,0,0)}}
+{{MAKRO html-pozadi-obrazek = none}}
 
-{{MAKRO barva-odkazu=#809eff}}
-{{MAKRO barva-navstiveneho-odkazu=#bd99ff}}
-{{MAKRO barva-adresy-odkazu=#cccccc}}
+# - Barva titulní lišty a jejího textu + jeho krytí a krytí jeho stínu:
+{{MAKRO zb-titul-pozadi                 = {{zb-pozadi}}}}
+{{MAKRO zb-titul-text                   = {{zb-text}}}}
+{{MAKRO zb-okno-ramecek                 = 255,255,255}}
 
-{{MAKRO obrazek-barva-pozadi=#999999}}
+# - Základní barva textu („inkoust“)
+{{MAKRO zb-text                         = 255,255,255}}
+# - Šedý text (méně kontrastní barva textu) (světlejší/tmavší) − tmavě šedá pro světlé motivy, světle šedá pro tmavé
+#   Musí být jasně odlišitelná od obyčejného textu.
+{{MAKRO zb-tmava                        = 204,204,204}}
+# - Méně kontrastní barva pozadí (světlejší/tmavší) − světle šedá pro světlé motivy, tmavě šedá pro tmavé
+{{MAKRO zb-svetla                       = 50,50,50}}
+# - Základní barva pozadí („papír“)
+{{MAKRO zb-pozadi                       = 0,0,0}}
 
-{{MAKRO stitek-barva-pozadi=#000000}}
-{{MAKRO stitek-barva-textu=inherit}}
-{{MAKRO stitek-barva-tenkych-ramecku=rgba(255,255,255,0.25)}}
-{{MAKRO stitek-box-shadow=0.1em 0.15em 0 0 rgba(255,255,255,0.5)}}
+# - Základní barva hypertextových odkazů (ne jejich adresy)
+{{MAKRO zb-odkaz                        = 128,158,255}}
+# - Odlišná barva pro již navštívené hypertextové odkazy
+{{MAKRO zb-navstiveny                   = 189,153,255}}
+# - Barva zvláštních odkazů v rámečku (použita pro rozcestník kapitoly).
+{{MAKRO zb-barevny-text                 = 130,249,121}}
 
-{{MAKRO rozcestnikvkapitole-barva-pozadi=#000000}}
-{{MAKRO rozcestnikvkapitole-barva-oddelovacu=rgba(255,255,255,0.4)}}
-{{MAKRO rozcestnikvkapitole-barva-odkazu=#82f279}}
+# - Samostatné nastavení krytí pro metaznaky [ ] a „Enter“ v zaklínadlech.
+#{{MAKRO sede-casti-kryti=0.7}}
 
-{{MAKRO klavesa-barva-pozadi=#333333}}
-{{MAKRO klavesa-barva-textu=#ffffff}}
+# - Pozadí odstavce s vloženým obrázkem + krytí tohoto pozadí:
+{{MAKRO obrazek-pozadi                  = 255,255,255}}
+{{MAKRO obrazek-pozadi-kryti            = 1}}
 
-{{MAKRO parametryprikazu-levy-sloupec-barva-textu=#ffffff}}
+# - Symboly:
+{{MAKRO symboly-tab                 = {{sym-raquo-bila}}}}
+{{MAKRO symboly-tab-barva-pozadi    = transparent}}
+{{MAKRO symboly-tritecky            = {{sym-tritecky-svetle}}}}
+{{MAKRO symboly-viditelnamezera     = {{sym-blank-bila}}}}
 
-{{MAKRO zaklinadlo-barva-textu=#ffffff}}
-{{MAKRO zaklinadlo-barva-tucneho-textu=#eeeeee}}
-{{MAKRO zaklinadlo-barva-kodu=rgba(255,255,255,0.7)}}
-{{MAKRO zaklinadlo-barva-znaku-dopreambule=#ffffff}}
-{{MAKRO zaklinadlo-barva-znaku-konec-radku=rgb(120,120,120)}}
-{{MAKRO zaklinadlo-barva-sedych=#e6fffc}}
-{{MAKRO zaklinadlo-prikladhodnoty-barva-textu=inherit}}
-{{MAKRO zaklinadlo-prikladhodnoty-barva-pozadi=#333333}}
+# - Stín boxu na titulní stránce:
+{{MAKRO index-podzahlavim-box-shadow=0 0.25rem 1.5rem 0 rgba(250,250,250,0.5)}}
 
-{{MAKRO symboly-tab-barva-pozadi=#666666}}
-{{MAKRO symboly-viditelnamezera=url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAMAQMAAABcN9+FAAAABlBMVEUAAAD///+l2Z/dAAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfkARoHKiFliKeMAAAAEklEQVQI12OwYfjAgA/b/0fBAGmbEhlfr2/IAAAAAElFTkSuQmCC")}}
-{{MAKRO symboly-tritecky=url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgAQMAAABJtOi3AAAABlBMVEUAAADw8PC5otm+AAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfkAgMEBxhyUKn3AAAAE0lEQVQI12NgoBeoZ/9QTzQBBwA5FBGeWyCouwAAAABJRU5ErkJggg==")}}
+{{MAKRO prehledstitku-liche-barva-pozadi=rgb(0,0,0)}}
+{{MAKRO prehledstitku-sude-barva-pozadi=rgb(0,0,0)}}
 
 {{KONEC POKUD}}
+#
+# Motiv „tmavý motiv“
+##############################################################################
+{{POKUD JE MOTIV tmavy}}
+# - Pozadí a obrázek značky <html>:
+{{MAKRO html-pozadi-barva   = rgb(18,26,39)}}
+{{MAKRO html-pozadi-obrazek = url("obrazky/udoli.jpg")}}
 
+# - Krytí všech <img>, které nemají krytí předefinované jinak. Používá se ke snížení jasu v tmavých motivech.
+{{MAKRO kryti-obrazku-globalni          = 0.75}}
+# - Zvláštní krytí pro ikony kapitol:
+#{{MAKRO kryti-obrazku-ikona-kapitoly    = {{kryti-obrazku-globalni}}}}
+
+# - Barva titulní lišty a jejího textu + jeho krytí a krytí jeho stínu:
+{{MAKRO zb-titul-pozadi                 = {{zb-pozadi}}}}
+{{MAKRO zb-titul-text                   = {{zb-text}}}}
+#{{MAKRO titulni-lista-text-kryti        = 1}}
+#{{MAKRO titulni-lista-stin-textu-kryti  = 0}}
+# - Barva ikon na titulní liště vpravo; také použita jako pozadí pro tlačítka „přejít nahoru/dolů“.
+#{{MAKRO zb-titul-krizek                 = {{zb-titul-text}}}}
+# - Barva zvýraznění pro tlačítka „přejít nahoru/dolů“, když jsou stisknutá.
+#{{MAKRO zb-titul-aktivni                = 255,255,0}}
+# - Stín v horní a spodní části titulní lišty (background-image):
+#{{MAKRO titulni-lista-obrazek-pozadi    = none}}
+# - Barva tenkého rámečku okna + krytí stínu okna:
+{{MAKRO zb-okno-ramecek={{zb-svetla}}}}
+{{MAKRO okno-stin-kryti=0.5}}
+
+# - Základní barva textu („inkoust“)
+{{MAKRO zb-text                         = 164,164,164}}
+# - Šedý text (méně kontrastní barva textu) (světlejší/tmavší) − tmavě šedá pro světlé motivy, světle šedá pro tmavé
+#   Musí být jasně odlišitelná od obyčejného textu.
+{{MAKRO zb-tmava                        = 120,120,120}}
+# - Méně kontrastní barva pozadí (světlejší/tmavší) − světle šedá pro světlé motivy, tmavě šedá pro tmavé
+{{MAKRO zb-svetla                       = 60,60,60}}
+# - Základní barva pozadí („papír“)
+{{MAKRO zb-pozadi                       = 40,40,40}}
+
+# - Základní barva hypertextových odkazů (ne jejich adresy)
+{{MAKRO zb-odkaz                        = 86,155,200}}
+# - Odlišná barva pro již navštívené hypertextové odkazy
+{{MAKRO zb-navstiveny                   = 183,136,183}}
+# - Barva zvláštních odkazů v rámečku (použita pro rozcestník kapitoly).
+{{MAKRO zb-barevny-text                 = 63,162,94}}
+
+# - Samostatné nastavení krytí pro metaznaky [ ] a „Enter“ v zaklínadlech.
+#{{MAKRO sede-casti-kryti=0.7}}
+
+# - Pozadí odstavce s vloženým obrázkem + krytí tohoto pozadí:
+{{MAKRO obrazek-pozadi                  = 255,255,255}}
+{{MAKRO obrazek-pozadi-kryti            = 0.2}}
+
+# - Symboly:
+{{MAKRO symboly-tab                 = {{sym-raquo-bila}}}}
+#{{MAKRO symboly-tab-barva-pozadi    = transparent}}
+{{MAKRO symboly-tritecky            = {{sym-tritecky-svetle}}}}
+{{MAKRO symboly-viditelnamezera     = {{sym-blank-bila}}}}
+
+# - Stín boxu na titulní stránce:
+#{{MAKRO index-podzahlavim-box-shadow=none}}
+
+{{KONEC POKUD}}
 #
 # CSS reset
 ##############################################################################
@@ -252,28 +377,28 @@ z-index:auto;font:inherit;}
 # Blokové prvky
 ##############################################################################
 html {
-    background:{{barva-pozadi}} {{obrazek-pozadi}} 100% 0%/cover repeat fixed;
-    color:{{barva-textu}};
+    background:{{html-pozadi-barva}} {{html-pozadi-obrazek}} 100% 0%/cover repeat fixed;
+    color:rgb({{zb-text}});
     font:62.5%/1.2 sans-serif;
 }
 
 body {
     margin:15rem auto 25rem;
-    border:thin solid #802020;
+    border:thin solid rgb({{zb-okno-ramecek}});
     padding:0;
     width:90%;min-width:95rem;max-width:120rem;
-    background-color:{{pozadi-papir}};
+    background-color:rgb({{zb-pozadi}});
     font-size:133%;
-    box-shadow:1rem 1rem 5rem 0 rgba(0,0,0,0.5);
+    box-shadow:1rem 1rem 5rem 0 rgba(0,0,0,{{okno-stin-kryti}});
 }
 
 header {
-    border-bottom:thin solid black;
+    border-bottom:thin solid rgb({{zb-okno-ramecek}});
     padding:0.4em 0.5em;
-    background:{{titulni-lista-barva-pozadi}} {{titulni-lista-obrazek-pozadi}} 0% 0%/1px 100% repeat-x;
-    color:{{titulni-lista-barva-textu}};
+    background:rgb({{zb-titul-pozadi}}) {{titulni-lista-obrazek-pozadi}} 0% 0%/1px 100% repeat-x;
+    color:rgba({{zb-titul-text}},{{titulni-lista-text-kryti}});
     font-weight:bold;
-    text-shadow:{{titulni-lista-text-shadow}};
+    text-shadow:0 0 0.25em rgba(0,0,0,{{titulni-lista-stin-textu-kryti}});
 }
 
 nav {
@@ -295,10 +420,10 @@ article {
 }
 
 footer {
-    border-top:thin solid purple;
+    border-top:thin solid rgb({{zb-okno-ramecek}});
     padding:1rem 3rem;
     font-size:85%;
-    background:{{stavovy-radek-barva-pozadi}};
+    background:rgb({{zb-svetla}});
 }
 
 h1 {
@@ -309,7 +434,7 @@ h1.kapitola img {
     vertical-align:middle;
     border:none;
     width:6.4rem;height:6.4rem;
-    opacity:0.9;
+    opacity:{{kryti-obrazku-ikona-kapitoly}};
 }
 
 h2 {
@@ -320,8 +445,8 @@ h2 {
 h3 {
     font:bold 125%/1.2 "DejaVu Sans", sans-serif;
     margin:1.5em 0 0.75em;
-    background-color:rgba(53,34,63,0.05);
-    box-shadow:0.1rem 0.1rem 0.2rem 0 rgba(0,0,0,0.25);
+    background-color:rgba({{zb-tmava}},0.2);
+    box-shadow:0.1rem 0.1rem 0.2rem 0 rgba({{zb-tmava}},0.8);
     padding:0.5rem 0.5rem;
     page-break-after:avoid; /* možná není podporována v současných prohlížečích */
 }
@@ -336,7 +461,7 @@ h3 .cislo {
 }
 
 p, ul, blockquote {
-    font-family: "DejaVu Serif", serif;
+    font-family: "DejaVu Sans", sans-serif;
     margin:0.75em 0 0 7rem;
     max-width:70em;
     hyphens:auto;
@@ -355,17 +480,18 @@ ul.kompaktni {
     text-align:left;
 }
 
+img {
+    opacity:{{kryti-obrazku-globalni}};
+}
 figure {
     margin:2rem 0;
+    border-radius:3rem;
+    padding:1rem;
+    background:rgba({{obrazek-pozadi}},{{obrazek-pozadi-kryti}});
     text-align:center;
 }
-figure img {
-    background:{{obrazek-barva-pozadi}};
-    border:1rem solid {{obrazek-barva-pozadi}};
-}
-
 blockquote {
-    border-left:0.5em solid {{odsazeny-barva-cary}};
+    border-left:0.5em solid rgb({{zb-tmava}});
     padding-left:1em;
 }
 blockquote blockquote {
@@ -378,11 +504,11 @@ blockquote+blockquote {
 }
 
 /* Inline prvky */
-a:link {color:{{barva-odkazu}};}
-a:visited {color:{{barva-navstiveneho-odkazu}};}
+a:link {color:rgb({{zb-odkaz}})}
+a:visited {color:rgb({{zb-navstiveny}});}
 /* a:visited {color:;} */
-a[href^="http://"]::before, a[href^="https://"]::before {content:"[";color:{{barva-adresy-odkazu}};}
-a[href^="http://"]::after, a[href^="https://"]::after {content:"]( " attr(href) " )";color:{{barva-adresy-odkazu}};}
+a[href^="http://"]::before, a[href^="https://"]::before {content:"[";color:rgba({{zb-adresa}},{{zb-adresa-kryti}});}
+a[href^="http://"]::after, a[href^="https://"]::after {content:"]( " attr(href) " )";color:rgba({{zb-adresa}},{{zb-adresa-kryti}});}
 a:hover {text-decoration:underline;}
 b {font-weight:bold;}
 i {font-style:italic;}
@@ -393,8 +519,8 @@ kbd {
     border-radius:0.5em;
     padding:0 0.5em;
     white-space:nowrap;
-    background:{{klavesa-barva-pozadi}};
-    color:{{klavesa-barva-textu}};
+    background:rgb({{zb-svetla}});
+    color:rgb({{zb-text}});
     font-family:"DejaVu Sans", sans-serif;
 }
 
@@ -417,7 +543,7 @@ nav a[rel="prev"]::after, nav a[rel="next"]::before {content:none;}
     font-family: "DejaVu Sans Mono", monospace;
     font-size:115%;
     page-break-inside:avoid;
-    color:{{zaklinadlo-barva-textu}};
+    color:rgb({{zb-text}});
 }
 
 .zaklinadlo>hr {
@@ -438,7 +564,7 @@ nav a[rel="prev"]::after, nav a[rel="next"]::before {content:none;}
 }
 
 .zaklinadlo .zahlavi b {
-    color:zaklinadlo-barva-tucneho-textu;
+    color:rgba({{zb-text}},{{zb-tucny-text-kryti}});
 }
 
 .zaklinadlo .zahlavi>.cislo {
@@ -465,9 +591,10 @@ nav a[rel="prev"]::after, nav a[rel="next"]::before {content:none;}
     margin:3pt 5pt 3pt 7rem;
     border-left:1pt dotted #999999;
     padding:2pt 5pt;
-    color:{{zaklinadlo-barva-kodu}};
+    color:rgba({{zb-text}},{{zb-text-kod-kryti}});
 }
 
+# Jen pro ukázku na titulní straně:
 .zaklinadlo td:nth-child(1) {white-space:nowrap;}
 .zaklinadlo td:nth-child(2) {font:100%/1.2 "DejaVu Serif";padding-left:1em;}
 
@@ -475,20 +602,25 @@ nav a[rel="prev"]::after, nav a[rel="next"]::before {content:none;}
     display:inline-block;
     width:0pt;
     position:relative;left:-2.5ch;top:0.5ex;
-    color:{{zaklinadlo-barva-znaku-dopreambule}};
+    color:rgb({{zb-tmava}});
     font-weight:bold;
 }
 
 /* zobrazení znaku ↲ na konci každého řádku zaklínadla kromě posledního */
-.radekzaklinadla::after, .radekzaklinadlaafter::after {content:"↲";margin-left:0.5em;color:{{zaklinadlo-barva-znaku-konec-radku}};}
+.radekzaklinadla::after, .radekzaklinadlaafter::after {
+    content:"↲";
+    margin-left:0.5em;
+    color:rgba({{zb-tmava}},{{sede-casti-kryti}});
+}
 .radekzaklinadla:last-child::after {display:none;}
 .radekzaklinadla:empty::after {margin-left:0;}
 
 .radekzaklinadla .prikladhodnoty {
     margin-left:2rem;
-    border-left:0.2rem solid #bf4a4a;
-    background:{{zaklinadlo-prikladhodnoty-barva-pozadi}};
-    color:{{zaklinadlo-prikladhodnoty-barva-textu}};
+    border-left:0.2rem solid rgb({{zb-barevny-stitek}});
+    padding-left:0.3rem;
+    background:rgb({{zb-svetla}});
+    color:inherit;
     font-family:Arimo,Helvetica,Arial,sans-serif;
 }
 
@@ -507,13 +639,13 @@ nav a[rel="prev"]::after, nav a[rel="next"]::before {content:none;}
 
 .zaklinadlo .volznak {
     display:inline-block;
-    color:{{zaklinadlo-barva-sedych}};
+    color:rgba({{zb-tmava}},{{sede-casti-kryti}});
     margin:0 -0.2em;
     transform:scaleY(1.75);
 }
 
 .zaklinadlo .reseninezname {
-    color:{{zaklinadlo-barva-sedych}};
+    color:rgb({{zb-tmava}});
     font-weight:bold;
     text-shadow:0 0 0.5em rgba(0,0,0,0.5);
 }
@@ -539,7 +671,7 @@ nav a[rel="prev"]::after, nav a[rel="next"]::before {content:none;}
 .ppc .zrusitzvyrazneni::before {content:"(";}
 .ppc .zrusitzvyrazneni::after {content:")";}
 .ppc :target {
-    background:{{poznpodcarou-aktivni-barva-pozadi}};
+    background:rgb({{zb-svetla}});
     padding-top:1.5rem;
     padding-bottom:1.5rem;
 }
@@ -548,8 +680,8 @@ nav a[rel="prev"]::after, nav a[rel="next"]::before {content:none;}
 .ppc :target + script + .zpetdotextu {
     display:block;
     padding:1rem 0 1rem 4rem;
-    background:{{poznpodcarou-zpetdotextu-barva-pozadi}};
-    color:{{poznpodcarou-zpetdotextu-barva-textu}};
+    /*background:;*/
+    color:rgb({{zb-navstiveny}});
     cursor:pointer;
     font-family:sans-serif;
     font-weight:bold;
@@ -580,7 +712,7 @@ nav a[rel="prev"]::after, nav a[rel="next"]::before {content:none;}
 
 .parametryprikazu td:first-child {
     font-family:"DejaVu Sans Mono", monospace;
-    color:{{parametryprikazu-levy-sloupec-barva-textu}};
+    color:rgba({{zb-text}},{{parametryprikazu-levy-sloupec-kryti}});
     padding-right:1em;
 }
 
@@ -592,7 +724,7 @@ nav a[rel="prev"]::after, nav a[rel="next"]::before {content:none;}
 header .right span {
     display:inline-block;
     margin:0 0.25em;
-    color:{{titulni-lista-barva-ikon-vpravo}};
+    color:rgb({{zb-titul-krizek}});
 }
 
 header .right .ico1 {
@@ -633,9 +765,8 @@ footer img {float:left;margin:0 1rem 1rem 0;}
     white-space:pre;
 }
 .tritecky {
+    background:transparent {{symboly-tritecky}} 0% 0%/100% 100% auto no-repeat;
     display:inline-block;
-    background-image:{{symboly-tritecky}};
-    background-size:100% 100%;
     width:1em;height:1ex;
 }
 
@@ -698,7 +829,7 @@ footer img {float:left;margin:0 1rem 1rem 0;}
 .podzahlavim p.informaceoverzi a {
     display:block;
     margin:0.3rem 0 0;
-    border-top:thin dotted {{index-podzahlavim-oddel-cara-barva}};
+    border-top:thin dotted rgb({{zb-tmava}});
     padding:0.2rem 0 0 1em;;
 }
 .podzahlavim p.informaceoverzi a::before {
@@ -726,8 +857,8 @@ nav .prev {text-align:right;margin-right:0.25em;}
 nav .next {text-align:left;}
 
 .rozcestnikkapitol {
-    background:{{rozcestnikvkapitole-barva-pozadi}};
-    color:{{rozcestnikvkapitole-barva-oddelovacu}};
+    background:rgb({{zb-svetla}});
+    color:rgb({{zb-tmava}});
     margin:1rem -1em;
     border:0.1rem solid rgba(0,0,0,0.2);
     border-radius:1em;
@@ -737,7 +868,7 @@ nav .next {text-align:left;}
 }
 .rozcestnikkapitol a {
     white-space:nowrap;
-    color:{{rozcestnikvkapitole-barva-odkazu}};
+    color:rgb({{zb-barevny-text}});
 }
 .rozcestnikkapitol a.sekce {
     font-weight:bold;
@@ -752,16 +883,16 @@ nav .next {text-align:left;}
 }
 .stitky span, .stitky a {
     display:inline-block;
-    background:{{stitek-barva-pozadi}};
-    color:{{stitek-barva-textu}};
+    background:rgb({{zb-svetla}});
+    color:rgb({{zb-text}});
     margin:0 0.5em;
-    border-color:{{stitek-barva-tenkych-ramecku}} {{stitek-barva-tenkych-ramecku}} {{stitek-barva-tenkych-ramecku}} rgba(80, 128, 128, {{stitek-kryti-tlusteho-ramecku}});
+    border-color:rgba({{zb-text}},0.25) rgba({{zb-text}},0.25) rgba({{zb-text}},0.25) rgba({{zb-barevny-stitek}},1);
     border-style:solid;
     border-width:thin thin thin 1.5rem;
     border-radius:0.4em;
     padding:0.25em 0.5em;
     min-width:5em;
-    box-shadow:{{stitek-box-shadow}};
+    box-shadow:0.1em 0.15em 0 0 rgba(0,0,0,{{stitek-kryti-stinu}});
     text-align:center;
     white-space:nowrap;
 }
@@ -821,6 +952,7 @@ nav .next {text-align:left;}
 .odkazydole img {
     margin:0.5rem;
     vertical-align:middle;
+    opacity:{{kryti-obrazku-ikona-kapitoly}};
 }
 
 /* .prehledy */
@@ -872,10 +1004,10 @@ dl.copyrights pre {
 }
 
 span.chybny {
-    color:{{chybny-znak-barva-textu}} !important;
-    background:{{chybny-znak-barva-pozadi}} !important;
+    color:rgb({{chybny-znak-text}}) !important;
+    background:rgb({{chybny-znak-pozadi}}) !important;
     font-weight:bold;
-    border:1px solid red;
+    border:1px solid;
 }
 
 /* odkazy nahoru a dolů */
@@ -883,33 +1015,30 @@ span.chybny {
     position:fixed;
     right:2%;
     z-index:256;
-    background:{{sipka-odkaz-nahorudolu-barva-pozadi}};
-    color:{{sipka-odkaz-nahorudolu-barva-textu}};
+    background:rgba({{zb-titul-pozadi}},{{nahorudolu-neaktivni-kryti}});
+    color:rgba({{zb-titul-krizek}},{{nahorudolu-neaktivni-kryti}});
     font:20pt/1 sans-serif;
-    border:5pt outset {{sipka-odkaz-nahorudolu-barva-ramecku}};
+    border:5pt outset rgba({{zb-titul-krizek}},{{nahorudolu-neaktivni-kryti}});
     border-radius:50%;
 }
-#odkaznahoru:hover, #odkazdolu:hover {
-    background-color:{{sipka-odkaz-nahorudolu-podkurzorem-barva-pozadi}};
-    border-color:{{sipka-odkaz-nahorudolu-podkurzorem-barva-ramecku}};
-    color:{{sipka-odkaz-nahorudolu-podkurzorem-barva-textu}};
+#odkaznahoru:hover, #odkazdolu:hover, #odkaznahoru:active, #odkazdolu:active {
+    background:rgba({{zb-titul-pozadi}},{{nahorudolu-aktivni-kryti}});
+    border-color:rgba({{zb-titul-aktivni}},{{nahorudolu-aktivni-kryti}});
+    color:rgba({{zb-titul-krizek}},{{nahorudolu-aktivni-kryti}});
     text-decoration:none;
     opacity:1;
 }
 #odkaznahoru:active, #odkazdolu:active {
-    background-color:{{sipka-odkaz-nahorudolu-aktivni-barva-pozadi}};
-    border-color:{{sipka-odkaz-nahorudolu-aktivni-barva-ramecku}};
-    color:{{sipka-odkaz-nahorudolu-aktivni-barva-textu}};
-    opacity:1;
+    color:rgba({{zb-titul-aktivni}},{{nahorudolu-aktivni-kryti}});
 }
 #odkaznahoru {
     top:10pt;
-    box-shadow:0 0 0 2pt rgb(33,33,33);
+    box-shadow:0 0 0 2pt rgba(0,0,0,{{nahorudolu-cernyramecek-kryti}});
     padding:0 6pt 3pt;
 }
 #odkazdolu {
     bottom:10pt;
-    opacity:0.75;
+    opacity:{{nahorudolu-neaktivni-kryti}};
     padding:0 4pt;
 }
 
