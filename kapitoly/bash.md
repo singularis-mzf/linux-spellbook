@@ -180,6 +180,91 @@ Poznámky:
 *# ≠*<br>
 **test** {*číslo1*} **-ne** {*číslo2*}
 
+## Zaklínadla (automatické doplňování)
+
+### Základní příkazy
+*# nastavit doplňování pro příkaz*<br>
+**complete** {*nastavení*} {*příkaz*}...
+
+*# vypsat možná doplnění podle nastavení*<br>
+**compgen** {*nastavení*} [**\-\-** {*doplňované-slovo*}]
+
+### Nastavení (complete/compgen)
+
+*# doplňovat názvy **souborů** a adresářů/jen adresářů*<br>
+**-A file**<br>
+**-A directory**
+
+*# doplňovat konkrétní slova*<br>
+**-W "**{*slovo*} [{*další-slovo*}]...**"**
+
+*# použit uživatelskou řídicí funkci*<br>
+*// Řídicí funkce dostane tři parametry: $1 bude název doplňovaného příkazu, $2 doplňované slovo a $3 přechozí slovo. Může také využít pole*<br>
+**-F** {*funkce*}
+
+*# doplňovat názvy **příkazů** (všech druhů)*<br>
+**-A command**
+
+*# doplňovat názvy **signálů** (např. „SIGKILL“)*<br>
+**-A signal**
+
+*# doplňovat jména **uživatelů**/skupin uživatelů*<br>
+**-A user**<br>
+**-A group**
+
+*# doplňovat názvy **vestavěných příkazů** (jen zapnutých/všech/jen vypnutých)*<br>
+**-A enabled**<br>
+**-A builtin**<br>
+**-A disabled**
+
+*# doplňovat názvy **proměnných** interpretu a prostředí/jen proměnných prostředí/jen polí interpretu*<br>
+**-A variable**<br>
+**-A export**<br>
+**-A arrayvar**
+
+*# doplňovat názvy **definovaných funkcí***<br>
+**-A function**
+
+*# doplňovat názvy **aliasů***<br>
+**-A alias**
+
+*# doplňovat známé názvy počítačů v síti (např. „localhost“)*<br>
+**-A hostname**
+
+<!--
+https://www.gnu.org/software/bash/manual/html_node/Programmable-Completion-Builtins.html#Programmable-Completion-Builtins
+-->
+
+### Vstupní údaje (jen v řídicí funkci doplňování)
+
+*# zjistit doplňované slovo*<br>
+**$2**
+
+*# zjistit předcházející slovo*<br>
+**$3**
+
+*# zjistit název doplňovaného příkazu*<br>
+**$1**
+
+*# nastavit jako odpověď sekvenci slov*<br>
+**COMPREPLY=($(compgen -W "**{*slovo*} [{*další slovo*}]...**"** [**-P** {*dodatečná-předpona*}] <nic>[**-S** {*dodatečná-přípona*}] **\-\- "**{*doplňované-slovo*}**"))**
+
+*# nastavit prázdnou odpověď*<br>
+**COMPREPLY=()**
+
+*# přidat další možná slova*<br>
+**COMPREPLY+=(**[{*slovo*}]...**)**
+
+*# index doplňovaného parametru*<br>
+*// 1 pro první parametr, 2 pro druhý parametr atd.*<br>
+**$COMP\_CWORD**
+
+*# zjistit obsah konkrétního parametru doplňovaného příkazového řádku*<br>
+**$COMP\_WORDS[**{*index*}**]**
+
+*# celá doplňovaná příkazová řádka*<br>
+**$COMP\_LINE**
+
 ## Parametry příkazů
 <!--
 - Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.

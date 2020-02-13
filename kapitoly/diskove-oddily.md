@@ -18,6 +18,7 @@ Poznámky:
 + LVM
 + BTRFS
 + tmpfs
+[ ] sudo fstrim
 
 + přesunout odkládací oddíly
 

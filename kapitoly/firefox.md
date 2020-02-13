@@ -72,6 +72,8 @@ https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/The_about_protocol
 *# vypnout JavaScript*<br>
 **javascript.enabled = FALSE**
 
+*# vypnout „obraz v obrazu“*<br>
+**media.videocontrols.picture-in-picture.enabled = FALSE**
 
 ### Jsou v GUI
 *# nenašeptávat otevřené panely*<br>

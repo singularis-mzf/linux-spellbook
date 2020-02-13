@@ -18,12 +18,17 @@ ps
 pgrep
 pstree
 kill
-lsof
+killall + pkill
+lsof + fuser (ale důkladně otestovat)
 /proc/PID
++ exec, sudo, ... (spouštění procesů), time (sledování času)
 
 PID v Linuxu neznamená Pražská integrovaná doprava...
 
 [ ] Stav běhu procesu?
+
+Spouštěním, sledováním, ovlivňováním a ukončováním procesů...
+Zde uvedené příkazy k ovlivňování a ukončování procesů by neměly být používány na démony (k jejich ovládání viz kapitolu Systém).
 
 ⊨
 -->
@@ -47,7 +52,7 @@ PID v Linuxu neznamená Pražská integrovaná doprava...
 * **Proces** je instance počítačového programu v paměti, identifikovaná systémově jedinečným číslem **PID** (obvykle v rozsahu 1 až 32768). Procesy v Linuxu mají rodinnou strukturu s jedním **rodičem** (PID rodiče je **PPID** jeho zrozenců). Když proces spustí nový proces, nový proces se automaticky stane jeho zrozencem a zdědí řadu jeho vlastností. (Poznámka: proces není vázaný na konkrétní program. Příkazem „exec“ lze spustit nový program bez vytvoření nového procesu − spuštěný program prostě přepíše stávající program se všemi důsledky.)
 * **Démoni** jsou dva prvotní démoni „systemd“ (PID 1) a „kthreadd“ (PID 2) a ti jejich přímí potomci, kteří nemají textové ani grafické uživatelské rozhraní, a tedy běží na pozadí, bez kontaktu s uživatelem. (Poznámka: dva prvotní démoni jako procesy nemají rodiče, jsou zřízeni přímo jádrem a jejich PPID je 0.)
 * **Zombie** je proces, který skončil, ale jeho rodič dosud nepřevzal jeho návratovou hodnotu. Převzetím návratové hodnoty rodičem je zombie **pohřbena** a její PID se uvolní pro přidělení dalšímu procesu.
-* **Název** procesu je identifikátor přiřazený mu jádrem; odvozuje se od jména spuštěného programu, ale je zkrácený na maximálně 15 znaků.
+* **Název** procesu je identifikátor přiřazený mu jádrem; odvozuje se od jména spuštěného programu, ale je zkrácený na maximálně 15 bajtů (obsahuje-li jméno spuštěného souboru vícebajtové znaky, může při tomto zkracování dojít k přerušení vícebajtové sekvence).
 
 <!--
 [ ] Zjistit, zda těch 15 znaků platí i pro UTF-8 názvy.
@@ -179,6 +184,10 @@ PID v Linuxu neznamená Pražská integrovaná doprava...
 
 ### Ovládání procesů
 
+*# požádat o ukončení podle názvu (obecně/příklad)*<br>
+[**sudo**] **pkill '**{*regulární-výraz*}**'**<br>
+**pkill '^gimp'**
+
 *# požádat o ukončení/násilně ukončit*<br>
 [**sudo**] **kill** {*PID*}...<br>
 [**sudo**] **kill -9** {*PID*}...
@@ -196,27 +205,50 @@ PID v Linuxu neznamená Pražská integrovaná doprava...
 
 ### Hledání procesů
 
+*# procesy podle názvu procesu (obecně/příklad)*<br>
+**pgrep** [**-x**] **'**{*regulární výraz*}**'**<br>
+**pgrep '^gimp'**
+
 *# všechny procesy*<br>
-**ps -o pid:1= -e**
+**pgrep .**
 
 *# přímí/všichni potomci určitého procesu*<br>
-**ps -o pid:1= \-\-ppid** {*ID-předka*}
+**pgrep -P** {*PID*}<br>
+**lkk procesy \| sed -E 's/^([0-9]+)(:[0-9]+)\*:(**{*PID*}**):.\*/\\1/;t;d'**
 
 *# proces a všichni jeho předci v pořadí, až po prvotního démona*<br>
-?
+**lkk procesy \| sed -nE '/^(**{*PID*}**):/{s/:/\\n/g;p}'**
 
 *# všechny procesy určitého uživatele/určité skupiny*<br>
-**ps -o pid:1= -U** {*uživatel*}[**,**{*další-uživatel*}]...<br>
-**ps -o pid:1= -G** {*skupina*}[**,**{*další-skupina*}]...
+**pgrep -U** {*uid-nebo-uživatel*}[**,**{*další*}]...<br>
+**pgrep -G** {*gid-nebo-skupina*}[**,**{*další*}]...
 
-*# procesy, které mají otevřený určitý soubor či adresář*<br>
-?
-
-*# procesy podle názvu*<br>
-?
+*# procesy, které mají otevřený konkrétní soubor*<br>
+**sudo fuser** {*cesta*}... **2&gt;/dev/null \| sed -E 's/^\\s+//;s/\\s+\|\\s?$/\\n/g'**
 
 *# sourozenci určitého procesu (včetně procesu samotného)*<br>
-**ps -o pid:1= \-\-ppid $(ps -o ppid:1=** {*PID-procesu*}**)**
+**pgrep -P $(ps \-\-no-headers -o ppid** {*PID-procesu*}**)**
+
+*# procesy spuštěné později či společně se zadaným procesem*<br>
+?
+
+*# procesy spuštěné dříve či společně se zadaným procesem*<br>
+?
+
+*# procesy, které mají otevřený konkrétní adresář*<br>
+**sudo fuser** {*cesta*}... **2&gt;/dev/null \| sed -E 's/^\\s+//;s/\\s+\|\\s?$/\\n/g'**
+
+### Stromové zobrazení
+
+*# proces a jeho potomci*<br>
+**pstree -pT**[**h**]<nic>[**l**] {*PID*}...
+
+*# proces a jeho předkové*<br>
+**pstree -ps**[**h**]<nic>[**l**] {*PID*}
+
+*# všechny procesy bez parametrů/s parametry*<br>
+**pstree -pT**[**h**]<nic>[**l**]<br>
+**pstree -paT**[**h**]<nic>[**l**]
 
 ## Parametry příkazů
 <!--
@@ -229,6 +261,34 @@ PID v Linuxu neznamená Pražská integrovaná doprava...
 
 *# *<br>
 **ps** {*parametry*}
+
+### pgrep
+
+*# *<br>
+**pgrep** [{*volby*}] **'**{*regulární výraz*}**'**<br>
+**pgrep** [{*volby a kritéria*}] <nic>[**'**{*regulární výraz*}**'**]
+
+**Volby:**
+
+!Parametry:
+
+* ☐ -x :: U regulárního výrazu požadovat přesnou shodu.
+* ○ -o ○ -n ○ -v :: Z nalezených procesů vybrat: jen nejstarší proces/jen nejnovější proces/všechny procesy, které *nevyhovují* kritériím. (Výchozí: všechny procesy vyhovující kritériím.) Poznámka: staří procesu se zde posuzuje podle času spuštění.
+* ☐ -f :: Regulární výraz testovat proti celé příkazové řádce procesu. (Normálně jen proti názvu procesu.)
+* ☐ -d {*řetězec*} :: Nastavit oddělovač výpisu nalezených PID.
+* ○ -c ○ -l ○ -a :: Vypsat: jen počet nalezených PID; PID a název procesu; PID a příkazový řádek procesu.
+* ☐ -i :: Při testu regulárního výrazu nerozlišovat velká a malá písmena.
+
+**Kritéria:**
+
+!Parametry:
+
+* ☐ -G {*gid-nebo-skupina*}... :: Vybrat podle skupiny (RGID).
+* ☐ -P {*PPID*}... :: Vybrat podle PPID.
+* ☐ -t {*terminál*}... :: Vybrat podle příslušného terminálu (např. „pts/1“).
+* ☐ -u {*uid-nebo-uživatel*}... :: Vybrat podle EUID.
+* ☐ -U {*uid-nebo-uživatel*}... :: Vybrat podle RUID.
+
 
 ## Instalace na Ubuntu
 <!--
@@ -262,6 +322,7 @@ V kapitole je použit také příkaz gawk:
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+* Existuje také příkaz „pkill“, který kombinuje většinu schopností příkazu „pgrep“ s příkazem „kill“ − tzn. vyhledaným procesům rovnou zašle signál.
 * Pokud rodič zanikne dřív než samotný proces, „adoptuje“ proces systemd.
 
 ## Další zdroje informací
@@ -286,3 +347,17 @@ Co hledat:
 * [Stránky TL;DR](https://github.com/tldr-pages/tldr/tree/master/pages/common)
 
 !ÚzkýRežim: vyp
+
+## Pomocné skripty
+
+*# lkk procesy − vypíše přehled procesů ve snadno zpracovatelném tvaru*<br>
+**#!/usr/bin/gawk -bf**<br>
+**BEGIN \{**<br>
+<odsadit1>**while ("ps \-\-no-headers -e -o pid,ppid" \| getline) {ppids[pids[++n] = $1] = $2}**<br>
+<odsadit1>**OFS = ORS = "";**<br>
+<odsadit1>**for (i = 1; i &lt;= n; ++i) \{**<br>
+<odsadit2>**print pid = pids[i];**<br>
+<odsadit2>**while ((pid = ppids[pid]) in ppids) {print ":", pid}**<br>
+<odsadit2>**print "\\n";**<br>
+<odsadit1>**\}**<br>
+**\}**

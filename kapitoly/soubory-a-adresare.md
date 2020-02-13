@@ -86,6 +86,43 @@ Nepokrývá činnosti, kde záleží na konkrétním obsahu souborů (tzn. ani u
 
 ### Kopírování adresářů
 
+### Přístupová práva a vlastnictví
+
+*# zjistit přístupová práva souboru či adresáře (symbolicky/číselně)*<br>
+?<br>
+?
+
+*# nastavit/zrušit práva r, w nebo x u souboru či adresáře*<br>
+?<br>
+?
+
+*# změnit skupinu souboru či adresáře*<br>
+[**sudo**] **chgrp** [**-R**] <nic>[**-c**] {*nová-skupina*} {*cesta*}...
+
+*# změnit **vlastníka** souboru či adresáře*<br>
+**sudo chown** [**-R** [**-L**]] <nic>[**-c**] <nic>[**\-\-from=**[{*původní-vlastník*}]**:**[{*původní-skupina*}]] {*nový-vlastník*}[**:**{*nová-skupina*}] {*cesta*}...
+
+### Zvláštní restrikce ext4
+
+<!--
+Následující zvláštní restrikce se podobají přístupovým právům, ale lze je použít
+pouze na souborových systémech ext2 až ext4 (nezkoumal/a jsem ZFS, btrfs apod.,
+ale tmpfs je nepodporuje). Na rozdíl od přístupových práv účinkují i na superuživatele a brání nejen obsah souboru či adresáře, ale také většinu jeho metadat a spolehlivě chrání soubor či adresář před smazáním.
+-->
+
+*# nastavit/zrušit zvláštní restrikci zakazující změny souboru či adresáře*<br>
+*// Je-li tato restrikce nastavena na adresář, není možno v něm vytvářet či mazat soubory, je však možno do souborů zapisovat a měnit jejich metadata.*<br>
+**sudo chattr** [**-R**] **+i** {*cesta*}...<br>
+**sudo chattr** [**-R**] **-i** {*cesta*}...
+
+*# nastavit/zrušit zvláštní restrikci změn dovolující jen připojování na konec souboru*<br>
+**sudo chattr** [**-R**] **+a** {*cesta*}...<br>
+**sudo chattr** [**-R**] **-a** {*cesta*}...
+
+### Zjistit
+
+*# místo zabrané souborem na disku*<br>
+?
 
 ## Parametry příkazů
 <!--
@@ -105,6 +142,15 @@ Nepokrývá činnosti, kde záleží na konkrétním obsahu souborů (tzn. ani u
 * ◉ -f ○ -i ○ -n ○ -b ○ -u :: Existující cílový soubor: přepsat bez ptaní/zeptat se/nepřesouvat/přejmenovat a nahradit/přepsat, pokud je starší.
 * ☐ -v :: Vypisovat provedené operace.
 * ☐ -T :: Cíl musí být soubor; je-li to existující adresář, selže s chybou.
+
+### mkdir
+
+!Parametry:
+
+* ☐ -p :: Vytvoří adresář, pokud ještě neexistuje. Je-li to třeba, vytvoří i nadřazené adresáře.
+* ☐ -v :: Vypisovat provedené operace.
+* ☐ --mode {*mód*} :: Vytvořenému adresáři nastaví uvedený mód. Ten může být zadán symbolicky (např. „u=rwx,g=rx,o=“) nebo číselně (např. „755“).
+
 
 ## Instalace na Ubuntu
 <!--

@@ -82,6 +82,10 @@ Poznámky:
 *# změnit proměnnou prostředí na proměnnou interpretu*<br>
 ?
 
+*# vypsat všechny proměnné prostředí (txt/txtz)*<br>
+**printenv**<br>
+**printenv -0**
+
 ### Pole
 
 ### Asociativní pole
