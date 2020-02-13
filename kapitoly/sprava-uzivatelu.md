@@ -77,6 +77,18 @@ Poznámky:
 
 ### Vlastnosti uživatelů (změnit)
 
+*# změnit heslo (pro člověka)*<br>
+**sudo passwd** [{*uživatel*}]<br>
+!: Dvakrát zadat nové heslo.
+
+*# změnit heslo (pro skript)*<br>
+**printf %s\\n "**{*uživatel*}**:**{*heslo*}**" ["**{*další\_uživatel*}**:**{*další-heslo*}"]... **\| sudo chpasswd**
+
+*# změnit vlastní heslo*<br>
+**passwd**<br>
+!: Zadat původní heslo.<br>
+!: Dvakrát zadat nové heslo.
+
 *# změnit heslo uživatele/vlastní heslo*<br>
 **sudo passwd** {*uživatel*}<br>
 **passwd**

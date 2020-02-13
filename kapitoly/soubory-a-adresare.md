@@ -48,6 +48,42 @@ Nepokrývá činnosti, kde záleží na konkrétním obsahu souborů (tzn. ani u
 * **Adresářová položka** je pojmenovaná položka v adresáři; obvykle je to soubor (přesněji − pevný odkaz na soubor), další adresář či symbolický odkaz, méně často zařízení (např. „/dev/null“), pojmenovaná roura apod. Název každé adresářové položky v jednom adresáři je jedinečný a může obsahovat jakékoliv znaky UTF-8 kromě nulového bajtu a znaku „/“.
 * Adresářová položka je **skrytá**, pokud její název začíná znakem „.“.
 
+### Přístupová práva souborů a adresářů
+
+Právo *čtení* (r, read) znamená:
+
+* U souboru právo otevřít soubor pro čtení a přečíst jeho obsah, a to jak sekvenčně, tak přímým přístupem k částem souboru.
+* U adresáře právo přečíst seznam názvů položek v adresáři bez dalších údajů. Nic víc.
+
+Právo *zápisu* (w, write) znamená:
+
+* U souboru právo otevřít daný soubor pro zápis, zkrátit ho (i na nulovou velikost), prodloužit ho, přepisovat existující bajty souboru a zapisovat nové na jeho konec.
+* U adresáře právo vytvářet nové adresářové položky, měnit názvy stávajících a mazat stávající adresářové položky (při dodržení ostatních pravidel souborového systému).
+
+Právo *spouštění* (x, execute) znamená:
+
+* U souboru právo daný soubor spustit jako proces. Jde-li o samostatný binární program, toto právo ke spuštění stačí; jde-li o skript vyžadující interpret, je k jeho spuštění fakticky potřeba ještě právo „r“, protože jinak interpret nedostane přístup k instrukcím skriptu.
+* U adresáře právo do daného adresáře vstoupit, zjistit informace o jeho položkách (např. typ položky či přístupová práva) a přistupovat k jeho souborům a podadresářům. Nezahrnuje však možnost přečíst seznam názvů položek, takže samotné právo „x“ k adresáři vyžaduje, aby program znal názvy položek, se kterými bude chtít pracovat. Samotné právo „r“ bez práva „x“ zase umožní programu vypsat seznam položek v adresáři, ale už k nim nemůže nijak přistoupovat, dokonce ani zjistit, zda je daná položka soubor či adresář.
+
+Právo *zmocnění* (s, set-uid a set-gid) se uplatňuje pouze pro vlastníka a skupinu (tzn. ne pro „ostatní“) a v obou případech má mírně pozměněný význam:
+
+* U souboru má právo zmocnění pro vlastníka (u+s) význam pouze v kombinaci s právem „x“ pro skupinu či ostatní a znamená, že proces vzniklý spuštěním daného souboru jiným uživatelem než vlastníkem dostane EUID vlastníka souboru a s ním i jeho práva. Nejčastějším použitím je získání práv superuživatele pro určitý program bez nutnosti zadávat jeho heslo.
+* Analogicky funguje u souboru právo zmocnění pro skupinu − proces vzniklý po spuštění daného souboru dostane EGID skupiny souboru.
+* U adresáře má význam pouze právo zmocnění pro skupinu − nově vytvořené adresářové položky v takovém adresáři budou příslušet skupině adresáře, ne skupině procesu, který je vytvořil. Nové poadresáře navíc získají hned při vytvoření právo zmocnění pro skupinu, takže bez další úpravy práv se tato vlastnost uplatní pro celý podstrom nově zřízených adresářových položek.
+
+Právo *omezení smazání* (t, sticky-bit) se uplatňuje pouze pro „ostatní“ a má v současnosti význam pouze u adresářů, kde omezuje výkon práva „w“:
+
+* V adresáři s nastaveným právem „t“ smí smazat nebo přejmenovat adresářovou položku jen vlastník této položky nebo vlastník celého adresáře. Vzniklé podadresáře toto právo automaticky nedědí!
+
+Práva „s“ a „t“ se normálně vyskytují pouze v kombinaci s právem „x“, proto je příkaz „ls“ zobrazuje místo x; vyskytnou-li se bez práva „x“, zobrazí je příkaz „ls“ velkým písmenem − „S“ a „T“.
+
+Pro superuživatele mají z výše uvedených význam pouze následující práva:
+
+* Právo „x“ jen u souborů.
+* Právo „s“ jen u adresářů.
+
+Žádná ostatní uvedená práva nemají na superuživatele žádný vliv.
+
 !ÚzkýRežim: vyp
 
 ## Zaklínadla

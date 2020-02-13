@@ -51,6 +51,11 @@ umask/fmask/dmask
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+Tato kapitola pokrývá dělení pevného disku na oddíly, jejich formátováním, připojováním ručním i automatickým a odpojováním. Zabývá se také prací s ramdisky, odkládacím prostorem a LVM.
+
+Tato verze kapitoly nepokrývá šifrování a nastavování kvót a souborový systém BTRFS.
+Rovněž nepokrývá vypalování DVD.
+
 ## Definice
 <!--
 - Uveďte výčet specifických pojmů pro použití v této kapitole a tyto pojmy definujte co nejprecizněji.
@@ -90,13 +95,74 @@ umask/fmask/dmask
 *// Velikost se udává nejčastěji v mebibajtech (s příponou M − např. „256M“) nebo gibibajtech (s příponou G − např. „10G“).*<br>
 **tmpfs** {*/cesta*} **tmpfs size=**{*velikost*}[**,nosuid**]<nic>[**,noexec**]<nic>[**,mode=**{*práva-číselně*}]<nic>[**,uid=**{*UID-vlastníka*}]<nic>[**,gid=**{*GID-skupiny*}]<nic>[**,**{*další,volby*}] **0 0**
 
-### Degrafmentace
+### Degrafmentace apod.
 
 *# zkontrolovat fragmentaci oddílu typu ext4*<br>
 **sudo e4defrag -c** {*/dev/oddíl*}
 
 *# defragmentovat oddíl typu ext4*<br>
 **sudo e4defrag** {*/dev/oddíl*}
+
+*# najít chybné bloky (obecně/příklad)*<br>
+*// Poznámka: Tento příkaz chybné bloky najde, ale neudělá nic proto, aby se je systém souborů nesnažil používat.*<br>
+**sudo badblocks** [**-v**[**v**]] <nic>[**-w**] {*/dev/zařízení-nebo-oddíl*}<br>
+**sudo badblocks -vv /dev/sda1**
+
+*# zkontrolovat a opravit souborový systém*<br>
+*// Příkaz „fsck“ pravděpodobně lze použít i se souborovým systémem v souboru.*<br>
+**sudo fsck** [**-V**] {*/dev/oddíl*}
+
+### Dělení disku
+
+*# TUI*<br>
+**sudo cfdisk** {*/dev/zařízení*}
+
+*# CLI*<br>
+**sudo fdisk** {*/dev/zařízení*}
+
+### Formátování
+
+<!--
+[**sudo**] **mkfs**
+-->
+
+*# formátovat na **ext4** (obecně/příklad)*<br>
+*// Maximální velikost jmenovky je 16 bajtů.*<br>
+*// Parametr -U přijímá také speciální hodnoty „random“ (vygenerovat náhodné UUID), „time“ (vygenerovat UUID závislé na čase), „clear“ (zrušit UUID).*<br>
+**sudo mke2fs -f ext4** [**-c**[**c**]] <nic>**-v** <nic>[**-E root\_owner=**{*UID*}**:**{*GID*}] <nic>[**-L** {*jmenovka*}] <nic>[**-U** {*UUID*}] <nic>[**-d** {*cesta*}] <nic>[**-F**] {*/dev/zařízení-nebo-oddíl*}<br>
+**sudo mke2fs -f ext4 -c -v -U 977bda6f-ce11-4549-9325-c48c360069ef /dev/sda3**
+
+*# formátovat na **NTFS** (obecně/příklad)*<br>
+**sudo mkntfs** [**-f**] <nic>[**-v**] <nic>[**-L** {*jmenovka*}] <nic>[**-C**] <nic>[**-U**] {*/dev/zařízení-nebo-oddíl*}<br>
+**sudo mkntfs -f -v -L MůjDisk /dev/sda3**
+
+<!--
+[ ] mkfs.fat => 12|16|32
+-->
+
+### Ostatní
+
+*# zálohovat diskový oddíl do souboru (přímo/komprimovaný)*<br>
+**sudo dd if=**{*/dev/oddíl*} **of=**{*cesta*} [**status=progress**]<br>
+**sudo dd if=**{*/dev/oddíl*} [**status=progress**] **\| gzip -n**[**9**] **&gt;**{*cesta.gz*}
+
+*# obnovit diskový oddíl (přímo/komprimovaný)*<br>
+*// Pozor! Tato operace je nebezpečná! Pokud zadáte chybný cílový oddíl, daný oddíl se nevratně přepíše daty určenými pro ten správný. Pokud velikost zálohy neodpovídá přesně velikosti cílového oddílu, nemusí být oddíl po obnově dobře použitelný. Tento příkaz používejte s velkou opatrností!*<br>
+**sudo dd if=**{*cesta*} **of=/dev/**{*oddíl*} [**status=progress**]<br>
+**gunzip -cd** {*cesta.gz*} **\| sudo dd of=**{*/dev/oddíl*} [**status=progress**]
+
+*# zjistit přesnou velikost oddílu v bajtech*<br>
+**sudo blockdev \-\-getsize64** {*/dev/oddíl*}
+
+*# zjistit přesnou velikost disku v bajtech*<br>
+**sudo blockdev \-\-getsize64** {*/dev/zařízení*}
+
+*# zjistit velikost fyzického bloku/logického sektoru (v bajtech)*<br>
+**sudo blockdev \-\-getbsz** {*/dev/zařízení*}<br>
+**sudo blockdev \-\-getss** {*/dev/zařízení*}
+
+*# zjistit, zda je zařízení jen pro čtení*<br>
+**test 1 -eq "$(sudo blockdev \-\-getro** {*/dev/zařízení*}**)"**
 
 ## Parametry příkazů
 <!--

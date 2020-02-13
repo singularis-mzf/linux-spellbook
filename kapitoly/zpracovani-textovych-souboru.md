@@ -223,6 +223,17 @@ egrep -Lr {*regulární-výraz*} {*soubor-či adresář*}...
 *# zapisovat na standardní výstup a současně do souborů*<br>
 [{*zdroj vstupu*} **\|**] **tee** [**-a**] {*výstupní-soubor*}...
 
+*# **konvertovat** malá písmena na velká (obecně/příklad)*<br>
+**sed -E 's/(.\*)/\\U\\1/'** [{*vstupní-soubor*}]...<br>
+**printf "Žluťoučký kůň\\n" \| sed -E's/(.\*)/\\U\\1/'** ⊨ ŽLUŤOUČKÝ KŮŇ
+
+*# konvertovat velká písmena na malá (obecně/příklad)*<br>
+**sed -E 's/(.\*)/\\L\\1/'** [{*vstupní-soubor*}]...<br>
+**printf "Žluťoučký kůň\\n" \| sed -E's/(.\*)/\\L\\1/'** ⊨ žluťoučký kůň
+
+*# konvertovat malá písmena na velká a naopak*<br>
+**sed -E 's/(.)/0\\1/g;s/0([[:lower:]])/1\\U\\1/g;s/0([[:upper:]])/1\\L\\1/g;s/[01]<nic>(.)/\\1/g** [{*vstupní-soubor*}]...
+
 *# obrátit **pořadí znaků** v každém záznamu (txt/txtz)*<br>
 **rev** [{*soubor*}]...<br>
 ?

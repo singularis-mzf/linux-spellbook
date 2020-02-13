@@ -69,7 +69,7 @@ Poznámky:
 **sudo systemctl enable apache2**<br>
 **sudo systemctl disable apache2**
 
-### Moduly
+### Ovládání modulů
 
 *# **zapnout** modul*<br>
 **sudo a2enmod** {*modul*}<br>
@@ -80,14 +80,16 @@ Poznámky:
 **sudo systemctl restart apache2**
 
 *# vypsat seznam zapnutých modulů*<br>
-**ls -1 /etc/apache2/conf-enabled \| sed -E 's/\\.load$//;t;d'**
+**ls -N1 /etc/apache2/conf-enabled \| sed -E 's/\\.load$//;t;d'**
 
 *# vypsat seznam všech dostupných modulů*<br>
-**ls -1 /etc/apache2/conf-available \| sed -E 's/\\.load$//;t;d'**
+**ls -N1 /etc/apache2/conf-available \| sed -E 's/\\.load$//;t;d'**
 
 *# vypsat seznam vypnutých modulů*<br>
 **LC\_ALL=C join -t "" -j 1 -v 1 &lt;(ls -1 /etc/apache2/conf-available \| LC\_ALL=C sort -u) &lt;(ls -1 /etc/apache2/conf-enabled \| LC\_ALL=C sort -u) \| sed -E 's/\\.load$//;t;d'**
 
+*# je modul zapnutý?*<br>
+**test -e /etc/apache2/conf-enabled/**{*modul*}**.load**
 
 ## Parametry příkazů
 <!--

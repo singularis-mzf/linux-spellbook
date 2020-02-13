@@ -25,9 +25,6 @@ Neměla by být součástí výsledné knihy.
 
 ## Zaklínadla
 
-*# vypočítat číslo pí na N desetinných míst*<br>
-**printf '%s\\n' 'scale = 1 +** {*počet-desetinných-míst*}**' '4\*a(1)' \| bc -l \| tr -d '\\n\\\\' \| head -c -1**[**; echo**]
-
 *# počkat určitou dobu/1 minutu/1 milisekundu*<br>
 **sleep** {*čas-v-sekundách*}<br>
 **sleep 1m**<br>
@@ -50,7 +47,44 @@ Kategorie: http://www.galago-project.org/specs/notification/0.9/x211.html
 *# vypsat banán*<br>
 **printf \\\\U0001f34c\\\\n**
 
-### date
+### Matematika
+
+*# rozložit číslo na prvočísla*<br>
+**factor** [{*kladnéceléčíslo*}]...
+
+*# vyhledat prvočísla*<br>
+**primes** [{*minumum*}] {*maximum*}
+<!--
+sudo apt-get install libmath-prime-util-perl
+-->
+
+*# vypočítat číslo pí na N desetinných míst*<br>
+**printf '%s\\n' 'scale = 1 +** {*počet-desetinných-míst*}**' '4\*a(1)' \| bc -l \| tr -d '\\n\\\\' \| head -c -1**[**; echo**]
+
+### Síť
+
+*# ruční překlad doménového jména na IP adresu (pro člověka)*<br>
+**host** {*doménové.jméno*}
+
+*# ruční překlad IP adresy na doménové jméno (pro člověka)*<br>
+**host** {*ip-adresa*}
+
+### Jádro
+
+*# vypsat načtené moduly (pro člověka/pro skript)*<br>
+**lsmod**<br>
+**cut -d "&blank;" -f 1 /proc/modules**
+
+*# odpojit načtený jaderný modul*<br>
+**sudo rmmod** {*název\_modulu*}
+
+*# připojit jaderný modul*<br>
+*// Jaderné moduly se nacházejí v podadresářích adresáře /lib/modules/(verze jádra).*<br>
+**sudo insmod** {*/cesta/modul.ko*}
+
+*# vypsat dostupné jaderné moduly*<br>
+**find /lib/modules/$(uname -r) -type f -name '\*.ko' -printf '%f\\n'**<br>
+**find /lib/modules/$(uname -r) -type f -name '\*.ko' \| sort \| sed -E 's!^(/[<nic>^/]\*){3}/(.\*)/([<nic>^/]+)\\.ko$!\\3\\t\\2!'**
 
 ### Metapříkazy
 
