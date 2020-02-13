@@ -72,6 +72,9 @@
 # obrázky:
 {{MAKRO obrazek-barva-pozadi=transparent}}
 
+# odsazený odstavec:
+{{MAKRO odsazeny-barva-cary=rgba(0,0,0,0.15)}}
+
 # „klávesa“:
 {{MAKRO klavesa-barva-pozadi=#dddddd}}
 {{MAKRO klavesa-barva-textu=#000000}}
@@ -328,17 +331,12 @@ h3 .cislo {
 
 p, ul, blockquote {
     font-family: "DejaVu Serif", serif;
-    margin:0.75em 0;
+    margin:0.75em 0 0 7rem;
     max-width:70em;
-}
-
-p, blockquote, ul {
     hyphens:auto;
     line-height:1.5;
 }
-
-ul {
-    margin-left:7rem;
+p, ul {
     text-align:justify;
 }
 
@@ -361,11 +359,16 @@ figure img {
 }
 
 blockquote {
-    margin:2ex 2em;
+    border-left:0.5em solid {{odsazeny-barva-cary}};
+    padding-left:1em;
 }
 blockquote blockquote {
+    margin:-0.75em 0 0;
+    padding-top:0.75em;
+}
+blockquote+blockquote {
     margin-top:0;
-    margin-bottom:0;
+    padding-top:0.75em;
 }
 
 /* Inline prvky */

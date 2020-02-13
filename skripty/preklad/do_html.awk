@@ -117,12 +117,13 @@ function ZacatekKapitoly(kapitola, cisloKapitoly, stitky, osnova,   vysledek, po
     return vysledek;
 }
 
-function KonecKapitoly(kapitola, cislaPoznamek, textyPoznamek,   i, vysledek, prikaz, pole) {
+function KonecKapitoly(kapitola, cislaPoznamek, textyPoznamek,   i, vysledek, prikaz, htmlPoznamky) {
     vysledek = "";
     if (length(cislaPoznamek) > 0) {
         vysledek = "<div class=\"ppc\">";
         for (i = 0; i < length(cislaPoznamek); ++i) {
-            vysledek = vysledek "<div id=\"kap" ID_KAPITOLY_OMEZENE "ppc" cislaPoznamek[i] "\"><a href=\"#kap" ID_KAPITOLY_OMEZENE "ppcr" cislaPoznamek[i] "\" class=\"cislopozn\">" cislaPoznamek[i] "</a>&nbsp;" textyPoznamek[cislaPoznamek[i]] "</div>\n<script>document.write(\"<div class=\\\"zpetdotextu\\\" onclick=\\\"window.history.back()\\\">zpět do textu</div>\");</script>\n";
+            htmlPoznamky = textyPoznamek[cislaPoznamek[i]];
+            vysledek = vysledek "<div id=\"kap" ID_KAPITOLY_OMEZENE "ppc" cislaPoznamek[i] "\"><a href=\"#kap" ID_KAPITOLY_OMEZENE "ppcr" cislaPoznamek[i] "\" class=\"cislopozn\">" cislaPoznamek[i] "</a>&nbsp;" htmlPoznamky "</div>\n<script>document.write(\"<div class=\\\"zpetdotextu\\\" onclick=\\\"window.history.back()\\\">zpět do textu</div>\");</script>\n";
         }
         #vysledek = vysledek "<div class=\"zrusitzvyrazneni\" id=\"zzv\"><a href=\"#zzv\">zrušit zvýraznění poznámky pod čarou</a></div></div>\n";
         vysledek = vysledek "</div>\n";
@@ -205,7 +206,7 @@ function KonecParametruPrikazu() {
     return "</tbody></table>\n"
 }
 
-function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, ikona, cislaPoznamek, textyPoznamek,   prvni) {
+function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, ikona, cislaPoznamek, textyPoznamek,   prvni, textPoznamky) {
     if (!isarray(cislaPoznamek) || !isarray(textyPoznamek)) {
         ShoditFatalniVyjimku("ZacatekZaklinadla(): Očekáváno pole!");
     }
@@ -226,7 +227,10 @@ function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, ikona, cislaPoznamek
                 } else {
                     vysledek = vysledek ",&nbsp;";
                 }
-                vysledek = vysledek "<a href=\"#kap" ID_KAPITOLY_OMEZENE "ppc" cislaPoznamek[i] "\" id=\"kap" ID_KAPITOLY_OMEZENE "ppcr" cislaPoznamek[i] "\">(" cislaPoznamek[i] ")</a>";
+                textPoznamky = gensub(/<[^>]>/, "", "g", textyPoznamek[cislaPoznamek[i]]);
+                gsub(/\n/, "", textPoznamky);
+                gsub(/\t/, " ", textPoznamky);
+                vysledek = vysledek "<a href=\"#kap" ID_KAPITOLY_OMEZENE "ppc" cislaPoznamek[i] "\" id=\"kap" ID_KAPITOLY_OMEZENE "ppcr" cislaPoznamek[i] "\" title=\"" textPoznamky "\">(" cislaPoznamek[i] ")</a>";
             }
             vysledek = vysledek "</sup>";
         }
