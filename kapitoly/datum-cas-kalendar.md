@@ -20,6 +20,7 @@ Poznámky:
 # Datum, čas a kalendář
 
 !Štítky: {tematický okruh}{čas}
+!FixaceIkon: 1754
 !ÚzkýRežim: zap
 
 ## Úvod

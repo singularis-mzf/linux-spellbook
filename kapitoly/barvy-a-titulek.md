@@ -26,6 +26,7 @@ __git_ps1
 # Barvy, titulek a výzva terminálu
 
 !Štítky: {tematický okruh}{bash}{barvy}
+!FixaceIkon: 1754
 !ÚzkýRežim: ZAP
 
 ## Úvod
@@ -168,7 +169,7 @@ Zde uvedené příkazy nevypisují escape sekvence, ale konkrétní hodnoty.
 **tput clear**
 
 *# odstranit N řádků od aktuálního řádku (včetně) dolů*<br>
-**tput hpa** {*N*}
+?
 
 ## Zaklínadla (PS0, PS1 a PS2)
 
@@ -221,8 +222,9 @@ Poznámka: escapování zaklínadel v této sekci je upraveno pro uvedení uvni
 **\\\\!""** ⊨ 1984<br>
 **\\\\\#** ⊨ 9
 
-*# označení **terminálu***<br>
-**$(ps -p \$\$ -o tty:1=)** ⊨ pts/3
+*# označení **terminálu** (alternativy)*<br>
+**\\\\l** ⊨ 3 (pro textovou konzoli např. „tty3“)<br>
+**$(ps h -o tty:1 -p \$\$)** ⊨ pts/3 (pro textovou konzoli např. „tty3“)
 
 *# **PID** příkazového interpretu*<br>
 **\\${\\$}** ⊨ 3338

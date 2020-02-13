@@ -22,6 +22,7 @@ Poznámka: mawk pracuje po bajtech a neumí zpracovat nulový bajt (končí řet
 # AWK
 
 !Štítky: {program}{syntaxe}{zpracování textu}
+!FixaceIkon: 1754
 !ÚzkýRežim: zap
 
 ## Úvod

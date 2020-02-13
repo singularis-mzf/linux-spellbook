@@ -83,7 +83,7 @@ Také možno „**epspdf** {*název-souboru*}**.eps**“ a umí konverzi na gray
 ### EXIF (metadata fotografií)
 
 *# přečíst EXIF data z fotografie JPEG*<br>
-**identify -verbose** {*cesta.jpg*} **\| sed -E '1,/^\\s\*Properties:$/d;/^\\s*Artifacts:$/,$d;s/^\\s+//;s/:&blank;/\\t/'**
+**identify -verbose** {*cesta.jpg*} **\| sed -E '1,/^\\s\*Properties:$/d;/^\\s\*Artifacts:$/,$d;s/^\\s+//;s/:&blank;/\\t/'**
 
 *# nastavit či změnit EXIF data*<br>
 ?

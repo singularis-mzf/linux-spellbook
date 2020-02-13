@@ -39,6 +39,7 @@ Poznámky:
 # Zpracování videa a zvuku
 
 !Štítky: {tematický okruh}{video}{zvuk}
+!FixaceIkon: 1754
 !ÚzkýRežim: zap
 
 ## Úvod
@@ -181,14 +182,14 @@ pomocná propojení filtrů, kterým musíte vymyslet nové, v grafu filtrů do
 **[**{*vi*}**] transpose=1 [**{*vo*}**]**
 
 *# otočit obraz o obecný úhel (ve stupních) proti/po směru hodinových ručiček*<br>
-**[**{*vi*}**] rotate=**{*úhel*}**\*(-PI/180)**[**:**{*výsl-šířka*}**:**{*výsl-výška*}][**:c=**{*barva-pozadí-nebo-none*}] **[**{*vo*}**]**<br>
-**[**{*vi*}**] rotate=**{*úhel*}**\*(PI/180)**[**:**{*výsl-šířka*}**:**{*výsl-výška*}][**:c=**{*barva-pozadí-nebo-none*}] **[**{*vo*}**]**
+**[**{*vi*}**] rotate=**{*úhel*}**\*(-PI/180)**[**:**{*výsl-šířka*}**:**{*výsl-výška*}]<nic>[**:c=**{*barva-pozadí-nebo-none*}] **[**{*vo*}**]**<br>
+**[**{*vi*}**] rotate=**{*úhel*}**\*(PI/180)**[**:**{*výsl-šířka*}**:**{*výsl-výška*}]<nic>[**:c=**{*barva-pozadí-nebo-none*}] **[**{*vo*}**]**
 
 *# otočit obraz o obecný úhel (ve stupních) proti směru hodinových ručiček a zvětšit rozlišení na obdelník opsaný otočenému snímku; nevyplněné rohy ponechat průhledné*<br>
 **[**{*vi*}**] rotate=**{*úhel*}**\*(-PI/180):rotw(**{*úhel*}**\*(-PI/180)):roth(**{*úhel*}**\*(-PI/180)):c=none [**{*vo*}**]**
 
 *# opravit perspektivu ze zadaných souřadnic (vLevo, vpRavo, Nahoře, Dole)*<br>
-**[**{*vi*}**] perspective=**{*LNx*}**:**{*LNy*}**:**{*RNx*}**:**{*RNy*}**:**{*LDx*}**:**{*LDy*}**:**{*RDx*}**:**{*RDy*}[**:sense=destination**][**:interpolation=cubic**] **[**{*vo*}**]**
+**[**{*vi*}**] perspective=**{*LNx*}**:**{*LNy*}**:**{*RNx*}**:**{*RNy*}**:**{*LDx*}**:**{*LDy*}**:**{*RDx*}**:**{*RDy*}[**:sense=destination**]<nic>[**:interpolation=cubic**] **[**{*vo*}**]**
 
 *# vyměnit dvě obdelníkové oblasti ve videu*<br>
 *// Všechny hodnoty mohou používat rozměry snímku (w, h), čas v sekundách (t) a sekvenční číslo snímku (n).*<br>
@@ -207,14 +208,14 @@ pomocná propojení filtrů, kterým musíte vymyslet nové, v grafu filtrů do
 
 *# **překrýt** hlavní (první) videovstup překryvným (druhým); po skončení překryvného vstupu: ho skrýt/ukončit výstup/zamrznout překryvný vstup na jeho posledním snímku*<br>
 *// Hodnoty posunu jsou výrazy s výsledkem v pixelech. Mohou používat: rozměry hlavního videa (W, H), rozměry překryvného videa (w, h), čas v sekundách (t) a sekvenční číslo snímku (n). Poznámka: výstup filtru overlay není nikdy delší než délka jeho hlavního (prvního) vstupu a hlavní vstup rovněž určuje jeho šířku a výšku.*<br>
-**[**{*vi*}**][**{*vi*}**] overlay=x=**{*posun-x*}**:y=**{*posun-y*}**:eof\_action=pass [**{*vo*}**]**<br>
-**[**{*vi*}**][**{*vi*}**] overlay=x=**{*posun-x*}**:y=**{*posun-y*}**:eof\_action=endall [**{*vo*}**]**<br>
-**[**{*vi*}**][**{*vi*}**] overlay=x=**{*posun-x*}**:y=**{*posun-y*}**:eof\_action=repeat [**{*vo*}**]**
+**[**{*vi*}**]<nic>[**{*vi*}**] overlay=x=**{*posun-x*}**:y=**{*posun-y*}**:eof\_action=pass [**{*vo*}**]**<br>
+**[**{*vi*}**]<nic>[**{*vi*}**] overlay=x=**{*posun-x*}**:y=**{*posun-y*}**:eof\_action=endall [**{*vo*}**]**<br>
+**[**{*vi*}**]<nic>[**{*vi*}**] overlay=x=**{*posun-x*}**:y=**{*posun-y*}**:eof\_action=repeat [**{*vo*}**]**
 
 *# prolnout jeden a druhý videovstup (obecně/konkrétně)*<br>
 *// Ve výrazu můžete použít hodnoty: sekvenční číslo snímku (N), souřadnice pixelu ((X/SW), (Y/SW)), šířka a výška ((W/SW), (H/SW)), čas v sekundách (T) a především hodnotu složky prvního vstupu (A) a druhého vstupu (B).*<br>
-**[**{*vi*}**][**{*vi*}**] blend=all\_expr=**{*výraz*}[**:eof\_action=**]{*repeat-endall-nebo-pass*} **[**{*vo*}**]**<br>
-**[prvni][druhy] blend=all\_expr=if(eq(mod(Y\\,2)\\,0)\\,A\\,B):eof\_action=endall [vysledek]**
+**[**{*vi*}**]<nic>[**{*vi*}**] blend=all\_expr=**{*výraz*}[**:eof\_action=**]{*repeat-endall-nebo-pass*} **[**{*vo*}**]**<br>
+**[prvni]<nic>[druhy] blend=all\_expr=if(eq(mod(Y\\,2)\\,0)\\,A\\,B):eof\_action=endall [vysledek]**
 
 ### Jas, kontrast, barva a spol.
 <!--
@@ -263,8 +264,8 @@ ale čísla možná pocházejí z https://www.w3.org/TR/filter-effects/#sepiaEq
 
 *# ztmavit/zesvětlit okraje snímku (efekt „**vignette**“)*<br>
 *// Úhel čočky je v rozsahu 0 (žádný účinek) až PI/2 (maximální účinek). Pro vyhodnocování výrazů pro každý snímek musíte přidat parametr „eval=frame“.*<br>
-**[**{*vi*}**] vignette=a=**{*úhel-čočky*}[**:x0=**{*x-středu*}**:y0=**{*y-středu*}][**:eval=frame**] **[**{*vo*}**]**<br>
-**[**{*vi*}**] vignette=mode=backward:a=**{*úhel-čočky*}[**:x0=**{*x-středu*}**:y0=**{*y-středu*}][**:eval=frame**] **[**{*vo*}**]**
+**[**{*vi*}**] vignette=a=**{*úhel-čočky*}[**:x0=**{*x-středu*}**:y0=**{*y-středu*}]<nic>[**:eval=frame**] **[**{*vo*}**]**<br>
+**[**{*vi*}**] vignette=mode=backward:a=**{*úhel-čočky*}[**:x0=**{*x-středu*}**:y0=**{*y-středu*}]<nic>[**:eval=frame**] **[**{*vo*}**]**
 
 ### Zapékání titulků
 
@@ -284,18 +285,18 @@ Barvy se zadávají ve formátu AABBGGRR, kde AA=FF je úplná průhlednost a A
 
 *# vložit roztmívačku/zatmívačku*<br>
 *// Všechny snímky před začátkem roztmívačky a za koncem zatmívačky budou nastaveny na uvedenou barvu, resp. zprůhledněny (je-li uveden parametr „alpha=1“).*<br>
-**[**{*vi*}**] fade=t=in:st=**{*začátek*}**:d=**{*trvání*}[**:c=**{*barva*}][**:alpha=1**] **[**{*vo*}**]**<br>
-**[**{*vi*}**] fade=t=out:st=**{*začátek*}**:d=**{*trvání*}[**:c=**{*barva*}][**:alpha=1**] **[**{*vo*}**]**
+**[**{*vi*}**] fade=t=in:st=**{*začátek*}**:d=**{*trvání*}[**:c=**{*barva*}]<nic>[**:alpha=1**] **[**{*vo*}**]**<br>
+**[**{*vi*}**] fade=t=out:st=**{*začátek*}**:d=**{*trvání*}[**:c=**{*barva*}]<nic>[**:alpha=1**] **[**{*vo*}**]**
 
 *# spojit za sebe dva **zvukové** vstupy **prolínačkou** (konkrétně sedmisekundovou/obecně)*<br>
-**[**{*ai*}**][**{*ai*}**] acrossfade=d=7:c1=exp:c2=exp [**{*ao*}**]**<br>
-**[**{*ai*}**][**{*ai*}**] acrossfade=d=**{*trvání-prolínačky*}**:c1=**{*funkce-zatmívačky*}**:c2=**{*funkce-roztmívačky*} **[**{*ao*}**]**<br>
+**[**{*ai*}**]<nic>[**{*ai*}**] acrossfade=d=7:c1=exp:c2=exp [**{*ao*}**]**<br>
+**[**{*ai*}**]<nic>[**{*ai*}**] acrossfade=d=**{*trvání-prolínačky*}**:c1=**{*funkce-zatmívačky*}**:c2=**{*funkce-roztmívačky*} **[**{*ao*}**]**<br>
 
 *# spojit za sebe dva **obrazové** vstupy **prolínačkou** (konkrétně sedmisekundovou/obecně)*<br>
 *// Tip: Pro pochopení fungování této konstrukce důrazně doporučuji si uvedený graf filtrů nakreslit.*<br>
 *// Začátek prolínačky zde znamená počet sekund od začátku prvního videa, kdy má prolínačka začít. Tento počet sekund je nutno předem zjistit.*<br>
-**[prvnivideo] split [x1][x2];[x2] trim=0:5.12 [x3];[x3][druhevideo] concat=n=2:v=1:a=0 [x4];[x1] fade=out:st=5.12:d=7.0:alpha=1 [x5];[x4][x5] overlay=eof\_action=pass [vystup]**<br>
-**[**{*vi*}**] split [**{*io1*}**][**{*io2*}**];[**{*io2*}**] trim=0:**{*začátek*} **[**{*io3*}**];[**{*io3*}**][**{*vi*}**] concat=n=2:v=1:a=0 [**{*io4*}**];[**{*io1*}**] fade=out:st={*začátek*}:d={*trvání*}:alpha=1 [**{*io5*}**];[**{*io4*}**][**{*io5*}**] overlay=eof\_action=pass [**{*vo*}**]**
+**[prvnivideo] split [x1]<nic>[x2];[x2] trim=0:5.12 [x3];[x3]<nic>[druhevideo] concat=n=2:v=1:a=0 [x4];[x1] fade=out:st=5.12:d=7.0:alpha=1 [x5];[x4]<nic>[x5] overlay=eof\_action=pass [vystup]**<br>
+**[**{*vi*}**] split [**{*io1*}**]<nic>[**{*io2*}**];[**{*io2*}**] trim=0:**{*začátek*} **[**{*io3*}**];[**{*io3*}**]<nic>[**{*vi*}**] concat=n=2:v=1:a=0 [**{*io4*}**];[**{*io1*}**] fade=out:st={*začátek*}:d={*trvání*}:alpha=1 [**{*io5*}**];[**{*io4*}**]<nic>[**{*io5*}**] overlay=eof\_action=pass [**{*vo*}**]**
 
 <!--
 [vi-první] split [io1][io2]
@@ -327,7 +328,7 @@ Barvy se zadávají ve formátu AABBGGRR, kde AA=FF je úplná průhlednost a A
 ### Vykreslování do videa
 *# **obdelník***<br>
 *// Volba invert vykreslí invertující rámeček; volba fill zajistí vyplněný obdelník.*<br>
-**[**{*vi*}**] drawbox=**{*posun-x-zleva*}**:**{*posun-y-shora*}**:**{*šířka*}**:**{*výška*}**:**{*barva-nebo-invert*}[**@**{*krytí-0-až-1*}][**:**{*tloušťka-nebo-fill*}] **[**{*vo*}**]**
+**[**{*vi*}**] drawbox=**{*posun-x-zleva*}**:**{*posun-y-shora*}**:**{*šířka*}**:**{*výška*}**:**{*barva-nebo-invert*}[**@**{*krytí-0-až-1*}]<nic>[**:**{*tloušťka-nebo-fill*}] **[**{*vo*}**]**
 
 *# trojúhelník*<br>
 ?
@@ -351,7 +352,7 @@ Barvy se zadávají ve formátu AABBGGRR, kde AA=FF je úplná průhlednost a A
 **[**{*vi*}**] sobel [**{*vo*}**]**
 
 *# rozdělit snímky po dávkách a každou dávku vykreslit po řádcích do mřížky daných rozměrů*<br>
-**[**{*vi*}**] tile=**{*počet-sloupců-mřížky*}**x**{*počet-řádků-mřížky*}[**:margin=**{*šířka-okraje*}][**:padding=**{*rozestup-mřížky*}][**:color=**{*barva-pozadí*}][**:nb\_frames=**{*velikost-dávky*}] **[**{*vo*}**]**
+**[**{*vi*}**] tile=**{*počet-sloupců-mřížky*}**x**{*počet-řádků-mřížky*}[**:margin=**{*šířka-okraje*}]<nic>[**:padding=**{*rozestup-mřížky*}]<nic>[**:color=**{*barva-pozadí*}]<nic>[**:nb\_frames=**{*velikost-dávky*}] **[**{*vo*}**]**
 
 ### Nízkoúrovňové manipulace
 
@@ -377,14 +378,14 @@ Problém: geq závisí na použitém barevném formátu
 **[video] geq=p(SW\*((X/SW)+100)\\,SH\*((Y/SH)+150)) [**{*vo*}**]**
 
 *# oříznout hodnoty složek obrazu (kromě alfa-kanálu)*<br>
-**[**{*vi*}**] limiter=**[**min=**{*minimum*}][**:max=**{*maximum*}] **[**{*vo*}**]**
+**[**{*vi*}**] limiter=**[**min=**{*minimum*}]<nic>[**:max=**{*maximum*}] **[**{*vo*}**]**
 
 *# aplikovat na zvukové vzorky obecný výraz*<br>
 *// Ve výrazu můžeme použít: hodnotu prvního/druhého kanálu (val(0)/val(1)), čas vzorku v sekundách (t), číslo vzorku (n), číslo počítaného kanálu (ch), původní počet kanálů (nb\_in\_channels), vzorkovací frekvenci (s).*<br>
 **[**{*ai*}**] aeval=**{*výraz*}[**|**{*výraz-pro-druhý-kanál*}]**:c=same [**{*ao*}**]**
 
 *# vynásobit vzorky dvou vstupů*<br>
-**[**{*ai*}**][**{*ai*}**] amultiply [**{*ao*}**]**
+**[**{*ai*}**]<nic>[**{*ai*}**] amultiply [**{*ao*}**]**
 
 *# nastavit novou vzorkovací frekvenci bez ovlivnění vzorků*<br>
 **[**{*ai*}**] asetrate=**{*nová-frekvence*} **[**{*ao*}**]**
@@ -418,7 +419,7 @@ Problém: geq závisí na použitém barevném formátu
 **[**{*ai*}**] aecho=0.6:0.3:**{*ms-zpoždění-1*}**\|**{*ms-další-zpoždění*}...**:**{*hlasitost-ozvěny-1*}**\|**{*hlasitost-další-ozvěny*}... **[**{*ao*}**]**
 
 *# smíchat paralelní audiostopy*<br>
-**[**{*ai*}**]**... **amix=**{*počet-vstupů*}**:duration=**{*longest,shortest,nebo-first*}[**:weights=**{*váhy vstupů*}**] [**{*ao*}**]**
+**[**{*ai*}**]**... **amix=**{*počet-vstupů*}**:duration=**{*longest,shortest,nebo-first*}[**:weights=**{*váhy vstupů*}**] <nic>[**{*ao*}**]**
 
 
 ### Pokročilá úprava zvuku
@@ -448,7 +449,7 @@ all vyžaduje novější verzi ffmpegu
 
 *# **za stopu***<br>
 *// V případě opakovaného použití v rámci jednoho grafu filtrů nahraďte identifikátor „tmpticho“ při každém použití jiným identifikátorem.*<br>
-**anoisesrc=a=0:d=**{*trvání-v-s*} **[**{*io1*}**]; [**{*ai*}**][**{*io1*}**] concat=n=2:v=0:a=1 [**{*ao*}**]**
+**anoisesrc=a=0:d=**{*trvání-v-s*} **[**{*io1*}**]; [**{*ai*}**]<nic>[**{*io1*}**] concat=n=2:v=0:a=1 [**{*ao*}**]**
 
 *# **nadstavení** zvuku na určitou délku*<br>
 **[**{*ai*}**] apad=whole\_len=**{*cílový-min-počet-vzorků*} **[**{*ao*}**]**
@@ -469,12 +470,12 @@ all vyžaduje novější verzi ffmpegu
 **[**{*ai*}**]** [**channelmap=FR-0|FL-1,**]**aeval=**{*výraz*}**:c=mono [**{*ao*}**]**
 
 *# rozdělit stereo-stopu na FR a FL stopu/na dvě mono-stopy („pravou“ a „levou“)*<br>
-**[**{*ai*}**] channelsplit=channels=FR\|FL [**{*ao*}**][**{*ao*}**]**<br>
-**[**{*ai*}**] asplit[**{*io1*}**][**{*io2*}**];[**{*io1*}**] channelmap=FR-mono:mono [**{*ao*}**];[**{*io2*}**] channelmap=FL-mono:mono [**{*ao*}**]**
+**[**{*ai*}**] channelsplit=channels=FR\|FL [**{*ao*}**]<nic>[**{*ao*}**]**<br>
+**[**{*ai*}**] asplit[**{*io1*}**]<nic>[**{*io2*}**];[**{*io1*}**] channelmap=FR-mono:mono [**{*ao*}**];[**{*io2*}**] channelmap=FL-mono:mono [**{*ao*}**]**
 
 *# spojit FR a FL stopu/„pravou“ a „levou“ mono-stopu do jedné stereo-stopy*<br>
-**[**{*ai*}**][**{*ai*}**] amerge [**{*ao*}**]**<br>
-**[**{*ai*}**][**{*ai*}**] join=map=0.0-FR\|1.0-FL [**{*ao*}**]**
+**[**{*ai*}**]<nic>[**{*ai*}**] amerge [**{*ao*}**]**<br>
+**[**{*ai*}**]<nic>[**{*ai*}**] join=map=0.0-FR\|1.0-FL [**{*ao*}**]**
 
 *# prohodit levý a pravý kanál stereo-stopy*<br>
 **[**{*ai*}**] channelmap=FR-FL\|FL-FR [**{*ao*}**]**
@@ -491,27 +492,27 @@ all vyžaduje novější verzi ffmpegu
 
 *# bílý/jiný **šum***<br>
 *// Amplituda se uvádí v rozsahu 0 až 1. Místo white lze použít také pink, brown, blue a violet.*<br>
-**anoisesrc=c=white**[**:d=**{*trvání-v-s*}][**:a=**{*amplituda*}][**:r=**{*vzorkovací-frekvence*}] **[**{*ao*}**]**<br>
-**anoisesrc=c=**{*druh-šumu*}[**:d=**{*trvání-v-s*}][**:a=**{*amplituda*}][**:r=**{*vzorkovací-frekvence*}] **[**{*ao*}**]**
+**anoisesrc=c=white**[**:d=**{*trvání-v-s*}]<nic>[**:a=**{*amplituda*}]<nic>[**:r=**{*vzorkovací-frekvence*}] **[**{*ao*}**]**<br>
+**anoisesrc=c=**{*druh-šumu*}[**:d=**{*trvání-v-s*}]<nic>[**:a=**{*amplituda*}]<nic>[**:r=**{*vzorkovací-frekvence*}] **[**{*ao*}**]**
 
 *# **načíst ze souboru** obraz/zvuk/obraz i zvuk*<br>
 **movie=**{*vstupní-soubor*} **[**{*vo*}**]**<br>
 **amovie=**{*vstupní-soubor*} **[**{*ao*}**]**<br>
-**movie=**{*vstupní-soubor*}**:s=dv+da [**{*vo*}**][**{*ao*}**]**
+**movie=**{*vstupní-soubor*}**:s=dv+da [**{*vo*}**]<nic>[**{*ao*}**]**
 
 *# **ticho***<br>
-**anoisesrc=a=0**[**:d=**{*trvání-v-s*}][**:r=**{*vzorkovací-frekvence*}]
+**anoisesrc=a=0**[**:d=**{*trvání-v-s*}]<nic>[**:r=**{*vzorkovací-frekvence*}]
 
 *# **tón** o zadané frekvenci*<br>
 *// V praxi může být nutno zvýšit výchozí hodnotu parametru „samples\_per\_frame“, ale nemám s tím zkušenosti. Amplituda generovaného signálu je 1/8.*<br>
-**sine=f=**{*frekvence-v-Hz*}[**:d=**{*trvání-v-s*}][**:r=**{*vzorkovací-frekvence*}]
+**sine=f=**{*frekvence-v-Hz*}[**:d=**{*trvání-v-s*}]<nic>[**:r=**{*vzorkovací-frekvence*}]
 
 *# černý/modrý/poloprůhledný zelený/zcela průhledný obraz*<br>
 *// Nejsou-li zadány parametry „d“ a „r“, výstup generátoru bude nekonečný s fps 25.*<br>
-**color=c=#000000:s=**{*šířka*}**x**{*výška*}[**:r=**{*fps*}][**:d=**{*trvání-v-sekundách*}]<br>
-**color=c=#0000FF:s=**{*šířka*}**x**{*výška*}[**:r=**{*fps*}][**:d=**{*trvání-v-sekundách*}]<br>
-**color=c=#00FF0080:s=**{*šířka*}**x**{*výška*}[**:r=**{*fps*}][**:d=**{*trvání-v-sekundách*}]<br>
-**color=c=#00000000:s=**{*šířka*}**x**{*výška*}[**:r=**{*fps*}][**:d=**{*trvání-v-sekundách*}]
+**color=c=#000000:s=**{*šířka*}**x**{*výška*}[**:r=**{*fps*}]<nic>[**:d=**{*trvání-v-sekundách*}]<br>
+**color=c=#0000FF:s=**{*šířka*}**x**{*výška*}[**:r=**{*fps*}]<nic>[**:d=**{*trvání-v-sekundách*}]<br>
+**color=c=#00FF0080:s=**{*šířka*}**x**{*výška*}[**:r=**{*fps*}]<nic>[**:d=**{*trvání-v-sekundách*}]<br>
+**color=c=#00000000:s=**{*šířka*}**x**{*výška*}[**:r=**{*fps*}]<nic>[**:d=**{*trvání-v-sekundách*}]
 
 ### Rozdělování a spojování
 
@@ -535,7 +536,7 @@ pozor na PTS!
 **[**{*ai*}**]**... **concat=n=**{*počet vstupů*}**:v=0:a=1 [**{*ao*}**]**
 
 *# spojit (za sebou) obrazové a zvukové vstupy*<br>
-**[**{*vi*}**][**{*ai*}**][**{*vi*}**][**{*ai*}**]**... **concat=n=**{*počet-dvojic-vstupů*}**:v=1:a=1 [**{*vo*}**][**{*ao*}**]**
+**[**{*vi*}**]<nic>[**{*ai*}**]<nic>[**{*vi*}**]<nic>[**{*ai*}**]**... **concat=n=**{*počet-dvojic-vstupů*}**:v=1:a=1 [**{*vo*}**]<nic>[**{*ao*}**]**
 
 <!--
 *# (nefunguje!!!!!!!!)přehrát úsek a opakovat ho ještě N-krát znovu (Je-li např. počet 2, úsek se celkem přehraje třikrát!)*<br>
@@ -601,8 +602,8 @@ a platí pouze pro daný výstup.
 **\-ab** {*bitrate*}
 
 *# oříznout časovou osu (alternativy)*<br>
-[**\-ss** {*začátek*}\] [**-to** {*konec*}]<br>
-[**\-ss** {*začátek*}\] [**-t** {*trvání-v-sekundách*}]
+[**\-ss** {*začátek*}\] <nic>[**-to** {*konec*}]<br>
+[**\-ss** {*začátek*}\] <nic>[**-t** {*trvání-v-sekundách*}]
 
 *# nastavit jednoduchý graf filtrů pro obrazovou stopu/zvukovou stopu*<br>
 **\-vf '**{*jednoduchý graf filtrů*}**'**<br>
@@ -634,7 +635,7 @@ a platí pouze pro daný výstup.
 ### Vstupní parametry
 
 *# oříznout časovou osu vstupního videa/nahrávky*<br>
-[**\-ss** {*začátek-s*}] [**-t** {*maximální-trvání-s*}] **-i** {*vstup*}
+[**\-ss** {*začátek-s*}] <nic>[**-t** {*maximální-trvání-s*}] **-i** {*vstup*}
 
 *# načíst statický obrázek (jpg,png,bmp,tif,...) jako nekonečné video (pozor − ne gif!)*<br>
 **\-loop 1 -i** {*obrázek*}
@@ -693,7 +694,7 @@ Ukázka vyžaduje, abyste v aktuálním adresáři měl/a video „video.mp4“
 
 *# *<br>
 **ffprobe video.mp4**<br>
-**ffmpeg -nostdin -filter\_complex '[0:v]scale=2\*trunc(iw/4):2\*trunc(ih/4),split[a\][b];[a]hue=s=0[a2];[a2\][b]hstack[vv]' -i video.mp4 -c:v h264 -b:v 2048k -an -map '[vv]' bez-zvuku.mp4**<br>
+**ffmpeg -nostdin -filter\_complex '[0:v]scale=2\*trunc(iw/4):2\*trunc(ih/4),split[a]<nic>[b];[a]hue=s=0[a2];[a2]<nic>[b]hstack[vv]' -i video.mp4 -c:v h264 -b:v 2048k -an -map '[vv]' bez-zvuku.mp4**<br>
 **ffmpeg -nostdin -hide\_banner -filter\_complex '[0:v]hflip,vflip,swaprect=100:150:10:15:200:50[vv];[0:a]afade=in:st=1:d=5:curve=exp,aecho=0.6:0.3:250|500:0.8|0.6[av]' -i video.mp4 -c:v h264 -b:v 2048k -c:a libmp3lame -b:a 64k -map '[vv]' -map '[av]' -to 20 hratky.mp4**
 
 !ÚzkýRežim: zap

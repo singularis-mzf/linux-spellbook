@@ -180,15 +180,22 @@ END {
         #   1=Adresář|2=ID|3=Název|4=Předchozí ID|5=Předchozí název|
         #   6=Následující ID|7=Následující název|
         #   8=Číslo dodatku/kapitoly|9=Štítky v {}|
-        #   10=Omezené ID
+        #   10=Omezené ID|11=ikona kapitoly ("ik_vychozi.png", nebo "ik/" + ID.png)
         #
         # Prázdná hodnota se nahrazuje „NULL“.
         #
+        if (system("test -e obrazky/ik/" id[i] ".png") == 0) {
+            ikonakapitoly = "ik/" id[i] ".png";
+        } else {
+            ikonakapitoly = "ik-vychozi.png";
+        }
+
         print adresar[i], id[i], nazev[i], \
             i == 1 ? "NULL\tNULL" : id[i - 1] "\t" nazev[i - 1], \
             i + 1 == ARGC - 1 ? "NULL\tNULL" : id[i + 1] "\t" nazev[i + 1], \
             i, \
             serazene_stitky[i] == "" ? "NULL" : serazene_stitky[i], \
-            omezeneid[i] > FRAGMENTY_TSV;
+            omezeneid[i], ikonakapitoly \
+            > FRAGMENTY_TSV;
     }
 }

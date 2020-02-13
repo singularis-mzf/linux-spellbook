@@ -23,8 +23,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 # Git
 
 !Štítky: {program}{správa verzí}
+!FixaceIkon: 1754
 !ÚzkýRežim: zap
-<!-- !FixaceIkon: * -->
 
 ## Úvod
 Git je systém správy verzí. Umožňuje vám zachytit přesný stav souborů v určitém
@@ -94,11 +94,11 @@ Každá revize je jednoznačně identifikována pomocí své MD5 heše. Kromě t
 
 *# přenést do indexu změny v pracovním repozitáři (všech souborů/jen již verzovaných)*<br>
 *// Normálně „git add“ přenese smazání souboru jen tehdy, je-li daný soubor výslovně jmenován na příkazovém řádku. S parametrem „-A“ přenese všechna smazání.*<br>
-**git add** [**-A**] [**\-\-**] {*soubor-nebo-adresář*}...<br>
-**git add -u** [**-A**] [**\-\-**] [{*soubor-nebo-adresář*}]...
+**git add** [**-A**] <nic>[**\-\-**] {*soubor-nebo-adresář*}...<br>
+**git add -u** [**-A**] <nic>[**\-\-**] <nic>[{*soubor-nebo-adresář*}]...
 
 *# operace **commit** (vytvořit z indexu novou revizi a nastavit na ni aktuální větev)*<br>
-**git commit** [**-m** {*komentář*}] [**-a**] [**\-\-allow-empty**] [**\-\-amend**] [**-S**] [**\-\-reset-author**]
+**git commit** [**-m** {*komentář*}] <nic>[**-a**] <nic>[**\-\-allow-empty**] <nic>[**\-\-amend**] <nic>[**-S**] <nic>[**\-\-reset-author**]
 
 *# nahradit poslední commitnutou revizi novým commitem se zachováním původního autora, předků, komentáře a časové známky*<br>
 *// Pozn.: heš commitu se v tomto případě změní, protože revize je neměnná, takže jediný způsob, jak ji upravit, je vytvořit novou revizi a nahradit s ní tu původní.*<br>
@@ -106,7 +106,7 @@ Každá revize je jednoznačně identifikována pomocí své MD5 heše. Kromě t
 
 *# načíst konkrétní soubory z revize v repozitáři do pracovního adresáře a indexu*<br>
 *// Výchozí revize je HEAD. Pozor, bez ptaní přepíše změny v pracovním adresáři!*<br>
-**git checkout** [{*revize*}] [**\-\-**] {*soubor-nebo-adresář*}...
+**git checkout** [{*revize*}] <nic>[**\-\-**] {*soubor-nebo-adresář*}...
 
 *# načíst HEAD do indexu/do indexu a pracovního adresáře (**zrušit všechny změny**)*<br>
 **git reset**<br>
@@ -114,15 +114,15 @@ Každá revize je jednoznačně identifikována pomocí své MD5 heše. Kromě t
 
 *# načíst konkrétní soubory z revize v repozitáři do indexu*<br>
 *// Výchozí revize je HEAD.*<br>
-**git reset** [{*revize*}] [**\-\-**] {*soubor-nebo-adresář*}...
+**git reset** [{*revize*}] <nic>[**\-\-**] {*soubor-nebo-adresář*}...
 
 *# načíst do pracovního adresáře i indexu revizi, která byla nejnovější k určitému datu/před 14 dny*<br>
 **git checkout $(git rev-list -n 1 \-\-first-parent "\-\-until=**{*datum-YYYY-MM-DD HH:mm:ss*}**" HEAD)**<br>
 **git checkout $(git rev-list -n 1 \-\-first-parent "\-\-until=$(date -d "14 days ago" "+%F %T")" HEAD)**
 
 *# smazat soubor z pracovního adresáře i indexu/jen z indexu*<br>
-**git rm** [**-f**] [**-r**] [[\-\-] {*soubor-či-adresář*}...]
-**git rm \-\-cached** [**-f**] [**-r**] [[\-\-] {*soubor-či-adresář*}...]
+**git rm** [**-f**] <nic>[**-r**] <nic>[[\-\-] {*soubor-či-adresář*}...]
+**git rm \-\-cached** [**-f**] <nic>[**-r**] <nic>[[\-\-] {*soubor-či-adresář*}...]
 
 *# přesunout či přejmenovat soubor/přesunout soubory v pracovním adresáři i indexu*<br>
 **git mv** {*původní-cesta*} {*nová-cesta*}<br>
@@ -209,11 +209,11 @@ Každá revize je jednoznačně identifikována pomocí své MD5 heše. Kromě t
 **git diff** {*revize1*} {*revize2*} [**\-\-** {*soubor-nebo-adresář*}...]
 
 *# vypsat „pro člověka“ zpětnou historii předků aktuální revize (až po kořen/jen po první revizi dosažitelnou z „omezující-revize“)*<br>
-**git log** [**\-\-pretty=**{*formát*}] [**-n** {*maximální-počet-revizí*}] [{*revize*}]<br>
-**git log** [**\-\-pretty=**{*formát*}] [**-n** {*maximální-počet-revizí*}] {*omezující-revize*}**..**{*revize*}
+**git log** [**\-\-pretty=**{*formát*}] <nic>[**-n** {*maximální-počet-revizí*}] <nic>[{*revize*}]<br>
+**git log** [**\-\-pretty=**{*formát*}] <nic>[**-n** {*maximální-počet-revizí*}] {*omezující-revize*}**..**{*revize*}
 
 *# vypsat „pro člověka“ zpětnou historii revizí, u kterých došlo ke změně v některém z uvedených souborů*<br>
-**git log** [**\-\-pretty=**{*formát*}] [**-n** {*maximální-počet-revizí*}] [{*revize*}] **\-\-** {*soubor-nebo-adresář*}...
+**git log** [**\-\-pretty=**{*formát*}] <nic>[**-n** {*maximální-počet-revizí*}] <nic>[{*revize*}] **\-\-** {*soubor-nebo-adresář*}...
 
 *# vypsat podrobné informace o revizi*<br>
 **git show** {*revize*}
@@ -228,7 +228,7 @@ Každá revize je jednoznačně identifikována pomocí své MD5 heše. Kromě t
 
 *# **vytvořit***<br>
 *// Poznámka: v žádných dvou pracovních adresářích jednoho repozitáře nemůže být současně aktivní tatáž větev; toto opatření platí, aby se zamezilo konfliktům při commitování.*<br>
-**git worktree add** [**\-\-detach**] [**-b** {*nová-větev*}] {*/nový/adresář*} {*revize*}
+**git worktree add** [**\-\-detach**] <nic>[**-b** {*nová-větev*}] {*/nový/adresář*} {*revize*}
 
 *# **vypsat** seznam*<br>
 **git worktree list** [**\-\-porcelain**]
@@ -256,12 +256,12 @@ Každá revize je jednoznačně identifikována pomocí své MD5 heše. Kromě t
 
 *# **odvolat** změny z určitých revizí/z určitého rozsahu revizí a odvolání commitnout*<br>
 *// Příkaz „git revert“ vyžaduje, aby v indexu ani pracovním adresáři nebyly žádné změny oproti HEAD.*<br>
-**git revert** [**\-\-no-edit**] [**-n**] {*revize*}...<br>
-**git revert** [**\-\-no-edit**] [**-n**] {*starší-revize*}**..**{*novější-revize*}
+**git revert** [**\-\-no-edit**] <nic>[**-n**] {*revize*}...<br>
+**git revert** [**\-\-no-edit**] <nic>[**-n**] {*starší-revize*}**..**{*novější-revize*}
 
 *# **přenést** změny z uvedených revizí do aktuální větve (seznam revizí uvést v příkazu/načíst)*<br>
-**git cherry-pick** [**-x**] [**-n**] {*revize*}...<br>
-{*příkaz generující seznam revizí*} **\| git cherry-pick \-\-stdin** [**-x**] [**-n**]
+**git cherry-pick** [**-x**] <nic>[**-n**] {*revize*}...<br>
+{*příkaz generující seznam revizí*} **\| git cherry-pick \-\-stdin** [**-x**] <nic>[**-n**]
 
 *# zařadit změny provedené v jiné větvi před změny provedené v této větvi*<br>
 *// Pozor! Protože revize jsou neměnné včetně odkazů na své předky, tento příkaz vytvoří zcela novou historii větve, a změní tak heše všech jejích revizí.*<br>

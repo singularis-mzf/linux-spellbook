@@ -129,11 +129,11 @@ function KonecKapitoly(kapitola, cislaPoznamek, textyPoznamek,   i, vysledek, pr
         vysledek = vysledek "</div>\n";
     }
     #
-    prikaz = "egrep -v '^(dodatky|kapitoly\t" IDKAPITOLY ")\t' '" FRAGMENTY_TSV "' | cut -f 2,3 | sort -Ru | head -n 3";
+    prikaz = "egrep -v '^(dodatky|kapitoly\t" IDKAPITOLY ")\t' '" FRAGMENTY_TSV "' | cut -f 2,3,11 | sort -Ru | head -n 3";
     i = 1;
     while (i <= 3 && (prikaz | getline)) {
         if (i == 1) {vysledek = vysledek "<div class=\"odkazydole\">"}
-        vysledek = vysledek "<a href=\"" $1 ".htm\"><img src=\"obrazky/ik-vychozi.png\" alt=\"\" width=\"32\" height=\"32\">" $2 "</a>";
+        vysledek = vysledek "<a href=\"" $1 ".htm\"><img src=\"obrazky/" $3 "\" alt=\"\" width=\"32\" height=\"32\">" $2 "</a>";
         ++i;
     }
     if (i != 1) {vysledek = vysledek "</div>"}

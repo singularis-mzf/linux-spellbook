@@ -33,7 +33,7 @@ CONVERT := convert
 VSECHNY_DODATKY := predmluva koncepce-projektu plan-vyvoje test licence
 
 # _ A, B, C, D, E, F, G
-VSECHNY_KAPITOLY := _ostatni _ukazka awk barvy-a-titulek bash datum-cas-kalendar diskove-oddily docker firefox git
+VSECHNY_KAPITOLY := _ostatni _ukazka apache awk barvy-a-titulek bash datum-cas-kalendar diskove-oddily docker firefox git
 # H, I, J, K, L, M
 VSECHNY_KAPITOLY += hledani-souboru konverze-formatu latex lkk make markdown moderni-veci
 # N, O, P, Q, R, S
@@ -51,6 +51,7 @@ VSECHNY_KAPITOLY_A_DODATKY_MD = $(VSECHNY_KAPITOLY:%=kapitoly/%.md) $(VSECHNY_DO
 OBRAZKY := favicon.png by-sa.png logo-knihy-velke.png make.png barvy.png ve-vystavbe.png marsh.jpg banner.png
 OBRAZKY += ik-vychozi.png
 SVG_OBRAZKY := kalendar.svg graf-filtru.svg
+OBRAZKY_IK := awk.png markdown.png regularni-vyrazy.png sprava-procesu.png
 
 # CSS motivy (vedle motivu „hlavní“)
 # ----------------------------------------------------------------------------
@@ -189,7 +190,7 @@ $(CSS_MOTIVY:%=$(VYSTUP_PREKLADU)/html/lkk-$(DATUM_SESTAVENI)-%.css): %: formaty
 
 # 4. obrazky/{obrazek} => vystup_prekladu/html/obrazky/{obrazek}
 # ----------------------------------------------------------------------------
-$(OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%): $(VYSTUP_PREKLADU)/html/obrazky/%: obrazky/%
+$(OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%) $(OBRAZKY_IK:%=$(VYSTUP_PREKLADU)/html/obrazky/ik/%): $(VYSTUP_PREKLADU)/html/obrazky/%: obrazky/%
 	mkdir -pv $(dir $@)
 	$(CONVERT) $< $@
 
@@ -204,6 +205,7 @@ $(VYSTUP_PREKLADU)/html/index.htm: $(SOUBORY_PREKLADU)/fragmenty.tsv \
   formaty/html/sablona.htm \
   $(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY)))   $(SOUBORY_PREKLADU)/fragmenty.tsv \
   $(OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%) \
+  $(OBRAZKY_IK:%=$(VYSTUP_PREKLADU)/html/obrazky/ik/%) \
   $(SVG_OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%) \
   $(DATUM_SESTAVENI_SOUBOR)
 	$(AWK) -f skripty/plneni-sablon/index-html.awk -v JMENOVERZE='$(JMENO)' -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v VARIANTA=index $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/html/sablona.htm > $@
@@ -312,7 +314,7 @@ $(VSECHNY_KAPITOLY_A_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap): \
 
 # 3. obrazky/{obrazek} => soubory_prekladu/pdf-spolecne/_obrazky/{obrazek}
 # ----------------------------------------------------------------------------
-$(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%): $(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%: obrazky/% konfig.ini
+$(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%) $(OBRAZKY_IK:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/ik/%): $(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%: obrazky/% konfig.ini
 	mkdir -pv $(dir $@)
 	$(CONVERT) $< $(shell bash -e skripty/precist_konfig.sh "Filtry" "$(@:$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%=../obrazky/%)" "-colorspace Gray" < konfig.ini) $@
 
@@ -348,7 +350,11 @@ $(SOUBORY_PREKLADU)/pdf-a4/kniha.tex: $(SOUBORY_PREKLADU)/pdf-a4/_all.kap format
 
 # 7. soubory_prekladu/pdf-a4/kniha.tex => vystup_prekladu/pdf-a4.pdf
 # ----------------------------------------------------------------------------
-$(VYSTUP_PREKLADU)/pdf-a4.pdf: $(SOUBORY_PREKLADU)/pdf-a4/kniha.tex $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%) $(SVG_OBRAZKY:%.svg=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%.pdf)
+$(VYSTUP_PREKLADU)/pdf-a4.pdf: \
+  $(SOUBORY_PREKLADU)/pdf-a4/kniha.tex \
+  $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%) \
+  $(OBRAZKY_IK:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/ik/%) \
+  $(SVG_OBRAZKY:%.svg=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%.pdf)
 	mkdir -pv $(dir $@)
 	ln -rsTv skripty $(dir $<)skripty 2>/dev/null || true
 	cd $(dir $<); exec $(AWK) -f skripty/latex.awk
@@ -379,7 +385,11 @@ $(SOUBORY_PREKLADU)/pdf-b5/kniha.tex: $(SOUBORY_PREKLADU)/pdf-b5/_all.kap format
 
 # 7. soubory_prekladu/pdf-b5/kniha.tex => vystup_prekladu/pdf-b5.pdf
 # ----------------------------------------------------------------------------
-$(VYSTUP_PREKLADU)/pdf-b5.pdf: $(SOUBORY_PREKLADU)/pdf-b5/kniha.tex $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%) $(SVG_OBRAZKY:%.svg=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%.pdf)
+$(VYSTUP_PREKLADU)/pdf-b5.pdf: \
+  $(SOUBORY_PREKLADU)/pdf-b5/kniha.tex \
+  $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%) \
+  $(OBRAZKY_IK:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/ik/%) \
+  $(SVG_OBRAZKY:%.svg=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%.pdf)
 	mkdir -pv $(dir $@)
 	ln -rsTv skripty $(dir $<)skripty 2>/dev/null || true
 	cd $(dir $<); exec $(AWK) -f skripty/latex.awk

@@ -21,6 +21,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 # Stahování videí
 
 !Štítky: {tematický okruh}{internet}{video}
+!FixaceIkon: 1754
 !ÚzkýRežim: zap
 
 ## Úvod

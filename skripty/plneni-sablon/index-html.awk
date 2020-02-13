@@ -43,6 +43,7 @@ function Zacatek() {
     delete nazev;
     delete cislo;
     delete stitky;
+    delete ikony;
     delete vycleneno;
 
     predevsim_pro = ZjistitPredevsimPro(JMENOVERZE);
@@ -50,19 +51,17 @@ function Zacatek() {
     pocet = 0;
     while (getline < FRAGMENTY_TSV) {
 # 1=Adresář|2=ID|3=Název|4=Předchozí ID|5=Předchozí název|6=Následující ID|7=Následující název
-# 8=Číslo dodatku/kapitoly|9=Štítky v {}
+# 8=Číslo dodatku/kapitoly|9=Štítky v {}|10=Omezené id|11=ikona kapitoly
         ++pocet;
         adresar[pocet] = $1;
         id[pocet] = $2;
         nazev[pocet] = $3;
         cislo[pocet] = $8;
         stitky[pocet] = $9 != "NULL" ? $9 : "";
+        ikony[pocet] = $11;
         vycleneno[pocet] = 0;
     }
     close(FRAGMENTY_TSV);
-
-
-
     return 0;
 }
 
@@ -136,7 +135,7 @@ function Konec() {
 # ============================================================================
 
 function VypsatOdkazNaKapitolu(i, vyclenit) {
-    print "<li value=\"" cislo[i] "\"><a href=\"" id[i] ".htm\">" nazev[i] "</a></li>";
+    print "<li value=\"" cislo[i] "\"><a href=\"" id[i] ".htm\"><span class=\"ikona\"><img src=\"obrazky/" ikony[i] "\" alt=\"\"></span>" nazev[i] "</a></li>";
     if (vyclenit) {
         vycleneno[i] = 1;
     }

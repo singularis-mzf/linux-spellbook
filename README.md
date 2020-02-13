@@ -127,6 +127,7 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [soubory-a-adresare](kapitoly/soubory-a-adresare.md) | Soubory a adresáře | 10% | dítě |
 | [zpracovani-binarnich-souboru](kapitoly/zpracovani-binarnich-souboru.md) | Zpracování binárních souborů | 10% | dítě |
 | [uzivatelska-rozhrani](kapitoly/uzivatelska-rozhrani.md) | Uživatelská rozhraní skriptů | 5% | dítě |
+| [apache](kapitoly/apache.md) | Webový server Apache | 5% | dítě |
 | [latex](kapitoly/latex.md) | LaTeX | 5% | dítě |
 | [bash](kapitoly/bash.md) | Bash | 2% | dítě |
 | [diskove-oddily](kapitoly/diskove-oddily.md) | Diskové oddíly | 1% | dítě |

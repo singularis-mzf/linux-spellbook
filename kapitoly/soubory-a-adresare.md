@@ -82,7 +82,7 @@ Nepokrývá činnosti, kde záleží na konkrétním obsahu souborů (tzn. ani u
 **stat -c %s** {*cesta*}... **\| numfmt \-\-to iec**
 
 *# skutečně zabraný prostor na disku (v bajtech/čitelně pro člověka)*<br>
-**stat -c '%b*%B'**  {*cesta*}... **\| bc**<br>
+**stat -c '%b\*%B'**  {*cesta*}... **\| bc**<br>
 ?
 
 *# datum a čas poslední změny (pro člověka/časová známka Unixu)*<br>

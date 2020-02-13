@@ -30,6 +30,7 @@ virtuálními konzolemi a X.
 # Systém
 
 !Štítky: {tematický okruh}{systém}{démoni}{klávesnice}{odkládací prostor}
+!FixaceIkon: 1754
 !ÚzkýRežim: zap
 
 ## Úvod

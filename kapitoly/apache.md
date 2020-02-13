@@ -1,7 +1,7 @@
 <!--
 
-Linux Kniha kouzel, kapitola Diskové oddíly
-Copyright (c) 2019 Singularis <singularis@volny.cz>
+Linux Kniha kouzel, kapitola Webový server Apache
+Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -14,32 +14,18 @@ https://creativecommons.org/licenses/by-sa/4.0/
 <!--
 Poznámky:
 
-+ mount
-+ LVM
-+ BTRFS
-+ tmpfs
-[ ] sudo fstrim
+[ ] Po přechodu na Ubuntu 20.04 nutno aktualizovat verzi PHP.
 
-+ přesunout odkládací oddíly
+- HTTP
+- HTTPS
+- PHP
 
-Článek o btrfs: https://www.root.cz/clanky/souborovy-system-btrfs-vlastnosti-a-vyhody-moderniho-ukladani-dat/
-
-Zpracovat také:
-https://www.root.cz/clanky/pripojeni-obrazu-disku-pod-beznym-uzivatelem-bez-opravneni-roota/
-
-Volby připojení:
-nodev?
-relatime?
-data=ordered
-uhelper=udisks2
-errors=remount-ro
-umask/fmask/dmask
-
+⊨
 -->
 
-# Diskové oddíly
+# Webový server Apache
 
-!Štítky: {tematický okruh}{systém}{LVM}{ramdisk}
+!Štítky: {program}{web}{server}{http}{https}
 
 !ÚzkýRežim: zap
 
@@ -57,6 +43,9 @@ umask/fmask/dmask
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+* Modul
+* Virtuální web
+
 !ÚzkýRežim: vyp
 
 ## Zaklínadla
@@ -65,38 +54,40 @@ umask/fmask/dmask
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-## Zaklínadla (fstab)
+### Ovládání serveru
 
-*# připojit kořenový systém souborů (obecně/příklad)*<br>
-{*diskový-oddíl*} **/** {*soub-systém*} {*nastavení*} **0 1**<br>
-**/dev/sda2<tab7>/<tab7>ext4<tab7>errors=remount-ro,discard,nouser\_xattr<tab3>0<tab7>1**
+*# ručně **zastavit** server*<br>
+**sudo systemctl stop apache2**
 
-*# připojit jiný než kořenový systém souborů (obecně/příklad)*<br>
-*// 2 v posledním poli zapne automatickou kontrolu souboru systémů při startu; tato volba je vhodná pro místní souborové systémy. 0 v posledním poli automatickou kontrolu vypne, ta je vhodná především pro výměnná média a síťové systémy souborů. Rovněž je vhodná pro místní systémy souborů připojované výhradně pro čtení.*<br>
-{*co-připojit*} {*soub-systém*} {*nastavení*} **0** {*2-nebo-0*}<br>
-**UUID="61bbd562-0694-4561-a8e2-4ccfd004a660" ext4 defaults 0 2**
+*# ručně spustit server*<br>
+**sudo systemctl start apache2**
 
-<!--
-3 možnosti „co připojit“:
+*# restartovat server*<br>
+**sudo systemctl restart apache2**
 
-1) oddíl (např. /dev/sda1)
-2) UUID (např. UUID="61bbd562-0694-4561-a8e2-4ccfd004a660")
-3) jmenovka (např. LABEL="MojeData")
--->
+*# nastavit server, aby se zapínal/nezapínal při startu systému*<br>
+**sudo systemctl enable apache2**<br>
+**sudo systemctl disable apache2**
 
-### Ramdisk
+### Moduly
 
-*# připojit ramdisk (fstab)*<br>
-*// Velikost se udává nejčastěji v mebibajtech (s příponou M − např. „256M“) nebo gibibajtech (s příponou G − např. „10G“).*<br>
-**tmpfs** {*/cesta*} **tmpfs size=**{*velikost*}[**,nosuid**]<nic>[**,noexec**]<nic>[**,mode=**{*práva-číselně*}]<nic>[**,uid=**{*UID-vlastníka*}]<nic>[**,gid=**{*GID-skupiny*}]<nic>[**,**{*další,volby*}] **0 0**
+*# **zapnout** modul*<br>
+**sudo a2enmod** {*modul*}<br>
+**sudo systemctl restart apache2**
 
-### Degrafmentace
+*# **vypnout** modul*<br>
+**sudo a2dismod** {*modul*}<br>
+**sudo systemctl restart apache2**
 
-*# zkontrolovat fragmentaci oddílu typu ext4*<br>
-**sudo e4defrag -c** {*/dev/oddíl*}
+*# vypsat seznam zapnutých modulů*<br>
+**ls -1 /etc/apache2/conf-enabled \| sed -E 's/\\.load$//;t;d'**
 
-*# defragmentovat oddíl typu ext4*<br>
-**sudo e4defrag** {*/dev/oddíl*}
+*# vypsat seznam všech dostupných modulů*<br>
+**ls -1 /etc/apache2/conf-available \| sed -E 's/\\.load$//;t;d'**
+
+*# vypsat seznam vypnutých modulů*<br>
+**LC\_ALL=C join -t "" -j 1 -v 1 &lt;(ls -1 /etc/apache2/conf-available \| LC\_ALL=C sort -u) &lt;(ls -1 /etc/apache2/conf-enabled \| LC\_ALL=C sort -u) \| sed -E 's/\\.load$//;t;d'**
+
 
 ## Parametry příkazů
 <!--
@@ -106,11 +97,27 @@ umask/fmask/dmask
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 ## Instalace na Ubuntu
+
+*# *<br>
+**sudo apt-get install apache2 php libapache2-mod-php php-gd php-mbstring php-sqlite3**
+**sudo a2enmod php7.2**<br>
+**sudo a2enmod rewrite**<br>
+**sudo sed -Ei '/^&lt;Directory \\/var\\/www\\/&gt;$/,/^&lt;\\/Directory&gt;$/s/^(\\s\*AllowOverride )None$/\\1All/' /etc/apache2/apache2.conf**<br>
+**sudo systemctl restart apache2**
+
+Otevřete ve webovém prohlížeči adresu [http://localhost](http://localhost) a zkontrolujte, že se vám zobrazí (v angličtině) uvítací stránka Apache2. Server nyní zpřístupňuje adresář „/var/www/html“; k souborům a adresářům přistupuje ze systémového uživatelského účtu „www-data“, proto potřbuje, aby k nim tento účet měl příslušná práva.
+
+Pro zprovoznění konkrétních webových aplikací budete možná potřebovat doinstalovat a zapnout další moduly Apache či PHP.
+
 <!--
-- Jako zaklínadlo bez titulku uveďte příkazy (popř. i akce) nutné k instalaci a zprovoznění všech nástrojů požadovaných kterýmkoliv zaklínadlem uvedeným v kapitole. Po provedení těchto činností musí být nástroje plně zkonfigurované a připravené k práci.
-- Ve výčtu balíků k instalaci vycházejte z minimální instalace Ubuntu.
+Modul „rewrite“ a změna konfigurace jsou potřeba, aby fungovaly soubory .htaccess.
+
+Modul „gd“ slouží ke zpracování bitmapových obrázků, modul „mbstring“ slouží ke zpracování textových řetězců a module „sqlite3“ k přístupu do databázových souborů SQLite.
+
+*# seznam balíčků s moduly Apache/PHP (pro člověka)*<br>
+**apt list 'libapache2-mod-\*'**
+**apt list 'php-\*' 'php?.?-\*'**
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 ## Ukázka
 <!--
@@ -130,6 +137,9 @@ umask/fmask/dmask
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+* Apache server běží pod systémovým uživatelským účtem „www-data“, zatímco soubory a adresáře ve /var/www/html po instalaci vlastní root; pokud chcete, aby Apache mohl do některých souborů či adresářů zapisovat, musíte do nich účtu „www-data“ poskytnout právo zápisu.
+* Ve výchozí konfiguraci zpřístupňuje Apache server adresář /var/www/html. Další soubory a adresáře z něj můžete zpřístupnit např. pomocí symbolických odkazů. (Jen se ujistěte, že účet www-data k nim bude mít odpovídající práva.)
+
 ## Další zdroje informací
 <!--
 - Uveďte, které informační zdroje jsou pro začátečníka nejlepší k získání rychlé a obsáhlé nápovědy. Typicky jsou to manuálové stránky, vestavěná nápověda programu nebo webové zdroje. Můžete uvést i přímé odkazy.
@@ -140,6 +150,8 @@ umask/fmask/dmask
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 Co hledat:
+
+* [Seznam modulů Apache](https://en.wikipedia.org/wiki/List\_of\_Apache_modules) (anglicky)
 
 * [Článek na Wikipedii](https://cs.wikipedia.org/wiki/Hlavn%C3%AD_strana)
 * Oficiální stránku programu

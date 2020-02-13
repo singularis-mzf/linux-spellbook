@@ -305,6 +305,12 @@ h1 {
     font:bold 175%/1.2 "DejaVu Sans", sans-serif;
     margin:0;
 }
+h1.kapitola img {
+    vertical-align:middle;
+    border:none;
+    width:6.4rem;height:6.4rem;
+    opacity:0.9;
+}
 
 h2 {
     font:150%/1.2 "DejaVu Sans", sans-serif;
@@ -826,29 +832,28 @@ nav .next {text-align:left;}
     margin:2em 0 2em 1em;
 }
 .prehledy>div {width:33%;}
+.prehledy ol {padding-bottom:2rem;}
 .prehledy li {list-style:decimal outside;width:85%;margin-top:0.5em;}
 /*.prehledy li+li {margin-top:0.5em;}*/
 .prehledy a {display:block;
     border-bottom:thin dotted rgba(0,0,0,0.2);}
 .prehledy strong {display:block;font-weight:bold;margin-top:1em;}
-
-
-/*
-ol#prehledkapitol {
-    margin:5em auto;
-    width:20em;
+.prehledy span.ikona {
+    position:relative;z-index:1;
+    display:inline-block;
+    margin-right:0.5em;
+    width:3em;height:1em;
+    /*border:1px dotted blue; /*DEBUG*/
+    opacity:0.7;
 }
-ol#prehledkapitol li {
-    list-style:decimal outside;
+.prehledy span.ikona img {
+    position:absolute;left:0;top:0;bottom:auto;right:auto;
+    width:100%;height:auto;
 }
-ol#prehledkapitol li+li {
-    margin-top:0.5em;
+.prehledy a:hover span.ikona, .prehledy a:active span.ikona {
+    opacity:1;
+    z-index:5;
 }
-ol#prehledkapitol a {
-    display:block;
-    border-bottom:thin dotted rgba(0,0,0,0.2);
-}
-*/
 
 dl.copyrights {
 }

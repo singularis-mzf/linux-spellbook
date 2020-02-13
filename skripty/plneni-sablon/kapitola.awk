@@ -65,9 +65,11 @@ function Zacatek() {
             id_nasledujici = nazev_nasledujici = "";
         }
         cislo_kapitoly = $8;
+        ikona_kapitoly = $11;
     } else if (IDKAPITOLY ~ /^_(autori|stitky)$/) {
         id_predchozi = id_nasledujici = nazev_predchozi = nazev_nasledujici = "";
         cislo_kapitoly = 0;
+        ikona_kapitoly = "ik-vychozi.png";
     } else {
         # kapitola, pro kterou neexistuje záznam, takže pravděpodobně nebude zapsána na výstup:
         existuje_kapitola = Test("-r kapitoly/" IDKAPITOLY ".md");
@@ -79,6 +81,7 @@ function Zacatek() {
         nazev_kapitoly = "(Není na výstup)";
         id_predchozi = id_nasledujici = nazev_predchozi = nazev_nasledujici = "";
         cislo_kapitoly = 0;
+        ikona_kapitoly = "ik-vychozi.png";
     }
 
     predevsim_pro = ZjistitPredevsimPro(JMENOVERZE);
@@ -154,6 +157,12 @@ function PrelozitVystup(radek) {
     gsub(/\{\{PŘEDEVŚIM PRO\}\}/, EscapovatKNahrade(predevsim_pro), radek);
     gsub(/\{\{DATUMSESTAVENÍ\}\}/, DATUMSESTAVENI, radek);
     gsub(/\{\{DATUM SESTAVENÍ\}\}/, datum, radek);
+    gsub(/\{\{IKONA KAPITOLY\}\}/, ikona_kapitoly, radek);
+
+    /^{/; # prázdný příkaz kvůli zvýrazňování syntaxe
+    if (match(radek, /\{\{[^}]+\}\}/)) {
+        ShoditFatalniVyjimku("Neznámé makro: " substr(radek, RSTART, RLENGTH));
+    }
 
     return radek;
 }
@@ -169,7 +178,7 @@ function Konec() {
 # Soukromé funkce a proměnné:
 # ============================================================================
 
-function VypsatPrehledStitku(format,   i, n, s, nazvy_kapitol, cisla_kapitol, stitky_kapitol, stitky_kapitoly) {
+function VypsatPrehledStitku(format,   i, n, s, nazvy_kapitol, cisla_kapitol, stitky_kapitol, stitky_kapitoly, ikony_kapitol) {
     if (format != "html") {
         ShoditFatalniVyjimku("Přehled štítků pro formát " format " není podporován!");
     }
@@ -177,10 +186,12 @@ function VypsatPrehledStitku(format,   i, n, s, nazvy_kapitol, cisla_kapitol, st
     delete nazvy_kapitol; # $8
     delete cisla_kapitol; # $3
     delete stitky_kapitol; # $9
+    delete ikony_kapitol; # $11
     while (getline < FRAGMENTY_TSV) { # id = $2
         cisla_kapitol[$2] = $8;
         nazvy_kapitol[$2] = $3;
         stitky_kapitol[$2] = $9;
+        ikony_kapitol[$2] = $11;
     }
     close(FRAGMENTY_TSV);
 
@@ -194,7 +205,7 @@ function VypsatPrehledStitku(format,   i, n, s, nazvy_kapitol, cisla_kapitol, st
         for (i = 3; i <= NF; ++i) {
             if (!($i in cisla_kapitol)) {ShoditFatalniVyjimku("Nečekané id kapitoly: " $i)}
 
-            print "<div><a href=\"" $i ".htm\"><span class=\"cislo\">" cisla_kapitol[$i] ".</span>\n<img src=\"obrazky/ik-vychozi.png\" width=\"64\" height=\"64\" alt=\"\">\n<span class=\"nazev\">" nazvy_kapitol[$i] "</span></a><span class=\"dalsistitky\">";
+            print "<div><a href=\"" $i ".htm\"><span class=\"cislo\">" cisla_kapitol[$i] ".</span>\n<img src=\"obrazky/" ikony_kapitol[$i] "\" width=\"64\" height=\"64\" alt=\"\">\n<span class=\"nazev\">" nazvy_kapitol[$i] "</span></a><span class=\"dalsistitky\">";
             n = split(gensub(/^\{|\}$/, "", "g", stitky_kapitol[$i]), stitky_kapitoly, "\\}\\{");
             for (j = 1; j <= n; ++j) {
                 print "<a href=\"#" GenerovatOmezeneId("s", stitky_kapitoly[j]) "\">" stitky_kapitoly[j] "</a>";

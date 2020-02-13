@@ -68,9 +68,13 @@ Files: obrazky/graf-filtru.svg obrazky/kalendar.svg
 Copyright: 2019, Singularis <singularis@volny.cz>
 License: CC-BY-SA-4.0
 
-Files: obrazky/vychozi.png obrazky/make.png zdroje_obrazku/tab.png
+Files: obrazky/ik-vychozi.png obrazky/make.png zdroje_obrazku/tab.png
 Copyright: 2019, Singularis <singularis@volny.cz>
 License: CC0
+
+Files: obrazky/ik/awk.png obrazky/ik/markdown.png obrazky/ik/regularni-vyrazy.png obrazky/ik/sprava-procesu.png
+Copyright: 2020, Singularis <singularis@volny.cz>
+License: CC-BY-SA-4.0
 
 Files: konfig.ini
 Copyright: 2019, Singularis <singularis@volny.cz>
@@ -79,6 +83,10 @@ License: CC0
 Files: skripty/lkk/awkvolby.awk
 Copyright: 2019, Singularis <singularis@volny.cz>
 License: CC-BY-SA-4.0 or Expat
+
+Files: zdroje_obrazku/ik.xcf
+Copyright: 2020, Singularis <singularis@volny.cz>
+License: CC0
 
 Files: zdroje_obrazku/vmezera.png
 License: public-domain

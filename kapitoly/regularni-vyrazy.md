@@ -23,6 +23,7 @@ Náměty k vylepšení:
 # Regulární výrazy
 
 !Štítky: {syntaxe}{zpracování textu}
+!FixaceIkon: 1754
 !ÚzkýRežim: zap
 
 ## Úvod
@@ -246,6 +247,12 @@ striktně doporučuji zadávat regulární výraz jako proměnnou, např. takto:
 
 *Pozor!* Proměnnou s regulárním výrazem v této konstrukci nikdy neuzavírejte do uvozovek!
 Pokud to uděláte, bash ji bude interpretovat jako obyčejný řetězec, ne jako regulární výraz!
+
+Existuje ještě druhý přiměřeně funkční způsob:
+
+**[[** {*řetězec*} **=~ $(printf %s "**{*regulární výraz*}**") ]]**
+
+Ale v tomto případě nesmí regulární výraz končit znakem nového řádku \\n, protože ten by se při rozvoji ztratil; pokud tímto znakem končit musí, pomůže uzavřít ho do hranatých závorek („[\\n]“).
 
 ### egrep
 

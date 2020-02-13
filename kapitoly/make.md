@@ -14,6 +14,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 # GNU make
 
 !Štítky: {program}{programování}
+!FixaceIkon: 1754
 !ÚzkýRežim: zap
 
 ## Úvod

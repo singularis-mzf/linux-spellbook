@@ -15,6 +15,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 # Plánování úloh
 
 !Štítky: {tematický okruh}{čas}
+!FixaceIkon: 1754
 !ÚzkýRežim: zap
 
 ## Úvod
