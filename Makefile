@@ -435,14 +435,21 @@ $(SOUBORY_PREKLADU)/deb/DEBIAN/control: formaty/deb/control $(DEB_VERZE_SOUBOR)
 	mkdir -pv $(dir $@)
 	sed -E -e "s/\\{Version\\}/$(DEB_VERZE)/g" -e "s/\\{Installed-Size\\}/$$(du -ks --exclude=DEBIAN $(SOUBORY_PREKLADU)/deb | cut -f 1 | tail -n 1)/g" $< >"$@"
 
-# 7. soubory_prekladu/deb/** => soubory_prekladu/deb/DEBIAN/md5sums
+# 7. skripty/lkk/bash-doplnovani.sh => soubory_prekladu/deb/usr/share/bash-completion/completions/lkk
+# ----------------------------------------------------------------------------
+$(SOUBORY_PREKLADU)/deb/usr/share/bash-completion/completions/lkk: skripty/lkk/bash-doplnovani.sh
+	mkdir -pv $(dir $@)
+	cat $< >$@
+
+# 8. soubory_prekladu/deb/** => soubory_prekladu/deb/DEBIAN/md5sums
 # ----------------------------------------------------------------------------
 $(SOUBORY_PREKLADU)/deb/DEBIAN/md5sums: \
   $(SOUBORY_PREKLADU)/deb/usr/bin/lkk \
   $(SOUBORY_PREKLADU)/deb/usr/share/doc/lkk/copyright \
   $(SOUBORY_PREKLADU)/deb/usr/share/lkk/awkvolby.awk \
   $(SOUBORY_PREKLADU)/deb/usr/share/lkk/lkk.awk \
-  $(SOUBORY_PREKLADU)/deb/usr/share/lkk/skripty/pomocne-funkce
+  $(SOUBORY_PREKLADU)/deb/usr/share/lkk/skripty/pomocne-funkce \
+  $(SOUBORY_PREKLADU)/deb/usr/share/bash-completion/completions/lkk
 	mkdir -pv $(dir $@)
 	(cd $(SOUBORY_PREKLADU)/deb && exec find * -path DEBIAN -prune -o -type f -exec md5sum -- '{}' +) | LC_ALL=C sort -k 1.33b >$@
 
