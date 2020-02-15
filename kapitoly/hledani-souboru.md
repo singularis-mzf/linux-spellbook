@@ -295,6 +295,13 @@ fprintf:
 *# hloubka prohledávání*<br>
 **%d**
 
+## Zaklínadla (celé příkazy)
+
+*# najít a odstranit prázdné adresáře/soubory/soubory i adresáře*<br>
+**find** {*kde*}... **-type d -empty -delete**<br>
+**find** {*kde*}... **-type f -empty -delete**<br>
+**find** {*kde*}... **-empty -delete**
+
 ## Parametry příkazů
 <!--
 - Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.

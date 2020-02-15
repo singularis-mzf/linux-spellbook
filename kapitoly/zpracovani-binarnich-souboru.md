@@ -171,6 +171,16 @@ Délka je nezáporný počet bajtů, případně s násobící příponou „K�
 
 -->
 
+### Patchování
+
+<!--
+Možnosti:
+- bsdiff (jen pro malé soubory)
+- rdiff
+- xdelta (selhala na zkušebním vstupu)
+
+-->
+
 ## Parametry příkazů
 <!--
 - Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.

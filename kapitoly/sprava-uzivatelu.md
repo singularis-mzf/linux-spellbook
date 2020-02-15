@@ -31,10 +31,17 @@ Poznámky:
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 ## Definice
-<!--
-- Uveďte výčet specifických pojmů pro použití v této kapitole a tyto pojmy definujte co nejprecizněji.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+* **Uživatel** je v této kapitole systémový účet identifikovaný pomocí **uživatelského jména** a někdy také pomocí čísla **UID**. Existují tři typy uživatelů: **běžný** (UID ≥ 1000), **systémový** (UID 1 až 999) a **superuživatel** (UID 0). Každý soubor nebo běžící proces přísluší nějakému uživateli.
+* Běžní uživatelé slouží k přihlášení osob k systému s různým nastavením a různými právy, co se týče zacházení se systémem.
+* Systémoví uživatelé slouží k vnitřním účelům systému, zejména k omezení práv některých démonů.
+* Superuživatel „root“ pak má nejvyšší možná oprávnění, neplatí pro něj většina omezení a jako jediný může spouštět procesy s právy jiných uživatelů a skupin bez znalosti jakéhokoliv hesla.
+* **Skupina** je neprázdná množina uživatelů identifikovaná **názvem skupiny** a někdy také číslem **GID**. Do skupin se přihlašují procesy (ne uživatelé či osoby) a přiřazují se souborům na disku za účelem komplexnějšího řízení přístupových práv. Každý soubor nebo běžící proces přísluší nějaké skupině (vždy jen jedné).
+
+### Uživatelé, skupiny a hesla
+
+* Uživatel je zabezpečený heslem − jako takový uživatel se můžete přihlásit po zadání jeho hesla. Nemá-li uživatel heslo, můžete se jako on přihlásit kdykoliv, bez zadání hesla. Systémoví uživatelé (a v Ubuntu i superuživatel) však mají hesla takzvaně zamčená, což prakticky znamená, že se jako oni přihlásit nemůžete.
+* Proces s právy uživatele, který je členem skupiny, se může do dané skupiny „přihlásit“ vždy bez zadávání hesla. Má-li skupina nastaveno heslo, může se do ní navíc přihlásit i proces uživatele, který není členem skupiny, avšak jen po zadání hesla.
 
 <!--
 
@@ -62,43 +69,56 @@ Poznámky:
 *# smazat uživatele*<br>
 **sudo deluser** [**\-\-remove-home**] {*uživatel*}
 
-
 *# existuje uživatel? (uspěje, pokud ano)*<br>
-**egrep -q "^$(whoami):" /etc/passwd**
+**getent** {*uživatel*} **&gt;/dev/null**
 
 *# vypsat všechny uživatele/všechny kromě systémových*<br>
-**cut -d : -f 1 /etc/passwd** [**\| LC\_ALL=C sort**]<br>
-**gawk -F : '$3 == 0 || $3 &gt;= 1000 {print $1;}' /etc/passwd** [**\| LC\_ALL=C sort**]
+**getent passwd \| cut -d : -f 1** [**\| LC\_ALL=C sort**]<br>
+**getent passwd \| gawk -F : '$3 == 0 || $3 &gt;= 1000 {print $1;}'** [**\| LC\_ALL=C sort**]
 
-
-*# změnit příkazový interpret uživatele/aktuálního uživatele (změnit shell)*<br>
+*# změnit **příkazový interpret** uživatele/aktuálního uživatele (změnit shell)*<br>
 **sudo chsh** [**-s** {*/cesta/k/novému/shellu*}] {*uživatel*}<br>
 **chsh** [**-s** {*/cesta/k/novému/shellu*}]
 
-### Vlastnosti uživatelů (změnit)
+### Heslo uživatele
 
-*# změnit heslo (pro člověka)*<br>
-**sudo passwd** [{*uživatel*}]<br>
+*# nastavit **heslo** (pro člověka)*<br>
+**sudo passwd** {*uživatelské-jméno*}<br>
 !: Dvakrát zadat nové heslo.
 
-*# změnit heslo (pro skript)*<br>
-**printf %s\\n "**{*uživatel*}**:**{*heslo*}**" ["**{*další\_uživatel*}**:**{*další-heslo*}"]... **\| sudo chpasswd**
+*# nastavit heslo (pro skript)*<br>
+**printf %s\\n "**{*uživatelské-jméno*}**:**{*heslo*}**" ["**{*další-uživatelské-jméno*}**:**{*další-heslo*}"]... **\| sudo chpasswd**
 
 *# změnit vlastní heslo*<br>
 **passwd**<br>
 !: Zadat původní heslo.<br>
 !: Dvakrát zadat nové heslo.
 
-*# změnit heslo uživatele/vlastní heslo*<br>
-**sudo passwd** {*uživatel*}<br>
-**passwd**
+*# zrušit heslo (umožní přihlášení **bez hesla**)*<br>
+*// Varování: Než použijete tento příkaz, dobře si rozmyslete, co děláte. Uživatelský účet bez hesla může představovat závažnou bezpečnostní díru ve vašem systému. Nepoužívejte tuto možnost, pokud vám stačí automatické přihlášení („autologin“).*<br>
+**sudo passwd -d** {*uživatelské-jméno*}
 
-*# změnit celé jméno uživatele (ne to přihlašovací)*<br>
-**sudo chfn -f "**{*nové jméno*}**"** {*uživatel*}
+*# **zamknout** heslo uživatele*<br>
+**sudo passwd -l** {*uživatelské-jméno*}
+
+*# **odemknout** heslo zamknuté pomocí „passwd -l“ (alternativy)*<br>
+*// Poznámka: Ve většině případů je správným postupem odemknutí hesla jeho nové nastavení. Příkaz „sudo passwd -u“ by měl být používán pouze pro hesla zamknutá pomocí „sudo passwd -l“, chceme-li zachovat původní heslo.*<br>
+**printf %s\\n "**{*uživatelské-jméno*}**:**{*nové-heslo*}**" \| sudo chpasswd**<br>
+**sudo passwd -u** {*uživatelské-jméno*}
+
+*# nastavit vypršení hesla/okamžitě vypršet (nezkoušeno)*<br>
+*// Vyprší-li platnost hesla, uživatel bude po příštím přihlášení donucen si heslo změnit. Poznámka: vypršení hesla jsem podrobně nezkoušel/a.*<br>
+**sudo passwd -x** {*dnů-platnosti*} [**-w** {*kolik-dnů-předem-varovat*}] {*uživatelské-jméno*}<br>
+**sudo passwd -e** {*uživatelské-jméno*}
+
+### Vlastnosti uživatelů (změnit)
+
+*# nastavit celé jméno uživatele (pozor − neplést si s uživatelským jménem!)*<br>
+**sudo chfn -f "**{*nové jméno*}**"** {*uživatelské-jméno*}
 
 *# změnit domovský adresář uživatele (bez přesunu/přesunout)*<br>
-**sudo usermod -d** {*/nový/adresář*} {*uživatel*}<br>
-**sudo usermod -m -d** {*/nový/adresář*} {*uživatel*}
+**sudo usermod -d** {*/nový/adresář*} {*uživatelské-jméno*}<br>
+**sudo usermod -m -d** {*/nový/adresář*} {*uživatelské-jméno*}
 
 *# změnit UID uživatele*<br>
 *// Podle manuálové stránky tento příkaz rovněž upraví vlastnictví uživatelova domovského adresáře a všech podadresářů a souborů v něm, jejichž je uživatel vlastníkem.*<br>
@@ -115,37 +135,36 @@ Vzít obrázek, zkonvertovat na 480x480 PNG 8bit RGB a uložit do souboru
 
 -->
 
-
 ### Vlastnosti uživatelů (vypsat)
 
-*# vypsat přihlašovací jméno aktuálního uživatele*<br>
-**whoami**
+*# vypsat uživatelské jméno/UID **aktuálního uživatele***<br>
+**whoami**<br>
+**id -u**
 
-*# vypsat celé jméno uživatele/aktuálního uživatele*<br>
+*# vypsat **celé jméno** uživatele/aktuálního uživatele*<br>
 **getent passwd** {*uživatel*} **\| cut -d : -f 5 \| cut -d , -f 1**<br>
 **getent passwd $(whoami) \| cut -d : -f 5 \| cut -d , -f 1**
 
-*# vypsat domovský adresář uživatele*<br>
+*# vypsat **domovský adresář** uživatele*<br>
 **getent passwd** {*uživatel*} **\| cut -d : -f 6**
 
-*# vypsat příkazový interpret (shell) uživatele*<br>
+*# vypsat **příkazový interpret** (shell) uživatele*<br>
 **getent passwd** {*uživatel*} **\| cut -d : -f 7**
 
 *# vypsat domovský adresář aktuálního uživatele (doporučená varianta/spolehlivá varianta)*<br>
 **$HOME**<br>
 **getent passwd $(whoami) \| cut -d : -f 6**
 
-*# vypsat UID uživatele/aktuálního uživatele*<br>
-**getent passwd** {*uživatel*} **\| cut -d : -f 3**<br>
-**id -u**
+*# vypsat UID uživatele*<br>
+**getent passwd** {*uživatel*} **\| cut -d : -f 3**
 
 *# vypsat skupiny uživatele/aktuálního uživatele*<br>
 **groups** {*uživatel*} **\| cut -d : -f 2- \| tr "&blank;" \\\\n \| LC\_ALL=C sort \| fgrep -vx ""**<br>
-**groups \| tr "&blank;" \\n**
+**groups \| tr "&blank;" \\\\n**
 
 ### Skupiny
 
-*# vytvořit skupinu uživatelů/systémovou skupinu*<br>
+*# vytvořit **skupinu** (běžnou/systémovou)*<br>
 **sudo addgroup** [**\-\-gid** {*konkrétní-GID*}] {*nová-skupina*}<br>
 **sudo addgroup \-\-system** [**\-\-gid** {*konkrétní-GID*}] {*nová-skupina*}
 
@@ -164,7 +183,7 @@ Vzít obrázek, zkonvertovat na 480x480 PNG 8bit RGB a uložit do souboru
 *# vypsat GID skupiny*<br>
 **getent group vboxsf \| cut -d : -f 3**
 
-*# vypsat všechny skupiny/všechny kromě systémových*<br>
+*# vypsat **všechny skupiny**/všechny kromě systémových*<br>
 **cut -d : -f 1 /etc/group** [**\| LC\_ALL=C sort**]<br>
 **gawk -F : '$3 == 0 || $3 &gt;= 1000 {print $1;}' /etc/group** [**\| LC\_ALL=C sort**]
 
@@ -174,6 +193,16 @@ Vzít obrázek, zkonvertovat na 480x480 PNG 8bit RGB a uložit do souboru
 *# je uživatel členem skupiny? (uspěje, pokud ano)*<br>
 **printf ,%s,\\n "$(getent group** {*skupina*} **\| cut -f : -f 4)" \| fgrep -q ,**{*uživatel*}**,**
 
+*# nastavit **heslo** skupiny (pro člověka)*<br>
+**sudo gpasswd** {*skupina*}<br>
+!: Dvakrát zadat nové heslo.
+
+*# nastavit heslo skupiny (pro skript)*<br>
+?
+
+*# zrušit heslo skupiny*<br>
+**sudo gpasswd -r** {*skupina*}
+
 ### Formáty souborů
 
 *# formát /etc/passwd*<br>
@@ -182,8 +211,9 @@ Vzít obrázek, zkonvertovat na 480x480 PNG 8bit RGB a uložit do souboru
 *# formát /etc/group*<br>
 {*název-skupiny*}**:x:**{*GID*}**:**[{*první-člen*}[**,**{*další-člen*}]...]
 
-### Ostatní
 <!--
+### Ostatní
+<!- -
 
 *# kteří uživatelé jsou přihlášeni k systému?*<br>
 **who -q \| egrep "^#"**
@@ -250,6 +280,5 @@ Co hledat:
 * ...
 * [Video: Linux Tip: How to add and delete user accounts](https://www.youtube.com/watch?v=933Uo9T4kfk) (anglicky)
 * [TL;DR stránka „adduser“](https://github.com/tldr-pages/tldr/blob/master/pages/linux/adduser.md) (anglicky)
-
 
 !ÚzkýRežim: vyp

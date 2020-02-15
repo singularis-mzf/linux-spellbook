@@ -233,23 +233,59 @@ jako chroot či cgroups.
 *// Funguje především na notebooku, nemám příliš vyzkoušené.*<br>
 **sudo powertop**
 
-## Zaklínadla (ovládání procesů)
-### Ukončení a pozastavení procesů, signály
+## Zaklínadla (spouštění a ovládání procesů)
+
+### Spouštění procesů
+
+*# spustit příkaz s právy **superuživatele**/jiného uživatele*<br>
+**sudo** {*příkaz*} [{*parametr-příkazu*}]...<br>
+**sudo -u** {*uživatel*} {*příkaz*} {*parametr-příkazu*}...
+
+*# spustit příkaz s právy jiné **skupiny***<br>
+**sg "**{*příkaz*} [{*parametr-příkazu*}]...**"**
+
+*# spustit příkaz a po skončení vypsat spotřebovaný **čas***<br>
+*// Jde o vestavěnou konstrukci bashe, která dovoluje na místo jednoduchého příkazu zadat také více příkazů spojených rourou, např. „time seq 10000 \| wc -l“. Účinek příkazu „time“ se pak vztahuje na všechny procesy spojené rourou.*<br>
+**time** {*příkaz*} [{*parametr-příkazu*}]...
+
+*# spustit příkaz a jeho programem **nahradit** volající bash či sh*<br>
+**exec** {*příkaz*} [{*parametr-příkazu*}]...
+
+*# spustit proces s nastavenou prioritou (ne vyšší/libovolnou)*<br>
+**nice -n $((**{*priorita*} **- $(nice)))** {*příkaz*} [{*parametry příkazu*}]...
+**sudo nice -n $((**{*priorita*} **- $(nice))) sudo -u "$(id -nu)" -g "$(id -ng)"** {*příkaz*} [{*parametry příkazu*}]...
+
+<!--
+*# spustit příkaz na pozadí, bez uživatelského rozhraní a bez příslušného terminálu*<br>
+*// Poznámka: tento příkaz nemám příliš vyzkoušený, doporučuji používat opatrně; možná se nechová vždy podle očekávání.*<br>
+**nohup** {*příkaz*} [{*parametr-příkazu*}]... **&amp;**
+-->
+
+### Ukončování procesů
 
 *# požádat o ukončení více procesů podle názvu (obecně/příklad)*<br>
 [**sudo**] **pkill '**{*regulární-výraz*}**'**<br>
 **pkill '^gimp'**
 
-*# požádat o ukončení/násilně ukončit*<br>
+*# požádat o ukončení/násilně **ukončit***<br>
 [**sudo**] **kill** {*PID*}...<br>
 [**sudo**] **kill -9** {*PID*}...
 
-*# zaslat procesu signál*<br>
+### Čekání, signály, priorita
+
+*# **počkat** na ukončení*<br>
+**while test -e /proc/**{*PID*}**; do IFS="" read -t 0.1 \|\| :; done &lt;&gt; &lt;(:)**
+
+*# zaslat procesu **signál***<br>
 [**sudo**] **kill -**[{*signál*}] {*PID*}...
 
 *# **pozastavit** proces/nechat ho pokračovat*<br>
 [**sudo**] **kill -SIGSTOP** {*PID*}...<br>
 [**sudo**] **kill -SIGCONT** {*PID*}...
+
+*# **změnit prioritu** běžícího procesu*<br>
+*// Priorita je číslo v rozsahu -20 (nejvyšší) až 19 (nejnižší); normální priorita je 0. Obyčejný uživatel (tzn. bez sudo) může pouze snižovat prioritu vlastních procesů.*<br>
+[**sudo**] **renice** {*priorita*} {*PID*}...
 
 ### Úlohy bashe
 
@@ -277,39 +313,6 @@ jako chroot či cgroups.
 
 *# počkat na dokončení úlohy běžící v pozadí*<br>
 **wait %**{*číslo-úlohy*} [**%**{*číslo-další-úlohy*}]...
-
-### Nastavení priority procesů
-
-*# spustit proces s nastavenou prioritou (ne vyšší/libovolnou)*<br>
-**nice -n $((**{*priorita*} **- $(nice)))** {*příkaz*} [{*parametry příkazu*}]...
-**sudo nice -n $((**{*priorita*} **- $(nice))) sudo -u "$(id -nu)" -g "$(id -ng)"** {*příkaz*} [{*parametry příkazu*}]...
-
-*# změnit prioritu běžícího procesu*<br>
-*// Priorita je číslo v rozsahu -20 (nejvyšší) až 19 (nejnižší); normální priorita je 0. Obyčejný uživatel (tzn. bez sudo) může pouze snižovat prioritu vlastních procesů.*<br>
-[**sudo**] **renice** {*priorita*} {*PID*}...
-
-
-## Zaklínadla (spouštění procesů)
-
-*# spustit příkaz s právy **superuživatele**/jiného uživatele*<br>
-**sudo** {*příkaz*} [{*parametr-příkazu*}]...<br>
-**sudo -u** {*uživatel*} {*příkaz*} {*parametr-příkazu*}...
-
-*# spustit příkaz s právy jiné **skupiny***<br>
-**sg "**{*příkaz*} [{*parametr-příkazu*}]...**"**
-
-*# spustit příkaz a po skončení vypsat spotřebovaný **čas***<br>
-*// Jde o vestavěnou konstrukci bashe, která dovoluje na místo jednoduchého příkazu zadat také více příkazů spojených rourou, např. „time seq 10000 \| wc -l“. Účinek příkazu „time“ se pak vztahuje na všechny procesy spojené rourou.*<br>
-**time** {*příkaz*} [{*parametr-příkazu*}]...
-
-*# spustit příkaz a jeho programem **nahradit** volající bash či sh*<br>
-**exec** {*příkaz*} [{*parametr-příkazu*}]...
-
-<!--
-*# spustit příkaz na pozadí, bez uživatelského rozhraní a bez příslušného terminálu*<br>
-*// Poznámka: tento příkaz nemám příliš vyzkoušený, doporučuji používat opatrně; možná se nechová vždy podle očekávání.*<br>
-**nohup** {*příkaz*} [{*parametr-příkazu*}]... **&amp;**
--->
 
 ## Parametry příkazů
 
@@ -353,7 +356,6 @@ jako chroot či cgroups.
 * ☐ -t {*terminál*}... :: Vybrat podle příslušného terminálu (např. „pts/1“).
 * ☐ -u {*uid-nebo-uživatel*}... :: Vybrat podle EUID.
 * ☐ -U {*uid-nebo-uživatel*}... :: Vybrat podle RUID.
-
 
 ## Instalace na Ubuntu
 
@@ -400,7 +402,6 @@ V kapitole je použit také příkaz gawk:
 * [TL;DR: ps](https://github.com/tldr-pages/tldr/blob/master/pages/common/ps.md) (anglicky)
 * [Tutorialspoint: Process Management](https://www.tutorialspoint.com/unix/unix-processes.htm) (anglicky)
 * [TL;DR: pgrep](https://github.com/tldr-pages/tldr/blob/master/pages/common/pgrep.md) (anglicky)
-
 
 !ÚzkýRežim: vyp
 
