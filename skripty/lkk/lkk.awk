@@ -31,49 +31,49 @@ BEGIN {
     stdout = "/dev/fd/9";
     stderr = "/dev/stderr";
 
-    # Akce:
-    DeklarovatVolbu("-e", "--editovat", "", "");
-    DeklarovatVolbu("-f", "--najit", "", "");
+    # Načíst proměnné prostředí:
+    HOME = PromennaProstredi("HOME");
+    if (HOME !~ /^\//) {ShoditFatalniVyjimku("Chybná hodnota proměnné $HOME!")}
+    EDITOR = PromennaProstredi("EDITOR", "sensible-editor");
+    XDG_DATA_HOME = PromennaProstredi("XDG_DATA_HOME", HOME "/.local/share");
+    LKKPATH = PromennaProstredi("LKKPATH", XDG_DATA_HOME "/lkk/skripty:/usr/share/lkk/skripty");
+
+    # Deklarovat akce:
+    DeklarovatVolbu("-e", "--editovat", "", "akce");
+    DeklarovatVolbu("-f", "--najit", "", "akce");
     DeklarovatAliasVolby("-f", "--najít");
-    DeklarovatVolbu("-h", "--help", "", "");
+    DeklarovatVolbu("-h", "--help", "", "akce");
     DeklarovatAliasVolby("-h", "--napoveda");
     DeklarovatAliasVolby("-h", "--nápověda");
-    DeklarovatVolbu("-l", "--seznam", "", "");
-    DeklarovatVolbu("-p", "--vypsat", "", "");
-    DeklarovatVolbu("-r", "--spustit", "", "");
-    DeklarovatVolbu("-t", "--existuje", "", "");
+    DeklarovatVolbu("-l", "--seznam", "", "akce");
+    DeklarovatVolbu("-p", "--vypsat", "", "akce");
+    DeklarovatVolbu("-r", "--spustit", "", "akce");
+    DeklarovatVolbu("-t", "--existuje", "", "akce");
 
-    DeklarovatVolbu("-P", "--seznam-cest", "", "");
+    DeklarovatVolbu("-P", "--seznam-cest", "", "akce");
 
-    # Přepínače:
+    # Deklarovat přepínače:
+    DeklarovatVolbu("--bash");
     DeklarovatVolbu("-s", "--system", "", "");
     DeklarovatAliasVolby("-s", "--systém");
     DeklarovatVolbu("-x", "--jen-spustitelne", "", "");
     DeklarovatAliasVolby("-x", "--jen-spustitelné");
 
+    # Zpracovat parametry:
     ZpracovatParametry("0");
 
     # 1. Proskenovat přepínače a určit akci.
-    akce = "";
-    for (i = 1; i <= POCET_PREPINACU; ++i) {
-        if (PREPINACE[i] ~ /^-[efhlpPrt]$/) {
-            if (akce == "") {
-                akce = substr(PREPINACE[i], 2);
-            } else if (akce != substr(PREPINACE[i], 2)) {
-                ShoditFatalniVyjimku("Spouštěč LKK dovoluje pouze jednu akci na volání!");
-            }
-        }
-    }
-    if (akce == "") {akce = "r"}
-
+    akce = PREP_SKUPINY["akce"] != "" ? gensub(/^-*/, "", 1, PREP_SKUPINY["akce"]) : "r";
     if (POCET_PREPINACU == 0 && POCET_ARGUMENTU == 0) {
-        print "lkk: Chybí název skriptu! Pro nápovědu zadejte: lkk --help" > stderr;
-        exit 1;
+        ShoditFatalniVyjimku("Chybí název skriptu! Pro nápovědu zadejte: lkk --help");
     }
 
     # 2. Skript musí být zadán, ledaže ho akce nevyžaduje.
-    if (akce !~ /^[hlP]$/ && (POCET_ARGUMENTU == 0 || ARGUMENTY[0] == "")) {
-        ShoditFatalniVyjimku("Chybí název skriptu!");
+    if (akce ~ /^[hlP]$/) {
+        if (POCET_ARGUMENTU != 0) {ShoditFatalniVyjimku("lkk: Chybné použití: akce -" akce " nepřijímá název skriptu!")}
+    } else {
+        if (POCET_ARGUMENTU == 0 || ARGUMENTY[0] == "") {ShoditFatalniVyjimku("Chybí název skriptu!")}
+        if (ARGUMENTY[0] ~ /\//) {ShoditFatalniVyjimku("lkk: Název skriptu nesmí obsahovat lomítko: " ARGUMENTY[0])}
     }
 
     # akce "h" (vypsat nápovědu)
@@ -86,22 +86,23 @@ BEGIN {
         print "\tlkk [-r] [--] {skript} [parametry...] :: Spustí skript se zadanými parametry." > stdout;
         print "\tlkk -t {skript} :: Jen ověří, že daný skript existuje." > stdout;
         print "\tlkk --seznam-cest :: Vypíše seznam cest (i neexistujících), kde hledá skripty." > stdout;
-        print "\nDalší volby:\n\t-s :: Skripty hledat jen v /usr/share/lkk/skripty; ignorovat proměnnou LKKPATH a uživatelské úložiště ~/.config/lkk/skripty." > stdout;
-        print "\t-x :: Ignorovat nespustitelné skripty (tzv. úryvky)." > stdout;
+        print "\nDalší volby:\n" > stdout;
+        print "\t--bash :: Je-li zadáno -e na neexistující skript, vytvoří skript s hlavičkou „#!/bin/bash“." > stdout;
+        print "\t-s :: Skripty hledat jen v /usr/share/lkk/skripty; ignorovat proměnnou LKKPATH a uživatelské úložiště ~/.local/share/lkk/skripty." > stdout;
+        print "\t-x :: Ignorovat nespustitelné skripty (tzv. úryvky). Je-li zadáno -e na neexistující skript, nastaví nový skript jako spustitelný." > stdout;
         exit;
     }
 
     # 3. Sestavit seznam cest k prohledání.
     if ("-s" in PREP_VOLBY) {
         cesty[cest = 1] = "/usr/share/lkk/skripty";
-    } else if ("LKKPATH" in ENVIRON) {
-        cest = split(ENVIRON["LKKPATH"], cesty, ":");
     } else {
-        cest = split(ENVIRON["HOME"] "/.config/lkk/skripty:/usr/share/lkk/skripty", cesty, ":");
+        cest = split(LKKPATH, cesty, ":");
     }
 
     # akce "l" (vypsat seznam dostupných skriptů)
     if (akce == "l") {
+        if (POCET_ARGUMENTU != 0) {ShoditFatalniVyjimku("Chybné použití: akce -l nepřijímá název skriptu!")}
         if (cest == 0) {exit}
         prikaz = "find"
         for (i = 1; i <= cest; ++i) {
@@ -110,7 +111,9 @@ BEGIN {
             }
         }
         if (prikaz == "find") {exit}
-        prikaz = prikaz " -mindepth 1 -maxdepth 1" ("-x" in PREP_VOLBY ? " -executable" : "") " -printf '%f\\n' | sort -u";
+        prikaz = prikaz " -mindepth 1 -maxdepth 1 -readable";
+        if ("-x" in PREP_VOLBY) {prikaz = prikaz " -executable"}
+        prikaz = prikaz " -printf '%f\\n' | sort -u";
         print prikaz > bashout;
         exit;
     }
@@ -122,30 +125,37 @@ BEGIN {
     }
 
     # 4. Vyhledat skript.
-    skriptu = 0;
-    test = ("-x" in PREP_VOLBY) ? "-x" : "-r";
-    if (ARGUMENTY[0] ~ /^\//) {
-        # absolutní cesta
-        nova_cesta = VyhledatSkript("", ARGUMENTY[0]);
-    } else {
-        for (i = 1; i <= cest; ++i) {
-            nova_cesta = VyhledatSkript(cesty[i], ARGUMENTY[0]);
-            if (nova_cesta != "") {break}
-        }
-    }
+    i = 1;
+    do
+    {
+        nova_cesta = VyhledatSkript(cesty[i], ARGUMENTY[0]);
+    } while (nova_cesta == "" && ++i <= cest);
 
     # 5. Spustit akci.
     switch (akce) {
         case "e": # editovat
-            if (nova_cesta != ENVIRON["HOME"] "/.config/lkk/skripty/" ARGUMENTY[0]) {
-                print "mkdir -pv ~/.config/lkk/skripty && \\" > bashout;
+            if (nova_cesta != XDG_DATA_HOME "/lkk/skripty/" ARGUMENTY[0]) {
+                print "mkdir -pv " DoApostrofu(XDG_DATA_HOME "/lkk/skripty") " && \\" > bashout;
                 if (nova_cesta != "") {
-                    print "cp -- " DoApostrofu(nova_cesta) " " DoApostrofu(ENVIRON["HOME"] "/.config/lkk/skripty/" ARGUMENTY[0]) " && \\"
+                    # skript nalezen => zkopírovat se zachováním práv
+                    print "cp -- " DoApostrofu(nova_cesta) " " DoApostrofu(XDG_DATA_HOME "/lkk/skripty/" ARGUMENTY[0]) " && \\" > bashout;
+                    nova_cesta = DoApostrofu(XDG_DATA_HOME "/lkk/skripty/" ARGUMENTY[0]);
+                } else if (system("test -e " DoApostrofu(XDG_DATA_HOME "/lkk/skripty/" ARGUMENTY[0])) != 0) {
+                    # skript neexistuje
+                    nova_cesta = DoApostrofu(XDG_DATA_HOME "/lkk/skripty/" ARGUMENTY[0]);
+                    if ("--bash" in PREP_VOLBY) {
+                        print "printf '#!/bin/bash -e\\n' > " nova_cesta " && \\" > bashout;
+                    } else {
+                        print "touch -- " nova_cesta " && \\" > bashout;
+                    }
+                    if ("-x" in PREP_VOLBY) {
+                        print "chmod a+x -- " nova_cesta " && \\" > bashout;
+                    }
                 } else {
-                    print "touch -- " DoApostrofu(ENVIRON["HOME"] "/.config/lkk/skripty/" ARGUMENTY[0]) " && \\"
+                    nova_cesta = DoApostrofu(XDG_DATA_HOME "/lkk/skripty/" ARGUMENTY[0]);
                 }
             }
-            print "exec " ("EDITOR" in ENVIRON ? ENVIRON["EDITOR"] : "sensible-editor") " " DoApostrofu(ENVIRON["HOME"] "/.config/lkk/skripty/" ARGUMENTY[0]) > bashout;
+            print "exec " EDITOR " " nova_cesta > bashout;
             exit;
 
         case "f": # najít skript
@@ -155,16 +165,14 @@ BEGIN {
 
         case "p": # vypsat skript
             if (nova_cesta == "") {
-                print "lkk: skript či úryvek " ARGUMENTY[0] " nenalezen!" > stderr;
-                exit 1;
+                ShoditFatalniVyjimku("skript či úryvek " ARGUMENTY[0] " nenalezen!");
             }
             print "exec cat " DoApostrofu(nova_cesta) > bashout;
             exit;
 
         case "r": # spustit skript
             if (nova_cesta == "") {
-                print "lkk: skript či úryvek " ARGUMENTY[0] " nenalezen!" > stderr;
-                exit 1;
+                ShoditFatalniVyjimku("skript či úryvek " ARGUMENTY[0] " nenalezen!");
             }
             prikaz = "exec " DoApostrofu(nova_cesta);
             for (i = 1; i < POCET_ARGUMENTU; ++i) {
@@ -205,4 +213,9 @@ function VyhledatSkript(cesta, skript) {
     cesta = DoApostrofu(nova_cesta);
     if (system("test -f " cesta " -a -r " cesta (("-x" in PREP_VOLBY) ? " -a -x " cesta : "")) != 0) {return ""}
     return nova_cesta;
+}
+
+function PromennaProstredi(nazev, nahradniHodnota) {
+    if (nazev in ENVIRON && ENVIRON[nazev] != "") {return ENVIRON[nazev]}
+    return nahradniHodnota;
 }

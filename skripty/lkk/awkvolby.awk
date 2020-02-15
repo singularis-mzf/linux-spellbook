@@ -117,7 +117,7 @@ function ZpracovatParametry(priznaky,   i, i_parametru, j, nazev) {
 
     i = 1;
     while (i < ARGC && ARGV[i] != "--") {
-        if (ARGV[i] ~ /^(--|\+)[^-+=]+$/) {
+        if (ARGV[i] ~ /^(--|\+)[^-+=][^+=]*$/) {
             # tvar „--název“, „+název“,, popř. „--název hodnota“ nebo „+název hodnota“
             nazev = awkvolby_prelozitvolbu(ARGV[i]);
             nazev == "" && awkvolby_chyba("Neznámá dlouhá volba: " ARGV[i]);
@@ -126,8 +126,8 @@ function ZpracovatParametry(priznaky,   i, i_parametru, j, nazev) {
             } else {
                 awkvolby_zpracovatprepinac(nazev, 1, ARGV[++i]);
             }
-        } else if (ARGV[i] ~ /^(--|\+)[^-+=]+=/) {
-            # tvar „--název=parametr“ nebo „+název=parametr“
+        } else if (ARGV[i] ~ /^(--|\+)[^-+=][^+=]*=/) {
+            # tvar „--název-volby=parametr“ nebo „+název-volby=parametr“
             priznaky !~ /!/ || awkvolby_chyba("Zadávání parametrů syntaxí --volba=parametr není podporováno!");
             nazev = awkvolby_prelozitvolbu(gensub(/=.*/, "", 1, ARGV[i]));
             awkvolby_zpracovatprepinac(nazev, 1, gensub(/^[^=]*=/, "", 1, ARGV[i]));
