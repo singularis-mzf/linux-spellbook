@@ -512,9 +512,12 @@ BEGIN {
         C_KAPITOLY = $8 - 1;
         # štítky
         STITKY = gensub(/\}\{/, "|", "g", gensub(/^\{|\}$|^NULL$/, "", "g", $9));
+        # ikona kapitoly
+        IKONA_KAPITOLY = $11;
     } else {
         C_KAPITOLY = 0;
         STITKY = "";
+        IKONA_KAPITOLY = "ik-vychozi.png";
     }
 
     # Načíst zvýraznění
@@ -682,7 +685,7 @@ TYP_RADKU == "NADPIS" {
         C_PODSEKCE = 0;
         delete ppcall;
         delete pptall;
-        printf("%s", ZacatekKapitoly(KAPITOLA, ++C_KAPITOLY, STITKY, OSNOVA));
+        printf("%s", ZacatekKapitoly(KAPITOLA, ++C_KAPITOLY, STITKY, OSNOVA, IKONA_KAPITOLY));
         if (tolower(KAPITOLA) == "licence") {
             printf("%s", ZapnoutRezimLicence());
         }

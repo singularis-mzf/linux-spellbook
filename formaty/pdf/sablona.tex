@@ -155,10 +155,21 @@
 
 % {titlesec}:
     \titleclass{\chapter}{top}\relax%
-    \newcommand{\chapterbreak}{\clearpage}% začínat kapitolu na nové straně
-    \titleformat{\chapter}[hang]{\normalfont\fontsz{17pt}\bfseries}%
-        {\settowidthwithminimum{\tmpsirkastitku}{\mbox{\thechapter}}{20pt}\makebox[\tmpsirkastitku][l]{\thechapter}}%
-        {0.33em}{}\relax
+    \newcommand*{\chapterbreak}{\clearpage}% začínat kapitolu na nové straně
+    \newcommand*{\vlozitikonukapitoly}{}%
+    \titleformat{\chapter}[hang]{%
+            % formátování před vlastním nadpisem:
+            \normalfont\fontsz{17pt}\bfseries%
+        }{%
+            % číslovka:
+            \vlozitikonukapitoly\hspace{0.5em}\thechapter\hspace{0.4em}\mbox{}%
+        }{%
+            % mezera mezi číslovkou a nadpisem:
+            0pt%
+        }{%
+            % kód před vlastním nápisem:
+        }\relax
+        %\includegraphics[width=2em,height=2em]{../../obrazky/ik/awk.png}
     \titlespacing*{\chapter}{0pt}{-1ex}{2ex plus2ex minus0.5ex}\relax
 
     \titleformat{\section}[hang]{\normalfont\fontsz{12pt}\bfseries}%
@@ -379,10 +390,11 @@
 }
 
 \newcommand*{\nazevkapitoly}{}
-\newcommand*{\kapitola}[4][]{% \kapitola{index-umístění-úchytu}{ZKR}{Název}
+\newcommand*{\kapitola}[5][]{% \kapitola{index-umístění-úchytu}{ZKR}{Název}{ikona-kapitoly.png}
     \clearpage%
     \renewcommand*{\generovatuchytkapitoly}{\uchytkapitoly{#2}{#3}}%
     \renewcommand*{\nazevkapitoly}{#4}%
+    \renewcommand*{\vlozitikonukapitoly}{\raisebox{-0.65em}{\includegraphics[width=2em,height=2em]{#5}}}%
     \chapter{#4}%
 }
 

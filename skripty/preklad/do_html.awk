@@ -66,7 +66,7 @@ function Tabulator(delka,  i, vysledek) {
 
 # + OSNOVA, DELKA_OSNOVY
 
-function ZacatekKapitoly(kapitola, cisloKapitoly, stitky, osnova,   vysledek, polozky, jePrvni, melaPodsekce, maPodsekce, poleStitku, i, n) {
+function ZacatekKapitoly(kapitola, cisloKapitoly, stitky, osnova, ikonaKapitoly,   vysledek, polozky, jePrvni, melaPodsekce, maPodsekce, poleStitku, i, n) {
 # Generování prvku <h1> obstarává šablona kapitoly (formaty/html/sablona_kapitoly).
 #    return "<h1>" kapitola "</h1>\n";
     vysledek = "";

@@ -236,11 +236,11 @@ function Tabulator(delka,  i, vysledek) {
     return "\\textcolor{seda}{\\guillemotright}{" Zopakovat("~", max(0, delka - 1)) "}";
 }
 
-function ZacatekKapitoly(kapitola, cisloKapitoly, stitky, osnova,   kapitolaVelkymi, zkratkaKapitoly) {
+function ZacatekKapitoly(kapitola, cisloKapitoly, stitky, osnova, ikonaKapitoly,   kapitolaVelkymi, zkratkaKapitoly) {
     DO_LATEXU_ODSTAVEC_PRED_ZAKLINADLEM = 0;
     kapitolaVelkymi = toupper(kapitola);
     zkratkaKapitoly = SubstrZleva(gensub(/[^[:alnum:]]/, "", "g", kapitolaVelkymi), 3);
-    kapitola = "\\kapitola{" ((cisloKapitoly - 1) % 21) "}{" zkratkaKapitoly "}{" kapitolaVelkymi "}%\n\\label{kapx" ID_KAPITOLY_OMEZENE "}";
+    kapitola = "\\kapitola{" ((cisloKapitoly - 1) % 21) "}{" zkratkaKapitoly "}{" kapitolaVelkymi "}{../pdf-spolecne/_obrazky/" ikonaKapitoly "}%\n\\label{kapx" ID_KAPITOLY_OMEZENE "}";
     if (stitky != "") {
         gsub(/\|/, "} \\stitek{", stitky);
         return kapitola "\\noindent\\stitek{" stitky "}\n";
