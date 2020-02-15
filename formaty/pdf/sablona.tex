@@ -35,13 +35,26 @@
 %
 {{POKUD JE FORMÁT pdf-a4}}
 
+% Poznámka pro všechny formáty: při změně vnějšího okraje („outer“) je nutno upravit definici příkazu „\uchytkapitoly“!
+%
 %% A4 = 21.0cm ⨉ 29.7cm
-\usepackage[xetex,a4paper,inner=1.5cm,outer=1cm,top=2cm,bottom=1.5cm]{geometry}
+\usepackage[xetex,
+    layout=a4paper,inner=1.5cm,outer=1cm,top=2cm,bottom=1.5cm,
+    twoside,showcrop,
+    layouthoffset=8mm,layoutvoffset=8mm,
+    papersize={22.6cm,31.3cm}
+    ]{geometry}
 {{KONEC POKUD}}
 {{POKUD JE FORMÁT pdf-b5}}
 
 %% B5 = 17.6cm ⨉ 25.0cm
-\usepackage[xetex,b5paper,inner=1.5cm,outer=1cm,top=1.75cm,bottom=1.25cm]{geometry}
+%% + odstup značek 3mm + spadávka 5mm = +8mm na každé straně, tzn. +16mm celkem
+\usepackage[xetex,
+    layout=b5paper,inner=1.5cm,outer=1cm,top=1.75cm,bottom=1.25cm,
+    twoside,showcrop,
+    layouthoffset=8mm,layoutvoffset=8mm,
+    papersize={19.2cm,26.6cm}
+    ]{geometry}
 {{KONEC POKUD}}
 
 % geometry: + showframe pro ladění
@@ -75,14 +88,45 @@
     \setlength{\dashlength}{3pt}    % vzdálenost od začátku čárky k začátku další
 
 % {fancyhdr}:
+    \newcommand*{\kapitolavnadpisu}{{%
+        \ttfamily%
+        \ifnumcomp{\value{chapter}}{>}{0}{%
+            \nazevkapitoly\makebox[1.5em]{\symbol{126}}\thechapter%
+        }{%
+            \mbox{}%
+        }}}%
+    % \uchytkapitoly{#1=index umístění (0 až N)}{#2=zkratka (tři písmena)}
+    % při změně vnějšího okraje stránky přizpůsobit hodnoty -15mm a 14mm!
+    \newcommand*{\uchytkapitoly}[2]{%
+        \ifnumodd{\value{page}}{\umistit{1mm}}{\umistit{-15mm}}%
+        {-#1cm-\headsep}{\rotatebox{270}{%
+        \begin{tcolorbox}[size=minimal,width=1cm,height=14mm,halign=center,valign=bottom,colback=cerna,top=1mm,bottom=1mm,left=0pt,right=0pt]%
+            \ifnumodd{\value{page}}{\color{bila}\sffamily\mbox{#2}}{\mbox{}}%
+        \end{tcolorbox}%
+        }}%
+    }%
+    \newcommand*{\generovatuchytkapitoly}{}%
     \fancypagestyle{normalni}{%
         \fancyhead{}\fancyfoot{}%
-        \fancyhead[RE,RO]{{\ttfamily%
-            \ifnumcomp{\value{chapter}}{>}{0}{%
-                \nazevkapitoly\makebox[1.5em]{\symbol{126}}\thechapter%
-            }{\mbox{}}%
-        }}
-        \fancyhead[LE,LO]{{\ttfamily LINUX: Kniha kouzel}}%
+        % vnější strana sudých stran
+        \fancyhead[LE]{%
+            \generovatuchytkapitoly{}%
+            {\ttfamily LINUX: Kniha kouzel}%
+        }%
+        % vnitřní strana sudých stran:
+        \fancyhead[RE]{%
+            \kapitolavnadpisu%
+        }%
+        % vnitřní strana lichých stran:
+        \fancyhead[LO]{%
+            {\ttfamily LINUX: Kniha kouzel}%
+        }%
+        % vnější strana lichých stran:
+        \fancyhead[RO]{%
+            \kapitolavnadpisu%
+            \generovatuchytkapitoly{}%
+        }%
+        %
         \fancyfoot[LE,RO]{\thepage}%
         \renewcommand*{\headrulewidth}{0.2pt}%
         \renewcommand*{\footrulewidth}{\headrulewidth}%
@@ -153,10 +197,14 @@
     \makeatletter\renewcommand{\@tocrmarg}{\@pnumwidth plus1fil}\makeatother
 
 % {xcolor}:
+    \definecolor{bila}{gray}{1}
+    \definecolor{cerna}{gray}{0}
     \definecolor{cervena}{rgb}{1,0,0}
+
     \definecolor{svetleseda}{gray}{0.9}
     \definecolor{seda}{gray}{0.5}
     \definecolor{sedamezisloupci}{gray}{0.75}
+
     \definecolor{pozadizaklinadelA}{gray}{0.925}
     \definecolor{pozadizaklinadelB}{gray}{1.0}
 
@@ -276,6 +324,21 @@
 \newenvironment*{blok}{}{}
 \newcommand*{\fontsz}[1]{\fontsize{#1}{#1}\selectfont}%
 
+
+% +x(doprava)+y(nahoru){obsah}
+\newlength{\umistitunitlength}%
+\newcommand{\umistit}[3]{{%
+    \setlength{\umistitunitlength}{\unitlength}%
+    \setlength{\unitlength}{#1}%
+    \begin{picture}(0,0)\put(1,0){{%
+        \setlength{\unitlength}{#2}%
+        \begin{picture}(0,0)\put(0,1){{%
+            \setlength{\unitlength}{\umistitunitlength}%
+            #3%
+        }}\end{picture}%
+    }}\end{picture}%
+}}%
+
 % \settowidthwithminimum{\registr}{text}{minimum} − nastaví do \registru šířku textu, ne však pod uvedenou minimální hranici
 \newcommand*{\settowidthwithminimum}[3]{%
     \settowidth{#1}{#2}%
@@ -316,8 +379,11 @@
 }
 
 \newcommand*{\nazevkapitoly}{}
-\newcommand*{\kapitola}[2][]{%
-    \clearpage\renewcommand*{\nazevkapitoly}{#2}\chapter{#2}%
+\newcommand*{\kapitola}[4][]{% \kapitola{index-umístění-úchytu}{ZKR}{Název}
+    \clearpage%
+    \renewcommand*{\generovatuchytkapitoly}{\uchytkapitoly{#2}{#3}}%
+    \renewcommand*{\nazevkapitoly}{#4}%
+    \chapter{#4}%
 }
 
 \newcommand*{\sekce}[2][]{{%
