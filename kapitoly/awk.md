@@ -44,7 +44,7 @@ Navíc provádí AWK několik dalších, speciálních iterací, které vykonáv
 příkazů označené určitým klíčovým slovem (např. BEGIN).
 
 Vzorek nebo blok příkazů je dovoleno vynechat; vynecháme-li vzorek, blok příkazů se
-vykoná pro každý řádek (ale ne ve speciálních iteracích); vynecháme-li blok příkazů,
+vykoná pro každou řádku (ale ne ve speciálních iteracích); vynecháme-li blok příkazů,
 automaticky se doplní „{print $0}“.
 
 Nejčastějším tvarem vzorku je podmínka tvořená pouze literálem regulárního výrazu
@@ -56,7 +56,7 @@ Pozor! V AWK se řádky v souboru, indexy sloupců v záznamu, indexy čísly
 ## Definice
 
 * **Vzorek** (pattern) je podmínka, která určuje, zda se daný blok příkazů má v dané iteraci skriptu provést. Podmínkou může být obecný výraz, nebo jedno z klíčových slov, která identifikují speciální iterace.
-* **Záznam** (record) je typicky řádek vstupního souboru. Způsob ukončení záznamu ve vstupních souborech lze změnit nastavením speciální proměnné „RS“ (record separator) na jiný než výchozí oddělovač (výchozí oddělovač je "\\n").
+* **Záznam** (record) je typicky řádka vstupního souboru. Způsob ukončení záznamu ve vstupních souborech lze změnit nastavením speciální proměnné „RS“ (record separator) na jiný než výchozí oddělovač (výchozí oddělovač je "\\n").
 * Záznam se po načtení rozdělí do **sloupců** (fields). Způsob oddělení záznamů se nastavuje speciální proměnnou „FS“ (field separator); její výchozí hodnotou je mezera, která má speciální význam a považuje za oddělovač sloupců jakoukoliv neprázdnou posloupnost bílých znaků (odpovídá regulárnímu výrazu „\\s+“).
 * Regulární výraz může být zadán buď jako **literál** do lomítek, např. „/^a/“, nebo jako **dynamický regulární výraz**, kterým může být jakýkoliv řetězec či řetězcový výraz (např. "^a"). Tyto dva způsoby zadání jsou většinou víceméně rovnocenné, liší se escapováním (v literálu musíte escapovat všechny výskyty znaku „/“, a to i uvnitř hranatých závorek) a tím, že dynamický regularní výraz se nikdy automaticky nedoplní o prefix „$0&blank;~“, zatímco literál to dělá skoro vždy.
 
@@ -75,9 +75,9 @@ Pozor! V AWK se řádky v souboru, indexy sloupců v záznamu, indexy čísly
 **priznak {next}**<br>
 **$0 != "xyz" {print "ne-XYZ:";print $0;}**<br>
 **!/^#/**<br>
-**length($0) &gt; 5 \|\| /^%/ {print "Řádek " FNR " podmínku splnil."}**
+**length($0) &gt; 5 \|\| /^%/ {print "Řádka " FNR " podmínku splnila."}**
 
-*# vykonat blok příkazů pro každý řádek*<br>
+*# vykonat blok příkazů pro každou řádku*<br>
 {*{blok příkazů}*}
 
 *# před otevřením prvního souboru*<br>
@@ -90,7 +90,7 @@ Pozor! V AWK se řádky v souboru, indexy sloupců v záznamu, indexy čísly
 *# po otevření souboru (ale před načtením prvního řádku)*<br>
 **BEGINFILE** {*{blok příkazů}*}
 
-*# po zpracování posledního řádku souboru*<br>
+*# po zpracování poslední řádky souboru*<br>
 *// Pozor: zvláštní průchod ENDFILE se nevykoná, pokud je zpracování souboru předčasně ukončeno, např. příkazem „nextfile“ či „exit“.*<br>
 **ENDFILE** {*{blok příkazů}*}
 
@@ -275,16 +275,16 @@ a na konci může být sloupec „*“, který přijme libovolné množství da
 
 ### Speciální proměnné
 
-*# **načtený řádek** (bez oddělovače záznamu/s oddělovačem záznamu)*<br>
+*# **načtená řádka** (bez oddělovače záznamu/s oddělovačem záznamu)*<br>
 **$0**<br>
 **$0 RT**
 
-*# **číslo řádku** v souboru/celkově*<br>
+*# **číslo řádky** v souboru/celkově*<br>
 *// Do obou uvedených proměnných můžete také přiřadit novou hodnotu, a změnit tak číslování řádku pro zbytek souboru (resp. veškerého vstupu)*<br>
 **FNR**<br>
 **NR**
 
-*# **sloupec** načteného řádku (obecně/příklady...)*<br>
+*# **sloupec** načtené řádky (obecně/příklady...)*<br>
 **$**{*číselný-výraz*}<br>
 **$2**<br>
 **$12**<br>
@@ -383,7 +383,7 @@ Pokud soubor existuje, při otevření se jeho obsah smaže; pokud chcete přid�
 
 Poznámky k přesměrování vstupu: Prvním čtením ze souboru, který ještě není otevřen, se tento soubor automaticky otevře pro čtení a zůstané otevřený pro čtení dalších řádků, dokud ho neuzavřete funkcí close(). Analogicky platí, že čtení z příkazu, který ještě nebyl spuštěn, ho spustí a další čtení čtou z výstupu téže instance, dokud spojení neuzavřete funkcí „close()“.
 
-*# přečíst řádek ze souboru*<br>
+*# přečíst řádku ze souboru*<br>
 [**if (**]**getline** [{*PROMĚNNÁ*}] &lt; {*"řetězec/s/cestou/souboru"*}**)** {*tělo příkazu if*}
 
 *# přečíst jeden znak ze souboru*<br>
@@ -395,7 +395,7 @@ Poznámky k přesměrování vstupu: Prvním čtením ze souboru, který ješt�
 **RS = normalni\_RS;**<br>
 [**close(**{*"řetězec/s/cestou/souboru"*}**);**]
 
-*# načíst řádek z výstupu příkazu*<br>
+*# načíst řádku z výstupu příkazu*<br>
 [**if (**]{*"příkaz"*} **\| getline** [{*PROMĚNNÁ*}]**)** {*tělo příkazu if*}
 
 ### Koprocesy
@@ -582,7 +582,7 @@ TODO: Test.
 *# načíst jiný zdrojový soubor, jako by jeho obsah byl zapsán zde*<br>
 **@include "**{*cesta/k/souboru.awk*}**"**
 
-*# implementovat načítání řádků rozdělených znakem \\ před znakem konce řádku (tento kód vložit na začátek skriptu)*<br>
+*# implementovat načítání řádek rozdělených znakem \\ před znakem konce řádku (tento kód vložit na začátek skriptu)*<br>
 {*proměnná*} **!= "" {$0 =** {*proměnná*}**;** {*proměnná*} **= "";}**<br>
 **/(^|[<nic>^\\\\])(\\\\\\\\)\*\\\\$/ {**{*proměnná*} **= substr($0, 1, length($0) - 1); next;}**
 
@@ -633,7 +633,7 @@ Poznámka: Parametry -f a -e můžete kombinovat a zadávat opakovaně. Každ�
 * Hodnoty ARGC a ARGV je možno za běhu skriptu bez omezení měnit, a tím ovlivňovat, které další soubory gawk či mawk otevře. Na již otevřené soubory to ale nemá vliv.
 * Používání koprocesů vyžaduje pečlivou synchronizaci mezi procesy. Existuje dvě situace, které vedou k zamrznutí programu a musíte se jim vyhnout: 1) Pokus o přečtení řádku z výstupu koprocesu, zatímco koproces nezapisuje, ale sám čeká na další vstup. 2) Zapsání velkého množství dat (cca od desítek kilobajtů) na vstup koprocesu, která koproces nenačte. (V takovém případě se naplní buffer roury.)
 * V literálech regulárních výrazů je nutno escapovat obyčejná lomítka, a to dokonce i uvnitř hranatých závorek, např. „a\*[x\\/y]+“, v dynamických regulárních výrazech je není nutno escapovat.
-* Chcete-li příkaz pokračovat na dalším řádku, vložte před konec řádku „\\“.
+* Chcete-li příkaz pokračovat na další řádce, vložte před konec řádky „\\“.
 * Obsahuje-li skript pouze vzorky BEGIN a žádné jiné, AWK nebude otevírat vstupní soubory a po vykonání průchodu BEGIN okamžitě skončí. Toho lze využít k napsání programu, který vstup nezpracovává.
 * Nestojí-li za sekvencí zpětných lomítek v řetězci náhrady funkcí sub() a gsub() „&amp;“, chová se toto escapování nelogicky − méně než tři zpětná lomítka se použijí tak, jak jsou, a každá čtveřice zpětných lomítek se zredukuje na dvě zpětná lomítka a zbytek sekvence se bere jako od začátku, takže např. 6 zpětných lomítek (v řetězci zapsaných jako 12) zapíše při náhradě čtyři zpětná lomítka, protože první čtyři lomítka se zredukovala na dvě a zbylá dvě se vzala tak, jak jsou. Toto neplatí ve funkci gensub(), ta se chová konzistentně a každou dvojici zpětných lomítek zredukuje na jedno, ať za ní následuje ampresand nebo ne. Pokud tedy potřebujete nahrazovat shody regulárního výrazu zpětnými lomítky, doporučuji vždy řetězec náhrady předem otestovat a pamatovat, že funkce sub() a gsub() zachází se zpětnými lomítky, za kterými nenásleduje ampresand, jinak než funkce gensub().
 

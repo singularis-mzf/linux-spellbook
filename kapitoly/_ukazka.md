@@ -84,19 +84,19 @@ Položka seznamu může pokračovat na dalším řádku a obsahovat text **tuč
 **<tab>řádek začínající tabulátorem**<br>
 **<tab8><tab8>a řádek začínající dvěma tabulátory**<br>
 !: Akce (tzn. popis, co udělat − musí být na jednom řádku).<br>
-**&blank;řádek odsazený jednou mezerou**<br>
+**&blank;řádka odsazená jednou mezerou**<br>
 **&blank;&blank;..dvěma mezerami**<br>
 **&nbsp;řádek odsazený jednou nezlomitelnou mezerou**<br>
-**&nbsp;&nbsp;řádek odsazený dvěma nezlomitelnými mezerami**<br>
+**&nbsp;&nbsp;řádka odsazená dvěma nezlomitelnými mezerami**<br>
 **neinterpretovaný netučný nebílý znak v řádku zaklínadla je chybný jako tato tečka:** .<br>
 <odsadit1>**řádek odsazený o 1 úroveň**<br>
-<odsadit2>**řádek odsazený o 2 úrovně**<br>
+<odsadit2>**řádka odsazená o 2 úrovně**<br>
 <odsadit3>**řádek odsazený o 3 úrovně**<br>
-<odsadit4>**řádek odsazený o 4 úrovně**<br>
+<odsadit4>**řádka odsazená o 4 úrovně**<br>
 <odsadit5>**řádek odsazený o 5 úrovní**<br>
-<odsadit6>**řádek odsazený o 6 úrovní**<br>
+<odsadit6>**řádka odsazená o 6 úrovní**<br>
 <odsadit7>**řádek odsazený o 7 úrovní**<br>
-<odsadit8>**řádek odsazený o 8 úrovní (což je maximum)**
+<odsadit8>**řádka odsazená o 8 úrovní (což je maximum)**
 <!--
 Poznámka: ve Firefoxu se nezlomitelné mezery zkopírují do schránky jako obyčejné mezery.
 -->
