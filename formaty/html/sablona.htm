@@ -55,7 +55,7 @@ Varianty:
 </head>
 <body id="nahore">
 <header>
-<span class="left"><a href="index.htm"><img src="obrazky/favicon.png" width="16" height="16" alt=""></a> Linux: Kniha kouzel, {{JMÉNO VERZE}} ({{DATUM SESTAVENÍ}})</span>
+<span class="left"><a href="index.htm"><img src="obrazky/favicon.png" width="16" height="16" alt=""></a> Linux: Kniha kouzel, {{OZNAČENÍ VERZE}} ({{DATUM SESTAVENÍ}})</span>
 <span class="right"><span class="ico1"></span><span class="ico2"></span><span class="ico3"></span></span>
 </header>
 
@@ -188,7 +188,10 @@ pokročilým uživatelům sepisovat, přehledně organizovat a&nbsp;sdílet svoj
 („snippets“) a&nbsp;začátečníkům umožňuje je (pokročilé) přitom sledovat a&nbsp;odnést si z&nbsp;toho
 v&nbsp;rámci svých (začátečníků) schopností co nejvíc.</p>
 <div class="ikona"><img src="obrazky/kalendar.svg" alt="" height="64"></div>
-<p class="informaceoverzi">Verze:<br><em>{{JMÉNO VERZE}}</em>
+<p class="informaceoverzi">Verze:<br><em class="oznaceni">{{OZNAČENÍ VERZE}}</em>
+{{POKUD MÁ VERZE JMÉNO}}
+<em class="jmenoverze">{{JMÉNO VERZE}}</em>
+{{KONEC POKUD}}
 {{POKUD ZNÁME PŘEDEVŠÍM PRO}}
 <br>Především pro:<br><em>{{PŘEDEVŠÍM PRO}}</em>
 {{KONEC POKUD}}

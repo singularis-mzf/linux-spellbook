@@ -818,6 +818,7 @@ footer img {float:left;margin:0 1rem 1rem 0;}
 }
 .podzahlavim p.informaceoverzi {
     margin:0;
+    text-align:left;
     text-indent:0;
     width:20em;
 }
@@ -833,13 +834,15 @@ footer img {float:left;margin:0 1rem 1rem 0;}
     padding:0.2rem 0 0 1em;;
 }
 .podzahlavim p.informaceoverzi a::before {
-    content: "📚 ";
+    content:"📚 ";
     font-size:150%;
 }
 .podzahlavim p.informaceoverzi a::after {
-    content: normal;
+    content:normal;
 }
-
+.podzahlavim p.informaceoverzi em {
+    white-space:nowrap;
+}
 
 nav .slogan {
     position:absolute;top:0.15em;right:2%;

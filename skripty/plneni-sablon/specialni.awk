@@ -43,6 +43,8 @@ function Zacatek() {
 function Pokud(podminka) {
     if (podminka ~ /^JE FORMÁT ./) {
         return IDFORMATU == substr(podminka, 11);
+    } else if (podminka == "MÁ VERZE JMÉNO") {
+        return ZjistitJmenoVerze(JMENOVERZE) != "";
     } else {
         ShoditFatalniVyjimku("Neznámá direktiva {{POKUD " podminka "}}!");
     }
@@ -94,7 +96,8 @@ function RidiciRadek(text) {
 }
 
 function PrelozitVystup(radek) {
-    gsub(/\{\{JMÉNO VERZE\}\}/, EscapovatKNahrade(JMENOVERZE), radek);
+    gsub(/\{\{OZNAČENÍ VERZE\}\}/, EscapovatKNahrade(ZjistitOznaceniVerze(JMENOVERZE)), radek);
+    gsub(/\{\{JMÉNO VERZE\}\}/, EscapovatKNahrade(ZjistitJmenoVerze(JMENOVERZE)), radek);
     return radek;
 }
 

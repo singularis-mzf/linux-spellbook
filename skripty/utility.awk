@@ -210,3 +210,13 @@ function ZjistitPredevsimPro(verze) {
         return "";
     }
 }
+
+function ZjistitOznaceniVerze(textverze,   i) {
+    i = index(textverze, ",");
+    return i != 0 ? gensub(/^\s*|\s*$/, "", "g", substr(textverze, 1, i - 1)) : textverze;
+}
+
+function ZjistitJmenoVerze(textverze,   i) {
+    i = index(textverze, ",");
+    return i != 0 ? gensub(/^\s*|\s*$/, "", "g", substr(textverze, i + 1)) : "";
+}

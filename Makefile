@@ -74,7 +74,7 @@ JMENO := Sid $(DATUM_SESTAVENI)
 
 # Verze .deb-balíčku (automaticky generovaná, ale je dovoleno ji nastavit ručně)
 # ----------------------------------------------------------------------------
-DEB_VERZE := $(shell printf %s\\n "$(JMENO)" | head -n 1 | sed -E -e 's/Sid/0./g' -e 's/([0-9] ?)beta/\1@/g' | tr -cd '0123456789.@\n' | tr -s . | sed -E -e 's/@/-beta/g' -e 's/^\.|\.$$//g' -e 's/^$$/0/')
+DEB_VERZE := $(shell gawk -f skripty/extrakce/debverze.awk -- "$(JMENO)")
 
 # Soubory symbolizující nastavení (automaticky generované)
 # ----------------------------------------------------------------------------

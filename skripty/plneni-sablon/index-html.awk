@@ -70,6 +70,8 @@ function Pokud(podminka) {
         return IDFORMATU == substr(podminka, 11);
     } else if (podminka == "ZNÁME PŘEDEVŠÍM PRO") {
         return predevsim_pro != "";
+    } else if (podminka == "MÁ VERZE JMÉNO") {
+        return ZjistitJmenoVerze(JMENOVERZE) != "";
     } else {
         ShoditFatalniVyjimku("Neznámá direktiva {{POKUD " podminka "}}!");
     }
@@ -120,7 +122,8 @@ function PrelozitVystup(radek) {
     #gsub(/\{\{JMÉNO VERZE\}\}/, EscapovatKNahrade(JMENOVERZE), radek);
     gsub(/\{\{DATUM SESTAVENÍ\}\}/, datum, radek);
     gsub(/\{\{DATUMSESTAVENÍ\}\}/, DATUMSESTAVENI, radek);
-    gsub(/\{\{JMÉNO VERZE\}\}/, EscapovatKNahrade(JMENOVERZE), radek);
+    gsub(/\{\{JMÉNO VERZE\}\}/, EscapovatKNahrade(ZjistitJmenoVerze(JMENOVERZE)), radek);
+    gsub(/\{\{OZNAČENÍ VERZE\}\}/, EscapovatKNahrade(ZjistitOznaceniVerze(JMENOVERZE)), radek);
     gsub(/\{\{PŘEDEVŠÍM PRO\}\}/, EscapovatKNahrade(predevsim_pro), radek);
 
     return radek;

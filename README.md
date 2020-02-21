@@ -115,6 +115,7 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) | Zpracování textových souborů | 100% | vydána (od verze 1.2) |
 | [zpracovani-videa-a-zvuku](kapitoly/zpracovani-videa-a-zvuku.md) | Zpracování videa a zvuku | 100% | vydána (od verze 1.0) |
 | [sprava-procesu](kapitoly/sprava-procesu) | Správa procesů | 100% | připravena k vydání |
+| [soubory-a-adresare](kapitoly/soubory-a-adresare.md) | Soubory a adresáře | 90% | dítě |
 | [sed](kapitoly/sed.md) | Sed | 80% | dítě |
 | [sprava-uzivatelu](kapitoly/sprava-uzivatelu.md) | Správa uživatelů | 80% | dítě |
 | [hledani-souboru](kapitoly/hledani-souboru.md) | Hledání souborů | 70% | dítě |
@@ -124,7 +125,6 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [perl](kapitoly/perl.md) | Základy Perlu | 20% | dítě |
 | [moderni-veci](kapitoly/moderni-veci.md) | Moderní věci | 10% | dítě |
 | [unicode](kapitoly/unicode.md) | Unicode a emotikony | 10% | dítě |
-| [soubory-a-adresare](kapitoly/soubory-a-adresare.md) | Soubory a adresáře | 10% | dítě |
 | [zpracovani-binarnich-souboru](kapitoly/zpracovani-binarnich-souboru.md) | Zpracování binárních souborů | 10% | dítě |
 | [uzivatelska-rozhrani](kapitoly/uzivatelska-rozhrani.md) | Uživatelská rozhraní skriptů | 5% | dítě |
 | [apache](kapitoly/apache.md) | Webový server Apache | 5% | dítě |
@@ -132,6 +132,7 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [bash](kapitoly/bash.md) | Bash | 2% | dítě |
 | [diskove-oddily](kapitoly/diskove-oddily.md) | Diskové oddíly | 1% | dítě |
 | [firefox](kapitoly/firefox.md) | Firefox | 1% | dítě |
+| [grub](kapitoly/grub.md) | GRUB | 1% | dítě |
 | [konverze-formatu](kapitoly/konverze-formatu.md) | Konverze formátů | 0% | embryo |
 | [promenne](kapitoly/promenne.md) | Proměnné prostředí a interpretu | 0% | embryo |
 | [lkk](kapitoly/lkk.md) | Linux: Kniha kouzel | 0% | embryo |
@@ -139,7 +140,6 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | prehravani-videa | Přehrávání videa, zvuku a obrázků | - | přál/a bych si |
 | sifrovani | Šifrování a kryptografie | - | přál/a bych si |
 | firewall | Firewall | - | přál/a bych si |
-| grub | GRUB | - | přál/a bych si |
 | vim | Vim | - | přál/a bych si |
 | sql | SQL | - | přál/a bych si |
 | ascii-art | ASCII art | - | přál/a bych si |
