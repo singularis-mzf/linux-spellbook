@@ -27,7 +27,7 @@ BEGIN {
         print "debverze.awk: Chybný počet parametrů (" ARGC ")!" > "/dev/stderr";
     }
     s = gensub(/[,\n].*/, "", 1, ARGV[1]);
-    s = gensub(/^[^0-9.]*([0-9]+(\.[0-9]+)*).*$/, "\\1", 1, $1);
+    s = gensub(/^[^0-9.]*([0-9]+(\.[0-9]+)*).*$/, "\\1", 1, s);
     if (s == "") {s = "0"}
     if (tolower($1) ~ /sid/) {s = "0." s}
     if (tolower($1) ~ /beta/) {s = s "~beta"}
