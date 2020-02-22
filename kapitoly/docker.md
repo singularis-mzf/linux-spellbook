@@ -19,6 +19,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 # Docker
 
 !Štítky: {program}{kontejnery}{virtualizace}
+!FixaceIkon: 1754
 !ÚzkýRežim: zap
 
 ## Úvod

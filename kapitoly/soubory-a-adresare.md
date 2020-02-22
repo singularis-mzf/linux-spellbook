@@ -29,26 +29,18 @@ Poznámky:
 !ÚzkýRežim: zap
 
 ## Úvod
-<!--
-- Vymezte, co je předmětem této kapitoly.
-- Obecně popište základní principy, na kterých fungují používané nástroje.
-- Uveďte, co kapitola nepokrývá, ačkoliv by to čtenář mohl očekávat.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 Tato kapitola se zabývá prací s adresáři a jejich položkami (soubory, podadresáři apod.) včetně jejich metadat (např. přístupových práv či velikosti souborů).
 Nepokrývá činnosti, kde záleží na konkrétním obsahu souborů (tzn. ani určování skutečného typu souborů).
 
 ## Definice
-<!--
-- Uveďte výčet specifických pojmů pro použití v této kapitole a tyto pojmy definujte co nejprecizněji.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-* **Adresářová položka** je pojmenovaná položka v adresáři; obvykle je to soubor (přesněji − pevný odkaz na soubor), další adresář či symbolický odkaz, méně často zařízení (např. „/dev/null“), pojmenovaná roura apod. Název každé adresářové položky v jednom adresáři je jedinečný a může obsahovat jakékoliv znaky UTF-8 kromě nulového bajtu a znaku „/“.
+* **Adresářová položka** je pojmenovaná položka v adresáři; obvykle je to soubor (přesněji − pevný odkaz na soubor), další adresář či symbolický odkaz, méně často zařízení (např. „/dev/null“), pojmenovaná roura apod. Adresářové položky se identifikují svým **názvem**, který je v daném adresáři jedinečný a může obsahovat jakékoliv znaky UTF-8 kromě nulového bajtu a znaku „/“.
 * Adresářová položka je **skrytá**, pokud její název začíná znakem „.“.
 
 ### Přístupová práva souborů a adresářů
+
+Každá adresářová položka má vlastníka (což je některý uživatel, např. „root“), příslušnou skupinu (skupinu uživatelů) a nastavení přístupových práv. Přístupová práva se dělí do tří skupin: první skupina („u“) definuje práva vlastníka, druhá („g“) práva členů skupiny (případně kromě vlastníka) a třetí („o“) práva ostatních uživatelů. Pro pohodlnější nastavení práv všem třem skupinám se používá zkratka „a“.
 
 Právo *čtení* (r, read) znamená:
 
@@ -69,7 +61,7 @@ Právo *zmocnění* (s, set-uid a set-gid) se uplatňuje pouze pro vlastníka a
 
 * U souboru má právo zmocnění pro vlastníka (u+s) význam pouze v kombinaci s právem „x“ pro skupinu či ostatní a znamená, že proces vzniklý spuštěním daného souboru jiným uživatelem než vlastníkem dostane EUID vlastníka souboru a s ním i jeho práva. Nejčastějším použitím je získání práv superuživatele pro určitý program bez nutnosti zadávat jeho heslo.
 * Analogicky funguje u souboru právo zmocnění pro skupinu − proces vzniklý po spuštění daného souboru dostane EGID skupiny souboru.
-* U adresáře má význam pouze právo zmocnění pro skupinu − nově vytvořené adresářové položky v takovém adresáři budou příslušet skupině adresáře, ne skupině procesu, který je vytvořil. Nové poadresáře navíc získají hned při vytvoření právo zmocnění pro skupinu, takže bez další úpravy práv se tato vlastnost uplatní pro celý podstrom nově zřízených adresářových položek.
+* U adresáře má význam pouze právo zmocnění pro skupinu − nově vytvořené adresářové položky v takovém adresáři budou příslušet skupině adresáře, ne skupině procesu, který je vytvořil. Toto právo automaticky dědí nově vzniklé podadresáře.
 
 Právo *omezení smazání* (t, sticky-bit) se uplatňuje pouze pro „ostatní“ a má v současnosti význam pouze u adresářů, kde omezuje výkon práva „w“:
 
@@ -77,84 +69,89 @@ Právo *omezení smazání* (t, sticky-bit) se uplatňuje pouze pro „ostatní�
 
 Práva „s“ a „t“ se normálně vyskytují pouze v kombinaci s právem „x“, proto je příkaz „ls“ zobrazuje místo x; vyskytnou-li se bez práva „x“, zobrazí je příkaz „ls“ velkým písmenem − „S“ a „T“.
 
-Pro superuživatele mají z výše uvedených význam pouze následující práva:
-
-* Právo „x“ jen u souborů.
-* Právo „s“ jen u adresářů.
-
-Žádná ostatní uvedená práva nemají na superuživatele žádný vliv.
+Pro superuživatele většina uvedených práv neplatí, výjimkou jsou jen právo „x“ u souborů a právo „s“ u adresářů.
 
 !ÚzkýRežim: vyp
 
 ## Zaklínadla
-<!--
-- Rozdělte na podsekce a naplňte „zaklínadly“.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+### Testy adresářových položek
+
+*# je položka2 novější než položka1? (z hlediska času poslední úpravy)*<br>
+**test** {*položka2*} **-nt** {*položka1*}
+
+*# odkazují dvě položky na tutéž entitu (soubor, adresář apod.)?*<br>
+**test** {*položka1*} **-ef** {*položka2*}
+
+*# je položka2 větší než položka1?*<br>
+?
 
 ### Zjistit údaje o adresářových položkách
 
-*# typ adresářové položky (písmeno/čitelně pro člověka)*<br>
-?<br>
-**stat -c %F** {*cesta*}...
+*# existuje adresářová položka?*<br>
+**test -e** {*cesta*}
 
-*# přístupová práva (číselně/textově)*<br>
+*# je adresářová položka soubor/adresář/symbolický odkaz/pojmenovaná roura?*<br>
+**test -f** {*cesta*}<br>
+**test -d** {*cesta*}<br>
+**test -L** {*cesta*}<br>
+**test -p** {*cesta*}
+
+*# přístupová **práva** (číselně/textově)*<br>
 **stat -c %a** {*cesta*}...<br>
 **stat -c %A** {*cesta*}...
 
 *# počet pevných odkazů*<br>
 **stat -c %h** {*cesta*}...
 
-*# vlastník (název/UID)*<br>
+*# **vlastník** (jméno/UID)*<br>
 **stat -c %U** {*cesta*}...<br>
 **stat -c %u** {*cesta*}...
 
-*# skupina (název/GID)*<br>
+*# **skupina** (název/GID)*<br>
 **stat -c %G** {*cesta*}...<br>
 **stat -c %g** {*cesta*}...
 
-*# celková velikost (v bajtech/čitelně pro člověka)*<br>
+*# celková **velikost** (v bajtech/čitelně pro člověka)*<br>
 **stat -c %s** {*cesta*}...<br>
 **stat -c %s** {*cesta*}... **\| numfmt \-\-to iec**
 
 *# skutečně zabraný prostor na disku (v bajtech/čitelně pro člověka)*<br>
 **stat -c '%b\*%B'**  {*cesta*}... **\| bc**<br>
-?
+**stat -c '%b\*%B'**  {*cesta*}... **\| bc \| numfmt \-\-to iec**
 
 *# datum a čas poslední změny (pro člověka/časová známka Unixu)*<br>
 **stat -c %y** {*cesta*}...<br>
 **stat -c %Y** {*cesta*}...
 
+*# číslo **inode***<br>
+**stat -c %i** {*cesta*}...
+
+*# typ adresářové položky (písmeno/čitelně pro člověka)*<br>
+?<br>
+**stat -c %F** {*cesta*}...
+
 *# příslušný přípojný bod (kořenový adresář souboru systémů, na kterém se položka nachází)*<br>
 **stat -c %m** {*cesta*}...
 
-*# číslo inode*<br>
-**stat -c %i** {*cesta*}...
+### Změny adresářových položek
 
+*# **přejmenovat** adresářovou položku*<br>
+**mv** [{*parametry*}] {*původní-název*} {*nový-název*}
 
-
-### ...
-
-*# přejmenovat adresářovou položku*<br>
-**mv** [{*parametry*}]
-
-*# smazat adresářovou položku (kromě adresáře)*<br>
-**rm** [**-f**] {*cesta*}...
-
-*# smazat prázdný adresář*<br>
-**rmdir** {*cesta*}
-
-*# smazat adresář rekurzívně*<br>
+*# **smazat** adresářovou položku (jakoukoliv kromě adresáře/prázdný adresář/adresář rekurzívně)*<br>
+**rm** [**-f**] {*cesta*}...<br>
+**rmdir** {*cesta*}<br>
 **rm -r**[**f**]<nic>[**v**] {*cesta*}...
 
-*# vytvořit adresář*<br>
-**mkdir** [**-v**] {*cesta*}...
+### Aktuální adresář
 
-*# vytvořit adresář a všechny jemu nadřazené, jen pokud neexistují*<br>
-**mkdir -p**[**v**] {*cesta*}...
-
-*# přepnout aktuální adresář*<br>
-**cd** {*cesta*}
+<!--
+?
+-->
+*# přepnout aktuální adresář na zadanou cestu/na předchozí aktuální adresář*<br>
+**cd** {*cesta*}<br>
+**cd -**
 
 *# zjistit aktuální adresář*<br>
 **pwd**
@@ -162,17 +159,36 @@ Pro superuživatele mají z výše uvedených význam pouze následující prá
 *# přejít do domovského adresáře*<br>
 **cd**
 
-### Kopírování adresářů
+### Vytvořit adresářovou položku
 
-### Přístupová práva a vlastnictví
+*# vytvořit prázdný **adresář***<br>
+*// Parametr „-p“: vytvořit adresář, jen pokud ještě neexistuje; a v případě potřeby nejdřív vytvořit adresáře jemu nadřazené.*<br>
+**mkdir** [**-v**] <nic>[**-m** {*práva*}] <nic>[**-p**] {*název*}
+
+*# vytvořit prázdný **soubor***<br>
+**touch** {*název*}
+
+*# vytvořit symbolický odkaz*<br>
+**ln -s "**{*obsah/odkazu*}**"** {*název*}
+
+*# vytvořit pojmenovanou rouru*<br>
+**mkfifo** [**-m** {*práva*}] {*název*}...
+
+<!--
+### Kopírování adresářů
+-->
+
+### Změnit přístupová práva a vlastnictví
 
 *# zjistit přístupová práva souboru či adresáře (symbolicky/číselně)*<br>
-?<br>
-?
+*// Symbolické vyjádření práv zde odpovídá tomu, jak je vypisuje „ls“!*<br>
+**stat -c %A** {*cesta*}... ⊨ -rwxrwxr-t<br>
+**stat -c %a** {*cesta*}... ⊨ 1775
 
 *# nastavit/zrušit práva r, w nebo x u souboru či adresáře*<br>
-?<br>
-?
+*// Tip: místo znaku „+“ můžete použít také „=“. V takovém případě se v dané kategorii uvedená práva nastaví (jako u „+“) a neuvedená se smažou (jako u „-“).*<br>
+[**sudo**] **chmod** [**-R**] {*kdo-[ugoa]*}**+**{*práva-[rwxst]*} {*cesta*}...<br>
+[**sudo**] **chmod** [**-R**] {*kdo-[ugoa]*}**-**{*práva-[rwxst]*} {*cesta*}...
 
 *# změnit skupinu souboru či adresáře*<br>
 [**sudo**] **chgrp** [**-R**] <nic>[**-c**] {*nová-skupina*} {*cesta*}...
@@ -197,18 +213,7 @@ ale tmpfs je nepodporuje). Na rozdíl od přístupových práv účinkují i na
 **sudo chattr** [**-R**] **+a** {*cesta*}...<br>
 **sudo chattr** [**-R**] **-a** {*cesta*}...
 
-### Zjistit
-
-*# místo zabrané souborem na disku*<br>
-?
-
 ## Parametry příkazů
-<!--
-- Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.
-- Jinak by zde měl být přehled nejužitečnějších parametrů používaných nástrojů.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-
 ### mv
 
 *# *<br>
@@ -227,15 +232,12 @@ ale tmpfs je nepodporuje). Na rozdíl od přístupových práv účinkují i na
 
 * ☐ -p :: Vytvoří adresář, pokud ještě neexistuje. Je-li to třeba, vytvoří i nadřazené adresáře.
 * ☐ -v :: Vypisovat provedené operace.
-* ☐ --mode {*mód*} :: Vytvořenému adresáři nastaví uvedený mód. Ten může být zadán symbolicky (např. „u=rwx,g=rx,o=“) nebo číselně (např. „755“).
+* ☐ -m {*práva*} :: Vytvořenému adresáři nastaví uvedený mód. Ten může být zadán symbolicky (např. „u=rwx,g=rx,o=“) nebo číselně (např. „755“).
 
 
 ## Instalace na Ubuntu
-<!--
-- Jako zaklínadlo bez titulku uveďte příkazy (popř. i akce) nutné k instalaci a zprovoznění všech nástrojů požadovaných kterýmkoliv zaklínadlem uvedeným v kapitole. Po provedení těchto činností musí být nástroje plně zkonfigurované a připravené k práci.
-- Ve výčtu balíčků k instalaci vycházejte z minimální instalace Ubuntu.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+Všechny použité nástroje jsou základními součástmi Ubuntu.
 
 ## Ukázka
 <!--

@@ -171,15 +171,21 @@ Délka je nezáporný počet bajtů, případně s násobící příponou „K�
 
 -->
 
-### Patchování
+### Záplatování
 
 <!--
 Možnosti:
 - bsdiff (jen pro malé soubory)
 - rdiff
 - xdelta (selhala na zkušebním vstupu)
-
 -->
+
+*# vytvořit záplatu*<br>
+**rdiff \-\- signature** {*původní-soubor*} **- \| rdiff** [**-s**] **\-\- delta -** {*nový-soubor*} **- \| gzip -9 &gt;**{*cíl-záplata.gz*}
+
+*# aplikovat záplatu*<br>
+**zcat** {*záplata.gz*} **\| rdiff** [**-s**] **\-\- patch** {*původní-soubor*} **- - &gt;**{*cíl-soubor*}
+
 
 ## Parametry příkazů
 <!--

@@ -90,6 +90,28 @@ Poznámky:
 
 ### Asociativní pole
 
+*# **vytvořit***<br>
+**unset** {*název*}<br>
+**declare -A** {*název*}
+
+*# **zrušit***<br>
+**unset** {*název*}
+
+*# **zkopírovat***<br>
+**asockopirovat** {*zdrojovépole*} {*cílovépole*}
+
+*# **přiřadit** hodnotu prvku*<br>
+*// Přiřazujete-li hodnotu jiné proměnné, nejsou uvozovky nutné.*<br>
+{*názevpole*}**[**{*klíč*}**]="**{*hodnota*}**"**
+
+*# zjistit **počet** prvků*<br>
+**${#**{*název*}**[@]}**
+
+*# obsahuje prvek se zadaným klíčem? (alternativy)*<br>
+**asocexist** {*názevpole*} **"**{*klíč*}**"**<br>
+**test -v '**{*názevpole*}[**{*klíč*}**]**'**<br>
+**test -v "**{*názevpole*}**[**{*$proměnná\_s\_klíčem*}**]"**
+
 
 ## Parametry příkazů
 <!--
@@ -145,3 +167,23 @@ Co hledat:
 * [Stránky TL;DR](https://github.com/tldr-pages/tldr/tree/master/pages/common)
 
 !ÚzkýRežim: vyp
+
+## Pomocné funkce
+
+*# asocexist() − testuje, zda v asociativním poli $1 existuje prvek $2*<br>
+**function asocexist() { test -v "$1[${2@Q}]"; }**
+
+*# asockopirovat() − kopií asociativního pole $1 přepíše proměnnou $2*<br>
+**function kopirovatasocpole() \{**
+<odsadit1>**declare -p "$1" &gt;/dev/null \|\| return $?**<br>
+<odsadit1>**: '^declare -\\S\*A'**<br>
+<odsadit1>**if [[ $(declare -p "$1") =~ $\_ ]]**<br>
+<odsadit1>**then**<br>
+<odsadit2>**unset "$2" &amp;&amp;**<br>
+<odsadit2>**declare -Ag "$2" &amp;&amp;**<br>
+<odsadit2>**eval "for \_ in \\"\\${!$1[@]}\\"; do $2[\\$\_]=\\${$1[\\$\_]}; done"**<br>
+<odsadit1>**else**<br>
+<odsadit2>**printf 'kopirovatasocpole: Není asociativní pole: %s\\n' "$1" &gt;&amp;2**<br>
+<odsadit2>**false**<br>
+<odsadit1>**fi**<br>
+**\}**

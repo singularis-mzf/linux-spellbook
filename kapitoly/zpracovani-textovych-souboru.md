@@ -354,15 +354,15 @@ Pro formát tsvz použijte „RS="\\0";“, pro tsv jej vynechejte.
 ### Vybrat/spojit sloupce
 
 *# vzít určité sloupce (obecně/příklad)*<br>
-**cut -c** {*specifikace-množiny*} [{*soubor*}]...<br>
-**cut -c 25-37,41-46**
+?<br>
+?
 
 *# vynechat určité sloupce*<br>
-**cut \-\-complement -c** {*specifikace-množiny*} [{*soubor*}]...<br>
+**colrm** {*první-vynechaný*} [{*poslední-vynechaný*}] <nic>[**&lt;** {*soubor*}]
 
 *# vynechat prvních/posledních deset znaků každého řádku*<br>
-**cut -c 11-**<br>
-**rev \| cut -c 11- \| rev**
+**colrm 1 10**<br>
+**sed -E 's/.{,10}$//'**
 
 ### Filtrace podle obsahu sloupců
 
@@ -490,9 +490,9 @@ Vzít/vynechat záznamy,...
 
 !parametry:
 
-* ☐ -d {*oddělovač*} :: Nastaví oddělovač sloupců pro parametr -f; výchozí je "\\t", což znamená tabulátor.
-* ○ -f {*sloupce*} ○ -c {*znaky*} ○ -b {*bajty*} :: Definuje množinu sloupců, znaků či bajtů každého záznamu, které mají být propuštěny. Pozor, pořadí ani duplicity nemají vliv na výstup! Příklad specifikace: „7,13-15,-3,20-“
-* ☐ --complement :: Neguje definovanou množinu − vybrané sloupce, znaky či bajty vypustí a vezme zbytek.
+* ☐ -d {*oddělovač*} :: Nastaví oddělovač sloupců pro parametr -f; výchozí je "\\t", což znamená tabulátor. Používejte pouze znaky ASCII.
+* ○ -f {*sloupce*} ○ -b {*bajty*} :: Definuje množinu sloupců či bajtů každého záznamu, které mají být propuštěny. Pozor, pořadí ani duplicity nemají vliv na výstup! Příklad specifikace: „7,13-15,-3,20-“
+* ☐ --complement :: Neguje definovanou množinu − vybrané sloupce či bajty vypustí a vezme zbytek.
 * ☐ -z :: Ukončovač záznamu je \\0 místo \\n.
 
 ### join

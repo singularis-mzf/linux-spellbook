@@ -140,6 +140,24 @@ Rovněž nepokrývá vypalování DVD.
 [ ] mkfs.fat => 12|16|32
 -->
 
+### Jmenovka
+
+*# zjistit jmenovku odkládacího oddílu/ext4*<br>
+**sudo swaplabel** {*/dev/oddíl*} **\| sed -nE 's/^LABEL:\\s\*//;T;p'**<br>
+**sudo e2label** {*/dev/oddíl*}
+
+*# nastavit jmenovku odkládacího oddílu/ext4*<br>
+**sudo swaplabel -L "**{*novájmenovka*}**"** {*/dev/oddíl*}<br>
+**sudo e2label** {*/dev/oddíl*} **"**{*novájmenovka*}**"**
+
+*# smazat jmenovku odkládacího oddílu/ext4*<br>
+**sudo swaplabel -L ""** {*/dev/oddíl*}<br>
+**sudo e2label** {*/dev/oddíl*} **""**
+
+<!--
+Viz: https://wiki.archlinux.org/index.php/Persistent_block_device_naming
+-->
+
 ### Ostatní
 
 *# zálohovat diskový oddíl do souboru (přímo/komprimovaný)*<br>

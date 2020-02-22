@@ -23,7 +23,7 @@ https://www.sallyx.org/sally/linux/prikazy/sed
 ⊨
 -->
 
-# GNU sed
+# Sed
 
 !Štítky: {program}{syntaxe}{zpracování textových souborů}
 
@@ -37,7 +37,39 @@ https://www.sallyx.org/sally/linux/prikazy/sed
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+GNU sed je nástroj příkazové řádky pro zpracování textového souboru (txt či txtz) po záznamech.
+Nejčastěji je užíván díky své schopnosti testovat záznamy vůči regulárním výrazům a nahrazovat
+jejich shody. Ve skutečnosti nenabízí o mnoho víc. Jeho hlavními výhodami jsou, že je rychlý,
+přítomný skoro v každé linuxové instalaci a plně podporuje UTF-8.
+
+Sed pracuje tak, že v cyklu načítá záznamy ze vstupních souborů a na každý záznam spustí
+skript (zadaný typicky přímo na příkazové řádce, jen vzácně se ukládá do samostatného souboru).
+Není-li zadán
+
 ## Definice
+
+* **Prostor** je proměnná v Sedu − je to oblast, do které se ukládají textové záznamy nebo jiné hodnoty. V Sedu existuje pouze pevně daný počet prostorů.
+* **Pracovní prostor** je prostor, do kterého se normálně na začátku každého cyklu přiřadí další načtený záznam. (Může však obsahovat i více záznamů.) Existují dva způsoby, jak na pracovní prostor nahlížet: většina příkazů ho vidí jako uspořádaný seznam záznamů, kde každý záznam je uveden včetně svého ukončovače; tzn. např. „ab\\n“ a „cd\\n“. Příkaz „s“ ovšem vidí pracovní prostor jinak − jako řetězec, kde jsou tyto záznamy spojeny dohromady, ovšem ukončovač posledního záznamu je odsunut mimo.
+* **Paměť** je pomocný prostor, do kterého lze záznamy z pracovního prostoru přenést či je připojit.
+* **Příznak** je booleovská proměnná, která se nastavuje na hodnotu 1, když příkaz „s“ úspěšně provede náhradu. Na hodnotu 0 se nastavuje na začátku cyklu a po provedení příkazu „t“ či „T“.
+* **Počítadlo záznamů** je číselná proměnná − na počátku má hodnotu 0 a inkrementuje se pokaždé, když je ze vstupu načten záznam.
+
+### Cyklus sedu
+
+Sed prochází skript v těchto krocích:
+
+1) Smaž pracovní prostor.
+
+2) Načti další záznam ze vstupu a připoj ho na konec pracovního prostoru.
+
+3) Projdi skript, vyhodnocuj podmínky a vykonávavej odpovídající příkazy.
+
+4) Nebyl-li sed volán s parametrem „-n“, vypiš pracovní prostor včetně odděleného ukončovače záznamu.
+
+5) Vypiš připojovací frontu a vyprázdni ji.
+
+6) Pokud nebyl v tomto cyklus skriptu proveden příkaz „q“, jdi zpět na krok 1.
+
 <!--
 - Uveďte výčet specifických pojmů pro použití v této kapitole a tyto pojmy definujte co nejprecizněji.
 -->
