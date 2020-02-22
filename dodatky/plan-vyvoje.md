@@ -16,6 +16,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 ## Chystané kapitoly
 
+* „Proměnné prostředí“ (printenv a další možnosti)
+* „Hledání souborů“ (find, locate, whereis a další)
 * „Unicode a emotikony“ („mapa znaků“, vzorníky a různé symboly)
 * „Základy Perlu“ (jednoduše, konzistentně)
 * „Komplexní textové formáty“ (JSON, XML apod.)
@@ -29,7 +31,6 @@ https://creativecommons.org/licenses/by-sa/4.0/
 * „GRUB“ (konfigurace, dualboot, nastavení grafického pozadí)
 * „Vim“ (základní a mírně pokročilé ovládání)
 * „Záznam obrazovky“ (maim, ffmpeg a další)
-* „Hledání souborů“ (find, locate, whereis a další)
 * „Soubory a adresáře“ (vytváření, mazání, fallocate, truncate, kopírování, práva a atributy)
 * „Pevné a symbolické odkazy“
 * „Bash“ (syntaxe, rozvoj proměnných, exec, přesměrování, roury a další)
@@ -38,8 +39,6 @@ https://creativecommons.org/licenses/by-sa/4.0/
 * „ASCII art“ (banner, toilet a další)
 * „Wine“ (parametry, konfigurace, zkušenosti, wine-prefixy apod.)
 * „Správa balíčků 2“ (apt-src, apt-mirror, aptly)
-* „Správa procesů“ (ps, pgrep, pstree, kill, nice, nohup apod.)
-* „Proměnné prostředí“ (printenv a další možnosti)
 * „Matematické výpočty“ (bc, dc, expr apod.)
 
 <!--
@@ -55,11 +54,11 @@ nebo komentářem na GitHubu. Váš zájem mě určitě potěší a povzbudí.
 
 ## Chystaný vývoj formátování a mechanismu překladu
 
-* Ikony pro kapitoly i v PDF variantách a na zbytku míst v HTML variantě.
-* Podpora poznámek pod čarou i mimo zaklínadla.
-* Rozdílné ikony pro jednotlivá zaklínadla.
 * Vylepšovat design a přehlednost HTML varianty.
 * Vylepšovat design a přehlednost PDF variant.
+<!--
+* Podpora poznámek pod čarou i mimo zaklínadla.
+-->
 
 ## Možný přechod na jazyk Perl
 

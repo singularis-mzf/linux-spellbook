@@ -15,7 +15,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 „Linux: Kniha kouzel“ je open source sbírka velmi krátkých řešených příkladů pro příkazovou řádku/příkazový řádek systému Linux, především distribuce Ubuntu. V současnosti je dostupná ve formátu HTML pro zobrazení na počítači a ve formátu PDF pro tisk na papír.
 
-Verze 1.3 je cílena na *Ubuntu 18.04 Bionic Beaver* a jeho deriváty.
+Verze *vanilková příchuť 1.4 Alžběta Altmanová*, je cílena na *Ubuntu 18.04 Bionic Beaver* a jeho deriváty.
 
 Příručka podléhá licenci [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 Podrobné údaje o autorství zdrojových souborů jsou uvedeny v komentářích v jejich záhlaví;
@@ -114,7 +114,7 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [system](kapitoly/system.md) | Systém | 100% | vydána (od verze 1.2) |
 | [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) | Zpracování textových souborů | 100% | vydána (od verze 1.2) |
 | [zpracovani-videa-a-zvuku](kapitoly/zpracovani-videa-a-zvuku.md) | Zpracování videa a zvuku | 100% | vydána (od verze 1.0) |
-| [sprava-procesu](kapitoly/sprava-procesu) | Správa procesů | 100% | připravena k vydání |
+| [sprava-procesu](kapitoly/sprava-procesu) | Správa procesů | 100% | vydána (od verze 1.4) |
 | [soubory-a-adresare](kapitoly/soubory-a-adresare.md) | Soubory a adresáře | 90% | dítě |
 | [sed](kapitoly/sed.md) | Sed | 80% | dítě |
 | [sprava-uzivatelu](kapitoly/sprava-uzivatelu.md) | Správa uživatelů | 80% | dítě |
@@ -160,7 +160,7 @@ Zvláštní kapitoly:
 ## Podobné projekty
 
 * [Pure Bash Bible](https://github.com/dylanaraps/pure-bash-bible) (anglicky, licence: MIT) je také kniha řešených příkladů (ačkoliv e-book) a rovněž se snaží nabízet ověřená a co nejlepší řešení. (Autor dokonce na svoje příkazy píše automatizované testy.) Ve srovnání s Linuxem: Knihou kouzel je ale omezená pouze na příkazový interpret „bash“, zatímco Linux: Kniha kouzel se snaží pokrýt celou škálu nástrojů dostupných na linuxových systémech a nabízí větší kvantitu.
-* [The Linux Documentation Projekt](http://www.tldp.org/) (anglicky, licence: GFDL 1.2, některé části i pod jinými svobodnými licencemi) je monumentální sbírka návodů a příruček mapující Linux. Je již ovšem prakticky neudržovaná a většinou velmi zastaralá. K návštěvě ji mohu doporučit jen „počítačovým archeologům“, rozhodně ne současným začátečníkům.
+* [The Linux Documentation Project](http://www.tldp.org/) (anglicky, licence: GFDL 1.2, některé části i pod jinými svobodnými licencemi) je monumentální sbírka návodů a příruček mapující Linux. Je již ovšem prakticky neudržovaná a většinou velmi zastaralá. K návštěvě ji mohu doporučit jen „počítačovým archeologům“, rozhodně ne současným začátečníkům.
 * [TL;DR](https://github.com/tldr-pages/tldr) (anglicky − „Too Long; Didn't Read“, licence: MIT) představuje výrazně zjednodušené manuálové stránky s krátkými příklady k jednotlivým nástrojům. Na rozdíl od *Linuxu: Knihy kouzel* je organizován po nástrojích, takže musíte vědět, k čemu chcete nápovědu, a neporadí vám lepší nástroje k provedení dané činnosti. Ke každému nástrojí navíc uvádí jen nejběžnější příklady. Kladem je, že jeden z jeho klientů je dostupný jako balíček [Ubuntu](https://packages.ubuntu.com/bionic/tldr) a [Debianu](https://packages.debian.org/buster/tldr).
 * [eg](https://github.com/srsudar/eg) (anglicky, licence MIT) je projektu *Linux: Kniha kouzel* asi nejpodobnější. Nabízí zjednodušené a velmi praktické „manuálové stránky“ s vynikajícím zvýrazňováním syntaxe, snadným přístupem a možností je snadno upravovat (v Markdownu). Jediným jeho nedostatkem je opět orientace na dokumentaci nástrojů spíš než na řešení úloh. Také již není příliš aktivně vyvíjen (poslední verze 1.1.1 je z října 2018). (Mimochodem, autor má smysl pro humor, když radí přejmenovat „eg“ na „woman“.)
 * [Cheat](https://github.com/chrisallenlane/cheat) (anglicky, licence: MIT) je nástroj pro správu vlastních jednoduchých „manuálových stránek“. Používá se snadno, ale není určen k objevování nových programů a ve srovnání s klasickými manuálovými stránkami má horší zvýrazňování syntaxe.

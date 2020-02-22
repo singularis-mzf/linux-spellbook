@@ -999,7 +999,8 @@ dl.copyrights dt {
 dl.copyrights dd {
     margin:0 0 0.5rem auto;
     max-width:95%;
-    overflow:auto;
+    /* overflow:auto + oprava posunování ve Firefoxu */
+    overflow:auto;padding-top:1px;padding-bottom:1px;
 }
 dl.copyrights pre {
     font-family:monospace;

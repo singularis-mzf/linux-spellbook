@@ -165,17 +165,22 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 <neodsadit>Všechen software potřebný k sestavení projektu je svobodný.
 Pokud některá kapitola odkazuje na nesvobodný software, vždy na to výslovně upozorní.
 
-## Aktuální poznámka k verzi „vanilková příchuť 1.3“
+## Aktuální poznámka k verzi „vanilková příchuť 1.4 Alžběta Altmanová“
 
-Ve verzi 1.3 nepřibyly žádné nové kapitoly.
+Ve verzi 1.4 přibyla jen jedna nová kapitola − Správa procesů. Hlavní novinky jsou však v jiných oblastech.
+Začal/a jsem verzím dávat jména, abych zjistil/a, zda se to osvědčí − verze 1.4 se jmenuje Alžběta Altmanová.
 
-Hlavní novinkou je spouštěč pomocných skriptů „lkk“ distribuovaný spolu se skripty ve formě balíčku „deb“.
+PDF varianty jsou nyní distribuovány se spadávkami a ořezovými značkami, což umožňuje mít na okraji „vizuální záložky“ kapitol.
+V nadpisech přibyly ikony kapitol a začínám experimentovat s rozdílnými ikonami zaklínadel.
 
-V PDF variantě se mi podařilo další podstatné zlepšení designu. Nadpisy jsou nyní přehlednější, stránky mají název kapitoly v záhlaví a titulky zaklínadel jsou střídavě podbarvené, což jim umožňuje být přehlednější.
+V HTML variantě je nově podporováno několik alternativních barevných motivů, mezi nimiž je nejzajímavější moderní „tmavý motiv“.
+Také se objevily první ikony kapitol a texty poznámek pod čarou se nyní zobrazují už po najetí kurzorem myši na odkaz,
+takže zpravidla není nutné na něj klikat a pak se vracet zpět.
 
-V HTML variantě je nejvýraznější novinkou nová organizace rozcestníku v záhlaví kapitoly. Další výraznou změnou je opatrný začátek podpory ikon zaklínadel (ty se ještě budou vyvíjet) a rovněž podpora dvou nových barevných motivů pro vysoký kontrast. Do budoucna počítám přidat ještě plnohodnotný tmavý motiv a obě verze motivu Solarized.
+Sestavil/a jsem také skript pro automatizaci generové vyrovnanosti; ukázalo se, že Linux: Kniha kouzel zdaleka
+není tak vyrovnaný/á, jak jsem si předsevzal/a, tak se vynasnažím to do příště napravit.
 
-Vydání verze 1.4 očekávám již ke konci února 2020, případně na začátku března.
+Vydání verze 1.5 očekávám ve druhé polovině března 2020. Její jméno určím a oznámím později.
 
 &nbsp;
 
