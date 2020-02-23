@@ -202,9 +202,9 @@ function Hes(s,   c, i, l, vysledek) {
 # ============================================================================
 
 function ZjistitPredevsimPro(verze) {
-    if (JMENOVERZE ~ /^vanilková příchuť.*[^0-9]1\.[0-9]+$/) {
+    if (JMENOVERZE ~ /^vanilková příchuť.*[^0-9]1\.[0-9]+(,.*)?$/) {
         return "Ubuntu 18.04 Bionic Beaver";
-    } else if (JMENOVERZE ~ /^vanilková příchuť.*[^0-9]2\.[0-9]+$/) {
+    } else if (JMENOVERZE ~ /^vanilková příchuť.*[^0-9]2\.[0-9]+(,.*)?$/) {
         return "Ubuntu 20.04 Focal Fossa";
     } else {
         return "";
