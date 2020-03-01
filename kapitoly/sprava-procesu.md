@@ -43,7 +43,7 @@ jako vlastnost „PPID“. (Pozor − nepleťte si PID a PPID!)
 Tato verze kapitoly nepokrývá sledování systémových volání procesů (ptrace, strace)
 ani zjišťování, které systémové knihovny jsou procesy využívány.
 
-Tato kapitola se nezabývá správou systémových zdrojů z celkového hlediska
+Tato kapitola se nezabývá správou systémových zdrojů z celkového hlediska,
 ani používáním kvót, kontejnerů či izolačních a virtualizačních technik
 jako chroot či cgroups.
 

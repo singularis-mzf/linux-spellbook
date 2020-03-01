@@ -29,7 +29,6 @@
 # ============================================================================
 BEGIN {
     VyzadujeFragmentyTSV();
-    #VyzadujePromennou("VSTUPPREFIX");
     VyzadujePromennou("IDFORMATU");
     VyzadujePromennou("JMENOVERZE");
 }
@@ -41,9 +40,7 @@ function Zacatek() {
 }
 
 function Pokud(podminka) {
-    if (podminka ~ /^JE FORMÁT ./) {
-        return IDFORMATU == substr(podminka, 11);
-    } else if (podminka == "MÁ VERZE JMÉNO") {
+    if (podminka == "MÁ VERZE JMÉNO") {
         return ZjistitJmenoVerze(JMENOVERZE) != "";
     } else {
         ShoditFatalniVyjimku("Neznámá direktiva {{POKUD " podminka "}}!");

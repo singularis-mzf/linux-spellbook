@@ -51,10 +51,10 @@ umask/fmask/dmask
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-Tato kapitola pokrývá dělení pevného disku na oddíly, jejich formátováním, připojováním ručním i automatickým a odpojováním. Zabývá se také prací s ramdisky, odkládacím prostorem a LVM.
+Tato kapitola pokrývá dělení pevného disku na oddíly, jejich formátováním, připojováním (ručním i automatickým) a odpojováním. Zabývá se také prací s ramdisky, odkládacím prostorem a LVM.
 
-Tato verze kapitoly nepokrývá šifrování a nastavování kvót a souborový systém BTRFS.
-Rovněž nepokrývá vypalování DVD.
+Tato verze kapitoly nepokrývá připojovaní souborových systémů obyčejným uživatelem; šifrování a nastavování kvót a souborový systém BTRFS.
+Rovněž nepokrývá síťové souborové systémy a vypalování DVD.
 
 ## Definice
 <!--
@@ -62,15 +62,38 @@ Rovněž nepokrývá vypalování DVD.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+* **Systém souborů** je něco, co nabízí adresářovou strukturu kompatibilní se způsobem, jakým Linux nahlíží na adresáře a soubory. Některé systémy souborů jsou „fyzické“ (uložené na skutečném zařízení), jiné jsou čistě virtuální (generované za běhu ovladačem v jádře).
+* **Virtuální souborový systém** (VFS) je způsob, jakým Linux nahlíží na strukturu souborů v počítači; není to skutečný systém souborů. Existuje pouze jeden, je pouze pro čtení a neobsahuje nic jiného než prázdný počáteční kořenový adresář. Při startu systému je na tento adresář připojen kořenový adresář kořenového systému souborů.
+* **Připojení** systému souborů znamená, že systém vezme existující adresář ve VFS (takzvaný **přípojný bod**, anglicky „mount point“) a „překryje“ ho kořenovým adresářem připojovaného systému souborů včetně jeho vlastnictví, příznaků a přístupových práv. Celá adresářová struktura připojeného systému souborů se tak stane součástí VFS a bude dostupná přes daný přípojný bod. (Nestane se však součástí původního systému souborů − adresář, který sehrál roli přípojného bodu, bude nadále existovat, ale nebude již touto cestou dostupný.) Opačným úkonem je **odpojení** systému souborů; při něm dojde k opětovnému zpřístupnění adresáře v původním systému souborů. Do VFS lze připojit i jiný než kořenový adresář systému souborů, nicméně k tomu musí být daný systém souborů již připojen.
+* **Typ systému souborů** je buď způsob uložení souborů a adresářů na diskovém oddílu (např. ext4) nebo druh ovladače, který poskytuje nějakým způsobem získanou adresářovou strukturu (např. „tmpfs“). Zvláštním typem systému souborů je „swap“, tedy odkládací oddíl, protože ten adresářovou strukturu neposkytuje.
+
+V následujících zaklínadlech platí:
+
+{*co-připojit*} může být:
+
+* UUID ve tvaru „UUID="61bbd562-0694-4561-a8e2-4ccfd004a660"“ pro připojení diskového oddílu s daným UUID.
+* Jmenovka ve tvaru LABEL="Jmenovka" pro připojení diskového oddílu s danou jmenovkou.
+* Cesta diskového oddílu či zařízení (např. „/dev/sda1“) pro připojení daného oddílu. V /etc/fstab se doporučuje tento tvar nepoužívat, protože na některých počítačích se označení zařízení může při každém restartu změnit. Použití při jednorázovém příkazu „mount“ je ale v pořádku.
+* U některých souborových systémů je to jiný řetězec (např. „tmpfs“, „none“ apod.)
+* Existuje ještě tvar pro síťový souborový systém, viz manuálovu stránku.
+
+{*kam-připojit*} může být:
+
+* Absolutní cesta k adresáři, který v dané chvíli ve VFS existuje, ale není ještě přípojným bodem. (V příkazu „mount“ lze zadat i relativní cestu.)
+* „none“ pro odkládací prostor.
+
+{*soub-systém*} je identifikátor souborového systému (např. ext4, vfat, ntfs, tmpfs apod.) Lze použít i „auto“; systém se pak pokusí detekovat typ systému souborů automaticky.
+
+{*volby-připojení*} je seznam čárkami oddělených voleb nebo klíčové slovo „defaults“, které má význam „rw,suid,dev,exec,auto,nouser,async“.
+
+
 !ÚzkýRežim: vyp
 
 ## Zaklínadla
-<!--
-- Rozdělte na podsekce a naplňte „zaklínadly“.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 ## Zaklínadla (fstab)
+
+### Položky v /etc/fstab
 
 *# připojit kořenový systém souborů (obecně/příklad)*<br>
 {*diskový-oddíl*} **/** {*soub-systém*} {*nastavení*} **0 1**<br>
@@ -78,8 +101,12 @@ Rovněž nepokrývá vypalování DVD.
 
 *# připojit jiný než kořenový systém souborů (obecně/příklad)*<br>
 *// 2 v posledním poli zapne automatickou kontrolu souboru systémů při startu; tato volba je vhodná pro místní souborové systémy. 0 v posledním poli automatickou kontrolu vypne, ta je vhodná především pro výměnná média a síťové systémy souborů. Rovněž je vhodná pro místní systémy souborů připojované výhradně pro čtení.*<br>
-{*co-připojit*} {*soub-systém*} {*nastavení*} **0** {*2-nebo-0*}<br>
+{*co-připojit*} {*kam-připojit*} {*soub-systém*} {*nastavení*} **0** {*2-nebo-0*}<br>
 **UUID="61bbd562-0694-4561-a8e2-4ccfd004a660" ext4 defaults 0 2**
+
+*# připojit adresář z již připojeného systému souborů na nové místo*<br>
+*// Pozor! Tímto způsobem vytváříte „druhé jméno“ pro již připojený souborový systém. Pokud však do některého podadresáře připojíte jiný další souborový systém, bude tento viditelný pouze přes cestu, na kterou byl připojen; stejná cesta v druhém umístění nebude překryta a povede do původního adresáře původního souborového systému.*<br>
+**/původní/adresář /nový/adresář none bind 0 0**
 
 <!--
 3 možnosti „co připojit“:
@@ -88,6 +115,29 @@ Rovněž nepokrývá vypalování DVD.
 2) UUID (např. UUID="61bbd562-0694-4561-a8e2-4ccfd004a660")
 3) jmenovka (např. LABEL="MojeData")
 -->
+
+### Připojení a odpojení systému souborů
+
+*# připojit systém souborů uvedený v /etc/fstab*<br>
+[**sudo**] **mount** {*/přípojný/bod*}
+
+*# připojit systém souborů*<br>
+**sudo mount -t** {*typ*} **-o** {*volby,připojení*} {*/co/připojit*} {*/přípojný/bod*}
+<!--
+<br>
+**sudo mount -t** {*typ*} **-o** {*volby,připojení*} **'LABEL=**{*jmenovka*}**'** {*/přípojný/bod*}
+-->
+
+*# odpojit systém souborů*<br>
+[**sudo**] **umount** {*/přípojný/bod*}
+
+*# připojit adresář z již připojeného systému souborů na nový přípojný bod*<br>
+*// Poznámka: Tímto příkazem se vytvoří nové, nezávislé připojení existujícího systému souborů.*<br>
+**sudo mount \-\-bind** {*/cesta/k/adresáři*} {*/nový/přípojný/bod*}
+
+*# přesunout systém souborů na jiný přípojný bod*<br>
+**sudo mount \-\-make-private** {*/nadřazený/přípojný/bod*} **&amp;&amp;**<br>
+**sudo mount \-\-move** {*/původní/přípojný/bod*} {*/nový/přípojný/bod*}
 
 ### Ramdisk
 
@@ -189,12 +239,72 @@ Viz: https://wiki.archlinux.org/index.php/Persistent_block_device_naming
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+### Volby připojení
+
+<!--
+rw,suid,dev,exec,auto,nouser,async
+-->
+
+Nejdůležitější volby připojení pro všechny typy systému souborů:
+
+!Parametry:
+
+* ◉ rw ○ ro :: Připojit pro čtení i zápis/jen pro čtení.
+* ◉ dev ○ nodev :: Povolit/zakázat speciální zařízení na připojeném systému souborů. (Doporučuji vždy „nodev“.)
+* ◉ exec ○ noexec :: Povolit/zakázat spouštění souborů z připojeného systému souborů.
+* ◉ suid ○ nosuid :: Povolit/zakázat respektování příznaků „u+s“ a „g+s“. V případě „nosuid“ tyto příznaky půjde měnit a číst, ale nebudou mít žádný vliv.
+* ☐ sync :: Zakáže používání systémové mezipaměti. Všechny operace budou prováděny přímo se zařízením.
+* ○ lazytime ◉ nolazytime :: lazytime: Časové známky u souborů se nebudou zapisovat na disk, dokud to nebude nutné; budou se provádět pouze v paměti, což umožní výrazně snížit počet zápisů na disk. Příkaz „sync“ a některé další situace způsobí zapsání všech provedených změn časových známek na disk.
+* ☐ nofail :: Ignorovat selhání při připojení.
+* ☐ X-mount.mkdir :: Pokud přípojný bod neexistuje, vytvoří ho s přístupovými právy „u=rwx,go=rx“. (Poznámka: připojený adresář tato práva zpravidla přepíše.) Podle manuálové stránky je tato volba dovolena pouze superuživateli.
+
+Nejdůležitější volby připojení pro **ext4**, **ext3** a **ext2**:
+
+!Parametry:
+
+* ○ errors=remount-ro ○ errors=panic ○ errors=continue :: V případě kritické chyby: připojí systém jen pro čtení/zhroutí se/pokračuje. (Nezkoušel/a jsem.)
+* ◉ user\_xattr ○ nouser\_xattr :: Povolí/zakáže uživatelské rozšířené atributy. (ext3/ext4) V případě nouser\_xattr budou uživatelské rozšířené atributy stávajících souborů a adresářů zachovány, ale nepůjdou číst ani zapisovat.
+* ◉ acl ○ noacl :: Povolí/zakáže rozšířená přístupová práva. (Zatím jsem nezkoušel/a.)
+* ○ discard ○ nodiscard :: Zapne/vypne označování prázdného prostoru na SSD discích (operace TRIM).
+
+Nejdůležitější volby připojení pro **vfat** (FAT32, FAT16, popř. FAT12):
+
+<!--
+[ ] Vyzkoušet!
+-->
+!Parametry:
+
+* ☐ uid={*UID*} :: Nastaví vlastníka všech položek.
+* ☐ gid={*GID*} :: Nastaví skupinu všech položek.
+* ○ umask={*mód*} ○ dmask={*mód*},fmask={*mód*} :: Nastaví přístupová práva všech adresářových položek/všech adresářů a souborů.
+* ☐ quiet :: Pokusy o změnu vlastníka, skupiny či přístupových práv nevyvolají chybu.
+* ○ fat=12 ○ fat=16 ○ fat=32 :: Vynutí konkrétní verzi FAT (obvykle není potřeba).
+
+Nejdůležitější volby připojení pro ntfs:
+
+!Parametry:
+
+* ☐ uid={*UID*} :: Nastaví vlastníka všech položek.
+* ☐ gid={*GID*} :: Nastaví skupinu všech položek.
+* ○ umask={*mód*} :: Nastaví přístupová práva všech adresářových položek.
+
+Nejdůležitější volby připojení pro tmpfs:
+
+!Parametry:
+
+* ☐ size={*velikost*} :: Nastaví kapacitu „ramdisku“; typicky se používá s příponami „M“ pro mebibajty a „G“ pro gibibajty (např. „size=4G“).
+* ☐ uid={*UID*} :: Nastaví počátečního vlastníka kořenového adresáře.
+* ☐ gid={*GID*} :: Nastaví počáteční skupinu kořenového adresáře.
+* ○ umask={*mód*} :: Nastaví počítační přístupová práva a příznaky kořenového adresáře.
+
 ## Instalace na Ubuntu
 <!--
 - Jako zaklínadlo bez titulku uveďte příkazy (popř. i akce) nutné k instalaci a zprovoznění všech nástrojů požadovaných kterýmkoliv zaklínadlem uvedeným v kapitole. Po provedení těchto činností musí být nástroje plně zkonfigurované a připravené k práci.
 - Ve výčtu balíků k instalaci vycházejte z minimální instalace Ubuntu.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+Všechny použité nástroje jsou základními součástmi Ubuntu.
 
 ## Ukázka
 <!--

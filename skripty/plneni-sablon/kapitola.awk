@@ -33,6 +33,7 @@ BEGIN {
     VyzadujePromennou("IDKAPITOLY");
     VyzadujePromennou("JMENOVERZE");
     VyzadujePromennou("DATUMSESTAVENI");
+    # Poznámka: tento skript obvykle nezná IDFORMATU! (Výjimkou je případ, kdy je použit {{PŘEHLED ŠTÍTKŮ}}.)
 }
 
 # VEŘEJNÉ FUNKCE
@@ -88,10 +89,7 @@ function Zacatek() {
     return 0;
 }
 
-function Pokud(podminka) {
-    if (podminka ~ /^JE FORMÁT ./) {
-        return IDFORMATU == substr(podminka, 11);
-    }
+function Pokud(podminka,   i, pole) {
     switch (podminka) {
         case "JE PRVNÍ":
             return id_predchozi == "";

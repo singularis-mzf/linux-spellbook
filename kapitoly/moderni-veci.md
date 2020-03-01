@@ -88,6 +88,29 @@ Také možno „**epspdf** {*název-souboru*}**.eps**“ a umí konverzi na gray
 *# nastavit či změnit EXIF data*<br>
 ?
 
+### Lorem Ipsum
+
+Poznámka: generátor „lorem“ má velmi omezenou slovní zásobu (méně než 200 slov),
+nemusí se proto hodit pro některé účely.
+
+*# vygenerovat pseudolatinský odstavec o délce N vět*<br>
+**lorem -s** {*N*} [**; echo**]
+
+*# vygenerovat M odstavců o délce přibližně N vět*<br>
+**for \_ in {1..**{*M*}**\}; do lorem -s** {*N*}**; printf '\\n\\n'; done**
+
+*# vygenerovat N pseudolatinských slov, 1 slovo na řádek*<br>
+**lorem -w** {*N*} **\| tr "&blank;" \\\\n**
+
+*# stáhnout pseudoanglický odstavec o délce N vět*<br>
+*// Vyžaduje připojení k internetu a závisí na vzdáleném serveru.*<br>
+**wget -qO- http://metaphorsum.com/sentences/**{*N*} [**\| fmt**]
+
+<!--
+http://www.lipsum.cz/ (text v poměrně kvalitní češtině, ale věty se mohou opakovat)
+https://cs.lipsum.com/ (stránka česky, text v pseudolatině)
+-->
+
 ### UUID
 
 *# vygenerovat UUID (náhodné/zahrnující místo a čas/kryptograficky bezpečné)*<br>
@@ -102,6 +125,10 @@ Také možno „**epspdf** {*název-souboru*}**.eps**“ a umí konverzi na gray
 
 *# konvertovat data URL na obrázek*<br>
 **printf "%s\\n" "**{*data-url*}**" \| cut -d , -f 2- -s \| base64 -d &gt;** {*výstupní-soubor*}
+
+### OCR (rozpoznání textu)
+
+
 
 ### Metadata MP3
 
@@ -133,7 +160,7 @@ Také možno „**epspdf** {*název-souboru*}**.eps**“ a umí konverzi na gray
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 *# *<br>
-**sudo apt-get install barcode qrencode zbar-tools**
+**sudo apt-get install barcode qrencode zbar-tools libtext-lorem-perl**
 
 ## Ukázka
 <!--

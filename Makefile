@@ -41,7 +41,7 @@ VSECHNY_KAPITOLY += odkazy perl planovani-uloh prace-s-archivy promenne regularn
 # S
 VSECHNY_KAPITOLY += sed soubory-a-adresare sprava-balicku sprava-balicku-2 sprava-procesu sprava-uzivatelu stahovani-videi system
 # T, U, V, W, X, Y, Z
-VSECHNY_KAPITOLY += unicode uzivatelska-rozhrani x
+VSECHNY_KAPITOLY += unicode uzivatelska-rozhrani wine x
 # Z
 VSECHNY_KAPITOLY += zpracovani-binarnich-souboru zpracovani-obrazku zpracovani-textovych-souboru zpracovani-videa-a-zvuku
 
@@ -82,10 +82,10 @@ DATUM_SESTAVENI_SOUBOR := $(SOUBORY_PREKLADU)/symboly/datum-sestaveni/$(DATUM_SE
 DEB_VERZE_SOUBOR := $(SOUBORY_PREKLADU)/symboly/deb-verze/$(DEB_VERZE)
 JMENO_SESTAVENI_SOUBOR := $(SOUBORY_PREKLADU)/symboly/jmeno-sestaveni/$(shell printf %s "$(JMENO)" | tr "/ \\n\\t" -)
 
-.PHONY: all clean html log pdf-a4 pdf-b5 info
+.PHONY: all clean html log pdf-a4 pdf-a4-bez pdf-b5 info
 .DELETE_ON_ERROR: # Speciální cíl, který nastavuje „make“, aby v případě selhání pravidla byl odstraněn jeho cíl.
 
-all: deb html log pdf-a4 pdf-b5
+all: deb html log pdf-a4 pdf-a4-bez pdf-b5
 
 clean:
 	$(RM) -Rv $(SOUBORY_PREKLADU) $(VYSTUP_PREKLADU)
@@ -98,6 +98,7 @@ deb: $(VYSTUP_PREKLADU)/lkk_$(DEB_VERZE)_all.deb
 html: $(addprefix $(VYSTUP_PREKLADU)/html/, lkk-$(DATUM_SESTAVENI).css $(CSS_MOTIVY:%=lkk-$(DATUM_SESTAVENI)-%.css) index.htm x-autori.htm x-stitky.htm)
 log: $(VYSTUP_PREKLADU)/log/index.log
 pdf-a4: $(VYSTUP_PREKLADU)/pdf-a4.pdf
+pdf-a4-bez: $(VYSTUP_PREKLADU)/pdf-a4-bez.pdf
 pdf-b5: $(VYSTUP_PREKLADU)/pdf-b5.pdf
 
 $(DATUM_SESTAVENI_SOUBOR):
@@ -145,11 +146,16 @@ $(SOUBORY_PREKLADU)/postprocess.dat: $(wildcard postprocess.dat)
 	-test -r postprocess.dat && cat postprocess.dat >"$@"
 	touch "$@"
 
-# 3. soubory_prekladu/ucs_ikony.dat
+# 4. soubory_prekladu/ucs_ikony.dat
 # ----------------------------------------------------------------------------
 $(SOUBORY_PREKLADU)/ucs_ikony.dat: ucs_ikony/ikony.txt skripty/extrakce/ikony-zaklinadel.awk
 	mkdir -pv $(dir $@)
 	$(AWK) -f skripty/extrakce/ikony-zaklinadel.awk
+
+# 5. soubory_prekladu/qr.svg
+# ----------------------------------------------------------------------------
+$(SOUBORY_PREKLADU)/qr.svg:
+	printf 'https://singularis-mzf.github.io' | qrencode -o "$@" -t svg -s 8
 
 # HTML:
 # ============================================================================
@@ -176,19 +182,19 @@ $(VSECHNY_KAPITOLY_A_DODATKY:%=$(VYSTUP_PREKLADU)/html/%.htm): \
   $(VYSTUP_PREKLADU)/%.htm: \
   $(SOUBORY_PREKLADU)/% skripty/plneni-sablon/kapitola.awk formaty/html/sablona.htm $(SOUBORY_PREKLADU)/fragmenty.tsv $(DATUM_SESTAVENI_SOUBOR)
 	mkdir -pv $(VYSTUP_PREKLADU)/html
-	cut -f 2 $(SOUBORY_PREKLADU)/fragmenty.tsv | fgrep -qx $(basename $(notdir $<)) && exec $(AWK) -f skripty/plneni-sablon/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=$(basename $(notdir $@)) -v TELOKAPITOLY=$< -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v VARIANTA=kapitola formaty/html/sablona.htm > $@ || true
+	cut -f 2 $(SOUBORY_PREKLADU)/fragmenty.tsv | fgrep -qx $(basename $(notdir $<)) && exec $(AWK) -f skripty/plneni-sablon/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDFORMATU=html -v IDKAPITOLY=$(basename $(notdir $@)) -v TELOKAPITOLY=$< -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v VARIANTA=kapitola formaty/html/sablona.htm > $@ || true
 
 # 3. formaty/html/sablona.css => vystup_prekladu/html/lkk.css
 # ----------------------------------------------------------------------------
 $(VYSTUP_PREKLADU)/html/lkk-$(DATUM_SESTAVENI).css: formaty/html/sablona.css skripty/plneni-sablon/css.awk skripty/plneni-sablon/css2.awk
 	mkdir -pv $(dir $@)
 	$(RM) $(VYSTUP_PREKLADU)/html/lkk-????????.css
-	set -o pipefail; $(AWK) -v MOTIV=hlavni -f skripty/plneni-sablon/css.awk $< | $(AWK) -f skripty/plneni-sablon/css2.awk > $@
+	set -o pipefail; $(AWK) -v IDFORMATU=html -v MOTIV=hlavni -f skripty/plneni-sablon/css.awk $< | $(AWK) -f skripty/plneni-sablon/css2.awk > $@
 
 $(CSS_MOTIVY:%=$(VYSTUP_PREKLADU)/html/lkk-$(DATUM_SESTAVENI)-%.css): %: formaty/html/sablona.css skripty/plneni-sablon/css.awk skripty/plneni-sablon/css2.awk
 	mkdir -pv $(dir $@)
 	$(RM) $(@:$(VYSTUP_PREKLADU)/html/lkk-$(DATUM_SESTAVENI)%=$(VYSTUP_PREKLADU)/html/lkk-????????%)
-	set -o pipefail; $(AWK) -v MOTIV=$(strip $(patsubst lkk-$(DATUM_SESTAVENI)-%.css, %, $(notdir $@))) -f skripty/plneni-sablon/css.awk $< | $(AWK) -f skripty/plneni-sablon/css2.awk > $@
+	set -o pipefail; $(AWK) -v IDFORMATU=html -v MOTIV=$(strip $(patsubst lkk-$(DATUM_SESTAVENI)-%.css, %, $(notdir $@))) -f skripty/plneni-sablon/css.awk $< | $(AWK) -f skripty/plneni-sablon/css2.awk > $@
 
 # 4. obrazky/{obrazek} => vystup_prekladu/html/obrazky/{obrazek}
 # ----------------------------------------------------------------------------
@@ -197,6 +203,10 @@ $(OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%) $(OBRAZKY_IK:%=$(VYSTUP_PREKLADU)
 	$(CONVERT) $< $@
 
 $(SVG_OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%): $(VYSTUP_PREKLADU)/html/obrazky/%: obrazky/%
+	mkdir -pv $(dir $@)
+	cp $< $@
+
+$(VYSTUP_PREKLADU)/html/obrazky/qr.svg: $(SOUBORY_PREKLADU)/qr.svg
 	mkdir -pv $(dir $@)
 	cp $< $@
 
@@ -209,8 +219,9 @@ $(VYSTUP_PREKLADU)/html/index.htm: $(SOUBORY_PREKLADU)/fragmenty.tsv \
   $(OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%) \
   $(OBRAZKY_IK:%=$(VYSTUP_PREKLADU)/html/obrazky/ik/%) \
   $(SVG_OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%) \
+  $(VYSTUP_PREKLADU)/html/obrazky/qr.svg \
   $(DATUM_SESTAVENI_SOUBOR)
-	$(AWK) -f skripty/plneni-sablon/index-html.awk -v JMENOVERZE='$(JMENO)' -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v VARIANTA=index $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/html/sablona.htm > $@
+	$(AWK) -f skripty/plneni-sablon/index-html.awk -v JMENOVERZE='$(JMENO)' -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v IDFORMATU=html -v VARIANTA=index $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/html/sablona.htm > $@
 
 # 6. sepsat copyrighty ke kapitolám
 # ----------------------------------------------------------------------------
@@ -232,7 +243,7 @@ $(VYSTUP_PREKLADU)/html/x-autori.htm: \
   formaty/html/sablona.htm \
   $(DATUM_SESTAVENI_SOUBOR)
 	mkdir -pv $(dir $@)
-	$(AWK) -f skripty/plneni-sablon/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=_autori -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v COPYRIGHTY_KAPITOL=$(SOUBORY_PREKLADU)/html/kap-copys.htm -v COPYRIGHTY_OBRAZKU=$(SOUBORY_PREKLADU)/html/obr-copys.htm -v VARIANTA=autori formaty/html/sablona.htm > $@
+	$(AWK) -f skripty/plneni-sablon/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDFORMATU=html -v IDKAPITOLY=_autori -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v COPYRIGHTY_KAPITOL=$(SOUBORY_PREKLADU)/html/kap-copys.htm -v COPYRIGHTY_OBRAZKU=$(SOUBORY_PREKLADU)/html/obr-copys.htm -v VARIANTA=autori formaty/html/sablona.htm > $@
 
 # 9. shromáždit štítky na stránku x-stitky.htm
 # ----------------------------------------------------------------------------
@@ -242,7 +253,7 @@ $(VYSTUP_PREKLADU)/html/x-stitky.htm: \
   $(SOUBORY_PREKLADU)/fragmenty.tsv \
   $(DATUM_SESTAVENI_SOUBOR)
 	mkdir -pv $(dir $@)
-	$(AWK) -f skripty/plneni-sablon/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=_stitky -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v FRAGMENTY_TSV=$(SOUBORY_PREKLADU)/fragmenty.tsv -v IDFORMATU=html -v VARIANTA=stitky formaty/html/sablona.htm >$@
+	$(AWK) -f skripty/plneni-sablon/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDFORMATU=html -v IDKAPITOLY=_stitky -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v FRAGMENTY_TSV=$(SOUBORY_PREKLADU)/fragmenty.tsv -v IDFORMATU=html -v VARIANTA=stitky formaty/html/sablona.htm >$@
 
 # LOG:
 # ============================================================================
@@ -269,7 +280,7 @@ $(VSECHNY_KAPITOLY_A_DODATKY:%=$(SOUBORY_PREKLADU)/log/%.kap): \
   %.kap: \
   % skripty/plneni-sablon/kapitola.awk skripty/utility.awk $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/log/sablona $(DATUM_SESTAVENI_SOUBOR)
 	mkdir -pv $(SOUBORY_PREKLADU)/log
-	$(AWK) -f skripty/plneni-sablon/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=$(basename $(notdir $@)) -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v TELOKAPITOLY=$< formaty/log/sablona > $@
+	$(AWK) -f skripty/plneni-sablon/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDFORMATU=log -v IDKAPITOLY=$(basename $(notdir $@)) -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v TELOKAPITOLY=$< formaty/log/sablona > $@
 
 # 3. soubory_prekladu/log/{id}.kap => vystup_prekladu/log/{id}.log
 # ----------------------------------------------------------------------------
@@ -354,6 +365,41 @@ $(SOUBORY_PREKLADU)/pdf-a4/kniha.tex: $(SOUBORY_PREKLADU)/pdf-a4/_all.kap format
 # ----------------------------------------------------------------------------
 $(VYSTUP_PREKLADU)/pdf-a4.pdf: \
   $(SOUBORY_PREKLADU)/pdf-a4/kniha.tex \
+  $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%) \
+  $(OBRAZKY_IK:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/ik/%) \
+  $(SVG_OBRAZKY:%.svg=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%.pdf)
+	mkdir -pv $(dir $@)
+	ln -rsTv skripty $(dir $<)skripty 2>/dev/null || true
+	cd $(dir $<); exec $(AWK) -f skripty/latex.awk
+	cat $(<:%.tex=%.pdf) > $@
+
+# PDF A4 bez ořezových značek:
+# ============================================================================
+
+# 4. soubory_prekladu/pdf-spolecne/{id}.kap => soubory_prekladu/pdf-a4-bez/{id}.kap
+# ----------------------------------------------------------------------------
+$(VSECHNY_KAPITOLY_A_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-a4-bez/%.kap): \
+  $(SOUBORY_PREKLADU)/pdf-a4-bez/%.kap: \
+  $(SOUBORY_PREKLADU)/pdf-spolecne/%.kap $(SOUBORY_PREKLADU)/postprocess.dat skripty/postprocess.awk skripty/utility.awk
+	mkdir -pv $(dir $@)
+	touch $(SOUBORY_PREKLADU)/postprocess.log
+	$(AWK) -v IDFORMATU=pdf-a4-bez -f skripty/postprocess.awk $(SOUBORY_PREKLADU)/postprocess.dat $< 2>&1 >$@
+
+# 5. soubory_prekladu/pdf-a4-bez/{id}.kap => soubory_prekladu/pdf-a4-bez/_all.kap
+# ----------------------------------------------------------------------------
+$(SOUBORY_PREKLADU)/pdf-a4-bez/_all.kap: $(VSECHNY_KAPITOLY_A_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-a4-bez/%.kap) $(SOUBORY_PREKLADU)/fragmenty.tsv
+	mkdir -pv $(dir $@)
+	cut -f 2 $(SOUBORY_PREKLADU)/fragmenty.tsv | sed 's/.*/$(SOUBORY_PREKLADU)\/pdf-a4-bez\/&.kap/' | xargs -r cat >$@
+
+# 6. soubory_prekladu/pdf-a4-bez/_all.kap => soubory_prekladu/pdf-a4-bez/kniha.tex
+# ----------------------------------------------------------------------------
+$(SOUBORY_PREKLADU)/pdf-a4-bez/kniha.tex: $(SOUBORY_PREKLADU)/pdf-a4-bez/_all.kap formaty/pdf/sablona.tex
+	$(AWK) -f skripty/plneni-sablon/specialni.awk -v IDFORMATU=pdf-a4-bez -v JMENOVERZE='$(JMENO)' -v TELO=$< formaty/pdf/sablona.tex >$@
+
+# 7. soubory_prekladu/pdf-a4-bez/kniha.tex => vystup_prekladu/pdf-a4-bez.pdf
+# ----------------------------------------------------------------------------
+$(VYSTUP_PREKLADU)/pdf-a4-bez.pdf: \
+  $(SOUBORY_PREKLADU)/pdf-a4-bez/kniha.tex \
   $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%) \
   $(OBRAZKY_IK:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/ik/%) \
   $(SVG_OBRAZKY:%.svg=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%.pdf)

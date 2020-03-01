@@ -66,9 +66,7 @@ function Zacatek() {
 }
 
 function Pokud(podminka) {
-    if (podminka ~ /^JE FORMÁT ./) {
-        return IDFORMATU == substr(podminka, 11);
-    } else if (podminka == "ZNÁME PŘEDEVŠÍM PRO") {
+    if (podminka == "ZNÁME PŘEDEVŠÍM PRO") {
         return predevsim_pro != "";
     } else if (podminka == "MÁ VERZE JMÉNO") {
         return ZjistitJmenoVerze(JMENOVERZE) != "";

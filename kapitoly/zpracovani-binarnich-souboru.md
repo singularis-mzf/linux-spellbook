@@ -53,6 +53,11 @@ Poznámky:
 **sha1sum** {*soubor*}... **\| cut -c -40**<br>
 **sha256sum** {*soubor*}... **\| cut -c -64**
 
+<!--
+[ ] BUG: md5sum vypíše \ na začátek řádku, pokud jsou některé znaky v cestě escapované! (Zejm. '\')
+-->
+
+
 *# vypočítat/ověřit kontrolní součty (MD5)*<br>
 *// Heše souborů a jejich názvy (včetně cesty) se uloží do uvedeného souboru.*<br>
 **md5sum** {*soubor*}... **&gt;** {*cílový-soubor.md5*}<br>

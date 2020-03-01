@@ -85,13 +85,26 @@ STAV_PODMINENENO_PREKLADU == 3 {next}
     if (STAV_PODMINENENO_PREKLADU != 0) {
         ShoditFatalniVyjimku("Chyba syntaxe: {{POKUD ...}} bez ukončení předchozího podmíněného bloku!");
     }
+
+    # Zvláštní obsluha pro tvar „{{POKUD JE FORMÁT abc|def}}“. Vyžaduje proměnnou IDFORMATU.
+    if ($0 ~ /^\{\{POKUD JE FORMÁT ./) {
+        if (IDFORMATU == "") {
+            ShoditFatalniVyjimku("Podmínka " $0 " a proměnná IDFORMATU není nastavena!");
+        }
+        STAV_PODMINENENO_PREKLADU = index("|" substr($0, 19, length($0) - 20) "|", "|" IDFORMATU "|") ? 1 : 2;
+        #print "LADĚNÍ: " $0 " => STAV_PODMINENENO_PREKLADU = " STAV_PODMINENENO_PREKLADU " (" IDFORMATU ")" > "/dev/stderr";
+        next;
+    }
+
     STAV_PODMINENENO_PREKLADU = Pokud(substr($0, 9, length($0) - 10)) ? 1 : 2;
+    #print "LADĚNÍ: " $0 " => STAV_PODMINENENO_PREKLADU = " STAV_PODMINENENO_PREKLADU " (" IDFORMATU ")" > "/dev/stderr";
     next;
 }
 
 /^\{\{KONEC POKUD\}\}$/ {
     if (STAV_PODMINENENO_PREKLADU != 0) {
         STAV_PODMINENENO_PREKLADU = 0;
+        #print "LADĚNÍ: " $0 " => STAV_PODMINENENO_PREKLADU = " STAV_PODMINENENO_PREKLADU " (" IDFORMATU ")" > "/dev/stderr";
         next;
     } else {
         ShoditFatalniVyjimku("{{KONEC POKUD}} bez odpovídajícího začátku");

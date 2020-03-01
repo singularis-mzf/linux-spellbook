@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, kapitola Hledání souborů
-Copyright (c) 2019 Singularis <singularis@volny.cz>
+Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -15,27 +15,26 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 # Hledání souborů
 
-!Štítky: {tematický okruh}
+!Štítky: {tematický okruh}{adresáře}{hledání}
 !ÚzkýRežim: zap
 
 ## Úvod
-<!--
-- Vymezte, co je předmětem této kapitoly.
-- Obecně popište základní principy, na kterých fungují používané nástroje.
-- Uveďte, co kapitola nepokrývá, ačkoliv by to čtenář mohl očekávat.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+Tato kapitola se zabývá hledáním souborů, adresářů a dalších adresářových položek v systému souborů. Převážně se zabývá příkazem „find“, který se opravdu vyplatí umět ovládat, ale uvádí také jiné příkazy vhodné k takové činnosti.
+
+Parametry zadávané příkazu find se skládají
 
 ## Definice
-<!--
-- Uveďte výčet specifických pojmů pro použití v této kapitole a tyto pojmy definujte co nejprecizněji.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+* **Výchozí bod** je cesta (relativní či absolutní) zadaná příkazu „find“, ze které tento příkaz zahajuje vyhledávání. Může být absolutní i relativní. Nejčastěji se jedná o cestu adresáře (např. „.“), ale může jít i o cestu souboru či symbolického odkazu. Výchozí bod se nezkracuje, vždy se zpracovává tak, jak je zadán.
+* **Hloubka** je nezáporné celé číslo, které určuje počet adresářů mezi výchozím bodem a právě zpracovávanou adresářovou položkou. Pro samotný výchozí bod je hloubka 0, pro jeho přímé podadresáře a soubory je hloubka 1, pro jejich soubory je hloubka 2 atd.
+* Průchod adresářovou strukturou může být **do šířky** (výchozí stav − každý adresář se nejprve otestuje sám o sobě, v případě úspěchu se vypíše nebo se zpracují akce a teprve poté do něj find vstoupí a zkoumá jeho obsah) nebo **do hloubky** (find vždy nejprve vstoupí do adresáře a prozkoumá a zpracuje veškerý jeho obsah a teprve „na odchodu“ zpracuje a prozkoumá samotný adresář). Výchozí je průchod do šířky. Průchod do hloubky se aplikuje pouze tehdy, je-li zadán globální parametr „-depth“ nebo je-li použita akce „-delete“. Při průchodu do hloubky nelze použít akci „-prune“.
 
 !ÚzkýRežim: vyp
 
 ## Zaklínadla (find: testy)
-### Typ (soubor, adresář, odkaz....)
+
+### Typ adresářové položky (soubor, adresář, odkaz...)
 
 *# obyčejný soubor*<br>
 **\-type f**
@@ -61,7 +60,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 *# soket*<br>
 **\-type s**
 
-### Název souboru a cesta
+### Název položky a cesta
 
 Písmeno „i“ vypne rozlišování mezi velkými a malými písmeny.
 
@@ -163,7 +162,7 @@ xxx , xxx # priorita?
 **\-group** {*skupina*}<br>
 **\-gid** {*GID*}
 
-### Přístupová práva
+### Přístupová práva (ACL)
 
 *# soubor je přístupný pro **čtení***<br>
 **\-readable**
@@ -189,6 +188,22 @@ xxx , xxx # priorita?
 -perm -{...} = „a“ − všechna uvedená práva musejí být položkou splněna
 -->
 
+### Obsah souboru
+
+<!--
+[ ] Vyzkoušet!
+-->
+*# některý řádek obsahuje/žádný řádek neobsahuje shodu s regulárním výrazem*<br>
+**\\! \( -type d -o \( -type l -xtype d \) \) -readable \-exec egrep -q** [**\-\-**] **'**{*regulární výraz*}**' \\;**
+**\\! \( -type d -o \( -type l -xtype d \) \) -readable \\! \-exec egrep -q** [**\-\-**] **'**{*regulární výraz*}**' \\;**
+
+<!--
+[ ] Vyzkoušet!
+-->
+*# některý řádek obsahuje/žádný řádek neobsahuje podřetězec*<br>
+**\\! \( -type d -o \( -type l -xtype d \) \) -readable \-exec fgrep -q** [**\-\-**] **'**{*podřetězec*}**' \\;**
+**\\! \( -type d -o \( -type l -xtype d \) \) -readable \\! \-exec fgrep -q** [**\-\-**] **'**{*podřetězec*}**' \\;**
+
 ### Ostatní
 
 *# prázdný adresář*<br>
@@ -197,9 +212,8 @@ xxx , xxx # priorita?
 *# pevné odkazy konkrétního souboru*<br>
 **\-samefile** {*soubor*}
 
-*# test, který vždy uspěje/selže*<br>
-**\-true**<br>
-**\-false**
+*# neplatné symbolické odkazy*<br>
+**\-type l \-xtype l**
 
 *# počet pevných odkazů (přesně/minimálně/maximálně N)*<br>
 **\-links** {*N*}<br>
@@ -208,6 +222,10 @@ xxx , xxx # priorita?
 
 *# obsah symbolického odkazu odpovídá vzorku*<br>
 **\-lname** {*vzorek*}
+
+*# test, který vždy uspěje/selže*<br>
+**\-true**<br>
+**\-false**
 
 *# vlastník nebo skupina souboru neexistuje*<br>
 **\\( -nogroup -o -nouser \\)**
@@ -219,39 +237,9 @@ xxx , xxx # priorita?
 *# čislo **inode***<br>
 **\-inum** {*inode*}
 
-
-
 ## Zaklínadla (find: akce)
 
-*# smazat soubor či prázdný adresář*<br>
-*// Akce uspěje, pokud se soubor či adresář podaří smazat.*<br>
-**\-delete**
-
-<!--
-[ ] -depth?
-[ ] -prune − Jde-li o adresář, nezkoumat jeho obsah.
--->
-
-*# spustit příkaz po dávkách*<br>
-*// Tato varianta je prakticky ekvivalentem volání příkazu xargs. Použije co největší dávky.*<br>
-**\-exec** {*příkaz*} [{*parametry příkazu*}] **'{}' +**
-
-*# spustit příkaz po dávkách*<br>
-*// Tato akce vždy uspěje. Přitom shromáždí položky z jednotlivých adresářů a najednou je předá ke zpracování uvedenému příkazu. Pouze pokud je souborů velké množství, může je rozdělit na několik dávek. Příkaz se spouští v adresáři, kde jsou vyhledané položky.*<br>
-**\-execdir** {*příkaz*} [{*parametry příkazu*}] **'{}' +**
-
-
-*# spustit příkaz pro každou cestu zvlášť*<br>
-*// Každý výskyt řetězce „{}“ v parametrech příkazu bude při volání nahrazen cestou testované položky. Akce uspěje, pokud uspěje příkaz.*<br>
-**\-exec** {*příkaz*} [{*parametry příkazu*}] **\\;**
-
-
-
-*# spustit příkaz pro každý soubor zvlášť*<br>
-*// Každý výskyt řetězce „{}“ v parametrech příkazu bude při volání nahrazen řetězcem „./název souboru“ a příkaz bude spuštěn v adresáři, kde se soubor nachází. Akce uspěje, pokud uspěje příkaz.*<br>
-**\-execdir** {*příkaz*} [{*parametry příkazu*}] **\\;**
-
-
+### Vypsat údaje
 
 *# zapsat cestu jako záznam do souboru (txt/txtz)*<br>
 ?<br>
@@ -271,10 +259,33 @@ fprintf:
 
 -->
 
+
+### Ostatní akce
+
+*# smazat soubor či prázdný adresář (lze použít jen při průchodu do hloubky)*<br>
+*// Akce uspěje, pokud se soubor či adresář podaří smazat.*<br>
+**\-delete**
+
+*# spustit příkaz po dávkách*<br>
+*// Tato varianta je prakticky ekvivalentem volání příkazu xargs. Použije co největší dávky. Vždy uspěje.*<br>
+**\-exec** {*příkaz*} [{*parametry příkazu*}] **'{}' +**
+
+*# spustit příkaz po dávkách po adresářích*<br>
+*// Tato varianta vždy uspěje. Shromáždí položky z jednotlivého adresáře a po velkých dávkách (obvykle najednou) je předá ke zpracování uvedenému příkazu. Příkaz se spouští v adresáři, kde jsou vyhledané položky, a dostává pouze název souboru s cestou „./“.*<br>
+**\-execdir** {*příkaz*} [{*parametry příkazu*}] **'{}' +**
+
+*# spustit příkaz pro každou položku (s cestou/bez cesty)*<br>
+*// Každý výskyt řetězce „{}“ v parametrech příkazu bude při volání nahrazen: v případě první varianty cestou testované položky od výchozího bodu, v případě varianty bez cesty jen názvem souboru s cestou „./“ (příkaz bude spuštěn ve stejném adresáři, kde se položka nachází). Akce uspěje, pokud uspěje příkaz.*<br>
+**\-exec** {*příkaz*} [{*parametry příkazu*}] **\\;**<br>
+**\-execdir** {*příkaz*} [{*parametry příkazu*}] **\\;**
+
+*# je-li položka adresář, **nevstupovat** do něj a ignorovat jeho obsah (funguje jen při průchodu do šířky)*<br>
+**\-prune**
+
 *# ukončit načítání dalších položek*<br>
 **\-quit**
 
-## Zaklínadla (printf a fprintf)
+## Zaklínadla (akce -printf a -fprintf)
 
 *# cíl symbolického odkazu*<br>
 **%l**
@@ -297,10 +308,41 @@ fprintf:
 
 ## Zaklínadla (celé příkazy)
 
-*# najít a odstranit prázdné adresáře/soubory/soubory i adresáře*<br>
+### Hledání textových souborů podle obsahu
+
+*# najít soubory, jejichž některá řádka obsahuje/žádný řádek neobsahuje shodu s regulárním výrazem*<br>
+**find** {*kde*}... **-type f -readable** [{*další podmínky*}]... **-exec egrep -l '**{*regulární výraz*}**' '{}' +**<br>
+**find** {*kde*}... **-type f -readable** [{*další podmínky*}]... **-exec egrep -L '**{*regulární výraz*}**' '{}' +**
+
+*# najít soubory, jejichž některá řádka obsahuje/žádný řádek neobsahuje podřetězec*<br>
+**find** {*kde*}... **-type f -readable** [{*další podmínky*}]... **-exec fgrep -l '**{*regulární výraz*}**' '{}' +**<br>
+**find** {*kde*}... **-type f -readable** [{*další podmínky*}]... **-exec fgrep -L '**{*regulární výraz*}**' '{}' +**
+
+### Hledání programů
+
+*# najít úplnou cestu podle názvu příkazu*<br>
+*// Poznámka: tento příkaz (pochopitelně) ignoruje vestavěné příkazy bashe, aliasy, funkce apod. Řídí se pouze proměnnou prostředí PATH.*<br>
+**which** {*název-příkazu*}...
+
+*# najít manuálové stránky (jako soubory/název a sekce)*<br>
+**find -L /usr/share/man -type f -name '**{*název*}**.\*.gz'** [**\| sort**]<br>
+**find -L /usr/share/man -type f -name '**{*název*}**.\*.gz' \| sed -E 's/.\*\\/(.\*)\\.([<nic>^.]+)\\.gz$/\\1(\\2)/' \| sort -u**
+
+### Obecné hledání
+
+*# najít a odstranit **prázdné** adresáře/soubory/soubory i adresáře*<br>
 **find** {*kde*}... **-type d -empty -delete**<br>
 **find** {*kde*}... **-type f -empty -delete**<br>
 **find** {*kde*}... **-empty -delete**
+
+*# najít **neplatné** symbolické odkazy (pro člověka/pro skript)*<br>
+*// Pozor! Příkaz nemůže správně určit, zda je symbolický odkaz neplatný, pokud nemá přístupová práva k adresáři, na který symbolický odkaz odkazuje! Příkaz „symlinks“ v takovém případě hlásí odkaz jako neplatný, uvedená podoba příkazu „find“ vypíše chybové hlášení „Permission denied“, ale odkaz do seznamu neplatných nezahrne.*<br>
+[**sudo**] **find** {*kde*}... **-type d -exec symlinks '{}' + \| egrep '^dangling:&blank;'**
+[**sudo**] **find** {*kde*}... **-type l -xtype l** [**-print0**]
+
+*# najít adresářové položky, jejichž názvy/celá cesta obsahují shodu s regulárním výrazem (pomoc databáze „mlocate“)*<br>
+[**sudo**] **locate \-\-regex -b** [**-e**] <nic>[**-i**] **-r '**{*regulární výraz pro název položky*}**'**<br>
+[**sudo**] **locate \-\-regex** [**-e**] <nic>[**-i**] **-r '**{*regulární výraz pro celou cestu*}**'**
 
 ## Parametry příkazů
 <!--
@@ -312,26 +354,29 @@ fprintf:
 ### find
 
 *# *<br>
-**find** {*globální parametry*} {*cesta*}... {*testy-a-akce*}
+**find** [**-P**] {*cesta*}... {*globální parametry*} {*testy-a-akce*}<br>
+**find -L** {*cesta*}... {*globální parametry*} {*testy-a-akce*}<br>
+**find -H** {*cesta*}... {*globální parametry*} {*testy-a-akce*}
+
+Chování k symbolickým odkazům: **-P**: nikdy nenásledovat (interpretovat každý odkaz jen jako adresářovou položku); **-L**: vždy následovat (chovat se, jako by na místě symbolického odkazu byl odkazovaný soubor, adresář apod.; vstupovat do takových adresářů); **-H**: následovat jen symbolické odkazy, které jsou přímo uvedeny jako „cesta“ na příkazové řádce.
 
 <neodsadit>Globální parametry:
 
 !parametry:
 
-* ◉ -P ○ -L ○ -H :: Kdy se k symbolickým odkazům chovat, jako by to byly odkazované soubory či adresáře: P = nikdy (výchozí stav); L = vždy; H = jen, jsou-li přímo uvedeny jako „cesta“.
+* ☐ -xdev :: Po každou „cestu“ na příkazové řádce omezí prohledávání jen na jeden souborový systém.
 * ☐ -depth :: Adresář zpracuje až „na odchodu“, tzn. teprve po zpracování veškerého jeho obsahu. Normálně se adresář zpracuje jako první a pak se teprve testuje jeho obsah.
 * ☐ -maxdepth {*číslo*} :: Sestoupí maximálně do uvedené hloubky. 0 znamená testovat jen cesty uvedené na příkazovém řádku; 1 znamená testovat i položky v adresářích uvedených na příkazovém řádku; 2 znamená testovat i položky v podadresářích těchto adresářů atd.
 * ☐ -mindepth {*číslo*} :: Na položky v hloubce nižší než „číslo“ se nebudou aplikovat žádné testy ani akce a nebudou vypsány.
-* ☐ -xdev :: Po každou „cestu“ na příkazové řádce omezí prohledávání jen na jeden souborový systém.
 
 
 
 ## Instalace na Ubuntu
-<!--
-- Jako zaklínadlo bez titulku uveďte příkazy (popř. i akce) nutné k instalaci a zprovoznění všech nástrojů požadovaných kterýmkoliv zaklínadlem uvedeným v kapitole. Po provedení těchto činností musí být nástroje plně zkonfigurované a připravené k práci.
-- Ve výčtu balíků k instalaci vycházejte z minimální instalace Ubuntu.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+Většina uvedených příkazů je základními součástmi Ubuntu. Pouze příkaz „symlinks“ musíte v případě potřeby doinstalovat:
+
+*# *<br>
+**sudo apt-get install symlinks**
 
 ## Ukázka
 <!--
@@ -350,6 +395,9 @@ fprintf:
 - Buďte co nejstručnější; neodbíhejte k popisování čehokoliv vedlejšího, co je dost možné, že už čtenář zná.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+* Příkaz „find“ cesty na svém výstupu nijak neřadí.
+* Příkaz „locate“ respektuje přístupová práva a najde pouze adresářové položky, ke kterým má uživatel v dané chvíli přístup.
 
 ## Další zdroje informací
 <!--
