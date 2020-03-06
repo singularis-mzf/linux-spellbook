@@ -33,9 +33,9 @@
 % 1. skupina balíčků:
 \usepackage[english,czech]{babel}
 %
-{{POKUD JE FORMÁT pdf-a4}}
-
 % Poznámka pro všechny formáty: při změně vnějšího okraje („outer“) je nutno upravit definici příkazu „\uchytkapitoly“!
+%
+{{POKUD JE FORMÁT pdf-a4}}
 %
 %% A4 = 21.0cm ⨉ 29.7cm
 \usepackage[xetex,
@@ -45,8 +45,17 @@
     papersize={22.6cm,31.3cm}
     ]{geometry}
 {{KONEC POKUD}}
+{{POKUD JE FORMÁT pdf-a4-bez}}
+%
+%% A4 = 21.0cm ⨉ 29.7cm
+\usepackage[xetex,
+    layout=a4paper,inner=1.5cm,outer=1cm,top=2cm,bottom=1.5cm,
+    twoside,
+    layouthoffset=0mm,layoutvoffset=0mm,
+    a4paper
+    ]{geometry}
+{{KONEC POKUD}}
 {{POKUD JE FORMÁT pdf-b5}}
-
 %% B5 = 17.6cm ⨉ 25.0cm
 %% + odstup značek 3mm + spadávka 5mm = +8mm na každé straně, tzn. +16mm celkem
 \usepackage[xetex,
@@ -54,6 +63,27 @@
     twoside,showcrop,
     layouthoffset=8mm,layoutvoffset=8mm,
     papersize={19.2cm,26.6cm}
+    ]{geometry}
+{{KONEC POKUD}}
+{{POKUD JE FORMÁT pdf-b5-bez}}
+%% B5 = 17.6cm ⨉ 25.0cm
+%% + odstup značek 3mm + spadávka 5mm = +8mm na každé straně, tzn. +16mm celkem
+\usepackage[xetex,
+    layout=b5paper,inner=1.5cm,outer=1cm,top=1.75cm,bottom=1.25cm,
+    twoside,
+    layouthoffset=0mm,layoutvoffset=0mm,
+    b5paper
+    ]{geometry}
+{{KONEC POKUD}}
+{{POKUD JE FORMÁT pdf-b5-na-a4}}
+%% A4 = 21.0cm ⨉ 29.7cm
+%% B5 = 17.6cm ⨉ 25.0cm
+%% + odstup značek 3mm + spadávka 5mm = +8mm na každé straně, tzn. +16mm celkem
+\usepackage[xetex,
+    layout=b5paper,inner=1.5cm,outer=1cm,top=1.75cm,bottom=1.25cm,
+    twoside,showcrop,
+    layouthoffset=17mm,layoutvoffset=23.5mm,
+    a4paper
     ]{geometry}
 {{KONEC POKUD}}
 
@@ -98,12 +128,14 @@
     % \uchytkapitoly{#1=index umístění (0 až N)}{#2=zkratka (tři písmena)}
     % při změně vnějšího okraje stránky přizpůsobit hodnoty -15mm a 14mm!
     \newcommand*{\uchytkapitoly}[2]{%
+{{POKUD NENÍ FORMÁT pdf-a4-bez|pdf-b5-bez}}
         \ifnumodd{\value{page}}{\umistit{1mm}}{\umistit{-15mm}}%
         {-#1cm-\headsep}{\rotatebox{270}{%
         \begin{tcolorbox}[size=minimal,width=1cm,height=14mm,halign=center,valign=bottom,colback=cerna,top=1mm,bottom=1mm,left=0pt,right=0pt]%
             \ifnumodd{\value{page}}{\color{bila}\sffamily\mbox{#2}}{\mbox{}}%
         \end{tcolorbox}%
         }}%
+{{KONEC POKUD}}
     }%
     \newcommand*{\generovatuchytkapitoly}{}%
     \fancypagestyle{normalni}{%
@@ -273,7 +305,7 @@
 \newenvironment*{uzkyrezim}{}{}
 \newcommand*{\nadpisobsahu}{\mbox{PŘEHLED (OBSAH)}}%
 
-{{POKUD JE FORMÁT pdf-a4}}
+{{POKUD JE FORMÁT pdf-a4|pdf-a4-bez}}
 \setlength{\sirkakodu}{0.9\textwidth} % šířka kódu v řádcích zaklínadel (obvykle odvozena od šířky textu „\textwidth“)
 \setlength{\omezeniodstavce}{4cm}
 
@@ -297,7 +329,7 @@
 
 {{KONEC POKUD}}
 %
-{{POKUD JE FORMÁT pdf-b5}}
+{{POKUD JE FORMÁT pdf-b5|pdf-b5-bez|pdf-b5-na-a4}}
 \setlength{\sirkakodu}{0.95\textwidth}
 
 % {\zapnoutrezimlicence}

@@ -13,73 +13,73 @@
 # Formát je popsán ve skriptu skripty/postprocess.awk.
 
 10
-pdf-b5
+pdf-b5.*
 awk
 sinus/kosinus/tangens/contangens}%
 sinus/kosinus/\\tangens/contangens}%
 
 20
-pdf-b5
+pdf-b5.*
 markdown
 nadpis první/druhé/třetí/čtvrté/páté/šesté úrovně}%
 nadpis první/druhé/třetí/\\čtvrté/páté/šesté úrovně}%
 
 30
-pdf-b5
+pdf-b5.*
 sprava-balicku
 \bfseries{}aktualizovat\mdseries{} všechny aktualizovatelné balíčky (normálně/drasticky/normálně/drasticky)}%
 \bfseries{}aktualizovat\mdseries{} všechny aktualizovatelné balíčky (normálně/drasticky/\\normálně/drasticky)}%
 
 40
-pdf-b5
+pdf-b5.*
 stahovani-videi
 \radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{{-}f \textquotedbl{}bestvideo[height{<}=?480]+bestaudio/best[height{<}=?480]/best\textquotedbl{}}%
 \radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{{-}f \textquotedbl{}bestvideo[height{<}=?480]+\-bestaudio/best[height{<}=?480]/best\textquotedbl{}}%
 
 50
-pdf-b5
+pdf-b5.*
 system
 {\footnotetext[10]{Ne, opravdu to není Ctrl+Alt+Delete...}\footnotetext[11]{Poznámka: Skutečně důležitá je pouze poslední klávesa \quotedblbase{}B\textquotedblleft{}; ty předchozí pouze vykonávají operace, díky nimž nebude restart tak drastický. Pokud chcete opravdu drastický reset, stačí na to klávesová zkratka \quotedblbase{}Alt\textquotedblleft{}+\quotedblbase{}PrintScreen\textquotedblleft{}+\quotedblbase{}B\textquotedblleft{}.}}{%
 {\footnotetext[10]{Ne, opravdu to není Ctrl+Alt+Delete...}\footnotetext[11]{\raggedright Poznámka: Skutečně důležitá je pouze poslední klávesa \quotedblbase{}B\textquotedblleft{}; ty předchozí pouze vykonávají operace, díky nimž nebude restart tak drastický. Pokud chcete opravdu drastický reset, stačí na to klávesová zkratka \quotedblbase{}Alt\textquotedblleft{}+\quotedblbase{}PrintScreen\textquotedblleft{}+\quotedblbase{}B\textquotedblleft{}.}}{%
 
 60
-pdf-b5
+pdf-b5.*
 zpracovani-videa-a-zvuku
 pomocí globálního parametru \bfseries{}{-}filter\_complex\mdseries{} (resp. \bfseries{}{-}filter\_complex\_script\mdseries{}),
 pomocí globálního parametru\\\bfseries{}{-}filter\_complex\mdseries{} (resp. \bfseries{}{-}filter\_complex\_script\mdseries{}),
 
 70
-pdf-b5
+pdf-b5.*
 zpracovani-videa-a-zvuku
 \bfseries{}rozmazat\mdseries{} obraz (normálně/maximálně/minimálně/obecně)}%
 \bfseries{}rozmazat\mdseries{} obraz (normálně/\\maximálně/minimálně/obecně)}%
 
 80
-pdf-b5
+pdf-b5.*
 licence
 creativecommons.org/compatiblelicenses, approved by Creative
 \\\mbox{creativecommons.org/compatiblelicenses}, approved by Creative
 
 110
-pdf-a4
+pdf-a4.*
 predmluva
 příkazový řádek/příkazovou řádku, v~Linuxu zvaný/ou \quotedblbase{}terminál\textquotedblleft{},
 příkazový řádek/pří\-ka\-zovou řádku, v~Linuxu zvaný/ou \quotedblbase{}terminál\textquotedblleft{},
 
 120
-pdf-a4
+pdf-a4.*
 git
 \item{}Jednoznačný prefix heše (Nebude{-}li uvedený prefix jednoznačný, git vyvolá chybu a~umožní vám situaci napravit, takže se nebojte používat ani velmi krátké prefixy.)
 \item{}\raggedright Jednoznačný prefix heše (Nebude{-}li uvedený prefix jednoznačný, git vyvolá chybu a~umožní vám situaci napravit, takže se nebojte používat ani velmi krátké prefixy.)
 
 130
-pdf-a4
+pdf-a4.*
 markdown
 \item{}Po prvním spuštění ReTextu doporučuji otevřít Úpravy / Nastavení a~zaškrtnout políčka \quotedblbase{}Vždy použít živý náhled\textquotedblleft{}, \quotedblbase{}Zvýrazňovat aktuální řádek\textquotedblleft{} a~\quotedblbase{}Zobrazovat čísla řádků\textquotedblleft{} a~restartovat ReText. S~těmito nastaveními mi připadne práce pohodlnější.
 \item\raggedright Po prvním spuštění ReTextu doporučuji otevřít Úpravy / Nastavení a~zaškrtnout políčka \quotedblbase{}Vždy použít živý náhled\textquotedblleft{}, \quotedblbase{}Zvýrazňovat aktuální řádek\textquotedblleft{} a~\quotedblbase{}Zobrazovat čísla řádků\textquotedblleft{} a~restartovat ReText. S~těmito nastaveními mi připadne práce pohodlnější.
 
 140
-pdf-a4
+pdf-a4.*
 datum-cas-kalendar
 }\begin{parametryprikazu}\parametrprikazu{{\dejavusansfamily{}○} {-}d \textquotesingle{}\dopln{datum a čas}\textquotesingle{} {\dejavusansfamily{}○} {-}d \textquotesingle{}\textquotedbl{}\dopln{původní čas. zóna}\textquotedbl{} \dopln{datum a čas}\textquotesingle{} {\dejavusansfamily{}○} {-}f \dopln{soubor} {\dejavusansfamily{}○} {-}f {-}}{Použije zadaný čas (parametr {-}d), popř. načte čas z~řádků daného souboru či ze standardního vstupu (parametr {-}f). Výchozí chování: použije aktuální čas.}%\n
 }\begin{parametryprikazu}\parametrprikazu{{\dejavusansfamily{}○} {-}d \textquotesingle{}\dopln{datum a čas}\textquotesingle{} {\dejavusansfamily{}○} {-}d \textquotesingle{}\textquotedbl{}\dopln{původní čas. zóna}\textquotedbl{} \dopln{datum a čas}\textquotesingle{} {\dejavusansfamily{}○} {-}f \dopln{soubor} {\dejavusansfamily{}○} {-}f {-}}{Použije zadaný čas (parametr {-}d),\\popř. načte čas z~řádků daného souboru či ze standardního vstupu (parametr {-}f). Výchozí chování: použije aktuální čas.}%\n

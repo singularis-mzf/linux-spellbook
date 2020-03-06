@@ -106,7 +106,7 @@ ENDFILE {
 # Formát postprocess.dat:
 #
 # $1 = id opravy
-# $2 = formát (musí odpovídat IDFORMATU)
+# $2 = formát (regulární výraz; IDFORMATU musí být přesná shoda)
 # $3 = id kapitoly (musí odpovídat IDKAPITOLY)
 # $4 = původní řádek
 # $5 = opravený řádek
@@ -119,7 +119,7 @@ NF < 5 {
 NF > 5 {print "VAROVÁNÍ: ", "NF = ", NF, "!" > "/dev/stderr"}
 $4 == $5 {ShoditFatalniVyjimku("Chybná náhrada id " $1 ": řádek se nemění!")}
 
-$2 == IDFORMATU && $3 == IDKAPITOLY {
+IDFORMATU ~ ("^(" $2 ")$") && $3 == IDKAPITOLY {
     if ($4 in nahrady) {
         ShoditFatalniVyjimku("Víceznačná náhrada pro stejný text: id " nahrady[$4] " a " $1 "!");
     }
@@ -149,3 +149,14 @@ function Log(text, jenSoubor,   s) {
     }
     return 0;
 }
+
+#function OdpovidaIdFormatu(vzorek) {
+#    if (pozice = index(vzorek, "*")) {
+#        return length(IDFORMATU) >= length(vzorek) - 1 && \
+#            SubstrZleva(IDFORMATU, pozice - 1) == SubstrZleva(vzorek, pozice - 1) && \
+#            SubstrZprava(IDFORMATU, length(vzorek) - pozice) == SubstrZprava(vzorek, length(vzorek) - pozice);
+#    } else {
+#        return IDFORMATU == vzorek;
+#    }
+#}
+

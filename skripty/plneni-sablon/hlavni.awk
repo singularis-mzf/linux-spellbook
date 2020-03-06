@@ -86,13 +86,19 @@ STAV_PODMINENENO_PREKLADU == 3 {next}
         ShoditFatalniVyjimku("Chyba syntaxe: {{POKUD ...}} bez ukončení předchozího podmíněného bloku!");
     }
 
-    # Zvláštní obsluha pro tvar „{{POKUD JE FORMÁT abc|def}}“. Vyžaduje proměnnou IDFORMATU.
+    # Zvláštní obsluha pro tvar „{{POKUD (JE|NENÍ) FORMÁT abc|def}}“. Vyžaduje proměnnou IDFORMATU.
     if ($0 ~ /^\{\{POKUD JE FORMÁT ./) {
         if (IDFORMATU == "") {
             ShoditFatalniVyjimku("Podmínka " $0 " a proměnná IDFORMATU není nastavena!");
         }
         STAV_PODMINENENO_PREKLADU = index("|" substr($0, 19, length($0) - 20) "|", "|" IDFORMATU "|") ? 1 : 2;
-        #print "LADĚNÍ: " $0 " => STAV_PODMINENENO_PREKLADU = " STAV_PODMINENENO_PREKLADU " (" IDFORMATU ")" > "/dev/stderr";
+        next;
+    }
+    if ($0 ~ /^\{\{POKUD NENÍ FORMÁT ./) {
+        if (IDFORMATU == "") {
+            ShoditFatalniVyjimku("Podmínka " $0 " a proměnná IDFORMATU není nastavena!");
+        }
+        STAV_PODMINENENO_PREKLADU = index("|" substr($0, 21, length($0) - 22) "|", "|" IDFORMATU "|") ? 2 : 1;
         next;
     }
 

@@ -82,10 +82,10 @@ DATUM_SESTAVENI_SOUBOR := $(SOUBORY_PREKLADU)/symboly/datum-sestaveni/$(DATUM_SE
 DEB_VERZE_SOUBOR := $(SOUBORY_PREKLADU)/symboly/deb-verze/$(DEB_VERZE)
 JMENO_SESTAVENI_SOUBOR := $(SOUBORY_PREKLADU)/symboly/jmeno-sestaveni/$(shell printf %s "$(JMENO)" | tr "/ \\n\\t" -)
 
-.PHONY: all clean html log pdf-a4 pdf-a4-bez pdf-b5 info
+.PHONY: all clean html log pdf-a4 pdf-a4-bez pdf-b5 pdf-b5-bez pdf-b5-na-a4 info
 .DELETE_ON_ERROR: # Speciální cíl, který nastavuje „make“, aby v případě selhání pravidla byl odstraněn jeho cíl.
 
-all: deb html log pdf-a4 pdf-a4-bez pdf-b5
+all: deb html log pdf-a4 pdf-a4-bez pdf-b5 pdf-b5-bez pdf-b5-na-a4
 
 clean:
 	$(RM) -Rv $(SOUBORY_PREKLADU) $(VYSTUP_PREKLADU)
@@ -100,6 +100,8 @@ log: $(VYSTUP_PREKLADU)/log/index.log
 pdf-a4: $(VYSTUP_PREKLADU)/pdf-a4.pdf
 pdf-a4-bez: $(VYSTUP_PREKLADU)/pdf-a4-bez.pdf
 pdf-b5: $(VYSTUP_PREKLADU)/pdf-b5.pdf
+pdf-b5-bez: $(VYSTUP_PREKLADU)/pdf-b5-bez.pdf
+pdf-b5-na-a4: $(VYSTUP_PREKLADU)/pdf-b5-na-a4.pdf
 
 $(DATUM_SESTAVENI_SOUBOR):
 	mkdir -pv $(dir $(DATUM_SESTAVENI_SOUBOR))
@@ -435,6 +437,76 @@ $(SOUBORY_PREKLADU)/pdf-b5/kniha.tex: $(SOUBORY_PREKLADU)/pdf-b5/_all.kap format
 # ----------------------------------------------------------------------------
 $(VYSTUP_PREKLADU)/pdf-b5.pdf: \
   $(SOUBORY_PREKLADU)/pdf-b5/kniha.tex \
+  $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%) \
+  $(OBRAZKY_IK:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/ik/%) \
+  $(SVG_OBRAZKY:%.svg=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%.pdf)
+	mkdir -pv $(dir $@)
+	ln -rsTv skripty $(dir $<)skripty 2>/dev/null || true
+	cd $(dir $<); exec $(AWK) -f skripty/latex.awk
+	cat $(<:%.tex=%.pdf) > $@
+
+# PDF B5 bez ořezových značek:
+# ============================================================================
+
+# 4. soubory_prekladu/pdf-spolecne/{id}.kap => soubory_prekladu/pdf-b5-bez/{id}.kap
+# ----------------------------------------------------------------------------
+$(VSECHNY_KAPITOLY_A_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-b5-bez/%.kap): \
+  $(SOUBORY_PREKLADU)/pdf-b5-bez/%.kap: \
+  $(SOUBORY_PREKLADU)/pdf-spolecne/%.kap $(SOUBORY_PREKLADU)/postprocess.dat skripty/postprocess.awk skripty/utility.awk
+	mkdir -pv $(dir $@)
+	touch $(SOUBORY_PREKLADU)/postprocess.log
+	$(AWK) -v IDFORMATU=pdf-b5-bez -f skripty/postprocess.awk $(SOUBORY_PREKLADU)/postprocess.dat $< 2>&1 >$@
+
+# 5. soubory_prekladu/pdf-b5-bez/{id}.kap => soubory_prekladu/pdf-b5-bez/_all.kap
+# ----------------------------------------------------------------------------
+$(SOUBORY_PREKLADU)/pdf-b5-bez/_all.kap: $(VSECHNY_KAPITOLY_A_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-b5-bez/%.kap) $(SOUBORY_PREKLADU)/fragmenty.tsv
+	mkdir -pv $(dir $@)
+	cut -f 2 $(SOUBORY_PREKLADU)/fragmenty.tsv | sed 's/.*/$(SOUBORY_PREKLADU)\/pdf-b5-bez\/&.kap/' | xargs -r cat >$@
+
+# 6. soubory_prekladu/pdf-b5-bez/_all.kap => soubory_prekladu/pdf-b5-bez/kniha.tex
+# ----------------------------------------------------------------------------
+$(SOUBORY_PREKLADU)/pdf-b5-bez/kniha.tex: $(SOUBORY_PREKLADU)/pdf-b5-bez/_all.kap formaty/pdf/sablona.tex
+	$(AWK) -f skripty/plneni-sablon/specialni.awk -v IDFORMATU=pdf-b5-bez -v JMENOVERZE='$(JMENO)' -v TELO=$< formaty/pdf/sablona.tex >$@
+
+# 7. soubory_prekladu/pdf-b5-bez/kniha.tex => vystup_prekladu/pdf-b5-bez.pdf
+# ----------------------------------------------------------------------------
+$(VYSTUP_PREKLADU)/pdf-b5-bez.pdf: \
+  $(SOUBORY_PREKLADU)/pdf-b5-bez/kniha.tex \
+  $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%) \
+  $(OBRAZKY_IK:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/ik/%) \
+  $(SVG_OBRAZKY:%.svg=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%.pdf)
+	mkdir -pv $(dir $@)
+	ln -rsTv skripty $(dir $<)skripty 2>/dev/null || true
+	cd $(dir $<); exec $(AWK) -f skripty/latex.awk
+	cat $(<:%.tex=%.pdf) > $@
+
+# PDF B5 na A4:
+# ============================================================================
+
+# 4. soubory_prekladu/pdf-spolecne/{id}.kap => soubory_prekladu/pdf-b5-na-a4/{id}.kap
+# ----------------------------------------------------------------------------
+$(VSECHNY_KAPITOLY_A_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-b5-na-a4/%.kap): \
+  $(SOUBORY_PREKLADU)/pdf-b5-na-a4/%.kap: \
+  $(SOUBORY_PREKLADU)/pdf-spolecne/%.kap $(SOUBORY_PREKLADU)/postprocess.dat skripty/postprocess.awk skripty/utility.awk
+	mkdir -pv $(dir $@)
+	touch $(SOUBORY_PREKLADU)/postprocess.log
+	$(AWK) -v IDFORMATU=pdf-b5-na-a4 -f skripty/postprocess.awk $(SOUBORY_PREKLADU)/postprocess.dat $< 2>&1 >$@
+
+# 5. soubory_prekladu/pdf-b5-na-a4/{id}.kap => soubory_prekladu/pdf-b5-na-a4/_all.kap
+# ----------------------------------------------------------------------------
+$(SOUBORY_PREKLADU)/pdf-b5-na-a4/_all.kap: $(VSECHNY_KAPITOLY_A_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-b5-na-a4/%.kap) $(SOUBORY_PREKLADU)/fragmenty.tsv
+	mkdir -pv $(dir $@)
+	cut -f 2 $(SOUBORY_PREKLADU)/fragmenty.tsv | sed 's/.*/$(SOUBORY_PREKLADU)\/pdf-b5-na-a4\/&.kap/' | xargs -r cat >$@
+
+# 6. soubory_prekladu/pdf-b5-na-a4/_all.kap => soubory_prekladu/pdf-b5-na-a4/kniha.tex
+# ----------------------------------------------------------------------------
+$(SOUBORY_PREKLADU)/pdf-b5-na-a4/kniha.tex: $(SOUBORY_PREKLADU)/pdf-b5-na-a4/_all.kap formaty/pdf/sablona.tex
+	$(AWK) -f skripty/plneni-sablon/specialni.awk -v IDFORMATU=pdf-b5-na-a4 -v JMENOVERZE='$(JMENO)' -v TELO=$< formaty/pdf/sablona.tex >$@
+
+# 7. soubory_prekladu/pdf-b5-na-a4/kniha.tex => vystup_prekladu/pdf-b5-na-a4.pdf
+# ----------------------------------------------------------------------------
+$(VYSTUP_PREKLADU)/pdf-b5-na-a4.pdf: \
+  $(SOUBORY_PREKLADU)/pdf-b5-na-a4/kniha.tex \
   $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%) \
   $(OBRAZKY_IK:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/ik/%) \
   $(SVG_OBRAZKY:%.svg=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%.pdf)
