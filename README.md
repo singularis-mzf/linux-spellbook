@@ -49,40 +49,31 @@ Pro tisk jsou určeny varianty ve formátu PDF, které jsou rovněž ke stažen�
 
 ## Návod k sestavení
 
-K sestavení příručky ze zdrojového kódu budete potřebovat Git, GNU make,
-GNU awk, ImageMagick, rsvg-convert a XeLaTeX a kvůli řazení české locale
-„cs\_CZ.UTF-8“ (musí fungovat české řazení příkazem „sort“). Také budete
-potřebovat písma „DejaVu Sans“, „Latin Modern Math“, „Latin Modern Mono Slanted“,
-„Latin Modern Mono Light Cond“, „TeX Gyre Schola“, „TeX Gyre Heros“ a „TeX Gyre Cursor“.
-V Ubuntu 18.04 LTS a Linuxu Mint 17.3 můžete tyto nástroje nainstalovat příkazem:
+Následující postup popisuje takzvané „malé sestavení“, kdy vzniknou jen formáty HTML a LOG.
+Úplné sestavení je popsáno v souboru [PREKLAD.md](PREKLAD.md).
 
-> ``sudo apt-get install git make gawk imagemagick librsvg2-bin texlive-xetex texlive-lang-czechslovak fonts-texgyre``
+Budete potřebovat:
 
-Pak budete potřebovat stáhnout si repozitář:
+* Git
+* GNU make
+* GNU awk
+* ImageMagick
+* qrencode
+* kvůli řazení české locale „cs\_CZ.UTF-8“ (musí fungovat české řazení příkazem „sort“)
+
+Ověřil/a jsem, že v Ubuntu 18.04 LTS a Linuxu Mint 17.3 můžete tyto nástroje nainstalovat příkazem:
+
+> ``sudo apt-get install git make gawk imagemagick qrencode``
+
+Až budete mít nainstalované potřebné nástroje, stáhněte si repozitář:
 
 > ``git clone https://github.com/singularis-mzf/linux-spellbook.git``
 
-A nakonec stačí spustit make:
+A nakonec spusťte takto make:
 
-> ``cd linux-spellbook``<br>
-> ``make``
+> ``make -j4 -C linux-spellbook log html``
 
-Pro urychlení můžete programu „make“ předat parametr **„-j4“**.
-
-Varování „*fontspec warning: "only-xetex-feature"*“ ignorujte; jde o chybu v balíčku „fontspec“, které již [byla nahlášena](https://github.com/wspr/fontspec/issues/382).
-
-Výstup ve všech podporovaných formátech najdete v podadresářích adresáře ``vystup_prekladu``.
-
-Předpokládám použití **české lokalizace** daného systému; používáte-li jinou (např. anglickou),
-spusťte prosím před překladem tento příkaz:
-
-> `printf %s\\n žába čádor tábor chalupa | LC_ALL="cs_CZ.UTF-8" sort`
-
-a zkontrolujte, že vypsal řádky v tomto pořadí:
-
-> čádor<br>chalupa<br>tábor<br>žába
-
-Pokud je vypsané pořadí odlišné, můžete se to pokusit napravit instalací balíčků „language-pack-cs“ a „hunspell-cs“, ale neručím za to, že to bude fungovat. Doporučený postup je použít českou lokalizaci systému.
+Předpokládám použití **české lokalizace** daného systému.
 
 ## Návod k zapojení se
 
@@ -120,6 +111,7 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [sprava-uzivatelu](kapitoly/sprava-uzivatelu.md) | Správa uživatelů | 80% | dítě |
 | [hledani-souboru](kapitoly/hledani-souboru.md) | Hledání souborů | 70% | dítě |
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
+| [diskove-oddily](kapitoly/diskove-oddily.md) | Diskové oddíly | 50% | dítě |
 | [zpracovani-obrazku](kapitoly/zpracovani-obrazku.md) | Zpracování obrázků | 40% | dítě |
 | [odkazy](kapitoly/odkazy.md) | Pevné a symbolické odkazy | 20% | dítě |
 | [perl](kapitoly/perl.md) | Základy Perlu | 20% | dítě |
@@ -130,10 +122,10 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [apache](kapitoly/apache.md) | Webový server Apache | 5% | dítě |
 | [latex](kapitoly/latex.md) | LaTeX | 5% | dítě |
 | [bash](kapitoly/bash.md) | Bash | 2% | dítě |
-| [diskove-oddily](kapitoly/diskove-oddily.md) | Diskové oddíly | 1% | dítě |
 | [firefox](kapitoly/firefox.md) | Firefox | 1% | dítě |
 | [grub](kapitoly/grub.md) | GRUB | 1% | dítě |
 | [konverze-formatu](kapitoly/konverze-formatu.md) | Konverze formátů | 0% | embryo |
+| [wine](kapitoly/wine.md) | Wine | 0% | embryo |
 | [promenne](kapitoly/promenne.md) | Proměnné prostředí a interpretu | 0% | embryo |
 | [lkk](kapitoly/lkk.md) | Linux: Kniha kouzel | 0% | embryo |
 | pdf | PDF | - | přál/a bych si |
@@ -143,7 +135,6 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | vim | Vim | - | přál/a bych si |
 | sql | SQL | - | přál/a bych si |
 | ascii-art | ASCII art | - | přál/a bych si |
-| wine | Wine | - | přál/a bych si |
 | sprava-balicku-2 | Správa balíčků 2 | - | přál/a bych si |
 | prostredi | Proměnné prostředí | - | přál/a bych si |
 | matematicke-vypocty | Matematické výpočty | - | přál/a bych si |
