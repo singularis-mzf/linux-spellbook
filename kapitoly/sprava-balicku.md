@@ -119,6 +119,10 @@ Offline instalací se rozumí stažení balíčků, jejich přenesení na počí
 **(apt-mark showauto; apt-mark showmanual) \| LC\_ALL=C sort -u**<br>
 **aptitude \-\-disable-columns -F** {*formát*} **search '?installed'**
 
+*# vypsat seznam nainstalovaných balíčků podle místa zabraného na disku; od největšího po nejmenší (pro člověka)*<br>
+*// Velikosti jsou uvedeny v kilobajtech.*<br>
+**dpkg-query -Wf '${Installed-Size}\\t${Package}:${Architecture}\\n' | sort -nr | less**
+
 *# vypsat všechny známé (nainstalované nebo dostupné) balíčky (pro všechny architektury)*<br>
 **aptitude search '?true'**
 
@@ -147,6 +151,9 @@ aptitude search --disable-columns -F %p "?upgradable"
 
 *# vypsat podrobné informace o balíčku*<br>
 **apt-cache show** {*balíček*}...
+
+*# kolik místa na disku zabírá balíček? (pro člověka)*<br>
+**aptitude search -F %I '?name(**{*balíček*}**)' \| head -n1**
 
 *# vypsat seznam souborů a adresářů v systému, které kontroluje daný (nainstalovaný/dostupný) balíček*<br>
 *// Poznámka: Ve výpisu „dpkg-query -L“ se typicky objevují také společné adresáře jako /etc či /usr; není příliš spolehnutí na to, že jde pouze o soubory příslušné danému balíčku.*<br>
@@ -311,7 +318,7 @@ Za znakem „=“ následuje příklad hodnoty pro balíček „gimp“.
 ### Odklonění
 
 *# **odklonit** soubor do nového umístění*<br>
-**sudo dpkg-divert \-\-local** [**\-\-move**] **\-\-divert** {*/nové/umístění*} {*/původní/umístění*}
+**sudo dpkg-divert \-\-local** [**\-\-rename**] **\-\-divert** {*/nové/umístění*} {*/původní/umístění*}
 
 *# **zrušit** odklon souboru*<br>
 **sudo dpkg-divert \-\-remove** {*/původní/umístění*}
@@ -320,7 +327,7 @@ Za znakem „=“ následuje příklad hodnoty pro balíček „gimp“.
 **dpkg-divert \-\-list \\\***
 
 *# odklonit soubor pro všechny balíčky kromě zadaného*<br>
-**sudo dpkg-divert \-\-package** {*balíček*} [**\-\-move**] **\-\-divert** {*/nové/umístění*} {*/původní/umístění*}
+**sudo dpkg-divert \-\-package** {*balíček*} [**\-\-rename**] **\-\-divert** {*/nové/umístění*} {*/původní/umístění*}
 
 ### Ostatní
 

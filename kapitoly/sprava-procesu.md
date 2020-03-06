@@ -232,6 +232,9 @@ jako chroot či cgroups.
 *# procesy spotřebovávající nejvíc elektřiny*<br>
 *// Funguje především na notebooku, nemám příliš vyzkoušené.*<br>
 **sudo powertop**
+<!--
+Viz také: příkaz „tlp“ z balíčku „tlp“.
+-->
 
 ## Zaklínadla (spouštění a ovládání procesů)
 

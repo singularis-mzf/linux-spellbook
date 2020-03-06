@@ -384,10 +384,12 @@ Pokud soubor existuje, při otevření se jeho obsah smaže; pokud chcete přid�
 Poznámky k přesměrování vstupu: Prvním čtením ze souboru, který ještě není otevřen, se tento soubor automaticky otevře pro čtení a zůstané otevřený pro čtení dalších řádků, dokud ho neuzavřete funkcí close(). Analogicky platí, že čtení z příkazu, který ještě nebyl spuštěn, ho spustí a další čtení čtou z výstupu téže instance, dokud spojení neuzavřete funkcí „close()“.
 
 *# přečíst řádku ze souboru*<br>
-[**if (**]**getline** [{*PROMĚNNÁ*}] &lt; {*"řetězec/s/cestou/souboru"*}**)** {*tělo příkazu if*}
+[**if (**]**getline** [{*PROMĚNNÁ*}] **&lt;** {*"řetězec/s/cestou/souboru"*}[**)** {*tělo příkazu if*}]
 
 *# přečíst jeden znak ze souboru*<br>
-?
+*// Poznámka: po použití této konstrukce pravděpodobně budete muset obnovit hodnoty proměnných RS, $0, RT, NR a FNR.*<br>
+**RS = "(.)";**<br>
+**if (getline &lt;** {*"řetězec/s/cestou/souboru"*}**) {{*proměnná*} = RT}**
 
 *# přečíst celý soubor do zadané proměnné*<br>
 **normalni\_RS = RS; RS = "^$";** {*PROMĚNNÁ*} **= "";**<br>

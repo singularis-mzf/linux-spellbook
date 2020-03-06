@@ -219,6 +219,10 @@ Poznámka: správci přihlášení se nepočítají mezi démony, protože mají
 *# vypsat seznam **časů posledních nabootování***<br>
 **journalctl \-\-list-boots \| sed -E $'s/.\*([A-Z]<nic>[a-z]{2}.\*)\\u2014.\*/\\\\1/' \| date -f - "+%F %T %z"**
 
+<!--
+Podrobnější informace: příkaz „uptimes“ z balíčku „uptimed“.
+-->
+
 *# zjistit, kolik místa na disku zabírají logy krále démonů*<br>
 **journalctl \-\-disk-usage**
 
