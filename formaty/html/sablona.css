@@ -572,14 +572,18 @@ nav a[rel="prev"]::after, nav a[rel="next"]::before {content:none;}
     width:3rem;
 }
 
-.zaklinadlo .zahlavi .D, .zaklinadlo .zahlavi .L {
+.zaklinadlo .zahlavi .D,
+.zaklinadlo .zahlavi .L {
+    position:relative;top:0.1em;
     display:inline-block;
-    margin-right:0.25em;
+    width:1.2em;height:1rem;overflow:visible;
+    text-align:center;white-space:pre;
+    /*margin-right:0.25em;*/
+    margin:-1px;
     border:1px solid transparent;
-    border-right:;
-    min-width:1em;
-    text-align:center;
-    white-space:pre;
+    padding:0;
+    /*min-width:1em;*/
+    font-size:200%;
 }
 .zaklinadlo .zahlavi .D, .vzornikikon .D {font-family:"DejaVu Sans", sans-serif;}
 .zaklinadlo .zahlavi .L, .vzornikikon .L {font-family:"Latin Modern Math", sans-serif;}

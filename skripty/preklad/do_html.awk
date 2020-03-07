@@ -216,8 +216,11 @@ function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, ikona, cislaPoznamek
     vysledek = "<div class=\"zaklinadlo\">";
     if (textZaklinadla != "") {
         if (ikona == "") {ikona = "&nbsp;\tD"}
+        idzaklinadla = Hes(textZaklinadla);
+        while (idzaklinadla in pridelenaIdZaklinadel) {idzaklinadla = idzaklinadla "x"}
+        pridelenaIdZaklinadel[idzaklinadla] = 1;
         vysledek = vysledek "<hr><div class=\"zahlavi\"><span class=\"cislo\">#" cisloZaklinadla " </span>";
-        vysledek = vysledek gensub(/([^\t]*)\t([^\t]*)/, "<span class=\"\\2\">\\1</span>", 1, ikona) textZaklinadla;
+        vysledek = vysledek gensub(/([^\t]*)\t([^\t]*)/, "<a class=\"ikona \\2\" id=\"z" idzaklinadla "\" href=\"#z" idzaklinadla "\">\\1</a>", 1, ikona) textZaklinadla;
         prvni = 1;
         if (length(cislaPoznamek) > 0) {
             vysledek = vysledek "<sup>";

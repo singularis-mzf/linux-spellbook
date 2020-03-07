@@ -475,7 +475,7 @@ function VypsatZahlaviZaklinadla(   i) {
     }
     if (TEXT_ZAKLINADLA != NULL_STRING) {
         if (TEXT_ZAKLINADLA != "") {
-            i = Hes(gensub(/[*]/, "", "g", TEXT_ZAKLINADLA)) % length(UCS_IKONY);
+            i = OmezenaHes(TEXT_ZAKLINADLA) % length(UCS_IKONY);
             printf("%s", ZacatekZaklinadla(++C_ZAKLINADLA, TEXT_ZAKLINADLA, substr(UCS_IKONY, 1 + i, 1) "\t" substr(UCS_IKONY_PISMA, 1 + i, 1), ppc, ppt));
         } else {
             printf("%s", ZacatekZaklinadla(0, "", "", ppc, ppt));
