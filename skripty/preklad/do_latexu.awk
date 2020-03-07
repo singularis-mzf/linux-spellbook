@@ -236,19 +236,19 @@ function Tabulator(delka,  i, vysledek) {
     return "\\textcolor{seda}{\\guillemotright}{" Zopakovat("~", max(0, delka - 1)) "}";
 }
 
-function ZacatekKapitoly(kapitola, cisloKapitoly, stitky, osnova, ikonaKapitoly,   kapitolaVelkymi, zkratkaKapitoly) {
+function ZacatekKapitoly(nazevKapitoly, cisloKapitoly, stitky, osnova, ikonaKapitoly, jeDodatek,   kapitolaVelkymi, zkratkaKapitoly) {
     DO_LATEXU_ODSTAVEC_PRED_ZAKLINADLEM = 0;
-    kapitolaVelkymi = toupper(kapitola);
-    zkratkaKapitoly = SubstrZleva(gensub(/[^[:alnum:]]/, "", "g", kapitolaVelkymi), 3);
-    kapitola = "\\kapitola{" ((cisloKapitoly - 1) % 21) "}{" zkratkaKapitoly "}{" kapitolaVelkymi "}{../pdf-spolecne/_obrazky/" ikonaKapitoly "}%\n\\label{kapx" ID_KAPITOLY_OMEZENE "}";
+    kapitolaVelkymi = toupper(nazevKapitoly);
+    zkratkaKapitoly = jeDodatek ? "" : SubstrZleva(gensub(/[^[:alnum:]]/, "", "g", kapitolaVelkymi), 3);
+    nazevKapitoly = "\\kapitola{" ((cisloKapitoly - 1) % 21) "}{" zkratkaKapitoly "}{" kapitolaVelkymi "}{../pdf-spolecne/_obrazky/" ikonaKapitoly "}%\n\\label{kapx" ID_KAPITOLY_OMEZENE "}";
     if (stitky != "") {
         gsub(/\|/, "} \\stitek{", stitky);
-        return kapitola "\\noindent\\stitek{" stitky "}\n";
+        return nazevKapitoly "\\noindent\\stitek{" stitky "}\n";
     }
-    return kapitola;
+    return nazevKapitoly;
 }
 
-function KonecKapitoly(kapitola, cislaPoznamek, textyPoznamek) {
+function KonecKapitoly(nazevKapitoly, cislaPoznamek, textyPoznamek) {
     return "";
 }
 

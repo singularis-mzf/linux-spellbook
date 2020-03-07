@@ -66,9 +66,9 @@ function Tabulator(delka,  i, vysledek) {
 
 # + OSNOVA, DELKA_OSNOVY
 
-function ZacatekKapitoly(kapitola, cisloKapitoly, stitky, osnova, ikonaKapitoly,   vysledek, polozky, jePrvni, melaPodsekce, maPodsekce, poleStitku, i, n) {
+function ZacatekKapitoly(nazevKapitoly, cisloKapitoly, stitky, osnova, ikonaKapitoly, jeDodatek,  vysledek, polozky, jePrvni, melaPodsekce, maPodsekce, poleStitku, i, n) {
 # Generování prvku <h1> obstarává šablona kapitoly (formaty/html/sablona_kapitoly).
-#    return "<h1>" kapitola "</h1>\n";
+#    return "<h1>" nazevKapitoly "</h1>\n";
     vysledek = "";
     delete polozky;
 
@@ -117,7 +117,7 @@ function ZacatekKapitoly(kapitola, cisloKapitoly, stitky, osnova, ikonaKapitoly,
     return vysledek;
 }
 
-function KonecKapitoly(kapitola, cislaPoznamek, textyPoznamek,   i, vysledek, prikaz, htmlPoznamky) {
+function KonecKapitoly(nazevKapitoly, cislaPoznamek, textyPoznamek,   i, vysledek, prikaz, htmlPoznamky) {
     vysledek = "";
     if (length(cislaPoznamek) > 0) {
         vysledek = "<div class=\"ppc\">";

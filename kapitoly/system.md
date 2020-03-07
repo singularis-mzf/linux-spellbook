@@ -84,6 +84,9 @@ Poznámka: správci přihlášení se nepočítají mezi démony, protože mají
 *# verze a varianta **jádra***<br>
 **uname -r** ⊨ 5.0.0-37-generic
 
+*# čas od spuštění systému (**uptime**)*<br>
+**uptime \-\-pretty**
+
 *# jméno procesoru*<br>
 **LC\_ALL=C lscpu \| egrep '^Model name:' | sed -E 's/^[<nic>^:]\*:\\s\*//'**
 
@@ -93,8 +96,9 @@ Poznámka: správci přihlášení se nepočítají mezi démony, protože mají
 *# informace o velikosti a využití **paměti** a odkládacího prostoru*<br>
 **free -h**
 
-*# čas od spuštění systému (**uptime**)*<br>
-**uptime \-\-pretty**
+*# zjistit druh počítače (stolní počítač, nebo **notebook**?)*<br>
+*// Návratový kód je 0 pro notebook, 1 pro stolní počítač a 2, pokud to nelze zjistit. Ve virtuálním počítači dle mých zkušeností, tento přikaz zjistí druh fyzického počítače, na kterém virtuální počítač běží.*<br>
+**laptop-detect**
 
 *# kódové jméno verze **distribuce***<br>
 **lsb\_release -sc** ⊨ bionic

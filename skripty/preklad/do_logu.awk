@@ -41,17 +41,17 @@ function Tabulator(delka) {
     return "Tabulator(" delka ")";
 }
 
-function ZacatekKapitoly(kapitola, cisloKapitoly, stitky, osnova, ikonaKapitoly,   osnovadohromady) {
+function ZacatekKapitoly(nazevKapitoly, cisloKapitoly, stitky, osnova, ikonaKapitoly, jeDodatek,   osnovadohromady) {
     DO_LOGU_UROVEN_ODSTAVCE = 0;
     gsub(/\|/, "}{", stitky);
     for (i = 1; i <= length(osnova); ++i) {
         osnovadohromady = osnovadohromady "\t" osnova[i] "\n";
 #        if (i > 500) { ShoditFatalniVyjimku("Příliš mnoho osnovy!"); }
     }
-    return "ZacatekKapitoly(\"" kapitola "\"" (stitky != "" ? ", štítky={" stitky "}" : "") ", ikona={" ikonaKapitoly "}) {\n" osnovadohromady "};\n";
+    return "ZacatekKapitoly(\"" nazevKapitoly "\"" (stitky != "" ? ", štítky={" stitky "}" : "") ", ikona={" ikonaKapitoly "}, jedodatek=" (jeDodatek ? "ano" : "ne") ") {\n" osnovadohromady "};\n";
 }
 
-function KonecKapitoly(kapitola, cislaPoznamek, textyPoznamek,   i, vysledek) {
+function KonecKapitoly(nazevKapitoly, cislaPoznamek, textyPoznamek,   i, vysledek) {
     if (!isarray(cislaPoznamek) || !isarray(textyPoznamek)) {
         ShoditFatalniVyjimku("KonecKapitoly(): Očekáváno pole!");
     }
@@ -68,9 +68,9 @@ function KonecKapitoly(kapitola, cislaPoznamek, textyPoznamek,   i, vysledek) {
         }
         vysledek = vysledek "}];\n";
     }
-    vysledek = vysledek "KonecKapitoly(\"" kapitola "\"); # Uroven odstavce: " DO_LOGU_UROVEN_ODSTAVCE "\n";
+    vysledek = vysledek "KonecKapitoly(\"" nazevKapitoly "\"); # Uroven odstavce: " DO_LOGU_UROVEN_ODSTAVCE "\n";
     if (DO_LOGU_UROVEN_ODSTAVCE != 0) {
-        ShoditFatalniVyjimku("Kapitole " kapitola " skončila s úrovní odstavce " DO_LOGU_UROVEN_ODSTAVCE ", což pravděpodobně znamená interní chybu lexikálně syntaktického analyzátoru.");
+        ShoditFatalniVyjimku("Kapitole " nazevKapitoly " skončila s úrovní odstavce " DO_LOGU_UROVEN_ODSTAVCE ", což pravděpodobně znamená interní chybu lexikálně syntaktického analyzátoru.");
     }
     return vysledek;
 }
