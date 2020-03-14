@@ -110,7 +110,7 @@ Poznámky:
 *# obsahuje prvek se zadaným klíčem? (alternativy)*<br>
 **asocexist** {*názevpole*} **"**{*klíč*}**"**<br>
 **test -v '**{*názevpole*}[**{*klíč*}**]**'**<br>
-**test -v "**{*názevpole*}**[**{*$proměnná\_s\_klíčem*}**]"**
+**test -v "**{*názevpole*}**[$\{**{*proměnná\_s\_klíčem*}**@Q}]"**
 
 
 ## Parametry příkazů

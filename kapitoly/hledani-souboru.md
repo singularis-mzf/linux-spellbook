@@ -20,15 +20,18 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 ## Úvod
 
-Tato kapitola se zabývá hledáním souborů, adresářů a dalších adresářových položek v systému souborů. Převážně se zabývá příkazem „find“, který se opravdu vyplatí umět ovládat, ale uvádí také jiné příkazy vhodné k takové činnosti.
-
-Parametry zadávané příkazu find se skládají
+Tato kapitola se zabývá vyhledáváním adresářových položek (souborů a adresářů).
+Převážně se zabývá příkazem „find“, který strukturu adresářů skutečně prochází
+a prohleďává, ale zahrnuje také vyhledávání programů a na databázi založený
+příkaz „locate“.
 
 ## Definice
 
-* **Výchozí bod** je cesta (relativní či absolutní) zadaná příkazu „find“, ze které tento příkaz zahajuje vyhledávání. Může být absolutní i relativní. Nejčastěji se jedná o cestu adresáře (např. „.“), ale může jít i o cestu souboru či symbolického odkazu. Výchozí bod se nezkracuje, vždy se zpracovává tak, jak je zadán.
-* **Hloubka** je nezáporné celé číslo, které určuje počet adresářů mezi výchozím bodem a právě zpracovávanou adresářovou položkou. Pro samotný výchozí bod je hloubka 0, pro jeho přímé podadresáře a soubory je hloubka 1, pro jejich soubory je hloubka 2 atd.
-* Průchod adresářovou strukturou může být **do šířky** (výchozí stav − každý adresář se nejprve otestuje sám o sobě, v případě úspěchu se vypíše nebo se zpracují akce a teprve poté do něj find vstoupí a zkoumá jeho obsah) nebo **do hloubky** (find vždy nejprve vstoupí do adresáře a prozkoumá a zpracuje veškerý jeho obsah a teprve „na odchodu“ zpracuje a prozkoumá samotný adresář). Výchozí je průchod do šířky. Průchod do hloubky se aplikuje pouze tehdy, je-li zadán globální parametr „-depth“ nebo je-li použita akce „-delete“. Při průchodu do hloubky nelze použít akci „-prune“.
+* **Výchozí bod** je cesta (relativní či absolutní) zadaná příkazu „find“, ze které tento příkaz zahajuje vyhledávání. Může být absolutní i relativní. Nejčastěji se jedná o adresář (např. „.“), ale může jít i o souboru či symbolický odkaz na adresář či soubor. Příkaz find výchozí bod nezkracuje, vždy ho zpracovává tak, jak je zadán.
+* **Hloubka** je celé číslo, které vyjadřuje počet adresářů od výchozího bodu k právě testované adresářové položce. Hloubku 0 mají pouze výchozí body; hloubku 1 soubory a podadresáře v nich, hloubku 2 ty další atd. Je-li např. „/usr/share“ výchozí bod, pak adresář „/usr/share“ má hloubku 0, soubor „/usr/share/.lock“ by měl hloubku 1, soubor „/usr/share/test/copyright.gz“ hloubku 2 atd.
+* Průchod adresářovou strukturou může být **do šířky** (výchozí stav − každý adresář je nejprve zpracován sám o sobě (provedou se nad ním testy a v případě úspěchu se vykonají akce) a teprve poté do něj find vstoupí a prozkoumá jeho obsah) nebo **do hloubky** (v tom případě find pokaždé nejprve vstoupí do adresáře a zpracuje veškerý jeho obsah a teprve „na odchodu“ zpracuje i samotný adresář). Výchozí je průchod do šířky. Průchod do hloubky se aplikuje pouze tehdy, je-li zadán globální parametr „-depth“ nebo je-li použita akce „-delete“. Při průchodu do hloubky nelze použít akci „-prune“.
+* **Názvem položky** se u příkazu „find“ rozumí samotný název adresářové položky.
+* **Cestou položky** se u příkazu „find“ rozumí výchozí bod (jak byl zadaný) a za ním adresářová cesta k položce včetně jejího názvu. Je-li např. výchozí bod „.“, je cestou položky např. „./test.sh“.
 
 !ÚzkýRežim: vyp
 
@@ -71,7 +74,7 @@ Písmeno „i“ vypne rozlišování mezi velkými a malými písmeny.
 **\-**[**i**]**path "**{*vzorek*}**"**
 
 *# cesta položky se shoduje s **regulárním výrazem***<br>
-**\-**[**i**]**regex '**{*regulární výraz*}**'**
+[**\-regextype posix-extended**] **-**[**i**]**regex '**{*regulární výraz*}**'**
 
 *# hodnota symbolického odkazu*<br>
 **\-**[**i**]**lname "**{*vzorek*}**"**
@@ -152,7 +155,21 @@ xxx , xxx # priorita?
 
 -->
 
-### Vlastnictví
+### Operátory testů
+
+*# oba testy musejí být splněny (**a také**)*<br>
+{*test1*} {*test2*}
+
+*# test nesmí být splněn (**ne-**)*<br>
+**\\!** {*test*}
+
+*# závorky (**seskupení** testů a akcí)*<br>
+**\\(** {*testy a akce*} **\\)**
+
+*# některý z testů musí být splněn (**nebo**)*<br>
+{*test1*} **-o** {*test2*}
+
+### Vlastnictví a skupina položky
 
 *# vlastník souboru (názvem/UID)*<br>
 **\-user** {*uživatel*}<br>
@@ -221,7 +238,7 @@ xxx , xxx # priorita?
 **\-links -$((**{*N*}**+1))**
 
 *# obsah symbolického odkazu odpovídá vzorku*<br>
-**\-lname** {*vzorek*}
+**\-lname '**{*vzorek*}**'**
 
 *# test, který vždy uspěje/selže*<br>
 **\-true**<br>
@@ -241,9 +258,18 @@ xxx , xxx # priorita?
 
 ### Vypsat údaje
 
-*# zapsat cestu jako záznam do souboru (txt/txtz)*<br>
-?<br>
+*# zapsat cestu položky jako záznam do souboru (txt/txtz)*<br>
+*// Poznámka: Varianta „txt“ není bezpečná v případě, že cesta položky obsahuje znak konce řádku.*<br>
+**\-fprint** {*soubor*}<br>
 **\-fprint0** {*soubor*}
+
+*# vypsat údaje podle formátu na standardní výstup/do souboru*<br>
+**\-printf '**{*formát*}**'**<br>
+**\-fprintf** {*soubor*} **'**{*formát*}**'**
+
+*# cestu položky na standardní výstup (txt/txtz)*<br>
+**\-print**<br>
+**\-print0**
 
 <!--
 -fprint {soubor}
@@ -287,6 +313,40 @@ fprintf:
 
 ## Zaklínadla (akce -printf a -fprintf)
 
+*# název/cesta položky/cesta položky bez výchozího bodu*<br>
+**%f**<br>
+**%p**<br>
+**%P**
+
+<!--
+[ ] Rozdíl mezi %f a %p?
+-->
+
+*# typ adresářové položky (písmeno)*<br>
+**%y**
+
+*# cesta položky bez názvu*<br>
+**%h**
+
+*# výchozí bod*<br>
+**%H**
+
+*# čas „změněno“(normálně/časová známka Unixu)*<br>
+*// V obou případech se bohužel vypíše s desetinnou částí.*<br>
+**%Ty-%Tm-%Td %TT** ⊨ 2020-03-13 22:03:00.9467889490<br>
+**%T@** ⊨ 1584133380.9467889490
+
+*# čas posledního přístupu (normálně/časová známka Unixu)*<br>
+*// V obou případech se bohužel vypíše s desetinnou částí.*<br>
+**%Ay-%Am-%Ad %AT** ⊨ 2020-03-13 22:03:00.9467889490<br>
+**%A@** ⊨ 1584133380.9467889490
+
+*# hloubka*<br>
+**%d** ⊨ 1
+
+*# typ souborového systému*<br>
+**%F**
+
 *# cíl symbolického odkazu*<br>
 **%l**
 <!--
@@ -303,8 +363,18 @@ fprintf:
 **%u**<br>
 **%U**
 
+*# skupina (jméno/GID)*<br>
+**%g**<br>
+**%G**
+
 *# hloubka prohledávání*<br>
 **%d**
+
+*# číslo „inode“*<br>
+**%i**
+
+*# přístupová práva symbolicky*<br>
+**%M**
 
 ## Zaklínadla (celé příkazy)
 
@@ -317,6 +387,9 @@ fprintf:
 *# najít soubory, jejichž některá řádka obsahuje/žádný řádek neobsahuje podřetězec*<br>
 **find** {*kde*}... **-type f -readable** [{*další podmínky*}]... **-exec fgrep -l '**{*regulární výraz*}**' '{}' +**<br>
 **find** {*kde*}... **-type f -readable** [{*další podmínky*}]... **-exec fgrep -L '**{*regulární výraz*}**' '{}' +**
+
+*# najít symbolické **smyčky**, tzn. symbolické odkazy, které přímo či nepřímo odkazují samy na sebe*<br>
+**find** {*kde*} **-type l -printf '%Y%p\\0' \| sed -zE 's/^L//;t;d'** [**\| tr \\\\0 \\\\n**]
 
 ### Hledání programů
 
@@ -368,8 +441,6 @@ Chování k symbolickým odkazům: **-P**: nikdy nenásledovat (interpretovat k
 * ☐ -depth :: Adresář zpracuje až „na odchodu“, tzn. teprve po zpracování veškerého jeho obsahu. Normálně se adresář zpracuje jako první a pak se teprve testuje jeho obsah.
 * ☐ -maxdepth {*číslo*} :: Sestoupí maximálně do uvedené hloubky. 0 znamená testovat jen cesty uvedené na příkazovém řádku; 1 znamená testovat i položky v adresářích uvedených na příkazovém řádku; 2 znamená testovat i položky v podadresářích těchto adresářů atd.
 * ☐ -mindepth {*číslo*} :: Na položky v hloubce nižší než „číslo“ se nebudou aplikovat žádné testy ani akce a nebudou vypsány.
-
-
 
 ## Instalace na Ubuntu
 

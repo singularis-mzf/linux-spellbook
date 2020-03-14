@@ -106,7 +106,7 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) | Zpracování textových souborů | 100% | vydána (od verze 1.2) |
 | [zpracovani-videa-a-zvuku](kapitoly/zpracovani-videa-a-zvuku.md) | Zpracování videa a zvuku | 100% | vydána (od verze 1.0) |
 | [sprava-procesu](kapitoly/sprava-procesu) | Správa procesů | 100% | vydána (od verze 1.4) |
-| [soubory-a-adresare](kapitoly/soubory-a-adresare.md) | Soubory a adresáře | 90% | dítě |
+| [soubory-a-adresare](kapitoly/soubory-a-adresare.md) | Soubory a adresáře | 100% | připravena k vydání |
 | [sed](kapitoly/sed.md) | Sed | 80% | dítě |
 | [sprava-uzivatelu](kapitoly/sprava-uzivatelu.md) | Správa uživatelů | 80% | dítě |
 | [hledani-souboru](kapitoly/hledani-souboru.md) | Hledání souborů | 70% | dítě |

@@ -22,7 +22,7 @@ Poznámky:
 
 # Základy Perlu
 
-!Štítky: {program}{zpracování textu}{syntaxe}{Perl}
+!Štítky: {program}{zpracování textu}{syntaxe}{Perl}{programování}
 !ÚzkýRežim: zap
 
 ## Úvod

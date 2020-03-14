@@ -180,6 +180,181 @@ Poznámky:
 *# ≠*<br>
 **test** {*číslo1*} **-ne** {*číslo2*}
 
+## Zaklínadla (nastavení)
+
+### Vypisování příkazů (např. pro ladění)
+
+*# vypisovat příkazy před vykonáním tak, jak byly zadány (zapnout/vypnout)*<br>
+**set -v**<br>
+**set +v**
+
+*# vypisovat příkazy před vykonáním tak, jak budou vykonány (zapnout/vypnout)*<br>
+**set -x**<br>
+**set +x**
+
+### Zapnout/vypnout rozvoje
+
+*# provádět rozvoj historie (zapnout/vypnout)*<br>
+**set -H**<br>
+**set +H**
+
+*# provádět rozvoj složených závorek {} (zapnout/vypnout)*<br>
+**set -B**<br>
+**set +B**
+
+*# provádět rozvoj cest (zapnout/vypnout)*<br>
+**set +f**<br>
+**set -f**
+
+*# provádět rozvoje ve výzvě bashe: zapnout (výchozí)/vypnout*<br>
+**shopt -s promptvars**<br>
+**shopt -u promptvars**
+
+### Nastavení rozvoje cest a proměnných
+
+*# velká a malá písmena při rozvoji cest: rozlišovat/nerozlišovat*<br>
+**shopt -s nocaseglob**<br>
+**shopt -u nocaseglob**
+
+*# konstrukci „\*\*“ při rozvoji cest interpretovat jako libovolnou (i prázdnou) posloupnost adresářů (zapnout/vypnout)*<br>
+**shopt -s globstar**<br>
+**shopt -u globstar**
+
+*# pokud vzorek při rozvoji cest neodpovídá žádné cestě: selhat s chybou/předat vzorek tak, jak je (výchozí chování)/předat prázdný řetězec*<br>
+**shopt -s failglob**<br>
+**shopt -u failglob nullglob**<br>
+**shopt -s nullglob; shopt -u failglob**
+
+*# rozvoj neexistující proměnné: považovat za kritickou chybu/tiše ignorovat*<br>
+**set -u**<br>
+**set +u**
+
+*# rozsahy ve vzorcích při rozvoji cest (např. „[A-Z]“) intepretovat: podle locale „C“/podle aktuálního locale*<br>
+**shopt -s globasciiranges**<br>
+**shopt -u globasciiranges**
+
+*# zahnout do rozvoje cest i skryté soubory a adresáře (zapnout/vypnout)*<br>
+**shopt -s dotglob**<br>
+**shopt -u dotglob**
+
+### Zpracování návratových kódů
+
+*# návratový kód vícenásobné roury se vezme: z prvního příkazu, který selhal/vždy z posledního příkazu roury*<br>
+**set -o pipefail**<br>
+**set +o pipefail**
+
+*# při chybě ukončit interpret (zapnout/vypnout)*
+**set -e**<br>
+**set +e**
+
+*# v případě selhání příkazu „exec“ v neinteraktivním režimu: pokračovat ve skriptu/skončit*<br>
+**shopt -s execfail**<br>
+**shopt -u execfail**
+
+*# uplatnit ukončení při chybě i na příkazy uvnitř substituce $() (zapnout/vypnout)*<br>
+**shopt -s inherit\_errexit**<br>
+**shopt -u inherit\_errexit**
+
+### Historie
+
+*# nastavit maximální počet příkazů uložených v historii v paměti/na disku*<br>
+**HISTSIZE=**{*počet*}<br>
+**HISTFILESIZE=**{*počet*}
+
+*# byl-li v interaktivním režimu proveden rozvoj historie, příkaz: vrátit na příkazovou řádku ke kontrole či úpravě/okamžitě provést*<br>
+**shopt -s histverify**<br>
+**shopt -u histverify**
+
+*# vypnout historii příkazů*<br>
+**set +o history**<br>
+**history -c**
+
+*# zapnout historii příkazů*<br>
+**set -o history**
+
+*# víceřádkové příkazy ukládat do historie: najednou/po řádcích*<br>
+**shopt -s cmdhist**<br>
+**shopt -u cmdhist**
+
+*# ukládání historie při ukončení bashe: připojit na konec/přepsat*<br>
+**shopt -s histappend**<br>
+**shopt -u histappend**
+
+*# nastavit způsob ukládání řádek do historie (obecně/příklad)*<br>
+*// Rozeznávané volby jsou: „ignorespace“ (neukládat řádky začínající bílým znakem), „ignoredups“ (neukládat stejný řádek znovu) a „erasedups“ (před uložením řádky smazat všechny stejné řádky z celé historie − pozor, tato volba mění pořadová čísla řádků v historii). Volba „ignoreboth“ (což je v Ubuntu výchozí chování) je synonymum pro „ignorespace:ignoredups“.*<br>
+**HISTCONTROL="**[{*volba*}[**:**{*další-volba*}]...]**"**<br>
+**HISTCONTROL="ignorespace:erasedups"**
+
+*# nastavit, kam se ukládá historie (obecně/příklad)*<br>
+**HISTFILE="**{*/absolutní/cesta-k-souboru*}**"**<br>
+**HISTFILE="/home/aneta/.bash\_history"**
+
+*# neukládat do historie příkazy začínající určitými řetězci/obsahující určité řetězce na první řádce*<br>
+*// Poznámka: řetězce jsou zde ve skutečnosti vzorky, takže se vyvarujte jakýchkoliv zvláštních znaků, nebo si nastudujte v manuálové stránce bashe, jak proměnná HISTIGNORE ve skutečnosti funguje.*<br>
+**HISTIGNORE="**{*řetězec*}**\***[**:**{*další řetězec*}**\***]...**"**<br>
+**HISTIGNORE="\***{*řetězec*}**\***[**:\***{*další řetězec*}**\***]...**"**
+
+*# ručně přidat do historie příkaz*<br>
+**history -s '**{*příkaz s parametry*}**'**
+
+*# smazat z historie poslední příkaz*<br>
+?
+
+### Ostatní
+
+*# symbolické odkazy v cestě k aktuálnímu adresáři: jednorázově rozvinout/pamatovat si*<br>
+**set -P**<br>
+**set +P**
+
+*# kontrolovat velikost okna a aktualizovat zvláštní proměnné COLUMNS a LINES (zapnout/vypnout)*<br>
+**shopt -s checkwinsize**<br>
+**shopt -u checkwinsize**
+
+*# snažit se opravit překlepy v parametru příkazu „cd“ (zapnout/vypnout)*<br>
+**shopt -s cdspell**<br>
+**shopt -u cdspell**
+
+*# aliasy: používat/ignorovat*<br>
+**shopt -s expand\_aliases**<br>
+**shopt -u expand\_aliases**
+
+*# nerozlišovat velká a malá písmena ve většině kontextů (zapnout/vypnout)*<br>
+**shopt -s nocasematch**<br>
+**shopt -u nocasematch**
+
+*# příkazy „.“ a „source“ budou při hledání svého argumentu prohledávat také cesty v proměnné PATH (zapnout/vypnout)*<br>
+**shopt -s sourcepath**<br>
+**shopt -u sourcepath**
+
+*# příkaz „echo“ bez parametrů „-e“ a „-E“ sekvence se zpětným lomítkem: interpretuje/neinterpretuje*<br>
+**shopt -s xpkg\_echo**<br>
+**shopt -u xpkg\_echo**
+
+*# při každém vytvoření či přiřazení proměnné či funkce z ní učinit proměnnou prostředí (zapnout/vypnout)*<br>
+**set -a**<br>
+**set +a**
+
+*# řízení úloh příkazy „fg“ a „bg“ a zkratkou Ctrl+Z (zapnout/vypnout)*<br>
+**set -m**<br>
+**set +m**
+
+*# už nenačítat další řádek příkazů; po vykonání příkazů z této řádky skončit (zapnout/vypnout)*<br>
+**set -t**<br>
+**set +t**
+
+*# přepsání existujícího souboru obyčejným přesměrováním výstupu (zakázat/povolit)*<br>
+**set -C**<br>
+**set +C**
+
+*# pokud není argument příkazu cd nalezen jako adresář, zkusit dereferencovat proměnnou téhož názvu (zapnout/vypnout)*<br>
+**shopt -s cdable\_vars**<br>
+**shopt -u cdable\_vars**
+
+<!--
+*# nastavit poziční parametry bashe*<br>
+**set \-\-** [{*parametr*}]...
+-->
+
 ## Zaklínadla (interaktivní ovládání)
 
 *# zopakovat poslední příkaz*<br>
@@ -312,6 +487,14 @@ https://www.gnu.org/software/bash/manual/html_node/Programmable-Completion-Built
 
 *# celá doplňovaná příkazová řádka*<br>
 **$COMP\_LINE**
+
+## Zaklínadla (ostatní)
+
+*# běží bash v interaktivním režimu?*<br>
+**[[ $- == \*i\* ]]**
+
+*# běží bash v režimu „login-shell“?*<br>
+?
 
 ## Parametry příkazů
 <!--

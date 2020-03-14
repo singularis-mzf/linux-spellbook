@@ -28,11 +28,6 @@ Poznámky:
 !ÚzkýRežim: zap
 
 ## Úvod
-<!--
-- Vymezte, co je předmětem této kapitoly.
-- Obecně popište základní principy, na kterých fungují používané nástroje.
-- Uveďte, co kapitola nepokrývá, ačkoliv by to čtenář mohl očekávat.
--->
 
 Tato kapitola se zabývá nástroji pro řazení, filtrování a záplatování textových souborů. Nezabývá se podrobně komplexními nástroji jako GNU awk, sed či Perl,
 přestože jsou v některých zaklínadlech použity.
@@ -43,7 +38,8 @@ Tato kapitola se nezabývá zpracováním textových formátů se složitější
 
 ## Definice
 
-* **Znak** (character) je posloupnost jedho nebo více bajtů v textovém souboru, která má význam definovaný kódováním znaků (typicky UTF-8).
+* **Kódování znaků** je určitá reprezentace znakové sady textu pomocí bajtů a jejich sekvencí v souboru či paměti. U textových souborů uvažujeme výhradně kódování UTF-8, případně ASCII (které je podmnožinou UTF-8). Soubory v jiných kódováních sice také můžeme zpracovávat, ale obvykle je výhodnější je nejprve převést na UTF-8.
+* **Znak** (character) je základní jednotka textu, které je kódováním znaků přiřazen nějaký význam a reprezentace. Např. „A“ je v UTF-8 znak, který znamená písmeno A a je reprezentován bajtem o hodnotě 65. „\\n“ je v UTF-8 znak, který znamená konec řádku a je reprezentován bajtem o hodnotě 10.
 * **Řetězec** (string) je libovolná posloupnost znaků, i prázdná či tvořená jedním znakem.
 * **Záznam** je zobecnění pojmu „řádek“ v textovém souboru. Textový soubor se dělí na jednotlivé záznamy podle jejich zakončení **ukončovačem záznamu** (record separator), což je typicky znak konce řádku „\\n“ nebo nulový bajt „\\0“. Záznamy se číslují od 1.
 * Záznam může být brán jako celek, nebo může být dál rozdělen na **sloupce** (fields). Existuje několik metod dělení záznamu na sloupce, nejčastější je použití určitého znaku ASCII jako „oddělovače sloupců“ (field separator). Sloupce se v každém záznamu číslují od 1.
@@ -199,6 +195,35 @@ egrep -Lr {*regulární-výraz*} {*soubor-či adresář*}...
 *# množinový průnik více souborů (and)*<br>
 *// Tip: nejlepšího výkonu této varianty dosáhnete tak, že začnete od nejmenšího vstupního souboru.*<br>
 **cat** {*první-soubor*} [**\| LC\_ALL=C join** [**-z**] **-t "" -j 1 -** {*další-soubor*}]...
+
+### Konverze kódování znaků a ukončení řádky
+
+*# konvertovat soubor **do/z** UTF-8*<br>
+*// Užitečná kódování: ISO8859-2, WINDOWS-1250, UTF-16, UTF-16BE, UTF-16LE, UTF-8, CP852 (MS-DOS), MAC-CENTRALEUROPE.*<br>
+**iconv -f "**{*vstupní kódování*}**" -t UTF-8** [**-o "**{*výstupní-soubor*}**"**] <nic>[{*vstupní-soubor*}]...<br>
+**iconv -f UTF-8 -t "**{*cílové kódování*}[**//IGNORE**]**"** [**-o "**{*výstupní-soubor*}**"**] <nic>[{*vstupní-soubor*}]...
+
+*# konvertovat soubor do ASCII s transliterací*<br>
+*// Poznámka: tato konverze je ztrátová, a tudíž prakticky jednosměrná.*<br>
+**iconv -f "**{*vstupní kodování*}**" -t "ASCII//TRANSLIT"** [**-o "**{*výstupní-soubor*}**"**] <nic>[{*vstupní-soubor*}]...
+
+*# vypsat úplný seznam podporovaných kódování*<br>
+**iconv -l \| sed -E 's!/\*$!!'**
+
+*# konverze ukončení řádku: Windows na Linux (\\r\\n na \\n)*<br>
+**tr -d \\\\r &lt;**{*vstupní-soubor*} **&gt;**{*výstupní-soubor*}
+
+*# konverze ukončení řádky: Linux na Windows (\\n na \\r\\n)*<br>
+**sed -E 's/\\r\*$/\\r/'**
+
+*# konverze ukončení řádku: Mac OS na Linux (\\r na \\n)*<br>
+**tr \\\\r \\\\n &lt;**{*vstupní-soubor*} **&gt;**{*výstupní-soubor*}
+
+*# konverze ukončení řádky: Linux na Mac OS (\\n na \\r)*<br>
+**tr \\\\n \\\\r &lt;**{*vstupní-soubor*} **&gt;**{*výstupní-soubor*}
+
+*# pokusit se zjistit kódování textu*<br>
+?
 
 ### Ostatní
 

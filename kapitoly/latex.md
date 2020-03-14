@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, kapitola LaTeX
-Copyright (c) 2019 Singularis <singularis@volny.cz>
+Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -39,6 +39,50 @@ https://creativecommons.org/licenses/by-sa/4.0/
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+*# základní struktura dokumentu*<br>
+*// Užitečné třídy: book, article; užitečné volby: 10pt, draft.*<br>
+**\\documentclass**[**[**{*volby*}**]**]**\{**{*třída*}**\}**
+
+*# prázdné záhlaví i zápatí (nastavit/jen pro tuto stránku)*<br>
+**\\pagestyle{empty}**<br>
+**\\thispagestyle{empty}**
+
+*# výchozí styl (jen číslo stránky v zápatí)(nastavit/jen pro tuto stránku)*<br>
+**\\pagestyle{plain}**<br>
+**\\thispagestyle{plain}**
+
+*# změnit číslo stránky*<br>
+**\\setcounter{page}\{**{*číslo*}**\}**
+
+*# řádkování (1/1,5/2/obecně)*<br>
+?<br>
+?<br>
+?
+
+*# odsazení první řádky odstavce*<br>
+?
+
+*# mezera mezi odstavci*<br>
+?
+
+<!--
+*# šířka/výška textové části stránky*<br>
+\\textwidth<br>
+\\textheight
+-->
+
+*# horizontální mezera (ne na okraji/vždy/jako znak)*<br>
+**\\hspace\{**{*délka*}**\}**<br>
+**\\hspace\*\{**{*délka*}**\}**<br>
+**\\rule\{**{*délka*}**\}{0pt}**
+
+*# vertikální mezera (za koncem řádku nebo odstavce)(střední/menší/větší/ne na okraji/vždy)*<br>
+**\\medskip**<br>
+**\\bigskip**<br>
+**\\smallskip**<br>
+**\\vspace\{**{*délka*}**\}**<br>
+**\\vspace\*\{**{*délka*}**\}**<br>
+
 *# formát papíru A4 (alternativy)*<br>
 **\\usepackage[**[**showframe,**]**a4paper,inner=top=**{*horní-okraj*}**,bottom=**{*spodní-okraj*}**,inner=**{*vnitřní-okraj*}**,outer=**{*vnější-okraj*}**]{geometry}**
 
@@ -66,6 +110,81 @@ https://creativecommons.org/licenses/by-sa/4.0/
 Nejčastější vlastnosti písma:
 - Scale=MatchLowercase
 -->
+
+### Křížové odkazy
+
+*# uložit pozici pro křížový odkaz*<br>
+**\\label\{**{*identifikator*}**\}**
+
+*# vložit číslo počítadla (nejčastěji označení sekce)*<br>
+**\\ref\{**{*identifikator*}**\}**
+
+*# vložit číslo stránky z křížového odkazu*<br>
+**\\pageref\{**{*identifikator*}**\}**
+
+### Členění dokumentu
+
+*# část/kapitola (jen v třídě „book“)*<br>
+**\\part\{**{*Název části*}**\}**<br>
+**\\chapter\{**{*Název kapitoly*}**\}**
+
+<!--
+[ ] \chapter[titulek]{Název} ?
+-->
+
+*# sekce/podsekce*<br>
+**\\section\{**{*Název sekce*}**\}**<br>
+**\\subsection\{**{*Název podsekce*}**\}**
+
+*# označení odstavce*<br>
+**\\paragraph\{**{*Titulek odstavce*}**\}** {*Text odstavce.*}
+
+<!--
+\\subparagraph
+-->
+
+<!--
+*# příkazy pro členění knihy*<br>
+**\\frontmatter \\mainmatter \\appendix \\backmatter**
+-->
+
+### Konec řádku
+
+*# okamžitý/přikázaný/doporučený*<br>
+*// Důležitost je číslo 0 (nejmenší) až 4 (největší).*<br>
+**\\\\**[**[**{*délka (mezera navíc)*}**]**][*\\relax*]<br>
+**\\newline**<br>
+**\\linebreak[**{*důležitost*}**]**
+
+*# vysázet text se zakázaným zalomením řádky*<br>
+**\\mbox\{**{*text*}**\}**
+
+### Konec stránky
+
+*# s vyprázdněním/přikázaný/doporučený*<br>
+**\\clearpage**<br>
+**\\newpage**<br>
+**\\pagebreak[**{*důležitost*}**]**
+
+*# začít další lichou stránku*<br>
+**\\cleardoublepage**
+
+<!--
+\raggedbottom
+\showhyphens{slova...}
+-->
+
+### Formát textu
+
+*# zvýraznit (alternativy)*<br>
+**\\emph\{**{*text*}**\}**<br>
+**\\em** {*text*}
+
+<!--
+*# velikosti písma od nejmenší po největší*<br>
+**\\tiny \\scriptsize \\footnotesize \\small \\normalsize \\large \\Large \\LARGE \\huge \\Huge**
+-->
+
 
 ### Přepínače
 

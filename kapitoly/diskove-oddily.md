@@ -255,6 +255,9 @@ Nejdůležitější volby připojení pro všechny typy systému souborů:
 * ◉ suid ○ nosuid :: Povolit/zakázat respektování příznaků „u+s“ a „g+s“. V případě „nosuid“ tyto příznaky půjde měnit a číst, ale nebudou mít žádný vliv.
 * ☐ sync :: Zakáže používání systémové mezipaměti. Všechny operace budou prováděny přímo se zařízením.
 * ○ lazytime ◉ nolazytime :: lazytime: Časové známky u souborů se nebudou zapisovat na disk, dokud to nebude nutné; budou se provádět pouze v paměti, což umožní výrazně snížit počet zápisů na disk. Příkaz „sync“ a některé další situace způsobí zapsání všech provedených změn časových známek na disk.
+* ◉ relatime ○ strictatime ○ noatime :: Časovou známku přístupu při čtení (access time) aktualizovat: jen pokud soubor či adresář od poslední změny nebyl čten/pokaždé/nikdy.
+* ☐ nodiratime :: U adresářů časovou známku přístupu pro čtení (access time) neaktualizovat nikdy.
+* ☐ noauto :: Nepřipojovat automaticky při startu systému (resp. příkazem „mount -a“).
 * ☐ nofail :: Ignorovat selhání při připojení.
 * ☐ X-mount.mkdir :: Pokud přípojný bod neexistuje, vytvoří ho s přístupovými právy „u=rwx,go=rx“. (Poznámka: připojený adresář tato práva zpravidla přepíše.) Podle manuálové stránky je tato volba dovolena pouze superuživateli.
 

@@ -47,26 +47,29 @@ Poznámky:
 
 ### Kontrolní součty a heše
 
-*# vypočítat hexidecimální haše souborů, každou hash na nový řádek (CRC32/MD5/SHA1/SHA256)*<br>
-**crc32** {*soubor*}... **\| cut -c -8**<br>
-**md5sum** {*soubor*}... **\| cut -c -32**<br>
-**sha1sum** {*soubor*}... **\| cut -c -40**<br>
-**sha256sum** {*soubor*}... **\| cut -c -64**
-
-<!--
-[ ] BUG: md5sum vypíše \ na začátek řádku, pokud jsou některé znaky v cestě escapované! (Zejm. '\')
--->
-
-
-*# vypočítat/ověřit kontrolní součty (MD5)*<br>
-*// Heše souborů a jejich názvy (včetně cesty) se uloží do uvedeného souboru.*<br>
-**md5sum** {*soubor*}... **&gt;** {*cílový-soubor.md5*}<br>
-**md5sum -c** {*soubor.md5*}
+*# vypočítat hexidecimální haše souborů, každou hash na nový řádek (MD5/SHA1/SHA256/SHA512)*<br>
+**md5sum** [**\-\-**] {*soubor*}... **\| sed -E 's/^\\\\?(\\S+)\\s.\*/\\1/'** ⊨ 8147f2a49ee708d9f7c20164cf48cfcf<br>
+**sha1sum** [**\-\-**] {*soubor*}... **\| sed -E 's/^\\\\?(\\S+)\\s.\*/\\1/'** ⊨ c61d1871cf7d71f29e2cfeda9dd73abe18a8fb42<br>
+**sha256sum** [**\-\-**] {*soubor*}... **\| sed -E 's/^\\\\?(\\S+)\\s.\*/\\1/'** ⊨ ea6c53b8ffae9d15408a14f1806e6813c4c92b32ee1e8fd05c39d76210755bb3<br>
+**sha512sum** [**\-\-**] {*soubor*}... **\| sed -E 's/^\\\\?(\\S+)\\s.\*/\\1/'** ⊨ f7389d5b8264db3f0950a1e512dd00f335b0ec77db9b6d7e7b36905b31864ec3182fe0e70ae7458951396dfdadbe5f3e1a326af00f8212092b7f7530fb6d9b87
 
 *# vypočítat/ověřit kontrolní součty (SHA256)*<br>
 *// Analogicky můžete také použít příkazy „sha1sum“, „sha224sum“, „sha384sum“ a „sha512sum“. Existuje také obecný „shasum“.*<br>
 **sha256sum** {*soubor*}... **&gt;** {*cílový-soubor.sha256*}<br>
-**sha256sum -c** {*soubor.sha256*}
+**sha256sum** [**\-\-ignore-missing**] <nic>[**\-\-status**] **-c** {*soubor.sha256*}
+
+*# vypočítat/ověřit kontrolní součty (MD5)*<br>
+*// Heše souborů a jejich názvy (včetně cesty) se uloží do uvedeného souboru.*<br>
+**md5sum** {*cesta*}... **&gt;** {*cílový-soubor.md5*}<br>
+**md5sum** [**\-\-ignore-missing**] <nic>[**\-\-status**] **-c** {*soubor.md5*}
+
+*# vypočítat heš CRC32 (hexadecimální/desítkovou)*<br>
+*// Poznámka: Příkaz „crc32“ lze použít i s více soubory, ale v takovém případě vypisuje ke kontrolním součtům i názvy souborů bez escapování, což znamená, že nelze bezpečně zpracovat soubory jejichž cesta obsahuje znak konce řádku.*<br>
+**crc32** {*soubor*}<br>
+**printf %d\\n $(crc32 "**{*soubor*}**")**
+
+*# vypočítat z jednoho souboru heše záznamů ukončených nulovým bajtem*<br>
+?
 
 ### Vytváření souboru
 
@@ -84,9 +87,20 @@ Poznámky:
 *# soubor s bajty 0 až 255*<br>
 **printf %02x {0..255} \| xxd -r -p &gt;~/ram/bytes.dat**
 
+### Spojování a dělení
+
+*# spojit soubory*<br>
+**cat** {*soubor*}... **&gt;**{*cíl*}
+
+*# rozdělit soubor na díly po určitém počtu bajtů*<br>
+?
+
+*# rozdělit soubor na N přibližně stejně velkých dílů*<br>
+?
 
 
-### Kódování
+
+### Kódování (base64, uuencode, xor)
 
 *# zakódovat do/dekódovat z base64*<br>
 **base64 -w 0** [{*soubor*}]<br>
@@ -96,6 +110,9 @@ Poznámky:
 **uuencode /dev/stdout &lt;** {*soubor*} **\| sed -n 'x;3,$p'**<br>
 **sed $'1i\\\\\\nbegin 644 /dev/stdout\\n$a\\\\\\nend' temp.dat \| uudecode &gt;** {*cíl*}
 
+*# symetrické kódování operátorem „xor“*<br>
+?
+
 ### Srovnání souborů podle obsahu
 
 *# jsou dva soubory po bajtech **shodné**?*<br>
@@ -104,9 +121,9 @@ Poznámky:
 *# jsou po bajtech shodné zadané úseky?*<br>
 **cmp** [**-s**] **-n** {*bajtů-k-porovnání-P*} {*soubor1*} {*soubor2*} {*začátek1-P*} {*začátek2-P*}
 
-
 *# který ze dvou souborů je větší?*<br>
-?
+*// Pokud příkaz uspěje, „soubor1“ je větší; jinak je nutno soubory otestovat ještě v opačném pořadí; pokud obě testování selžou, jsou soubory stejně velké.*<br>
+**test $(stat -c %s "**{*soubor1*}**") -gt $(stat -c %s "**{*soubor2*}**")**
 
 ### Ostatní
 
@@ -118,18 +135,26 @@ Poznámky:
 *# nastavit bajt na určité adrese*<br>
 **printf %08x:%02x** {*adresa*} {*hodnota-bajtu*} **\| xxd -r -** {*soubor*}
 
-*# spojit soubory*<br>
-**cat** {*soubor*}... **&gt;**{*cíl*}
+*# vzít prvních N bajtů/kibibajtů/mebibajtů/gibibajtů*<br>
+**head -c** {*N*} {*soubor*}<br>
+**head -c** {*N*}**K** {*soubor*}<br>
+**head -c** {*N*}**M** {*soubor*}<br>
+**head -c** {*N*}**G** {*soubor*}
 
-*# rozdělit soubor na díly po určitém počtu bajtů*<br>
-?
+*# vzít prvních N bajtů/kilobajtů/megabajtů/gigabajtů*<br>
+**head -c** {*N*} {*soubor*}<br>
+**head -c** {*N*}**kB** {*soubor*}<br>
+**head -c** {*N*}**MB** {*soubor*}<br>
+**head -c** {*N*}**GB** {*soubor*}
 
-*# rozdělit soubor na N přibližně stejně velkých dílů*<br>
-?
-
-*# vzít/vynechat prvních N bajtů*<br>
+*# vynechat prvních N bajtů/kibibajtů/mebibajtů/gibibajtů*<br>
+**tail -c +**{*N+1*} {*soubor*}<br>
+?<br>
 ?<br>
 ?
+<!--
+Problém: tail -c +1K přeskočí jen 1023 bajtů!
+-->
 
 *# vyjmout úsek bajtů*<br>
 ?
@@ -143,8 +168,9 @@ Poznámky:
 *# určit typ souboru (zejména pro člověka*<br>
 **file** {*soubor*}...
 
-*# určit velikost souboru v bajtech*<br>
-**wc -c** [{*soubor*}]...
+*# určit velikost souboru v bajtech (alternativy)*<br>
+**wc -c** [{*soubor*}]...<br>
+**stat -c %s** {*soubor*}
 
 *# určit počet bajtů určité hodnoty v daném souboru*<br>
 **tr -cd \\\\**{*osmičková-hodnota*} **&lt;**{*soubor*} **\| wc -c**

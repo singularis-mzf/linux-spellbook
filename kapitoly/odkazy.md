@@ -91,6 +91,19 @@ https://creativecommons.org/licenses/by-sa/4.0/
 *# najít duplicitní soubory v adresářové struktuře a sloučit je pomocí pevných odkazů*<br>
 ?
 
+<!--
+Oblíbené rsync parametry:
+
+-aviA
+--progress
+--noatime
+--delete
+--backup --backup-dir=...
+--exclude=''
+
+-->
+
+
 ## Parametry příkazů
 <!--
 - Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.
