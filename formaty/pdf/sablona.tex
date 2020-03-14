@@ -454,8 +454,10 @@
     }}%
 
 \newcommand*{\klavesa}[1]{%
-    \tcbox[size=fbox,on line,leftrule=0.4pt,toprule=0.4pt,rightrule=1.5pt,bottomrule=1.5pt,boxsep=1.5pt,left=1.5pt,right=1.5pt]{{\sffamily #1}}%
-    }%
+    \tcbox[size=fbox,on line,leftrule=0.4pt,toprule=0.4pt,rightrule=1.5pt,bottomrule=1.5pt,boxsep=1.5pt,left=1.5pt,right=1.5pt]{%
+        {\sffamily\raisebox{0ex}[1.4ex][0.2ex]{{%
+            #1%
+    }}}}}%
 
 \newcommand*{\moznyzlom}{{%
     \normalfont\zaklinadlofamily\color{seda}%

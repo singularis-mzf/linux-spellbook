@@ -758,20 +758,20 @@ footer p {margin:0;padding:0;max-width:none;}
 footer p+p {margin-top:0.75em;}
 footer img {float:left;margin:0 1rem 1rem 0;}
 .tab {
-    background:{{symboly-tab-barva-pozadi}} {{symboly-tab}} 0% 100%/1ch auto no-repeat;
+    background:{{symboly-tab-barva-pozadi}} {{symboly-tab}} 0% 100%/1ch no-repeat;
     display:inline-block;
     overflow:hidden;
     width:1ch;height:1.8ch;
     white-space:pre;
 }
 .viditelnamezera {
-    background:transparent {{symboly-viditelnamezera}} 50% 100%/100% auto no-repeat;
+    background:transparent {{symboly-viditelnamezera}} 50% 100%/100% no-repeat;
     white-space:pre;
 }
 .tritecky {
-    background:transparent {{symboly-tritecky}} 0% 0%/100% 100% auto no-repeat;
+    background:transparent {{symboly-tritecky}} 0% 0%/100% 100% no-repeat;
     display:inline-block;
-    width:1em;height:1ex;
+    width:0.75em;height:1ex;
 }
 
 /* .zahlavistranky: */
