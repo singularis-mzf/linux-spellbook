@@ -136,7 +136,9 @@ function Konec() {
 # ============================================================================
 
 function VypsatOdkazNaKapitolu(i, vyclenit) {
-    print "<li value=\"" cislo[i] "\"><a href=\"" id[i] ".htm\"><span class=\"ikona\"><img src=\"obrazky/" ikony[i] "\" alt=\"\"></span>" nazev[i] "</a></li>";
+    print "<div><a href=\"" id[i] ".htm\"><span class=\"cislo\">" cislo[i] \
+        "</span> <span class=\"ikona\"><img src=\"obrazky/" ikony[i] "\" alt=\"\"></span>" \
+        "<span class=\"nazev\">" nazev[i] "</span></a></div>";
     if (vyclenit) {
         vycleneno[i] = 1;
     }

@@ -971,24 +971,41 @@ nav .next {text-align:left;}
     margin:2em 0 2em 1em;
 }
 .prehledy>div {width:33%;}
-.prehledy ol {padding-bottom:2rem;}
-.prehledy li {list-style:decimal outside;width:85%;margin-top:0.5em;}
+.prehledy>div>div {padding-bottom:2rem;}
+.prehledy>div>div>div {width:85%;margin-top:0.5em;}
 /*.prehledy li+li {margin-top:0.5em;}*/
-.prehledy a {display:block;
-    border-bottom:thin dotted rgba(0,0,0,0.2);}
+.prehledy a {
+    display:flex;
+    border-bottom:thin dotted rgba(0,0,0,0.2);
+    flex-direction:row;
+    text-decoration:none;
+}
+.prehledy a>* {display:block;}
 .prehledy strong {display:block;font-weight:bold;margin-top:1em;}
-.prehledy span.ikona {
+.prehledy .cislo {
+    flex-shrink:0;
+    width:3em;
+    margin-right:0.25em;
+    text-align:right;
+}
+.prehledy .cislo::after {content:"."}
+.prehledy .ikona {
     position:relative;z-index:1;
+    flex-shrink:0;
     display:inline-block;
     margin-right:0.5em;
     width:3em;height:1em;
     /*border:1px dotted blue; /*DEBUG*/
     opacity:0.7;
 }
-.prehledy span.ikona img {
+.prehledy .ikona img {
     position:absolute;left:0;top:0;bottom:auto;right:auto;
     width:100%;height:auto;
 }
+.prehledy .nazev {
+    flex-shrink:1;
+}
+.prehledy a:hover .nazev {text-decoration:underline;}
 .prehledy a:hover span.ikona, .prehledy a:active span.ikona {
     opacity:1;
     z-index:5;
