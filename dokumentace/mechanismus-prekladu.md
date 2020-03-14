@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, dokumentace
-Copyright (c) 2019 Singularis <singularis@volny.cz>
+Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -13,21 +13,84 @@ https://creativecommons.org/licenses/by-sa/4.0/
 -->
 # Dokumentace mechanismu překladu
 
-*Dokumentace je neaktuální, protože neodráží nejnovější úpravy v mechanismu překladu. Vyčkejte prosím na aktualizaci.*
+**(Dokumentace je rozepsaná; počkejte prosím na finální verzi...)**
+
+## Vstup
+
+Vstupem pro mechanismus překladu jsou zdrojové soubory kapitol (v adresáři
+*kapitoly*) a dodatků (v adresáři *dodatky*). Tyto zdrojové kódy jsou
+v upraveném Markdownu. Kompletní a aktuální přehled všech podporovaných
+konstrukcí se nachází ve speciální kapitole [Ukázka](../kapitoly/_ukazka.md).
+
+## Výstup
+
+Mechanismus překladu dodržuje „čistotu stromu zdrojového kódu“ − zapisuje pouze
+do dvou zvláštních adresářů, které si v případě potřeba vytvoří:
+
+* „soubory\_prekladu“ − obsahuje dočasné, pomocné a pracovní soubory potřebné při překladu.
+* „vystup\_prekladu“ − obsahuje koncový výsledek překladu − Linux: Knihu kouzel v různých výstupních formátech.
+
+Oba uvedené adresáře je možné kdykoliv bezpečně smazat a vygenerovat ze zbytku stromu.
+
+## Formáty
+
+* Formáty PDF se spadávkami (*pdf-a4*, *pdf-b5*, *pdf-b5-na-a4*) jsou určeny pro tisk v profesionálních tiskárnách, kde následně proběhne ořez podle ořezovných značek a vazba.
+* Formáty PDF bez spadávek (*pdf-a4-bez*, *pdf-b5-bez*) jsou určeny pro domácí tisk.
+* Formát HTML s kaskádovými styly pro různé barevné motivy (*html*) je určen pro zobrazení na stolním počítači, případně laptopu. Jeho primární funkce je podpůrná − má umožnit pohodlně vykopírovat zaklínadla, a eliminovat tak vznik chyb při opisování.
+* Formát „log“ je určen k ladění mechanismu překladu. Jeho výstupní soubory obsahují čitelnou textovou reprezentaci proudu volání funkcí při překladu, což umožňuje odhalit případné chyby.
+* Formát „deb“ z kapitol shromáždí pouze pomocné funkce, skripty a výstřižky a sestaví balíček ve formátu „deb“ obsahující spouštěč „lkk“. (Podrobněji viz samostatná sekce.)
+
+## Obsah adresáře „soubory\_prekladu“, společná část
+
+### fragmenty.tsv
+
+Soubor „fragmenty.tsv“ je tabulka ve formátu TSV, kterou generuje skript
+[skripty/extrakce/fragmenty.awk](../skripty/extrakce/fragmenty.awk).
+Každý záznam představuje kapitolu či dodatek k vygenerování a zařazení na výstup
+(viz „poradi-kapitol.lst“). Tímto souborem je určeno pořadí kapitol a dodatků na výstupu.
+
+Sloupce jsou následující:
+
+* \[1\] Adresář („dodatky“ nebo „kapitoly“).
+* \[2\] ID dodatku či kapitoly (název souboru bez přípony).
+* \[3\] Název dodatku či kapitoly (podle zdrojového souboru).
+* \[4\] Předchozí ID, nebo „NULL“.
+* \[5\] Předchozí název, nebo „NULL“.
+* \[6\] Následující ID, nebo „NULL“.
+* \[7\] Následující název, nebo „NULL“.
+* \[8\] Pořadové číslo.
+* \[9\] Štítky uzavřené v závorkách {}, nebo „NULL“. Např. „{barvy}{čas}“. Extrahují se ze zdrjového souboru a zde jsou již abecedně seřazené.
+* \[10\] Zjednodušené ID sestávající jen z písmen anglické abecedy.
+* \[11\] Odkaz na ikonu kapitoly (soubor s obrázkem).
+
+Kapitoly a dodatky, které na výstup nebudou zapsány, se do tabulky „fragmenty.tsv“ neuvádí.
+
+### postprocess.dat
+
+Soubor „postprocess.dat“ v adresáři „soubory\_prekladu“ vzniká kopií stejnojmenného souboru
+v hlavním adresáři a obsahuje definice pro postprocessing zdrojového kódu pro formáty PDF.
+
+Jako záznam o samotném postprocessingu zde vzniká také soubor „postprocess.log“.
+
+### stitky.tsv
+
+Tabulka ve formátu TSV, vzniká jako vedlejší produkt skriptu
+[skripty/extrakce/fragmenty.awk](../skripty/extrakce/fragmenty.awk).
+Jde o abecedně řazený seznam štítků a jim odpovídajících kapitol.
+
+Sloupce jsou následující:
+
+* \[1\] Text štítku.
+
+
+
+
+
+
+
+
 
 <!--
-Zdrojový kód kapitol a dodatků knihy *Linux: Kniha kouzel* je v omezeném
-(a na druhou stranu mírně rozšířeném) Markdownu. Kompletní a aktuální přehled
-*všech* podporovaných konstrukcí najdete ve speciální kapitole
-[Ukázka](../kapitoly/_ukazka.md). Zvlášť je třeba upozornit, že není
-podporovaná kompletní sada znaků Unicode, ale jen podmnožina daná striktním
-výčtem (která však bude podle potřeby rozšiřována).
-
-Tento dokument si klade za cíl stručně popsat mechanismy, na nichž je
-založen překlad těchto zdrojových kódů do všech podporovaných výstupních
-formátů. Podrobnější (a možná aktuálnější) přehled si o těchto mechanismech
-můžete udělat studiem souboru [Makefile](../Makefile) a odkazovaných skriptů
-(většina z nich je v jazyce GNU awk).
 
 Jsou podporovány tři hlavní skupiny výstupních formátů:
 
