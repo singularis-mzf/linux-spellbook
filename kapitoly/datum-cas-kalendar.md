@@ -115,7 +115,7 @@ pro zarovnání mezerami místo nulami tam vložte „\_“, např. „%\_m“ v
 **%W** ⊨ 07 (00..53, týden začíná pondělím)<br>
 **%U** ⊨ 07 (00..53, týden začíná nedělí)
 
-*# escapované znaky (alternativy)*<br>
+*# odzvláštněné znaky (alternativy)*<br>
 **%%** ⊨ %<br>
 **%n** ⊨ konec řádku<br>
 **%t** ⊨ tabulátor

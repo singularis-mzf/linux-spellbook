@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, kapitola Zpracování videa a zvuku
-Copyright (c) 2019 Singularis <singularis@volny.cz>
+Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -273,7 +273,7 @@ ale čísla možná pocházejí z https://www.w3.org/TR/filter-effects/#sepiaEq
 **[**{*vi*}**] subtitles=**{*soubor-s-titulky*} **[**{*vo*}**]**
 
 *# zapéci titulky do obrazu (obecně/podtrženým červeným písmem Arial velikosti 48)*<br>
-*// Nastavení stylu jsou ve formátu ASS, přičemž znaky = a , musíte escapovat kvůli ffmpegu.*<br>
+*// Nastavení stylu jsou ve formátu ASS, přičemž znaky = a , musíte odzvláštnit kvůli ffmpegu.*<br>
 **[**{*vi*}**] subtitles=**{*soubor-s-titulky*}[**:force\_style=**{*nastavení-stylu*}] **[**{*vo*}**]**<br>
 **[**{*vi*}**] subtitles=**{*soubor-s-titulky*}**:force\_style=FontName\\=Arial\\,Fontsize\\=48\\,PrimaryColour\\=&amp;H000000FF\\,Underline\\=1 [**{*vo*}**]**
 
@@ -440,6 +440,10 @@ Problém: geq závisí na použitém barevném formátu
 ### Vložit ticho
 
 *# **před stopu** (do všech kanálů/do kanálů různě)*<br>
+?<br>
+?
+<!--
+Nefungovalo mi... vyzkoušet jiné varianty.
 **[**{*ai*}**] adelay='"$(yes** {*milisekund*} **\| head -n 32 \| xargs echo \| tr ' ' \\\|)"' [**{*ao*}**]**<br>
 **[**{*ai*}**] adelay=**{*ms-pro-první-kanál*}[**\|**{*ms-pro-další-kanál*}]... **[**{*ao*}**]**
 <!--

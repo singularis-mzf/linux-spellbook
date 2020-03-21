@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, kapitola Barvy, titulek a výzva terminálu
-Copyright (c) 2019 Singularis <singularis@volny.cz>
+Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -173,14 +173,14 @@ Zde uvedené příkazy nevypisují escape sekvence, ale konkrétní hodnoty.
 
 ## Zaklínadla (PS0, PS1 a PS2)
 
-Poznámka: escapování zaklínadel v této sekci je upraveno pro uvedení uvnitř dvojitých uvozovek v bashi. Při uvedení jiným způsobem (např. v jednoduchých uvozovkách nebo při načítání ze souboru) je nutno escapování zpětnými lomítky přizpůsobit.
+Poznámka: z hlediska odzvláštnění jsou zaklínadla v této sekci upravena pro uvedení uvnitř dvojitých uvozovek v bashi. Při uvedení jiným způsobem (např. v jednoduchých uvozovkách nebo při načítání ze souboru) je tomu nutno zpětná lomítka přizpůsobit.
 
 ### Častá
 *# **znak $** pro normálního uživatele a # pro uživatele „root“*<br>
 **\\\\\\$** ⊨ $
 
 *# provedení příkazu a vypsání jeho výstupu (vyhodnotit hned/vyhodnotit při každém vypsání dané výzvy)*<br>
-*// U druhé varianty (vyhodnotit při každém vypsání výzvy) musíte v příkazu escapovat znaky ", \\, $ a !, aby se do příslušné proměnné uložil přesně tak, jak má být vykonán.*<br>
+*// U druhé varianty (vyhodnotit při každém vypsání výzvy) musíte v příkazu odzvláštnit znaky ", \\, $ a !, aby se do příslušné proměnné uložil přesně tak, jak má být vykonán.*<br>
 **$(**{*příkaz*}**)**<br>
 **\\$(**{*příkaz*}**)**
 

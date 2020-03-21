@@ -147,7 +147,7 @@ ho nijak neomezují a nemají na něj vliv.
 ### Vypsat seznam adresářových položek (pro skript)
 
 *# **všech** (txt/txtz)*<br>
-*// Poznámka: příkaz „find“ escapuje svůj výstup, pokud je veden na terminál. Je-li toto chování nežádoucí, nechte jeho výstup ještě projít dalším filtrem, např. „cat“.*<br>
+*// Poznámka: příkaz „find“ odzvláštňuje speciální znaky na svém výstupu, pokud je veden na terminál. Je-li toto chování nežádoucí, nechte jeho výstup ještě projít dalším filtrem, např. „cat“.*<br>
 **find** {*adresář*} **-mindepth 1 -maxdepth 1 -printf %P\\n**<br>
 **find** {*adresář*} **-mindepth 1 -maxdepth 1 -printf %P\\0**
 
@@ -217,7 +217,7 @@ Poznámka: srovnávané položky nemusejí být v tomtéž adresáři; můžete
 -->
 
 *# přístupová **práva** (kompletní/základní číselně/základní textově pro člověka)*<br>
-**getfacl -ac** [**\-\-**] {*cesta*}... ⊨ user\:\:rw- (výstup má víc řádků)<br>
+**getfacl -ac** [**\-\-**] {*cesta*}... ⊨ user\:\:rw- (výstup má víc řádek)<br>
 **stat -c %**[**04**]**a** [**\-\-**] {*cesta*}... ⊨ 1775<br>
 **stat -c %A** [**\-\-**] {*cesta*}... ⊨ -rwxrwxr-t
 

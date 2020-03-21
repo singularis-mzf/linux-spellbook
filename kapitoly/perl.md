@@ -165,10 +165,17 @@ Problém: co když pracuji s referencí?
 {*identifikátor\_funkce*}**(**{*parametry,oddělené,čárkami*}**)**
 
 *# definovat uživatelskou funkci*<br>
-**sub** {*identifikátor\_funkce*} {*blok příkazů*}
+**sub** {*identifikátor\_funkce*} [{*prototyp*}]<br>
+**\{**<br>
+<odsadit1>[{*příkazy*}]...<br>
+**\}**
 
 *# vrátit se z funkce a vrátit návratovou hodnotu*<br>
 **return** {*návratová hodnota*}**;**
+
+*# přiřadit do proměnné ukazatel na anonymní funkci*<br>
+*// Analogicky můžete ukazatel na anonymní funkci předat jako parametr jiné funkci.*<br>
+{*$proměnná*} **= sub \{**[{*příkazy*}]...**\};**
 
 ### Komentáře
 
@@ -250,7 +257,6 @@ Problém: co když pracuji s referencí?
 
 ### Skaláry: řetězce
 
-
 *# zjistit délku řetězce*<br>
 **length(**{*$skalár*}**)**
 
@@ -260,26 +266,27 @@ Problém: co když pracuji s referencí?
 *# zopakovat řetězec*<br>
 {*$řetězec*} **x** {*$počet*}
 
-*# rozdělit řetězec na pole*<br>
-[{*@pole*} **=**] **split(**{*oddělovač*}**,** {*dělený-řetězec*}[**,** {*maximální-počet-dílů*}]**)**
+*# rozdělit řetězec na pole (obecně/příklady)*<br>
+[{*@pole*} **=**] **split(**{*oddělovač*}**,** {*dělený-řetězec*}[**,** {*maximální-počet-dílů*}]**)**<br>
+**@pole = split(":", $s);**<br>
+**@pole = split(/[:;]/, $s);**
+<!--
+Split podrobněji!
+-->
 
 *# spojit pole na řetězec*<br>
-[{*$řetězec*} **=**] **join(**{*oddělovač*}**,** {*@pole*}**)**
+[{*$řetězec*} **=**] **join("**{*oddělovač (řetězec)*}**",** {*@pole*}**)**
 
-*# má shodu s regulárním výrazem?*<br>
-{*řetězec*} **=~ /**{*regulární výraz*}**/**[**i**][**m**]
+*# má/nemá shodu s regulárním výrazem?*<br>
+{*řetězec*} **=~ /**{*regulární výraz*}**/**[**i**]<nic>[**m**]<br>
+{*řetězec*} **!~ /**{*regulární výraz*}**/**[**i**]<nic>[**m**]
 
-*# najít pozitici první shody s regulárním výrazem*<br>
+*# najít pozici první shody s regulárním výrazem*<br>
 ?
 
-*# provést náhradu pomocí regulárního výrazu (destruktivní/nedestruktivní)*<br>
-*// Destruktivní varianta uloží výsledek náhrady do uvedené proměnné a vrátí jen, zda k nahrazení došlo. Nedestruktivní varianta vrátí řetězec po provedení náhrady (nedošlo-li k náhradě, vrací původní řetězec).*<br>
-{*$proměnná*} **=~ s/**{*regulární výraz*}**/**{*náhrada*}**/**[**g**][**i**][**m**][**s**]<br>
-{*$řetězec*} **=~ s/**{*regulární výraz*}**/**{*náhrada*}**/r**[**g**][**i**][**m**][**s**]
-<!--
-Problém: konstrukce [a][b] má v současnosti odlišný speciální význam v Markdownu a v těchto
-zdrojových kódech. Tuto situaci je třeba vyřešit.
--->
+*# provést náhradu pomocí regulárního výrazu (výsledek: přiřadit zpět/vrátit)*<br>
+{*$proměnná*} **=~ s/**{*regulární výraz*}**/**{*náhrada*}**/**[**g**]<nic>[**i**]<nic>[**m**]<nic>[**s**]<br>
+{*$řetězec*} **=~ s/**{*regulární výraz*}**/**{*náhrada*}**/r**[**g**]<nic>[**i**]<nic>[**m**]<nic>[**s**]
 
 *# přeložit znaky (analogie příkazu **tr**)*<br>
 *// Poznámka: výsledek překladu přepíše původní proměnnou, ale není návratovou hodnotou výrazu!*<br>
@@ -339,7 +346,7 @@ use feature 'state';
 **use** [{*adresář*}**\:\:**]...{*název\_souboru\_bez\_přípony*}**;**
 
 *# hledat moduly i ve stejném adresáři, kde se nachází daný zdrojový soubor*<br>
-**use lib (((\_\_FILE\_\_ =~ s/^\[^\\/]\*$/.\\/x/r) =~ s/\\/\[^\\/]\*$//r));**
+**use lib (((\_\_FILE\_\_ =~ s/^\[<nic>^\\/]\*$/.\\/x/r) =~ s/\\/\[<nic>^\\/]\*$//r));**
 <!--
 TODO: Otestovat!
 -->

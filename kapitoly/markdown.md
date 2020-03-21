@@ -54,7 +54,7 @@ Tato verze kapitoly nepokrývá GFM (GitHub Flavoured Markdown), nicméně všec
 
 *# dva **odstavce***<br>
 {*první odstavec*}<br>
-{*prázdný řádek*}<br>
+{*prázdná řádka*}<br>
 {*druhý odstavec*}
 
 *# **tučný** text*<br>
@@ -64,23 +64,23 @@ Tato verze kapitoly nepokrývá GFM (GitHub Flavoured Markdown), nicméně všec
 **\***{*text*}**\***
 
 *# vložený **kód** v rámci řádku (obecně/příklad)*<br>
-*// Ve vloženém kódu se neinterpretují žádné formátovací sekvence ani escapování (dokonce i zpětné lomítko si tam zachovává význam obyčejného znaku), proto je potřeba zvláštní přístup, pokud má vložený kód obsahovat zpětné apostrofy. K otevření a uzavření vloženého kódu můžete použít libovolný počet zpětných apostrofů, ale musí být stejný pro otevření i pro uzavření a vyšší než maximální počet zpětných apostrofů vyskytujících se ve formátovaném kódu vedle sebe.*<br>
+*// Ve vloženém kódu se neinterpretují žádné formátovací sekvence ani odzvláštnění (dokonce i zpětné lomítko si tam zachovává význam obyčejného znaku), proto je potřeba zvláštní přístup, pokud má vložený kód obsahovat zpětné apostrofy. K otevření a uzavření vloženého kódu můžete použít libovolný počet zpětných apostrofů, ale musí být stejný pro otevření i pro uzavření a vyšší než maximální počet zpětných apostrofů vyskytujících se ve formátovaném kódu vedle sebe.*<br>
 **\`**{*kód*}**\`**<br>
 **\`\`\`\`PRIKLAD="\*\`\`\`\*"\`\`\`\`**
 
 *# víceřádkový **kód***<br>
 **&blank;&blank;&blank;&blank;**{*první řádek*}<br>
-[**&blank;&blank;&blank;&blank;**{*další řádek*}]...
+[**&blank;&blank;&blank;&blank;**{*další řádka*}]...
 
 ### Odkazy a obrázky
 
 *# hypertextový **odkaz** (normální/zjednodušený)*<br>
-*// Některé interprety markdownu automaticky převádějí úplné URL adresy na hypertextové odkazy bez zjevné možnosti escapování.*<br>
+*// Některé interprety markdownu automaticky převádějí úplné URL adresy na hypertextové odkazy bez zjevné možnosti odzvláštnění.*<br>
 **[**{*text odkazu*}**\](**{*adresa-odkazu*}[**&blank;"**{*titulek*}**"**]**)**<br>
 **&lt;**{*adresa-odkazu*}**&gt;**
 
 *# předdefinovaný hypertextový odkaz (definice/použití)*<br>
-*// Definice se uvádí pro každý identifikátor pouze jednou a může být kdekoliv v dokumentu (ale na samostatném řádku). Definovaný identifikátor může být použit na více místech, a to i s různými texty odkazů. Identifikátor může začínat číslem a obsahovat mezery a není citlivý na velikost písmen!*<br>
+*// Definice se uvádí pro každý identifikátor pouze jednou a může být kdekoliv v dokumentu (ale na samostatné řádce). Definovaný identifikátor může být použit na více místech, a to i s různými texty odkazů. Identifikátor může začínat číslem a obsahovat mezery a není citlivý na velikost písmen!*<br>
 **[**{*identifikátor*}**]:&blank;**[{*bílé znaky*}]{*adresa-odkazu*}[**&blank;"**{*titulek*}**"**]<br>
 **[**{*text odkazu*}**\][**{*identifikátor*}**]**
 
@@ -101,7 +101,7 @@ Tato verze kapitoly nepokrývá GFM (GitHub Flavoured Markdown), nicméně všec
 *# automaticky **číslovaný** seznam*<br>
 **1.** {*položka seznamu*}<br>
 [**1.** {*další položka seznamu*}]...<br>
-{*prázdný řádek*}
+{*prázdná řádka*}
 
 <!--
 -- Nefunguje?
@@ -114,7 +114,7 @@ Tato verze kapitoly nepokrývá GFM (GitHub Flavoured Markdown), nicméně všec
 [**&blank;&blank;&blank;&blank;**{*pokračování*}]<br>
 <br>
 **\*&blank;&blank;&blank;**{*druhá položka*}<br>
-{*prázdný řádek*}
+{*prázdná řádka*}
 
 *# automaticky číslovaný seznam s odstavci*<br>
 **1.&blank;&blank;**{*text prvního odstavce*}<br>
@@ -137,7 +137,7 @@ Tato verze kapitoly nepokrývá GFM (GitHub Flavoured Markdown), nicméně všec
 ## Zaklínadla (Markdown Extra)
 
 *# **tabulka***<br>
-*// Zarovnání je „:\-\-\-“ vlevo, „\-\-\-“ na střed nebo „\-\-\-:“ vpravo. Řádek se záhlavím a řádek se zarovnáními jsou povinné, ostatní řádky tabulky jsou nepovinné. Buňky tabulky mohou obsahovat formátování.*<br>
+*// Zarovnání je „:\-\-\-“ vlevo, „\-\-\-“ na střed nebo „\-\-\-:“ vpravo. Řádek se záhlavím a řádka se zarovnáními jsou povinné, ostatní řádky tabulky jsou nepovinné. Buňky tabulky mohou obsahovat formátování.*<br>
 **\|** {*záhlaví 1*} [**\|** {*další záhlaví*}]...<br>
 **\|** {*zarovnání 1*} [**\|** {*další zarovnání*}]...<br>
 [**\|** {*buňka 1*} [**\|** {*další buňka*}]...]...
@@ -156,9 +156,9 @@ Tato verze kapitoly nepokrývá GFM (GitHub Flavoured Markdown), nicméně všec
 **:**&blank;{*odstavec popisující druhý a třetí pojem*}
 
 *# víceřádkový **kód***<br>
-*// Pro tuto syntaxi můžete použít i více než tři znaky \~, ale jejich počet v zahajujícím a ukončujícím řádku se musí shodovat.*<br>
+*// Pro tuto syntaxi můžete použít i více než tři znaky \~, ale jejich počet v zahajující a ukončující řádce se musí shodovat.*<br>
 **\~\~\~**[&blank;**.**{*CSS-třída*}]<br>
-{*řádek kódu*}...<br>
+{*řádka kódu*}...<br>
 **\~\~\~**
 
 *# nadpis s kotvou/odkaz na takový nadpis*<br>
@@ -172,7 +172,7 @@ Tato verze kapitoly nepokrývá GFM (GitHub Flavoured Markdown), nicméně všec
 ### Ostatní
 
 *# **komentář***<br>
-**&lt;!\-\-** {*obsah komentáře, i víc řádků*} **\-\-&gt;**
+**&lt;!\-\-** {*obsah komentáře, i víc řádek*} **\-\-&gt;**
 
 *# horizontální čára*<br>
 **\*\*\***
@@ -187,7 +187,7 @@ Tato verze kapitoly nepokrývá GFM (GitHub Flavoured Markdown), nicméně všec
 
 *# **kód** se zvýrazněním syntaxe*<br>
 **\`\`\`**{*syntaxe*}<br>
-{*řádek kódu*}...<br>
+{*řádka kódu*}...<br>
 **\`\`\`**
 
 ## Parametry příkazů
@@ -232,10 +232,10 @@ Existuje i modernější a propracovanější editor [Remarkable](https://rema
 !ÚzkýRežim: zap
 
 ## Tipy a zkušenosti
-* Asi nejhorším problémem v Markdownu je escapování. Speciální znaky se totiž escapují zpětným lomítkem pouze tehdy, když mají speciální význam; v ostatních případech se zpětné lomítko před takovým znakem exportuje jako normální znak. Problém však je, že inteprety Markdownu se velmi značně liší v tom, které znaky a v jakých kontextech považují za speciální. Proto nelze dosáhnout zcela jednotných výsledků. Standardní Markdown však zaručuje možnost zpětným lomíkem escapovat: \!, \#, \*, \+, \-, \., \\, \_, \` a všechny tři druhy závorek. Markdown Extra k tomu přidává znaky \: a \|.
+* Asi nejhorším problémem v Markdownu je odzvláštňování. Speciální znaky se totiž odzvláštňují zpětným lomítkem pouze tehdy, když mají speciální význam; v ostatních případech se zpětné lomítko před takovým znakem exportuje jako normální znak. Problém však je, že inteprety Markdownu se velmi značně liší v tom, které znaky a v jakých kontextech považují za speciální. Proto nelze dosáhnout zcela jednotných výsledků. Standardní Markdown však zaručuje možnost zpětným lomíkem odzvláštnit: \!, \#, \*, \+, \-, \., \\, \_, \` a všechny tři druhy závorek. Markdown Extra k tomu přidává znaky \: a \|.
 * Identifikátory předdefinovaných odkazů a obrázků jsou prakticky obecné řetězce. Vhodný identifikátor je i např. „3.12;Dobrý den/Žlutoučký kůň\*“. Jejich maximální délka je ale omezena implementací.
 * V Markdownu můžete přímo používat inline prvky HTML (např. &lt;br&gt; či &lt;strong&gt;). Při konverzi na jiný formát než HTML však tyto prvky pravděpodobně nebudou podporovány.
-* Markdown (standardní) umožňuje vložit zalomení řádku pomocí dvou či více mezer na konci řádku. Osobně to nedoporučuji, protože některé textové editory (např. vim) bílé znaky na konci řádku nezobrazují a některé nástroje je mohou považovat za překlep a automaticky odstranit. Doporučuji místo toho používat HTML značku &lt;br&gt;, případně &lt;br&nbsp;/&gt;.
+* Markdown (standardní) umožňuje vložit zalomení řádky pomocí dvou či více mezer na konci řádky. Osobně to nedoporučuji, protože některé textové editory (např. vim) bílé znaky na konci řádku nezobrazují a některé nástroje je mohou považovat za překlep a automaticky odstranit. Doporučuji místo toho používat HTML značku &lt;br&gt;, případně &lt;br&nbsp;/&gt;.
 * Markdown neumožňuje vloženému obrázku definovat rozměry. Toto můžete učinit buď pomocí CSS, nebo místo syntaxe Markdownu přímo použít značku &lt;img&gt;.
 * Po prvním spuštění ReTextu doporučuji otevřít Úpravy / Nastavení a zaškrtnout políčka „Vždy použít živý náhled“, „Zvýrazňovat aktuální řádek“ a „Zobrazovat čísla řádků“ a restartovat ReText. S těmito nastaveními mi připadne práce pohodlnější.
 

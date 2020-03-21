@@ -264,12 +264,12 @@ egrep -Lr {*regulární-výraz*} {*soubor-či adresář*}...
 ?
 
 *# ke každému záznamu přidat **předponu/příponu***<br>
-*// Příkaz „sed“ vyžaduje v příponě i předponě další úroveň escapování znaků „\\“ a „\\n“. Proto v uvedeném případě zadávejte zpětné lomítko jako „\\\\\\\\“ a konec řádku jako „\\\\\\n“. Konec řádku se navíc může vyskytnout pouze při použití formátu txtz, u formátu txt pravděpodobně nebude fungovat správně.*<br>
+*// Příkaz „sed“ vyžaduje v příponě i předponě další úroveň odzvláštnění znaků „\\“ a „\\n“. Proto v uvedeném případě zadávejte zpětné lomítko jako „\\\\\\\\“ a konec řádku jako „\\\\\\n“. Konec řádku se navíc může vyskytnout pouze při použití formátu txtz, u formátu txt pravděpodobně nebude fungovat správně.*<br>
 **sed** [**-z**] **$'i\\\\\\n**{*předpona*}**'** [{*soubor*}]... **\| paste** [**-z**] **-d "" - -**<br>
 **sed** [**-z**] **$'a\\\\\\n**{*přípona*}**'** [{*soubor*}]... **\| paste** [**-z**] **-d "" - -**
 
 *# ke každému záznamu přidat předponu i příponu (alternativy)*<br>
-*// Uvedené varianty se liší požadavky na escapování v příponě: v první variantě sed požaduje dodatečné escapování znaků „\\“ a (případně) konce řádku; v druhé variantě požaduje sed escapování znaků „\\“, „/“ a „&amp;“.*<br>
+*// Uvedené varianty se liší požadavky na odzvláštnění v příponě: v první variantě sed požaduje dodatečné odzvláštění znaků „\\“ a (případně) konce řádku; v druhé variantě požaduje sed odzvláštnění znaků „\\“, „/“ a „&amp;“.*<br>
 **sed** [**-z**] **$'i\\\\\\n**{*předpona*}**\\np\\nc\\\\\\n**{*přípona*}**'** [{*soubor*}]... **\| paste** [**-z**] **-d "" - - -**<br>
 **sed** [**-z**] **'s/.\*/**{*předpona*}**&amp;**{*přípona*}**/'**
 

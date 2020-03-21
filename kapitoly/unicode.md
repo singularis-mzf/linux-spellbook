@@ -46,7 +46,7 @@ https://unix.stackexchange.com/questions/198849/how-can-i-find-the-common-name-f
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 *# získat kód znaku (desítkový/hexadecimální)*<br>
-*// Poznámka: díky použitému escapování by tento tvar měl fungovat pro všechny znaky s výjimkou apostrofu (znak č. 39, resp. 0027).*<br>
+*// Poznámka: díky použitému odzvláštnění by tento tvar měl fungovat pro všechny znaky s výjimkou apostrofu (znak č. 39, resp. 0027).*<br>
 **printf %d\\\\n \\''**{*znak*}**'**<br>
 **printf %04x\\\\n \\''**{*znak*}**'**
 

@@ -146,7 +146,7 @@ Poznámky:
 **test "**{*řetězec 1*}**" != "**{*řetězec 2*}**"**<br>
 
 *# odpovídá hodnota proměnné regulárnímu výrazu? (bash/sh)*<br>
-*// Název proměnné „regvyraz“ zde nemá žádný speciální význam, je zvolen jen pro přehlednost; můžete použít jakoukoliv proměnnou. Jednoduchý regulární výraz (takový, který neobsahuje mezery, escapování ani hranaté závorky) můžete dokonce zadat přímo, pro zadání složitějšího výrazu je ale striktně doporučeno jej předem uložit do proměnné, protože pravidla escapování v tomto kontextu jsou složitá a neintuitivní.*<br>
+*// Název proměnné „regvyraz“ zde nemá žádný speciální význam, je zvolen jen pro přehlednost; můžete použít jakoukoliv proměnnou. Jednoduchý regulární výraz (takový, který neobsahuje mezery, uvozovky, zpětná lomítka ani hranaté závorky) můžete dokonce zadat přímo, pro zadání složitějšího výrazu je ale striktně doporučeno jej předem uložit do proměnné, protože pravidla odzvláštňování v tomto kontextu jsou složitá a neintuitivní.*<br>
 **regvyraz='**{*regulární výraz*}**'**<br>
 **[[ $**{*název\_proměnné*} **=~ $regvyraz ]]**<br>
 {*název\_proměnné*}**=$**{*název\_proměnné*} **regvyraz='**{*regulární výraz*}**' bash -c '[[ $**{*název\_proměnné*} **=~ $regvyraz ]]'**

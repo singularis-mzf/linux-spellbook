@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, AWK
-Copyright (c) 2019 Singularis <singularis@volny.cz>
+Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -17,6 +17,9 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 Tip pro mawk: používat mawk -W sprintf=2123456789
 Poznámka: mawk pracuje po bajtech a neumí zpracovat nulový bajt (končí řetězec), což je závažné omezení.
+
+Poznámka:
+- mawk neumí syntaxi {} v rozšířených regulárních výrazech.
 -->
 
 # AWK
@@ -58,7 +61,7 @@ Pozor! V AWK se řádky v souboru, indexy sloupců v záznamu, indexy čísly
 * **Vzorek** (pattern) je podmínka, která určuje, zda se daný blok příkazů má v dané iteraci skriptu provést. Podmínkou může být obecný výraz, nebo jedno z klíčových slov, která identifikují speciální iterace.
 * **Záznam** (record) je typicky řádka vstupního souboru. Způsob ukončení záznamu ve vstupních souborech lze změnit nastavením speciální proměnné „RS“ (record separator) na jiný než výchozí oddělovač (výchozí oddělovač je "\\n").
 * Záznam se po načtení rozdělí do **sloupců** (fields). Způsob oddělení záznamů se nastavuje speciální proměnnou „FS“ (field separator); její výchozí hodnotou je mezera, která má speciální význam a považuje za oddělovač sloupců jakoukoliv neprázdnou posloupnost bílých znaků (odpovídá regulárnímu výrazu „\\s+“).
-* Regulární výraz může být zadán buď jako **literál** do lomítek, např. „/^a/“, nebo jako **dynamický regulární výraz**, kterým může být jakýkoliv řetězec či řetězcový výraz (např. "^a"). Tyto dva způsoby zadání jsou většinou víceméně rovnocenné, liší se escapováním (v literálu musíte escapovat všechny výskyty znaku „/“, a to i uvnitř hranatých závorek) a tím, že dynamický regularní výraz se nikdy automaticky nedoplní o prefix „$0&blank;~“, zatímco literál to dělá skoro vždy.
+* Regulární výraz může být zadán buď jako **literál** do lomítek, např. „/^a/“, nebo jako **dynamický regulární výraz**, kterým může být jakýkoliv řetězec či řetězcový výraz (např. "^a"). Tyto dva způsoby zadání jsou většinou víceméně rovnocenné, liší se požadavky na odzvláštnění (v literálu musíte odzvláštnit všechny výskyty znaku „/“, a to i uvnitř hranatých závorek) a tím, že dynamický regularní výraz se nikdy automaticky nedoplní o prefix „$0&blank;~“, zatímco literál to dělá skoro vždy.
 
 !ÚzkýRežim: vyp
 
@@ -449,7 +452,7 @@ Nevyzkoušeno:
 
 ### Řetězcové funkce (regulární výrazy)
 
-Poznámka k řetězci náhrady: V tomto řetězci je nutno escapovat znaky „\\“ a „&amp;“, protože mají speciální význam: Funkce sub(), gensub() a gsub() za neescapovaný znak „&amp;“ dosadí text shody s nahrazovaným regulárním výrazem. Funkce „gensub()“ navíc za značky „\\1“ až „\\9“ (do řetězce nutno zadávat jako "\\\\1" atd.) dosadí text číslovaného záchytu (podřetězec odpovídající seskupení v regulárním výrazu).
+Poznámka k řetězci náhrady: V tomto řetězci je nutno odzvláštnit znaky „\\“ a „&amp;“, protože mají speciální význam: Funkce sub(), gensub() a gsub() za neodzvláštněný znak „&amp;“ dosadí text shody s nahrazovaným regulárním výrazem. Funkce „gensub()“ navíc za značky „\\1“ až „\\9“ (do řetězce nutno zadávat jako "\\\\1" atd.) dosadí text číslovaného záchytu (podřetězec odpovídající seskupení v regulárním výrazu).
 
 *# **vyhovuje**/nevyhovuje regulárnímu výrazu?*<br>
 {*řetězec*} **~** {*regulární-výraz*}<br>
@@ -634,10 +637,10 @@ Poznámka: Parametry -f a -e můžete kombinovat a zadávat opakovaně. Každ�
 * Skalární proměnné se do funkcí předávají hodnotou, pole odkazem.
 * Hodnoty ARGC a ARGV je možno za běhu skriptu bez omezení měnit, a tím ovlivňovat, které další soubory gawk či mawk otevře. Na již otevřené soubory to ale nemá vliv.
 * Používání koprocesů vyžaduje pečlivou synchronizaci mezi procesy. Existuje dvě situace, které vedou k zamrznutí programu a musíte se jim vyhnout: 1) Pokus o přečtení řádku z výstupu koprocesu, zatímco koproces nezapisuje, ale sám čeká na další vstup. 2) Zapsání velkého množství dat (cca od desítek kilobajtů) na vstup koprocesu, která koproces nenačte. (V takovém případě se naplní buffer roury.)
-* V literálech regulárních výrazů je nutno escapovat obyčejná lomítka, a to dokonce i uvnitř hranatých závorek, např. „a\*[x\\/y]+“, v dynamických regulárních výrazech je není nutno escapovat.
+* V literálech regulárních výrazů je nutno odzvláštňovat obyčejná lomítka, a to dokonce i uvnitř hranatých závorek, např. „a\*[x\\/y]+“, v dynamických regulárních výrazech je není nutno odzvláštňovat.
 * Chcete-li příkaz pokračovat na další řádce, vložte před konec řádky „\\“.
 * Obsahuje-li skript pouze vzorky BEGIN a žádné jiné, AWK nebude otevírat vstupní soubory a po vykonání průchodu BEGIN okamžitě skončí. Toho lze využít k napsání programu, který vstup nezpracovává.
-* Nestojí-li za sekvencí zpětných lomítek v řetězci náhrady funkcí sub() a gsub() „&amp;“, chová se toto escapování nelogicky − méně než tři zpětná lomítka se použijí tak, jak jsou, a každá čtveřice zpětných lomítek se zredukuje na dvě zpětná lomítka a zbytek sekvence se bere jako od začátku, takže např. 6 zpětných lomítek (v řetězci zapsaných jako 12) zapíše při náhradě čtyři zpětná lomítka, protože první čtyři lomítka se zredukovala na dvě a zbylá dvě se vzala tak, jak jsou. Toto neplatí ve funkci gensub(), ta se chová konzistentně a každou dvojici zpětných lomítek zredukuje na jedno, ať za ní následuje ampresand nebo ne. Pokud tedy potřebujete nahrazovat shody regulárního výrazu zpětnými lomítky, doporučuji vždy řetězec náhrady předem otestovat a pamatovat, že funkce sub() a gsub() zachází se zpětnými lomítky, za kterými nenásleduje ampresand, jinak než funkce gensub().
+* Nestojí-li za sekvencí zpětných lomítek v řetězci náhrady funkcí sub() a gsub() „&amp;“, chová se toto odzvláštňování nelogicky − méně než tři zpětná lomítka se použijí tak, jak jsou, a každá čtveřice zpětných lomítek se zredukuje na dvě zpětná lomítka a zbytek sekvence se bere jako od začátku, takže např. 6 zpětných lomítek (v řetězci zapsaných jako 12) zapíše při náhradě čtyři zpětná lomítka, protože první čtyři lomítka se zredukovala na dvě a zbylá dvě se vzala tak, jak jsou. Toto neplatí ve funkci gensub(), ta se chová konzistentně a každou dvojici zpětných lomítek zredukuje na jedno, ať za ní následuje ampresand nebo ne. Pokud tedy potřebujete nahrazovat shody regulárního výrazu zpětnými lomítky, doporučuji vždy řetězec náhrady předem otestovat a pamatovat, že funkce sub() a gsub() zachází se zpětnými lomítky, za kterými nenásleduje ampresand, jinak než funkce gensub().
 
 ## Další zdroje informací
 
@@ -662,15 +665,3 @@ Poznámka: Parametry -f a -e můžete kombinovat a zadávat opakovaně. Každ�
 *# lkk retence − načte celý standardní vstup do paměti a po uzavření vstupu jej vypíše na výstup*<br>
 **#!/bin/bash**<br>
 **exec gawk -b -e 'BEGIN {RS = FS = "^$"; ORS = "";} {print}'**
-
-<!--
-### Pomocné funkce
-*# escapovat()*<br>
-**function escapovat(s) {gsub(/[\\\\\|.\*+?{}[\\]()\\/^$]/, "\\\\\\\\&amp;", s);return s;}**
-
-*# escapovatknahrade()*<br>
-**function escapovatknahrade(s) {gsub(/[\\\\&amp;]/, "\\\\\\\\&amp;", s);return s;}**
-
-Poznámka:
-- mawk neumí syntaxi {} v rozšířených regulárních výrazech.
--->

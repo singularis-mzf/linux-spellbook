@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, kapitola Ukázka
-Copyright (c) 2019 Singularis <singularis@volny.cz>
+Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -138,25 +138,25 @@ Pro parametry příkazů existuje zvláštní režim zapnutý direktivou „!par
 * --dlouhy :: Dlouhý parametr bez hodnoty.
 * --dlouhy {*hodnota*} :: Dlouhý parametr s hodnotou.
 
-Každý řádek tohoto zvláštního režimu musí obsahovat oddělovač \:\: a před tímto oddělovačem nemusí být escapován znak -, a to ani když se opakuje.
+Každý řádek tohoto zvláštního režimu musí obsahovat oddělovač \:\: a před tímto oddělovačem nemusí být odzvláštněn znak -, a to ani když se opakuje.
 
-## Zvláštní znaky a jejich escapování
+## Zvláštní znaky a jejich odzvláštňování
 
-„Escapování“ znamená zapsání speciálního znaku za dodatečné zpětné lomítko
+„Odzvláštnění“ znamená zapsání speciálního znaku za dodatečné zpětné lomítko
 (nebo jiným alternativním způsobem). Jeho účelem je zbavit znak nechtěného
 speciálního významu a nechat ho vypsat do výstupního formátu jako obyčejný znak.
-Pravidla escapování ve zdrojových kódech tohoto projektu jsou následující:
+Pravidla odzvláštňování ve zdrojových kódech tohoto projektu jsou následující:
 
 * (&lt;), (&amp;), (&gt;)<br>se zadávají vždy jako odpovídající entity &amp;lt;, &amp;amp; a &amp;gt;.
-* (\\), (\`), (\*), (\_)<br>se ve zdrojovém kódu escapují zpětným lomítkem vždy.
-* (\#), ($), (+), (-), (:), ([), (|), (~)<br>se escapují před prvním alfanumerickým znakem na řádku nebo jsou-li zdvojeny. Příklad: \\#\\#, \\$\\$, \\+\\+, \\-\\-, \\:\\:, \\[\\[, \\|\\|, \\~\\~.
-* (!)<br>se escapuje, má-li za ním stát „[“.
-* (])<br>se escapuje, je-li zdvojena nebo má-li za ní stát „(“ nebo „[“.
-* ({), (})<br>se escapují, jen utvořily-li by nechtěnou formátovací sekvenci „\{\*“ či „\*\}“. Příklad: \\\{\*text kurzívou\*\\}
-* ())<br>se escapuje jen uvnitř adresy hypertextového odkazu. Příklad: [X\](http:⫽pism.cz/Pismeno\\\_(X\\))
-* (.)<br>se escapuje za sekvencí desítkových číslic, které na řádce zdrojového kódu nepředchází žádné nebílé znaky, a to jen v případě, že za danou tečkou následuje mezera.
-* (()<br>se neescapuje nikdy.
-* ("), (%), ('), (,), (/), (;), (=), (?), (@), (^) a písmena anglické abecedy A až Z a a až z a číslice 0 až 9<br>je striktně zakázáno escapovat; překlad takovou konstrukci odmítne.
+* (\\), (\`), (\*), (\_)<br>se ve zdrojovém kódu odzvláštňují zpětným lomítkem vždy.
+* (\#), ($), (+), (-), (:), ([), (|), (~)<br>se odzvláštňují před prvním alfanumerickým znakem na řádku nebo jsou-li zdvojeny. Příklad: \\#\\#, \\$\\$, \\+\\+, \\-\\-, \\:\\:, \\[\\[, \\|\\|, \\~\\~.
+* (!)<br>se odzvláštňuje, má-li za ním stát „[“.
+* (])<br>se odzvláštňuje, je-li zdvojena nebo má-li za ní stát „(“ nebo „[“.
+* ({), (})<br>se odzvláštňují, jen utvořily-li by nechtěnou formátovací sekvenci „\{\*“ či „\*\}“. Příklad: \\\{\*text kurzívou\*\\}
+* ())<br>se odzvláštňuje jen uvnitř adresy hypertextového odkazu. Příklad: [X\](http:⫽pism.cz/Pismeno\\\_(X\\))
+* (.)<br>se odzvláštňuje za sekvencí desítkových číslic, které na řádce zdrojového kódu nepředchází žádné nebílé znaky, a to jen v případě, že za danou tečkou následuje mezera.
+* (()<br>se neodzvláštňuje nikdy.
+* ("), (%), ('), (,), (/), (;), (=), (?), (@), (^) a písmena anglické abecedy A až Z a a až z a číslice 0 až 9<br>je striktně zakázáno odzvláštňovat; překlad takovou konstrukci odmítne.
 * Nezlomitelnou mezeru lze zadat jak přímo, tak odpovídající entitou &amp;nbsp;.
 
 Potřebujete-li zapsat URL adresu, která nemá být nikde (ani na GitHubu) formátována jako odkaz,

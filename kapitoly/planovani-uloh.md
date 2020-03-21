@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, kapitola Plánování úloh
-Copyright (c) 2019 Singularis <singularis@volny.cz>
+Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -56,7 +56,7 @@ Plán − viz podsekci „Pravidelné úlohy (plány)“.
 **lkk pridat-ulohu** {*id-úlohy*} {*plán*} **'\~/bin/spustit-v-x** {*příkaz a parametry*}**'**
 
 *# **vypsat** seznam úloh (id je na konci řádku, za znakem „#“)/vypsat konkrétní úlohu*<br>
-*// Poznámka: Znaky „\\“ a „%“ jsou ve výpisu escapovány, protože mají pro crontab speciální význam.*<br>
+*// Poznámka: Znaky „\\“ a „%“ jsou ve výpisu odzvláštněny, protože mají pro crontab speciální význam.*<br>
 **crontab -l**<br>
 **crontab -l \| egrep '#**{*id-úlohy*}**$'**
 

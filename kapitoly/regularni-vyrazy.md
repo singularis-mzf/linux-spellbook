@@ -15,7 +15,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 Poznámky:
 
 Náměty k vylepšení:
-[ ] Pro každou syntaxi vypsat, které znaky vyžaduje escapovat.
+[ ] Pro každou syntaxi vypsat, které znaky vyžaduje odzvláštnit.
 [ ] Perl: vyřešit problémy s UTF-8.
 
 -->
@@ -59,14 +59,14 @@ varianta pro rozšířený regulární výraz.
 ### Jednotlivé znaky
 
 *# konkrétní znak*<br>
-*// Některé znaky musejí být v regulárních výrazech pro zbavení svého speciálního významu escapovány zpětným lomítkem.*<br>
+*// Některé znaky musejí být v regulárních výrazech pro zbavení svého speciálního významu odzvláštněny zpětným lomítkem.*<br>
 {*znak*}
 
 *# **libovolný znak***<br>
 **.**
 
 *# kterýkoliv **z uvedených znaků***<br>
-*// Uvnitř těchto hranatých závorek se speciální znaky neescapují zpětným lomítkem, ale uvedením na určitou pozici.*<br>
+*// Uvnitř těchto hranatých závorek se speciální znaky neodzvláštňují zpětným lomítkem, ale uvedením na určitou pozici.*<br>
 **[**{*znaky*}**]**
 
 *# libovolný znak **kromě uvedených***<br>
@@ -239,7 +239,7 @@ varianta pro rozšířený regulární výraz.
 *# *<br>
 **[[** {*řetězec*} **=~** {*regulární-výraz*} **]]**
 
-*Poznámka:* Protože pravidla escapování regulárního výrazu v této konstrukci jsou neintuitivní a nepraktická,
+*Poznámka:* Protože pravidla odzvláštňování regulárního výrazu v této konstrukci jsou neintuitivní a nepraktická,
 striktně doporučuji zadávat regulární výraz jako proměnnou, např. takto:
 
 *# *<br>

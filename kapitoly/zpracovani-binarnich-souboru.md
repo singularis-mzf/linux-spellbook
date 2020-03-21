@@ -64,7 +64,7 @@ Poznámky:
 **md5sum** [**\-\-ignore-missing**] <nic>[**\-\-status**] **-c** {*soubor.md5*}
 
 *# vypočítat heš CRC32 (hexadecimální/desítkovou)*<br>
-*// Poznámka: Příkaz „crc32“ lze použít i s více soubory, ale v takovém případě vypisuje ke kontrolním součtům i názvy souborů bez escapování, což znamená, že nelze bezpečně zpracovat soubory jejichž cesta obsahuje znak konce řádku.*<br>
+*// Poznámka: Příkaz „crc32“ lze použít i s více soubory, ale v takovém případě vypisuje ke kontrolním součtům i názvy souborů bez odzvláštnění, což znamená, že nelze bezpečně zpracovat soubory jejichž cesta obsahuje znak konce řádku.*<br>
 **crc32** {*soubor*}<br>
 **printf %d\\n $(crc32 "**{*soubor*}**")**
 

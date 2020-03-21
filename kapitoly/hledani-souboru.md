@@ -16,6 +16,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 # Hledání souborů
 
 !Štítky: {tematický okruh}{adresáře}{hledání}
+!FixaceIkon: 1754
 !ÚzkýRežim: zap
 
 ## Úvod
@@ -24,6 +25,8 @@ Tato kapitola se zabývá vyhledáváním adresářových položek (souborů a 
 Převážně se zabývá příkazem „find“, který strukturu adresářů skutečně prochází
 a prohleďává, ale zahrnuje také vyhledávání programů a na databázi založený
 příkaz „locate“.
+
+Tato verze kapitoly nepokrývá vyhledávání podle obsahu souboru.
 
 ## Definice
 
@@ -132,15 +135,18 @@ Písmeno „i“ vypne rozlišování mezi velkými a malými písmeny.
 *# **prázdný** soubor*<br>
 **\-size 0**
 
-### Čas („změněno“, „poslední přístup“)
+### Čas („změněno“, „čteno“)
 
-*# změněno/poslední přístup v rozsahu dnů*<br>
+*# změněno/čteno v rozsahu dnů*<br>
 *// Dny zadejte ve formátu %F (YYYY-MM-DD).*<br>
 **-newermt "**{*první-den-intervalu*} **00:00:00" \\! -newermt "**{*poslední-den-intervalu*} **23:59:59"**<br>
 **-newerat "**{*první-den-intervalu*} **00:00:00" \\! -newerat "**{*poslední-den-intervalu*} **23:59:59"**
 <!--
 [ ] VYZKOUŠET!
 -->
+
+*# čteno od poslední změny*<br>
+?
 
 <!--
 -amin {} :: poslední přístup
@@ -217,14 +223,21 @@ xxx , xxx # priorita?
 <!--
 [ ] Vyzkoušet!
 -->
-*# některý řádek obsahuje/žádný řádek neobsahuje podřetězec*<br>
+*# některá řádka obsahuje/žádná řádka neobsahuje podřetězec*<br>
 **\\! \( -type d -o \( -type l -xtype d \) \) -readable \-exec fgrep -q** [**\-\-**] **'**{*podřetězec*}**' \\;**
 **\\! \( -type d -o \( -type l -xtype d \) \) -readable \\! \-exec fgrep -q** [**\-\-**] **'**{*podřetězec*}**' \\;**
 
-### Ostatní
+### Velikost adresáře
 
 *# prázdný adresář*<br>
 **\-type d -empty**
+
+*# adresář s alespoň N položkami/právě N položkami/nejvýše N položkami*<br>
+**\-type d -exec sh -c 'test $(ls -1AbU \-\- "{}") -ge** {*N*}**' \\;** [**\-\-print**]<br>
+**\-type d -exec sh -c 'test $(ls -1AbU \-\- "{}") -eq** {*N*}**' \\;** [**\-\-print**]<br>
+**\-type d -exec sh -c 'test $(ls -1AbU \-\- "{}") -le** {*N*}**' \\;** [**\-\-print**]
+
+### Ostatní
 
 *# pevné odkazy konkrétního souboru*<br>
 **\-samefile** {*soubor*}
@@ -254,22 +267,25 @@ xxx , xxx # priorita?
 *# čislo **inode***<br>
 **\-inum** {*inode*}
 
+*# **hloubka** prohledávání*<br>
+?
+
 ## Zaklínadla (find: akce)
 
 ### Vypsat údaje
 
-*# zapsat cestu položky jako záznam do souboru (txt/txtz)*<br>
-*// Poznámka: Varianta „txt“ není bezpečná v případě, že cesta položky obsahuje znak konce řádku.*<br>
-**\-fprint** {*soubor*}<br>
-**\-fprint0** {*soubor*}
+*# cestu položky na standardní výstup (txt/txtz)*<br>
+**\-print**<br>
+**\-print0**
 
 *# vypsat údaje podle formátu na standardní výstup/do souboru*<br>
 **\-printf '**{*formát*}**'**<br>
 **\-fprintf** {*soubor*} **'**{*formát*}**'**
 
-*# cestu položky na standardní výstup (txt/txtz)*<br>
-**\-print**<br>
-**\-print0**
+*# zapsat cestu položky jako záznam do souboru (txt/txtz)*<br>
+*// Poznámka: Varianta „txt“ není bezpečná v případě, že cesta položky obsahuje znak konce řádku.*<br>
+**\-fprint** {*soubor*}<br>
+**\-fprint0** {*soubor*}
 
 <!--
 -fprint {soubor}
@@ -313,23 +329,19 @@ fprintf:
 
 ## Zaklínadla (akce -printf a -fprintf)
 
-*# název/cesta položky/cesta položky bez výchozího bodu*<br>
-**%f**<br>
-**%p**<br>
-**%P**
-
-<!--
-[ ] Rozdíl mezi %f a %p?
--->
+*# název položky/cesta položky/cesta položky bez výchozího bodu*<br>
+**%f** ⊨ test.txt<br>
+**%p** ⊨ ./testdir/test.txt<br>
+**%P** ⊨ testdir/test.txt
 
 *# typ adresářové položky (písmeno)*<br>
-**%y**
+**%y** ⊨ f
 
 *# cesta položky bez názvu*<br>
-**%h**
+**%h** ⊨ ./testdir
 
 *# výchozí bod*<br>
-**%H**
+**%H** ⊨ .
 
 *# čas „změněno“(normálně/časová známka Unixu)*<br>
 *// V obou případech se bohužel vypíše s desetinnou částí.*<br>
@@ -341,40 +353,35 @@ fprintf:
 **%Ay-%Am-%Ad %AT** ⊨ 2020-03-13 22:03:00.9467889490<br>
 **%A@** ⊨ 1584133380.9467889490
 
-*# hloubka*<br>
+*# hloubka prohledávání*<br>
 **%d** ⊨ 1
 
 *# typ souborového systému*<br>
-**%F**
+**%F** ⊨ ext4
 
-*# cíl symbolického odkazu*<br>
-**%l**
-<!--
-[ ] Pokud není s. odkaz, prázdný řetězec?
--->
+*# cíl (obsah) symbolického odkazu*<br>
+*// Pokud položka není symbolický odkaz, %l vypisuje prázdný řetězec.*<br>
+**%l** ⊨
 
 *# počet pevných odkazů*<br>
-**%n**
+**%n** ⊨ 1
 
 *# velikost souboru v bajtech*<br>
-**%s**
+**%s** ⊨ 3
 
 *# vlastník (jméno/UID)*<br>
-**%u**<br>
-**%U**
+**%u** ⊨ milada<br>
+**%U** ⊨ 1000
 
 *# skupina (jméno/GID)*<br>
-**%g**<br>
-**%G**
-
-*# hloubka prohledávání*<br>
-**%d**
+**%g** ⊨ milada<br>
+**%G** ⊨ 1000
 
 *# číslo „inode“*<br>
-**%i**
+**%i** ⊨ 2758499
 
 *# přístupová práva symbolicky*<br>
-**%M**
+**%M** ⊨ -rw-r\-\-r\-\-
 
 ## Zaklínadla (celé příkazy)
 
@@ -418,18 +425,13 @@ fprintf:
 [**sudo**] **locate \-\-regex** [**-e**] <nic>[**-i**] **-r '**{*regulární výraz pro celou cestu*}**'**
 
 ## Parametry příkazů
-<!--
-- Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.
-- Jinak by zde měl být přehled nejužitečnějších parametrů používaných nástrojů.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 ### find
 
 *# *<br>
-**find** [**-P**] {*cesta*}... {*globální parametry*} {*testy-a-akce*}<br>
-**find -L** {*cesta*}... {*globální parametry*} {*testy-a-akce*}<br>
-**find -H** {*cesta*}... {*globální parametry*} {*testy-a-akce*}
+[**sudo**] **find** [**-P**] {*cesta*}... {*globální parametry*} {*testy-a-akce*}<br>
+[**sudo**] **find -L** {*cesta*}... {*globální parametry*} {*testy-a-akce*}<br>
+[**sudo**] **find -H** {*cesta*}... {*globální parametry*} {*testy-a-akce*}
 
 Chování k symbolickým odkazům: **-P**: nikdy nenásledovat (interpretovat každý odkaz jen jako adresářovou položku); **-L**: vždy následovat (chovat se, jako by na místě symbolického odkazu byl odkazovaný soubor, adresář apod.; vstupovat do takových adresářů); **-H**: následovat jen symbolické odkazy, které jsou přímo uvedeny jako „cesta“ na příkazové řádce.
 
@@ -439,8 +441,11 @@ Chování k symbolickým odkazům: **-P**: nikdy nenásledovat (interpretovat k
 
 * ☐ -xdev :: Po každou „cestu“ na příkazové řádce omezí prohledávání jen na jeden souborový systém.
 * ☐ -depth :: Adresář zpracuje až „na odchodu“, tzn. teprve po zpracování veškerého jeho obsahu. Normálně se adresář zpracuje jako první a pak se teprve testuje jeho obsah.
-* ☐ -maxdepth {*číslo*} :: Sestoupí maximálně do uvedené hloubky. 0 znamená testovat jen cesty uvedené na příkazovém řádku; 1 znamená testovat i položky v adresářích uvedených na příkazovém řádku; 2 znamená testovat i položky v podadresářích těchto adresářů atd.
-* ☐ -mindepth {*číslo*} :: Na položky v hloubce nižší než „číslo“ se nebudou aplikovat žádné testy ani akce a nebudou vypsány.
+* ☐ -maxdepth {*číslo*} :: Sestoupí maximálně do uvedené hloubky. 0 znamená testovat jen cesty uvedené na příkazové řádce; 1 znamená testovat i položky v adresářích uvedených na příkazovém řádku; 2 znamená testovat i položky v podadresářích těchto adresářů atd.
+* ☐ -mindepth {*číslo*} :: Na položky v hloubce nižší než „číslo“ se nebudou aplikovat žádné testy ani akce a nebudou vypsány. Pozor, to znamená, že na ně nebude účinkovat akce -prune! Příkaz find se pokusí vstoupit do každého adresáře s hloubkou menší než „mindepth“.
+
+
+<neodsadit>Testy a akce jsou uvedeny jako zaklínadla v předchozí části kapitoly.
 
 ## Instalace na Ubuntu
 
@@ -449,13 +454,15 @@ Většina uvedených příkazů je základními součástmi Ubuntu. Pouze přík
 *# *<br>
 **sudo apt-get install symlinks**
 
-## Ukázka
 <!--
+## Ukázka
+<!- -
 - Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
 - Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti − ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
 - Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
--->
+- ->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
+-->
 
 !ÚzkýRežim: zap
 
@@ -465,7 +472,6 @@ Většina uvedených příkazů je základními součástmi Ubuntu. Pouze přík
 - Popište typické chyby nových uživatelů a jak se jim vyhnout.
 - Buďte co nejstručnější; neodbíhejte k popisování čehokoliv vedlejšího, co je dost možné, že už čtenář zná.
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 * Příkaz „find“ cesty na svém výstupu nijak neřadí.
 * Příkaz „locate“ respektuje přístupová práva a najde pouze adresářové položky, ke kterým má uživatel v dané chvíli přístup.
@@ -479,16 +485,20 @@ Většina uvedených příkazů je základními součástmi Ubuntu. Pouze přík
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-Co hledat:
 
-* [Článek na Wikipedii](https://cs.wikipedia.org/wiki/Hlavn%C3%AD_strana)
-* Oficiální stránku programu
-* Oficiální dokumentaci
-* [Manuálovou stránku](http://manpages.ubuntu.com/)
-* [Balíček](https://packages.ubuntu.com/)
-* Online referenční příručky
-* Různé další praktické stránky, recenze, videa, tutorialy, blogy, ...
-* Publikované knihy
-* [Stránky TL;DR](https://github.com/tldr-pages/tldr/tree/master/pages/common)
+
+* [Wikipedie: find](https://cs.wikipedia.org/wiki/Find)
+* [Oficiální dokumentace balíčku „findutils“](https://www.gnu.org/software/findutils/manual/html\_node/find\_html/) (anglicky)
+* [YouTube: Linux Find Command Tutorial](https://www.youtube.com/watch?v=f3KwmOb42j4) (anglicky)
+* [YouTube: Find Files in Linux (find, whereis)](https://www.youtube.com/watch?v=O9lNYhz8amY) (anglicky)
+* man find (anglicky)
+* [Balíček findutils](https://packages.ubuntu.com/bionic/findutils) (anglicky)
+* [TL;DR: find](https://github.com/tldr-pages/tldr/blob/master/pages/common/find.md) (anglicky)
+* [TL;DR: locate](https://github.com/tldr-pages/tldr/blob/master/pages/linux/locate.md) (anglicky)
+* [TL;DR: which](https://github.com/tldr-pages/tldr/blob/master/pages/common/which.md) (anglicky)
+
+<!--
+https://www.youtube.com/watch?v=zmlNuMKJSkc – Dobré video, ale dělá chybu *.log bez uvozovek.
+-->
 
 !ÚzkýRežim: vyp
