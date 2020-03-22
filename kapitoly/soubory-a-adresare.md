@@ -207,14 +207,8 @@ Poznámka: srovnávané položky nemusejí být v tomtéž adresáři; můžete
 ### Zjistit údaje
 
 *# prostor zabraný na disku adresářem a celým jeho podstromem (v bajtech/čitelně pro člověka)*<br>
-?<br>
-?
-
-<!--
-[ ] du poskytuje nevěrohodné údaje!
-**du -sb0**[**x**] {*adresář*}... **\| sed -zE 's/\\s.\*/\\n/' \| tr -d \\\\0** ⊨ 16404<br>
+**du -s0**[**x**] **-B 1** {*adresář*}... **\| sed -zE 's/\\s.\*/\\n/' \| tr -d \\\\0** ⊨ 16404<br>
 **du -sh**[**x**] {*adresář*}... ⊨ 28K .
--->
 
 *# přístupová **práva** (kompletní/základní číselně/základní textově pro člověka)*<br>
 **getfacl -ac** [**\-\-**] {*cesta*}... ⊨ user\:\:rw- (výstup má víc řádek)<br>
