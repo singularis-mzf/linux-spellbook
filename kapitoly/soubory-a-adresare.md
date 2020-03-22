@@ -15,6 +15,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 Poznámky:
 
 - Kdo má právo nastavovat příslušnou skupinu?
+- [ ] Přidat fallocate, truncate a možná kopírování (ale pro to bude možná samostatná kapitola).
 
 ⊨
 -->
@@ -247,7 +248,7 @@ Poznámka: srovnávané položky nemusejí být v tomtéž adresáři; můžete
 **stat -c %A \| cut -c 1 \| tr - f** ⊨ f<br>
 **stat -c %F** {*cesta*}... ⊨ běžný soubor
 
-*# příslušný přípojný bod (kořenový adresář souboru systémů, na kterém se položka nachází)*<br>
+*# příslušný přípojný bod (kořenový adresář systému souborů, na kterém se položka nachází)*<br>
 **stat -c %m** {*cesta*}... ⊨ /
 
 *# prostor skutečně zabraný na disku souborem (v bajtech/čitelně pro člověka)*<br>
