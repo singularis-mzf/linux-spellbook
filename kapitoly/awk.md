@@ -579,7 +579,7 @@ TODO: Test.
 **systime()**
 
 *# zformátovat čas*<br>
-*// Bez parametru „1“ vypíše lokální čas, s ním vypíše UTC. Pro „formát“ − viz kapitolu „Datum, čas a kalendář“.*<br>
+*// Bez parametru „1“ vypíše lokální čas, s ním vypíše UTC. Pro „formát“ – viz kapitolu „Datum, čas a kalendář“.*<br>
 **strftime(**{*formát*}**,**{*časová-známka-Unixu*}[**, 1**]**)**
 
 ### Pokročilé konstrukce
@@ -620,7 +620,7 @@ Poznámka: Parametry -f a -e můžete kombinovat a zadávat opakovaně. Každ�
 ## Ukázka
 <!- -
 - Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
-- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti − ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
+- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti – ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
 - Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
 - ->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
@@ -640,7 +640,7 @@ Poznámka: Parametry -f a -e můžete kombinovat a zadávat opakovaně. Každ�
 * V literálech regulárních výrazů je nutno odzvláštňovat obyčejná lomítka, a to dokonce i uvnitř hranatých závorek, např. „a\*[x\\/y]+“, v dynamických regulárních výrazech je není nutno odzvláštňovat.
 * Chcete-li příkaz pokračovat na další řádce, vložte před konec řádky „\\“.
 * Obsahuje-li skript pouze vzorky BEGIN a žádné jiné, AWK nebude otevírat vstupní soubory a po vykonání průchodu BEGIN okamžitě skončí. Toho lze využít k napsání programu, který vstup nezpracovává.
-* Nestojí-li za sekvencí zpětných lomítek v řetězci náhrady funkcí sub() a gsub() „&amp;“, chová se toto odzvláštňování nelogicky − méně než tři zpětná lomítka se použijí tak, jak jsou, a každá čtveřice zpětných lomítek se zredukuje na dvě zpětná lomítka a zbytek sekvence se bere jako od začátku, takže např. 6 zpětných lomítek (v řetězci zapsaných jako 12) zapíše při náhradě čtyři zpětná lomítka, protože první čtyři lomítka se zredukovala na dvě a zbylá dvě se vzala tak, jak jsou. Toto neplatí ve funkci gensub(), ta se chová konzistentně a každou dvojici zpětných lomítek zredukuje na jedno, ať za ní následuje ampresand nebo ne. Pokud tedy potřebujete nahrazovat shody regulárního výrazu zpětnými lomítky, doporučuji vždy řetězec náhrady předem otestovat a pamatovat, že funkce sub() a gsub() zachází se zpětnými lomítky, za kterými nenásleduje ampresand, jinak než funkce gensub().
+* Nestojí-li za sekvencí zpětných lomítek v řetězci náhrady funkcí sub() a gsub() „&amp;“, chová se toto odzvláštňování nelogicky – méně než tři zpětná lomítka se použijí tak, jak jsou, a každá čtveřice zpětných lomítek se zredukuje na dvě zpětná lomítka a zbytek sekvence se bere jako od začátku, takže např. 6 zpětných lomítek (v řetězci zapsaných jako 12) zapíše při náhradě čtyři zpětná lomítka, protože první čtyři lomítka se zredukovala na dvě a zbylá dvě se vzala tak, jak jsou. Toto neplatí ve funkci gensub(), ta se chová konzistentně a každou dvojici zpětných lomítek zredukuje na jedno, ať za ní následuje ampresand nebo ne. Pokud tedy potřebujete nahrazovat shody regulárního výrazu zpětnými lomítky, doporučuji vždy řetězec náhrady předem otestovat a pamatovat, že funkce sub() a gsub() zachází se zpětnými lomítky, za kterými nenásleduje ampresand, jinak než funkce gensub().
 
 ## Další zdroje informací
 
@@ -655,13 +655,13 @@ Poznámka: Parametry -f a -e můžete kombinovat a zadávat opakovaně. Každ�
 * [Video „Controlling Array Sorting in AWK“](https://www.youtube.com/watch?v=88oVSJMm8xI) (anglicky)
 * [Awk tutorial](https://www.grymoire.com/Unix/Awk.html) (anglicky)
 * [Video „awk command \| Powerful Text Manipulation Tool“](https://www.youtube.com/watch?v=7qaBKueySg0) (anglicky)
-* [Video: UNIX − awk explained](https://www.youtube.com/watch?v=7p-P0mMzc1E) (anglicky)
+* [Video: UNIX – awk explained](https://www.youtube.com/watch?v=7p-P0mMzc1E) (anglicky)
 * [TL;DR stránka](https://github.com/tldr-pages/tldr/blob/master/pages/common/awk.md) (anglicky)
 
 !ÚzkýRežim: vyp
 
 ## Pomocné funkce a skripty
 
-*# lkk retence − načte celý standardní vstup do paměti a po uzavření vstupu jej vypíše na výstup*<br>
+*# lkk retence – načte celý standardní vstup do paměti a po uzavření vstupu jej vypíše na výstup*<br>
 **#!/bin/bash**<br>
 **exec gawk -b -e 'BEGIN {RS = FS = "^$"; ORS = "";} {print}'**

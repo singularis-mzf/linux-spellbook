@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, kapitola Diskové oddíly
-Copyright (c) 2019 Singularis <singularis@volny.cz>
+Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -51,20 +51,16 @@ umask/fmask/dmask
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-Tato kapitola pokrývá dělení pevného disku na oddíly, jejich formátováním, připojováním (ručním i automatickým) a odpojováním. Zabývá se také prací s ramdisky, odkládacím prostorem a LVM.
+Tato kapitola se zabývá dělením pevného disku na oddíly, jejich formátováním a připojováním (ručním i automatickým). Zabývá se také prací s ramdisky, odkládacím prostorem, LVM a squash-fs.
 
 Tato verze kapitoly nepokrývá připojovaní souborových systémů obyčejným uživatelem; šifrování a nastavování kvót a souborový systém BTRFS.
 Rovněž nepokrývá síťové souborové systémy a vypalování DVD.
 
 ## Definice
-<!--
-- Uveďte výčet specifických pojmů pro použití v této kapitole a tyto pojmy definujte co nejprecizněji.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 * **Systém souborů** je něco, co nabízí adresářovou strukturu kompatibilní se způsobem, jakým Linux nahlíží na adresáře a soubory. Některé systémy souborů jsou „fyzické“ (uložené na skutečném zařízení), jiné jsou čistě virtuální (generované za běhu ovladačem v jádře).
 * **Virtuální souborový systém** (VFS) je způsob, jakým Linux nahlíží na strukturu souborů v počítači; není to skutečný systém souborů. Existuje pouze jeden, je pouze pro čtení a neobsahuje nic jiného než prázdný počáteční kořenový adresář. Při startu systému je na tento adresář připojen kořenový adresář kořenového systému souborů.
-* **Připojení** systému souborů znamená, že systém vezme existující adresář ve VFS (takzvaný **přípojný bod**, anglicky „mount point“) a „překryje“ ho kořenovým adresářem připojovaného systému souborů včetně jeho vlastnictví, příznaků a přístupových práv. Celá adresářová struktura připojeného systému souborů se tak stane součástí VFS a bude dostupná přes daný přípojný bod. (Nestane se však součástí původního systému souborů − adresář, který sehrál roli přípojného bodu, bude nadále existovat, ale nebude již touto cestou dostupný.) Opačným úkonem je **odpojení** systému souborů; při něm dojde k opětovnému zpřístupnění adresáře v původním systému souborů. Do VFS lze připojit i jiný než kořenový adresář systému souborů, nicméně k tomu musí být daný systém souborů již připojen.
+* **Připojení** systému souborů znamená, že systém vezme existující adresář ve VFS (takzvaný **přípojný bod**, anglicky „mount point“) a „překryje“ ho kořenovým adresářem připojovaného systému souborů včetně jeho vlastnictví, příznaků a přístupových práv. Celá adresářová struktura připojeného systému souborů se pak stane součástí VFS, dostupnou přes daný přípojný bod. Naopak původní překrytý adresář (včetně svého obsahu) tímto z VFS odpadne. Opačným úkonem je **odpojení** systému souborů; při něm dojde k opětovnému zpřístupnění původního adresáře. Do VFS lze připojit i jiný než kořenový adresář systému souborů, nicméně k tomu musí být daný systém souborů již připojen jinam.
 * **Typ systému souborů** je buď způsob uložení souborů a adresářů na diskovém oddílu (např. ext4) nebo druh ovladače, který poskytuje nějakým způsobem získanou adresářovou strukturu (např. „tmpfs“). Zvláštním typem systému souborů je „swap“, tedy odkládací oddíl, protože ten adresářovou strukturu neposkytuje.
 
 V následujících zaklínadlech platí:
@@ -142,7 +138,7 @@ V následujících zaklínadlech platí:
 ### Ramdisk
 
 *# připojit ramdisk (fstab)*<br>
-*// Velikost se udává nejčastěji v mebibajtech (s příponou M − např. „256M“) nebo gibibajtech (s příponou G − např. „10G“).*<br>
+*// Velikost se udává nejčastěji v mebibajtech (s příponou M – např. „256M“) nebo gibibajtech (s příponou G – např. „10G“).*<br>
 **tmpfs** {*/cesta*} **tmpfs size=**{*velikost*}[**,nosuid**]<nic>[**,noexec**]<nic>[**,mode=**{*práva-číselně*}]<nic>[**,uid=**{*UID-vlastníka*}]<nic>[**,gid=**{*GID-skupiny*}]<nic>[**,**{*další,volby*}] **0 0**
 
 ### Degrafmentace apod.
@@ -312,7 +308,7 @@ Všechny použité nástroje jsou základními součástmi Ubuntu.
 ## Ukázka
 <!--
 - Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
-- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti − ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
+- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti – ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
 - Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)

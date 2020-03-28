@@ -32,7 +32,7 @@ Tato verze kapitoly nepokrývá vyhledávání podle obsahu souboru.
 
 * **Výchozí bod** je cesta (relativní či absolutní) zadaná příkazu „find“, ze které tento příkaz zahajuje vyhledávání. Může být absolutní i relativní. Nejčastěji se jedná o adresář (např. „.“), ale může jít i o souboru či symbolický odkaz na adresář či soubor. Příkaz find výchozí bod nezkracuje, vždy ho zpracovává tak, jak je zadán.
 * **Hloubka** je celé číslo, které vyjadřuje počet adresářů od výchozího bodu k právě testované adresářové položce. Hloubku 0 mají pouze výchozí body; hloubku 1 soubory a podadresáře v nich, hloubku 2 ty další atd. Je-li např. „/usr/share“ výchozí bod, pak adresář „/usr/share“ má hloubku 0, soubor „/usr/share/.lock“ by měl hloubku 1, soubor „/usr/share/test/copyright.gz“ hloubku 2 atd.
-* Průchod adresářovou strukturou může být **do šířky** (výchozí stav − každý adresář je nejprve zpracován sám o sobě (provedou se nad ním testy a v případě úspěchu se vykonají akce) a teprve poté do něj find vstoupí a prozkoumá jeho obsah) nebo **do hloubky** (v tom případě find pokaždé nejprve vstoupí do adresáře a zpracuje veškerý jeho obsah a teprve „na odchodu“ zpracuje i samotný adresář). Výchozí je průchod do šířky. Průchod do hloubky se aplikuje pouze tehdy, je-li zadán globální parametr „-depth“ nebo je-li použita akce „-delete“. Při průchodu do hloubky nelze použít akci „-prune“.
+* Průchod adresářovou strukturou může být **do šířky** (výchozí stav – každý adresář je nejprve zpracován sám o sobě (provedou se nad ním testy a v případě úspěchu se vykonají akce) a teprve poté do něj find vstoupí a prozkoumá jeho obsah) nebo **do hloubky** (v tom případě find pokaždé nejprve vstoupí do adresáře a zpracuje veškerý jeho obsah a teprve „na odchodu“ zpracuje i samotný adresář). Výchozí je průchod do šířky. Průchod do hloubky se aplikuje pouze tehdy, je-li zadán globální parametr „-depth“ nebo je-li použita akce „-delete“. Při průchodu do hloubky nelze použít akci „-prune“.
 * **Názvem položky** se u příkazu „find“ rozumí samotný název adresářové položky.
 * **Cestou položky** se u příkazu „find“ rozumí výchozí bod (jak byl zadaný) a za ním adresářová cesta k položce včetně jejího názvu. Je-li např. výchozí bod „.“, je cestou položky např. „./test.sh“.
 
@@ -207,8 +207,8 @@ xxx , xxx # priorita?
 **\-perm -**{*kdo*}**=rwx**
 
 <!--
--perm /{...} = „nebo“ − mezi uvedenými musí existovat právo, které je položkou splněno
--perm -{...} = „a“ − všechna uvedená práva musejí být položkou splněna
+-perm /{...} = „nebo“ – mezi uvedenými musí existovat právo, které je položkou splněno
+-perm -{...} = „a“ – všechna uvedená práva musejí být položkou splněna
 -->
 
 ### Obsah souboru
@@ -295,9 +295,9 @@ xxx , xxx # priorita?
 -printf {formát}
 
 fprintf:
-%fhlpP − quoted
+%fhlpP – quoted
 
--ok[dir] {příkaz} [parametry] ; − jako exec[dir], ale zeptá se uživatele
+-ok[dir] {příkaz} [parametry] ; – jako exec[dir], ale zeptá se uživatele
 
 -->
 
@@ -458,7 +458,7 @@ Většina uvedených příkazů je základními součástmi Ubuntu. Pouze přík
 ## Ukázka
 <!- -
 - Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
-- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti − ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
+- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti – ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
 - Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
 - ->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)

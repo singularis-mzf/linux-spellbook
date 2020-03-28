@@ -95,7 +95,7 @@ Barva např. rgb(1,2,3) nebo #aabbcc
 ## Ukázka
 <!--
 - Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
-- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti − ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
+- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti – ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
 - Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
@@ -120,9 +120,9 @@ Obecné parametry zenity:
 (+ --title, ale ten je důležitý)
 
 Návratový kód zenity:
-0 − úspěch, uživatel zadal hodnotu, vypsána na standardní výstup.
-1 − storno; uživatel odmítl zadat hodnotu
-5 − čas vypršel (byl-li zadán parametrem --timeout)
+0 – úspěch, uživatel zadal hodnotu, vypsána na standardní výstup.
+1 – storno; uživatel odmítl zadat hodnotu
+5 – čas vypršel (byl-li zadán parametrem --timeout)
 
 -->
 

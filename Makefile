@@ -30,10 +30,10 @@ CONVERT := convert
 
 # Dodatky a kapitoly
 # ----------------------------------------------------------------------------
-VSECHNY_DODATKY := predmluva koncepce-projektu plan-vyvoje test licence
+VSECHNY_DODATKY := predmluva koncepce-projektu plan-vyvoje test zakladni-znalosti licence
 
 # _ A, B, C, D, E, F, G
-VSECHNY_KAPITOLY := _ostatni _ukazka apache awk barvy-a-titulek bash datum-cas-kalendar diskove-oddily docker firefox git grub
+VSECHNY_KAPITOLY := _ostatni _ukazka apache awk barvy-a-titulek bash css datum-cas-kalendar diskove-oddily docker firefox git grub
 # H, I, J, K, L, M
 VSECHNY_KAPITOLY += hledani-souboru konverze-formatu latex lkk make markdown moderni-veci
 # N, O, P, Q, R, S

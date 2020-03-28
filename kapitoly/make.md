@@ -77,7 +77,7 @@ jemuž se bude věnovat většina této kapitoly.
 *# rozvinout proměnnou, jejíž název je uložený v jiné proměnné*<br>
 **$($(**{*NÁZEV\_PROMĚNNÉ*}**))**
 
-*# příklad záměny při rozvoji − vypíše: bbeceda.cpp hlavicka.h bbakus.cpp ostatni.cc*<br>
+*# příklad záměny při rozvoji – vypíše: bbeceda.cpp hlavicka.h bbakus.cpp ostatni.cc*<br>
 **TEST := abeceda.cc hlavicka.h abakus.cc ostatni.cc**<br>
 **all:**<br>
 <tab>**@echo $(TEST:a%.cc=b%.cpp)**
@@ -229,7 +229,7 @@ jemuž se bude věnovat většina této kapitoly.
 *# vrátí podřetězec, pokud se vyskytuje v řetězci; jinak vrátí prázdný řetězec*<br>
 **$(findstring** {*podřetězec*}**,**{*řetězec*}**)**
 
-*# příklad − vrátí: aa bb cc cc bb aa*<br>
+*# příklad – vrátí: aa bb cc cc bb aa*<br>
 **$(foreach PROM,a b c c b a,$(PROM)$(PROM))**
 
 ### Podmíněný překlad a include

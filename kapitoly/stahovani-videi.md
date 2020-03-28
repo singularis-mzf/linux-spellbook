@@ -31,7 +31,7 @@ Instagram, Facebook, MixCloud, Vimeo apod.
 Tyto služby stahování (podle mých informací) oficiálně nepodporují
 (ačkoliv YouTube prý umožňuje stahování prostřednictvím služby YouTube Red),
 ale již mnoho let tolerují existenci nástrojů na ně a jeden
-z nich − „youtube-dl“ už je běžnou součástí linuxových distribucí.
+z nich – „youtube-dl“ už je běžnou součástí linuxových distribucí.
 
 Tato kapitola nepokrývá stahování videí a zvuku přístupných přímo jako soubor
 ke stažení (např. z Ulož.to nebo z různých FTP serverů).

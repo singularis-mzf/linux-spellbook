@@ -30,7 +30,7 @@ využívají systémové zdroje jako výkon procesoru, paměť RAM či pevný di
 Ne všechny uvedené postupy však fungují pro zacházení s démony;
 hodláte-li zacházet s démony, navštivte kapitolu Systém.
 
-Když v Linuxu spustíte program, vznikne tzv. proces − jakási „schránka“ pro program,
+Když v Linuxu spustíte program, vznikne tzv. proces – jakási „schránka“ pro program,
 která mu umožňuje běžet na procesoru a využívat systémové zdroje.
 Většina příkazů, které v terminálu zadáte, vytvoří nový proces.
 Pouze malá část spuštěných procesů si otevře také grafické uživatelské rozhraní.
@@ -38,7 +38,7 @@ Pouze malá část spuštěných procesů si otevře také grafické uživatelsk
 Procesy jsou v Linuxu identifikovány čísly PID (což neznamená „Pražská integrovaná doprava“)
 a jsou uspořádány do „rodinné“ struktury, kde každý proces s výjimkou
 dvou prvotních démonů má právě jednoho rodiče. PID rodiče je u vlastního procesu uvedeno
-jako vlastnost „PPID“. (Pozor − nepleťte si PID a PPID!)
+jako vlastnost „PPID“. (Pozor – nepleťte si PID a PPID!)
 
 Tato verze kapitoly nepokrývá sledování systémových volání procesů (ptrace, strace)
 ani zjišťování, které systémové knihovny jsou procesy využívány.
@@ -50,10 +50,10 @@ jako chroot či cgroups.
 ## Definice
 
 * **Proces** je instance počítačového programu v paměti, v dané chvíli jednoznačně identifikovaná kladným celým číslem **PID** (obvykle v rozsahu 1 až 32768). PID procesu se za jeho běhu nemůže změnit; může se však změnit **PPID** (pokud je rodič pohřben dřív než zrozenec) nebo to, který program v rámci daného procesu ve skutečnosti běží.
-* **Démon** je systémový proces bez uživatelského rozhraní, konkrétně jsou to dva **prvotní démoni** („systemd“ − PID 1 a „kthreadd“ − PID 2) a ti jejich přímí potomci, kteří nemají textové ani grafické uživatelské rozhraní. Prvotní démoni jako procesy nemají rodiče, jsou zřízeni přímo jádrem a jejich PPID je 0.
+* **Démon** je systémový proces bez uživatelského rozhraní, konkrétně jsou to dva **prvotní démoni** („systemd“ – PID 1 a „kthreadd“ – PID 2) a ti jejich přímí potomci, kteří nemají textové ani grafické uživatelské rozhraní. Prvotní démoni jako procesy nemají rodiče, jsou zřízeni přímo jádrem a jejich PPID je 0.
 * **Zombie** je proces, který skončil, ale jeho rodič dosud nepřevzal jeho návratovou hodnotu. Převzetím návratové hodnoty rodičem je zombie **pohřbena** a její PID se uvolní pro přidělení dalšímu procesu.
 * **Název procesu** je textový identifikátor přiřazený procesu jádrem. Není jednoznačný a vzniká (asi) tak, že se z ARGV[0] vezme jen název souboru (bez cesty) a zkrátí se na prvních 15 bajtů (obsahuje-li vícebajtové znaky, může dojít ke vzniku neplatné sekvence).
-* **Úloha bashe** je proces spuštěný z bashe, který byl spuštěn na pozadí nebo alespoň jednou na pozadí odsunut. Takový proces dostane od dané instance bashe vedle PID ještě druhý identifikátor − „číslo úlohy“. Číslo úlohy je pak pro daný proces jedinečné, ale pouze v rámci dané instance bashe.
+* **Úloha bashe** je proces spuštěný z bashe, který byl spuštěn na pozadí nebo alespoň jednou na pozadí odsunut. Takový proces dostane od dané instance bashe vedle PID ještě druhý identifikátor – „číslo úlohy“. Číslo úlohy je pak pro daný proces jedinečné, ale pouze v rámci dané instance bashe.
 
 !ÚzkýRežim: vyp
 
@@ -117,7 +117,8 @@ jako chroot či cgroups.
 *// Nepříluší-li proces žádnému terminálu ani konzoli, vypíše „?“.*<br>
 **ps h -o tty:1 -p** {*PID*} ⊨ pts/1
 
-*# aktuální **adresář***<br>
+*# aktuální **adresář** (pro člověka/pro skript)*<br>
+[**sudo**] **pwdx** {*PID*}... ⊨ 2343: /home/nana
 [**sudo**] **readlink /proc/**{*PID*}**/cwd** ⊨ /home/nana
 
 *# **uživatel** vlastnící proces (jméno/UID)*<br>
@@ -377,7 +378,7 @@ V kapitole je použit také příkaz gawk:
 ## Ukázka
 <!- -
 - Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
-- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti − ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
+- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti – ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
 - Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
 - ->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
@@ -387,7 +388,7 @@ V kapitole je použit také příkaz gawk:
 
 ## Tipy a zkušenosti
 
-* Existuje také příkaz „pkill“, který kombinuje většinu schopností příkazu „pgrep“ s příkazem „kill“ − tzn. vyhledaným procesům rovnou zašle signál.
+* Existuje také příkaz „pkill“, který kombinuje většinu schopností příkazu „pgrep“ s příkazem „kill“ – tzn. vyhledaným procesům rovnou zašle signál.
 * Pokud rodič zanikne dřív než samotný proces, „adoptuje“ proces systemd.
 
 ## Další zdroje informací
@@ -410,7 +411,7 @@ V kapitole je použit také příkaz gawk:
 
 ## Pomocné skripty
 
-*# lkk procesy − vypíše přehled procesů ve snadno zpracovatelném tvaru*<br>
+*# lkk procesy – vypíše přehled procesů ve snadno zpracovatelném tvaru*<br>
 **#!/usr/bin/gawk -bf**<br>
 **BEGIN \{**<br>
 <odsadit1>**while ("ps h -e -o pid,ppid" \| getline) {ppids[pids[++n] = $1] = $2}**<br>

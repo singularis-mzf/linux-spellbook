@@ -278,7 +278,7 @@ Příkazy \ifnumcomp a \ifdimcomp prý fungují i ve vyhodnocovaném kontextu.
 ## Ukázka
 <!--
 - Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
-- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti − ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
+- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti – ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
 - Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
@@ -311,7 +311,7 @@ Co hledat:
 * [balíček Bionic](https://packages.ubuntu.com/)
 * online referenční příručky
 * různé další praktické stránky, recenze, videa, tutorialy, blogy, ...
-* [DeTeXify](http://detexify.kirelabs.org/classify.html) (anglicky) − pomůcka k nalezení symbolů LaTeXu podle ruční kresby
+* [DeTeXify](http://detexify.kirelabs.org/classify.html) (anglicky) – pomůcka k nalezení symbolů LaTeXu podle ruční kresby
 * publikované knihy
 
 !ÚzkýRežim: vyp

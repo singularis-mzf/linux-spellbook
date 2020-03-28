@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, dodatek Plán budoucího vývoje
-Copyright (c) 2019 Singularis <singularis@volny.cz>
+Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -17,7 +17,6 @@ https://creativecommons.org/licenses/by-sa/4.0/
 ## Chystané kapitoly
 
 * „Proměnné prostředí“ (printenv a další možnosti)
-* „Hledání souborů“ (find, locate, whereis a další)
 * „Unicode a emotikony“ („mapa znaků“, vzorníky a různé symboly)
 * „Základy Perlu“ (jednoduše, konzistentně)
 * „Komplexní textové formáty“ (JSON, XML apod.)
@@ -31,7 +30,6 @@ https://creativecommons.org/licenses/by-sa/4.0/
 * „GRUB“ (konfigurace, dualboot, nastavení grafického pozadí)
 * „Vim“ (základní a mírně pokročilé ovládání)
 * „Záznam obrazovky“ (maim, ffmpeg a další)
-* „Soubory a adresáře“ (vytváření, mazání, fallocate, truncate, kopírování, práva a atributy)
 * „Pevné a symbolické odkazy“
 * „Bash“ (syntaxe, rozvoj proměnných, exec, přesměrování, roury a další)
 * „LaTeX“ (základní struktura dokumentu, standardní značky, překlad do PDF, důležité balíčky)
@@ -42,7 +40,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 * „Matematické výpočty“ (bc, dc, expr apod.)
 
 <!--
-* „HTTP, FTP, MySQL a spol. (klientská strana − ftp, wget, curl, ...)“
+* „HTTP, FTP, MySQL a spol. (klientská strana – ftp, wget, curl, ...)“
 * „HTTP, FTP, MySQL a spol. (servery)“
 -->
 

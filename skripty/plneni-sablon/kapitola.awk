@@ -40,8 +40,8 @@ BEGIN {
 # ============================================================================
 
 # Zacatek()
-#       − Je volaná před začátkem zpracování (v místě řádku „{{ZAČÁTEK}}“).
-#       − Jejím úkolem je inicializace.
+#       – Je volaná před začátkem zpracování (v místě řádku „{{ZAČÁTEK}}“).
+#       – Jejím úkolem je inicializace.
 #
 function Zacatek() {
     datum = sprintf("%d. %s %s", substr(DATUMSESTAVENI, 7, 2), MesicVDruhemPade(sprintf("%d", substr(DATUMSESTAVENI, 5, 2))), substr(DATUMSESTAVENI, 1, 4));
@@ -108,9 +108,9 @@ function Pokud(podminka,   i, pole) {
 }
 
 # RidiciRadek()
-#       − Obsluhuje obecné řídicí řádky, např. „{{XYZ}}“.
-#       − Neobsluhuje {{ZAČÁTEK}}, {{KONEC}}, {{POKUD *}}, {{KONEC POKUD}}, {{VARIANTA *}}, {{VARIANTY *}}.
-#       − Na návratové hodnotě nezáleží.
+#       – Obsluhuje obecné řídicí řádky, např. „{{XYZ}}“.
+#       – Neobsluhuje {{ZAČÁTEK}}, {{KONEC}}, {{POKUD *}}, {{KONEC POKUD}}, {{VARIANTA *}}, {{VARIANTY *}}.
+#       – Na návratové hodnotě nezáleží.
 #
 function RidiciRadek(text) {
     switch (text) {
@@ -140,8 +140,8 @@ function RidiciRadek(text) {
 }
 
 # PrelozitVystup()
-#       − Má za úkol zpracovat obyčejný řádek, než bude vypsán na výstup.
-#       − Typicky nahrazuje výskyty speciálních značek.
+#       – Má za úkol zpracovat obyčejný řádek, než bude vypsán na výstup.
+#       – Typicky nahrazuje výskyty speciálních značek.
 #
 function PrelozitVystup(radek) {
 #    gsub(/\{\{JMÉNO VERZE\}\}/, EscapovatKNahrade(JMENOVERZE), radek);
@@ -169,7 +169,7 @@ function PrelozitVystup(radek) {
 }
 
 # Konec()
-#       − Je volaná na konci zpracování, nenastala-li fatální výjimka.
+#       – Je volaná na konci zpracování, nenastala-li fatální výjimka.
 #
 function Konec() {
     return 0;

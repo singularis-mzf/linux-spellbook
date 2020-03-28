@@ -187,14 +187,14 @@ ARGIND < 2 {
 # dál pokračovat, jen je-li načítání zapnuté
 !zapnuto {next}
 
-# pomocný skript: /^\*#\s*lkk\s+()([-A-Za-z0-9]+)\s*−\s*(\S.*\S)\s*\*<br>$/
-# pomocná funkce: /^\*#\s*(([A-Za-z0-9]|\\_)+)\(\)\s*−\s*(\S.*\S)\s*\*<br>$/
-# pomocný úryvek: /^\*#\s*lkk\s+(-p\s+)([-A-Za-z0-9]+)\s*−\s*(\S.*\S)\s*\*<br>$/
+# pomocný skript: /^\*#\s*lkk\s+()([-A-Za-z0-9]+)\s*–\s*(\S.*\S)\s*\*<br>$/
+# pomocná funkce: /^\*#\s*(([A-Za-z0-9]|\\_)+)\(\)\s*–\s*(\S.*\S)\s*\*<br>$/
+# pomocný úryvek: /^\*#\s*lkk\s+(-p\s+)([-A-Za-z0-9]+)\s*–\s*(\S.*\S)\s*\*<br>$/
 
 # kvůli zvýrazňování syntaxe používám v regulárních výrazech \043 jako náhradu za znak „#“
 
 # SKRIPTY:
-(data_retezec = gensub(/^\*\043\s*lkk\s+(-p\s+)?([A-Za-z0-9][-A-Za-z0-9]*)\s*−\s*(\S[^\t]*\S)\s*\*<br>$/, "\\1\t\\2\t\\3", 1)) != $0 {
+(data_retezec = gensub(/^\*\043\s*lkk\s+(-p\s+)?([A-Za-z0-9][-A-Za-z0-9]*)\s*–\s*(\S[^\t]*\S)\s*\*<br>$/, "\\1\t\\2\t\\3", 1)) != $0 {
     split(data_retezec, data_pole);
     jmeno = data_pole[2];
     popis = data_pole[3];
@@ -204,7 +204,7 @@ ARGIND < 2 {
 }
 
 # FUNKCE:
-(data_retezec = gensub(/^\*\043\s*(([A-Za-z0-9]|\\_)+)\(\)\s*−\s*(\S.*\S)\s*\*<br>$/, "\\1\t\\3", 1)) != $0 {
+(data_retezec = gensub(/^\*\043\s*(([A-Za-z0-9]|\\_)+)\(\)\s*–\s*(\S.*\S)\s*\*<br>$/, "\\1\t\\3", 1)) != $0 {
     i = index(data_retezec, "\t");
     jmeno = gensub(/\\_/, "_", "g", substr(data_retezec, 1, i - 1));
     popis = substr(data_retezec, i + 1);

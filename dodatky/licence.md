@@ -53,9 +53,9 @@ exhaustive, and do not form part of our licenses.
 > **Considerations for the public:** By using one of our public
 > licenses, a licensor grants the public permission to use the
 > licensed material under specified terms and conditions. If
-> the licensor's permission is not necessary for any reason−for
+> the licensor's permission is not necessary for any reason–for
 > example, because of any applicable exception or limitation to
-> copyright−then that use is not regulated by the license. Our
+> copyright–then that use is not regulated by the license. Our
 > licenses grant only permissions under copyright and certain
 > other rights that a licensor has authority to grant. Use of
 > the licensed material may still be restricted for other
@@ -81,7 +81,7 @@ such rights in consideration of benefits the Licensor receives from
 making the Licensed Material available under these terms and
 conditions.
 
-> **Section 1 − Definitions.**
+> **Section 1 – Definitions.**
 
 > a. **Adapted Material** means material subject to Copyright and Similar
 > Rights that is derived from or based upon the Licensed Material
@@ -150,7 +150,7 @@ conditions.
 > m. **You** means the individual or entity exercising the Licensed Rights
 > under this Public License. **Your** has a corresponding meaning.
 
-> **Section 2 − Scope.**
+> **Section 2 – Scope.**
 
 > a. License grant.
 
@@ -184,12 +184,12 @@ conditions.
 
 >> 5\. Downstream recipients.
 
->>> A. *Offer from the Licensor − Licensed Material. Every*
+>>> A. *Offer from the Licensor – Licensed Material. Every*
 >>> *recipient of the Licensed Material automatically*
 >>> *receives an offer from the Licensor to exercise the*
 >>> *Licensed Rights under the terms and conditions of this Public License.*
 
->>> b. *Additional offer from the Licensor − Adapted Material.*
+>>> b. *Additional offer from the Licensor – Adapted Material.*
 >>> *Every recipient of Adapted Material from You*
 >>> *automatically receives an offer from the Licensor to*
 >>> *exercise the Licensed Rights in the Adapted Material*
@@ -227,7 +227,7 @@ conditions.
 >> licensing scheme. In all other cases the Licensor expressly
 >> reserves any right to collect such royalties.
 
-> **Section 3 − License Conditions.**
+> **Section 3 – License Conditions.**
 
 Your exercise of the Licensed Rights is expressly made subject to the
 following conditions.
@@ -287,7 +287,7 @@ following conditions.
 >>> Measures to, Adapted Material that restrict exercise of the
 >>> rights granted under the Adapter's License You apply.
 
-> **Section 4 − Sui Generis Database Rights.**
+> **Section 4 – Sui Generis Database Rights.**
 
 Where the Licensed Rights include Sui Generis Database Rights that
 apply to Your use of the Licensed Material:
@@ -309,7 +309,7 @@ For the avoidance of doubt, this Section 4 supplements and does not
 replace Your obligations under this Public License where the Licensed
 Rights include other Copyright and Similar Rights.
 
-> **Section 5 − Disclaimer of Warranties and Limitation of Liability.**
+> **Section 5 – Disclaimer of Warranties and Limitation of Liability.**
 
 > **a. Unless otherwise separately undertaken by the Licensor, to the**
 > **extent possible, the Licensor offers the Licensed Material as-is**
@@ -337,7 +337,7 @@ Rights include other Copyright and Similar Rights.
 > possible, most closely approximates an absolute disclaimer and
 > waiver of all liability.
 
-> **Section 6 − Term and Termination.**
+> **Section 6 – Term and Termination.**
 
 > a. This Public License applies for the term of the Copyright and
 > Similar Rights licensed here. However, if You fail to comply with
@@ -363,7 +363,7 @@ Rights include other Copyright and Similar Rights.
 
 > d. Sections 1, 5, 6, 7, and 8 survive termination of this Public License.
 
-> **Section 7 − Other Terms and Conditions.**
+> **Section 7 – Other Terms and Conditions.**
 
 > a. The Licensor shall not be bound by any additional or different
 > terms or conditions communicated by You unless expressly agreed.
@@ -372,7 +372,7 @@ Rights include other Copyright and Similar Rights.
 > Licensed Material not stated herein are separate from and
 > independent of the terms and conditions of this Public License.
 
-> **Section 8 − Interpretation.**
+> **Section 8 – Interpretation.**
 
 > a. For the avoidance of doubt, this Public License does not, and
 > shall not be interpreted to, reduce, limit, restrict, or impose

@@ -120,7 +120,7 @@ NR == 1 {next}
         vzorek = files[i];
         #print "LADĚNÍ: vzorek \"" vzorek "\"." > "/dev/stderr";
         if (vzorek ~ /^[^?*]+$/) {
-            # Vzorek neobsahuje znaky ? ani * − testovat na přesnou shodu.
+            # Vzorek neobsahuje znaky ? ani * – testovat na přesnou shodu.
             if (vzorek in hledane_obrazky) {
                 zaznamy_k_obrazkum[vzorek] = pocet_zaznamu;
                 #print "LADĚNÍ: Přesná shoda: \"" vzorek "\"." > "/dev/stderr";
@@ -129,7 +129,7 @@ NR == 1 {next}
             #    print "LADĚNÍ: Přesná shoda nenalezena: \"" vzorek "\"." > "/dev/stderr";
             #}
         } else if (vzorek ~ /^[^?*]*\*[^?*]*$/) {
-            # Vzorek obsahuje právě jeden znak * − testovat na shodu předpony a přípony.
+            # Vzorek obsahuje právě jeden znak * – testovat na shodu předpony a přípony.
             pozice = index(vzorek, "*");
             predpona = substr(vzorek, 1, pozice - 1);
             pripona = substr(vzorek, pozice + 1);

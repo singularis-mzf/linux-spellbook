@@ -24,11 +24,11 @@ konstrukcí se nachází ve speciální kapitole [Ukázka](../kapitoly/_ukazka.m
 
 ## Výstup
 
-Mechanismus překladu dodržuje „čistotu stromu zdrojového kódu“ − zapisuje pouze
+Mechanismus překladu dodržuje „čistotu stromu zdrojového kódu“ – zapisuje pouze
 do dvou zvláštních adresářů, které si v případě potřeba vytvoří:
 
-* „soubory\_prekladu“ − obsahuje dočasné, pomocné a pracovní soubory potřebné při překladu.
-* „vystup\_prekladu“ − obsahuje koncový výsledek překladu − Linux: Knihu kouzel v různých výstupních formátech.
+* „soubory\_prekladu“ – obsahuje dočasné, pomocné a pracovní soubory potřebné při překladu.
+* „vystup\_prekladu“ – obsahuje koncový výsledek překladu – Linux: Knihu kouzel v různých výstupních formátech.
 
 Oba uvedené adresáře je možné kdykoliv bezpečně smazat a vygenerovat ze zbytku stromu.
 
@@ -36,7 +36,7 @@ Oba uvedené adresáře je možné kdykoliv bezpečně smazat a vygenerovat ze 
 
 * Formáty PDF se spadávkami (*pdf-a4*, *pdf-b5*, *pdf-b5-na-a4*) jsou určeny pro tisk v profesionálních tiskárnách, kde následně proběhne ořez podle ořezovných značek a vazba.
 * Formáty PDF bez spadávek (*pdf-a4-bez*, *pdf-b5-bez*) jsou určeny pro domácí tisk.
-* Formát HTML s kaskádovými styly pro různé barevné motivy (*html*) je určen pro zobrazení na stolním počítači, případně laptopu. Jeho primární funkce je podpůrná − má umožnit pohodlně vykopírovat zaklínadla, a eliminovat tak vznik chyb při opisování.
+* Formát HTML s kaskádovými styly pro různé barevné motivy (*html*) je určen pro zobrazení na stolním počítači, případně laptopu. Jeho primární funkce je podpůrná – má umožnit pohodlně vykopírovat zaklínadla, a eliminovat tak vznik chyb při opisování.
 * Formát „log“ je určen k ladění mechanismu překladu. Jeho výstupní soubory obsahují čitelnou textovou reprezentaci proudu volání funkcí při překladu, což umožňuje odhalit případné chyby.
 * Formát „deb“ z kapitol shromáždí pouze pomocné funkce, skripty a výstřižky a sestaví balíček ve formátu „deb“ obsahující spouštěč „lkk“. (Podrobněji viz samostatná sekce.)
 

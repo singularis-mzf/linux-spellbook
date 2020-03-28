@@ -1,7 +1,7 @@
 <!--
 
-Linux Kniha kouzel, kapitola Správa balíčků 2
-Copyright (c) 2019 Singularis <singularis@volny.cz>
+Linux Kniha kouzel, kapitola CSS
+Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -17,9 +17,9 @@ Poznámky:
 ⊨
 -->
 
-# Správa balíčků 2
+# CSS
 
-!Štítky: {tematický okruh}
+!Štítky: {tematický okruh}{syntaxe}
 
 !ÚzkýRežim: zap
 
@@ -37,24 +37,36 @@ Poznámky:
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+* **Selektor** je...
+* **Vlastnost** je...
+
 !ÚzkýRežim: vyp
 
-## Zaklínadla
+## Zaklínadla (selektory)
 <!--
 - Rozdělte na podsekce a naplňte „zaklínadly“.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-*# sestavit binární balíček typu .deb*<br>
-*// Architektura bude typicky „all“, „amd64“ nebo „i386“.*<br>
-**mkdir** {*adresář-s-balíčkem*}**/DEBIAN**<br>
-**printf '%s:&blank;%s\\n' Package** {*jméno-balíčku*} **Version** {*verze-balíčku*} **Architecture** {*architektura*} **Maintainer "**{*Vaše Jméno*} **&lt;**{*váš@email.cz*}**&gt;" [**Original-Maintainer "**{*Jméno původního autora*} **&lt;{*email@původního.autora*}**&gt;"**] {*Installed-Size*} **$(cd** {*adresář-s-balíčkem*}**; du -ks \-\-exclude=DEBIAN \| cut -f 1)** [**Depends "**{*závislosti*}] <nic>[**Homepage "**{*http://adresa*}**"**] **&gt;** {*adresář-s-balíčkem*}**/DEBIAN/control**<br>
-**dpkg-deb -b** {*adresář-s-balíčkem*} [{*cílový/adresář*}]
+## Zaklínadla (vlastnosti)
 
-<!--
-Další pole:
--
--->
+### Písmo
+
+*# tučné*<br>
+**font-weight: bold;**
+
+*# kurzíva/skloněné*<br>
+**font-style: italic;**<br>
+**font-style: oblique;**
+
+### Okraje
+
+*# vnější/vnitřní okraj*<br>
+*// Vnější okraj (margin) může být záporný.*<br>
+**margin:** {*nahoře*} {*vpravo*} {*dole*} {*vlevo*}**;**<br>
+**padding:** {*nahoře*} {*vpravo*} {*dole*} {*vlevo*}**;**
+
+### Ostatní
 
 ## Parametry příkazů
 <!--
@@ -77,26 +89,6 @@ Další pole:
 - Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
-
-<!--
-
-Package: lkk
-Version: vp-1.3
-Architecture: all
-Maintainer: Singularis&lt;singularis@volny.cz&gt;
-Installed-Size: 5
-Depends: gawk (&gt;= 4.1.4)
-Homepage: https://singularis-mzf.github.io/
-Description: ...
- Dlouhý popis...
-
-Další možnosti:
-
-- soubor md5sums
-- skripty „preinst“, „postinst“, „prerm“ a „postrm“
-- soubor „conffiles“ (seznam globálních konfiguračních souborů v /etc; výjimečně i jinde)
-
--->
 
 !ÚzkýRežim: zap
 

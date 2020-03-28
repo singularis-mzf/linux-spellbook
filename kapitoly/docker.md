@@ -208,11 +208,11 @@ Pro základní přehled lze použít i příkazy:
 **docker** {*příkaz*} **\-\-help**
 
 * [Praktický úvod do Docker a kontejnerů](http://www.cloudsvet.cz/?series=docker)
-* [Video: Jakub Kratina − Docker 101](https://www.youtube.com/watch?v=cV0HFt0QGEA)
+* [Video: Jakub Kratina – Docker 101](https://www.youtube.com/watch?v=cV0HFt0QGEA)
 * [Článek: Proč používat Docker](https://www.zdrojak.cz/clanky/proc-pouzivat-docker/)
 * [Stránka na Wikipedii](https://cs.wikipedia.org/wiki/Docker\_(software\))
 * [Video: Docker pro neznalé (Václav Pavlín)](https://www.youtube.com/watch?v=A1nngnx8WDg)
-* [Video: Daniel Plakinger − Docker #2](https://www.youtube.com/watch?v=x\_jsNPW6ixQ) (slovensky)
+* [Video: Daniel Plakinger – Docker #2](https://www.youtube.com/watch?v=x\_jsNPW6ixQ) (slovensky)
 * [Referenční příručka pro Dockerfile](https://docs.docker.com/engine/reference/builder/) (anglicky)
 * [TL;DR stránka „docker“](https://github.com/tldr-pages/tldr/blob/master/pages/common/docker.md) (anglicky)
 * [Oficiální referenční příručka](https://docs.docker.com/engine/reference/commandline/docker/) (anglicky)

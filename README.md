@@ -69,9 +69,10 @@ Až budete mít nainstalované potřebné nástroje, stáhněte si repozitář:
 
 > ``git clone https://github.com/singularis-mzf/linux-spellbook.git``
 
-A nakonec spusťte takto make:
+A nakonec spusťte make:
 
-> ``make -j4 -C linux-spellbook log html``
+> ``cd linux-spellbook``
+> ``make -j4 log html``
 
 Předpokládám použití **české lokalizace** daného systému.
 

@@ -1,4 +1,4 @@
-# awkvolby − Modul GNU awk pro zpracování voleb a argumentů na příkazové řádce
+# awkvolby – Modul GNU awk pro zpracování voleb a argumentů na příkazové řádce
 #
 # Copyright (c) 2020 Singularis
 #
@@ -58,13 +58,13 @@
 
 #
 # Příznaky:
-#   1 − Volba se nesmí opakovat.
-#   c − Volba typu „počítadlo“; nepřijímá parametr, ale má výchozí hodnotu parametru „1“ a s každým opakováním se inkrementuje.
+#   1 – Volba se nesmí opakovat.
+#   c – Volba typu „počítadlo“; nepřijímá parametr, ale má výchozí hodnotu parametru „1“ a s každým opakováním se inkrementuje.
 #       Vylučuje se s~1, p, v.
-#   g − Byla-li již zadána jiná volba z téže skupiny, je to fatální chyba (jinak se předchozí volba přepíše).
-#   p − Volba vyžaduje parametr.
-#   P − Volba vyžaduje neprázdný parametr.
-#   v − Volba přijímá volitelný parametr (vylučuje se s „p“).
+#   g – Byla-li již zadána jiná volba z téže skupiny, je to fatální chyba (jinak se předchozí volba přepíše).
+#   p – Volba vyžaduje parametr.
+#   P – Volba vyžaduje neprázdný parametr.
+#   v – Volba přijímá volitelný parametr (vylučuje se s „p“).
 #
 function DeklarovatVolbu(nazev, alias, priznaky, skupina, napoveda,   rezervovano, i) {
     awkvolby_jenazevvolby(nazev) || awkvolby_chyba("Chybějící či neplatný název volby!");
@@ -100,9 +100,9 @@ function DeklarovatAliasVolby(nazev, alias) {
 
 #
 # Příznaky:
-#   0 − po ukončení zpracování posune celé pole ARGUMENTY o jeden index dolů,
+#   0 – po ukončení zpracování posune celé pole ARGUMENTY o jeden index dolů,
 #       takže první argument bude ARGUMENTY[0]; ARGUMENTY[POCET_ARGUMENTU] = ""
-#   m − „mixed“: povolí míchání voleb a argumentů nezačínajících „+“ nebo „-“
+#   m – „mixed“: povolí míchání voleb a argumentů nezačínajících „+“ nebo „-“
 #   ! ~ zakáže zpracování parametrů zadaných pomocí znaku „=“.
 #
 function ZpracovatParametry(priznaky,   i, i_parametru, j, nazev) {

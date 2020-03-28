@@ -31,7 +31,7 @@ kdy má naplánovaná úloha proběhnout, počítač neběží, cron dané spuš
 jednoduše vynechá, zatímco at spustí naplánovanou úlohu,
 hned jak to bude možné.
 
-Oběma mechanismům je také společné omezení přesnosti − spuštění lze nastavit
+Oběma mechanismům je také společné omezení přesnosti – spuštění lze nastavit
 jen s přesností na minuty. Potřebujete-li přesnější zacílení, je třeba,
 aby si přesný čas ohlídal až spuštěný proces.
 
@@ -49,7 +49,7 @@ spouštěné pod účtem superuživatele, ty však nejsou touto verzí kapitoly 
 
 ### Pravidelné úlohy (obecně)
 
-Plán − viz podsekci „Pravidelné úlohy (plány)“.
+Plán – viz podsekci „Pravidelné úlohy (plány)“.
 
 *# **přidat** nebo **nahradit** úlohu (spustit na pozadí/spustit v grafickém prostředí)*<br>
 **lkk pridat-ulohu** {*id-úlohy*} {*plán*} **'**{*příkaz a parametry*}**'**<br>
@@ -125,7 +125,7 @@ Plán − viz podsekci „Pravidelné úlohy (plány)“.
 
 ### Jednorázové úlohy
 
-Plán − viz sekci „Jednorázové úlohy (plány)“. Plán se zde neuzavírá do uvozovek!
+Plán – viz sekci „Jednorázové úlohy (plány)“. Plán se zde neuzavírá do uvozovek!
 
 *# **přidat** úlohu*<br>
 **printf "%s\\\\n" '**{*příkaz*}**'**... **\| at** {*plán*}
@@ -223,9 +223,9 @@ Poznámka: ukázka vyžaduje nainstalovaný balíček „mplayer“ (a pochopit
 * [Stránka na Wikipedii: Cron](https://cs.wikipedia.org/wiki/Cron)
 * [Stránka na Wikipedii: At](https://cs.wikipedia.org/wiki/At\_(Unix\))
 * [Článek na Root.cz: Cron: naplánovanie opakujúcich sa procesov](https://www.root.cz/clanky/cron-naplanovanie-opakujucich-sa-procesov/) (slovensky)
-* [Článek Cron − správca úloh](https://www.linuxexpres.cz/praxe/cron-spravca-uloh) (slovensky)
+* [Článek Cron – správca úloh](https://www.linuxexpres.cz/praxe/cron-spravca-uloh) (slovensky)
 * [Video „Linux/Mac Tutorial: Cron Jobs“](https://www.youtube.com/watch?v=QZJ1drMQz1A) (anglicky)
-* [Video „Crontab Command − 15 Cronjob Scheduling Examples in Linux“](https://www.youtube.com/watch?v=6dJlp133iYg) (anglicky)
+* [Video „Crontab Command – 15 Cronjob Scheduling Examples in Linux“](https://www.youtube.com/watch?v=6dJlp133iYg) (anglicky)
 * [Manuálová stránka „at“](http://manpages.ubuntu.com/manpages/bionic/en/man1/at.1posix.html) (anglicky)
 * [Bionic: balíček „at“](https://packages.ubuntu.com/bionic/at) (anglicky)
 * [Bionic: balíček „bcron-run“](https://packages.ubuntu.com/bionic/bcron-run) (anglicky)
@@ -235,13 +235,13 @@ Poznámka: ukázka vyžaduje nainstalovaný balíček „mplayer“ (a pochopit
 
 ## Pomocné funkce a skripty
 
-*# lkk pridat-ulohu − přidá nebo nahradí pravidelnou úlohu*<br>
+*# lkk pridat-ulohu – přidá nebo nahradí pravidelnou úlohu*<br>
 **#!/bin/bash -e**<br>
 **nazevulohy=$1 plan=$2**<br>
 **shift 2**<br>
 **(crontab -l 2&gt;/dev/null \| sed -E "/#$nazevulohy\\$/d"; printf "$plan %s #$nazevulohy\\\\n" "$@" \| sed -E 's/[\\\\%]/\\\\&amp;/g') \| crontab -**
 
-*# lkk spustit-v-x − slouží ke spouštění grafických aplikací z naplánovaných úloh*<br>
+*# lkk spustit-v-x – slouží ke spouštění grafických aplikací z naplánovaných úloh*<br>
 *// Tento skript je vyžadován pro spouštění grafických aplikací z naplánovaných úloh. Pro správný běh takto spuštěných aplikací může být nutno doplnit do seznamu u příkazu „egrep“ mnoho dalších proměnných.*<br>
 **#!/bin/bash -e**<br>
 **function f () \{**<br>

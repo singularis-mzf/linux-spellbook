@@ -110,11 +110,11 @@ Offline instalací se rozumí stažení balíčků, jejich přenesení na počí
 *# vypsat **všechny dostupné balíčky** (včetně dostupných verzí, pouze pro hlavní architekturu)*<br>
 **aptitude search \-\-disable-columns -F "$(printf "%s\\t%s" %p %V)" '?true' \| egrep -v "$(printf "[^\\t]\*:[^\\t]|[^\\t]\*\\t&lt;[^\\t]\*&gt;(\\t\|\\$)")"**
 
-*# vypsat seznam **nainstalovaných balíčků** včetně verzí (pro člověka − alternativy)*<br>
+*# vypsat seznam **nainstalovaných balíčků** včetně verzí (pro člověka – alternativy)*<br>
 **apt list \-\-installed**<br>
 **dpkg-query -l** [**\| less**]<br>
 
-*# vypsat seznam **nainstalovaných balíčků** (pro skript − alternativy)*<br>
+*# vypsat seznam **nainstalovaných balíčků** (pro skript – alternativy)*<br>
 **dpkg-query -Wf '${Package}:${Architecture}/${Version}/${db:Status-Status}\\n'** [**'**{*vzorek*}**'**] **\| egrep '/installed$'**<br>
 **(apt-mark showauto; apt-mark showmanual) \| LC\_ALL=C sort -u**<br>
 **aptitude \-\-disable-columns -F** {*formát*} **search '?installed'**
@@ -230,7 +230,7 @@ aptitude search --disable-columns -F %p "?upgradable"
 **?virtual**
 
 <!--
-?origin(původ) − jen balíčky určitého původu
+?origin(původ) – jen balíčky určitého původu
 -->
 
 ### Aptitude (formát -F)
@@ -563,7 +563,7 @@ Instalace, spuštění a odinstalování GIMPu různými způsoby:
 * Flatpak přistupuje poměrně benevolentně k přístupovým právům uživatelů. Umožňuje instalovat a odinstalovávat balíčky systémové instalace bez zadání hesla nejen superuživateli, ale také všem uživatelům, kteří jsou členy skupin admin a sudo. Ostatní uživatelům to umožní po zadání hesla administrujícího uživatele, dokonce i přesto, že sami nemají právo používat sudo.
 * Flatpak neprovádí automatickou aktualizaci balíčků.
 <!--
-4) Stalo se mi, že u některých snapů nebyla správně vyplněna licence. − Vrátit
+4) Stalo se mi, že u některých snapů nebyla správně vyplněna licence. – Vrátit
 jen v případě ověření.
 -->
 

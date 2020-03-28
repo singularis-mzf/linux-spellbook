@@ -36,7 +36,7 @@ vyhledávání řetězců z této množiny v textu. S takto vyhledanými řet
 Regulární výrazy se objevují se ve většině programovacích jazyků,
 ale také v textových editorech či manuálním nastavení e-mailových filtrů.
 
-V Linuxu se bohužel vyskytují tři různé syntaxe regulárních výrazů − základní
+V Linuxu se bohužel vyskytují tři různé syntaxe regulárních výrazů – základní
 regulární výrazy, rozšířené regulární výrazy a regulární výrazy jazyka Perl.
 Z praktických důvodů považuji za nejdůležitější rozšířené regulární výrazy,
 a proto kdykoliv napíšu „regulární výraz“ bez dalšího upřesnění, mám na mysli
@@ -197,7 +197,7 @@ varianta pro rozšířený regulární výraz.
 **&amp;**<br>
 **$&amp;**
 
-*# **záchyt** − podřetězec původního řetězce odpovídající seskupení (varianty)*<br>
+*# **záchyt** – podřetězec původního řetězce odpovídající seskupení (varianty)*<br>
 *// Zdvojení zpětného lomítka v GNU awk vyplývá ze skutečnosti, že ho (obvykle) zadáváte jako řetězec v programovacím jazyce. Pokud byste náhodou např. načítali řetězec náhrady ze souboru, bude tam zpětné lomítko patřit pouze jedno!*<br>
 **\\**{*pořadové-číslo-1-až-9*} ⊨ v reg. výrazu: GNU sed a Perl; v řetězci náhrady: GNU sed<br>
 **\\\\**{*pořadové-číslo-1-až-9*} ⊨ v řetězci náhrady: GNU awk (jen funkce gensub())<br>
@@ -327,7 +327,7 @@ Regulární výrazy jsou používány i v mnoha dalších programech.
 ## Ukázka
 <!- -
 - Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
-- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti − ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
+- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti – ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
 - Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
 - ->
 

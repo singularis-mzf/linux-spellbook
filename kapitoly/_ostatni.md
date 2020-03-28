@@ -145,7 +145,7 @@ https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu
 
 ## Pomocné funkce a skripty
 
-*# lkk\_strlen() − vypíše počet znaků v řetězcích předaných jako parametry*<br>
+*# lkk\_strlen() – vypíše počet znaků v řetězcích předaných jako parametry*<br>
 **function lkk\_strlen() \{**<br>
 <odsadit1>**test $# -eq 0 &amp;&amp; return 1**<br>
 <odsadit1>**while printf %s\\\\n "${#1}" &amp;&amp; shift &amp;&amp; test $# -gt 0**<br>

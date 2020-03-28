@@ -641,7 +641,7 @@ a platí pouze pro daný výstup.
 *# oříznout časovou osu vstupního videa/nahrávky*<br>
 [**\-ss** {*začátek-s*}] <nic>[**-t** {*maximální-trvání-s*}] **-i** {*vstup*}
 
-*# načíst statický obrázek (jpg,png,bmp,tif,...) jako nekonečné video (pozor − ne gif!)*<br>
+*# načíst statický obrázek (jpg,png,bmp,tif,...) jako nekonečné video (pozor – ne gif!)*<br>
 **\-loop 1 -i** {*obrázek*}
 <!-- Pro gif prý -ignore_loop 0, ale vykoná cyklus jen podle hlavičky gifu. -->
 

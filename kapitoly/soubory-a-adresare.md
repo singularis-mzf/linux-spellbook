@@ -41,12 +41,12 @@ Tato verze kapitoly dostatečně nepokrývá „mód“ (číselné vyjádření
 
 ## Definice
 
-* **Adresářová položka** je jednoznačně pojmenovaná položka v adresáři; obvykle je to soubor (přesněji − pevný odkaz na soubor), další adresář či symbolický odkaz, méně často zařízení (např. „/dev/null“), pojmenovaná roura apod. Adresářové položky se v daném adresáři identifikují svým **názvem**, který může obsahovat jakékoliv znaky UTF-8 kromě nulového bajtu a znaku „/“. V každém adresáři se nacházejí dva zvláštní adresářové odkazy „.“ (na sebe) a „..“ (na nadřazený adresář), které se ale nepočítají a většina nástojů je ignoruje (bohužel ne všechny).
+* **Adresářová položka** je jednoznačně pojmenovaná položka v adresáři; obvykle je to soubor (přesněji – pevný odkaz na soubor), další adresář či symbolický odkaz, méně často zařízení (např. „/dev/null“), pojmenovaná roura apod. Adresářové položky se v daném adresáři identifikují svým **názvem**, který může obsahovat jakékoliv znaky UTF-8 kromě nulového bajtu a znaku „/“. V každém adresáři se nacházejí dva zvláštní adresářové odkazy „.“ (na sebe) a „..“ (na nadřazený adresář), které se ale nepočítají a většina nástojů je ignoruje (bohužel ne všechny).
 * Adresářová položka je **skrytá**, pokud její název začíná znakem „.“.
 * **Přístupová práva** jsou nastavení souboru či adresáře, která určují, kteří uživatelé budou moci s daným souborem či adresářem zacházet. Nastavení přístupových práv se dělí na **základní**, které je přítomno vždy, a **rozšířená** (ACL, access control list), jejichž nastavení lze přidávat či odebírat. (Vedle toho existují ještě „výchozí“ přístupová práva, ale těmi se pro jejich neintuitivnost a zřídkavé využití budu zabývat jen okrajově.)
 * **Zvláštní příznaky** jsou tři příznaky (u+s, g+s, +t), které mohou být nastaveny souborům a adresářům a mají na ně zvláštní účinky. Jim příbuzné jsou **zvláštní restrikce ext4**, které jsou ale dostupné pouze na souborovém systému ext4 (a částečně ext2 a ext3).
 * **Mód** (mode) je číselné vyjádření v osmičkové soustavě, které shrnuje základní nastavení přístupových práv a nastavení zvláštních příznaků.
-* **Uživatelské rozšířené atributy** (URA, user xattrs) umožňují ukládat k souborům a adresářům další obecná data v podobě dvojic klíč−hodnota; jsou však k dispozici pouze na souborovém systému ext4, jsou poměrně skryté, při jakémkoliv kopírování se obvykle ztratí a nejsou příliš využívány. Proto doporučuji se jim raději vyhýbat.
+* **Uživatelské rozšířené atributy** (URA, user xattrs) umožňují ukládat k souborům a adresářům další obecná data v podobě dvojic klíč–hodnota; jsou však k dispozici pouze na souborovém systému ext4, jsou poměrně skryté, při jakémkoliv kopírování se obvykle ztratí a nejsou příliš využívány. Proto doporučuji se jim raději vyhýbat.
 <!--
 * **Kanonická cesta** je absolutní cesta k adresářové položce od kořenového adresáře, která neobsahuje symbolické odkazy ani žádné zbytečné prvky.
 -->
@@ -73,7 +73,7 @@ Právo **spouštění** (x, execute) znamená:
 Každá adresářová položka má vlastníka (což je některý uživatel, např. „root“) a příslušnou skupinu.
 Přístupová práva může měnit pouze vlastník položky nebo superuživatel.
 
-Z historických důvodů existují dvě nastavení přístupových práv − základní (mode)
+Z historických důvodů existují dvě nastavení přístupových práv – základní (mode)
 a rozšířené (ACL). Základní nastavení je vždy přítomno a dělí se na nastavení
 pro vlastníka („u“), skupinu („g“) a ostatní („o“). Rozšířené nastavení je pak tvořeno
 seznamem dalších položek, které mohou stanovovat dodatečná práva konkrétním
@@ -95,8 +95,8 @@ získá EUID (a tedy i práva) vlastníka souboru, a to i v případě, že
 Nejčastějším použitím je spuštění určitého program u s právy superuživatele.
 
 **Příznak zmocnění skupiny** (g+s, set-gid bit) funguje u souborů analogicky
-− spustí-li daný soubor kterýkoliv uživatel, vzniklý proces získá EGID (tedy skupinová práva)
-skupiny souboru. Navíc ovšem funguje i u adresářů − všechny nově vytvořené adresářové položky
+– spustí-li daný soubor kterýkoliv uživatel, vzniklý proces získá EGID (tedy skupinová práva)
+skupiny souboru. Navíc ovšem funguje i u adresářů – všechny nově vytvořené adresářové položky
 v adresáři s příznakem zmocnění pro skupinu budou při vytvoření přiřazeny stejné skupině
 jako adresář, ve kterém byly vytvořeny. (Normálně by získaly skupinu podle procesu,
 který je vytvořil.) Takto vytvořené podadresáře navíc získají také příznak zmocnění pro skupinu,
@@ -104,8 +104,8 @@ což znamená, že tento příznak se automaticky rozšíří i do všech nově
 pokud u nich nebude výslovně zrušen.
 
 Třetí speciální příznak je **příznak omezení smazání** (+t, sticky-bit).
-Ten má význam pouze u adresářů, kde omezuje výkon práva „w“ − brání ve smazání či přejmenování
-„cizích položek“, tedy přesněji − zabrání ve smazání či přejmenování adresářové položky
+Ten má význam pouze u adresářů, kde omezuje výkon práva „w“ – brání ve smazání či přejmenování
+„cizích položek“, tedy přesněji – zabrání ve smazání či přejmenování adresářové položky
 každému uživateli, který není vlastníkem dané položky či vlastníkem samotného adresáře.
 Hlavním smyslem této kombinace je, že uživatelé mohou v daném adresáři vytvářet nové
 položky a ty jsou pak chráněny před zásahy jiných uživatelů, kteří mají k témuž adresáři
@@ -507,7 +507,7 @@ Všechny použité nástroje jsou základními součástmi Ubuntu.
 ## Ukázka
 <!- -
 - Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
-- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti − ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
+- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti – ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
 - Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
 - ->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
@@ -518,7 +518,7 @@ Všechny použité nástroje jsou základními součástmi Ubuntu.
 ## Tipy a zkušenosti
 
 * Uživatelé a skupiny jsou v souborovém systému uloženy ve formě čísel UID a GID. Proto když uložíte soubor na USB flash disk a přenesete ho na jiný počítač, kde pracujete jako uživatel s jiným UID, může se stát, že tam k souborům na flash disku nebudete mít dostatečná přístupová práva.
-* V Linuxu existují také „výchozí přístupová práva“, což je nastavení přístupových práv na adresáři, které (je-li nastaveno) ovlivňuje přístupová práva nově vyvářených položek; bohužel nelze říci „stanovuje“, ale platí pouze „ovlivňuje“ − na výsledných právech se podílejí i další faktory, nelze rozlišit práva pro soubory a pro adresáře a celé je to dost komplikované a neintuitivní. Zatím jsem naštěstí nanarazil/a na případ, kdy by tuto vlastnost skutečně nějaký program použil.
+* V Linuxu existují také „výchozí přístupová práva“, což je nastavení přístupových práv na adresáři, které (je-li nastaveno) ovlivňuje přístupová práva nově vyvářených položek; bohužel nelze říci „stanovuje“, ale platí pouze „ovlivňuje“ – na výsledných právech se podílejí i další faktory, nelze rozlišit práva pro soubory a pro adresáře a celé je to dost komplikované a neintuitivní. Zatím jsem naštěstí nanarazil/a na případ, kdy by tuto vlastnost skutečně nějaký program použil.
 * Symbolické odkazy mají vlastníka a skupinu, ale nemají vlastní přístupová práva. Přístup k odkazované položce se vždy řídí jejími přístupovými právy, čtení symbolického odkazu je bez omezení a zápis do něj není dovolen (je nutno místo toho odkaz smazat a vytvořit nový).
 
 <!--

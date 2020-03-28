@@ -81,7 +81,7 @@ kdyby znal jen kouzla odpovídající jeho školnímu ročníku.)
 
 ## Je tato kniha pro váš systém?
 
-> *„Když dojdete na místo, kde má být podle mapy studánka, a najdete tam místo ní supermarket, neznamená to, že je mapa chybná, jen je určena pro jinou verzi lesa.“*<br>− Singularis
+> *„Když dojdete na místo, kde má být podle mapy studánka, a najdete tam místo ní supermarket, neznamená to, že je mapa chybná, jen je určena pro jinou verzi lesa.“*<br>– Singularis
 
 <neodsadit>Verze knihy „vanilková příchuť“ řady 1.x jsou určeny především pro
 **Ubuntu 18.04, Bionic Beaver**, a jeho varianty Kubuntu, Lubuntu, Ubuntu Budgie,
@@ -99,7 +99,7 @@ v příští již může fungovat jinak.
 Velmi podstatnou vlastností této knihy je její **organizace**.
 Zaklínadla v kapitolách jsou shromážděna do logických skupin
 a až na odůvodněné výjimky jsou vždy řazena od nejčastějších a nejdůležitějších
-k méně obvyklým. Díky tomu nemusíte kapitolu číst celou − ty nejužitečnější znalosti
+k méně obvyklým. Díky tomu nemusíte kapitolu číst celou – ty nejužitečnější znalosti
 získáte hned z několika prvních zaklínadel z několika prvních skupin.
 
 Ačkoliv jsou v knize i kapitoly zaměřené na konkrétní nástroje (např. GNU make),
@@ -125,7 +125,7 @@ příkazem „lkk“, takže je nebudete muset ručně kopírovat.
 
 Tato kniha může být užitečná také **pokročilým uživatelům**, kteří již
 systém GNU/Linux řadu let používají. Jste-li takovým uživatelem, kniha vám nabízí
-jiné výhody než začátečníkům − především rychlou nápovědu k příkazům a parametrům,
+jiné výhody než začátečníkům – především rychlou nápovědu k příkazům a parametrům,
 které už jste pozapomněl/a, moderní a pohodlné alternativy k zastaralým
 a těžkopádným postupům, na které jste možná zvykl/á ze starších verzí GNU/Linuxu, a programátorskou inspiraci (jako i spousta jiných projektů na GitHubu).
 
@@ -186,4 +186,4 @@ Počítám v ní s experimentálním nasazením bezjavascriptového rozbalovac
 
 &nbsp;
 
-<neodsadit>− Singularis
+<neodsadit>– Singularis

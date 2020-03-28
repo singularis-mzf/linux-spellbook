@@ -48,11 +48,11 @@ Není-li zadán
 
 ## Definice
 
-* **Prostor** je proměnná v Sedu − je to oblast, do které se ukládají textové záznamy nebo jiné hodnoty. V Sedu existuje pouze pevně daný počet prostorů.
-* **Pracovní prostor** je prostor, do kterého se normálně na začátku každého cyklu přiřadí další načtený záznam. (Může však obsahovat i více záznamů.) Existují dva způsoby, jak na pracovní prostor nahlížet: většina příkazů ho vidí jako uspořádaný seznam záznamů, kde každý záznam je uveden včetně svého ukončovače; tzn. např. „ab\\n“ a „cd\\n“. Příkaz „s“ ovšem vidí pracovní prostor jinak − jako řetězec, kde jsou tyto záznamy spojeny dohromady, ovšem ukončovač posledního záznamu je odsunut mimo.
+* **Prostor** je proměnná v Sedu – je to oblast, do které se ukládají textové záznamy nebo jiné hodnoty. V Sedu existuje pouze pevně daný počet prostorů.
+* **Pracovní prostor** je prostor, do kterého se normálně na začátku každého cyklu přiřadí další načtený záznam. (Může však obsahovat i více záznamů.) Existují dva způsoby, jak na pracovní prostor nahlížet: většina příkazů ho vidí jako uspořádaný seznam záznamů, kde každý záznam je uveden včetně svého ukončovače; tzn. např. „ab\\n“ a „cd\\n“. Příkaz „s“ ovšem vidí pracovní prostor jinak – jako řetězec, kde jsou tyto záznamy spojeny dohromady, ovšem ukončovač posledního záznamu je odsunut mimo.
 * **Paměť** je pomocný prostor, do kterého lze záznamy z pracovního prostoru přenést či je připojit.
 * **Příznak** je booleovská proměnná, která se nastavuje na hodnotu 1, když příkaz „s“ úspěšně provede náhradu. Na hodnotu 0 se nastavuje na začátku cyklu a po provedení příkazu „t“ či „T“.
-* **Počítadlo záznamů** je číselná proměnná − na počátku má hodnotu 0 a inkrementuje se pokaždé, když je ze vstupu načten záznam.
+* **Počítadlo záznamů** je číselná proměnná – na počátku má hodnotu 0 a inkrementuje se pokaždé, když je ze vstupu načten záznam.
 
 ### Cyklus sedu
 
@@ -278,7 +278,7 @@ Cyklus:
 ## Ukázka
 <!--
 - Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
-- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti − ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
+- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti – ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
 - Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)

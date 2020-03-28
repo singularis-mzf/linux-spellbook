@@ -60,7 +60,7 @@ BEGINFILE {
             break;
         case 2: # {id}.md
             if (pocet_nahrad == 0) {
-                Log("\"" cas "\" − nenalezeny žádné odpovídající náhrady.");
+                Log("\"" cas "\" – nenalezeny žádné odpovídající náhrady.");
             }
             FS = "\t";
             RS = "\n";
@@ -99,7 +99,7 @@ ENDFILE {
             idnahrady = nahrady[nahrada];
             Log("Náhrada id=" idnahrady ": počet použití = " nahrady_vyskyty[idnahrady] (nahrady_vyskyty[idnahrady] == 1 ? "." : "!!!!!!!!"));
         }
-        Log("Končím − postprocessing \"" cas "\" proběhl úspěšně (počet řádků: " posledni_radek ").");
+        Log("Končím – postprocessing \"" cas "\" proběhl úspěšně (počet řádků: " posledni_radek ").");
     }
 }
 

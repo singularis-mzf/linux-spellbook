@@ -130,7 +130,7 @@ Poznámky:
 ## Ukázka
 <!--
 - Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
-- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti − ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
+- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti – ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
 - Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
@@ -170,10 +170,10 @@ Co hledat:
 
 ## Pomocné funkce
 
-*# asocexist() − testuje, zda v asociativním poli $1 existuje prvek $2*<br>
+*# asocexist() – testuje, zda v asociativním poli $1 existuje prvek $2*<br>
 **function asocexist() { test -v "$1[${2@Q}]"; }**
 
-*# asockopirovat() − kopií asociativního pole $1 přepíše proměnnou $2*<br>
+*# asockopirovat() – kopií asociativního pole $1 přepíše proměnnou $2*<br>
 **function kopirovatasocpole() \{**
 <odsadit1>**declare -p "$1" &gt;/dev/null \|\| return $?**<br>
 <odsadit1>**: '^declare -\\S\*A'**<br>

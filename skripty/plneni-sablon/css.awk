@@ -36,8 +36,8 @@ BEGIN {
 # ============================================================================
 
 # Zacatek()
-#       − Je volaná před začátkem zpracování (v místě řádku „{{ZAČÁTEK}}“).
-#       − Jejím úkolem je inicializace.
+#       – Je volaná před začátkem zpracování (v místě řádku „{{ZAČÁTEK}}“).
+#       – Jejím úkolem je inicializace.
 #
 function Zacatek() {
     delete MAKRA;
@@ -53,9 +53,9 @@ function Pokud(podminka) {
 }
 
 # RidiciRadek()
-#       − Obsluhuje obecné řídicí řádky, např. „{{XYZ}}“.
-#       − Neobsluhuje {{ZAČÁTEK}}, {{KONEC}}, {{POKUD *}}, {{KONEC POKUD}}, {{VARIANTA *}}, {{VARIANTY *}}.
-#       − Na návratové hodnotě nezáleží.
+#       – Obsluhuje obecné řídicí řádky, např. „{{XYZ}}“.
+#       – Neobsluhuje {{ZAČÁTEK}}, {{KONEC}}, {{POKUD *}}, {{KONEC POKUD}}, {{VARIANTA *}}, {{VARIANTY *}}.
+#       – Na návratové hodnotě nezáleží.
 #
 function RidiciRadek(text,   pozice) {
     if (text ~ /^MAKRO [^}= \t]+[ \t]*=/) {
@@ -70,8 +70,8 @@ function RidiciRadek(text,   pozice) {
 }
 
 # PrelozitVystup()
-#       − Má za úkol zpracovat obyčejný řádek, než bude vypsát na výstup.
-#       − Typicky nahrazuje výskyty speciálních značek.
+#       – Má za úkol zpracovat obyčejný řádek, než bude vypsát na výstup.
+#       – Typicky nahrazuje výskyty speciálních značek.
 #
 function PrelozitVystup(radek,   makro, i) {
     if (radek ~ /^#( |#|$)/) {return ""}
@@ -93,7 +93,7 @@ function PrelozitVystup(radek,   makro, i) {
 }
 
 # Konec()
-#       − Je volaná na konci zpracování, nenastala-li fatální výjimka.
+#       – Je volaná na konci zpracování, nenastala-li fatální výjimka.
 #
 function Konec() {
     return 0;

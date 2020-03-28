@@ -188,7 +188,7 @@ function ZpracujZnak(znak) {
             return "\\quotedblbase{}";
         case "“":
             return "\\textquotedblleft{}";
-        case "−":
+        case "–":
             return "\\textendash{}";
         case "—":
             return "\\textemdash{}";

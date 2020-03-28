@@ -56,14 +56,14 @@ a přesto z moci Perlu vytěžit co nejvíc.
 
 Perl rozeznává čtyři základní datové typy:
 
-* **Skalár**, což je vlastně řetězec, se kterým pouze číselné operátory a funkce zacházejí jako s číslem. Přístup ke skaláru se značí znakem „$“ a výchozí hodnotou skalárních objektů je speciální **nehodnota undef**.
+* **Skalár**, což je dynamicky typovaná proměnná, která může obsahovat řetězec, číslo, ukazatel na nějaký objekt nebo zvláštní **nehodnotu undef**, která je výchozí hodnotou skalárů (a lze ji také považovat za „ukazatel nikam“). Přístup ke skaláru se značí znakem „$“ a výchozí hodnotou skalárních objektů je speciální **nehodnota undef**. (Poznámka: v Perlu existují i skaláry, které mají současně nesouvisející číselnou a řetězcovou hodnotu, např. mají řetězcovou hodnotu "Hello" a číselnou hodnotu 13. Doufejte však, že na takové zrůdnosti při svém programování nenarazíte.)
 * **Pole**, což je uspořádaný kontejner skalárů indexovaný celými čísly 0, 1, 2 atd. Přístup k poli se značí znakem „@“ a pole se indexuje hranatými závorkami „[]“. Výchozí hodnotou objektu typu pole je prázdné pole.
 * **Asociativní pole** (hash), což je neuspořádaný kontejner skalárů (hodnot) indexovaný jinými skaláry (klíči). Přístup k asociativnímu poli se značí znakem „%“ a tato pole se indexují složenými závorkami „{}“. Výchozí hodnotou objektu tohoto typu je prázdné asociativní pole.
-* **Funkce**, což je prostě funkce, která přebírá parametry a vrací návratovou hodnotu.
+* **Funkce** je pojmenovaný či nepojmenovaný podprogram, který přebírá parametry a vrací návratovou hodnotu.
 
 Proměnné každého z těchto typů mají svůj vlastní jmenný prostor, takže je v pořádku mít vedle sebe např. pole „@x“ a asociativní pole „%x“.
 
-* **Ukazatel** (reference, v češtině obvykle nazývaný „odkaz“) je skalár, který odkazuje na nějaký objekt v paměti. **Dereferencí** ukazatele můžeme získat přístup k odkazovanému objektu pro čtení i přiřazení.
+* **Ukazatel** (reference, v češtině obvykle nazývaný „odkaz“) je skalár, který odkazuje na nějaký objekt v paměti (pole, funkci, regulární výraz apod.). **Dereferencí** ukazatele můžeme získat přístup k odkazovanému objektu pro čtení i přiřazení.
 * **Seznam** je literál pole zadaný do kulatých závorek, např. „(1, 2, 3)“ nebo „($a, $b, $c)“. Má-li sudý počet prvků, lze s ním inicializovat i asociativní pole.
 
 !ÚzkýRežim: vyp
@@ -79,29 +79,42 @@ Proměnné každého z těchto typů mají svůj vlastní jmenný prostor, tak�
 Sem nepatří zaklínadla specifická pro jednotlivé typy skalárů (čísla, řetězce, ukazatele); výjimkou jsou zaklínadla pro nehodnotu undef, ta sem patří.
 -->
 
-*# deklarovat proměnnou (lokální v bloku či souboru/globální, viditelnou všemi moduly)*<br>
+*# deklarovat proměnnou (lokální v bloku či souboru/viditelnou všemi moduly)*<br>
 *// V rámci deklarace proměnné nemůžete deklarovat víc než jednu proměnnou; toto omezení se však běžně obchází pomocí syntaxe pro rozklad pole do proměnných. Viz sekci „Pole“.*<br>
 **my $**{*identifikátor*} [**=** {*hodnota*}]**;**<br>
 **our $**{*identifikátor*} [**=** {*hodnota*}]**;**
 
-*# přečíst proměnnou/přiřadit do proměnné*<br>
+*# přečíst proměnnou/**přiřadit** do proměnné*<br>
 **$**{*identifikátor*}<br>
 **$**{*identifikátor*} **=** {*hodnota*}
 
-*# neobsahuje skalár nehodnotu undef?*<br>
+*# neobsahuje proměnná nehodnotu undef?*<br>
 **defined(**{*$skalár*}**)**
 
 *# přiřadit proměnné nehodnotu **undef***<br>
-**undef($**{*identifikátor*}**)**
+**$**{*identifikátor*} **= undef**
+
+*# získat hodnotu proměnné prostředí (obecně/příklad)*<br>
+**$ENV\{"**{*názevproměnné*}**\}**<br>
+**$ENV{"PATH"}**
+
+*# přiřadit hodnotu proměnné prostředí*<br>
+**$ENV\{"**{*názevproměnné*}**\} =** {*hodnota*}
 
 ### Pole
 
-*# literál pole (jako hodnota/jako ukazatel na pole)*<br>
+*# literál pole (vrací seznam/vrací ukazatel)*<br>
 **(**[{*skalár*}[**,** {*další skalár*}]...]**)**<br>
 **[**[{*skalár*}[**,** {*další skalár*}]...]**]**
 
-*# získat prvek pole na indexu I*<br>
+*# **přečíst** hodnotu prvku pole*<br>
 **$**{*identifikátor\_pole*}**[**{*index*}**]**
+
+*# **přiřadit** hodnotu prvku pole*<br>
+**$**{*identifikátor\_pole*}**[**{*index*}**] =** {*hodnota*}
+
+*# **existuje** prvek pole?*<br>
+{*index*} **lt; scalar(**{*@pole*}**) &amp;&amp;** {*index*} **&gt;= 0**
 
 *# deklarovat pole*<br>
 **my @**{*identifikátor\_pole*} [**= (**{*prvky, pole*}**)**]**;**
@@ -121,8 +134,12 @@ Sem nepatří zaklínadla specifická pro jednotlivé typy skalárů (čísla, �
 **shift(**{*@pole*}**)**<br>
 **pop(**{*@pole*}**)**
 
-*# smazat všechny prvky*<br>
-{*@pole*} **= ();**
+*# **smazat** všechny prvky/úsek*<br>
+{*@pole*} **= ();**<br>
+**splice(**{*@pole*}**,** {*první-smaz-index*}**,** {*počet-ke-smazání*}**);**
+
+*# **zkopírovat** celé pole*<br>
+{*@cílové\_pole*} **=** {*@zdrojové\_pole*}**;**
 
 *# vytvořit pole s posloupností celých čísel/znaků*<br>
 **(**{*celé-číslo*}**..**{*celé-číslo*}**)**<br>
@@ -138,18 +155,18 @@ splice()?
 **(**[{*klíč*}**,** {*hodnota*}[**,** {*další klíč*}**,** {*další hodnota*}]...]**)**<br>
 **\{**[{*klíč*}**,** {*hodnota*}[**,** {*další klíč*}**,** {*další hodnota*}]...]**\}**
 
-*# smazat prvek/všechny prvky*<br>
+*# **smazat** prvek/všechny prvky*<br>
 **delete** {*%pole*}**\{**{*klíč*}**\};**<br>
 {*%pole*} **= ();**
 <!--
 Problém: co když pracuji s referencí?
 -->
 
-*# obsahuje prvek?*<br>
+*# **obsahuje** prvek?*<br>
 **exists(**{*%pole*}**\{**{*klíč*}**\})**
 
-*# přidat či přepsat prvek*<br>
-?
+*# **přidat** či přepsat prvek*<br>
+**$**{*idpole*}**{"**{*klíč*}**"} =** {*hodnota*}
 
 *# získat pole klíčů/hodnot*<br>
 **keys(**{*%pole*}**)**<br>
@@ -210,7 +227,7 @@ Problém: co když pracuji s referencí?
 *# nekonečný cyklus*<br>
 [{*návěští*}**:**] **for (;;)** {*blok příkazů*}
 
-### Řízení cyklů a jiné skoky
+### Řízení toku
 
 *# vyskočit za konec cyklu*<br>
 **last** [{*návěští*}]**;**
@@ -224,6 +241,11 @@ Problém: co když pracuji s referencí?
 *# skočit na návěští*<br>
 **goto** {*návěští*}**;**
 
+*# ukončit program*<br>
+**exit(**[{*návratový-kód*}]**);**
+
+*# ukončit program s hlášením kritické chyby*<br>
+**die("**{*text*}**");**
 
 ### Podmínky
 
@@ -308,13 +330,13 @@ use feature 'state';
 
 ### Operátory
 
-*# vrátit první definovanou hodnotu*<br>
+*# vrátit první ne-undef skalár*<br>
 {*skalár*} [**//** {*další-skalár*}]...
 
 
 ### Skaláry: ukazatelé
 
-*# je skalár ukazatel?/zjistit odkazovaného objektu*<br>
+*# je skalár ukazatel?/zjistit typ odkazovaného objektu*<br>
 **defined(ref(**{*$skalár*}**))**<br>
 **ref(**{*$skalár*}**)**
 
@@ -407,7 +429,7 @@ https://www.tutorialspoint.com/perl/perl_special_variables.htm
 -->
 
 *# zapsat záznam (položky oddělené hodnotou „$OFS“ a zakončené hodnotou „$ORS“)*<br>
-*// Vynecháte-li $f, použije se „STDOUT“ (standardní výstup). Pozor na zvláštní syntaxi − za označením výstupního souboru se zde píše mezera bez čárky!*<br>
+*// Vynecháte-li $f, použije se „STDOUT“ (standardní výstup). Pozor na zvláštní syntaxi – za označením výstupního souboru se zde píše mezera bez čárky!*<br>
 **print(**[{*$f*}**&blank;**]{*první položka*}[**,** {*další položka*}]**)**
 
 *# zapsat řetězec*<br>
@@ -436,7 +458,7 @@ https://www.tutorialspoint.com/perl/perl_special_variables.htm
 ## Ukázka
 <!--
 - Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
-- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti − ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
+- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti – ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
 - Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
@@ -479,7 +501,7 @@ Co hledat:
 
 ## Pomocné funkce (Perl)
 
-*# lkk -p perl-vzorek-parametru − xxx*<br>
+*# lkk -p perl-vzorek-parametru – xxx*<br>
 **sub vzorek\_parametru \{**<br>
 <odsadit1>**return join("", map \{**<br>
 <odsadit2>**my $r;**<br>

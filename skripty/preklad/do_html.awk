@@ -233,6 +233,7 @@ function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, ikona, cislaPoznamek
                 textPoznamky = gensub(/<[^>]>/, "", "g", textyPoznamek[cislaPoznamek[i]]);
                 gsub(/\n/, "", textPoznamky);
                 gsub(/\t/, " ", textPoznamky);
+                gsub(Escapovat(ZpracujZnak("␣")), EscapovatKNahrade("&blank;"), textPoznamky);
                 vysledek = vysledek "<a href=\"#kap" ID_KAPITOLY_OMEZENE "ppc" cislaPoznamek[i] "\" id=\"kap" ID_KAPITOLY_OMEZENE "ppcr" cislaPoznamek[i] "\" title=\"" textPoznamky "\">(" cislaPoznamek[i] ")</a>";
             }
             vysledek = vysledek "</sup>";

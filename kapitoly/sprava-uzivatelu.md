@@ -40,7 +40,7 @@ Poznámky:
 
 ### Uživatelé, skupiny a hesla
 
-* Uživatel je zabezpečený heslem − jako takový uživatel se můžete přihlásit po zadání jeho hesla. Nemá-li uživatel heslo, můžete se jako on přihlásit kdykoliv, bez zadání hesla. Systémoví uživatelé (a v Ubuntu i superuživatel) však mají hesla takzvaně zamčená, což prakticky znamená, že se jako oni přihlásit nemůžete.
+* Uživatel je zabezpečený heslem – jako takový uživatel se můžete přihlásit po zadání jeho hesla. Nemá-li uživatel heslo, můžete se jako on přihlásit kdykoliv, bez zadání hesla. Systémoví uživatelé (a v Ubuntu i superuživatel) však mají hesla takzvaně zamčená, což prakticky znamená, že se jako oni přihlásit nemůžete.
 * Proces s právy uživatele, který je členem skupiny, se může do dané skupiny „přihlásit“ vždy bez zadávání hesla. Má-li skupina nastaveno heslo, může se do ní navíc přihlásit i proces uživatele, který není členem skupiny, avšak jen po zadání hesla.
 
 <!--
@@ -113,7 +113,7 @@ Poznámky:
 
 ### Vlastnosti uživatelů (změnit)
 
-*# nastavit celé jméno uživatele (pozor − neplést si s uživatelským jménem!)*<br>
+*# nastavit celé jméno uživatele (pozor – neplést si s uživatelským jménem!)*<br>
 **sudo chfn -f "**{*nové jméno*}**"** {*uživatelské-jméno*}
 
 *# změnit domovský adresář uživatele (bez přesunu/přesunout)*<br>
@@ -243,7 +243,7 @@ Vzít obrázek, zkonvertovat na 480x480 PNG 8bit RGB a uložit do souboru
 ## Ukázka
 <!--
 - Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
-- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti − ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
+- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti – ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
 - Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)

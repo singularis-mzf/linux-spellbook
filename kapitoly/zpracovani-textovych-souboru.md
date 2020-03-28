@@ -48,12 +48,12 @@ Tato kapitola se nezabývá zpracováním textových formátů se složitější
 
 V této kapitole rozlišuji následující formáty textových souborů:
 
-* TXT − záznamy ukončeny „\\n“, na sloupce se nedělí.
-* TXTZ − záznamy ukončeny „\\0“, na sloupce se nedělí.
-* TSV − záznamy ukončeny „\\n“, sloupce se dělí tabulátorem („\\t“) nebo jiným znakem ASCII (např. v /etc/passwd se dělí znakem „:“).
-* TSVZ − záznamy ukončeny „\\0“, sloupce se oddělují tabulátorem („\\t“) nebo jiným znakem ASCII.
-* PSV − komplikovaný textový formát s pojmenovanými sloupci; záznamy jsou ukončeny sekvencemi více než jednoho znaku „\\n“; sloupce jsou pojmenovány.
-* pevná šířka sloupců − záznamy ukončeny „\\n“, sloupce (kromě posledního) jsou zarovnány na pevný počet znaků pomocí mezer.
+* TXT – záznamy ukončeny „\\n“, na sloupce se nedělí.
+* TXTZ – záznamy ukončeny „\\0“, na sloupce se nedělí.
+* TSV – záznamy ukončeny „\\n“, sloupce se dělí tabulátorem („\\t“) nebo jiným znakem ASCII (např. v /etc/passwd se dělí znakem „:“).
+* TSVZ – záznamy ukončeny „\\0“, sloupce se oddělují tabulátorem („\\t“) nebo jiným znakem ASCII.
+* PSV – komplikovaný textový formát s pojmenovanými sloupci; záznamy jsou ukončeny sekvencemi více než jednoho znaku „\\n“; sloupce jsou pojmenovány.
+* pevná šířka sloupců – záznamy ukončeny „\\n“, sloupce (kromě posledního) jsou zarovnány na pevný počet znaků pomocí mezer.
 
 !ÚzkýRežim: vyp
 
@@ -517,7 +517,7 @@ Vzít/vynechat záznamy,...
 
 * ☐ -d {*oddělovač*} :: Nastaví oddělovač sloupců pro parametr -f; výchozí je "\\t", což znamená tabulátor. Používejte pouze znaky ASCII.
 * ○ -f {*sloupce*} ○ -b {*bajty*} :: Definuje množinu sloupců či bajtů každého záznamu, které mají být propuštěny. Pozor, pořadí ani duplicity nemají vliv na výstup! Příklad specifikace: „7,13-15,-3,20-“
-* ☐ --complement :: Neguje definovanou množinu − vybrané sloupce či bajty vypustí a vezme zbytek.
+* ☐ --complement :: Neguje definovanou množinu – vybrané sloupce či bajty vypustí a vezme zbytek.
 * ☐ -z :: Ukončovač záznamu je \\0 místo \\n.
 
 ### join
@@ -568,14 +568,14 @@ Vzít/vynechat záznamy,...
 
 * ☐ -u :: Po seřazení vyloučí duplicity (z každé skupiny duplicitních řádků ponechá pouze jeden).
 * ○ -c ○ -C :: Neřadí; jen zkontroluje, zda je vstup seřazený. Varianta „-c“ navíc vypíše první chybně seřazený řádek.
-* ☐ -k {*definice-řadicího-klíče*}{*druh-a-příznaky-řazení*} :: Definuje řadicí klíč, podle kterého se má řadit. Podrobněji − viz manuálová stránka příkazu *sort*.
+* ☐ -k {*definice-řadicího-klíče*}{*druh-a-příznaky-řazení*} :: Definuje řadicí klíč, podle kterého se má řadit. Podrobněji – viz manuálová stránka příkazu *sort*.
 * ☐ -t {*oddělovač*} :: Definuje oddělovač polí při řazení podle klíčů.
 * ☐ -m :: Místo řazení pouze slučuje již seřazené soubory do jednoho.
 * ☐ -s :: Stabilní řazení. Zachová relativní pořadí řádků, jejichž všechny řadicí klíče se rovnají.
 * ○ -{*druh-řazení*} :: Přepne na jiný druh řazení než obyčejné řetězcové.
 * ☐ -{*příznak-řazení*} :: Nastaví příslušný příznak ovlivňující řazení.
 
-<neodsadit>Druhy řazení jsou: g, h, M, n, R, V. Za zmínku z nich stojí jen „n“ − řazení podle číselné hodnoty (včetně případných desetinných míst) a „h“ − totéž, ale s rozpoznáváním přípon K (kilo), M (mega) atd.
+<neodsadit>Druhy řazení jsou: g, h, M, n, R, V. Za zmínku z nich stojí jen „n“ – řazení podle číselné hodnoty (včetně případných desetinných míst) a „h“ – totéž, ale s rozpoznáváním přípon K (kilo), M (mega) atd.
 
 Příznaky řazení jsou tyto:
 
@@ -583,7 +583,7 @@ Příznaky řazení jsou tyto:
 
 * r :: Řadit sestupně (normálně se řadí vzestupně).
 * f :: Nerozlišovat velká a malá písmena.
-* d :: „Řazení jako ve slovníku“ − zohledňovat jen písmena, čísla a bílé znaky.
+* d :: „Řazení jako ve slovníku“ – zohledňovat jen písmena, čísla a bílé znaky.
 * b :: Ignorovat bílé znaky na začátku klíče (při řazení podle číselné hodnoty se ignorují vždy).
 * i :: Ignorovat netisknutelné znaky.
 
@@ -598,7 +598,7 @@ Všechny použité nástroje jsou základními součástmi Ubuntu, s výjimkou 
 ## Ukázka
 <!- -
 - Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
-- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti − ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
+- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti – ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
 - Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
 - ->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)

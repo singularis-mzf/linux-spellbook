@@ -38,7 +38,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 **\-resize** {*šířka*}<br>
 **\-resize x**{*výška*}
 
-*# vynutit oba rozměry (**FORCE**) − jediná varianta, která v případě potřeby změní poměr stran obrázku*<br>
+*# vynutit oba rozměry (**FORCE**) – jediná varianta, která v případě potřeby změní poměr stran obrázku*<br>
 **\-resize** {*šířka*}**x**{*výška*}**\\!**
 
 *# vyplnit (**CONTAIN**)/a doplnit pozadím na přesný rozměr*<br>

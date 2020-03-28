@@ -325,7 +325,7 @@ Různé další tipy se dají najít v článku Bash/Prompt customization (angl
 
 ## Pomocné funkce
 
-*# bezp\_set() − nastaví písmo či pozadí na první podporovanou barvu*<br>
+*# bezp\_set() – nastaví písmo či pozadí na první podporovanou barvu*<br>
 **function bezp\_set () \{**<br>
 <odsadit1>**local f="$1" c="$(tput colors 2&gt;/dev/null \|\| printf 0)" x=""**<br>
 <odsadit1>**shift**<br>
@@ -333,14 +333,14 @@ Různé další tipy se dají najít v článku Bash/Prompt customization (angl
 <odsadit1>**return 0**<br>
 **\}**
 
-*# barvapronh() − nastaví barvu písma podle hodnoty parametru*<br>
+*# barvapronh() – nastaví barvu písma podle hodnoty parametru*<br>
 **function barvapronh () \{**<br>
 <odsadit1>**test $1 -gt 0 &amp;&amp; tput bold**<br>
 <odsadit1>**test $1 -eq 1 &amp;&amp; bezp\_set setaf 1**<br>
 <odsadit1>**test $1 -gt 1 &amp;&amp; bezp\_set setaf 2**<br>
 **\}**
 
-*# pstput() − vypíše escape sekvenci uzavřenou pro použití v proměnných PS1 a PS2*<br>
+*# pstput() – vypíše escape sekvenci uzavřenou pro použití v proměnných PS1 a PS2*<br>
 **function pstput () \{**<br>
 <odsadit1>**printf \\\\[; tput "$@" &amp;&amp; printf \\\\]**<br>
 **\}**
