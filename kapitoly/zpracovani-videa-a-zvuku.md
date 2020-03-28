@@ -351,7 +351,7 @@ Barvy se zadávají ve formátu AABBGGRR, kde AA=FF je úplná průhlednost a A
 *# aplikovat na obraz **Sobelův operátor** detekce hran*<br>
 **[**{*vi*}**] sobel [**{*vo*}**]**
 
-*# rozdělit snímky po dávkách a každou dávku vykreslit po řádcích do mřížky daných rozměrů*<br>
+*# rozdělit snímky po dávkách a každou dávku vykreslit po řádkách do mřížky daných rozměrů*<br>
 **[**{*vi*}**] tile=**{*počet-sloupců-mřížky*}**x**{*počet-řádků-mřížky*}[**:margin=**{*šířka-okraje*}]<nic>[**:padding=**{*rozestup-mřížky*}]<nic>[**:color=**{*barva-pozadí*}]<nic>[**:nb\_frames=**{*velikost-dávky*}] **[**{*vo*}**]**
 
 ### Nízkoúrovňové manipulace
@@ -576,7 +576,7 @@ a platí pouze pro daný výstup.
 
 ### Globální parametry
 *# nastavit **graf filtrů**/načíst ho ze souboru*<br>
-*// Některá zaklínadla v této kapitole používají vložené příkazy bashe pomocí syntaxe „'"$(příkaz)"'“; tyto konstrukce budou v dané podobě fungovat jen na příkazovém řádku.*<br>
+*// Některá zaklínadla v této kapitole používají vložené příkazy bashe pomocí syntaxe „'"$(příkaz)"'“; tyto konstrukce budou v dané podobě fungovat jen na příkazové řádce.*<br>
 **\-filter\_complex '**{*graf filtrů*}**'**<br>
 **\-filter\_complex\_script** {*soubor*}
 

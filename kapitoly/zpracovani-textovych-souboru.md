@@ -41,7 +41,7 @@ Tato kapitola se nezabývá zpracováním textových formátů se složitější
 * **Kódování znaků** je určitá reprezentace znakové sady textu pomocí bajtů a jejich sekvencí v souboru či paměti. U textových souborů uvažujeme výhradně kódování UTF-8, případně ASCII (které je podmnožinou UTF-8). Soubory v jiných kódováních sice také můžeme zpracovávat, ale obvykle je výhodnější je nejprve převést na UTF-8.
 * **Znak** (character) je základní jednotka textu, které je kódováním znaků přiřazen nějaký význam a reprezentace. Např. „A“ je v UTF-8 znak, který znamená písmeno A a je reprezentován bajtem o hodnotě 65. „\\n“ je v UTF-8 znak, který znamená konec řádku a je reprezentován bajtem o hodnotě 10.
 * **Řetězec** (string) je libovolná posloupnost znaků, i prázdná či tvořená jedním znakem.
-* **Záznam** je zobecnění pojmu „řádek“ v textovém souboru. Textový soubor se dělí na jednotlivé záznamy podle jejich zakončení **ukončovačem záznamu** (record separator), což je typicky znak konce řádku „\\n“ nebo nulový bajt „\\0“. Záznamy se číslují od 1.
+* **Záznam** je zobecnění pojmu „řádka“ v textovém souboru. Textový soubor se dělí na jednotlivé záznamy podle jejich zakončení **ukončovačem záznamu** (record separator), což je typicky znak konce řádky „\\n“ nebo nulový bajt „\\0“. Záznamy se číslují od 1.
 * Záznam může být brán jako celek, nebo může být dál rozdělen na **sloupce** (fields). Existuje několik metod dělení záznamu na sloupce, nejčastější je použití určitého znaku ASCII jako „oddělovače sloupců“ (field separator). Sloupce se v každém záznamu číslují od 1.
 * **Odstavec** je posloupnost záznamů v souboru ukončená více než jedním ukončovačem záznamu (tzn. v praxi typicky jedním či více prázdnými řádky).
 * **Záplata** je speciální textový soubor, který obsahuje záznam o změnách mezi dvěma verzemi jednoho nebo více textových souborů. Využití záplat je v dnešní době zřídkavé.
@@ -264,7 +264,7 @@ egrep -Lr {*regulární-výraz*} {*soubor-či adresář*}...
 ?
 
 *# ke každému záznamu přidat **předponu/příponu***<br>
-*// Příkaz „sed“ vyžaduje v příponě i předponě další úroveň odzvláštnění znaků „\\“ a „\\n“. Proto v uvedeném případě zadávejte zpětné lomítko jako „\\\\\\\\“ a konec řádku jako „\\\\\\n“. Konec řádku se navíc může vyskytnout pouze při použití formátu txtz, u formátu txt pravděpodobně nebude fungovat správně.*<br>
+*// Příkaz „sed“ vyžaduje v příponě i předponě další úroveň odzvláštnění znaků „\\“ a „\\n“. Proto v uvedeném případě zadávejte zpětné lomítko jako „\\\\\\\\“ a konec řádky jako „\\\\\\n“. Konec řádky se navíc může vyskytnout pouze při použití formátu txtz, u formátu txt pravděpodobně nebude fungovat správně.*<br>
 **sed** [**-z**] **$'i\\\\\\n**{*předpona*}**'** [{*soubor*}]... **\| paste** [**-z**] **-d "" - -**<br>
 **sed** [**-z**] **$'a\\\\\\n**{*přípona*}**'** [{*soubor*}]... **\| paste** [**-z**] **-d "" - -**
 
@@ -277,7 +277,7 @@ egrep -Lr {*regulární-výraz*} {*soubor-či adresář*}...
 **nl** [{*parametry*}] {*soubor*}...<br>
 ?
 
-*# přeformátovat text do řádků určité šířky*<br>
+*# přeformátovat text do řádek určité šířky*<br>
 *// Běžně se k tomu používá příkaz „fmt“, ale ten nerespektuje vícebajtové znaky, takže pro texty v UTF-8 funguje nekorektně.*<br>
 ?
 
@@ -385,7 +385,7 @@ Pro formát tsvz použijte „RS="\\0";“, pro tsv jej vynechejte.
 *# vynechat určité sloupce*<br>
 **colrm** {*první-vynechaný*} [{*poslední-vynechaný*}] <nic>[**&lt;** {*soubor*}]
 
-*# vynechat prvních/posledních deset znaků každého řádku*<br>
+*# vynechat prvních/posledních deset znaků každé řádky*<br>
 **colrm 1 10**<br>
 **sed -E 's/.{,10}$//'**
 
@@ -567,7 +567,7 @@ Vzít/vynechat záznamy,...
 !parametry:
 
 * ☐ -u :: Po seřazení vyloučí duplicity (z každé skupiny duplicitních řádků ponechá pouze jeden).
-* ○ -c ○ -C :: Neřadí; jen zkontroluje, zda je vstup seřazený. Varianta „-c“ navíc vypíše první chybně seřazený řádek.
+* ○ -c ○ -C :: Neřadí; jen zkontroluje, zda je vstup seřazený. Varianta „-c“ navíc vypíše první chybně seřazenou řádku.
 * ☐ -k {*definice-řadicího-klíče*}{*druh-a-příznaky-řazení*} :: Definuje řadicí klíč, podle kterého se má řadit. Podrobněji – viz manuálová stránka příkazu *sort*.
 * ☐ -t {*oddělovač*} :: Definuje oddělovač polí při řazení podle klíčů.
 * ☐ -m :: Místo řazení pouze slučuje již seřazené soubory do jednoho.

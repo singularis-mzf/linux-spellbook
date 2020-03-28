@@ -265,12 +265,12 @@ Ale v tomto případě nesmí regulární výraz končit znakem nového řádku
 * -x :: Regulárnímu výrazu musí odpovídat celá řádka (výchozí chování: jakýkoliv podřetězec řádku).
 * -z :: Řádky vstupních souborů jsou ukončeny nulovým bajtem; znak \\n bude považovat za za normální znak.
 * -C {*počet*} :: „kontext“ Kromě vyhovujícího řádku vypíše zadaný počet předchozích a následujících. (Samostatně lze tyto počty nastavit parametry **-A** a **-B**.)
-* -o :: Místo celých řádků vypisuje jednotlivé podřetězce vyhovující výrazu, každý podřetězec na samostatný řádek.
+* -o :: Místo celých řádek vypisuje jednotlivé podřetězce vyhovující výrazu, každý podřetězec na samostatnou řádku.
 * -h :: Vyhledává-li se ve více souborech, neuvede se jako prefix řádky název souboru.
 * -H :: Vždy uvede jako prefix řádku název souboru.
 * -n :: Jako prefix bude vypisovat číslo řádky.
 * -q :: Žádný normální výstup, jen otestuje, zda by našel alespoň jeden vyhovující řádek. Parametr **-s** zase potlačí chybová hlášení.
-* -m {*N*} :: Ukončí hledání po nalezení N vyhovujících řádků.
+* -m {*N*} :: Ukončí hledání po nalezení N vyhovujících řádek.
 * -i :: Nerozlišovat velká a malá písmena.
 
 Poznámka: příkaz „grep“ má tytéž parametry jako „egrep“, ale pracuje se základními regulárními výrazy.
@@ -294,8 +294,8 @@ Poznámka: příkaz „grep“ má tytéž parametry jako „egrep“, ale pracu
 
 !parametry:
 
-* -n :: Vykoná program v cyklu pro každý řádek vstupu.
-* -p :: Vykoná program v cyklu pro každý řádek vstupu a na konci každého cyklu vypíše proměnnou „$\_“.
+* -n :: Vykoná program v cyklu pro každou řádku vstupu.
+* -p :: Vykoná program v cyklu pro každý řádek vstupu a na konci každého cyklu vypíše proměnnou „$\_“ ($ARG).
 * -w :: Zapne užitečná varování. (**-W** zapne všechna varování.)
 * -e {*program*} :: Vykoná tento program místo načtení programu ze souboru.
 * -X :: Vypne všechna varování.

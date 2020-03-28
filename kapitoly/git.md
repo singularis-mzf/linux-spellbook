@@ -38,7 +38,7 @@ a příkaz „git stash“.
 
 ## Definice
 * **Pracovní adresář** je množina všech verzovaných souborů v gitem spravovaném uživatelském adresáři. Nikdy nezahrnuje obsah speciálního adresáře „.git“.
-* **Revize** je konkrétní neměnný (historický) stav pracovního adresáře zapsaný do repozitáře a doplněný o další údaje. Revizi lze v příkazovém řádku určit řadou způsobů, viz níže. Revize vzniká operací **commit**.
+* **Revize** je konkrétní neměnný (historický) stav pracovního adresáře zapsaný do repozitáře a doplněný o další údaje. Revizi lze v příkazové řádce určit řadou způsobů, viz níže. Revize vzniká operací **commit**.
 * **Repozitář** je skupina souborů a adresářů, do kterých git vysoce optimalizovaným způsobem ukládá všechny revize. Repozitář může mít přiřazen jeden nebo více vzdálených repozitářů (nejčastěji pouze jeden, zvaný **origin**); není-li repozitář takzvaně „bare“, má také svůj primární pracovní adresář a může mít i jeden nebo více „sekundárních pracovních adresářů“.
 * **Tag** je symbolický název pevně přiřazený uživatelem určité konkrétní revizi; není vhodné jej dodatečně měnit. (Je v gitu analogií konstanty v programování.)
 * **Větev** je proměnný symbolický název odkazující na určitou revizi v repozitáři (s výjimkou takzvané prázdné větve, která na žádnou revizi neodkazuje). Součástí operace „**commit**“ je přiřazení nové revize větvi. (Větev je v gitu analogií proměnné v programování.)
@@ -305,7 +305,7 @@ Každá revize je jednoznačně identifikována pomocí své MD5 heše. Kromě t
 ## Zaklínadla (.gitignore)
 
 *# komentář*<br>
-**#** [{*text do konce řádku*}]
+**#** [{*text do konce řádky*}]
 
 *# ignorovat soubory a adresáře vyhovující vzorku (může obsahovat znaky ? a \* ve stejném významu jako v bashi)*<br>
 {*vzorek*}
@@ -324,7 +324,7 @@ Každá revize je jednoznačně identifikována pomocí své MD5 heše. Kromě t
 **git** [{*globální parametry*}] **commit** [{*parametry*}]
 
 * **\-a** \:\: Před provedením commitu přenese do indexu všechny změny a smazání verzovaných souborů v pracovním adresáři.
-* **\-m "**{*komentář*}**"** \:\: Slouží k uvedení komentáře ke commitu na příkazovém řádku (jinak se uživateli k sepsání komentáře otevře nastavený editor).
+* **\-m "**{*komentář*}**"** \:\: Slouží k uvedení komentáře ke commitu na příkazové řádce (jinak se uživateli k sepsání komentáře otevře nastavený editor).
 * **\-\-amend** \:\: Nově vytvořenou revizí nahradí stávající revizi, na kterou odkazuje aktuální větev. (Na rozdíl od normálního chování, při kterém commit přidá novou revizi jako potomka.) Nové revizi se přiřadí čas a autorství (a potenciálně i komentář) původní revize.
 * **\-\-allow-empty** \:\: Dovolí vložit novou revizi i v případě, že index neobsahuje oproti HEAD žádné změny.
 * **\-\-reset-author** \:\: V kombinaci s volbou \-\-amend nepřebírá z přepsané revize autorství a čas.
@@ -355,9 +355,9 @@ Celé jméno a e-mail se používají k označení autorství revizí. Musíte
 **git init**
 **git add skript text**<br>
 **git commit -m "První verze"**<br>
-**printf %s\\\\n "Druhý řádek" &gt;&gt; text**<br>
+**printf %s\\\\n "Druhá řádka" &gt;&gt; text**<br>
 **git status**<br>
-**git commit -a -m "Přidán druhý řádek"**<br>
+**git commit -a -m "Přidána druhá řádka"**<br>
 **git log**
 
 *# Druhá část příkladu*<br>

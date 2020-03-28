@@ -41,7 +41,7 @@ Jedna z prvních věcí, která mě po otevření linuxového terminálu naštv
 
 ## Definice
 
-* **Výzva terminálu** (zkráceně „výzva“) je řetězec, který interpret příkazového řádku vypisuje před, během nebo po přijetí příkazu od uživatele (tzn. v interaktivním režimu). V interpretu „bash“ se rozeznávají tři druhy výzvy a jejich šablony jsou uloženy v proměnných PS0, PS1 a PS2: **hlavní výzva** (PS1) značí, že bash očekává příkaz, **vedlejší výzva** (PS2) značí, že bash očekává pokračování příkazu na dalším řádku, **potvrzující výzva** (PS0) se vypisuje po přijetí příkazu a před zahájením jeho vykonávání.
+* **Výzva terminálu** (zkráceně „výzva“) je řetězec, který interpret příkazové řádky vypisuje před, během nebo po přijetí příkazu od uživatele (tzn. v interaktivním režimu). V interpretu „bash“ se rozeznávají tři druhy výzvy a jejich šablony jsou uloženy v proměnných PS0, PS1 a PS2: **hlavní výzva** (PS1) značí, že bash očekává příkaz, **vedlejší výzva** (PS2) značí, že bash očekává pokračování příkazu na dalším řádku, **potvrzující výzva** (PS0) se vypisuje po přijetí příkazu a před zahájením jeho vykonávání.
 * **Escape sekvence** je posloupnost bajtů, na kterou terminál zareaguje změnou nastavení (např. barvy písma) či nějakou akcí. Escape sekvence začínají netisknutelným znakem „escape“ (ASCII kód 0x1b). V minulosti se zapisovaly ručně a děsily nezkušené uživatele; dnes je však můžeme pohodlně generovat moderním příkazem „tput“, který současně redukuje problémy s kompatibilitou jednotlivých typů terminálů.
 * **Paleta** je v této kapitole pole barev, které daný terminál podporuje, *indexované od nuly*. Typicky se vyskytují pouze dvě palety: s 8 barvami a s 256 barvami, ačkoliv realizace konkrétních barev v těchto paletách se mohou v jednotlivých terminálech mírně lišit.
 
@@ -126,7 +126,7 @@ Zde uvedené příkazy nevypisují escape sekvence, ale konkrétní hodnoty.
 *# počet podporovaných barev (velikost palety)*<br>
 **tput colors** ⊨ 256
 
-*# aktuální sloupec/řádek kurzoru/obojí do proměnných $Y (řádek) a $X (sloupec)*<br>
+*# aktuální sloupec/řádka kurzoru/obojí do proměnných $Y (řádek) a $X (sloupec)*<br>
 **read -rsd R -p $'\\e[6n' &lt;/dev/tty &amp;&amp; printf %s\\\\n $\(\($(printf %s\\\\n "$REPLY" \| sed -E 's/.\*\\[([0-9]+);([0-9]+)/\\1/') - 1\)\)**<br>
 **read -rsd R -p $'\\e[6n' &lt;/dev/tty &amp;&amp; printf %s\\\\n $\(\($(printf %s\\\\n "$REPLY" \| sed -E 's/.\*\\[([0-9]+);([0-9]+)/\\2/') - 1\)\)**<br>
 **read -rsd R -p $'\\e[6n' &lt;/dev/tty &amp;&amp; eval "$(printf %s\\\\n "$REPLY" \| sed -E 's/.\*\\[([0-9]+);([0-9]+)/Y=$\(\(\\1-1\)\);X=$\(\(\\2-1\)\);/')"**
@@ -147,7 +147,7 @@ Zde uvedené příkazy nevypisují escape sekvence, ale konkrétní hodnoty.
 **tput cub** {*posun*}<br>
 **tput cuf** {*posun*}
 
-*# posun kurzoru **do určitého sloupce** na aktuálním řádku/na začátek řádku*<br>
+*# posun kurzoru **do určitého sloupce** na aktuální řádce/na začátek řádku*<br>
 **tput hpa** {*index-sloupce*}<br>
 **tput hpa 0**
 
@@ -161,14 +161,14 @@ Zde uvedené příkazy nevypisují escape sekvence, ale konkrétní hodnoty.
 
 ### Mazání obrazovky
 
-*# smazat **část řádku** od kurzoru vlevo/vpravo*<br>
+*# smazat **část řádky** od kurzoru vlevo/vpravo*<br>
 **tput el1**<br>
 **tput el**
 
 *# smazat **celou obrazovku** a kurzor přesunout na pozici 0 0 (levý horní roh)*<br>
 **tput clear**
 
-*# odstranit N řádků od aktuálního řádku (včetně) dolů*<br>
+*# odstranit N řádků od aktuální řádky (včetně) dolů*<br>
 ?
 
 ## Zaklínadla (PS0, PS1 a PS2)
@@ -232,7 +232,7 @@ Poznámka: z hlediska odzvláštnění jsou zaklínadla v této sekci upravena
 *# počet úloh běžících na pozadí (těch, které lze vypsat příkazem „jobs“)*<br>
 **\\\\j** ⊨ 0
 
-*# počet řádků/sloupců terminálu*<br>
+*# počet řádek/sloupců terminálu*<br>
 **\\${LINES}**<br>
 **\\${COLUMNS}**
 
@@ -298,7 +298,7 @@ Všechny použité součásti jsou základními nástroji přítomnými v každ
 -->
 
 * Výchozí nastavení výzev se nachází v souboru „~/.bashrc“. Umístěním svých definic na konec tohoto souboru můžete výchozí nastavení přepsat. Změna se projeví při dalším spuštění bashe.
-* Konstrukci proměnné PS1 je vhodné pro přehlednost rozdělit do více řádků, kdy první řádek bude přiřazení a na dalších použijete operátor += k připojení hodnoty ke stávající hodnotě.
+* Konstrukci proměnné PS1 je vhodné pro přehlednost rozdělit do více řádek, kdy první řádka bude přiřazení a na dalších použijete operátor += k připojení hodnoty ke stávající hodnotě.
 * Tip: Před zkoušením nastavování barev a titulku terminálu si vypněte výzvu příkazem „PS1=""“. Výchozí výzva obsahuje escape sekvence, které by kolidovaly s těmi, které se snažíte zadat a rušily by jejich účinek.
 * Bash podporuje proměnnou „PROMPT\_COMMAND“. Je-li nastavena, je vykonána jako příkaz těsně před vypsáním hlavní výzvy. Toho lze využít k nastavení proměnných, které pak ve výzvě použijeme. Proměnná PROMPT\_COMMAND může obsahovat i více příkazů oddělených středníky. Podle manuálové stránky by příkazy uvedené v této proměnné neměly generovat žádný výstup na terminál! (Ale výstup do souboru je pravděpodobně v pořádku.)
 

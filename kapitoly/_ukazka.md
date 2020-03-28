@@ -21,7 +21,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 ## Úvod
 Tato kapitola je jen ukázka dovoleného formátování. Je zatím poměrně omezené.
-Běžné odstavce mohou pokračovat na dalším řádku.
+Běžné odstavce mohou pokračovat na další řádce.
 Mohou také obsahovat vynucený<br>konec řádku a omezené formátování:
 **tučně**, *kurzívou*, {*doplň*} nebo {_Klávesa_}, do **tučného textu lze vnořit *kurzívu*,**
 a do *kurzívy lze vnořit **tučný text**,* ale „doplň“ s nimi nelze kombinovat.
@@ -34,7 +34,7 @@ Normálně se odstavce v PDF verzi odsazují, kromě odstavců, které následu
 Mezi normálními odstavci může být:
 
 > Odsazený odstavec. Text odsazeného odstavce může ve zdrojovém kódu
-> pokračovat na dalším řádku. Je dovolena pouze jedna úroveň odsazení
+> pokračovat na další řádce. Je dovolena pouze jedna úroveň odsazení
 > a může obsahovat<br>konec řádku a omezené formátování:
 > **tučně**, *kurzívou*, nebo {*doplň*}, do **tučného textu lze vnořit *kurzívu*,**
 > a do *kurzívy lze vnořit **tučný text**,* ale „doplň“ s nimi nelze kombinovat.
@@ -57,18 +57,18 @@ Mezi normálními odstavci může být:
 A toto už je obyčejný odstavec.
 
 * Takto vypadají seznamy.
-Položka seznamu může pokračovat na dalším řádku a obsahovat text **tučně**, *kurzívou*, nebo {*na doplnění*}.
-* Další položka seznamu. Může obsahovat také [hypertextový odkaz](http://www.seznam.cz/) a vynucený<br>konec řádku.
+Položka seznamu může pokračovat na další řádce a obsahovat text **tučně**, *kurzívou*, nebo {*na doplnění*}.
+* Další položka seznamu. Může obsahovat také [hypertextový odkaz](http://www.seznam.cz/) a vynucený<br>konec řádky.
 
 ### Zaklínadlo
 
 *# zvláštním typem záznamu je takzvané zaklínadlo; to může obsahovat tučně zvýrazněná **klíčová slova**, a to i **na konci***<br>
 *// může mít poznámku pod čarou, která vypadá takto*<br>
-**tučné části v řádcích zaklínadla má uživatel zadat tak, jak jsou** {*toto-má-doplnit*} [**nepovinná část**] {_Klávesa_}...<br>
+**tučné části v řádkách zaklínadla má uživatel zadat tak, jak jsou** {*toto-má-doplnit*} [**nepovinná část**] {_Klávesa_}...<br>
 **příklad může mít i víc řádků**
 
 *# druhé zaklínadlo, které...*<br>
-*// má dvě poznámky pod čarou, z toho první je velmi velmi dlouhá, aby se ukázalo, jak se bude v okně prohlížeče, na papíře nebo v jiném výstupním formátu zalamovat do více řádků; pro tento účel by se hodil text Lorem Ipsum, ale tento text je také dost dobrý*<br>
+*// má dvě poznámky pod čarou, z toho první je velmi velmi dlouhá, aby se ukázalo, jak se bude v okně prohlížeče, na papíře nebo v jiném výstupním formátu zalamovat do více řádek; pro tento účel by se hodil text Lorem Ipsum, ale tento text je také dost dobrý*<br>
 *// a toto je ta druhá*<br>
 {*doplnit*} **a musí mít i nějaký řádek**
 
@@ -82,7 +82,7 @@ Položka seznamu může pokračovat na dalším řádku a obsahovat text **tuč
 *// druhou*<br>
 *// třetí poznámku pod čarou*<br>
 **<tab>řádek začínající tabulátorem**<br>
-**<tab8><tab8>a řádek začínající dvěma tabulátory**<br>
+**<tab8><tab8>a řádka začínající dvěma tabulátory**<br>
 !: Akce (tzn. popis, co udělat – musí být na jednom řádku).<br>
 **&blank;řádka odsazená jednou mezerou**<br>
 **&blank;&blank;..dvěma mezerami**<br>

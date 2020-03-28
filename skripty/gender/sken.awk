@@ -67,7 +67,7 @@ function UrcitRod(predchozi, slovo) {
         case "řádek":
             # ŘÁDEK
             # ten řádek / vidím ten řádek / bez těch řádek
-            return predchozi !~ /^(z|třída|pět|šest|sedm|osm|devět|načítání)$/ ? "mužský" : "ženský";
+            return predchozi !~ /^(z|do|třída|pět|šest|sedm|osm|devět|více|počet|čísla)$|(ých|ících|ání)$/ ? "mužský" : "ženský";
         case "řádka":
         case "řádkách":
         case "řádkám":
@@ -97,7 +97,7 @@ function UrcitRod(predchozi, slovo) {
             # s těmi řádky = mužský; bez té řádky = ženský
             if (predchozi ~ /^dvěma$|ými$/) {
                 return "mužský";
-            } else if (predchozi ~ /^(zadání|prefix|z|číslo|příkazové|pozici|konce|dvě|tři|čtyři|konec|zbytek|část|podřetězec|zαčátek)$/) {
+            } else if (predchozi ~ /^(zadání|prefix|z|číslo|příkazové|pozici|konce|dvě|tři|čtyři|konec|zbytek|část|podřetězec|začátek|ukončení)$/) {
                 return "ženský";
             } else if (predchozi ~ /^(mít|všechny|má|tvoří|hledat|se|ostatní)$|ící$/) {
                 return "0";

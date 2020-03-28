@@ -281,7 +281,7 @@ Poznámky:
 **shopt -u histappend**
 
 *# nastavit způsob ukládání řádek do historie (obecně/příklad)*<br>
-*// Rozeznávané volby jsou: „ignorespace“ (neukládat řádky začínající bílým znakem), „ignoredups“ (neukládat stejný řádek znovu) a „erasedups“ (před uložením řádky smazat všechny stejné řádky z celé historie – pozor, tato volba mění pořadová čísla řádků v historii). Volba „ignoreboth“ (což je v Ubuntu výchozí chování) je synonymum pro „ignorespace:ignoredups“.*<br>
+*// Rozeznávané volby jsou: „ignorespace“ (neukládat řádky začínající bílým znakem), „ignoredups“ (neukládat stejný řádek znovu) a „erasedups“ (před uložením řádky smazat všechny stejné řádky z celé historie – pozor, tato volba mění pořadová čísla řádek v historii). Volba „ignoreboth“ (což je v Ubuntu výchozí chování) je synonymum pro „ignorespace:ignoredups“.*<br>
 **HISTCONTROL="**[{*volba*}[**:**{*další-volba*}]...]**"**<br>
 **HISTCONTROL="ignorespace:erasedups"**
 
@@ -369,14 +369,14 @@ Poznámky:
 {_Ctrl_}**+**{_U_}<br>
 {_Ctrl_}**+**{_W_}
 
-*# vyjmout text od aktuálního znaku do konce řádku/slova*<br>
+*# vyjmout text od aktuálního znaku do konce řádky/slova*<br>
 {_Ctrl_}**+**{_K_}<br>
 {_Alt_}**+**{_K_}
 
 *# vložit naposledy vyjmutý text*<br>
 {_Ctrl_}**+**{_Y_}
 
-*# smazat terminál (ponechat aktuální řádek)*<br>
+*# smazat terminál (ponechat aktuální řádku)*<br>
 {_Ctrl_}**+**{_L_}
 
 *# pozastavit výpis na terminál/pokračovat*<br>
@@ -399,7 +399,7 @@ Poznámky:
 *# vrátit řádek načtený z historie do původního stavu*<br>
 {_Alt_}**+**{_R_}
 
-*# vložit poslední slovo z posledního řádku v historii*<br>
+*# vložit poslední slovo z poslední řádky v historii*<br>
 *// Opakovaným stiskem lze vložit poslední slovo z předposlední řádky, před-předposlední atd.*<br>
 {_Alt_}**+**{_._}
 
