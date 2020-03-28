@@ -23,6 +23,7 @@ Poznámky:
 # Základy Perlu
 
 !Štítky: {program}{zpracování textu}{syntaxe}{Perl}{programování}
+!FixaceIkon: 1754
 !ÚzkýRežim: zap
 
 ## Úvod
@@ -380,61 +381,94 @@ TODO: Otestovat!
 **1;**
 
 
-
 ## Zaklínadla (práce se soubory)
 
 ### Otevřít/zavřít
 
 *# zavřít soubor či rouru*<br>
-**close(**{*$f*}**)** [**or die(**{*zpráva*}**)**]
+**close(**{*$f*}**)** [**or die(**{*zpráva*}**)**]**;**
 
-*# otevřít soubor*<br>
-*// Mód může být „&lt;“... [ ] TODO!*<br>
-**undef(**{*$f*}**);**<br>
-**open(**{*$f*}**, "**{*mód*}**",** {*"cesta/k/souboru"*}**)** [**or die(**{*zpráva*}**)**]
+*# otevřít textový soubor (normálně/se striktními kontrolami)*<br>
+*// Mód je jeden z: „&lt;“: otevřít existující soubor pro čtení; „&gt;“: vytvořit nový/přepsat existující soubor a otevřít pro zápis; „&gt;&gt;“: otevřít pro zápis na konec souboru.*<br>
+**open(**{*$f*} **= undef, "**{*mód*}**:utf8",** {*"cesta/k/souboru"*}**)** [**or die(**{*"chybová zpráva"*}**)**]**;**<br>
+**open(**{*$f*} **= undef, "**{*mód*}**:encoding(UTF-8)",** {*"cesta/k/souboru"*}**)** [**or die(**{*"chybová zpráva"*}**)**]**;**
+
+*# otevřít binární soubor*<br>
+*// Mód je jeden z: „&lt;“: otevřít existující soubor pro čtení; „+&lt;“: otevřít existující soubor pro čtení i zápis; „&gt;“: vytvořit nový/přepsat existující soubor a otevřít jen pro zápis; „+&gt;“: totéž, ale pro zápis i čtení; „&gt;&gt;“: otevřít soubor pro zápis na konec.*<br>
+**open(**{*$f*} **= undef, "**{*mód*}**:raw",** {*"cesta/k/souboru"*}**)** [**or die(**{*"chybová zpráva"*}**)**]**;**
 
 *# otevřít rouru pro zápis*<br>
-**undef(**{*$f*}**);**<br>
-**open(**{*$f*}**, "\|-", "**{*název-příkazu*}**"**[**,** {*parametr-příkazu*}]...**)** [**or die(**{*zpráva*}**)**]
+**open(**{*$f*} **= undef, "\|-", "**{*název-příkazu*}**"**[**,** {*parametr-příkazu*}]...**)** [**or die(**{*zpráva*}**)**]**;**
 
 *# otevřít rouru pro čtení*<br>
-**undef(**{*$f*}**);**<br>
-**open(**{*$f*}**, "-\|", "**{*název-příkazu*}**"**[**,** {*parametr-příkazu*}]...**)** [**or die(**{*zpráva*}**)**]
+**open(**{*$f*} **= undef, "-\|", "**{*název-příkazu*}**"**[**,** {*parametr-příkazu*}]...**)** [**or die(**{*zpráva*}**)**]**;**
 
+### Číst (textový soubor)
 
-### Číst
-
-*# načíst řádek*<br>
-*// Funkci spusťte v kontextu, kde se očekává skalár; vrací načtený řádek včetně znaku konce řádku (lze odstranit funkcí „chomp()“); bylo-li dosaženo konce souboru, vrací „undef“.*<br>
+*# načíst řádek bez ukončovače*<br>
+*// Při čtení za koncem souboru se do proměnné $cíl uloží nehodnota undef.*<br>
 {*$cíl*} **= readline(**{*$f*}**);**<br>
-[**chomp(**{*$cíl*}**);**]
+**chomp(**{*$cíl*}**) if (defined(**{*$cíl*}**))**
 
-*# načíst znak*<br>
-*// Podle manuálu tato funkce není příliš efektivní. Pravděpodobně by mohlo být rychlejší načíst řádek funkcí „readline()“ a rozdělit po znacích funkcí „substr()“.*<br>
+*# načíst jeden znak*<br>
+*// Podle manuálu tato funkce není příliš efektivní. Doporučuji raději načíst řádku s ukončovačem a rozdělit po znacích. Při čtení za koncem souboru tato funkce vrací undef.*<br>
 {*$cíl*} **= getc(**{*$f*}**);**
 
-*# načíst všechny (zbývající) řádky*<br>
-{*@cíl*} **= readline(**{*$f*}**);**<br>
-[**chomp(**{*@cíl*}**);**]
+*# načíst všechny zbývající řádky bez ukončovače*<br>
+{*@cíl*} **= array(readline(**{*$f*}**));**<br>
+**chomp(**{*@cíl*}**);**
 
-*# načíst celý soubor najednou*<br>
+*# načíst všechny zbývající řádky s ukončovačem/zahodit*<br>
+{*@cíl*} **= array(readline(**{*$f*}**));**<br>
+**array(readline(**{*$f*}**));**
+
+*# načíst celý soubor do řetězce*<br>
 {*$cíl*} **= "";**<br>
 **while (read(**{*$f*}**,** {*$cíl*}**, 4096, length(**{*$cíl*}**))) {}**
 
-### Zapisovat
+### Číst (binární soubor)
+
+*# načíst pevný maximální počet bajtů*<br>
+**read(**{*$f*}**,** {*$cíl*}**,** {*max-bajtů*}[**,** {*počáteční-index-do-cíle*}]**)**
+
+*# načíst jeden bajt*<br>
+{*$cíl*} **= getc(**{*$f*}**);**
+
+*# načíst všechny zbývající bajty*<br>
+{*$cíl*} **= "";**<br>
+**while (read(**{*$f*}**,** {*$cíl*}**, 4096, length(**{*$cíl*}**))) {}**
+
+*# konvertovat bajty z řetězce na pole číselných hodnot*<br>
+{*@cíl*} **= unpack("C\*",** {*$řetězec*}**);**
+
+### Zapisovat (textový soubor)
+
+*# zapsat řetězec*<br>
+**printf(**[{*$f*}**&blank;**]**"%s",** {*$řetězec*}**);**
+
+*# zapsat znak (alternativy)*<br>
+**printf(**[{*$f*}**&blank;**]**%s",** {*$znak*}**);**<br>
+**{local $ORS = ""; print(**[{*$f*}**&blank;**]{*$znak*}**);}**
+
+*# zapsat položky seznamu oddělené hodnotou $OFS a zakončené hodnotou $ORS*<br>
+**print(**[{*$f*}**&blank;**]{*položky, seznamu*}**);**
+
+### Zapisovat (binární soubor)
+
+*# zapsat bajty (z řetězce/z pole čísel)*<br>
+**printf(**[{*$f*}**&blank;**]**"%s",** {*$řetězec*}**);**<br>
+?
+
+*# zapsat bajt (znakově/z číselné hodnoty)*<br>
+**printf(**[{*$f*}**&blank;**]**"%s",** {*$znak*}**);**<br>
+**printf(**[{*$f*}**&blank;**]**"%c",** {*$číslo*}**);**
+
+
 <!--
 
 https://www.tutorialspoint.com/perl/perl_special_variables.htm
 -> používat „use English;“!
 -->
-
-*# zapsat záznam (položky oddělené hodnotou „$OFS“ a zakončené hodnotou „$ORS“)*<br>
-*// Vynecháte-li $f, použije se „STDOUT“ (standardní výstup). Pozor na zvláštní syntaxi – za označením výstupního souboru se zde píše mezera bez čárky!*<br>
-**print(**[{*$f*}**&blank;**]{*první položka*}[**,** {*další položka*}]**)**
-
-*# zapsat řetězec*<br>
-**printf(**[{*$f*}**&blank;**]**"%s",** {*$řetězec*}**)**
-
 
 
 ## Parametry příkazů
@@ -475,6 +509,7 @@ https://www.tutorialspoint.com/perl/perl_special_variables.htm
 
 * *Předávání parametrů do funkcí:* Parametry se do funkce předají pomocí pole „@\_“, které má tu speciální vlastnost, že ty jeho prvky, které byly v místě předání *přiřaditelnými* hodnotami (včetně např. prvků jiných polí) se do něj předají odkazem. To znamená, že skalární proměnné se do všech funkcí předávají odkazem, nikdy hodnotou. Pole (včetně seznamů) se při předávání do funkce rozloží na všechny svoje prvky v náležitém pořadí a ty se předají odkazem. Asociativní pole se rozloží na posloupnost dvojic „klíč,hodnota“, příčemž klíče se předají hodnotou (jsou nepřiřaditelné), zatímco hodnoty se předají odkazem. Perl neprovádí žádnou automatickou kontrolu počtu, typu či hodnoty předaných parametrů; ta je výhradně zodpovědností volané funkce.
 * Seznam (na rozdíl od pole) obsahuje svoje prvky odkazem (pozor, neplést s ukazatelem) a přiřazuje se do něj po prvcích; to znamená, že např. výrazem **($a, $b) = (1, 2)** přiřadíte do proměnné **$a** hodnotu 1 a do proměnné **$b** hodnotu 2; podobně výrazem „($a, $b) = @x“ načtete do proměnných $a a $b první dva prvky pole @x. Uvedete-li do seznamu pole nebo vnořený seznam, ten se „rozbalí“ na svoje prvky, proto např. výrazem „(@x) = (1, 2)“ přiřadíte hodnoty do prvních dvou prvků pole, aniž byste ho zkrátili; oproti tomu příkazem „@x = (1, 2)“ přiřadíte do proměnné „@x“ nové, dvouprvkové pole.
+* Dokumentace Perlu radí upřednostňovat funkci „print“ před „printf“, protože je rychlejší a snáze se píše. To první je nejspíš pravda, ale pokud ji chcete použít korektně, musíte před každým voláním nastavit proměnné $OFS a $ORS, protože funkce „print“ je vypisuje, a budou-li nastaveny na nečekané hodnoty z jiné části programu, bude výstup vaší funkce nekorektní, pokud jejich hodnoty nebudete mít pod kontrolou. Napsat "%s" do printf je mnohem jednodušší než neustále přiřazovat $OFS a $ORS.
 
 ## Další zdroje informací
 <!--
@@ -501,6 +536,10 @@ Co hledat:
 
 ## Pomocné funkce (Perl)
 
+*# lkk perl – spouštěč, který spustí skript Perlu s doporučenými parametry*<br>
+**#!/bin/bash**<br>
+**exec perl -CSDAL "-Mv5.26.0" -Mstrict -Mwarnings -Mutf8 -MEnglish "$@"**
+
 *# lkk -p perl-vzorek-parametru – xxx*<br>
 **sub vzorek\_parametru \{**<br>
 <odsadit1>**return join("", map \{**<br>
@@ -511,3 +550,29 @@ Co hledat:
 <odsadit2>**":".$r.":";**<br>
 <odsadit1>**\} @\_);**<br>
 **\}**
+
+*# lkk -p perl-alength – délka pole, resp. počet členů seznamu*<br>
+**sub alength {return scalar(@ARG)}**
+<!--
+Poznámka: funkce alength je nutná kvůli tomu, že některé standardní funkce se při volání ve skalárním kontextu chovají jinak, takže funkci „scalar“ není možné použít pro zjištění velikosti vráceného pole.
+Např. scalar(readline($f)) nevrátí počet načtených řádek souboru, ale alength(readline($f)) už ano.
+-->
+
+*# lkk -p perl-array – vrátí pole ze zadaných parametrů (lze využít k přetypování skaláru či asociativního pole)*<br>
+**sub array {return @ARG}**
+
+*# lkk -p perl-vypis – zavolá funkci „print“ s prázdnými hodnotami $OFS a $ORS*<br>
+**sub vypis \{**<br>
+<odsadit1>**local $OFS = "";**<br>
+<odsadit1>**local $ORS = "";**<br>
+<odsadit1>**return print(@ARG);**<br>
+**\}**
+
+*# lkk -p perl-fprintf – ...*<br>
+**sub fprintf {my $soubor = shift(@ARG); return printf($soubor @ARG);}**
+
+*# lkk -p perl-printn – ...*<br>
+**sub printn {local $OFS = ""; local $ORS = ""; return print(@ARG);}**
+
+*# lkk -p perl-fprintn – ...*<br>
+**sub fprintn {local $OFS = ""; local $ORS = ""; my $soubor = shift(@ARG); return print($soubor @ARG);}**

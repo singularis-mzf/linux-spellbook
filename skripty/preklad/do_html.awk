@@ -151,7 +151,7 @@ function KonecSekce(kapitola, sekce) {
 }
 
 function ZacatekPodsekce(kapitola, sekce, podsekce, cisloKapitoly, cisloSekce, cisloPodsekce) {
-    return "\n<h3><a href=\"#cast" cisloSekce "x" cisloPodsekce "\" id=\"cast" cisloSekce "x" cisloPodsekce "\"><span class=\"cislo\">" cisloPodsekce "</span> " podsekce "</a></h3>\n";
+    return "\n<h3><a href=\"#cast" cisloSekce "x" cisloPodsekce "\" id=\"cast" cisloSekce "x" cisloPodsekce "\" title=\"" sprintf("kapitola %d (%s), sekce %d (%s), podsekce %d (%s)", cisloKapitoly, kapitola, cisloSekce, sekce, cisloPodsekce, podsekce) "\">" sprintf("/s%02d/p%02d", cisloSekce, cisloPodsekce) " " podsekce "</a></h3>\n";
 }
 
 function KonecPodsekce(kapitola, sekce, podsekce) {
@@ -219,8 +219,9 @@ function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, ikona, cislaPoznamek
         idzaklinadla = Hes(textZaklinadla);
         while (idzaklinadla in pridelenaIdZaklinadel) {idzaklinadla = idzaklinadla "x"}
         pridelenaIdZaklinadel[idzaklinadla] = 1;
-        vysledek = vysledek "<hr><div class=\"zahlavi\"><span class=\"cislo\">#" cisloZaklinadla " </span>";
-        vysledek = vysledek gensub(/([^\t]*)\t([^\t]*)/, "<a class=\"ikona \\2\" id=\"z" idzaklinadla "\" href=\"#z" idzaklinadla "\">\\1</a>", 1, ikona) textZaklinadla;
+        vysledek = vysledek "<div class=\"zahlavi\">" \
+            gensub(/([^\t]*)\t([^\t]*)/, "<a class=\"ikona \\2\" id=\"z" idzaklinadla "\" href=\"#z" idzaklinadla "\">\\1</a>", 1, ikona) \
+            textZaklinadla "<span class=\"cislo\">#" cisloZaklinadla " </span>";
         prvni = 1;
         if (length(cislaPoznamek) > 0) {
             vysledek = vysledek "<sup>";

@@ -13,6 +13,12 @@ https://creativecommons.org/licenses/by-sa/4.0/
 -->
 <!--
 [ ] dpkg-reconfigure
+[ ] snap saved
+[ ] snap forget <balíček>
+[ ] snap remove <balíček> --purge
+[ ] snap changes
+[ ] sudo snap set refresh.hold='...'
+[ ] sudo snap get refresh.hold
 -->
 
 # Správa balíčků
