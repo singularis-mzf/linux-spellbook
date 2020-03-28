@@ -212,14 +212,7 @@
     \titleformat{\subsection}[hang]{\normalfont\fontsz{11pt}}%
         {}%
         {0pt}{%
-            \begin{blok}%
-                \setlength{\unitlength}{1em}%
-                \begin{picture}(2.25,1)(0,0.16)\relax%
-                    %\put(0,-0.2){{\color{svetleseda}\rule{\columnwidth}{1.4\unitlength}}}%
-                    \put(0.7,0){\makebox(1,1){\arabic{subsection}}}%
-                    \put(1.2,0.5){\circle{1.2}}%
-                \end{picture}%
-            \end{blok}%
+            $^{\mbox{{\small s\arabic{section}/}}}$\arabic{subsection}
         }\relax
     \titlespacing*{\subsection}{0pt}{4ex plus1ex minus0ex}{1ex}\relax
 
