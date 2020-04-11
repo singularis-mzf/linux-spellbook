@@ -109,10 +109,10 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [system](kapitoly/system.md) | Systém | 100% | vydána (od verze 1.2) |
 | [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) | Zpracování textových souborů | 100% | vydána (od verze 1.2) |
 | [zpracovani-videa-a-zvuku](kapitoly/zpracovani-videa-a-zvuku.md) | Zpracování videa a zvuku | 100% | vydána (od verze 1.0) |
+| [diskove-oddily](kapitoly/diskove-oddily.md) | Diskové oddíly | 100% | připravena k vydání|
 | [sed](kapitoly/sed.md) | Sed | 80% | dítě |
 | [sprava-uzivatelu](kapitoly/sprava-uzivatelu.md) | Správa uživatelů | 80% | dítě |
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
-| [diskove-oddily](kapitoly/diskove-oddily.md) | Diskové oddíly | 50% | dítě |
 | [zpracovani-obrazku](kapitoly/zpracovani-obrazku.md) | Zpracování obrázků | 40% | dítě |
 | [odkazy](kapitoly/odkazy.md) | Pevné a symbolické odkazy | 20% | dítě |
 | [perl](kapitoly/perl.md) | Základy Perlu | 20% | dítě |

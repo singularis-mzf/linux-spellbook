@@ -155,6 +155,13 @@
 # - Barvy pozadí pro přehled štítků: (???) [ ] DOLADIT!!!
 {{MAKRO prehledstitku-liche-barva-pozadi=rgba(200,200,200,1)}}
 {{MAKRO prehledstitku-sude-barva-pozadi=rgba(180,180,180,1)}}
+
+# - Tlačítko „MENU“
+{{MAKRO menu-ramecek-tlacitka           = 153,153,153}}
+{{MAKRO menu-pozadi-tlacitka            = {{zb-titul-pozadi}}}}
+{{MAKRO menu-text-tlacitka              = {{zb-titul-text}}}}
+{{MAKRO menu-stin-textu-tlacitka        = 0,0,0}}
+{{MAKRO menu-stin-textu-tlacitka-kryti  = 0}}
 #
 #
 # Motiv „hlavní“
@@ -168,6 +175,7 @@
 {{MAKRO zb-svetla                   = 204,204,204}}
 {{MAKRO zb-pozadi                   = 212,221,208}}
 {{MAKRO zb-barevny-text             = 22,102,68}}
+{{MAKRO menu-stin-textu-tlacitka-kryti = 1}}
 
 {{MAKRO titulni-lista-obrazek-pozadi    = {{sym-titliststin}}}}
 {{MAKRO titulni-lista-stin-textu-kryti  = 0.5}}
@@ -1072,7 +1080,62 @@ span.chybny {
     white-space:nowrap;
 }
 
+/* Menu */
 
+a#menu {
+    position:fixed;left:5px;top:5px;bottom:auto;right:auto;
+    display:block;
+    margin:0;
+    border-width:0.25rem 0.5rem 0.5rem 0.25rem;
+    border-style:outset;
+    border-color:rgb({{menu-ramecek-tlacitka}});
+    padding:0.25em 0.5em;
+    white-space:nowrap;
+    background:rgb({{menu-pozadi-tlacitka}});
+    color:rgb({{menu-text-tlacitka}});
+    font-weight:bold;
+    text-shadow:0 0 0.1em rgba({{menu-stin-textu-tlacitka}}, {{menu-stin-textu-tlacitka-kryti}});
+
+    opacity:0.5; /* toto odstranit po odebrání experimentálního statutu */
+}
+a#menu::before {
+    content:"≡ ";
+    text-decoration:none;
+}
+a#menu+aside {
+    position:fixed;left:10px;top:5px;bottom:5px;right:auto;z-index:-2;
+    width:40%;min-width:20em;max-width:40em;
+    margin:0;
+    border:medium solid rgb({{zb-okno-ramecek}});
+    padding:0;
+    box-shadow:1rem 1rem 5rem 0 rgba(0,0,0,{{okno-stin-kryti}});
+    background-color:rgb({{zb-pozadi}});
+    color:inherit;
+    opacity:0;
+    transition-duration:0.5s;
+    transition-property:all;
+}
+a#menu:target+aside {
+    opacity:1;
+    z-index:5000;
+}
+
+a#menu+aside>div {
+    position:absolute;top:0;right:0;bottom:0;left:0;z-index:5;
+    padding:3em 2em 2em;
+    overflow:auto;
+}
+
+a#zavritmenu {
+    position:absolute;top:0.3rem;right:2rem;bottom:auto;left:auto;z-index:10;
+    white-space:nowrap;
+}
+a#zavritmenu::after {
+    content: " ×";
+    font-weight:bold;
+    font-size:150%;
+    vertical-align:-0.07em;
+}
 
 @media print {
     html, body, article {
