@@ -16,6 +16,8 @@ Poznámky:
 
 [ ] Naprogramovat funkci, která vrátí pole všech shod regulárního výrazu.
 
+[ ] Zpracovat tutorial začínající na: https://www.perltutorial.org/perl-syntax/
+[ ] Zpracovat referenční příručku funkcí:
 - Referenční příručka: https://perldoc.perl.org/5.30.0/index-functions-by-cat.html
 
 -->
@@ -42,89 +44,122 @@ konzervativně zvolené, podmnožiny jeho vlastností. (Většinu vlastností
 Perlu totiž tvoří syntaktické zkratky, které expertům pomáhají psát programy
 rychle a efektivně, ale nepřidávají nic k funkčnosti jazyka.)
 
-Perl je záludný skriptovací jazyk, v němž se proměnné deklarují
-nejčastěji klíčovým slovem „my“, velikost pole se určuje funkcí „scalar()“,
-modul Perlu musí končit příkazem „1;“ a podmínka „if (false)“ je splněna...
+Perl je zákeřný skriptovací jazyk, v němž se proměnné deklarují
+nejčastěji klíčovým slovem „my“, modul Perlu musí končit příkazem „1;“,
+podmínka „if (false)“ je splněna (ačkoliv generuje varování)
+a příkaz náhrady „s/.$/&amp;/g“ provedený nad řetězcem "X\\n\\n\\n" nikdy
+neskončí výsledkem "X\\n\\n&amp;" jako v *sedu* (kde je nutno ampresand odzvláštnit),
+ale výsledkem "X\\n\\n\\n", popř. pokud přidáte ještě modifikátor „s“,
+výsledkem "X\\n&amp;&amp;"; ke stejnému chování jako v sedu ho však nedonutíte.
+
 Úspěšné použití takového jazyka vyžaduje buď hlubokou znalost,
 nebo se omezit na úzkou, konzervativně zvolenou podmnožinu jeho
-funkcionality. Tato kapitola volí druhou uvedenou cestu. Budete-li
-v Perlu programovat delší dobu, pravděpodobně se časem naučíte
-znát jeho svévolné a zákeřné pasti a využít jeho ezoterické syntaktické
-zkratky. Do té doby vám tato kapitola pomůže se jim vyhnout,
-a přesto z moci Perlu vytěžit co nejvíc.
+funkcionality. Tato kapitola volí druhou uvedenou cestu, a navíc nabízí modul
+s pomocnými funkcemi, které vám pomohou některé svévolné a zákeřné pasti Perlu překonat.
+Budete-li v Perlu programovat delší dobu, pravděpodobně se je časem naučíte
+znát a podaří se vám zvýšit svoji efektivitu využitím ezoterických syntaktických zkratek.
+Do té doby vám tato kapitola pomůže se pastem vyhýbat, a přesto z moci Perlu
+vytěžit co nejvíc.
 
 ## Definice
 
-Perl rozeznává čtyři základní datové typy:
+Perl rozeznává tři základní datové typy (existují i další):
 
-* **Skalár**, což je dynamicky typovaná proměnná, která může obsahovat řetězec, číslo, ukazatel na nějaký objekt nebo zvláštní **nehodnotu undef**, která je výchozí hodnotou skalárů (a lze ji také považovat za „ukazatel nikam“). Přístup ke skaláru se značí znakem „$“ a výchozí hodnotou skalárních objektů je speciální **nehodnota undef**. (Poznámka: v Perlu existují i skaláry, které mají současně nesouvisející číselnou a řetězcovou hodnotu, např. mají řetězcovou hodnotu "Hello" a číselnou hodnotu 13. Doufejte však, že na takové zrůdnosti při svém programování nenarazíte.)
+* **Skalár**, což je dynamicky typovaná proměnná, která může obsahovat řetězec, číslo, ukazatel na nějaký objekt nebo zvláštní **nehodnotu undef**, která je výchozí hodnotou skalárů (a lze ji také považovat za „ukazatel nikam“). Přístup ke skaláru se značí znakem „$“. (Poznámka: v Perlu mohou existovat i skaláry, které mají nesouvisející číselnou a řetězcovou hodnotu, např. mají řetězcovou hodnotu "Hello" a číselnou hodnotu 13. Doufejte však, že na takové zrůdnosti při svém programování nenarazíte.)
 * **Pole**, což je uspořádaný kontejner skalárů indexovaný celými čísly 0, 1, 2 atd. Přístup k poli se značí znakem „@“ a pole se indexuje hranatými závorkami „[]“. Výchozí hodnotou objektu typu pole je prázdné pole.
-* **Asociativní pole** (hash), což je neuspořádaný kontejner skalárů (hodnot) indexovaný jinými skaláry (klíči). Přístup k asociativnímu poli se značí znakem „%“ a tato pole se indexují složenými závorkami „{}“. Výchozí hodnotou objektu tohoto typu je prázdné asociativní pole.
-* **Funkce** je pojmenovaný či nepojmenovaný podprogram, který přebírá parametry a vrací návratovou hodnotu.
+* **Asociativní pole** (hash), což je neuspořádaný kontejner skalárů (**hodnot**) indexovaný jinými skaláry (**klíči**). Přístup k asociativnímu poli se značí znakem „%“ a tato pole se indexují složenými závorkami „{}“. Výchozí hodnotou je prázdné asociativní pole. Asociativní pole se inicializují poli či seznamy se sudým počtem prvků (lichý počtu prvků generuje varování), kde se první prvek interpretuje jako klíč, druhý jako odpovídající hodnota, třetí jako klíč a tak dále.
 
 Proměnné každého z těchto typů mají svůj vlastní jmenný prostor, takže je v pořádku mít vedle sebe např. pole „@x“ a asociativní pole „%x“.
 
-* **Ukazatel** (reference, v češtině obvykle nazývaný „odkaz“) je skalár, který odkazuje na nějaký objekt v paměti (pole, funkci, regulární výraz apod.). **Dereferencí** ukazatele můžeme získat přístup k odkazovanému objektu pro čtení i přiřazení.
-* **Seznam** je literál pole zadaný do kulatých závorek, např. „(1, 2, 3)“ nebo „($a, $b, $c)“. Má-li sudý počet prvků, lze s ním inicializovat i asociativní pole.
+* **Ukazatel** (reference, v češtině obvykle nazývaný „odkaz“) je skalár, který odkazuje na nějaký objekt v paměti (pole, funkci, regulární výraz apod.). **Dereferencí** ukazatele můžeme získat přístup k odkazovanému objektu pro čtení i přiřazení. Tím se ukazatel liší od skutečného **odkazu**, který poskytuje přístup k odkazovanému objektu bez dereference – přiřazení odkazu je přímo přiřazením odkazovanému objektu, zatímco ukazatel musíme nejprve dereferencovat.
+* **Seznam** je dočasný objekt příbuzný poli; zadává se výčtem prvků v kulatých závorkách, např. „(1, 2, 3)“ nebo „($a, $b, $c)“. Seznam a pole se liší pouze několika drobnostmi: Pole je nositelem hodnot svých prvků, takže přiřazením do prvku pole se přiřadí pouze tomuto prvku a nikam jinam; oproti tomu seznam je nositelem odkazů na svoje prvky, takže když přiřadíte „($a, $b, $c) = (1, 2, 3)“, přiřadíte tím hodnoty z druhého seznamu odkazovaným proměnným, ne prvkům seznamu. Pole má proměnný počet prvků, lze do něj prvky vkládat či je vyjímat; seznam má oproti tomu pevný počet prvků, který se určuje znovu při každém vyhodnocení výrazu, v němž se seznam nachází.
+* Důležitou vlastností seznamů je **zplošťování** — pokaždé, když v seznamu uvedete vnořený seznam, rozvine se na všechny prvky v odpovídajícím pořadí, jako byste je uvedli přímo. Totéž platí pokud v seznamu uvedete pole (rozvine se na posloupnost odkazů na své prvky) nebo asociativní pole (rozvine se na posloupnost dvojic prvků klíč, odkaz na odpovídající hodnotu, klíč, odkaz na odpovídající hodnotu a tak dále). Pokud potřebujete do seznamu vložit pole či asociativní pole jako takové, vložte ukazatel na něj.
 
 !ÚzkýRežim: vyp
 
 ## Zaklínadla
-<!--
-- Rozdělte na podsekce a naplňte „zaklínadly“.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 ### Skaláry
 <!--
 Sem nepatří zaklínadla specifická pro jednotlivé typy skalárů (čísla, řetězce, ukazatele); výjimkou jsou zaklínadla pro nehodnotu undef, ta sem patří.
 -->
 
-*# deklarovat proměnnou (lokální v bloku či souboru/viditelnou všemi moduly)*<br>
-*// V rámci deklarace proměnné nemůžete deklarovat víc než jednu proměnnou; toto omezení se však běžně obchází pomocí syntaxe pro rozklad pole do proměnných. Viz sekci „Pole“.*<br>
-**my $**{*identifikátor*} [**=** {*hodnota*}]**;**<br>
-**our $**{*identifikátor*} [**=** {*hodnota*}]**;**
+*# deklarovat skalární proměnnou viditelnou v bloku*<br>
+**my $**{*identifikátor*} [**=** {*hodnota*}]**;**
 
 *# přečíst proměnnou/**přiřadit** do proměnné*<br>
 **$**{*identifikátor*}<br>
 **$**{*identifikátor*} **=** {*hodnota*}
 
-*# neobsahuje proměnná nehodnotu undef?*<br>
+*# má skalár hodnotu? (tzn. není undef)*<br>
 **defined(**{*$skalár*}**)**
 
 *# přiřadit proměnné nehodnotu **undef***<br>
 **$**{*identifikátor*} **= undef**
 
-*# získat hodnotu proměnné prostředí (obecně/příklad)*<br>
-**$ENV\{"**{*názevproměnné*}**\}**<br>
-**$ENV{"PATH"}**
+*# zjistit typ skaláru*<br>
+**typy(**{*$skalár*}**)**
 
-*# přiřadit hodnotu proměnné prostředí*<br>
-**$ENV\{"**{*názevproměnné*}**\} =** {*hodnota*}
+*# získat ukazatel na regulární výraz (obecně/příklad)*<br>
+**qr/**{*regulární výraz*}**/**<br>
+**qr/^ab\\.c/**
 
-### Pole
+*# deklarovat skalární proměnnou viditelnou i z jiných modulů*<br>
+**our $**{*identifikátor*} [**=** {*hodnota*}]**;**
 
-*# literál pole (vrací seznam/vrací ukazatel)*<br>
-**(**[{*skalár*}[**,** {*další skalár*}]...]**)**<br>
-**[**[{*skalár*}[**,** {*další skalár*}]...]**]**
+### Pole a seznamy (literály)
+
+*# **seznam***<br>
+*// Prvky seznamu mohou být skaláry (každý utvoří jeden prvek seznamu) nebo pole a vnořené seznamy (každé pole a vnořený seznam se za běhu rozloží na všechny svoje prvky v náležitém pořadí). Tip: skalárem v seznamu může být i nehodnota undef.*<br>
+**(**[{*prvek seznamu*}[**,** {*další prvek seznamu*}]...]**)**<br>
+
+*# seznam **ze slov** (alternativy)*<br>
+*// Slovo je každá neprázdná posloupnost nebílých znaků oddělená od ostatních slov alespoň jedním bílým znakem (což může být i tabulátor či konec řádky). Uvnitř operátoru qw má zvláštní význam pouze odpovídající uzavírací závorka; odzvláštnění není možné, i zpětné lomítko se zde považuje za obyčejný znak.*<br>
+**qw(**{*slova*}**)**<br>
+**qw\{**{*slova*}**\}**
+
+*# anonymní **pole** (vrací ukazatel!)*<br>
+*// Pozor, seznam s hranatými závorkami vrací ukazatel na vytvořené pole a ten se ukládá do skaláru, ne do pole! Pro inicializaci proměnné typu pole použijte seznam s kulatými závorkami.*<br>
+**[**[{*prvek seznamu*}[**,** {*další prvek seznamu*}]...]**]**<br>
+
+*# zopakovat seznam (obecně/příklad)*<br>
+{*seznam*} **x** {*počet*}<br>
+**("a", undef) x 2** ⊨ ("a", undef, "a", undef)
+
+*# zopakovat obsah pole (obecně/příklad)*<br>
+**(**{*@pole*}**) x** {*počet*}<br>
+**(@test) x 5**
+
+*# seznam celých čísel v daném rozsahu (obecně/příklady)*<br>
+**(**{*celé-číslo*}**..**{*celé-číslo*}**)**<br><br>
+**(-1..4)** ⊨ (-1, 0, 1, 2, 3, 4)<br>
+**(2..5, -3..-1)** ⊨ (2, 3, 4, 5, -3, -2, -1)
+
+*# seznam znaků UCS v daném kódovém rozsahu*<br>
+?
+
+*# seznam prvků pole podle indexů z jiného pole*<br>
+?
+
+### Pole (operace)
 
 *# **přečíst** hodnotu prvku pole*<br>
 **$**{*identifikátor\_pole*}**[**{*index*}**]**
 
 *# **přiřadit** hodnotu prvku pole*<br>
-**$**{*identifikátor\_pole*}**[**{*index*}**] =** {*hodnota*}
+**$**{*identifikátor\_pole*}**[**{*index*}**] =** {*skalární hodnota*}
 
-*# **existuje** prvek pole?*<br>
-{*index*} **lt; scalar(**{*@pole*}**) &amp;&amp;** {*index*} **&gt;= 0**
-
-*# deklarovat pole*<br>
-**my @**{*identifikátor\_pole*} [**= (**{*prvky, pole*}**)**]**;**
+*# deklarovat proměnnou typu pole (obecně/příklady)*<br>
+**my @**{*identifikátor\_pole*} [**=** {*seznam*}]**;**<br>
+**my @pole = qw(5 6 7);**<br>
+**my @pole = ("a", "bc", "d");**
 
 *# rozložit pole do nových skalárních proměnných*<br>
+*// Přebytečné prvky pole se zahazují. Přebytečné proměnné se vyplní nehodnotou undef.*<br>
 **my ($**{*id*}[**,** {*další\_id*}]...**) =** {*@pole*}**;**
 
 *# zjistit **počet prvků** pole*<br>
-**scalar(**{*@pole*}**)**
+**alength(**{*@pole*}**)**
 
 *# **přidat** prvek na začátek/konec pole*<br>
 **unshift(**{*@pole*}**,** {*skalár*}**)**<br>
@@ -142,9 +177,17 @@ Sem nepatří zaklínadla specifická pro jednotlivé typy skalárů (čísla, �
 *# **zkopírovat** celé pole*<br>
 {*@cílové\_pole*} **=** {*@zdrojové\_pole*}**;**
 
-*# vytvořit pole s posloupností celých čísel/znaků*<br>
-**(**{*celé-číslo*}**..**{*celé-číslo*}**)**<br>
-**(**{*znak*}**..**{*znak*}**)**
+*# **existuje** prvek pole?*<br>
+{*index*} **&lt; alength(**{*@pole*}**) &amp;&amp;** {*index*} **&gt;= 0**
+
+*# vybrat pouze prvky vyhovující podmínce (obecně/příklad použití)*<br>
+*// Zvláštní proměnná $ARG je uvnitř podmínky operátoru „grep“ odkazem na právě testovaný prvek pole. Je tedy možné přiřazením do ní prvek pole změnit, ale nedoporučuje se to.*<br>
+**(grep \{**{*podmínka*}**\} (**{*prvky seznamu*}**))**<br>
+**my @novepole = ((grep {$ARG &lt; 5} (@starepole)), (grep {$ARG &gt; 5} (@starepole)));**
+
+*# transformovat seznam po členech*<br>
+?
+
 
 <!--
 splice()?
@@ -157,24 +200,24 @@ splice()?
 **\{**[{*klíč*}**,** {*hodnota*}[**,** {*další klíč*}**,** {*další hodnota*}]...]**\}**
 
 *# **smazat** prvek/všechny prvky*<br>
-**delete** {*%pole*}**\{**{*klíč*}**\};**<br>
+**delete $**{*id\_pole*}**\{**{*klíč*}**\};**<br>
 {*%pole*} **= ();**
 <!--
 Problém: co když pracuji s referencí?
 -->
 
 *# **obsahuje** prvek?*<br>
-**exists(**{*%pole*}**\{**{*klíč*}**\})**
+**exists($**{*id\_pole*}**\{**{*klíč*}**\})**
 
 *# **přidat** či přepsat prvek*<br>
-**$**{*idpole*}**{"**{*klíč*}**"} =** {*hodnota*}
+**$**{*id\_pole*}**{"**{*klíč*}**"} =** {*hodnota*}
 
 *# získat pole klíčů/hodnot*<br>
 **keys(**{*%pole*}**)**<br>
 **values(**{*%pole*}**)**
 
 *# získat počet dvojic v asociativním poli*<br>
-**scalar(keys(**{*%pole*}**))**
+**alength(keys(**{*%pole*}**))**
 
 
 ### Funkce
@@ -379,6 +422,15 @@ TODO: Otestovat!
 {*blok příkazů „use“*}<br>
 {*definice proměnných a funkcí*}<br>
 **1;**
+
+### Ostatní
+
+*# získat hodnotu proměnné prostředí (obecně/příklad)*<br>
+**$ENV\{"**{*názevproměnné*}**\}**<br>
+**$ENV{"PATH"}**
+
+*# přiřadit hodnotu proměnné prostředí*<br>
+**$ENV\{"**{*názevproměnné*}**\} =** {*hodnota*}
 
 
 ## Zaklínadla (práce se soubory)

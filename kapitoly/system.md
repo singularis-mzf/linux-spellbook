@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, kapitola Systém
-Copyright (c) 2019 Singularis <singularis@volny.cz>
+Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -29,14 +29,14 @@ virtuálními konzolemi a X.
 
 # Systém
 
-!Štítky: {tematický okruh}{systém}{démoni}{klávesnice}{odkládací prostor}
+!Štítky: {tematický okruh}{systém}{démoni}{klávesnice}
 !FixaceIkon: 1754
 !ÚzkýRežim: zap
 
 ## Úvod
 
 Tato kapitola se zabývá vybranými aspekty běhu operačního systému a jeho ovládání,
-zejména ovládáním démonů, systémovými logy, odkládacími oddíly a restartem či vypnutím počítače.
+zejména ovládáním démonů, systémovými logy, restartem či vypnutím počítače.
 Také se zabývá rozložením klávesnice.
 
 Když zavaděč GRUB spustí jádro systému, to pak vytvoří dva první procesy: systemd (PID 1)
@@ -46,13 +46,15 @@ se do systému (popř. automaticky přihlásí výchozího uživatele). Když se
 vznikne takzvané „sezení“, které zanikne, až se uživatel odhlásí
 (včetně případů, kdy je odhlášení součástí restartu či vypnutí počítače).
 
-Tato kapitola se nezabývá samotným zaváděním operačního systému a diskovými oddíly (kromě odkládacích).
+Tato kapitola se nezabývá samotným zaváděním operačního systému a diskovými oddíly.
 Rovněž se nezabývá zjišťováním informací o hardwaru počítače (s výjimkou procesoru).
 
 Tato verze kapitoly nepokrývá nastavení automatického přihlašování do X,
 nastavování cílů, nastavení synchronizace systémového času s NTP servery
 ani vytváření vlastních služeb a démonů.
 Rovněž nepokrývá ovládání kontejnerů příkazem „machinectl“.
+
+Poznámka: práce s odkládacím prostorem byla přesunuta do kapitoly *Diskové oddíly*.
 
 <!--
 Poznámka: jádro si ponechává možnost spouštět svoje vlastní, nezávislé procesy prostřednictvím
@@ -233,38 +235,6 @@ Podrobnější informace: příkaz „uptimes“ z balíčku „uptimed“.
 *# vyprázdnit log krále démonů/log jádra*<br>
 ?<br>
 **sudo dmesg \-\-clear**
-
-### Odkládací oddíly a soubory
-
-*# **připojit** odkládací oddíl/soubor (platí jen do restartu)*<br>
-**sudo swapon** {*/dev/oddíl*}...<br>
-**sudo swapon** {*/cesta/název-souboru*}...
-
-*# připojit odkládací oddíl identifikovaný jmenovkou/UUID*<br>
-**sudo swapon LABEL=**{*jmenovka*}<br>
-**sudo swapon UUID=**{*UUID*}
-
-*# **odpojit** odkládací oddíl/soubor/všechny odkládací oddíly a soubory*<br>
-**sudo swapoff** {*/dev/oddíl*}...<br>
-**sudo swapoff** {*/cesta/soubor*}...<br>
-**sudo swapoff -a**[**v**]
-
-*# **vypsat** aktivní odkládací oddíly a soubory*<br>
-*// Bez sudo vynechá jmenovky a UUID.*<br>
-[**sudo**] **swapon \-\-show**[**=NAME,USED,SIZE,PRIO,LABEL,UUID**] <nic>[**\-\-noheadings**] <nic>[**\-\-bytes**]
-
-*# **vytvořit** odkládací soubor*<br>
-*// Velikost můžete zadat také v megabajtech (s příponou „M“) či gigabajtech (s příponou „G“).*<br>
-[**sudo**] **fallocate -l** {*velikost-v-bajtech*} {*název-souboru*}<br>
-[**sudo**] **chmod 600** {*název-souboru*}<br>
-[**sudo**] **mkswap** {*název-souboru*}<br>
-**sudo chown root:root** {*název-souboru*}
-
-*# **smazat** odpojený odkládací soubor*<br>
-**sudo rm** {*název-souboru*}
-
-*# **naformátovat** odkládací oddíl*<br>
-**sudo mkswap** [**-L** {*jmenovka*}] <nic>[**-U** {*požadované-UUID*}] {*/dev/oddíl*}
 
 ### Sezení
 

@@ -62,8 +62,9 @@ varianta pro rozšířený regulární výraz.
 *// Některé znaky musejí být v regulárních výrazech pro zbavení svého speciálního významu odzvláštněny zpětným lomítkem.*<br>
 {*znak*}
 
-*# **libovolný znak***<br>
-**.**
+*# **libovolný znak** (rozšířený i základní/Perl)*<br>
+**.**<br>
+**(?:.\|\\n)**
 
 *# kterýkoliv **z uvedených znaků***<br>
 *// Uvnitř těchto hranatých závorek se speciální znaky neodzvláštňují zpětným lomítkem, ale uvedením na určitou pozici.*<br>
@@ -152,18 +153,22 @@ varianta pro rozšířený regulární výraz.
 
 ### Kotvy a hranice (pozice)
 
-*# začátek/konec testovaného řetězce (rozšířený i základní, mimo víceřádkový režim)*<br>
+*# začátek testovaného řetězce (rozšířený i základní/víceřádkový režim/Perl)*<br>
 **^**<br>
-**$**
+**\\\`**<br>
+**\\A**
 
+*# konec testovaného řetězce (rozšířený i základní/víceřádkový režim/Perl)*<br>
+**$**<br>
+**\\'**<br>
+**\\z**
+
+<!--
 *# začátek/konec testovaného řetězce (ve víceřádkovém režimu)*<br>
 *// Podpora těchto kotev v programech je omezená, ale gawk, sed i perl je podporují.*<br>
 **\\\`**<br>
 **\\'**
-
-*# začátek/konec řádku (rozšířený i základní, ve víceřádkovém režimu)*<br>
-**^**<br>
-**$**
+-->
 
 *# začátek slova (rozšířený a základní/Perl)*<br>
 **\\&lt;**<br>
@@ -177,6 +182,10 @@ varianta pro rozšířený regulární výraz.
 **(\\&lt;\|\\&gt;)**<br>
 **\\(\\&lt;\\\|\\&gt;\\)**<br>
 **\\b**
+
+*# začátek/konec řádku*<br>
+?<br>
+?
 
 ### Seskupení
 
