@@ -25,7 +25,6 @@ https://creativecommons.org/licenses/by-sa/4.0/
 * „X (správce oken)“ (práce s okny, se schránkou, oznámení a další)
 * „Zpracování obrázků“ (ImageMagick, konverze RAW z fotoaparátů, zatím asi bez animovaných gifů)
 * „Zpracování binárních souborů“ (md5sum, uuencode, base64, analýzy, konverze a další)
-* „Diskové oddíly“ (fstab, mount, fsck, mkfs, LVM, vypalování DVD)
 * „Firewall“ (asi hlavně iptables)
 * „GRUB“ (konfigurace, dualboot, nastavení grafického pozadí)
 * „Vim“ (základní a mírně pokročilé ovládání)
@@ -35,6 +34,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 * „LaTeX“ (základní struktura dokumentu, standardní značky, překlad do PDF, důležité balíčky)
 * „SQL“ (SQLite, MySQL, MariaDB; všechno možné)
 * „ASCII art“ (banner, toilet a další)
+* „DOSBox“ (ovládání, konfigurace, spouštění)
 * „Wine“ (parametry, konfigurace, zkušenosti, wine-prefixy apod.)
 * „Správa balíčků 2“ (apt-src, apt-mirror, aptly)
 * „Matematické výpočty“ (bc, dc, expr apod.)
@@ -50,14 +50,6 @@ Pokud máte nějaké osobní preference, které z kapitol byste chtěl/a dostat
 nebo návrh na zpracování jiného tématu, napište mi váš názor e-mailem
 nebo komentářem na GitHubu. Váš zájem mě určitě potěší a povzbudí.
 
-## Chystaný vývoj formátování a mechanismu překladu
-
-* Vylepšovat design a přehlednost HTML varianty.
-* Vylepšovat design a přehlednost PDF variant.
-<!--
-* Podpora poznámek pod čarou i mimo zaklínadla.
--->
-
 ## Možný přechod na jazyk Perl
 
 Přechod projektu z AWK na Perl v nejbližší budoucnosti *nenastane*.
@@ -65,3 +57,6 @@ Mechanismus překladu je značně založený na příkazech „switch“,
 které Perl sám o sobě dobře neumí a náhražky v něm vypadají ošklivě
 nebo dobře nefungují. Proto bude další vývoj mechanismu překladu probíhat
 i nadále v AWK.
+
+Plánuji však převod spouštěče „lkk“ do Perlu, tak aby GNU awk nebylo
+vyžadováno jako závislost balíčku „lkk“.
