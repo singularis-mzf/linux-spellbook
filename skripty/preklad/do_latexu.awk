@@ -388,7 +388,7 @@ function ZalomitRadekZaklinadla(text,   c, i, slzav, hrzav, lastzlom) {
             case ";":
             case "=":
             case "|":
-                if (!(substr(text, i >= 6 ? i - 5 : 1, 10) ~ / /)) {
+                if (substr(text, i >= 6 ? i - 5 : 1, 10) !~ / /) {
                     if ((slzav == 0 || (slzav == 1 && substr(text, i - 1, 1) == "{" && substr(text, i + 1, 1) == "}")) && hrzav == 0 && i - lastzlom >= 5) {
                         zlomy[length(zlomy) + 1] = i;
                         lastzlom = i;

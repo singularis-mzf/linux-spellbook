@@ -165,24 +165,17 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 <neodsadit>Všechen software potřebný k sestavení projektu je svobodný.
 Pokud některá kapitola odkazuje na nesvobodný software, vždy na to výslovně upozorní.
 
-## Aktuální poznámka k verzi „vanilková příchuť 1.5 Bohuslav Barvič“
+## Aktuální poznámka k verzi „vanilková příchuť 1.6 Celestýna Cihlářová“
 
-Ve verzi 1.5, jménem Bohuslav Barvič, přibyly nové kapitoly *Hledání souborů*
-(zabývající se zejména příkazem „find“) a *Soubory a adresáře*
-(zabývající se především přístupovými právy a ACL).
+Verze 1.6, jménem Celestýna Cihlářová, přináší novou kapitolu *Diskové oddíly*.
+Čísla zaklínadel jsou nyní přesunuta na pravou stranu a jsou zvýrazněny ikony zaklínadel.
+Design PDF variant jsem vylepšil/a novým (přehlednějším) formátem nadpisů podsekcí.
 
-Vrátily se PDF varianty bez ořezových značek, vhodné pro domácí tisk; nyní jsou označení „pdf-a4-bez“
-a „pdf-b5-bez“. Přibyla také varianta „pdf-b5-na-a4“, která je sice s ořezovými značkami, ale na formát
-papíru A4.
+Významnou novinkou v HTML variantě je experimentální bezjavascriptové menu.
+Do příští verze se plánuji rozhodnout, zda ho vylepším tak, aby bylo použitelné,
+nebo od něj ustoupím.
 
-V HTML variantě byly zprovozněny permanentní odkazy na jednotlivá zaklínadla (vázané na jejich text).
-Ikony zaklínadel, sloužící jako odkazy, jsou nyní větší a barevné.
-
-Další výraznou novinkou je neologismus „odzvláštňování“, kterým jsem nahradil/a „escapování“.
-Snad se osvědčí.
-
-Vydání verze 1.6, jménem Celestýna Cihlářová, očekávám ve druhé polovině dubna 2020.
-Počítám v ní s experimentálním nasazením bezjavascriptového rozbalovacího menu v HTML variantě.
+Vydání verze 1.7, jménem Darja Drážní, očekávám v průběhu května 2020.
 
 &nbsp;
 

@@ -83,3 +83,15 @@ pdf-a4.*
 datum-cas-kalendar
 }\begin{parametryprikazu}\parametrprikazu{{\dejavusansfamily{}○} {-}d \textquotesingle{}\dopln{datum a čas}\textquotesingle{} {\dejavusansfamily{}○} {-}d \textquotesingle{}\textquotedbl{}\dopln{původní čas. zóna}\textquotedbl{} \dopln{datum a čas}\textquotesingle{} {\dejavusansfamily{}○} {-}f \dopln{soubor} {\dejavusansfamily{}○} {-}f {-}}{Použije zadaný čas (parametr {-}d), popř. načte čas z~řádků daného souboru či ze standardního vstupu (parametr {-}f). Výchozí chování: použije aktuální čas.}%\n
 }\begin{parametryprikazu}\parametrprikazu{{\dejavusansfamily{}○} {-}d \textquotesingle{}\dopln{datum a čas}\textquotesingle{} {\dejavusansfamily{}○} {-}d \textquotesingle{}\textquotedbl{}\dopln{původní čas. zóna}\textquotedbl{} \dopln{datum a čas}\textquotesingle{} {\dejavusansfamily{}○} {-}f \dopln{soubor} {\dejavusansfamily{}○} {-}f {-}}{Použije zadaný čas (parametr {-}d),\\popř. načte čas z~řádků daného souboru či ze standardního vstupu (parametr {-}f). Výchozí chování: použije aktuální čas.}%\n
+
+150
+pdf-a4.*
+diskove-oddily
+\item{}UUID souborového systému ve tvaru \quotedblbase{}UUID=61bbd562{-}0694{-}4561{-}a8e2{-}4ccfd004a660\textquotedblleft{}.
+\item{}UUID souborového systému ve tvaru\\\quotedblbase{}UUID=61bbd562{-}0694{-}4561{-}a8e2{-}4ccfd004a660\textquotedblleft{}.
+
+160
+pdf-a4.*
+diskove-oddily
+\radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{UUID=\textquotedbl{}61bbd562{-}0694{-}4561{-}a8e2{-}4ccfd004a660\textquotedbl{}\textcolor{seda}{\guillemotright}{~~~~~~}/\textcolor{seda}{\guillemotright}{~~~~~~}ext4\textcolor{seda}{\guillemotright}{~~~~~~}errors={\moznyzlom}remount{-}ro,{\moznyzlom}discard,{\moznyzlom}nouser\_xattr\textcolor{seda}{\guillemotright}{~~}0\textcolor{seda}{\guillemotright}{~~~~~~}1}%
+\radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{UUID=\textquotedbl{}61bbd562{-}0694{-}4561{-}a8e2{-}4ccfd004a660\textquotedbl{}\textcolor{seda}{\guillemotright}{~~~~~~}/\textcolor{seda}{\guillemotright}{~~~~~~}ext4{\moznyzlom}\textcolor{seda}{\guillemotright}{~~~~~~}errors={\moznyzlom}remount{-}ro,{\moznyzlom}discard,{\moznyzlom}nouser\_xattr\textcolor{seda}{\guillemotright}{~~}0\textcolor{seda}{\guillemotright}{~~~~~~}1}%

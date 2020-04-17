@@ -15,7 +15,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 „Linux: Kniha kouzel“ je open source sbírka velmi krátkých řešených příkladů pro příkazovou řádku/příkazový řádek systému Linux, především distribuce Ubuntu. V současnosti je dostupná ve formátu HTML pro zobrazení na počítači a ve formátu PDF pro tisk na papír.
 
-Verze *vanilková příchuť 1.5 Bohuslav Barvič*, je cílena na *Ubuntu 18.04 Bionic Beaver* a jeho deriváty.
+Verze *vanilková příchuť 1.6 Celestýna Cihlářová*, je cílena na *Ubuntu 18.04 Bionic Beaver* a jeho deriváty.
 
 Příručka podléhá licenci [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 Podrobné údaje o autorství zdrojových souborů jsou uvedeny v komentářích v jejich záhlaví;
@@ -94,9 +94,10 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [awk](kapitoly/awk.md) | AWK | 100% | vydána (od verze 1.2) |
 | [barvy-a-titulek](kapitoly/barvy-a-titulek.md) | Barvy, titulek a výzva terminálu | 100% | vydána (od verze 1.0) |
 | [datum-cas-kalendar](kapitoly/datum-cas-kalendar.md) | Datum, čas a kalendář | 100% | vydána (od verze 1.1) |
+| [diskove-oddily](kapitoly/diskove-oddily.md) | Diskové oddíly | 100% | vydána (od verze 1.6) |
 | [docker](kapitoly/docker.md) | Docker | 100% | vydána (od verze 1.0) |
 | [git](kapitoly/git.md) | Git | 100% | vydána (od verze 1.0) |
-| [hledani-souboru](kapitoly/hledani-souboru.md) | Hledání souborů | 100% | | vydána (od verze 1.5) |
+| [hledani-souboru](kapitoly/hledani-souboru.md) | Hledání souborů | 100% | vydána (od verze 1.5) |
 | [make](kapitoly/make.md) | GNU make | 100% | vydána (od verze 1.0) |
 | [markdown](kapitoly/markdown.md) | Markdown | 100% | vydána (od verze 1.0) |
 | [planovani-uloh](kapitoly/planovani-uloh.md) | Plánování úloh | 100% | vydána (od verze 1.0) |
@@ -109,7 +110,6 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [system](kapitoly/system.md) | Systém | 100% | vydána (od verze 1.2) |
 | [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) | Zpracování textových souborů | 100% | vydána (od verze 1.2) |
 | [zpracovani-videa-a-zvuku](kapitoly/zpracovani-videa-a-zvuku.md) | Zpracování videa a zvuku | 100% | vydána (od verze 1.0) |
-| [diskove-oddily](kapitoly/diskove-oddily.md) | Diskové oddíly | 100% | připravena k vydání|
 | [sed](kapitoly/sed.md) | Sed | 80% | dítě |
 | [sprava-uzivatelu](kapitoly/sprava-uzivatelu.md) | Správa uživatelů | 80% | dítě |
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
@@ -133,6 +133,7 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | prehravani-videa | Přehrávání videa, zvuku a obrázků | - | přál/a bych si |
 | sifrovani | Šifrování a kryptografie | - | přál/a bych si |
 | firewall | Firewall | - | přál/a bych si |
+| dosbox | DosBox | - | přál/a bych si |
 | vim | Vim | - | přál/a bych si |
 | sql | SQL | - | přál/a bych si |
 | ascii-art | ASCII art | - | přál/a bych si |

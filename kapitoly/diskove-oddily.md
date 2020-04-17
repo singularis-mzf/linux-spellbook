@@ -31,7 +31,7 @@ uhelper=udisks2
 
 # Diskové oddíly
 
-!Štítky: {tematický okruh}{systém}{LVM}{ramdisk}
+!Štítky: {tematický okruh}{systém}{LVM}{ramdisk}{odkládací prostor}
 !FixaceIkon: 1754
 !ÚzkýRežim: zap
 
@@ -228,8 +228,8 @@ asi PHY-SEC/LOG-SEC u lsblk
 *# formátovat na **ext4** (obecně/příklad)*<br>
 *// Maximální velikost jmenovky je 16 bajtů.*<br>
 *// Parametr -U přijímá také speciální hodnoty „random“ (vygenerovat náhodné UUID), „time“ (vygenerovat UUID závislé na čase), „clear“ (zrušit UUID).*<br>
-**sudo mke2fs -f ext4** [**-c**[**c**]] <nic>**-v** <nic>[**-E root\_owner=**{*UID*}**:**{*GID*}] <nic>[**-L** {*jmenovka*}] <nic>[**-U** {*UUID*}] <nic>[**-d** {*cesta*}] <nic>[**-F**] {*/dev/zařízení-nebo-oddíl*}<br>
-**sudo mke2fs -f ext4 -c -v -U 977bda6f-ce11-4549-9325-c48c360069ef /dev/sda3**
+**sudo mke2fs -t ext4** [**-c**[**c**]] <nic>**-v** <nic>[**-E root\_owner=**{*UID*}**:**{*GID*}] <nic>[**-L** {*jmenovka*}] <nic>[**-U** {*UUID*}] <nic>[**-d** {*cesta*}] <nic>[**-F**] {*/dev/zařízení-nebo-oddíl*}<br>
+**sudo mke2fs -t ext4 -c -v -U 977bda6f-ce11-4549-9325-c48c360069ef /dev/sda3**
 
 *# formátovat na **FAT32** (obecně/příklad)*<br>
 *// Poznámka: jmenovka systémů FAT může být maximálně 11 znaků dlouhá!*<br>
