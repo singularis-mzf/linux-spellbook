@@ -1,5 +1,5 @@
 # Linux Kniha kouzel, Makefile
-# Copyright (c) 2019 Singularis <singularis@volny.cz>
+# Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 # podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -33,7 +33,7 @@ CONVERT := convert
 VSECHNY_DODATKY := predmluva koncepce-projektu plan-vyvoje test zakladni-znalosti licence
 
 # _ A, B, C, D, E, F, G
-VSECHNY_KAPITOLY := _ostatni _ukazka apache awk barvy-a-titulek bash css datum-cas-kalendar diskove-oddily docker firefox git grub
+VSECHNY_KAPITOLY := _ostatni _ukazka apache awk barvy-a-titulek bash css datum-cas-kalendar diskove-oddily docker dosbox firefox git grub
 # H, I, J, K, L, M
 VSECHNY_KAPITOLY += hledani-souboru konverze-formatu latex lkk make markdown moderni-veci
 # N, O, P, Q, R, S

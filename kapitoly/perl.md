@@ -140,58 +140,10 @@ Sem nepatří zaklínadla specifická pro jednotlivé typy skalárů (čísla, �
 
 *# seznam prvků pole podle indexů z jiného pole*<br>
 ?
-
-### Pole (operace)
-
-*# **přečíst** hodnotu prvku pole*<br>
-**$**{*identifikátor\_pole*}**[**{*index*}**]**
-
-*# **přiřadit** hodnotu prvku pole*<br>
-**$**{*identifikátor\_pole*}**[**{*index*}**] =** {*skalární hodnota*}
-
-*# deklarovat proměnnou typu pole (obecně/příklady)*<br>
-**my @**{*identifikátor\_pole*} [**=** {*seznam*}]**;**<br>
-**my @pole = qw(5 6 7);**<br>
-**my @pole = ("a", "bc", "d");**
-
-*# rozložit pole do nových skalárních proměnných*<br>
-*// Přebytečné prvky pole se zahazují. Přebytečné proměnné se vyplní nehodnotou undef.*<br>
-**my ($**{*id*}[**,** {*další\_id*}]...**) =** {*@pole*}**;**
-
-*# zjistit **počet prvků** pole*<br>
-**alength(**{*@pole*}**)**
-
-*# **přidat** prvek na začátek/konec pole*<br>
-**unshift(**{*@pole*}**,** {*skalár*}**)**<br>
-**push(**{*@pole*}**,** {*skalár*}**)**
-
-*# **vyjmout** první/poslední prvek pole*<br>
-*// Obě uvedené funkce vracejí vyjmutý prvek.*<br>
-**shift(**{*@pole*}**)**<br>
-**pop(**{*@pole*}**)**
-
-*# **smazat** všechny prvky/úsek*<br>
-{*@pole*} **= ();**<br>
-**splice(**{*@pole*}**,** {*první-smaz-index*}**,** {*počet-ke-smazání*}**);**
-
-*# **zkopírovat** celé pole*<br>
-{*@cílové\_pole*} **=** {*@zdrojové\_pole*}**;**
-
-*# **existuje** prvek pole?*<br>
-{*index*} **&lt; alength(**{*@pole*}**) &amp;&amp;** {*index*} **&gt;= 0**
-
-*# vybrat pouze prvky vyhovující podmínce (obecně/příklad použití)*<br>
-*// Zvláštní proměnná $ARG je uvnitř podmínky operátoru „grep“ odkazem na právě testovaný prvek pole. Je tedy možné přiřazením do ní prvek pole změnit, ale nedoporučuje se to.*<br>
-**(grep \{**{*podmínka*}**\} (**{*prvky seznamu*}**))**<br>
-**my @novepole = ((grep {$ARG &lt; 5} (@starepole)), (grep {$ARG &gt; 5} (@starepole)));**
-
-*# transformovat seznam po členech*<br>
-?
-
-
 <!--
-splice()?
+### Pole (operace)
 -->
+
 
 ### Asociativní pole
 
@@ -225,6 +177,12 @@ Problém: co když pracuji s referencí?
 *# zavolat uživatelskou funkci*<br>
 {*identifikátor\_funkce*}**(**{*parametry,oddělené,čárkami*}**)**
 
+*# zavolat uživatelskou funkci přijímající blok příkazů*<br>
+*// Ačkoliv Perl dovoluje zapsat volání s blokem příkazů na jednu řádku, pro přehlednost této už tak dost odpudivé syntaxe vždy oddělujte příkazy bloku od volání funkce a používejte náležité odsazení, i když bude příkaz jen jeden a velmi jednoduchý, jako třeba „$ARG &gt;= 0“. Návratovou hodnotou předaného bloku bude hodnota posledního provedeného příkazu.*<br>
+**(**{*identifikátor\_funkce*} **\{**<br>
+<odsadit1>{*příkaz bloku;*}...<br>
+**\}** [{*parametry, funkce*}]...**)**
+
 *# definovat uživatelskou funkci*<br>
 **sub** {*identifikátor\_funkce*} [{*prototyp*}]<br>
 **\{**<br>
@@ -237,6 +195,15 @@ Problém: co když pracuji s referencí?
 *# přiřadit do proměnné ukazatel na anonymní funkci*<br>
 *// Analogicky můžete ukazatel na anonymní funkci předat jako parametr jiné funkci.*<br>
 {*$proměnná*} **= sub \{**[{*příkazy*}]...**\};**
+
+*# definovat uživatelskou funkci přijímající blok příkazů*<br>
+*// Předaný blok zavoláte jako funkci příkazem „$název-&gt;()“, kde název je zvolený identifikátor proměnné.*<br>
+^**sub** {*identifikátor\_funkce*} **(&amp;@);**<br>
+**sub** {*identifikátor\_funkce*} **(&amp;@)**<br>
+**\{**<br>
+<odsadit1>**my $**{*název*} **= shift(@ARG);**<br>
+<odsadit1>[{*příkazy*}]...<br>
+**\}**
 
 ### Komentáře
 
@@ -431,6 +398,141 @@ TODO: Otestovat!
 
 *# přiřadit hodnotu proměnné prostředí*<br>
 **$ENV\{"**{*názevproměnné*}**\} =** {*hodnota*}
+
+## Zaklínadla (pole)
+
+<!--
+https://metacpan.org/pod/List::MoreUtils
+-->
+
+### Základní operace
+
+*# **přečíst** hodnotu prvku pole*<br>
+**$**{*identifikátor\_pole*}**[**{*index*}**]**
+
+*# **přiřadit** hodnotu prvku pole*<br>
+**$**{*identifikátor\_pole*}**[**{*index*}**] =** {*skalární hodnota*}
+
+*# deklarovat proměnnou typu pole (obecně/příklady)*<br>
+**my @**{*identifikátor\_pole*} [**=** {*seznam*}]**;**<br>
+**my @pole = qw(5 6 7);**<br>
+**my @pole = ("a", "bc", "d");**
+
+*# rozložit pole do nových skalárních proměnných*<br>
+*// Přebytečné prvky pole se zahazují. Přebytečné proměnné se vyplní nehodnotou undef.*<br>
+**my ($**{*id*}[**,** {*další\_id*}]...**) =** {*@pole*}**;**
+
+*# přiřadit celé pole (alternativy)*<br>
+**@**{*cílové\_pole*} **= @**{*zdrojové\_pole*}<br>
+**@**{*cílové\_pole*} **=** {*(seznam)*}
+
+### Přístup k prvkům
+
+*# podle indexu*<br>
+**$**{*identifikátor\_pole*}**[**{*index*}**]**
+
+*# první/poslední prvek*<br>
+**$**{*identifikátor\_pole*}**[0]**<br>
+**$**{*identifikátor\_pole*}**[-1]**
+
+### Analýza pole (logické testy)
+
+*# **existuje** prvek pole?*<br>
+{*index*} **&lt; alength(**{*@pole*}**) &amp;&amp;** {*index*} **&gt;= 0**
+
+*# **existuje** prvek splňující podmínku?*<br>
+^**use List\:\:MoreUtils;**<br>
+**(any \{**<br>
+<odsadit1>{*podmínka;*}<br>
+**\}** {*@pole*}**)**
+
+*# platí podmínka pro **všechny** prvky?*<br>
+^**use List\:\:MoreUtils;**<br>
+**(all \{**<br>
+<odsadit1>{*podmínka;*}<br>
+**\}** {*@pole*}**)**
+
+*# platí podmínka právě pro **jeden** z prvků?*<br>
+^**use List\:\:MoreUtils;**<br>
+**(one \{**<br>
+<odsadit1>{*podmínka;*}<br>
+**\}** {*@pole*}**)**
+
+
+### Velikost pole
+
+*# zjistit **počet prvků** pole*<br>
+**alength(**{*@pole*}**)**
+
+*# je pole **prázdné**?*<br>
+?
+
+### Průchod a zpracování pole
+
+*# transformovat po prvcích*<br>
+*// Operátor „map“ funguje přesně jako cyklus „foreach (@pole)“ (tzn. v uvedeném bloku je $ARG odkaz na právě zpracovávaný prvek pole), až na to, že jeho návratovou hodnotou je seznam hodnot posledního provedeného příkazu bloku v každém cyklu. Protože je $ARG odkaz, můžete ho využít k modifikaci prvků původního pole.*<br>
+**(map \{**<br>
+<odsadit1>{*příkaz*}...<br>
+**\}** {*@pole*}**)**
+
+*# vybrat prvky*<br>
+*// Výsledkem je seznam prvků, pro které se poslední příkaz v bloku vyhodnotí jako logická pravda.*<br>
+**(grep \{**<br>
+<odsadit1>{*příkaz*}...<br>
+**\}** {*@pole*}**)**
+
+*# zpracovat po dvojicích*<br>
+?
+
+*# zpracovat po N-ticích*<br>
+^**use List\:\:MoreUtils;**<br>
+**foreach (natatime(**{*N*}**,** {*prvky, seznamu*}...**)) \{**<br>
+<odsadit1>**my @**{*pole*} **= $ARG-&gt;();**<br>
+<odsadit1>{*příkaz;*}...<br>
+**\}**
+
+### Filtrování
+
+*# vynechat prvky, které se již vyskytly*<br>
+*// Funkce provádí řetězcové porovnání prvků, ne číselné. Zachovává pořadí prvků.*<br>
+^**use List\:\:MoreUtils;**<br>
+**distinct(**{*prvky*}...**)**
+
+*# vybrat prvky, které se vyskytují právě jednou*<br>
+^**use List\:\:MoreUtils;**<br>
+**singleton(**{*prvky*}...**)**
+
+
+### Vyhledávání
+
+<!--
+*# najít první prvek vyhovující podmínce (hodnotu/index)*<br>
+^**use List\:\:MoreUtils;**<br>
+-->
+
+### Transformace
+
+
+### Vkládání/vyjímání prvků
+
+*# **vložit** prvek na začátek pole/konec pole/určitý index*<br>
+**unshift(**{*@pole*}**,** {*skalár*}**);**<br>
+**push(**{*@pole*}**,** {*skalár*}**);**<br>
+**splice(**{*@pole*}**,** {*index*}**, 0,** {*skalár*}**);**
+
+*# **vyjmout** první/poslední/určitý prvek pole*<br>
+*// Obě uvedené funkce vracejí vyjmutý prvek.*<br>
+**shift(**{*@pole*}**)**<br>
+**pop(**{*@pole*}**)**<br>
+**splice(**{*@pole*}**,** {*index*}**, 1);**
+
+*# **smazat** všechny prvky/úsek*<br>
+{*@pole*} **= ();**<br>
+**splice(**{*@pole*}**,** {*první-smaz-index*}**,** {*počet-ke-smazání*}**);**
+
+
+
+
 
 
 ## Zaklínadla (práce se soubory)

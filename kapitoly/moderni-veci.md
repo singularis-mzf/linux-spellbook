@@ -129,6 +129,37 @@ https://cs.lipsum.com/ (stránka česky, text v pseudolatině)
 ### OCR (rozpoznání textu)
 
 
+### Předčítání (syntéza hlasu)
+
+<!--
+[**-w** {*cíl.wav*}]
+**espeak -v czech -f** {*soubor*}
+**espeak -v czech \-\-stdin**
+
+russian
+french
+spanish
+german
+-->
+
+*# přečíst text česky/slovensky/anglicky/americkou angličtinou/v esperantu*<br>
+**espeak -v czech** [{*další parametry*}] <nic>[**\-\-**] **"**{*Text.*}**"**<br>
+**espeak -v slovak** [{*další parametry*}] <nic>[**\-\-**] **"**{*Text.*}**"**<br>
+**espeak** [{*další parametry*}] <nic>[**\-\-**] **"**{*Text.*}**"**<br>
+**espeak -v english-us** [{*další parametry*}] <nic>[**\-\-**] **"**{*Text.*}**"**<br>
+**espeak -v esperanto** [{*další parametry*}] <nic>[**\-\-**] **"**{*Text.*}**"**<br>
+
+*# text číst ze souboru/ze standardního vstupu*<br>
+**espeak** {*parametry*} **-f** {*soubor*}<br>
+**espeak** {*parametry*} **\-\-stdin**
+
+*# vypsat dostupné hlasy (pro člověka)*<br>
+**espeak \-\-voices**
+
+<!--
+sudo apt-get install espeak
+-->
+
 
 ### Metadata MP3
 

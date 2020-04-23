@@ -1,6 +1,6 @@
 <!--
 
-Linux Kniha kouzel, kapitola Proměnné prostředí a interpretu
+Linux Kniha kouzel, kapitola DOSBox
 Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -17,10 +17,10 @@ Poznámky:
 ⊨
 -->
 
-# Proměnné prostředí a interpretu
+# DOSBox
 
-!Štítky: {tematický okruh}{bash}{systém}
-
+!Štítky: {program}{emulace}{hry}
+!FixaceIkon: 1754
 !ÚzkýRežim: zap
 
 ## Úvod
@@ -37,26 +37,6 @@ Poznámky:
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-<!--
-
-Důležité proměnné prostředí:
-
-* HOME – Uvádí cestu do domovského adresáře přihlášeného uživatele. Řada dalších cest se od ní odvozuje. \~ se v bashi rozvíjí na hodnotu $HOME.
-* PATH – Uvádí seznam adresářů prohledávaných při vyhledávání spustitelných souborů. Cesty v seznamu jsou odděleny dvojtečkou a prohledávají se od první k poslední.
-* DISPLAY – Uvádí označení displeje, na kterém budou grafické programy otevírat svoje okna. Na většině systémů je to „:0.0“.
-* TERM – Uvádí označení typu terminálu, ze kterého lze odvodit podporu barev a escape-sekvencí. Často to bývá „xterm-256color“, „linux“ či „rxvt“.
-* XDG\_SESSION\_TYPE — Uvádí „x11“, pokud program běží v grafickém prostředí X-serveru.
-
-Důležité proměnné prostředí, které lze nastavit:
-
-* LC\_ALL – Používá se k nastavení místních zvyklostí. (...)
-
-Méně důležité:
-
-* LOGNAME – Obvykle obsahuje jméno aktuálního uživatele (ale není stoprocentně spolehlivá).
-
--->
-
 !ÚzkýRežim: vyp
 
 ## Zaklínadla
@@ -65,73 +45,47 @@ Méně důležité:
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-### Testy
+### Ovládání
 
-*# je proměnná definovaná?*<br>
-**test -v** {*název\_proměnné*}
+*# přepnout na celou obrazovku/zpět do režimu okna*<br>
+{_Alt_} **+** {_Enter_}<br>
+{_Alt_} **+** {_Enter_}
 
-*# jde o proměnnou interpretu?*<br>
+*# zvýšit/snížit výkon emulace*<br>
+{_Ctrl_} **+** {_F12_}<br>
+{_Ctrl_} **+** {_F11_}
+
+*# pozastavit emulaci/pokračovat*<br>
+{_Alt_} **+** {_Pause_}<br>
 ?
 
-*# jde o proměnnou prostředí?*<br>
+*# nahrávat emulovanou obrazovku (začít/skončit)*<br>
+*// Nahrávky budou uloženy do...*<br>
+{_Ctrl_} **+** {_Alt_} **+** {_F5_}<br>
+{_Ctrl_} **+** {_Alt_} **+** {_F5_}
+
+*# **snímek** emulované obrazovky*<br>
+{_Ctrl_} **+** {_F5_}
+
+*# nahrávat zvuk (wav/midi)*<br>
+{_Ctrl_} **+** {_F6_}<br>
+{_Ctrl_} **+** {_Alt_} **+** {_F8_}
+
+*# zavřít DOSBox*<br>
+{_Ctrl_} **+** {_F9_}
+
+*# zachytávat/uvolnit myš*<br>
+{_Ctrl_} **+** {_F10_}<br>
+{_Ctrl_} **+** {_F10_}
+
+*# turbo režim (zap=vyp)*<br>
+{_Alt_} **+** {_F12_}
+
+### Připojování adresářů
+
+*# připojit/odpojit adresář jako jednotku MS-DOSu*<br>
+**mount** {*písmeno*} {*cesta*}<br>
 ?
-
-### Jmenné odkazy
-
-*# vytvořit jmenný odkaz*<br>
-*// Poznámka: jmenným odkazem nelze odkazovat na normální ani asociativní pole!*<br>
-**declare -n** {*název\_odkazu*}**=**{*název\_odkazované\_proměnné*}
-
-*# zrušit jmenný odkaz*<br>
-**unset -n** {*název\_odkazu*}
-
-*# je proměnná jmenný odkaz?*<br>
-**test -R** {*název\_proměnné*}
-
-*# přečíst jmenný odkaz*<br>
-**if test -R** {*název\_odkazu*}**; then declare +n** {*název\_odkazu*}**; echo $**{*název\_odkazu*}**; declare -n** {*název\_odkazu*}**; else false; fi**
-<!--
-[ ] Vyzkoušet.
--->
-
-### Proměnné prostředí
-
-*# změnit proměnnou interpretu na proměnnou prostředí*<br>
-**export** {*název\_proměnné*}[**=**{*nová-hodnota*}]
-
-*# změnit proměnnou prostředí na proměnnou interpretu*<br>
-?
-
-*# vypsat všechny proměnné prostředí (txt/txtz)*<br>
-**printenv**<br>
-**printenv -0**
-
-### Pole
-
-### Asociativní pole
-
-*# **vytvořit***<br>
-**unset** {*název*}<br>
-**declare -A** {*název*}
-
-*# **zrušit***<br>
-**unset** {*název*}
-
-*# **zkopírovat***<br>
-**asockopirovat** {*zdrojovépole*} {*cílovépole*}
-
-*# **přiřadit** hodnotu prvku*<br>
-*// Přiřazujete-li hodnotu jiné proměnné, nejsou uvozovky nutné.*<br>
-{*názevpole*}**[**{*klíč*}**]="**{*hodnota*}**"**
-
-*# zjistit **počet** prvků*<br>
-**${#**{*název*}**[@]}**
-
-*# obsahuje prvek se zadaným klíčem? (alternativy)*<br>
-**asocexist** {*názevpole*} **"**{*klíč*}**"**<br>
-**test -v '**{*názevpole*}[**{*klíč*}**]**'**<br>
-**test -v "**{*názevpole*}**[$\{**{*proměnná\_s\_klíčem*}**@Q}]"**
-
 
 ## Parametry příkazů
 <!--
@@ -187,23 +141,3 @@ Co hledat:
 * [Stránky TL;DR](https://github.com/tldr-pages/tldr/tree/master/pages/common)
 
 !ÚzkýRežim: vyp
-
-## Pomocné funkce
-
-*# asocexist() – testuje, zda v asociativním poli $1 existuje prvek $2*<br>
-**function asocexist() { test -v "$1[${2@Q}]"; }**
-
-*# asockopirovat() – kopií asociativního pole $1 přepíše proměnnou $2*<br>
-**function kopirovatasocpole() \{**
-<odsadit1>**declare -p "$1" &gt;/dev/null \|\| return $?**<br>
-<odsadit1>**: '^declare -\\S\*A'**<br>
-<odsadit1>**if [[ $(declare -p "$1") =~ $\_ ]]**<br>
-<odsadit1>**then**<br>
-<odsadit2>**unset "$2" &amp;&amp;**<br>
-<odsadit2>**declare -Ag "$2" &amp;&amp;**<br>
-<odsadit2>**eval "for \_ in \\"\\${!$1[@]}\\"; do $2[\\$\_]=\\${$1[\\$\_]}; done"**<br>
-<odsadit1>**else**<br>
-<odsadit2>**printf 'kopirovatasocpole: Není asociativní pole: %s\\n' "$1" &gt;&amp;2**<br>
-<odsadit2>**false**<br>
-<odsadit1>**fi**<br>
-**\}**
