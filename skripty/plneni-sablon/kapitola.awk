@@ -135,7 +135,7 @@ function RidiciRadek(text) {
             return 0;
 
         default:
-            ShoditFatalniVyjimku("Neznámý řídicí řádek: {{" text "}}!");
+            return RidiciRadekSpolecnaObsluha(text);
     }
 }
 
@@ -188,13 +188,14 @@ function VypsatPrehledStitku(format,   i, n, s, nazvy_kapitol, cisla_kapitol, st
     delete cisla_kapitol; # $3
     delete stitky_kapitol; # $9
     delete ikony_kapitol; # $11
-    while (getline < FRAGMENTY_TSV) { # id = $2
+    VyzadujeFragmentyTSV();
+    for (i = 1; i < POCET_KAPITOL; ++i) {
+        $0 = FRAGMENTY_TSV_RADKY[i];
         cisla_kapitol[$2] = $8;
         nazvy_kapitol[$2] = $3;
         stitky_kapitol[$2] = $9;
         ikony_kapitol[$2] = $11;
     }
-    close(FRAGMENTY_TSV);
 
     # Načíst štítky ze stitky.tsv:
     stitky_tsv = gensub(/fragmenty/, "stitky", 1, FRAGMENTY_TSV);
@@ -202,7 +203,7 @@ function VypsatPrehledStitku(format,   i, n, s, nazvy_kapitol, cisla_kapitol, st
         # obrazky/ik-vychozi.png 64x64
         if (NF < 3) {ShoditFatalniVyjimku("Chyba formátu stitky.tsv: očekávány alespoň tři sloupce!")}
         # $1 = štítek $2 = omezené id štítku $3..$NF = id kapitol
-        print "<dt id=\"" $2 "\" class=\"stitky\"><a href=\"#" $2 "\">" $1 "</a></dt><dd>";
+        print "<dt id=\"" $2 "\" class=\"stitky\"><span><a href=\"#" $2 "\">" $1 "</a></span></dt><dd>";
         for (i = 3; i <= NF; ++i) {
             if (!($i in cisla_kapitol)) {ShoditFatalniVyjimku("Nečekané id kapitoly: " $i)}
 

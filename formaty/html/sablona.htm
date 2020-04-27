@@ -1,5 +1,5 @@
 # Linux Kniha kouzel, šablona speciální stránky (HTML)
-# Copyright (c) 2019 Singularis <singularis@volny.cz>
+# Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 # podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -288,89 +288,41 @@ uvést víckrát, jsou vyznačeny šedou trojtečkou.</td></tr>
 {{VARIANTY autori,index,kapitola,stitky}}
 
 </article>
-<!-- MENU -->
-<a href="#menu" id="menu">MENU</a>
-<aside>
-<div>
-<div>Toto je experimentální bezjavascriptové menu ve vývoji.
-Zatím prosím použijte k navigaci <a href="index.htm">přehled kapitol</a>.</div>
-<a href="awk.htm">AWK</a>
-<a href="docker.htm">Docker</a>
-<a href="#cast3x2">3x2</a>
-<a href="#cast3x1">3x1</a>
-<div>Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum<br>
-Lorem Ipsum</div></div>
-<a href="#zavritmenu" id="zavritmenu">Zavřít&nbsp;menu</a>
+<nav class="menu">
+<!-- MENU KAPITOLY -->
+<a href="#menukapitoly" id="menukapitoly"><span class="prvnipismeno">K</span>apitoly</a>
+<aside class="menukapitoly">
+<div><div class="nadpis">Kapitoly</div><div class="polozky">
+{{MENU KAPITOLY}}
+</div></div>
+<a href="#zavritmenu" id="zavritmenu" class="zavritmenu">Zavřít&nbsp;menu</a>
 </aside>
+<!-- MENU OSNOVA -->
+<a href="#menuosnova" id="menuosnova"><span class="prvnipismeno">O</span>snova</a>
+<aside class="menuosnova">
+<div><div class="nadpis">Osnova</div><div class="polozky">
+{{MENU OSNOVA}}
+</div></div>
+<a href="#zavritmenu" class="zavritmenu">Zavřít&nbsp;menu</a>
+</aside>
+<!-- MENU ŠTÍTKY -->
+<a href="#menustitky" id="menustitky"><span class="prvnipismeno">Š</span>títky</a>
+<aside class="menustitky">
+<div><div class="nadpis">Štítky</div><div class="polozky">
+{{MENU ŠTÍTKY}}
+</div></div>
+<a href="#zavritmenu" class="zavritmenu">Zavřít&nbsp;menu</a>
+</aside>
+<!-- MENU NÁPOVĚDA -->
+<a href="#menunapoveda" id="menunapoveda"><span class="prvnipismeno">N</span>ápověda</a>
+<aside class="menunapoveda">
+<div><div class="nadpis">Nápověda</div><div class="polozky">
+{{MENU NÁPOVĚDA}}
+</div></div>
+<a href="#zavritmenu" class="zavritmenu">Zavřít&nbsp;menu</a>
+</aside>
+
+</nav>
 <!-- *** -->
 <footer id="dole">
 <img src="obrazky/by-sa.png" width="88" height="31" alt="[BY-SA]">

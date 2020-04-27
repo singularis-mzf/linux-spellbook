@@ -53,7 +53,7 @@ https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/The_about_protocol
 *# vypnout cache na disku (paměť stačí)*<br>
 **browser.cache.disk.enable = FALSE**
 
-*# vypnout otravnou výzvu k „Refresh Firefox“*<br>
+*# vypnout otravnou výzvu k „Refresh Firefox“ (ve Firefoxu 75 už není)*<br>
 *// Nutno vytvořit jako novou hodnotu typu BOOLEAN.*<br>
 **browser.disableResetPrompt = TRUE**
 
@@ -72,13 +72,13 @@ https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/The_about_protocol
 *# vypnout JavaScript*<br>
 **javascript.enabled = FALSE**
 
-*# vypnout „obraz v obrazu“*<br>
-**media.videocontrols.picture-in-picture.enabled = FALSE**<br>
-**media.videocontrols.picture-in-picture.video-toggle.enabled = FALSE**
-
 ### Jsou v GUI
 *# nenašeptávat otevřené panely*<br>
 **browser.urlbar.suggest.openpage = FALSE**
+
+*# vypnout „obraz v obrazu“*<br>
+**media.videocontrols.picture-in-picture.enabled = FALSE**<br>
+**media.videocontrols.picture-in-picture.video-toggle.enabled = FALSE**
 
 ## Parametry příkazů
 ![ve výstavbě](../obrazky/ve-vystavbe.png)

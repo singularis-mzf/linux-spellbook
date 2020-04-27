@@ -1,5 +1,5 @@
 # Linux Kniha kouzel, skript do_html.awk
-# Copyright (c) 2019 Singularis <singularis@volny.cz>
+# Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 # podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -143,7 +143,7 @@ function KonecKapitoly(nazevKapitoly, cislaPoznamek, textyPoznamek,   i, vyslede
 }
 
 function ZacatekSekce(kapitola, sekce, cisloKapitoly, cisloSekce) {
-    return "\n<h2><a href=\"#cast" cisloSekce "\" id=\"cast" cisloSekce "\"><span class=\"cislo\">" cisloSekce ".</span> " sekce "</a></h2>\n";
+    return "\n<h2 id=\"cast" cisloSekce "\"><a href=\"#cast" cisloSekce "\"><span class=\"cislo\">" cisloSekce ".</span> " sekce "</a></h2>\n";
 }
 
 function KonecSekce(kapitola, sekce) {
@@ -151,7 +151,7 @@ function KonecSekce(kapitola, sekce) {
 }
 
 function ZacatekPodsekce(kapitola, sekce, podsekce, cisloKapitoly, cisloSekce, cisloPodsekce) {
-    return "\n<h3><a href=\"#cast" cisloSekce "x" cisloPodsekce "\" id=\"cast" cisloSekce "x" cisloPodsekce "\" title=\"" sprintf("kapitola %d (%s), sekce %d (%s), podsekce %d (%s)", cisloKapitoly, kapitola, cisloSekce, sekce, cisloPodsekce, podsekce) "\">" sprintf("/s%02d/p%02d", cisloSekce, cisloPodsekce) " " podsekce "</a></h3>\n";
+    return "\n<h3 id=\"cast" cisloSekce "x" cisloPodsekce "\"><span><a href=\"#cast" cisloSekce "x" cisloPodsekce "\" title=\"" sprintf("kapitola %d (%s), sekce %d (%s), podsekce %d (%s)", cisloKapitoly, kapitola, cisloSekce, sekce, cisloPodsekce, podsekce) "\">" sprintf("/s%02d/p%02d", cisloSekce, cisloPodsekce) " " podsekce "</a></span></h3>\n";
 }
 
 function KonecPodsekce(kapitola, sekce, podsekce) {

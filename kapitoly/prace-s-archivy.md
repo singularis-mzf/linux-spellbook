@@ -22,6 +22,7 @@ Poznámky:
 # Práce s archivy
 
 !Štítky: {tematický okruh}{komprese}{zip}
+!FixaceIkon: 1754
 !ÚzkýRežim: zap
 
 ## Úvod

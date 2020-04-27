@@ -182,7 +182,7 @@ $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/html/%): \
 # ----------------------------------------------------------------------------
 $(VSECHNY_KAPITOLY_A_DODATKY:%=$(VYSTUP_PREKLADU)/html/%.htm): \
   $(VYSTUP_PREKLADU)/%.htm: \
-  $(SOUBORY_PREKLADU)/% skripty/plneni-sablon/kapitola.awk formaty/html/sablona.htm $(SOUBORY_PREKLADU)/fragmenty.tsv $(DATUM_SESTAVENI_SOUBOR)
+  $(SOUBORY_PREKLADU)/% skripty/plneni-sablon/kapitola.awk skripty/plneni-sablon/hlavni.awk formaty/html/sablona.htm $(SOUBORY_PREKLADU)/fragmenty.tsv $(DATUM_SESTAVENI_SOUBOR)
 	mkdir -pv $(VYSTUP_PREKLADU)/html
 	cut -f 2 $(SOUBORY_PREKLADU)/fragmenty.tsv | fgrep -qx $(basename $(notdir $<)) && exec $(AWK) -f skripty/plneni-sablon/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDFORMATU=html -v IDKAPITOLY=$(basename $(notdir $@)) -v TELOKAPITOLY=$< -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v VARIANTA=kapitola formaty/html/sablona.htm > $@ || true
 
@@ -241,7 +241,7 @@ $(SOUBORY_PREKLADU)/html/obr-copys.htm: COPYRIGHT skripty/extrakce/copykobr.awk
 # ----------------------------------------------------------------------------
 $(VYSTUP_PREKLADU)/html/x-autori.htm: \
   $(addprefix $(SOUBORY_PREKLADU)/html/, kap-copys.htm obr-copys.htm) \
-  skripty/plneni-sablon/kapitola.awk \
+  skripty/plneni-sablon/kapitola.awk skripty/plneni-sablon/hlavni.awk \
   formaty/html/sablona.htm \
   $(DATUM_SESTAVENI_SOUBOR)
 	mkdir -pv $(dir $@)
@@ -250,7 +250,7 @@ $(VYSTUP_PREKLADU)/html/x-autori.htm: \
 # 9. shromáždit štítky na stránku x-stitky.htm
 # ----------------------------------------------------------------------------
 $(VYSTUP_PREKLADU)/html/x-stitky.htm: \
-  skripty/plneni-sablon/kapitola.awk \
+  skripty/plneni-sablon/kapitola.awk skripty/plneni-sablon/hlavni.awk \
   formaty/html/sablona.htm \
   $(SOUBORY_PREKLADU)/fragmenty.tsv \
   $(DATUM_SESTAVENI_SOUBOR)
@@ -280,7 +280,7 @@ $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/log/%): \
 # ----------------------------------------------------------------------------
 $(VSECHNY_KAPITOLY_A_DODATKY:%=$(SOUBORY_PREKLADU)/log/%.kap): \
   %.kap: \
-  % skripty/plneni-sablon/kapitola.awk skripty/utility.awk $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/log/sablona $(DATUM_SESTAVENI_SOUBOR)
+  % skripty/plneni-sablon/kapitola.awk skripty/plneni-sablon/hlavni.awk skripty/utility.awk $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/log/sablona $(DATUM_SESTAVENI_SOUBOR)
 	mkdir -pv $(SOUBORY_PREKLADU)/log
 	$(AWK) -f skripty/plneni-sablon/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDFORMATU=log -v IDKAPITOLY=$(basename $(notdir $@)) -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v TELOKAPITOLY=$< formaty/log/sablona > $@
 

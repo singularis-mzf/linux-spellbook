@@ -80,8 +80,9 @@ Poznámka: správci přihlášení se nepočítají mezi démony, protože mají
 
 ### Informace o systému (zjistit)
 
-*# obecné informace (pro člověka)*<br>
-**neofetch**
+*# obecné informace (pro člověka)(alternativy)*<br>
+**neofetch**<br>
+**inxi**
 
 *# verze a varianta **jádra***<br>
 **uname -r** ⊨ 5.0.0-37-generic
@@ -274,6 +275,9 @@ Podrobnější informace: příkaz „uptimes“ z balíčku „uptimed“.
 [ ] Zjistit, jak lze použít k nastavení systému, aby naběhl do textového prostředí místo grafického...
 -->
 
+*# dočasně vypnout automatické připojování výměnných jednotek *<br>
+**sudo systemctl stop udisks2**
+
 ## Zaklínadla (klávesnice)
 
 ### Ovládání počítače klávesnicí
@@ -380,10 +384,10 @@ sudo systemctl restart keyboard-setup.service
 
 ## Instalace na Ubuntu
 
-Většina použitých příkazů je základní součástí Ubuntu, pouze příkazy numlockx, xdotool a neofetch si musíte doinstalovat, chcete-li je použít:
+Většina použitých příkazů je základní součástí Ubuntu, pouze příkazy numlockx, xdotool, inxi a neofetch si musíte doinstalovat, chcete-li je použít:
 
 *# *<br>
-**sudo apt-get install numlockx xdotool neofetch**
+**sudo apt-get install numlockx xdotool neofetch inxi**
 
 <!--
 ## Ukázka

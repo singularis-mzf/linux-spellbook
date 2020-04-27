@@ -1,6 +1,6 @@
 /*
  * Linux Kniha kouzel, šablona CSS
- * Copyright (c) 2019,2020 Singularis <singularis@volny.cz>
+ * Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
  *
  * Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
  * podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -422,6 +422,9 @@ nav.spodni {
     margin:3em 3rem 2em 0;
     text-align:center;
 }
+nav.menu {
+    display:block;
+}
 
 article {
     padding:2rem 3rem 10rem;
@@ -453,9 +456,6 @@ h2 {
 h3 {
     font:bold 125%/1.2 "DejaVu Sans", sans-serif;
     margin:1.5em 0 0.75em;
-    background-color:rgba({{zb-tmava}},0.2);
-    box-shadow:0.1rem 0.1rem 0.2rem 0 rgba({{zb-tmava}},0.8);
-    padding:0.5rem 0.5rem;
     page-break-after:avoid; /* možná není podporována v současných prohlížečích */
 }
 h3 .cislo {
@@ -467,6 +467,15 @@ h3 .cislo {
     text-align:center;
     width:1.5em;height:1.5em;
 }
+h3>span {
+    display:block;
+    background-color:rgba({{zb-tmava}},0.2);
+    box-shadow:0.1rem 0.1rem 0.2rem 0 rgba({{zb-tmava}},0.8);
+    padding:0.5rem 0.5rem;
+}
+
+h2, h3 {position:relative;top:-3rem;}
+h2>a, h3>span {position:relative;top:3rem;}
 
 p, ul, blockquote {
     font-family: "DejaVu Sans", sans-serif;
@@ -533,7 +542,7 @@ kbd {
 }
 
 /* Sebeodkazy nadpisů */
-h1>a:link, h1>a:visited, h2>a:link, h2>a:visited, h3>a:link, h3>a:visited, h4>a:link, h4>a:visited, h5>a:link, h5>a:visited, h6>a:link, h6>a:visited {
+h1>a:link, h1>a:visited, h2>a:link, h2>a:visited, h3>span>a:link, h3>span>a:visited, h4>a:link, h4>a:visited, h5>a:link, h5>a:visited, h6>a:link, h6>a:visited {
     display:block;
     color:inherit;
 }
@@ -893,7 +902,7 @@ nav .next {text-align:left;}
 .stitky {
     margin:2em 0;
 }
-.stitky span, .stitky a {
+.stitky a {
     display:inline-block;
     background:rgb({{zb-svetla}});
     color:rgb({{zb-text}});
@@ -908,6 +917,8 @@ nav .next {text-align:left;}
     text-align:center;
     white-space:nowrap;
 }
+.prehledstitku dt {position:relative;top:-3em;}
+.prehledstitku dt>span {position:relative;top:3em;display:block;}
 .prehledstitku .stitky {
     margin:1em 0 0.5em;
 }
@@ -1082,28 +1093,42 @@ span.chybny {
 
 /* Menu */
 
-a#menu {
-    position:fixed;left:5px;top:5px;bottom:auto;right:auto;
+nav.menu {
+    position:fixed;left:5pt;top:5pt;bottom:auto;right:auto; z-index:5;
     display:block;
+    margin:0;border:none;padding:0;
+    white-space:nowrap;
+    line-height:1.2;
+}
+nav.menu>a {
+    position:relative;z-index:5;
+    display:inline-block;
     margin:0;
     border-width:0.25rem 0.5rem 0.5rem 0.25rem;
     border-style:outset;
     border-color:rgb({{menu-ramecek-tlacitka}});
-    padding:0.25em 0.5em;
-    white-space:nowrap;
+    padding:0.25em;
+    min-width:6em;
+    /*white-space:nowrap;*/
     background:rgb({{menu-pozadi-tlacitka}});
     color:rgb({{menu-text-tlacitka}});
-    font-weight:bold;
+    /*font-weight:bold;*/
     text-shadow:0 0 0.1em rgba({{menu-stin-textu-tlacitka}}, {{menu-stin-textu-tlacitka-kryti}});
-
-    opacity:0.5; /* toto odstranit po odebrání experimentálního statutu */
-}
-a#menu::before {
-    content:"≡ ";
     text-decoration:none;
 }
-a#menu+aside {
-    position:fixed;left:10px;top:5px;bottom:5px;right:auto;z-index:-2;
+nav.menu>a:hover {
+    z-index:6;
+    box-shadow:0 0 0.1em 0.1em rgb({{menu-pozadi-tlacitka}});
+}
+nav.menu>a::before {
+    content:"≡ ";
+    font-weight:bold;
+    text-decoration:none;
+}
+nav.menu>a .prvnipismeno {text-decoration:underline}
+
+nav.menu>a+aside {
+    position:fixed;left:-50%;top:5pt;bottom:5pt;right:auto;z-index:-2;
     width:40%;min-width:20em;max-width:40em;
     margin:0;
     border:medium solid rgb({{zb-okno-ramecek}});
@@ -1114,23 +1139,64 @@ a#menu+aside {
     opacity:0;
     transition-duration:0.5s;
     transition-property:all;
+    white-space:normal;
 }
-a#menu:target+aside {
+nav.menu>a:target+aside {
     opacity:1;
     z-index:5000;
+    left:5%;
 }
 
-a#menu+aside>div {
+nav.menu>a+aside>div {
     position:absolute;top:0;right:0;bottom:0;left:0;z-index:5;
-    padding:3em 2em 2em;
+    /*padding:3em 2em 2em;*/
     overflow:auto;
 }
+nav.menu div.polozky {
+    display:block;
+}
+nav.menu div.polozky>a {
+    display:block;
+    background-color:rgb({{zb-pozadi}});
+    color:rgb({{zb-text}});
+    margin:0;border:none;padding:0.25em 1rem;
+    text-decoration:none;
+}
+nav.menu div.polozky>a:hover {
+    background-color:rgb({{zb-tmava}});
+    color:rgb({{zb-pozadi}});
+}
+nav.menu .nadpis {
+    margin:0;
+    border-bottom:thin solid;
+    padding:0.5rem 1rem;
+    font-size:150%;
+    text-transform:uppercase;
+}
 
-a#zavritmenu {
+nav.menu div.polozky .cislo {
+    display:inline-block;
+    margin:0 0.5em;
+    min-width:1.5em;
+    text-align:right;
+}
+
+nav.menu div.polozky .sekce {font-weight:bold}
+nav.menu div.polozky .podsekce {padding-left:3rem}
+
+nav.menu div.polozky .ikona {
+    display:inline-block;
+    width:3em;
+    vertical-align:middle;
+}
+nav.menu div.polozky .ikona img {width:100%; height:auto;}
+
+
+a.zavritmenu {
     position:absolute;top:0.3rem;right:2rem;bottom:auto;left:auto;z-index:10;
     white-space:nowrap;
 }
-a#zavritmenu::after {
+a.zavritmenu::after {
     content: " ×";
     font-weight:bold;
     font-size:150%;

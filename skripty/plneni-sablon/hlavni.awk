@@ -1,5 +1,5 @@
 # Linux Kniha kouzel, skript plneni-sablon/hlavni.awk
-# Copyright (c) 2019 Singularis <singularis@volny.cz>
+# Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 # podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -31,11 +31,18 @@ BEGIN {
 }
 
 function VyzadujeFragmentyTSV() {
+    if (POCET_KAPITOL) {return POCET_KAPITOL}
     FRAGMENTY_TSV = "soubory_prekladu/fragmenty.tsv";
     if (!Test("-r " FRAGMENTY_TSV)) {
         ShoditFatalniVyjimku("Nemohu číst ze souboru " FRAGMENTY_TSV "!");
     }
-    return 1;
+    POCET_KAPITOL = 0;
+    while (getline < FRAGMENTY_TSV) {
+        FRAGMENTY_TSV_RADKY[++POCET_KAPITOL] = $0;
+        FRAGMENTY_TSV_RADKY[$2] = $0; # $2 = id
+    }
+    close(FRAGMENTY_TSV);
+    return POCET_KAPITOL;
 }
 
 function VyzadujePromennou(nazev, popisChyby) {
@@ -152,6 +159,77 @@ STAV_PODMINENENO_PREKLADU == 2 {next}
 # ====================================================
 BYL_ZACATEK {
     print PrelozitVystup($0);
+}
+
+# Společná obsluha pro řídicí řádky
+# ====================================================
+function RidiciRadekSpolecnaObsluha(text,   i, soubor) {
+    switch (text) {
+        case "MENU OSNOVA":
+            if (IDFORMATU != "html") {ShoditFatalniVyjimku("{{MENU OSNOVA}} je podporováno jen pro formát HTML!")}
+            if (IDKAPITOLY ~ /^(_|$)/) {
+                printf("Pro tuto stránku není menu osnova podporováno.\n");
+                return 0;
+            }
+            VyzadujeFragmentyTSV();
+            soubor = gensub(/fragmenty\.tsv$/, "osnova/" IDKAPITOLY ".tsv", 1, FRAGMENTY_TSV);
+            if (system("test -r '" soubor "'")) {
+                ShoditFatalniVyjimku("Soubor '" soubor "' neexistuje nebo nelze otevřít ke čtení!");
+            }
+            while (getline < soubor) {
+                # $1 = {SEKCE|PODSEKCE}, $2 = číselné označení, $4 = titulek
+                switch ($1) {
+                    case "SEKCE":
+                    case "PODSEKCE":
+                        # TODO: přeložit údaje do HTML (zejména entity jako &amp;)
+                        printf("<a href=\"#cast%s\" class=\"%s\">%s %s</a>\n", $2, $1 == "SEKCE" ? "sekce" : "podsekce", "", $4);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            close(soubor);
+            #printf("<div>DEBUG: osnova kapitoly %s.</div>\n", IDKAPITOLY);
+            return 0;
+
+        case "MENU KAPITOLY":
+            if (IDFORMATU != "html") {ShoditFatalniVyjimku("{{MENU KAPITOLY}} je podporováno jen pro formát HTML!")}
+            VyzadujeFragmentyTSV();
+            for (i = 1; i <= POCET_KAPITOL; ++i) {
+                $0 = FRAGMENTY_TSV_RADKY[i];
+                printf("<a href=\"%s.htm\" class=\"kapitola\"><span class=\"ikona\"><img src=\"obrazky/%s\" alt=\"[]\"></span><span class=\"cislo\">%d</span><span class=\"nazev\">%s</span></a>\n", $2, $11, i, $3);
+            }
+            return 0;
+
+        case "MENU ŠTÍTKY":
+            if (IDFORMATU != "html") {ShoditFatalniVyjimku("{{MENU ŠTÍTKY}} je podporováno jen pro formát HTML!")}
+            VyzadujeFragmentyTSV();
+            stitky_tsv = gensub(/fragmenty/, "stitky", 1, FRAGMENTY_TSV);
+            while (getline < stitky_tsv) {
+                # obrazky/ik-vychozi.png 64x64
+                if (NF < 3) {ShoditFatalniVyjimku("Chyba formátu stitky.tsv: očekávány alespoň tři sloupce!")}
+                # $1 = štítek $2 = omezené id štítku
+                printf("<a href=\"x-stitky.htm#%s\">%s</a>\n", $2, $1);
+            }
+            close(stitky_tsv);
+            return 0;
+
+        case "MENU NÁPOVĚDA":
+            if (IDFORMATU != "html") {ShoditFatalniVyjimku("{{MENU NÁPOVÉDA}} je podporováno jen pro formát HTML!")}
+            VyzadujeFragmentyTSV();
+            if ("predmluva" in FRAGMENTY_TSV_RADKY) {
+                printf("<a href=\"predmluva.htm\">Předmluva</a>\n");
+            }
+            if ("koncepce-projektu" in FRAGMENTY_TSV_RADKY) {
+                printf("<a href=\"koncepce-projektu.htm\">Koncepce projektu</a>\n");
+            }
+            printf("<a href=\"https://singularis-mzf.github.io/\">Ostatní verze knihy</a>\n");
+            printf("<a href=\"https://github.com/singularis-mzf/linux-spellbook\">Repozitář na GitHubu</a>\n");
+            return 0;
+
+        default:
+            ShoditFatalniVyjimku("Neznámý řídicí řádek: {{" text "}}!");
+    }
 }
 
 END {

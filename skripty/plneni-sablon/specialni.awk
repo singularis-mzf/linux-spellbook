@@ -88,7 +88,7 @@ function RidiciRadek(text) {
             return 0;
 
         default:
-            ShoditFatalniVyjimku("Neznámý řídicí řádek: {{" text "}}!");
+            return RidiciRadekSpolecnaObsluha(text);
     }
 }
 

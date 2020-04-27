@@ -112,7 +112,7 @@ function RidiciRadek(text,   i, s) {
             return 0;
 
         default:
-            ShoditFatalniVyjimku("Neznámý řídicí řádek: {{" text "}}!");
+            return RidiciRadekSpolecnaObsluha(text);
     }
 }
 
