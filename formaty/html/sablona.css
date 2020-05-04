@@ -477,7 +477,7 @@ h3>span {
 }
 
 h2, h3 {position:relative;top:-{{vyska-horni-listy}};}
-h2>a, h3>span {position:relative;top:{{vyska-horni-listy}};}
+h2>a, h2>span, h3>span {position:relative;top:{{vyska-horni-listy}};}
 h3 sup {
     vertical-align:super;
     font-size:85%;
