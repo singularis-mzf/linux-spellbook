@@ -182,7 +182,7 @@ function RidiciRadekSpolecnaObsluha(text,   i, soubor) {
                     case "SEKCE":
                     case "PODSEKCE":
                         # TODO: přeložit údaje do HTML (zejména entity jako &amp;)
-                        printf("<a href=\"#cast%s\" class=\"%s\">%s %s</a>\n", $2, $1 == "SEKCE" ? "sekce" : "podsekce", "", $4);
+                        printf("<a href=\"#cast%s\" class=\"%s\">%s %s</a>\n", $2, $1 == "SEKCE" ? "sekce" : "podsekce", ($1 == "SEKCE" ? "" : "/") gensub(/^.*[^[:digit:]]/, "", 1, $2), $4);
                         break;
                     default:
                         break;
@@ -209,7 +209,7 @@ function RidiciRadekSpolecnaObsluha(text,   i, soubor) {
                 # obrazky/ik-vychozi.png 64x64
                 if (NF < 3) {ShoditFatalniVyjimku("Chyba formátu stitky.tsv: očekávány alespoň tři sloupce!")}
                 # $1 = štítek $2 = omezené id štítku
-                printf("<a href=\"x-stitky.htm#%s\">%s</a>\n", $2, $1);
+                printf("<a href=\"x-stitky.htm#%s\">%s&nbsp;&nbsp;(%d)</a>\n", $2, $1, NF - 2);
             }
             close(stitky_tsv);
             return 0;

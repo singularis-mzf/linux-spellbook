@@ -276,7 +276,12 @@ Podrobnější informace: příkaz „uptimes“ z balíčku „uptimed“.
 -->
 
 *# dočasně vypnout automatické připojování výměnných jednotek *<br>
+?
+
+<!--
 **sudo systemctl stop udisks2**
+-->
+
 
 ## Zaklínadla (klávesnice)
 

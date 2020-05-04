@@ -52,6 +52,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+{{MAKRO vyska-horni-listy = 4rem}}
+
 # Sdílené symboly:
 #
 {{MAKRO sym-raquo-bila      = url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAUCAYAAACJfM0wAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH5AINERcKMRncRgAAAZ5JREFUOMvV1L1rVEEUBfDfNev6QQLaWFiIH9iYiIIGjRGJGEkjgoVB8A+09bMQtdFIGoMoQQtRY2cEQRLBqMlem1l4PPZtdktPN+/MPfM458xQkJktfZCZOwyB6uapzJzuI3AyM2czsz2s8E7MYK5huIXzuJaZe4cRhsAZ3MjM0YaZE7iVmfuHEe7iOOYz80ADfxC3M/PQIMJL+FIbns/Mw2X9Hu8q/D7czMyJXsJRS343ruB0hfuFxxGxXJpzAdMYKfxfLGAxIjo9hSu1OodLJVDYwvOIeFn2TGAOe7pjeIVnEbHZ0+OI6ETEIu5irXwewbFuGyJiGXfwvfKDRzG2XXjQ2aZRHWw2ka2GWzZZOr2rYsVnbBR+HFcxWrHiE9abwmvjMs5WuN94GhGvi/9TuFj3vzG8zBzDdRypnLWGRxHxsTRmFqdqjXkSEW/7WTFZE13Fg4j4WtbjpYZd/MDDiFgZ2OPi5/2IWG/gV3EvIr4NGl7iTfF0o2HmQ7HnZ7/KVIW38AIL1RBqhy6VS/Bn4Ie5hNOPbw/72P9f+AeGb5+ISgoslAAAAABJRU5ErkJggg==")}}
@@ -378,7 +380,7 @@ line-height:inherit;list-style:inherit;margin:0;
 max-height:none;max-width:none;min-height:0;overflow:visible;
 padding:0;position:static;right:auto;table-layout:auto;
 text-decoration:none;text-indent:0;text-transform:inherit;
-top:auto;visibility:inherit;white-space:inherit;word-spacing:inherit;
+top:auto;vertical-align:baseline;visibility:inherit;white-space:inherit;word-spacing:inherit;
 z-index:auto;font:inherit;}
 
 #
@@ -474,8 +476,13 @@ h3>span {
     padding:0.5rem 0.5rem;
 }
 
-h2, h3 {position:relative;top:-3rem;}
-h2>a, h3>span {position:relative;top:3rem;}
+h2, h3 {position:relative;top:-{{vyska-horni-listy}};}
+h2>a, h3>span {position:relative;top:{{vyska-horni-listy}};}
+h3 sup {
+    vertical-align:super;
+    font-size:85%;
+    font-weight:normal;
+}
 
 p, ul, blockquote {
     font-family: "DejaVu Sans", sans-serif;
@@ -587,17 +594,21 @@ nav a[rel="prev"]::after, nav a[rel="next"]::before {content:none;}
     float:right;
 }
 
-.zaklinadlo .zahlavi .D,
-.zaklinadlo .zahlavi .L {
+.zaklinadlo .zahlavi .ikona {
+    position:relative;top:-{{vyska-horni-listy}};
     float:left;
-    min-width:1.2em;height:1.2em;overflow:visible;
-    text-align:center;white-space:pre;
+}
+.zaklinadlo .zahlavi .ikona * {display:block;position:relative;}
+.zaklinadlo .zahlavi .ikona>span {top:{{vyska-horni-listy}}}
+.zaklinadlo .zahlavi .ikona a {
+    background:rgba(0,0,0,0.1);
     margin:-1px 1.5rem -1px -1px;
     border:1px solid transparent;
-    padding:0;
-    font-size:200%;
-    background:rgba(0,0,0,0.1);
     border-radius:1em;
+    padding:0;
+    min-width:1.2em;height:1.2em;overflow:visible;
+    text-align:center;white-space:pre;
+    font-size:200%;
 }
 .zaklinadlo .zahlavi .D, .vzornikikon .D {font-family:"DejaVu Sans", sans-serif;}
 .zaklinadlo .zahlavi .L, .vzornikikon .L {font-family:"Latin Modern Math", sans-serif;}
@@ -766,6 +777,14 @@ header .right .ico3 {
 header .right .ico3::before {content:"\d7";}
 
 /* zbytek */
+#nahore {
+    display:block;
+    height:0.2rem;
+    margin:0 0 -0.2rem;
+    position:relative;
+    top:-{{vyska-horni-listy}};
+}
+
 header .left img {vertical-align:bottom;margin-right:0.25em;}
 header .right {float:right;}
 footer p {margin:0;padding:0;max-width:none;}
