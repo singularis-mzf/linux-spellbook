@@ -165,17 +165,11 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 <neodsadit>Všechen software potřebný k sestavení projektu je svobodný.
 Pokud některá kapitola odkazuje na nesvobodný software, vždy na to výslovně upozorní.
 
-## Aktuální poznámka k verzi „vanilková příchuť 1.6 Celestýna Cihlářová“
+## Aktuální poznámka k verzi „vanilková příchuť 1.7 Čestmír Čapek“
 
-Verze 1.6, jménem Celestýna Cihlářová, přináší novou kapitolu *Diskové oddíly*.
-Čísla zaklínadel jsou nyní přesunuta na pravou stranu a jsou zvýrazněny ikony zaklínadel.
-Design PDF variant jsem vylepšil/a novým (přehlednějším) formátem nadpisů podsekcí.
+Verze 1.7, jménem Čestmír Čapek, nepřináší žádnou novou kapitolu. Hlavní novinkou je nové, efektivní bezjavascriptové menu v HTML verzi a dodělání ikon pro všechny vydané kapitoly a předmluvu.
 
-Významnou novinkou v HTML variantě je experimentální bezjavascriptové menu.
-Do příští verze se plánuji rozhodnout, zda ho vylepším tak, aby bylo použitelné,
-nebo od něj ustoupím.
-
-Vydání verze 1.7, jménem Darja Drážní, očekávám v průběhu května 2020.
+Vydání verze 1.8, jménem Darja Drážní, očekávám v druhé polovině května 2020.
 
 &nbsp;
 

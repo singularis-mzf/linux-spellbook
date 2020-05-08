@@ -90,6 +90,12 @@ diskove-oddily
 \item{}UUID souborového systému ve tvaru \quotedblbase{}UUID=61bbd562{-}0694{-}4561{-}a8e2{-}4ccfd004a660\textquotedblleft{}.
 \item{}UUID souborového systému ve tvaru\\\quotedblbase{}UUID=61bbd562{-}0694{-}4561{-}a8e2{-}4ccfd004a660\textquotedblleft{}.
 
+155
+pdf-b5.*
+diskove-oddily
+\radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{UUID=\textquotedbl{}61bbd562{-}0694{-}4561{-}a8e2{-}4ccfd004a660\textquotedbl{}\textcolor{seda}{\guillemotright}{~~~~~~}/\textcolor{seda}{\guillemotright}{~~~~~~}ext4\textcolor{seda}{\guillemotright}{~~~~~~}errors={\moznyzlom}remount{-}ro,{\moznyzlom}discard,{\moznyzlom}nouser\_xattr\textcolor{seda}{\guillemotright}{~~}0\textcolor{seda}{\guillemotright}{~~~~~~}1}%
+\radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{UUID=\textquotedbl{}61bbd562{-}0694{-}4561{-}a8e2{-}4ccfd004a660\textquotedbl{}\moznyzlom{}\textcolor{seda}{\guillemotright}{~~~~~~}/\textcolor{seda}{\guillemotright}{~~~~~~}ext4\textcolor{seda}{\guillemotright}{~~~~~~}errors={\moznyzlom}remount{-}ro,{\moznyzlom}discard,{\moznyzlom}nouser\_xattr\textcolor{seda}{\guillemotright}{~~}0\textcolor{seda}{\guillemotright}{~~~~~~}1}%
+
 160
 pdf-a4.*
 diskove-oddily
