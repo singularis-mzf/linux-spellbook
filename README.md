@@ -110,7 +110,7 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [system](kapitoly/system.md) | Systém | 100% | vydána (od verze 1.2) |
 | [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) | Zpracování textových souborů | 100% | vydána (od verze 1.2) |
 | [zpracovani-videa-a-zvuku](kapitoly/zpracovani-videa-a-zvuku.md) | Zpracování videa a zvuku | 100% | vydána (od verze 1.0) |
-| [sed](kapitoly/sed.md) | Sed | 80% | dítě |
+| [sed](kapitoly/sed.md) | Sed | 100% | připravena k vydání |
 | [sprava-uzivatelu](kapitoly/sprava-uzivatelu.md) | Správa uživatelů | 80% | dítě |
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
 | [zpracovani-obrazku](kapitoly/zpracovani-obrazku.md) | Zpracování obrázků | 40% | dítě |

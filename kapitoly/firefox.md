@@ -61,6 +61,12 @@ https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/The_about_protocol
 **browser.tabs.insertAfterCurrent = FALSE**<br>
 **browser.tabs.insertRelatedAfterCurrent = FALSE**
 
+*# neotevírat ihned po kliknutí do adresního řádku nabídku*<br>
+**browser.urlbar.openViewOnFocus = FALSE**
+<!--
+(od Firefoxu 75, možná 76)
+-->
+
 *# povolit přizpůsobení stránek a prohlížeče pomocí stylových předpisů*<br>
 *// Přizpůsobení se provádí pomocí souborů userContent.css (stránky) a userChrome.css (rozhraní prohlížeče). V profilu Firefoxu musíte vytvořit nový adresář „chrome“ a umístit je tam.*<br>
 **toolkit.legacyUserProfileCustomizations.stylesheets = TRUE**

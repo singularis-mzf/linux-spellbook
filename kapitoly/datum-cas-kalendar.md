@@ -36,6 +36,7 @@ Plánovní úloh na konkrétní čas do této kapitoly nespadá.
 ## Definice
 
 * **Časová známka Unixu** je číselná reprezentace okamžiku v čase daná počtem sekund od 00:00:00 UTC 1. ledna 1970. Čas před tímto milníkem se reprezentuje zápornými čísly, pozdější čas kladnými. Obvykle se uvažují celá čísla, ale některé implementace pracují i s desetinnými. Časová známka Unixu se uvádí téměř výhradně v desítkové soustavě.
+* **Systémový čas** je čas zpřístupněný systémem programům. Při startu systému se nastaví podle hardwarového času a zaniká vypnutím operačního systému. Systémový čas je obvykle v lokální časové zóně. Protikladem je **hardwarový čas**, což je čas poskytovaný zařízením na základní desce počítače. Hardwarový čas je obvykle v UTC, ale přesto se při práci s ním používá čas v lokální časové zóně.
 
 !ÚzkýRežim: vyp
 
@@ -254,7 +255,7 @@ pro zarovnání mezerami místo nulami tam vložte „\_“, např. „%\_m“ v
 *# zjistit datum Velikonoční neděle*<br>
 **date -d "$(LC\_ALL=C ncal -e** [{*rok*}]**)" +%F**
 
-### Nastavení systému
+### Systémový a hardwarový čas
 
 *# přepnout **časovou zónu** systému (ručně)*<br>
 **sudo dpkg-reconfigure tzdata**<br>
@@ -272,6 +273,18 @@ pro zarovnání mezerami místo nulami tam vložte „\_“, např. „%\_m“ v
 *// Zadejte čas a datum ve formátu „YYYY-MM-DD HH:MM:SS“. Poznámka: Ve VirtualBoxu .*<br>
 **timedatectl set-ntp off**<br>
 **timedatectl set-time "**{*nový lokální čas*}**"**
+
+*# ručně nastavit hardwarový čas*<br>
+*// Datum a čas by měly být ve formátu „YYYY-MM-DD HH:MM:SS“, dovoleny jsou i jiné formáty. Pozor, je vyžadován lokální čas v časové zóně systému!*<br>
+**sudo hwclock \-\-set \-\-date '**{*lokální datum čas*}**'**
+
+*# nastavit systémový čas z hardwarového/hardwarový ze systémového*<br>
+**sudo hwclock -s**<br>
+**sudo hwclock -w**
+
+*# zobrazit hardwarový čas (lokální/UTC)*<br>
+**sudo hwclock -r**<br>
+**sudo hwclock -r \| date -u -f - '+%F&blank;%T.%6N%z'**
 
 *# ručně synchronizovat systémový čas*<br>
 ?

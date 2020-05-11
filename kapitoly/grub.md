@@ -63,6 +63,13 @@ Poznámky:
 <odsadit1>**text = "%d s"**<br>
 **\}**
 
+*# sestavit zaváděcí ramfs (pro nejnovější jádro/pro všechna jádra/pro konkrétní jádro)*<br>
+*// Konkrétní verze jádra se zadává ve formátu „4.15.0-99-generic“.*<br>
+**sudo update-initramfs -u**[**v**]<br>
+**sudo update-initramfs -u**[**v**] **-k all**<br>
+**sudo update-initramfs -u**[**v**] **-k** {*verze-jádra*}<br>
+
+
 ## Parametry příkazů
 <!--
 - Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.

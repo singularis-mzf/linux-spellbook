@@ -233,9 +233,18 @@ function ZjistitPredevsimPro(verze) {
     }
 }
 
-function ZjistitOznaceniVerze(textverze,   i) {
-    i = index(textverze, ",");
-    return i != 0 ? gensub(/^\s*|\s*$/, "", "g", substr(textverze, 1, i - 1)) : textverze;
+function ZjistitOznaceniVerze(textverze, pridatZkratku,   i, s) {
+    if ((i = index(textverze, ",")) != 0) {
+        s = substr(textverze, i + 1);
+        gsub(/^\s*|\s*,.*$/, "", textverze);
+        if (pridatZkratku) {
+            s = gensub(/(\S)\S*/, "\\1.", "g", s);
+            gsub(/\s+/, " ", s);
+            gsub(/^\s|\s$/, "", s);
+            textverze = textverze ", " toupper(s);
+        }
+    }
+    return textverze;
 }
 
 function ZjistitJmenoVerze(textverze,   i) {

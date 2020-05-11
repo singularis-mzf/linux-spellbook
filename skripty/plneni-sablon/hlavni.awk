@@ -168,7 +168,7 @@ function RidiciRadekSpolecnaObsluha(text,   i, soubor) {
         case "MENU OSNOVA":
             if (IDFORMATU != "html") {ShoditFatalniVyjimku("{{MENU OSNOVA}} je podporováno jen pro formát HTML!")}
             if (IDKAPITOLY ~ /^(_|$)/) {
-                printf("Pro tuto stránku není menu osnova podporováno.\n");
+                printf("<div class=\"text\">Menu Osnova má smysl pouze na stránkách kapitol a některých dodatků.</div>\n");
                 return 0;
             }
             VyzadujeFragmentyTSV();

@@ -589,6 +589,9 @@ nav a[rel="prev"]::after, nav a[rel="next"]::before {content:none;}
 .zaklinadlo .zahlavi b {
     color:rgba({{zb-text}},{{zb-tucny-text-kryti}});
 }
+.zaklinadlo .zahlavi sup {
+    vertical-align:super;
+}
 
 .zaklinadlo .zahlavi>.cislo {
     float:right;
@@ -1006,7 +1009,7 @@ nav .next {text-align:left;}
     margin:2em 0 2em 1em;
 }
 .prehledy>div {width:33%;}
-.prehledy>div>div {padding-bottom:2rem;}
+.prehledy>div>div {margin-bottom:5rem;}
 .prehledy>div>div>div {width:85%;margin-top:0.5em;}
 /*.prehledy li+li {margin-top:0.5em;}*/
 .prehledy a {
@@ -1016,7 +1019,7 @@ nav .next {text-align:left;}
     text-decoration:none;
 }
 .prehledy a>* {display:block;}
-.prehledy strong {display:block;font-weight:bold;margin-top:1em;}
+.prehledy strong {display:block;font-weight:bold;}
 .prehledy .cislo {
     flex-shrink:0;
     width:3em;
@@ -1191,6 +1194,11 @@ nav.menu .nadpis {
     padding:0.5rem 1rem;
     font-size:150%;
     text-transform:uppercase;
+}
+
+nav.menu .text {
+    padding:1em;
+    line-height:1.5;
 }
 
 nav.menu div.polozky .cislo {

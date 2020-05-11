@@ -153,7 +153,7 @@ function PrelozitVystup(radek) {
     gsub(/\{\{NÁSLEDUJÍCÍ NÁZEV\}\}/, nazev_nasledujici, radek);
     gsub(/\{\{NÁSLEDUJÍCÍ ČÍSLO\}\}/, id_nasledujici != "" ? cislo_kapitoly + 1 : 0, radek);
     gsub(/\{\{ČÍSLO KAPITOLY\}\}/, cislo_kapitoly, radek);
-    gsub(/\{\{OZNAČENÍ VERZE\}\}/, EscapovatKNahrade(ZjistitOznaceniVerze(JMENOVERZE)), radek);
+    gsub(/\{\{OZNAČENÍ VERZE\}\}/, EscapovatKNahrade(ZjistitOznaceniVerze(JMENOVERZE, 1)), radek);
     gsub(/\{\{JMÉNO VERZE\}\}/, EscapovatKNahrade(ZjistitJmenoVerze(JMENOVERZE)), radek);
     gsub(/\{\{PŘEDEVŚIM PRO\}\}/, EscapovatKNahrade(predevsim_pro), radek);
     gsub(/\{\{DATUMSESTAVENÍ\}\}/, DATUMSESTAVENI, radek);

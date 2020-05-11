@@ -54,7 +54,7 @@ OBRAZKY := favicon.png by-sa.png logo-knihy-velke.png make.png barvy.png ve-vyst
 OBRAZKY += ik-vychozi.png
 SVG_OBRAZKY := kalendar.svg graf-filtru.svg
 OBRAZKY_IK := awk.png barvy-a-titulek.png datum-cas-kalendar.png diskove-oddily.png docker.png git.png hledani-souboru.png
-OBRAZKY_IK += make.png markdown.png planovani-uloh.png prace-s-archivy.png regularni-vyrazy.png soubory-a-adresare.png sprava-balicku.png sprava-procesu.png stahovani-videi.png system.png
+OBRAZKY_IK += make.png markdown.png planovani-uloh.png prace-s-archivy.png regularni-vyrazy.png sed.png soubory-a-adresare.png sprava-balicku.png sprava-procesu.png stahovani-videi.png system.png
 OBRAZKY_IK += zpracovani-textovych-souboru.png zpracovani-videa-a-zvuku.png
 OBRAZKY_IK += predmluva.png koncepce-projektu.png
 

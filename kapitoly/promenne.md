@@ -15,12 +15,14 @@ https://creativecommons.org/licenses/by-sa/4.0/
 Poznámky:
 
 ⊨
+☐
+○ ◉
 -->
 
 # Proměnné prostředí a interpretu
 
 !Štítky: {tematický okruh}{bash}{systém}
-
+!FixaceIkon: 1754
 !ÚzkýRežim: zap
 
 ## Úvod
@@ -31,11 +33,15 @@ Poznámky:
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+Tato kapitola pokrývá veškerou práci s proměnnými prostředí v Linuxu a dále také veškerou
+práci s proměnnými interpretu Bash. Rovněž uvádí některé důležité proměnné prostředí,
+kterými lze ovlivnit funkci programů a systému.
+
 ## Definice
-<!--
-- Uveďte výčet specifických pojmů pro použití v této kapitole a tyto pojmy definujte co nejprecizněji.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+* **Prostředí** je soubor pojmenovaných textových proměnných, který má v Linuxu každý proces. Nově vytvořený proces nejčastěji získá svoje prostředí jako kopii prostředí svého rodičovského procesu. Je-li proces spuštěn příkazem „exec“, proměnné prostředí se zachovají do nově spuštěného procesu.
+* **Proměnná prostředí** je jedna z proměnných v prostředí (např. „HOME“).
+* **Proměnná interpretu** je proměnná vytvořená interpretem Bash (popř. jiným) za účelem použití ve funkcích a skriptech. Není přístupná z jiných procesů, nešíří se do nich a ukončením dané instance bashe zaniká. Proměnné interpretu nemusejí být textové, mohou to být také pole, asociativní pole či funkce.
 
 <!--
 
@@ -74,25 +80,10 @@ Méně důležité:
 ?
 
 *# jde o proměnnou prostředí?*<br>
+**printenv** {*název\_proměnné*} **&gt;/dev/null**
+
+*# jde o funkci?*<br>
 ?
-
-### Jmenné odkazy
-
-*# vytvořit jmenný odkaz*<br>
-*// Poznámka: jmenným odkazem nelze odkazovat na normální ani asociativní pole!*<br>
-**declare -n** {*název\_odkazu*}**=**{*název\_odkazované\_proměnné*}
-
-*# zrušit jmenný odkaz*<br>
-**unset -n** {*název\_odkazu*}
-
-*# je proměnná jmenný odkaz?*<br>
-**test -R** {*název\_proměnné*}
-
-*# přečíst jmenný odkaz*<br>
-**if test -R** {*název\_odkazu*}**; then declare +n** {*název\_odkazu*}**; echo $**{*název\_odkazu*}**; declare -n** {*název\_odkazu*}**; else false; fi**
-<!--
-[ ] Vyzkoušet.
--->
 
 ### Proměnné prostředí
 
@@ -105,6 +96,7 @@ Méně důležité:
 *# vypsat všechny proměnné prostředí (txt/txtz)*<br>
 **printenv**<br>
 **printenv -0**
+
 
 ### Pole
 
@@ -132,6 +124,23 @@ Méně důležité:
 **test -v '**{*názevpole*}[**{*klíč*}**]**'**<br>
 **test -v "**{*názevpole*}**[$\{**{*proměnná\_s\_klíčem*}**@Q}]"**
 
+### Jmenné odkazy
+
+*# vytvořit jmenný odkaz*<br>
+*// Poznámka: jmenným odkazem nelze odkazovat na normální ani asociativní pole!*<br>
+**declare -n** {*název\_odkazu*}**=**{*název\_odkazované\_proměnné*}
+
+*# zrušit jmenný odkaz*<br>
+**unset -n** {*název\_odkazu*}
+
+*# je proměnná jmenný odkaz?*<br>
+**test -R** {*název\_proměnné*}
+
+*# přečíst jmenný odkaz*<br>
+**if test -R** {*název\_odkazu*}**; then declare +n** {*název\_odkazu*}**; echo $**{*název\_odkazu*}**; declare -n** {*název\_odkazu*}**; else false; fi**
+<!--
+[ ] Vyzkoušet.
+-->
 
 ## Parametry příkazů
 <!--

@@ -1,6 +1,6 @@
 <!--
 
-Linux Kniha kouzel, kapitola GNU make
+Linux Kniha kouzel, kapitola Make
 Copyright (c) 2019 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -11,7 +11,7 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
-# GNU make
+# Make
 
 !Štítky: {program}{programování}
 !FixaceIkon: 1754
