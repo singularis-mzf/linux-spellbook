@@ -157,11 +157,6 @@ $(SOUBORY_PREKLADU)/ucs_ikony.dat: ucs_ikony/ikony.txt skripty/extrakce/ikony-za
 	mkdir -pv $(dir $@)
 	$(AWK) -f skripty/extrakce/ikony-zaklinadel.awk
 
-# 5. soubory_prekladu/qr.svg
-# ----------------------------------------------------------------------------
-$(SOUBORY_PREKLADU)/qr.svg:
-	printf 'https://singularis-mzf.github.io' | qrencode -o "$@" -t svg -s 8
-
 # HTML:
 # ============================================================================
 
@@ -211,10 +206,6 @@ $(SVG_OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%): $(VYSTUP_PREKLADU)/html/obra
 	mkdir -pv $(dir $@)
 	cp $< $@
 
-$(VYSTUP_PREKLADU)/html/obrazky/qr.svg: $(SOUBORY_PREKLADU)/qr.svg
-	mkdir -pv $(dir $@)
-	cp $< $@
-
 # 5. vystup_prekladu/html/{id}.htm => vystup_prekladu/html/index.htm
 # ----------------------------------------------------------------------------
 $(VYSTUP_PREKLADU)/html/index.htm: $(SOUBORY_PREKLADU)/fragmenty.tsv \
@@ -223,8 +214,7 @@ $(VYSTUP_PREKLADU)/html/index.htm: $(SOUBORY_PREKLADU)/fragmenty.tsv \
   $(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY)))   $(SOUBORY_PREKLADU)/fragmenty.tsv \
   $(OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%) \
   $(OBRAZKY_IK:%=$(VYSTUP_PREKLADU)/html/obrazky/ik/%) \
-  $(SVG_OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%) \
-  $(VYSTUP_PREKLADU)/html/obrazky/qr.svg \
+  $(SVG_OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%)
   $(DATUM_SESTAVENI_SOUBOR)
 	$(AWK) -f skripty/plneni-sablon/index-html.awk -v JMENOVERZE='$(JMENO)' -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v IDFORMATU=html -v VARIANTA=index $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/html/sablona.htm > $@
 
@@ -342,6 +332,8 @@ $(SVG_OBRAZKY:%.svg=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%.pdf): $(SOUBORY_
 #	z balíčku „librsvg2-bin“:
 	rsvg-convert -f pdf -o "$@" "$<"
 
+$(SOUBORY_PREKLADU)/pdf-spolecne/qr.eps: konfig.ini
+	bash skripty/precist_konfig.sh Adresy do-qr <$< | qrencode -o "$@" -t eps -s 8
 
 # PDF A4:
 # ============================================================================
@@ -372,7 +364,8 @@ $(VYSTUP_PREKLADU)/pdf-a4.pdf: \
   $(SOUBORY_PREKLADU)/pdf-a4/kniha.tex \
   $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%) \
   $(OBRAZKY_IK:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/ik/%) \
-  $(SVG_OBRAZKY:%.svg=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%.pdf)
+  $(SVG_OBRAZKY:%.svg=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%.pdf) \
+  $(SOUBORY_PREKLADU)/pdf-spolecne/qr.eps
 	mkdir -pv $(dir $@)
 	ln -rsTv skripty $(dir $<)skripty 2>/dev/null || true
 	cd $(dir $<); exec $(AWK) -f skripty/latex.awk
@@ -407,7 +400,8 @@ $(VYSTUP_PREKLADU)/pdf-a4-bez.pdf: \
   $(SOUBORY_PREKLADU)/pdf-a4-bez/kniha.tex \
   $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%) \
   $(OBRAZKY_IK:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/ik/%) \
-  $(SVG_OBRAZKY:%.svg=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%.pdf)
+  $(SVG_OBRAZKY:%.svg=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%.pdf) \
+  $(SOUBORY_PREKLADU)/pdf-spolecne/qr.eps
 	mkdir -pv $(dir $@)
 	ln -rsTv skripty $(dir $<)skripty 2>/dev/null || true
 	cd $(dir $<); exec $(AWK) -f skripty/latex.awk
@@ -442,7 +436,8 @@ $(VYSTUP_PREKLADU)/pdf-b5.pdf: \
   $(SOUBORY_PREKLADU)/pdf-b5/kniha.tex \
   $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%) \
   $(OBRAZKY_IK:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/ik/%) \
-  $(SVG_OBRAZKY:%.svg=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%.pdf)
+  $(SVG_OBRAZKY:%.svg=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%.pdf) \
+  $(SOUBORY_PREKLADU)/pdf-spolecne/qr.eps
 	mkdir -pv $(dir $@)
 	ln -rsTv skripty $(dir $<)skripty 2>/dev/null || true
 	cd $(dir $<); exec $(AWK) -f skripty/latex.awk
@@ -477,7 +472,8 @@ $(VYSTUP_PREKLADU)/pdf-b5-bez.pdf: \
   $(SOUBORY_PREKLADU)/pdf-b5-bez/kniha.tex \
   $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%) \
   $(OBRAZKY_IK:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/ik/%) \
-  $(SVG_OBRAZKY:%.svg=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%.pdf)
+  $(SVG_OBRAZKY:%.svg=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%.pdf) \
+  $(SOUBORY_PREKLADU)/pdf-spolecne/qr.eps
 	mkdir -pv $(dir $@)
 	ln -rsTv skripty $(dir $<)skripty 2>/dev/null || true
 	cd $(dir $<); exec $(AWK) -f skripty/latex.awk
@@ -512,7 +508,8 @@ $(VYSTUP_PREKLADU)/pdf-b5-na-a4.pdf: \
   $(SOUBORY_PREKLADU)/pdf-b5-na-a4/kniha.tex \
   $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%) \
   $(OBRAZKY_IK:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/ik/%) \
-  $(SVG_OBRAZKY:%.svg=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%.pdf)
+  $(SVG_OBRAZKY:%.svg=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%.pdf) \
+  $(SOUBORY_PREKLADU)/pdf-spolecne/qr.eps
 	mkdir -pv $(dir $@)
 	ln -rsTv skripty $(dir $<)skripty 2>/dev/null || true
 	cd $(dir $<); exec $(AWK) -f skripty/latex.awk

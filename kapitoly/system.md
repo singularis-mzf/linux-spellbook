@@ -90,6 +90,10 @@ Poznámka: správci přihlášení se nepočítají mezi démony, protože mají
 *# čas od spuštění systému (**uptime**)*<br>
 **uptime \-\-pretty**
 
+*# počet logických procesorů/fyzických jader*<br>
+**nproc \-\-all**<br>
+?
+
 *# jméno procesoru*<br>
 **LC\_ALL=C lscpu \| egrep '^Model name:' | sed -E 's/^[<nic>^:]\*:\\s\*//'**
 

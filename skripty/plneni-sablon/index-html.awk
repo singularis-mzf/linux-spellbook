@@ -121,7 +121,8 @@ function PrelozitVystup(radek) {
     gsub(/\{\{DATUM SESTAVENÍ\}\}/, datum, radek);
     gsub(/\{\{DATUMSESTAVENÍ\}\}/, DATUMSESTAVENI, radek);
     gsub(/\{\{JMÉNO VERZE\}\}/, EscapovatKNahrade(ZjistitJmenoVerze(JMENOVERZE)), radek);
-    gsub(/\{\{OZNAČENÍ VERZE\}\}/, EscapovatKNahrade(ZjistitOznaceniVerze(JMENOVERZE, 1)), radek);
+    gsub(/\{\{OZNAČENÍ VERZE\}\}/, EscapovatKNahrade(ZjistitOznaceniVerze(JMENOVERZE)), radek);
+    gsub(/\{\{OZNAČENÍ VERZE S INICIÁLAMI\}\}/, EscapovatKNahrade(ZjistitOznaceniVerze(JMENOVERZE, 1)), radek);
     gsub(/\{\{PŘEDEVŠÍM PRO\}\}/, EscapovatKNahrade(predevsim_pro), radek);
 
     return radek;
