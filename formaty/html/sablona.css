@@ -1031,6 +1031,7 @@ nav .next {text-align:left;}
 }
 .prehledy a>* {display:block;}
 .prehledy strong {display:block;font-weight:bold;}
+.prehledy .cislo, .prehledy .nazev {margin-top:1em;}
 .prehledy .cislo {
     flex-shrink:0;
     width:3em;
@@ -1039,17 +1040,15 @@ nav .next {text-align:left;}
 }
 .prehledy .cislo::after {content:"."}
 .prehledy .ikona {
-    position:relative;z-index:1;
     flex-shrink:0;
     display:inline-block;
     margin-right:0.5em;
-    width:3em;height:1em;
+    width:3em;height:3em;
     /*border:1px dotted blue; /*DEBUG*/
     opacity:0.7;
 }
 .prehledy .ikona img {
-    position:absolute;left:0;top:0;bottom:auto;right:auto;
-    width:100%;height:auto;
+    width:100%;height:auto;vertical-align:middle;
 }
 .prehledy .nazev {
     flex-shrink:1;
