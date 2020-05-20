@@ -59,24 +59,42 @@ Varianty:
 <span class="left"><a href="index.htm"><img src="obrazky/favicon.png" width="16" height="16" alt=""></a> Linux: Kniha kouzel, {{OZNAČENÍ VERZE S INICIÁLAMI}} ({{DATUM SESTAVENÍ}})</span>
 <span class="right"><span class="ico1"></span><span class="ico2"></span><span class="ico3"></span></span>
 </header>
+<nav class="menuokna">
+<a href="#menukapitoly" class="menu"><span class="prvnipismeno">K</span>apitoly</a>
+<a href="#menuosnova" class="menu"><span class="prvnipismeno">O</span>snova</a>
+<a href="#menustitky" class="menu"><span class="prvnipismeno">Š</span>títky</a>
+<a href="#menunapoveda" class="menu"><span class="prvnipismeno">N</span>ápověda</a>
+{{VARIANTY autori,kapitola,stitky}}
+{{POKUD NENÍ PRVNÍ}}
+<a href="{{PŘEDCHOZÍ ID}}.htm" rel="prev" title="{{PŘEDCHOZÍ ČÍSLO}}. {{PŘEDCHOZÍ NÁZEV}}" accesskey="p" class="predchozi">Předchozí&nbsp;kapitola</a>
+{{KONEC POKUD}}
+<a href="index.htm" class="prehled"><span class="prvnipismeno">P</span>řehled kapitol</a>
+{{POKUD NENÍ POSLEDNÍ}}
+<a href="{{NÁSLEDUJÍCÍ ID}}.htm" rel="next" title="{{NÁSLEDUJÍCÍ ČÍSLO}}. {{NÁSLEDUJÍCÍ NÁZEV}}" accesskey="n" class="nasledujici">Následující&nbsp;kapitola</a>
+{{KONEC POKUD}}
+{{VARIANTY autori,index,kapitola,stitky}}
+</nav>
 
 {{VARIANTY autori,kapitola,stitky}}
+<div class="slogan">Veškerá moc příkazové řádky/příkazového řádku přehledně, pro začátečníky i&nbsp;pokročilé</div>
 
+<!--
 <nav class="horni">
 <div class="slogan">Veškerá moc příkazové řádky/příkazového řádku přehledně, pro začátečníky i&nbsp;pokročilé</div>
 <span class="prev">
 {{POKUD NENÍ PRVNÍ}}
 <a href="{{PŘEDCHOZÍ ID}}.htm" rel="prev" title="{{PŘEDCHOZÍ ČÍSLO}}. {{PŘEDCHOZÍ NÁZEV}}" accesskey="p">Předchozí&nbsp;kapitola</a>&nbsp;|
 {{KONEC POKUD}}
-</span><a href="index.htm" accesskey="i">Přehled</a><span class="next"><!--
+</span><a href="index.htm" accesskey="i">Přehled</a><span class="next"><!- -
 {{POKUD NENÍ POSLEDNÍ}}
--->&nbsp;| <a href="{{NÁSLEDUJÍCÍ ID}}.htm" rel="next" title="{{NÁSLEDUJÍCÍ ČÍSLO}}. {{NÁSLEDUJÍCÍ NÁZEV}}" accesskey="n">Následující&nbsp;kapitola</a>
+- ->&nbsp;| <a href="{{NÁSLEDUJÍCÍ ID}}.htm" rel="next" title="{{NÁSLEDUJÍCÍ ČÍSLO}}. {{NÁSLEDUJÍCÍ NÁZEV}}" accesskey="n">Následující&nbsp;kapitola</a>
 {{KONEC POKUD}}
 {{POKUD JE POSLEDNÍ}}
--->
+- ->
 {{KONEC POKUD}}
 </span>
 </nav>
+-->
 
 {{VARIANTY autori,index,kapitola,stitky}}
 

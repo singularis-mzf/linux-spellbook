@@ -83,6 +83,8 @@ function ZacatekKapitoly(nazevKapitoly, cisloKapitoly, stitky, osnova, ikonaKapi
         vysledek = "";
     }
 
+    return vysledek; # negenerovat osnovu (je v menu)
+
     jePrvni = 1;
     melaPodsekce = 1;
     for (i = 1; i <= length(osnova); ++i) {
