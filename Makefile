@@ -41,7 +41,7 @@ VSECHNY_KAPITOLY += odkazy perl planovani-uloh prace-s-archivy promenne regularn
 # S
 VSECHNY_KAPITOLY += sed soubory-a-adresare sprava-balicku sprava-balicku-2 sprava-procesu sprava-uzivatelu stahovani-videi system
 # T, U, V, W, X, Y, Z
-VSECHNY_KAPITOLY += unicode uzivatelska-rozhrani wine x
+VSECHNY_KAPITOLY += unicode uzivatelska-rozhrani vim wine x
 # Z
 VSECHNY_KAPITOLY += zpracovani-binarnich-souboru zpracovani-obrazku zpracovani-textovych-souboru zpracovani-videa-a-zvuku
 
@@ -54,7 +54,7 @@ OBRAZKY := favicon.png by-sa.png logo-knihy-velke.png make.png barvy.png ve-vyst
 OBRAZKY += ik-vychozi.png
 SVG_OBRAZKY := kalendar.svg graf-filtru.svg
 OBRAZKY_IK := awk.png barvy-a-titulek.png datum-cas-kalendar.png diskove-oddily.png docker.png git.png hledani-souboru.png
-OBRAZKY_IK += make.png markdown.png planovani-uloh.png prace-s-archivy.png regularni-vyrazy.png sed.png soubory-a-adresare.png sprava-balicku.png sprava-procesu.png stahovani-videi.png system.png
+OBRAZKY_IK += make.png markdown.png planovani-uloh.png prace-s-archivy.png regularni-vyrazy.png sed.png soubory-a-adresare.png sprava-balicku.png sprava-procesu.png stahovani-videi.png system.png vim.png
 OBRAZKY_IK += zpracovani-textovych-souboru.png zpracovani-videa-a-zvuku.png
 OBRAZKY_IK += predmluva.png koncepce-projektu.png
 
@@ -214,7 +214,7 @@ $(VYSTUP_PREKLADU)/html/index.htm: $(SOUBORY_PREKLADU)/fragmenty.tsv \
   $(addsuffix .htm,$(addprefix $(VYSTUP_PREKLADU)/html/,$(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY)))   $(SOUBORY_PREKLADU)/fragmenty.tsv \
   $(OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%) \
   $(OBRAZKY_IK:%=$(VYSTUP_PREKLADU)/html/obrazky/ik/%) \
-  $(SVG_OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%)
+  $(SVG_OBRAZKY:%=$(VYSTUP_PREKLADU)/html/obrazky/%) \
   $(DATUM_SESTAVENI_SOUBOR)
 	$(AWK) -f skripty/plneni-sablon/index-html.awk -v JMENOVERZE='$(JMENO)' -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v IDFORMATU=html -v VARIANTA=index $(SOUBORY_PREKLADU)/fragmenty.tsv formaty/html/sablona.htm > $@
 

@@ -85,20 +85,20 @@ Offline instalací se rozumí stažení balíčků, jejich přenesení na počí
 **sudo apt-get update**
 
 *# **aktualizovat** všechny aktualizovatelné balíčky (normálně/drasticky/normálně/drasticky)*<br>
-**sudo apt-get upgrade** [**-y**] [**\-\-autoremove** [**\-\-purge**]]<br>
-**sudo apt-get dist-upgrade** [**-y**] [**\-\-autoremove** [**\-\-purge**]]<br>
-**sudo aptitude** [**-y**] [**\-\-no-new-installs**] **safe-upgrade** <br>
+**sudo apt-get upgrade** [**-y**] <nic>[**\-\-autoremove** [**\-\-purge**]]<br>
+**sudo apt-get dist-upgrade** [**-y**] <nic>[**\-\-autoremove** [**\-\-purge**]]<br>
+**sudo aptitude** [**-y**] <nic>[**\-\-no-new-installs**] **safe-upgrade** <br>
 **sudo aptitude** [**-y**] **full-upgrade**
 
 *# **nainstalovat** nový balíček včetně závislostí (vzdálený balíček/lokální soubor)*<br>
-**sudo apt-get install** [**-y**] [**\-\-no-install-recommends**] [**\-\-install-suggests**] [**-V**] {*balíček*}...<br>
+**sudo apt-get install** [**-y**] <nic>[**\-\-no-install-recommends**] <nic>[**\-\-install-suggests**] <nic>[**-V**] {*balíček*}...<br>
 **sudo gdebi** {*balíček.deb*}
 
 *# aktualizovat jen konkrétní balíčky a jejich závislosti*<br>
 **sudo apt-get install \-\-only-upgrade** {*balíček*}...
 
 *# nainstalovat či upgradovat zvolené balíčky a současně upgradovat ostatní*<br>
-**sudo apt-get upgrade** [**-y**] **&amp;&amp; sudo apt-get install** [**-y**] [**\-\-autoremove** [**\-\-purge**]] {*balíček*}...
+**sudo apt-get upgrade** [**-y**] **&amp;&amp; sudo apt-get install** [**-y**] <nic>[**\-\-autoremove** [**\-\-purge**]] {*balíček*}...
 
 *# pokusit se napravit poškozené závislosti*<br>
 **sudo apt-get install \-\-fix-broken**
@@ -115,7 +115,7 @@ Offline instalací se rozumí stažení balíčků, jejich přenesení na počí
 **aptitude** [**-F** {*formát*}] **search '**{*vyhledávací podmínka*}**'** [**'**{*další vyhledávací podmínka*}**'**]...
 
 *# vypsat **všechny dostupné balíčky** (včetně dostupných verzí, pouze pro hlavní architekturu)*<br>
-**aptitude search \-\-disable-columns -F "$(printf "%s\\t%s" %p %V)" '?true' \| egrep -v "$(printf "[^\\t]\*:[^\\t]|[^\\t]\*\\t&lt;[^\\t]\*&gt;(\\t\|\\$)")"**
+**aptitude search \-\-disable-columns -F "$(printf "%s\\t%s" %p %V)" '?true' \| egrep -v "$(printf "[^\\t]\*:[<nic>^\\t]|[<nic>^\\t]\*\\t&lt;[<nic>^\\t]\*&gt;(\\t\|\\$)")"**
 
 *# vypsat seznam **nainstalovaných balíčků** včetně verzí (pro člověka – alternativy)*<br>
 **apt list \-\-installed**<br>
@@ -192,92 +192,6 @@ aptitude search --disable-columns -F %p "?upgradable"
 **sudo apt-mark manual** {*balíček*}...<br>
 **sudo apt-mark auto** {*balíček*}...
 
-### Aptitude (vyhledávací podmínky)
-
-*# hledání podle jména balíčku (alternativy)*<br>
-**?name("**{*regulární-výraz*}**")**<br>
-**?exact-name(**{*přesné-jméno*}**)**
-
-*# hledání podle krátkého popisu balíčku*<br>
-**?description("**{*regulární výraz*}**")**
-
-*# hledání podle **architektury***<br>
-**?architecture(**{*architektura*}**)**
-
-*# hledání podle archivu balíčku v repozitáři*<br>
-**?archive("**{*regulární-výraz*}**")**
-
-*# hledání podle sekce a podsekce v repozitáři*<br>
-**?section("**{*regulární-výraz*}**")**
-
-*# jen balíčky instalované ručně/automaticky*<br>
-**?and(?installed,?not(?automatic))**<br>
-**?automatic**
-
-*# jen nainstalované balíčky*<br>
-**?installed**
-
-*# logické operace mezi vzorky*<br>
-**?and(**{*vzorek1*}**,**{*vzorek2*}**)**<br>
-**?or(**{*vzorek1*}**,**{*vzorek2*}**)**<br>
-**?not(**{*vzorek*}**)**
-
-*# balíčky, které by byly odstraněny operací „autoremove“*<br>
-**\~g**
-
-*# balíčky, pro které je dostupná novější verze/které mohou být upgradovány*<br>
-*// Pozor! Tento filtr zahrne i balíčky, které nemohou být aktualizovány, protože tomu brání konflikt mezi balíčky nebo zákaz jejich instalace! Naopak nezahrnuje balíčky, které budou nově instalovány pouze pro splnění nově vzniklých závislostí. Proto tento filtr není tak praktický, jak by se mohl zdát.*<br>
-**?upgradable**<br>
-?
-
-*# jen „nové“ balíčky*<br>
-**?new**
-
-*# jen „virtuální“ balíčky*<br>
-**?virtual**
-
-<!--
-?origin(původ) – jen balíčky určitého původu
--->
-
-### Aptitude (formát -F)
-
-Za znakem „=“ následuje příklad hodnoty pro balíček „gimp“.
-
-*# **název** balíčku*<br>
-*// Název balíčku jiné než výchozí architektury bude doplněn o architekturu, např. „gimp:i386“.*<br>
-**%p = gimp**
-
-*# krátký **popis** balíčku*<br>
-**%d = GNU Image Manipulation Program**
-
-*# **architektura***<br>
-**%E = amd64**
-
-*# **verze** (instalovaná/dostupná)*<br>
-*// Je-li dostupných víc verzí balíčku, parametr %V vybere tu, která by se nejspíš instalovala.*<br>
-*// Není-li instalovaná, resp. dostupná žádná verze, tyto parametry vypíšou „&lt;žádná&gt;“ a ignorují snahu o změnu lokalizace. Pro přenositelnost je proto doporučuji ve skriptech testovat proti regulárnímu výrazu „&lt;.\*&gt;“ místo porovnání s konkrétní hodnotou.*<br>
-**%v = 2.8.22-1**<br>
-**%V = 2.8.22-1**
-
-*# **archiv** balíčku v repozitáři*<br>
-*// Je-li dostupných víc verzí balíčku, tento parametr zohledňuje pouze nejnovější verzi. Je-li dostupná ve více archivech, vypíše parametr %t všechny dané archivy oddělené čárkou, typicky např. „bionic-security,bionic-updates“.*<br>
-**%t = bionic**
-
-*# **sekce a podsekce** balíčku*<br>
-**%s = universe/graphics**
-
-*# velikost balíčku/velikost instalovaných souborů*<br>
-**%D = 3 672 kB**<br>
-**%I = 15,8 MB**
-
-*# popis původu balíčku*<br>
-**%O = Ubuntu:18.04/bionic [amd64]**
-
-*# příznak automatické instalace*<br>
-*// Pro balíčky instalované jen pro splnění závislosti jiného balíčku vypíše „A“, jinak vypíše prázdný řetězec.*<br>
-**%M =**
-
 ### PPA
 
 *# **přidat** do zdrojů nové PPA/odebrat PPA*<br>
@@ -285,9 +199,14 @@ Za znakem „=“ následuje příklad hodnoty pro balíček „gimp“.
 **sudo add-apt-repository -r** [**-y**] **ppa:**{*id-vývojáře*}**/**{*id-repozitáře*}
 
 *# **vypsat** seznam aktivních PPA*<br>
-**egrep -shx '\\s\*deb(\\\[\[^\]\]\*\\\])?\\s\*http://ppa.launchpad.net/.\*' /etc/apt/sources.list /etc/apt/sources.list.d/\*.list \| cut -d / -f 4,5 \| sed -E 's/.\*/ppa:&amp;/' \| LC\_ALL=C sort -u**
+**egrep -shx '\\s\*deb(\\\[\[<nic>^\]\]\*\\\])?\\s\*http://ppa.launchpad.net/.\*' /etc/apt/sources.list /etc/apt/sources.list.d/\*.list \| cut -d / -f 4,5 \| sed -E 's/.\*/ppa:&amp;/' \| LC\_ALL=C sort -u**
 
 *# vypsat seznam balíčků dostupných z určitého PPA*<br>
+?
+
+### Jádra
+
+*# vypsat seznam nainstalovaných jader*<br>
 ?
 
 ### Správá důvěryhodných klíčů
@@ -348,7 +267,93 @@ Za znakem „=“ následuje příklad hodnoty pro balíček „gimp“.
 *# „velikonoční vajíčko“ v APT*<br>
 **apt-get moo**
 
+## Zaklínadla (aptitude)
 
+### Vyhledávací podmínky
+
+*# hledání podle jména balíčku (alternativy)*<br>
+**?name("**{*regulární-výraz*}**")**<br>
+**?exact-name(**{*přesné-jméno*}**)**
+
+*# hledání podle krátkého popisu balíčku*<br>
+**?description("**{*regulární výraz*}**")**
+
+*# hledání podle **architektury***<br>
+**?architecture(**{*architektura*}**)**
+
+*# hledání podle archivu balíčku v repozitáři*<br>
+**?archive("**{*regulární-výraz*}**")**
+
+*# hledání podle sekce a podsekce v repozitáři*<br>
+**?section("**{*regulární-výraz*}**")**
+
+*# jen balíčky instalované ručně/automaticky*<br>
+**?and(?installed,?not(?automatic))**<br>
+**?automatic**
+
+*# jen nainstalované balíčky*<br>
+**?installed**
+
+*# logické operace mezi vzorky*<br>
+**?and(**{*vzorek1*}**,**{*vzorek2*}**)**<br>
+**?or(**{*vzorek1*}**,**{*vzorek2*}**)**<br>
+**?not(**{*vzorek*}**)**
+
+*# balíčky, které by byly odstraněny operací „autoremove“*<br>
+**\~g**
+
+*# balíčky, pro které je dostupná novější verze/které mohou být upgradovány*<br>
+*// Pozor! Tento filtr zahrne i balíčky, které nemohou být aktualizovány, protože tomu brání konflikt mezi balíčky nebo zákaz jejich instalace! Naopak nezahrnuje balíčky, které budou nově instalovány pouze pro splnění nově vzniklých závislostí. Proto tento filtr není tak praktický, jak by se mohl zdát.*<br>
+**?upgradable**<br>
+?
+
+*# jen „nové“ balíčky*<br>
+**?new**
+
+*# jen „virtuální“ balíčky*<br>
+**?virtual**
+
+<!--
+?origin(původ) – jen balíčky určitého původu
+-->
+
+### Formát -F
+
+Za znakem „=“ následuje příklad hodnoty pro balíček „gimp“.
+
+*# **název** balíčku*<br>
+*// Název balíčku jiné než výchozí architektury bude doplněn o architekturu, např. „gimp:i386“.*<br>
+**%p = gimp**
+
+*# krátký **popis** balíčku*<br>
+**%d = GNU Image Manipulation Program**
+
+*# **architektura***<br>
+**%E = amd64**
+
+*# **verze** (instalovaná/dostupná)*<br>
+*// Je-li dostupných víc verzí balíčku, parametr %V vybere tu, která by se nejspíš instalovala.*<br>
+*// Není-li instalovaná, resp. dostupná žádná verze, tyto parametry vypíšou „&lt;žádná&gt;“ a ignorují snahu o změnu lokalizace. Pro přenositelnost je proto doporučuji ve skriptech testovat proti regulárnímu výrazu „&lt;.\*&gt;“ místo porovnání s konkrétní hodnotou.*<br>
+**%v = 2.8.22-1**<br>
+**%V = 2.8.22-1**
+
+*# **archiv** balíčku v repozitáři*<br>
+*// Je-li dostupných víc verzí balíčku, tento parametr zohledňuje pouze nejnovější verzi. Je-li dostupná ve více archivech, vypíše parametr %t všechny dané archivy oddělené čárkou, typicky např. „bionic-security,bionic-updates“.*<br>
+**%t = bionic**
+
+*# **sekce a podsekce** balíčku*<br>
+**%s = universe/graphics**
+
+*# velikost balíčku/velikost instalovaných souborů*<br>
+**%D = 3 672 kB**<br>
+**%I = 15,8 MB**
+
+*# popis původu balíčku*<br>
+**%O = Ubuntu:18.04/bionic [amd64]**
+
+*# příznak automatické instalace*<br>
+*// Pro balíčky instalované jen pro splnění závislosti jiného balíčku vypíše „A“, jinak vypíše prázdný řetězec.*<br>
+**%M =**
 
 ## Zaklínadla (Flatpak)
 <!--

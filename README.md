@@ -15,7 +15,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 „Linux: Kniha kouzel“ je open source sbírka velmi krátkých řešených příkladů pro příkazovou řádku/příkazový řádek systému Linux, především distribuce Ubuntu. V současnosti je dostupná ve formátu HTML pro zobrazení na počítači a ve formátu PDF pro tisk na papír.
 
-Verze *vanilková příchuť 1.6 Celestýna Cihlářová*, je cílena na *Ubuntu 18.04 Bionic Beaver* a jeho deriváty.
+Verze *vanilková příchuť 1.7 Čestmír Čapek*, je cílena na *Ubuntu 18.04 Bionic Beaver* a jeho deriváty.
 
 Příručka podléhá licenci [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 Podrobné údaje o autorství zdrojových souborů jsou uvedeny v komentářích v jejich záhlaví;
@@ -111,6 +111,7 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) | Zpracování textových souborů | 100% | vydána (od verze 1.2) |
 | [zpracovani-videa-a-zvuku](kapitoly/zpracovani-videa-a-zvuku.md) | Zpracování videa a zvuku | 100% | vydána (od verze 1.0) |
 | [sed](kapitoly/sed.md) | Sed | 100% | připravena k vydání |
+| [vim](kapitoly/vim.md) | Vim | 100% | připravena k vydání |
 | [sprava-uzivatelu](kapitoly/sprava-uzivatelu.md) | Správa uživatelů | 80% | dítě |
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
 | [zpracovani-obrazku](kapitoly/zpracovani-obrazku.md) | Zpracování obrázků | 40% | dítě |
@@ -122,6 +123,7 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [uzivatelska-rozhrani](kapitoly/uzivatelska-rozhrani.md) | Uživatelská rozhraní skriptů | 5% | dítě |
 | [apache](kapitoly/apache.md) | Webový server Apache | 5% | dítě |
 | [latex](kapitoly/latex.md) | LaTeX | 5% | dítě |
+| [dosbox](kapitoly/dosbox.md) | DosBox | 5% | dítě |
 | [bash](kapitoly/bash.md) | Bash | 2% | dítě |
 | [firefox](kapitoly/firefox.md) | Firefox | 1% | dítě |
 | [grub](kapitoly/grub.md) | GRUB | 1% | dítě |
@@ -133,12 +135,9 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | prehravani-videa | Přehrávání videa, zvuku a obrázků | - | přál/a bych si |
 | sifrovani | Šifrování a kryptografie | - | přál/a bych si |
 | firewall | Firewall | - | přál/a bych si |
-| dosbox | DosBox | - | přál/a bych si |
-| vim | Vim | - | přál/a bych si |
 | sql | SQL | - | přál/a bych si |
 | ascii-art | ASCII art | - | přál/a bych si |
 | sprava-balicku-2 | Správa balíčků 2 | - | přál/a bych si |
-| prostredi | Proměnné prostředí | - | přál/a bych si |
 | matematicke-vypocty | Matematické výpočty | - | přál/a bych si |
 | zaznam-x | Záznam obrazovky | - | přál/a bych si |
 | css | Kaskádové styly CSS | - | přál/a bych si |
@@ -152,6 +151,7 @@ Zvláštní kapitoly:
 
 ## Podobné projekty
 
+* [GNU/Linux Desktop Survival Guide](https://togaware.com/linux/survivor/) (anglicky, licence: GPL v2+ nebo CC BY 2.0+) je vynikající, pro mě fascinující a stále udržovaný zdroj podobný Linuxu: Knize kouzel. Na rozdíl od Linuxu: Knihy kouzel již vychází knižně a PDF verze příručky je placená (HTML verze je dostupná online a zdarma). Také pravděpodobně není tak vázaná na konkrétní verzi konkrétní distribuce (ale zatím jsem neměl čas se s ní podrobně seznámit).
 * [Pure Bash Bible](https://github.com/dylanaraps/pure-bash-bible) (anglicky, licence: MIT) je také kniha řešených příkladů (ačkoliv e-book) a rovněž se snaží nabízet ověřená a co nejlepší řešení. (Autor dokonce na svoje příkazy píše automatizované testy.) Ve srovnání s Linuxem: Knihou kouzel je ale omezená pouze na příkazový interpret „bash“, zatímco Linux: Kniha kouzel se snaží pokrýt celou škálu nástrojů dostupných na linuxových systémech a nabízí větší kvantitu.
 * [The Linux Documentation Project](http://www.tldp.org/) (anglicky, licence: GFDL 1.2, některé části i pod jinými svobodnými licencemi) je monumentální sbírka návodů a příruček mapující Linux. Je již ovšem prakticky neudržovaná a většinou velmi zastaralá. K návštěvě ji mohu doporučit jen „počítačovým archeologům“, rozhodně ne současným začátečníkům.
 * [TL;DR](https://github.com/tldr-pages/tldr) (anglicky − „Too Long; Didn't Read“, licence: MIT) představuje výrazně zjednodušené manuálové stránky s krátkými příklady k jednotlivým nástrojům. Na rozdíl od *Linuxu: Knihy kouzel* je organizován po nástrojích, takže musíte vědět, k čemu chcete nápovědu, a neporadí vám lepší nástroje k provedení dané činnosti. Ke každému nástrojí navíc uvádí jen nejběžnější příklady. Kladem je, že jeden z jeho klientů je dostupný jako balíček [Ubuntu](https://packages.ubuntu.com/bionic/tldr) a [Debianu](https://packages.debian.org/buster/tldr).
