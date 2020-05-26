@@ -39,7 +39,7 @@ NF > 0 {
     for (i = 1; i <= NF; ++i) {
         if ($i ~ /[[:alpha:]]/) {
             if ((rod = UrcitRod(predchozi, $i)) != "") {
-                print id, FNR, $i, rod, puvodniradek;
+                print id, FNR, tolower("(" predchozi ")" $i), rod, puvodniradek;
             }
             predchozi = $i;
         }
@@ -66,8 +66,14 @@ function UrcitRod(predchozi, slovo) {
             return "mužský";
         case "řádek":
             # ŘÁDEK
+            # aktuální řádek / odsazení řádek
+            if (predchozi ~ /^(n)$|(í)$/) {
+                if (predchozi ~ /^(aktuální|první|následující)$|(ání)$/) {return "mužský"}
+                if (predchozi ~ /^(odsazení)$/) {return "ženský"}
+                return "?";
+            }
             # ten řádek / vidím ten řádek / bez těch řádek
-            return predchozi !~ /^(z|do|třída|pět|šest|sedm|osm|devět|více|počet|čísla)$|(ých|ících|ání)$/ ? "mužský" : "ženský";
+            return predchozi ~ /^(z|do|třída|pět|šest|sedm|osm|devět|více|počet|čísla|rozsah)$|(ých|ících)$/ ? "ženský" : "mužský";
         case "řádka":
         case "řádkách":
         case "řádkám":
@@ -80,10 +86,10 @@ function UrcitRod(predchozi, slovo) {
             return "ženský";
         case "řádku":
             # ŘÁDKU
-            # mužský, ledaže „vidím tu řádku“
-            if (predchozi ~ /[éí](ho|m)$|ní$|^(jednom|číslo|konec|konce|konci|zbytek|část|rámci|v|prefix|podřetězec|začátek|začátku)$/) {
+            # mužský, ledaže „vidím tu řádku“ nebo „aktuální/předchozí řádku“
+            if (predchozi ~ /[éí](ho|m)$|^(jednom|číslo|konec|konce|konci|zbytek|část|rámci|v|prefix|podřetězec|začátek|začátku)$/) {
                 return "mužský";
-            } else if (predchozi ~ /^(na)$|(číst|ou)$/) {
+            } else if (predchozi ~ /(číst|ou|ní|zí)$/) {
                 return "ženský";
             } else {
                 return "?";
@@ -95,11 +101,11 @@ function UrcitRod(predchozi, slovo) {
             # ŘÁDKY
             # 1/4/5 = ty řádky / vidím ty řádky / ty řádky! = obojetné (0)
             # s těmi řádky = mužský; bez té řádky = ženský
-            if (predchozi ~ /^dvěma$|ými$/) {
+            if (predchozi ~ /^(dvěma|nad)$|ými$/) {
                 return "mužský";
-            } else if (predchozi ~ /^(zadání|prefix|z|číslo|příkazové|pozici|konce|dvě|tři|čtyři|konec|zbytek|část|podřetězec|začátek|ukončení)$/) {
+            } else if (predchozi ~ /^(zadání|prefix|z|číslo|čísla|číslem|znak|příkazové|pozici|konce|dvě|tři|čtyři|konec|koncem|zbytek|část|podřetězec|začátek|začátkem|ukončení|této|rámci)$|(ím)$/) {
                 return "ženský";
-            } else if (predchozi ~ /^(mít|všechny|má|tvoří|hledat|se|ostatní)$|ící$/) {
+            } else if (predchozi ~ /^(mít|všechny|má|tvoří|hledat|se|ostatní|znak)$|ící$/) {
                 return "0";
             } else {
                 return "?";

@@ -165,11 +165,19 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 <neodsadit>Všechen software potřebný k sestavení projektu je svobodný.
 Pokud některá kapitola odkazuje na nesvobodný software, vždy na to výslovně upozorní.
 
-## Aktuální poznámka k verzi „vanilková příchuť 1.7 Čestmír Čapek“
+## Aktuální poznámka k verzi „vanilková příchuť 1.8 Darja Drážní“
 
-Verze 1.7, jménem Čestmír Čapek, nepřináší žádnou novou kapitolu. Hlavní novinkou je nové, efektivní bezjavascriptové menu v HTML verzi a dodělání ikon pro všechny vydané kapitoly a předmluvu.
+Verze 1.8, jménem Darja Dražní, přináší nové kapitoly Sed a Vim.
+Kapitola „GNU make“ se nově jmenuje jen „Make“.
 
-Vydání verze 1.8, jménem Darja Drážní, očekávám v druhé polovině května 2020.
+V HTML verzi proběhlo větší množství vylepšení, z nichž nejvýraznější je lišta s menu,
+do níž jsem integroval/a i odkaz na přehled kapitol. Ikony v přehledu kapitol se
+již nepřekrývají a nepřekrývají ani následující nadpis. K označení verze
+v titulkové liště „okna“ se nově přidávají i iniciály jména verze.
+
+V PDF verzi je hlavní novinkou QR kód na titulní straně.
+
+Vydání verze 1.9, jménem Eliáš Ečer, očekávám v druhé polovině května 2020. (Neexistuje žádné české rodné jméno začínající písmenem Ď.)
 
 &nbsp;
 

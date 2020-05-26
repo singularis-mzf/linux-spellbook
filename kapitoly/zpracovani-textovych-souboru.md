@@ -567,7 +567,7 @@ Vzít/vynechat záznamy,...
 !parametry:
 
 * ☐ -u :: Po seřazení vyloučí duplicity (z každé skupiny duplicitních řádků ponechá pouze jeden).
-* ○ -c ○ -C :: Neřadí; jen zkontroluje, zda je vstup seřazený. Varianta „-c“ navíc vypíše první chybně seřazenou řádku.
+* ○ -c ○ -C :: Neřadí; jen zkontroluje, zda je vstup seřazený. Varianta „-c“ navíc vypíše první chybně seřazený řádek.
 * ☐ -k {*definice-řadicího-klíče*}{*druh-a-příznaky-řazení*} :: Definuje řadicí klíč, podle kterého se má řadit. Podrobněji – viz manuálová stránka příkazu *sort*.
 * ☐ -t {*oddělovač*} :: Definuje oddělovač polí při řazení podle klíčů.
 * ☐ -m :: Místo řazení pouze slučuje již seřazené soubory do jednoho.

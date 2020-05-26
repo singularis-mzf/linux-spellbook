@@ -109,7 +109,7 @@ Další režimy můžete najít v dokumentaci, ale pravděpodobně o nich nyn�
 {*číslo-sloupce*}**\|**<br>
 {_Home_}{*číslo-sloupce*}{_→_}
 
-### Posun kurzoru na jiný řádek
+### Posun kurzoru na jinou řádku
 
 PNZ = první nebílý znak
 
@@ -117,8 +117,8 @@ PNZ = první nebílý znak
 {_↑_}<br>
 {_↓_}
 
-*# nahoru/dolů o N řádků*<br>
-*// K posunu kurzoru nahoru či dolů po řádcích obrazovky místo po řádcích souboru slouží příkazy „gk“ a „gj“.*<br>
+*# nahoru/dolů o N řádek*<br>
+*// K posunu kurzoru nahoru či dolů po řádkách obrazovky místo po řádkách souboru slouží příkazy „gk“ a „gj“.*<br>
 {*N*}{_↑_}<br>
 {*N*}{_↓_}
 
@@ -283,8 +283,8 @@ PNZ = první nebílý znak
 *# zapsat **kopii** souboru*<br>
 **:w** {*cílová/cesta*}{_Enter_}
 
-*# zapsat rozsah řádků do souboru (obecně/příklad)*<br>
-**:**{*první-zapsaný*}**,**{*poslední-zapsaný*}**w** {*cílová/cesta*}{_Enter_}<br>
+*# zapsat rozsah řádek do souboru (obecně/příklad)*<br>
+**:**{*první-zapsaná*}**,**{*poslední-zapsaná*}**w** {*cílová/cesta*}{_Enter_}<br>
 **:3,17w prehledy/radky.txt**{_Enter_}
 
 *# načíst soubor a **vložit** za aktuální řádek*<br>
@@ -350,7 +350,7 @@ Tip: jako výchozí používejte schránku „p“.
 [{*počet-opakování*}]**P**
 
 *# **spojit** řádky (viz poznámku)*<br>
-*// Připojí následující řádek na konec aktuálního. Pokud aktuální řádek končí znakem, který není mezera, před připojením tam mezeru vloží. Prázdný řádek nekončí žádným znakem, proto za něj mezeru nevkládá.*<br>
+*// Připojí následující řádku na konec aktuální. Pokud aktuální řádka končí znakem, který není mezera, před připojením tam mezeru vloží. Prázdný řádek nekončí žádným znakem, proto za něj mezeru nevkládá.*<br>
 **J**
 
 *# **duplikovat** aktuální řádek*<br>
@@ -385,7 +385,7 @@ Tip: jako výchozí používejte schránku „p“.
 ### Nahradit text (příkaz „:s“)
 
 Poznámka: parametr „kde“ u příkazu „:s“ může být:
-**prázdný řetězec** pro nahrazování v aktuálním řádku;
+**prázdný řetězec** pro nahrazování v aktuální řádce;
 **znak %** pro nahrazování v celém souboru;
 **číselný rozsah řádků** (např. „5,25“) pro nahrazování na řádcích v uvedeném rozsahu „včetně“.
 
@@ -406,16 +406,16 @@ Poznámka: parametr „kde“ u příkazu „:s“ může být:
 *// Výchozí hodnota je 8. Toto nastavení nezmění text, má vliv až na další operace.*<br>
 **:set shiftwidth=**{*počet-mezer*}{_Enter_}
 
-*# zvětšit odsazení řádků (alternativy)*<br>
+*# zvětšit odsazení řádek (alternativy)*<br>
 [{*počet-řádků*}]**&gt;&gt;**<br>
 {*(režim výběru)*}[{*počet-úrovní*}]**&gt;**
 
-*# zmenšit odsazení řádků (alternativy)*<br>
+*# zmenšit odsazení řádek (alternativy)*<br>
 [{*počet-řádků*}]**&lt;&lt;**<br>
 {*(režim výběru)*}[{*počet-úrovní*}]**&lt;**
 
 *# odstranit odsazení z výběru*<br>
-*// Funguje jen tehdy, pokud je každý řádek výběru odsazený o méně než 999 úrovní (což je pro typické textové soubory splněno).*<br>
+*// Funguje jen tehdy, pokud je každá řádka výběru odsazená o méně než 999 úrovní (což je pro typické textové soubory splněno).*<br>
 {*(režim výběru)*}**999&lt;**
 
 *# odstranit odsazení z aktuálního řádku*<br>
@@ -434,7 +434,7 @@ Poznámka: parametr „kde“ u příkazu „:s“ může být:
 **v**{*N-1*}**lu**<br>
 **v**{*N-1*}**lU**
 
-*# řádek na malá písmena*<br>
+*# řádka na malá písmena*<br>
 **Vu**
 
 *# řádka na velká písmena*<br>
@@ -517,7 +517,7 @@ Poznámka: parametr „kde“ u příkazu „:s“ může být:
 {*(režim výběru)*}**I**{*text*}{_Esc_}<br>
 {*(režim výběru)*}**A**{*text*}{_Esc_}
 
-*# **nahradit** každý řádek výběru textem*<br>
+*# **nahradit** každou řádku výběru textem*<br>
 {*(režim výběru)*}**c**{*text*}{_Esc_}
 
 *# před/za každý řádek vložit obsah schránky*<br>
@@ -835,7 +835,7 @@ V něm však většina zaklínadel z této kapitoly není použitelná.
 
 * Doporučuji komukoliv (bez ohledu na úroveň zkušeností) si alespoň jednou projít „kurz“, který spustíte příkazem „vimtutor“ (příkaz zadávejte v bashi, ne ve vimu).
 * Příkaz „c“ je velmi efektivní v kombinaci s opakováním příkazem „.“ a opakováním vyhledávání příkazem „n“.
-* Každá schránka si spolu s textem zachovává i „režim“: znakový, řádkový či sloupcový. Je-li schránka ve znakovém režimu, „p“ vloží její obsah za kurzor; je-li v řádkovém režimu, „p“ vloží její obsah za aktuální řádek; je-li ve sloupcovém režimu (což znamená, že vznikla ze sloupcového výběru), „p“ vloží její první řádek za kurzor a následující řádky na odpovídající pozice následujících řádků textu.
+* Každá schránka si spolu s textem zachovává i „režim“: znakový, řádkový či sloupcový. Je-li schránka ve znakovém režimu, „p“ vloží její obsah za kurzor; je-li v řádkovém režimu, „p“ vloží její obsah za aktuální řádku; je-li ve sloupcovém režimu (což znamená, že vznikla ze sloupcového výběru), „p“ vloží její první řádku za kurzor a následující řádky na odpovídající pozice následujících řádků textu.
 * Klávesové zkratky editoru Vim jsou optimalizované pro anglickou klávesnici; proto doporučuji s tímto editorem používat rozložení kláves kompatibilní s anglickým.
 * Doporučuji nastavit si „:set number“ a „:set cursorline“. Editor s nimi podle mě vypadá podstatně lépe.
 * Většina uživatelů Vimu intenzivně používá příkazy „y“ a „p“ bez uvedení schránky; to se ovšem vyplácí jen tehdy, pokud chcete zkopírovaný text okamžitě někam vložit a pak už ho nebudete potřebovat. V ostatních případech totiž brzy narazíte na problém, že skoro jakákoliv další úprava vám „poslední smazaný text“ přepíše. Doporučuji proto si zvyknout jakékoliv úseky, které si chcete udržet delší dobu, ukládat do schránky „p“ (příkaz bude vypadat např. „"pdd“). Alternativním řešením je směrovat ostatní příkazy mazání a náhrad do zvláštního registru „\_“ (např. „"\_dd“).

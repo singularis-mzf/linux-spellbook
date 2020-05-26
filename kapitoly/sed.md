@@ -56,7 +56,7 @@ skript (zadaný typicky přímo na příkazové řádce, jen vzácně se uklád�
 
 ### Cyklus sedu
 
-Sed provádí zprcování vstupních souborů v těchto krocích:
+Sed provádí zpracování vstupních souborů v těchto krocích:
 
 <neodsadit>1) Smaž *pracovní prostor*.
 
@@ -256,7 +256,7 @@ Volba může být také „p“ (došlo-li k náhradě, provést příkaz „p�
 ### Komentář
 
 *# komentář*<br>
-**#** {*komentář do konce řádku*}
+**#** {*komentář do konce řádky*}
 
 <!--
 ### Operace s připojovací frontou

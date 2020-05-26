@@ -39,8 +39,8 @@ stahovani-videi
 50
 pdf-b5.*
 system
-{\footnotetext[10]{Ne, opravdu to není Ctrl+Alt+Delete...}\footnotetext[11]{Poznámka: Skutečně důležitá je pouze poslední klávesa \quotedblbase{}B\textquotedblleft{}; ty předchozí pouze vykonávají operace, díky nimž nebude restart tak drastický. Pokud chcete opravdu drastický reset, stačí na to klávesová zkratka \quotedblbase{}Alt\textquotedblleft{}+\quotedblbase{}PrintScreen\textquotedblleft{}+\quotedblbase{}B\textquotedblleft{}.}}{%
-{\footnotetext[10]{Ne, opravdu to není Ctrl+Alt+Delete...}\footnotetext[11]{\raggedright Poznámka: Skutečně důležitá je pouze poslední klávesa \quotedblbase{}B\textquotedblleft{}; ty předchozí pouze vykonávají operace, díky nimž nebude restart tak drastický. Pokud chcete opravdu drastický reset, stačí na to klávesová zkratka \quotedblbase{}Alt\textquotedblleft{}+\quotedblbase{}PrintScreen\textquotedblleft{}+\quotedblbase{}B\textquotedblleft{}.}}{%
+{\footnotetext[9]{Ne, opravdu to není Ctrl+Alt+Delete...}\footnotetext[10]{Poznámka: Skutečně důležitá je pouze poslední klávesa \quotedblbase{}B\textquotedblleft{}; ty předchozí pouze vykonávají operace, díky nimž nebude restart tak drastický. Pokud chcete opravdu drastický reset, stačí na to klávesová zkratka \quotedblbase{}Alt\textquotedblleft{}+\quotedblbase{}PrintScreen\textquotedblleft{}+\quotedblbase{}B\textquotedblleft{}.}}{%
+{\footnotetext[9]{Ne, opravdu to není Ctrl+Alt+Delete...}\footnotetext[10]{\raggedright Poznámka: Skutečně důležitá je pouze poslední klávesa \quotedblbase{}B\textquotedblleft{}; ty předchozí pouze vykonávají operace, díky nimž nebude restart tak drastický. Pokud chcete opravdu drastický reset, stačí na to klávesová zkratka \quotedblbase{}Alt\textquotedblleft{}+\quotedblbase{}PrintScreen\textquotedblleft{}+\quotedblbase{}B\textquotedblleft{}.}}{%
 
 60
 pdf-b5.*
@@ -59,6 +59,18 @@ pdf-b5.*
 licence
 creativecommons.org/compatiblelicenses, approved by Creative
 \\\mbox{creativecommons.org/compatiblelicenses}, approved by Creative
+
+85
+pdf-b5.*
+diskove-oddily
+\parametrprikazu{{\dejavusansfamily{}☐}~sync}{Zakáže používání systémové mezipaměti. Všechny operace budou prováděny přímo se zařízením.}%\n
+\parametrprikazu{{\dejavusansfamily{}☐}~sync}{Zakáže používání systémové mezipaměti. Všechny operace budou prováděny\\přímo se zařízením.}%\n
+
+90
+pdf-b5.*
+vim
+zvýrazňovat klíčové slovo jako klíčové slovo/identifikátor/funkci/operátor}%
+zvýrazňovat klíčové slovo jako klíčové slovo/identifikátor/\\funkci/operátor}%
 
 110
 pdf-a4.*
@@ -101,3 +113,15 @@ pdf-a4.*
 diskove-oddily
 \radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{UUID=\textquotedbl{}61bbd562{-}0694{-}4561{-}a8e2{-}4ccfd004a660\textquotedbl{}\textcolor{seda}{\guillemotright}{~~~~~~}/\textcolor{seda}{\guillemotright}{~~~~~~}ext4\textcolor{seda}{\guillemotright}{~~~~~~}errors={\moznyzlom}remount{-}ro,{\moznyzlom}discard,{\moznyzlom}nouser\_xattr\textcolor{seda}{\guillemotright}{~~}0\textcolor{seda}{\guillemotright}{~~~~~~}1}%
 \radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{UUID=\textquotedbl{}61bbd562{-}0694{-}4561{-}a8e2{-}4ccfd004a660\textquotedbl{}\textcolor{seda}{\guillemotright}{~~~~~~}/\textcolor{seda}{\guillemotright}{~~~~~~}ext4{\moznyzlom}\textcolor{seda}{\guillemotright}{~~~~~~}errors={\moznyzlom}remount{-}ro,{\moznyzlom}discard,{\moznyzlom}nouser\_xattr\textcolor{seda}{\guillemotright}{~~}0\textcolor{seda}{\guillemotright}{~~~~~~}1}%
+
+170
+pdf-a4.*
+vim
+}\begin{parametryprikazu}\parametrprikazu{{\dejavusansfamily{}○} {-}o {\dejavusansfamily{}○} {-}O {\dejavusansfamily{}○} {-}p}{Je{-}li zadáno více souborů, otevře je: v~pohledech nad sebou (shora)/v~pohledech vedle sebe (zleva)/v~panelech. Výchozí chování: Je{-}li zadáno více souborů, otevře se pouze první a~ostatní jsou otevřeny skrytě a~uživatel se na ně musí přepnout příkazem \quotedblbase{}:n\textquotedblleft{}.}%\n
+}\begin{parametryprikazu}\parametrprikazu{{\dejavusansfamily{}○} {-}o {\dejavusansfamily{}○} {-}O {\dejavusansfamily{}○} {-}p}{Je{-}li zadáno více souborů, otevře je: v~pohledech nad sebou (shora)/v~pohledech vedle sebe (zleva)/\newline v~panelech. Výchozí chování: Je{-}li zadáno více souborů, otevře se pouze první a~ostatní jsou otevřeny skrytě a~uživatel se na ně musí přepnout příkazem \quotedblbase{}:n\textquotedblleft{}.}%\n
+
+180
+pdf-a4.*
+sed
+\begin{odstavce}Sed provádí zpracování vstupních souborů v~těchto krocích:
+\begin{odstavce}\hspace*{-1.25em}Sed provádí zpracování vstupních souborů v~těchto krocích:
