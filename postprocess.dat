@@ -125,3 +125,9 @@ pdf-a4.*
 sed
 \begin{odstavce}Sed provádí zpracování vstupních souborů v~těchto krocích:
 \begin{odstavce}\hspace*{-1.25em}Sed provádí zpracování vstupních souborů v~těchto krocích:
+
+190
+pdf-b5.*
+vim
+\item{}Nastavení provedená příkazem \quotedblbase{}:set\textquotedblleft{} z~editoru jsou platná jen do ukončení procesu. Pro trvalé nastavení pro nově otevírané instance editoru zapište příkazy \quotedblbase{}:set\textquotedblleft{} do souboru \quotedblbase{}\char`\~{}/.vimrc\textquotedblleft{} nebo do \quotedblbase{}/etc/vim/vimrc.local\textquotedblleft{}.
+\item{}Nastavení provedená příkazem \quotedblbase{}:set\textquotedblleft{} z~editoru jsou platná jen do ukončení procesu. Pro trvalé nastavení pro nově otevírané instance editoru zapište příkazy \quotedblbase{}:set\textquotedblleft{} do souboru\\\quotedblbase{}\char`\~{}/.vimrc\textquotedblleft{} nebo do \quotedblbase{}/etc/vim/vimrc.local\textquotedblleft{}.

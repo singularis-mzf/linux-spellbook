@@ -839,7 +839,7 @@ V něm však většina zaklínadel z této kapitoly není použitelná.
 * Klávesové zkratky editoru Vim jsou optimalizované pro anglickou klávesnici; proto doporučuji s tímto editorem používat rozložení kláves kompatibilní s anglickým.
 * Doporučuji nastavit si „:set number“ a „:set cursorline“. Editor s nimi podle mě vypadá podstatně lépe.
 * Většina uživatelů Vimu intenzivně používá příkazy „y“ a „p“ bez uvedení schránky; to se ovšem vyplácí jen tehdy, pokud chcete zkopírovaný text okamžitě někam vložit a pak už ho nebudete potřebovat. V ostatních případech totiž brzy narazíte na problém, že skoro jakákoliv další úprava vám „poslední smazaný text“ přepíše. Doporučuji proto si zvyknout jakékoliv úseky, které si chcete udržet delší dobu, ukládat do schránky „p“ (příkaz bude vypadat např. „"pdd“). Alternativním řešením je směrovat ostatní příkazy mazání a náhrad do zvláštního registru „\_“ (např. „"\_dd“).
-
+* Nastavení provedená příkazem „:set“ z editoru jsou platná jen do ukončení procesu. Pro trvalé nastavení pro nově otevírané instance editoru zapište příkazy „:set“ do souboru „~/.vimrc“ nebo do „/etc/vim/vimrc.local“.
 
 ## Další zdroje informací
 

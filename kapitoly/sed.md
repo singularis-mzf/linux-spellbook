@@ -284,7 +284,7 @@ Volba může být také „p“ (došlo-li k náhradě, provést příkaz „p�
 ## Parametry příkazů
 ### sed
 
-*# *
+*# *<br>
 **sed** {*parametry*} [**-e**] **'**{*skript*}**'** [{*vstupní-soubor*}]...<br>
 **sed** {*parametry*} **-f** {*soubor-se-skriptem*} [{*vstupní-soubor*}]...<br>
 [**sudo**] **sed -i** {*parametry*} [**-e**] **'**{*skript*}**'** {*soubor*}<br>
