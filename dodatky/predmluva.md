@@ -77,7 +77,7 @@ váš zkušený předchůdce. Při sesílání kouzel přesahujících vaši kva
 se sice můžete snadno „spálit“ (a to platí i u této sbírky),
 přesto vám to však prospěje mnohem víc, než kdybyste se omezil/a jen na to,
 co už bezpečně umíte. (Zamyslete se, jak by dopadl takový Harry Potter,
-kdyby znal jen kouzla odpovídající jeho školnímu ročníku.)
+kdyby znal jen kouzla odpovídající svému školnímu ročníku.)
 
 ## Je tato kniha pro váš systém?
 
@@ -177,7 +177,7 @@ v titulkové liště „okna“ se nově přidávají i iniciály jména verze
 
 V PDF verzi je hlavní novinkou QR kód na titulní straně.
 
-Vydání verze 1.9, jménem Eliáš Ečer, očekávám v druhé polovině května 2020. (Neexistuje žádné české rodné jméno začínající písmenem Ď.)
+Vydání verze 1.9, jménem Eliáš Ečer, očekávám v druhé polovině června 2020. (Neexistuje žádné české rodné jméno začínající písmenem Ď.)
 
 &nbsp;
 

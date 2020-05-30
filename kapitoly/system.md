@@ -17,6 +17,8 @@ Poznámky:
 [ ] Automatické přihlašování (GDM/SDDM/Lightdm)
 [ ] Synchronizace času (zapnout/vypnout/ručné provést)
 [ ] Chybí ukázka.
+[ ] lspci
+[ ] lsusb
 
 - machinectl ovládá kontejnery, ale musí se doinstalovat.
 
@@ -89,6 +91,10 @@ Poznámka: správci přihlášení se nepočítají mezi démony, protože mají
 
 *# čas od spuštění systému (**uptime**)*<br>
 **uptime \-\-pretty**
+
+*# kompletní informace o **hardware** (textově/s prohlížečem)*<br>
+**sudo lshw**<br>
+**sudo lshw -html &gt;/tmp/lshw.htm &amp;&amp; sensible-browser /tmp/lshw.htm**
 
 *# počet logických procesorů/fyzických jader*<br>
 **nproc \-\-all**<br>
@@ -286,6 +292,17 @@ Podrobnější informace: příkaz „uptimes“ z balíčku „uptimed“.
 **sudo systemctl stop udisks2**
 -->
 
+### Analýza času stráveného zaváděním systému
+
+*# rozdělení času mezi firmware, zavaděč, jádro a zbytek (pro člověka)*<br>
+**systemd-analyze time** ⊨ Startup finished in 13.465s (firmware) + 1.435s (loader) + 3.459s (kernel) + 1min 30.339s (userspace) = 1min 48.700s
+
+*# kolik času zabrala inicializace jednotek? (pro člověka)*<br>
+*// Pozor! Do uvedeného času se započítává i čas strávený čekáním na inicializaci jiných jednotek; proto pokud má některá jednotka uvedený dlouhý čas, nemusí to znamenat, že zpomalení způsobuje ona!*<br>
+**systemd-analyze blame** [**\-\-user**]
+
+*# vykreslit graf popisující inicializaci jednotek při zavádění*<br>
+**systemd-analyze plot &gt;**{*dočasný-soubor.svg*} **&amp;&amp; sensible-browser** {*dočasný-soubor.svg*}
 
 ## Zaklínadla (klávesnice)
 

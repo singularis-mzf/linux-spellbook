@@ -127,6 +127,18 @@ https://github.com/dbro/csvquote
 -->
 
 
+### Koš
+
+*# vysypat koš (nezkoušeno, install trash-cli)*<br>
+**trash-empty**
+
+*# vyhodit soubory do koše (nezkoušeno, install trash-cli)*<br>
+**trash** {*soubor*}...
+<!--
+adresáře?
+-->
+
+
 ## Parametry příkazů
 ...
 

@@ -71,14 +71,14 @@ Až budete mít nainstalované potřebné nástroje, stáhněte si repozitář:
 
 A nakonec spusťte make:
 
-> ``cd linux-spellbook``
+> ``cd linux-spellbook``<br>
 > ``make -j4 log html``
 
 Předpokládám použití **české lokalizace** daného systému.
 
 ## Návod k zapojení se
 
-Bude k dispozici v souboru [CONTRIBUTING.md](CONTRIBUTING.md).
+Viz soubor [JAK-SE-ZAPOJIT.md](JAK-SE-ZAPOJIT.md).
 
 ### Výběr a pořadí kapitol
 
@@ -98,7 +98,7 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [docker](kapitoly/docker.md) | Docker | 100% | vydána (od verze 1.0) |
 | [git](kapitoly/git.md) | Git | 100% | vydána (od verze 1.0) |
 | [hledani-souboru](kapitoly/hledani-souboru.md) | Hledání souborů | 100% | vydána (od verze 1.5) |
-| [make](kapitoly/make.md) | GNU make | 100% | vydána (od verze 1.0) |
+| [make](kapitoly/make.md) | Make | 100% | vydána (od verze 1.0) |
 | [markdown](kapitoly/markdown.md) | Markdown | 100% | vydána (od verze 1.0) |
 | [planovani-uloh](kapitoly/planovani-uloh.md) | Plánování úloh | 100% | vydána (od verze 1.0) |
 | [prace-s-archivy](kapitoly/prace-s-archivy.md) | Práce s archivy | 100% | vydána (od verze 1.1) |
@@ -112,6 +112,7 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [vim](kapitoly/vim.md) | Vim | 100% | vydána (od verze 1.8) |
 | [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) | Zpracování textových souborů | 100% | vydána (od verze 1.2) |
 | [zpracovani-videa-a-zvuku](kapitoly/zpracovani-videa-a-zvuku.md) | Zpracování videa a zvuku | 100% | vydána (od verze 1.0) |
+| [promenne](kapitoly/promenne.md) | Proměnné prostředí a interpretu | 90% | dítě |
 | [sprava-uzivatelu](kapitoly/sprava-uzivatelu.md) | Správa uživatelů | 80% | dítě |
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
 | [zpracovani-obrazku](kapitoly/zpracovani-obrazku.md) | Zpracování obrázků | 40% | dítě |
@@ -125,19 +126,18 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [latex](kapitoly/latex.md) | LaTeX | 5% | dítě |
 | [dosbox](kapitoly/dosbox.md) | DosBox | 5% | dítě |
 | [bash](kapitoly/bash.md) | Bash | 2% | dítě |
+| [lkk](kapitoly/lkk.md) | Linux: Kniha kouzel | 2% | dítě |
+| [sprava-balicku-2](kapitoly/sprava-balicku-2) | Správa balíčků 2 | 1% | dítě |
 | [firefox](kapitoly/firefox.md) | Firefox | 1% | dítě |
 | [grub](kapitoly/grub.md) | GRUB | 1% | dítě |
 | [konverze-formatu](kapitoly/konverze-formatu.md) | Konverze formátů | 0% | embryo |
 | [wine](kapitoly/wine.md) | Wine | 0% | embryo |
-| [promenne](kapitoly/promenne.md) | Proměnné prostředí a interpretu | 0% | embryo |
-| [lkk](kapitoly/lkk.md) | Linux: Kniha kouzel | 0% | embryo |
-| pdf | PDF | - | přál/a bych si |
+| [pdf](kapitoly/pdf.md) | PDF | 0% | embryo |
 | prehravani-videa | Přehrávání videa, zvuku a obrázků | - | přál/a bych si |
 | sifrovani | Šifrování a kryptografie | - | přál/a bych si |
 | firewall | Firewall | - | přál/a bych si |
 | sql | SQL | - | přál/a bych si |
 | ascii-art | ASCII art | - | přál/a bych si |
-| sprava-balicku-2 | Správa balíčků 2 | - | přál/a bych si |
 | matematicke-vypocty | Matematické výpočty | - | přál/a bych si |
 | zaznam-x | Záznam obrazovky | - | přál/a bych si |
 | css | Kaskádové styly CSS | - | přál/a bych si |

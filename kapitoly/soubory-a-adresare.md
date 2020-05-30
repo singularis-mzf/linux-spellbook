@@ -501,7 +501,11 @@ Mód je číselné vyjádření základních práv a zvláštních příznaků 
 
 ## Instalace na Ubuntu
 
-Všechny použité nástroje jsou základními součástmi Ubuntu.
+Všechny použité nástroje jsou základními součástmi Ubuntu, s výjimkou příkazu „tree“,
+který můžete doinstalovat takto:
+
+*# *<br>
+**sudo apt-get install tree**
 
 <!--
 ## Ukázka

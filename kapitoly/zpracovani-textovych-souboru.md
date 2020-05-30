@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, kapitola Zpracování textových souborů
-Copyright (c) 2019 Singularis <singularis@volny.cz>
+Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -56,6 +56,72 @@ V této kapitole rozlišuji následující formáty textových souborů:
 * pevná šířka sloupců – záznamy ukončeny „\\n“, sloupce (kromě posledního) jsou zarovnány na pevný počet znaků pomocí mezer.
 
 !ÚzkýRežim: vyp
+
+## Zaklínadla: Konverze
+
+### Konverze ukončení řádky
+
+<!--
+Příkaz „flip“ nefunguje moc dobře:
+- Texty v UTF-8 považuje za binární a bez parametru -b nekonvertuje.
+- Po konverzi na místě zachovává mtime, ale už ne atime a ctime.
+- Nepodporuje formát Mac OS.
+- Není základní součástí Ubuntu.
+
+**flip -mb** {*soubor*}...<br>
+{*...*} **\| flip -m - \|** {*...*}
+
+**flip -ub** {*soubor*}...<br>
+{*...*} **\| flip -u - \|** {*...*}
+
+*# konverze ukončení řádky: Linux na Windows (\\n na \\r\\n)*<br>
+-->
+
+*# Windows nebo Linux **na Linux** (na místě/rourou)*<br>
+**sed -Ei 's/\\r//g'** {*soubor*}...<br>
+{*...*} **\| tr -d \\\\r \|** {*...*}
+
+*# Windows nebo Linux **na Windows** (na místě/rourou)*<br>
+**sed -Ei 's/\\r\*$/\\r/'** {*soubor*}...<br>
+{*...*} **\| sed -E 's/\\r\*$/\\r/' \|** {*...*}
+
+*# Mac OS na Linux (na místě/rourou)*<br>
+**LC\_ALL=C sed -zEi 'y/\\\\r/\\\\n/'** {*soubor*}...<br>
+{*...*} **\| tr \\\\r \\\\n \|** {*...*}
+
+*# Linux na Mac OS (na místě/rourou)*<br>
+**LC\_ALL=C sed -zEi 'y/\\\\n/\\\\r/'** {*soubor*}...<br>
+{*...*} **\| tr \\\\n \\\\r \|** {*...*}
+
+### Konverze kódování znaků
+
+*# konvertovat soubor **do/z** UTF-8*<br>
+*// Užitečná kódování: ISO8859-2, WINDOWS-1250, UTF-16, UTF-16BE, UTF-16LE, UTF-8, CP852 (MS-DOS), MAC-CENTRALEUROPE.*<br>
+**iconv -f "**{*vstupní kódování*}**" -t UTF-8** [**-o "**{*výstupní-soubor*}**"**] <nic>[{*vstupní-soubor*}]...<br>
+**iconv -f UTF-8 -t "**{*cílové kódování*}[**//IGNORE**]**"** [**-o "**{*výstupní-soubor*}**"**] <nic>[{*vstupní-soubor*}]...
+
+*# konvertovat soubor do ASCII s transliterací*<br>
+*// Poznámka: tato konverze je ztrátová, a tudíž prakticky jednosměrná.*<br>
+**iconv -f "**{*vstupní kodování*}**" -t "ASCII//TRANSLIT"** [**-o "**{*výstupní-soubor*}**"**] <nic>[{*vstupní-soubor*}]...
+
+*# vypsat úplný seznam podporovaných kódování*<br>
+**iconv -l \| sed -E 's!/\*$!!'**
+
+*# pokusit se zjistit kódování textu*<br>
+?
+
+### Konverze velikosti písmen
+
+*# **konvertovat** malá písmena na velká (obecně/příklad)*<br>
+**sed -E 's/(.\*)/\\U\\1/'** [{*vstupní-soubor*}]...<br>
+**printf "Žluťoučký kůň\\n" \| sed -E's/(.\*)/\\U\\1/'** ⊨ ŽLUŤOUČKÝ KŮŇ
+
+*# konvertovat velká písmena na malá (obecně/příklad)*<br>
+**sed -E 's/(.\*)/\\L\\1/'** [{*vstupní-soubor*}]...<br>
+**printf "Žluťoučký kůň\\n" \| sed -E's/(.\*)/\\L\\1/'** ⊨ žluťoučký kůň
+
+*# konvertovat malá písmena na velká a naopak*<br>
+**sed -E 's/(.)/0\\1/g;s/0([[:lower:]])/1\\U\\1/g;s/0([[:upper:]])/1\\L\\1/g;s/[01]<nic>(.)/\\1/g** [{*vstupní-soubor*}]...
 
 ## Zaklínadla (txt, txtz)
 
@@ -196,35 +262,6 @@ egrep -Lr {*regulární-výraz*} {*soubor-či adresář*}...
 *// Tip: nejlepšího výkonu této varianty dosáhnete tak, že začnete od nejmenšího vstupního souboru.*<br>
 **cat** {*první-soubor*} [**\| LC\_ALL=C join** [**-z**] **-t "" -j 1 -** {*další-soubor*}]...
 
-### Konverze kódování znaků a ukončení řádky
-
-*# konvertovat soubor **do/z** UTF-8*<br>
-*// Užitečná kódování: ISO8859-2, WINDOWS-1250, UTF-16, UTF-16BE, UTF-16LE, UTF-8, CP852 (MS-DOS), MAC-CENTRALEUROPE.*<br>
-**iconv -f "**{*vstupní kódování*}**" -t UTF-8** [**-o "**{*výstupní-soubor*}**"**] <nic>[{*vstupní-soubor*}]...<br>
-**iconv -f UTF-8 -t "**{*cílové kódování*}[**//IGNORE**]**"** [**-o "**{*výstupní-soubor*}**"**] <nic>[{*vstupní-soubor*}]...
-
-*# konvertovat soubor do ASCII s transliterací*<br>
-*// Poznámka: tato konverze je ztrátová, a tudíž prakticky jednosměrná.*<br>
-**iconv -f "**{*vstupní kodování*}**" -t "ASCII//TRANSLIT"** [**-o "**{*výstupní-soubor*}**"**] <nic>[{*vstupní-soubor*}]...
-
-*# vypsat úplný seznam podporovaných kódování*<br>
-**iconv -l \| sed -E 's!/\*$!!'**
-
-*# konverze ukončení řádku: Windows na Linux (\\r\\n na \\n)*<br>
-**tr -d \\\\r &lt;**{*vstupní-soubor*} **&gt;**{*výstupní-soubor*}
-
-*# konverze ukončení řádky: Linux na Windows (\\n na \\r\\n)*<br>
-**sed -E 's/\\r\*$/\\r/'**
-
-*# konverze ukončení řádku: Mac OS na Linux (\\r na \\n)*<br>
-**tr \\\\r \\\\n &lt;**{*vstupní-soubor*} **&gt;**{*výstupní-soubor*}
-
-*# konverze ukončení řádky: Linux na Mac OS (\\n na \\r)*<br>
-**tr \\\\n \\\\r &lt;**{*vstupní-soubor*} **&gt;**{*výstupní-soubor*}
-
-*# pokusit se zjistit kódování textu*<br>
-?
-
 ### Ostatní
 
 *# **počet záznamů** (txt/txtz)*<br>
@@ -247,17 +284,6 @@ egrep -Lr {*regulární-výraz*} {*soubor-či adresář*}...
 
 *# zapisovat na standardní výstup a současně do souborů*<br>
 [{*zdroj vstupu*} **\|**] **tee** [**-a**] {*výstupní-soubor*}...
-
-*# **konvertovat** malá písmena na velká (obecně/příklad)*<br>
-**sed -E 's/(.\*)/\\U\\1/'** [{*vstupní-soubor*}]...<br>
-**printf "Žluťoučký kůň\\n" \| sed -E's/(.\*)/\\U\\1/'** ⊨ ŽLUŤOUČKÝ KŮŇ
-
-*# konvertovat velká písmena na malá (obecně/příklad)*<br>
-**sed -E 's/(.\*)/\\L\\1/'** [{*vstupní-soubor*}]...<br>
-**printf "Žluťoučký kůň\\n" \| sed -E's/(.\*)/\\L\\1/'** ⊨ žluťoučký kůň
-
-*# konvertovat malá písmena na velká a naopak*<br>
-**sed -E 's/(.)/0\\1/g;s/0([[:lower:]])/1\\U\\1/g;s/0([[:upper:]])/1\\L\\1/g;s/[01]<nic>(.)/\\1/g** [{*vstupní-soubor*}]...
 
 *# obrátit **pořadí znaků** v každém záznamu (txt/txtz)*<br>
 **rev** [{*soubor*}]...<br>

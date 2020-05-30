@@ -37,7 +37,7 @@ VSECHNY_KAPITOLY := _ostatni _ukazka apache awk barvy-a-titulek bash css datum-c
 # H, I, J, K, L, M
 VSECHNY_KAPITOLY += hledani-souboru konverze-formatu latex lkk make markdown moderni-veci
 # N, O, P, Q, R, S
-VSECHNY_KAPITOLY += odkazy perl planovani-uloh prace-s-archivy promenne regularni-vyrazy
+VSECHNY_KAPITOLY += odkazy pdf perl planovani-uloh prace-s-archivy promenne regularni-vyrazy
 # S
 VSECHNY_KAPITOLY += sed soubory-a-adresare sprava-balicku sprava-balicku-2 sprava-procesu sprava-uzivatelu stahovani-videi system
 # T, U, V, W, X, Y, Z
