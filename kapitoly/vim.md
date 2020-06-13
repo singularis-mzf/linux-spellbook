@@ -575,7 +575,7 @@ Tip: jako výchozí schránku pro makra používejte schránku „q“.
 {*(ve správci souborů)*}{_-_}
 
 *# **zavřít** správce souborů (alternativy)*<br>
-{*(ve správci souborů)*}**ZZ*<br>
+{*(ve správci souborů)*}**ZZ**<br>
 {*(ve správci souborů)*}**:q**
 
 ### Zvýraznění syntaxe
