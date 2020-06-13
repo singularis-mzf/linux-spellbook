@@ -155,12 +155,19 @@ Vzít obrázek, zkonvertovat na 480x480 PNG 8bit RGB a uložit do souboru
 **$HOME**<br>
 **getent passwd $(whoami) \| cut -d : -f 6**
 
-*# vypsat UID uživatele*<br>
+*# vypsat UID uživatele/aktuálního uživatele*<br>
+**id -u** {*uživatel*}<br>
+**id -u**
+<!--
 **getent passwd** {*uživatel*} **\| cut -d : -f 3**
+-->
 
 *# vypsat skupiny uživatele/aktuálního uživatele*<br>
-**groups** {*uživatel*} **\| cut -d : -f 2- \| tr "&blank;" \\\\n \| LC\_ALL=C sort \| fgrep -vx ""**<br>
+**id -Gn** {*uživatel*} **\| tr "&blank;" \\\\n \|** [**LC\_ALL=C**] **sort**<br>
+**id -Gn \| tr "&blank;" \\\\n \|** [**LC\_ALL=C**] **sort**<br>
+<!--
 **groups \| tr "&blank;" \\\\n**
+-->
 
 ### Skupiny
 

@@ -20,8 +20,9 @@ Poznámky:
 
 
 [ ] Přednastavování proměnných prostředí (.profile, /etc/environment apod.)
-
 [ ] Pattern matching (možná spíš do jiné kapitoly): https://www.gnu.org/software/bash/manual/html_node/Pattern-Matching.html#Pattern-Matching
+[ ] Proměnné jen pro čtení (a další atributy „declare“).
+[ ] Zvláštní proměnné interpretu?
 
 -->
 
@@ -105,9 +106,9 @@ Kde používám označení „proměnná“, platí to pro proměnné prostřed�
 **promenzkum \| sed -znE '/^\\S+\\s+[<nic>^x]+\\s+\\S+$/{s/.\*\\s//;p}' \| tr \\\\0 \\\\n**
 
 *# seznam proměnných prostředí (s hodnotami/bez hodnot/s hodnotami ve formátu txtz)*<br>
-**env -0 \| egrep -zv '^\_' \| tr \\\\0 \\\\n**<br>
+**env -0 \| egrep -zv '^\_=' \| tr \\\\0 \\\\n**<br>
 **compgen -e**<br>
-**env -0 \| egrep -zv '^\_'**
+**env -0 \| egrep -zv '^\_='**
 <!--
 Poznámka: příkaz „printenv“ z nějakého důvodu vypisuje kromě proměnných prostředí také
 proměnnou „_“, ačkoliv tu ani jako proměnnou prostředí nastavit nelze.

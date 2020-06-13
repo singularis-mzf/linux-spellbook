@@ -14,6 +14,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 <!--
 Poznámky:
 
+[ ] Šifrování z https://www.sallyx.org/sally/linux/prikazy/binary-files
+
 ⊨
 -->
 

@@ -29,7 +29,6 @@ A = i + End
 C = c End
 
 Přechod na Focal Fossa:
-[ ] Nefunguje :browse?
 
 ⊨
 -->
@@ -48,9 +47,9 @@ mezi řadou režimů, z nichž nejdůležitější jsou *základní režim*, ve
 kterými uživatel ovládá editor, a *vkládací režim*, v němž uživatel píše text.
 
 Tato verze kapitoly se nevěnuje stylu „práce s objekty“ a vyhýbá se funkcím,
-jejichž činnost závisí na konkrétní syntaxi editovaného textu.
-Rovněž nepokrývá doplňování s našeptáváním (autocomplete), skládání (folding), režim srovávání „vimdiff“
-a specifika GUI varianty (gvim).
+jejichž činnost závisí na konkrétní syntaxi editovaného textu (např. skok na deklaraci proměnné pod kurzorem).
+Rovněž nepokrývá doplňování s našeptáváním (autocomplete), skládání (folding), režim srovávání „vimdiff“,
+specifika GUI varianty (gvim) a zásuvné moduly (plug-ins).
 Nedostatečně pokrývá příkaz „g//“.
 
 ## Definice
@@ -134,6 +133,9 @@ PNZ = první nebílý znak
 *# na **první**/**poslední** řádku souboru, PNZ*<br>
 **gg**<br>
 **G**
+
+*# na N-tý řádek pohledu, PNZ*<br>
+{*N*}**H**
 
 *# na následující/předchozí řádku, PNZ*<br>
 {_Enter_}<br>
@@ -556,6 +558,26 @@ Tip: jako výchozí schránku pro makra používejte schránku „q“.
 *# znovu spustit poslední spuštěné makro*<br>
 [{*kolikrát*}]**@@**
 
+### Správce souborů
+
+*# otevřít **správce souborů** (v pohledu nad/pod/vlevo/vpravo/na novém panelu)*<br>
+**:Sex**{_Enter_}<br>
+**:Hex**{_Enter_}<br>
+**:Vex**{_Enter_}<br>
+**:Vex!**{_Enter_}<br>
+**:Tex**{_Enter_}
+
+*# **otevřít** soubor/adresář ze správce souborů*<br>
+!: Nastavte kurzor na název souboru.<br>
+{_Enter_}
+
+*# přejít o adresář výš*<br>
+{*(ve správci souborů)*}{_-_}
+
+*# **zavřít** správce souborů (alternativy)*<br>
+{*(ve správci souborů)*}**ZZ*<br>
+{*(ve správci souborů)*}**:q**
+
 ### Zvýraznění syntaxe
 
 *# zapnout/vypnout zvýraznění syntaxe*<br>
@@ -607,6 +629,9 @@ Další skupiny na: http://vimdoc.sourceforge.net/htmldoc/syntax.html#{group-nam
 {_PageUp_}<br>
 {_PageDown_}
 
+*# aktuální řádku doprostřed pohledu*<br>
+**zz**
+
 *# o půl okna nahoru/dolů*<br>
 {_Ctrl_}**+**{_U_}<br>
 {_Ctrl_}**+**{_D_}
@@ -618,6 +643,10 @@ Další skupiny na: http://vimdoc.sourceforge.net/htmldoc/syntax.html#{group-nam
 *# na začátek/konec souboru*<br>
 **gg**<br>
 **G**
+
+*# aktuální řádek na horní/dolní okraj pohledu*<br>
+**zt**<br>
+**zb**
 
 *# o N znaků vlevo/vpravo (jen při vypnutém zalamování)*<br>
 {*N*}**zh**<br>
@@ -639,6 +668,10 @@ Další skupiny na: http://vimdoc.sourceforge.net/htmldoc/syntax.html#{group-nam
 **:split**{_Enter_}<br>
 **:vsplit**{_Enter_}
 
+*# otevřít nový prázdný pohled nad aktivním/vlevo od aktivního*<br>
+**:new**{_Enter_}<br>
+**:vnew**{_Enter_}
+
 *# nastavit výšku aktivního pohledu*<br>
 **:res** {*počet-řádek*}{_Enter_}
 
@@ -650,8 +683,10 @@ Další skupiny na: http://vimdoc.sourceforge.net/htmldoc/syntax.html#{group-nam
 
 ### Práce s více panely
 
-*# otevřít **nový** panel*<br>
-**:tabnew**{_Enter_}
+*# otevřít **nový** panel (prázdný/se stejným souborem jako v aktivním pohledu/s jiným souborem)*<br>
+**:tabnew**{_Enter_}<br>
+**:tabnew %**{_Enter_}<br>
+**:tabnew** {*cesta/k/souboru*}{_Enter_}
 
 *# přepnout se na další/předchozí panel*<br>
 **gt**<br>
@@ -672,10 +707,13 @@ Další skupiny na: http://vimdoc.sourceforge.net/htmldoc/syntax.html#{group-nam
 
 *# nastavit číselnou či textovou volbu*<br>
 *// Hodnota může být prázdná. Pokud textová hodnota obsahuje bílé či speciální znaky (kromě tečky a čárky), musíte je odzvláštnit zpětným lomítkem; použití uvozovek vim, zdá se, nepodporuje..*<br>
-**:set** {*volba*}**=**{*hodnota*}
+**:set** {*volba*}**=**{*hodnota*}{_Enter_}
 
 *# **zjistit** hodnotu volby*<br>
-**:set** {*volba*}**?**
+**:set** {*volba*}**?**{_Enter_}
+
+*# vypsat hodnoty všech voleb*<br>
+**:set all**{_Enter_}
 
 ### Vzhled
 
@@ -840,6 +878,7 @@ V něm však většina zaklínadel z této kapitoly není použitelná.
 * Doporučuji nastavit si „:set number“ a „:set cursorline“. Editor s nimi podle mě vypadá podstatně lépe.
 * Většina uživatelů Vimu intenzivně používá příkazy „y“ a „p“ bez uvedení schránky; to se ovšem vyplácí jen tehdy, pokud chcete zkopírovaný text okamžitě někam vložit a pak už ho nebudete potřebovat. V ostatních případech totiž brzy narazíte na problém, že skoro jakákoliv další úprava vám „poslední smazaný text“ přepíše. Doporučuji proto si zvyknout jakékoliv úseky, které si chcete udržet delší dobu, ukládat do schránky „p“ (příkaz bude vypadat např. „"pdd“). Alternativním řešením je směrovat ostatní příkazy mazání a náhrad do zvláštního registru „\_“ (např. „"\_dd“).
 * Nastavení provedená příkazem „:set“ z editoru jsou platná jen do ukončení procesu. Pro trvalé nastavení pro nově otevírané instance editoru zapište příkazy „:set“ do souboru „~/.vimrc“ nebo do „/etc/vim/vimrc.local“.
+* Jeden editovaný soubor může být otevřen ve více pohledech, dokonce i na různých panelech. V těchto případech má ovšem každý pohled svůj kurzor, čehož lze někdy chytře využít.
 
 ## Další zdroje informací
 

@@ -138,6 +138,15 @@ https://github.com/dbro/csvquote
 adresáře?
 -->
 
+### Jádro
+
+*# seznam nainstalovaných jader*<br>
+**linux-version list**
+
+*# právě běžící jádro*<br>
+**uname -r**
+
+
 
 ## Parametry příkazů
 ...

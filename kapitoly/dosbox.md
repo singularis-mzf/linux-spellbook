@@ -14,6 +14,10 @@ https://creativecommons.org/licenses/by-sa/4.0/
 <!--
 Poznámky:
 
+[ ] https://www.sallyx.org/sally/dos/dosbox.php
+[ ] https://www.dosbox.com/wiki/Main_Page
+[ ] https://www.dosbox.com/wiki/Dosbox.conf#Sections
+
 ⊨
 -->
 

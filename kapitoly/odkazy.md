@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, kapitola Pevné a symbolické odkazy
-Copyright (c) 2019 Singularis <singularis@volny.cz>
+Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -135,6 +135,8 @@ Oblíbené rsync parametry:
 - Buďte co nejstručnější; neodbíhejte k popisování čehokoliv vedlejšího, co je dost možné, že už čtenář zná.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+* Upřednostňujte relativní symbolické odkazy; jsou o trochu odolnější proti přesouvání a přejmenovávání adresářů. Absolutní symbolické odkazy mají svoje místo při odkazování na soubory, které mají ze systémových důvodů svou pevnou absolutní cestu (např. /etc/passwd), nebo pokud je odkaz a cíl v různých podstromech kořenového adresáře (např. při odkazování z /etc do /home); ve všech ostatních případech se vyplatí relativní symbolické odkazy, zejména při odkazování se v rámci USB flash disku. Stačí totiž když ho připojí jiný uživatel a už cesta k souborům začíná „/home/katka/WWW/“ místo „/home/petr/WWW“. Relativní odkazy mezi soubory na flash disku pak budou fungovat, ale absolutní ne.
 
 ## Další zdroje informací
 <!--

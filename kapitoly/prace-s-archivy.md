@@ -178,6 +178,9 @@ externí programy).
 {*zdroj*} **\| gzip** [**-9**] **\|** {*cíl*}<br>
 {*zdroj*} **\| gunzip \|** {*cíl*}
 
+*# otestovat integritu archivu*<br>
+**gzip -t** {*archiv.gz*}
+
 ### TAR + GZIP
 
 *# **rozbalit** archiv*<br>

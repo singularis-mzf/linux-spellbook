@@ -93,25 +93,25 @@ V následujících zaklínadlech platí:
 
 ### Položky v /etc/fstab
 
-*# připojit kořenový systém souborů (obecně/příklad)*<br>
+*# připojit **kořenový** systém souborů (obecně/příklad)*<br>
 *// Poznámka: Připojení kořenového systému souborů by mělo být v /etc/fstab první řádkou kromě komentářů a prázdných řádek.*<br>
 {*co-připojit*} **/** {*typ-soub-sys*} {*volby-připojení*} **0 1**<br>
 **UUID="61bbd562-0694-4561-a8e2-4ccfd004a660"<tab7>/<tab7>ext4<tab7>errors=remount-ro,discard,nouser\_xattr<tab3>0<tab7>1**
 
-*# připojit jiný než kořenový systém souborů (obecně/příklad)*<br>
+*# **připojit** jiný než kořenový systém souborů (obecně/příklad)*<br>
 *// 2 v posledním poli zapne automatickou kontrolu souboru systémů při startu; tato volba je vhodná pro místní souborové systémy. 0 v posledním poli automatickou kontrolu vypne, ta je vhodná především pro výměnná média a síťové systémy souborů. Rovněž je vhodná pro místní systémy souborů připojované výhradně pro čtení.*<br>
 {*co-připojit*} {*kam-připojit*} {*typ-soub-sys*} {*volby-připojení*} **0** {*2-nebo-0*}<br>
 **/dev/skupina/muj-oddil ext4 defaults 0 2**
 
-*# připojit ramdisk*<br>
+*# připojit **ramdisk***<br>
 *// Velikost se udává nejčastěji v mebibajtech (s příponou M – např. „256M“) nebo gibibajtech (s příponou G – např. „10G“).*<br>
 **tmpfs** {*kam-připojit*} **tmpfs size=**{*velikost*}[**,nosuid**]<nic>[**,nodev**]<nic>[**,noexec**]<nic>[**,mode=**{*práva-číselně*}]<nic>[**,uid=**{*UID-vlastníka*}]<nic>[**,gid=**{*GID-skupiny*}]<nic>[**,**{*další,volby*}] **0 0**
 
-*# připojit odkládací oddíl/odkládací soubor*<br>
+*# připojit **odkládací** oddíl/odkládací soubor*<br>
 {*co-připojit*} **none swap sw 0 0**<br>
 {*/cesta/k/souboru*} **none swap sw 0 0**
 
-*# připojit adresář z již připojeného systému souborů na nové místo*<br>
+*# připojit **adresář** z již připojeného systému souborů na nové místo*<br>
 **/původní/adresář /nový/adresář none bind 0 0**
 
 <!--
@@ -124,7 +124,7 @@ V následujících zaklínadlech platí:
 
 ### Připojení a odpojení systému souborů
 
-*# připojit systém souborů uvedený v /etc/fstab (alternativy)*<br>
+*# **připojit** systém souborů uvedený v /etc/fstab (alternativy)*<br>
 [**sudo**] **mount** {*kam-připojit*}<br>
 [**sudo**] **mount** {*co-připojit*}
 
@@ -132,14 +132,20 @@ V následujících zaklínadlech platí:
 **sudo mount -t** {*typ-soub-sys*} **-o** {*volby,připojení*} {*/co/připojit*} {*/kam/připojit*}<br>
 **sudo mount -t ext4 -o defaults,nosuid,nodev,lazytime,discard UUID=61bbd562-0694-4561-a8e2-4ccfd004a660 /mnt/abc**
 
-*# odpojit systém souborů*<br>
+*# odpojit systém souborů a **vysunout** zařízení (alternativy)*<br>
+*// Příkaz „eject“ pro jistotu používejte se sudo, popř. vyzkoušejte, zda bez něj ve vašem konkrétním případě funguje. Často se mi stává, že i uživateli, který je ve skupinách „cdrom“ a „plugdev“ selže s chybou „Nemohu otevřít zařízení“ a zatím se mi nepodařilo zjistit, jaké tam platí pravidlo.*<br>
+[**sudo**] **eject** [**-v**] {*/dev/oddíl*}<br>
+[**sudo**] **eject** [**-v**] {*/dev/zařízení*}<br>
+[**sudo**] **eject** [**-v**] {*/cesta/přípojného/bodu*}
+
+*# **odpojit** systém souborů*<br>
 [**sudo**] **umount** {*kam-připojit*}
 
-*# připojit adresář z již připojeného systému souborů na nový přípojný bod*<br>
+*# připojit **adresář** z již připojeného systému souborů na nový přípojný bod*<br>
 *// Poznámka: Tímto příkazem se vytvoří nové, nezávislé připojení existujícího systému souborů.*<br>
 **sudo mount \-\-bind** {*/cesta/k/adresáři*} {*/nový/přípojný/bod*}
 
-*# přesunout systém souborů na jiný přípojný bod (alternativa 1)*<br>
+*# **přesunout** systém souborů na jiný přípojný bod (alternativa 1)*<br>
 **sudo mount \-\-bind** {*/původní/přípojný/bod*} {*/nový/přípojný/bod*}<br>
 **sudo umount** {*/původní/přípojný/bod*}
 
@@ -287,19 +293,19 @@ asi PHY-SEC/LOG-SEC u lsblk
 
 ### Jmenovka (nastavit)
 
-*# nastavit/smazat jmenovku odkládacího oddílu*<br>
+*# nastavit/smazat jmenovku **odkládacího** oddílu*<br>
 **sudo swaplabel -L "**{*novájmenovka*}**"** {*/dev/oddíl*}
 **sudo swaplabel -L ""** {*/dev/oddíl*}
 
-*# nastavit/smazat jmenovku ext4*<br>
+*# nastavit/smazat jmenovku **ext4***<br>
 **sudo e2label** {*/dev/oddíl*} **"**{*novájmenovka*}**"**<br>
 **sudo e2label** {*/dev/oddíl*} **""**
 
-*# nastavit/smazat jmenovku FAT32*<br>
+*# nastavit/smazat jmenovku **FAT32***<br>
 ?<br>
 ?
 
-*# nastavit/smazat jmenovku NTFS*<br>
+*# nastavit/smazat jmenovku **NTFS***<br>
 ?<br>
 ?
 
@@ -316,7 +322,7 @@ Viz: https://wiki.archlinux.org/index.php/Persistent_block_device_naming
 
 ### Degrafmentace, kontrola, TRIM apod.
 
-*# zkontrolovat a opravit souborový systém*<br>
+*# **zkontrolovat** a opravit souborový systém*<br>
 *// Příkaz „fsck“ pravděpodobně lze použít i se souborovým systémem v souboru, ale nezkoušel/a jsem to.*<br>
 **sudo fsck** [**-V**] {*/dev/oddíl*}
 
@@ -329,7 +335,7 @@ Viz: https://wiki.archlinux.org/index.php/Persistent_block_device_naming
 **sudo fstrim** [**-v**] {*/přípojný/bod*}<br>
 **sudo fstrim -a** [**-v**]
 
-*# zkontrolovat fragmentaci oddílu typu ext4*<br>
+*# zkontrolovat **fragmentaci** oddílu typu ext4*<br>
 **sudo e4defrag -c** {*/dev/oddíl*}
 
 *# defragmentovat oddíl typu ext4 (pozor!)*<br>
@@ -338,11 +344,11 @@ Viz: https://wiki.archlinux.org/index.php/Persistent_block_device_naming
 
 ### Ostatní
 
-*# zálohovat diskový oddíl do souboru (přímo/komprimovaný)*<br>
+*# **zálohovat** diskový oddíl do souboru (přímo/komprimovaný)*<br>
 **sudo dd if=**{*/dev/oddíl*} **of=**{*cesta*} [**status=progress**]<br>
 **sudo dd if=**{*/dev/oddíl*} [**status=progress**] **\| gzip -n**[**9**] **&gt;**{*cesta.gz*}
 
-*# obnovit diskový oddíl (přímo/komprimovaný)*<br>
+*# **obnovit** diskový oddíl (přímo/komprimovaný)*<br>
 *// Pozor! Tato operace je nebezpečná! Pokud zadáte chybný cílový oddíl, daný oddíl se nevratně přepíše daty určenými pro ten správný. Pokud velikost zálohy neodpovídá přesně velikosti cílového oddílu, nemusí být oddíl po obnově dobře použitelný. Tento příkaz používejte s velkou opatrností!*<br>
 **sudo dd if=**{*cesta*} **of=/dev/**{*oddíl*} [**status=progress**]<br>
 **gunzip -cd** {*cesta.gz*} **\| sudo dd of=**{*/dev/oddíl*} [**status=progress**]
@@ -358,10 +364,10 @@ Viz: https://wiki.archlinux.org/index.php/Persistent_block_device_naming
 *# **smazat***<br>
 **sudo pvremove** {*/dev/zařízení-nebo-oddíl*} [**-v**[**v**]]
 
-*# zkontrolovat*<br>
+*# **zkontrolovat***<br>
 **sudo pvck** {*/dev/zařízení-nebo-oddíl*}
 
-*# vypsat (pro člověka/pro skript)*<br>
+*# **vypsat** (pro člověka/pro skript)*<br>
 **sudo pvs**<br>
 **sudo pvs \-\-noheadings \| sed -E 's/^\\s\*(\\S+)\\s.\*$/\\1/'**
 
@@ -383,7 +389,7 @@ Viz: https://wiki.archlinux.org/index.php/Persistent_block_device_naming
 *# **přejmenovat***<br>
 **sudo vgrename** {*id-skupiny*} {*nove-id-skupiny*}
 
-*# vypsat (pro člověka/pro skript)*<br>
+*# **vypsat** (pro člověka/pro skript)*<br>
 **sudo vgs**<br>
 ?
 
