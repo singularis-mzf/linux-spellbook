@@ -190,7 +190,7 @@ function VypsatPrehledStitku(format,   i, n, s, nazvy_kapitol, cisla_kapitol, st
     delete stitky_kapitol; # $9
     delete ikony_kapitol; # $11
     VyzadujeFragmentyTSV();
-    for (i = 1; i < POCET_KAPITOL; ++i) {
+    for (i = 1; i <= POCET_KAPITOL; ++i) {
         $0 = FRAGMENTY_TSV_RADKY[i];
         cisla_kapitol[$2] = $8;
         nazvy_kapitol[$2] = $3;
