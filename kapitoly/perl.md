@@ -688,11 +688,11 @@ Co hledat:
 
 !ÚzkýRežim: vyp
 
-## Pomocné funkce (Perl)
+## Pomocné funkce a skripty (Perl)
 
 *# lkk perl – spouštěč, který spustí skript Perlu s doporučenými parametry*<br>
 **#!/bin/bash**<br>
-**exec perl -CSDAL "-Mv5.26.0" -Mstrict -Mwarnings -Mutf8 -MEnglish "$@"**
+**exec perl -CSDAL -Mv5.26.0 -Mstrict -Mwarnings -Mutf8 -MEnglish "$@"**
 
 *# lkk -p perl-vzorek-parametru – xxx*<br>
 **sub vzorek\_parametru \{**<br>

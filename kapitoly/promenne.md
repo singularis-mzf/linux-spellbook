@@ -18,7 +18,6 @@ Poznámky:
 ☐
 ○ ◉
 
-
 [ ] Přednastavování proměnných prostředí (.profile, /etc/environment apod.)
 [ ] Pattern matching (možná spíš do jiné kapitoly): https://www.gnu.org/software/bash/manual/html_node/Pattern-Matching.html#Pattern-Matching
 [ ] Proměnné jen pro čtení (a další atributy „declare“).
@@ -46,6 +45,8 @@ a systému, a pokrývá také práci s parametry skriptů a funkcí v Bashi
 
 Tato verze kapitoly nepokrývá proměnné interpretu bash, které řídí jeho funkci,
 ale normálně nejsou proměnnými prostředí a nešíří se do nově vytvořených procesů.
+Také nepokrývá atributy proměnných (např. proměnné jen pro čtení) a nedostatečně
+pokrývá lokální proměnné ve funkcích.
 Do této kapitoly nespadají takzvané zvláštní parametry (jako např. $?, $! apod.).
 
 ## Definice
@@ -98,12 +99,12 @@ Kde používám označení „proměnná“, platí to pro proměnné prostřed�
 **compgen -v**
 
 <!--
-**promenzkum \| sed -zE 's/^(\\S+)&blank;\\S+&blank;/\\1=/' \| tr \\\\0 \\\\n**<br>
+**lkk\_promenzkum \| sed -zE 's/^(\\S+)&blank;\\S+&blank;/\\1=/' \| tr \\\\0 \\\\n**<br>
 -->
 
 *# seznam všech proměnných interpretu (s hodnotami/bez hodnot)*<br>
-**promenzkum \| sed -znE '/^\\S+\\s+[<nic>^x]+\\s+\\S+$/{s/^(\\S+)&blank;\\S+&blank;/\\1=/;p}' \| tr \\\\0 \\\\n**<br>
-**promenzkum \| sed -znE '/^\\S+\\s+[<nic>^x]+\\s+\\S+$/{s/.\*\\s//;p}' \| tr \\\\0 \\\\n**
+**lkk\_promenzkum \| sed -znE '/^\\S+\\s+[<nic>^x]+\\s+\\S+$/{s/^(\\S+)&blank;\\S+&blank;/\\1=/;p}' \| tr \\\\0 \\\\n**<br>
+**lkk\_promenzkum \| sed -znE '/^\\S+\\s+[<nic>^x]+\\s+\\S+$/{s/.\*\\s//;p}' \| tr \\\\0 \\\\n**
 
 *# seznam proměnných prostředí (s hodnotami/bez hodnot/s hodnotami ve formátu txtz)*<br>
 **env -0 \| egrep -zv '^\_=' \| tr \\\\0 \\\\n**<br>
@@ -115,14 +116,14 @@ proměnnou „_“, ačkoliv tu ani jako proměnnou prostředí nastavit nelze.
 -->
 
 *# seznam řetězcových proměnných interpretu (s hodnotami/bez hodnot)*<br>
-**promenzkum \| sed -znE '/^\\S+\\s+[<nic>^aAx]+\\s+\\S+$/{s/^(\\S+)&blank;\\S+&blank;/\\1=/;p}' \| tr \\\\0 \\\\n**<br>
-**promenzkum \| sed -znE '/^\\S+\\s+[<nic>^aAx]+\\s+\\S+$/{s/\\s.\*//;p}' \| tr \\\\0 \\\\n**
+**lkk\_promenzkum \| sed -znE '/^\\S+\\s+[<nic>^aAx]+\\s+\\S+$/{s/^(\\S+)&blank;\\S+&blank;/\\1=/;p}' \| tr \\\\0 \\\\n**<br>
+**lkk\_promenzkum \| sed -znE '/^\\S+\\s+[<nic>^aAx]+\\s+\\S+$/{s/\\s.\*//;p}' \| tr \\\\0 \\\\n**
 
 *# seznam polí (bez hodnot)*<br>
 **compgen -A arrayvar**
 
 *# seznam asociativních polí (bez hodnot)*<br>
-**promenzkum \| egrep -z '^\\S+&blank;\\S\*A\\S\*&blank;' \| cut -d '&blank;' -f 1 -z \| tr \\\\0 \\\\n**
+**lkk\_promenzkum \| egrep -z '^\\S+&blank;\\S\*A\\S\*&blank;' \| cut -d '&blank;' -f 1 -z \| tr \\\\0 \\\\n**
 
 ### Řetězcové proměnné interpretu
 
@@ -205,10 +206,12 @@ Prázdný klíč způsobí chybu „chybný podskript pole“.
 {*názevpole*}**["**{*klíč*}**"]="**{*hodnota*}**"**<br>
 {*názevpole*}**[$**{*klíč\_proměnná*}**]="**{*hodnota*}**"**
 
-*# obsahuje prvek se zadaným klíčem? (alternativy)*<br>
-**asocexist** {*názevpole*} **"**{*klíč*}**"**<br>
-**test -v '**{*názevpole*}[**{*klíč*}**]**'**<br>
+*# **obsahuje** prvek se zadaným klíčem? (klíč je hodnota proměnné)*<br>
 **test -v "**{*názevpole*}**[$\{**{*proměnná\_s\_klíčem*}**@Q}]"**
+
+*# obsahuje prvek se zadaným klíčem? (klíč je řetězec)*<br>
+**: '**{*klíč*}**'** [**&amp;&amp;**]<br>
+**test -v "**{*názevpole*}**[${\_@Q}]"**
 
 *# **iterovat** přes klíče/přes hodnoty*<br>
 **for** {*iterační\_proměnná*} **in "${!**{*název\_pole*}**[@]}"; do** {*...*}**; done**<br>
@@ -225,10 +228,15 @@ Prázdný klíč způsobí chybu „chybný podskript pole“.
 **${#**{*název*}**[@]}**
 
 *# **zkopírovat***<br>
-**asockopirovat** {*zdrojovépole*} {*cílovépole*}
+**unset -v** {*cílovépole*}<br>
+**declare -A** {*cílovépole*}<br>
+**for \_ in "${!**{*zdrojovépole*}**[@]}"; do cílovépole[$\_]=$\{**{*zdrojovépole*}**[$\_]}; done**
+<!--
+**lkk\_asockopirovat** {*zdrojovépole*} {*cílovépole*}
+-->
 
 *# **sloučit** dvě asociativní pole*<br>
-?
+**for \_ in "${!**{*zdrojovépole*}**[@]}"; do cílovépole[$\_]=$\{**{*zdrojovépole*}**[$\_]}; done**
 
 *# příklady: přiřadit do proměnné „x“ hodnotu z asociativního pole „a“, kde klíčem je: zpětné lomítko/dvě zpětná lomítka/apostrof/dvojitá uvozovka/„A B“/„} }“*<br>
 **x="${a["\\\\"]}"**<br>
@@ -569,27 +577,9 @@ Co hledat:
 
 ## Pomocné funkce
 
-*# asocexist() – testuje, zda v asociativním poli $1 existuje prvek $2*<br>
-**function asocexist() { test -v "$1[${2@Q}]"; }**
-
-*# asockopirovat() – kopií asociativního pole $1 přepíše proměnnou $2*<br>
-**function kopirovatasocpole() \{**
-<odsadit1>**declare -p "$1" &gt;/dev/null \|\| return $?**<br>
-<odsadit1>**: '^declare -\\S\*A'**<br>
-<odsadit1>**if [[ $(declare -p "$1") =~ $\_ ]]**<br>
-<odsadit1>**then**<br>
-<odsadit2>**unset "$2" &amp;&amp;**<br>
-<odsadit2>**declare -Ag "$2" &amp;&amp;**<br>
-<odsadit2>**eval "for \_ in \\"\\${!$1[@]}\\"; do $2[\\$\_]=\\${$1[\\$\_]}; done"**<br>
-<odsadit1>**else**<br>
-<odsadit2>**printf 'kopirovatasocpole: Není asociativní pole: %s\\n' "$1" &gt;&amp;2**<br>
-<odsadit2>**false**<br>
-<odsadit1>**fi**<br>
-**\}**
-
-*# promenzkum() – vypíše údaje o proměnných ve formátu vhodném pro další zpracování*<br>
-**function promenzkum() \{**
-<odsadit1>**for X in $(compgen -v)**
+*# lkk\_promenzkum() – vypíše údaje o proměnných ve formátu vhodném pro další zpracování*<br>
+**function lkk\_promenzkum() \{**<br>
+<odsadit1>**for X in $(compgen -v)**<br>
 <odsadit1>**do**<br>
 <odsadit2>**declare -p $X**<br>
 <odsadit2>**printf \\\\0**<br>

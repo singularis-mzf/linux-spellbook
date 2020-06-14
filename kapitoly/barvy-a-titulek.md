@@ -74,9 +74,10 @@ Jedna z prvních věcí, která mě po otevření linuxového terminálu naštv
 **tput sgr0**
 
 *# nastavit **barvu popředí/pozadí***<br>
-*// Funkce „bezp\_set“ použije ze svých argumentů první podporované číslo barvy. Není-li žádné z uvedených čísel podporováno, žádná barva se nanastaví. Při volání doporučuji jako první uvést číslo pro paletu s 256 barvami a jako druhé číslo náhradní barvy z osmibarevné palety.*<br>
-**bezp\_set setaf** {*číslo-barvy*}...<br>
-**bezp\_set setab** {*číslo-barvy*}...
+*// Funkce „lkk\_bezp\_set“ použije ze svých argumentů první podporované číslo barvy. Není-li žádné z uvedených čísel podporováno, žádná barva se nanastaví. Při volání doporučuji jako první uvést číslo pro paletu s 256 barvami a jako druhé číslo náhradní barvy z osmibarevné palety.*<br>
+^^**source &lt;(lkk \-\-funkce)**<br>
+**lkk\_bezp\_set setaf** {*číslo-barvy*}...<br>
+**lkk\_bezp\_set setab** {*číslo-barvy*}...
 
 *# **ztmavit** text (jen zapnout)*<br>
 **tput dim**
@@ -97,7 +98,8 @@ Jedna z prvních věcí, která mě po otevření linuxového terminálu naštv
 **tput blink**
 
 *# vyplnit celý terminál barvou*<br>
-**bezp\_set setab** {*číslo-barvy*} [{*náhradní-číslo-barvy*}]...**; tput clear; tput sgr0**
+^^**source &lt;(lkk \-\-funkce)**<br>
+**lkk\_bezp\_set setab** {*číslo-barvy*} [{*náhradní-číslo-barvy*}]...**; tput clear; tput sgr0**
 
 ### Nastavení písma
 
@@ -249,18 +251,19 @@ Další možnost: \\044\\[\\]
 ## Zaklínadla (příklady)
 
 *# návratová hodnota, čas, aktuální adresář a dolar*<br>
-**function pstput () { printf \\\\[; tput "$@" &amp;&amp; printf \\\\]; }**<br>
+^^**source &lt;(lkk \-\-funkce)**<br>
 **PROMPT\_COMMAND="navr\_hodn=\\$?"**<br>
-**PS1="$(pstput sgr0)\\$navr\_hodn $(pstput setaf 6)\\A "**<br>
-**PS1+="$(pstput sgr0; pstput bold; pstput setaf 2)\\w$(pstput sgr0)\\\\\\$&blank;"**
+**PS1="$(lkk\_pstput sgr0)\\$navr\_hodn $(lkk\_pstput setaf 6)\\A "**<br>
+**PS1+="$(lkk\_pstput sgr0; lkk\_pstput bold; lkk\_pstput setaf 2)\\w$(lkk\_pstput sgr0)\\\\\\$&blank;"**
 
 *# vedlejší výzva: zelené svislítko*<br>
-**function pstput () { printf \\\\[; tput "$@" &amp;&amp; printf \\\\]; }**<br>
-**PS2="\\\\[$(bezp\_set setaf 2)\\\\]\|$(pstput sgr0)&blank;"**
+^^**source &lt;(lkk \-\-funkce)**<br>
+**PS2="\\\\[$(lkk\_bezp\_set setaf 2)\\\\]\|$(lkk\_pstput sgr0)&blank;"**
 
 *# příkazy psát červeně na zeleném pozadí, výpisy příkazů tyrkysově na fialové pozadí*<br>
-**PS1="\\\\[$(bezp\_set setaf 1; bezp\_set setab 2; tput el)\\\\]\\\$&blank;"**<br>
-**PS0="$(bezp\_set setaf 6; bezp\_set setab 5; tput el)"**
+^^**source &lt;(lkk \-\-funkce)**<br>
+**PS1="\\\\[$(lkk\_bezp\_set setaf 1; lkk\_bezp\_set setab 2; tput el)\\\\]\\\$&blank;"**<br>
+**PS0="$(lkk\_bezp\_set setaf 6; lkk\_bezp\_set setab 5; tput el)"**
 
 
 ## Parametry příkazů
@@ -269,7 +272,7 @@ Další možnost: \\044\\[\\]
 **PS1="**{*text*}**"**<br>
 **PS1+="**{*další text*}**"**
 
-*Důležitá poznámka:* Aby mohl bash správně zformátovat hlavní a vedlejší výzvu (PS1 a PS2), potřebuje předem znát počet tisknutých znaků na každém řádku. Bohužel bash nerozumí escape sekvencím, proto mu musíte napovědět a tyto sekvence uzavřít do zvláštních závorek „\\[“ a „\\]“ (ve dvojitých uvozovkách se zadávají „\\\\[“ a „\\\\]“), které znamenají, že jejich obsah bash nemá při výpočtu šířky řádků vůbec zohledňovat. Tyto závorky se bohužel naopak nesmějí používat v proměnné PS0, tam by vypsaly škaredé paznaky na terminál. V ukázce a v některých zaklínadlech lze tento problém vyřešit tak, že místo přímého zadání příkazu tput použijete pomocnou funkci pstput.
+*Důležitá poznámka:* Aby mohl bash správně zformátovat hlavní a vedlejší výzvu (PS1 a PS2), potřebuje předem znát počet tisknutých znaků na každém řádku. Bohužel bash nerozumí escape sekvencím, proto mu musíte napovědět a tyto sekvence uzavřít do zvláštních závorek „\\[“ a „\\]“ (ve dvojitých uvozovkách se zadávají „\\\\[“ a „\\\\]“), které znamenají, že jejich obsah bash nemá při výpočtu šířky řádků vůbec zohledňovat. Tyto závorky se bohužel naopak nesmějí používat v proměnné PS0, tam by vypsaly škaredé paznaky na terminál. V ukázce a v některých zaklínadlech lze tento problém vyřešit tak, že místo přímého zadání příkazu tput použijete pomocnou funkci lkk\_pstput.
 
 ## Instalace na Ubuntu
 
@@ -277,16 +280,14 @@ Všechny použité součásti jsou základními nástroji přítomnými v každ
 
 ## Ukázka
 *# *<br>
-**function pstput () \{**<br>
-<odsadit1>**printf \\\\[; tput "$@" &amp;&amp; printf \\\\]**<br>
-**\}**<br>
+**source &lt;(lkk \-\-funkce)**<br>
 **PROMPT\_COMMAND="navr\_hodn=\\$?;$PROMPT\_COMMAND"**<br>
 **PS1="\\\\[$(printf %s\\\\n "$TERM" \| egrep -isq "^(xterm|rxvt)" &amp;&amp; printf "\\\\e]2;%s\\\\a" "Bude příkaz č. \\\\#")\\\\]"**<br>
-**PS1+="Tato $(pstput smul)výzva je $(pstput sitm)zbytečně$(pstput rmul) rozsáhlá, aby ukázala $(pstput bold)spoustu$(pstput sgr0) možností.\\\\n"**<br>
-**PS1+="$(pstput dim)Velikost terminálu: \\$(tput cols)x\\$(tput lines) Volné místo: $(pstput smul)\\$(df -h \-\-output=avail . \| tail -n 1 \| tr -d \\" \\")$(pstput sgr0)\\\\n"**<br>
-**PS1+="Návr.kód:\\\\[\\$(barvapronh \\${navr\_hodn})\\\\]\\${navr\_hodn}$(pstput sgr0)&blank;(\\\\[$(bezp\_set setaf 87 6)\\\\]\\\\t$(pstput sgr0)) !""\\\\!&blank;"**<br>
-**PS1+="\\\\[$(bezp\_set setaf 220 3; tput bold)\\\\]\\\\w$(pstput sgr0)&blank;\\\\$&blank;"**<br>
-**PS2="\\\\[$(bezp\_set setaf 10 2; tput bold)\\\\]\|&blank;$(pstput sgr0)"**
+**PS1+="Tato $(lkk\_pstput smul)výzva je $(lkk\_pstput sitm)zbytečně$(lkk\_pstput rmul) rozsáhlá, aby ukázala $(lkk\_pstput bold)spoustu$(lkk\_pstput sgr0) možností.\\\\n"**<br>
+**PS1+="$(lkk\_pstput dim)Velikost terminálu: \\$(tput cols)x\\$(tput lines) Volné místo: $(lkk\_pstput smul)\\$(df -h \-\-output=avail . \| tail -n 1 \| tr -d \\" \\")$(lkk\_pstput sgr0)\\\\n"**<br>
+**PS1+="Návr.kód:\\\\[\\$(lkk\_barvapronh \\${navr\_hodn})\\\\]\\${navr\_hodn}$(lkk\_pstput sgr0)&blank;(\\\\[$(lkk\_bezp\_set setaf 87 6)\\\\]\\\\t$(lkk\_pstput sgr0)) !""\\\\!&blank;"**<br>
+**PS1+="\\\\[$(lkk\_bezp\_set setaf 220 3; tput bold)\\\\]\\\\w$(lkk\_pstput sgr0)&blank;\\\\$&blank;"**<br>
+**PS2="\\\\[$(lkk\_bezp\_set setaf 10 2; tput bold)\\\\]\|&blank;$(lkk\_pstput sgr0)"**
 
 !ÚzkýRežim: zap
 
@@ -325,23 +326,23 @@ Různé další tipy se dají najít v článku Bash/Prompt customization (angl
 
 ## Pomocné funkce
 
-*# bezp\_set() – nastaví písmo či pozadí na první podporovanou barvu*<br>
-**function bezp\_set () \{**<br>
+*# lkk\_bezp\_set() – nastaví písmo či pozadí na první podporovanou barvu*<br>
+**function lkk\_bezp\_set () \{**<br>
 <odsadit1>**local f="$1" c="$(tput colors 2&gt;/dev/null \|\| printf 0)" x=""**<br>
 <odsadit1>**shift**<br>
 <odsadit1>**for x in $@; do if test $x -lt $c; then tput $f $x; break; fi; done**<br>
 <odsadit1>**return 0**<br>
 **\}**
 
-*# barvapronh() – nastaví barvu písma podle hodnoty parametru*<br>
-**function barvapronh () \{**<br>
+*# lkk\_barvapronh() – nastaví barvu písma podle hodnoty parametru*<br>
+**function lkk\_barvapronh () \{**<br>
 <odsadit1>**test $1 -gt 0 &amp;&amp; tput bold**<br>
-<odsadit1>**test $1 -eq 1 &amp;&amp; bezp\_set setaf 1**<br>
-<odsadit1>**test $1 -gt 1 &amp;&amp; bezp\_set setaf 2**<br>
+<odsadit1>**test $1 -eq 1 &amp;&amp; lkk\_bezp\_set setaf 1**<br>
+<odsadit1>**test $1 -gt 1 &amp;&amp; lkk\_bezp\_set setaf 2**<br>
 **\}**
 
-*# pstput() – vypíše escape sekvenci uzavřenou pro použití v proměnných PS1 a PS2*<br>
-**function pstput () \{**<br>
+*# lkk\_pstput() – vypíše escape sekvenci uzavřenou pro použití v proměnných PS1 a PS2*<br>
+**function lkk\_pstput () \{**<br>
 <odsadit1>**printf \\\\[; tput "$@" &amp;&amp; printf \\\\]**<br>
 **\}**
 

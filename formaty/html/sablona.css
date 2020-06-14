@@ -575,8 +575,8 @@ nav a[rel="prev"]::after, nav a[rel="next"]::before {content:none;}
     display:none !important;
 }
 
-.zaklinadlo + .zaklinadlo {
-    /* mezera mezi zaklínadly */
+.zaklinadlo + .zaklinadlo, p + .zaklinadlo {
+    /* mezera mezi zaklínadly nebo mezi odstavcem a zaklínadlem */
     margin-top:1.25em;
 }
 

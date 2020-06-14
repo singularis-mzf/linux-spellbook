@@ -127,7 +127,8 @@ Tato kniha může být užitečná také **pokročilým uživatelům**, kteří 
 systém GNU/Linux řadu let používají. Jste-li takovým uživatelem, kniha vám nabízí
 jiné výhody než začátečníkům – především rychlou nápovědu k příkazům a parametrům,
 které už jste pozapomněl/a, moderní a pohodlné alternativy k zastaralým
-a těžkopádným postupům, na které jste možná zvykl/á ze starších verzí GNU/Linuxu, a programátorskou inspiraci (jako i spousta jiných projektů na GitHubu).
+a těžkopádným postupům, na které jste možná zvykl/á ze starších verzí GNU/Linuxu,
+a programátorskou inspiraci (jako i spousta jiných projektů na GitHubu).
 
 ## Příběh
 
@@ -165,19 +166,11 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 <neodsadit>Všechen software potřebný k sestavení projektu je svobodný.
 Pokud některá kapitola odkazuje na nesvobodný software, vždy na to výslovně upozorní.
 
-## Aktuální poznámka k verzi „vanilková příchuť 1.8 Darja Drážní“
+## Aktuální poznámka k verzi „vanilková příchuť 1.9 Eliáš Ečer“
 
-Verze 1.8, jménem Darja Dražní, přináší nové kapitoly Sed a Vim.
-Kapitola „GNU make“ se nově jmenuje jen „Make“.
+(rozepsáno...)
 
-V HTML verzi proběhlo větší množství vylepšení, z nichž nejvýraznější je lišta s menu,
-do níž jsem integroval/a i odkaz na přehled kapitol. Ikony v přehledu kapitol se
-již nepřekrývají a nepřekrývají ani následující nadpis. K označení verze
-v titulkové liště „okna“ se nově přidávají i iniciály jména verze.
-
-V PDF verzi je hlavní novinkou QR kód na titulní straně.
-
-Vydání verze 1.9, jménem Eliáš Ečer, očekávám v druhé polovině června 2020. (Neexistuje žádné české rodné jméno začínající písmenem Ď.)
+Vydání verze 1.10, jménem Františka Fučíková, očekávám v druhé polovině července 2020. (Neexistuje žádné české rodné jméno začínající písmenem É či Ě.)
 
 &nbsp;
 
