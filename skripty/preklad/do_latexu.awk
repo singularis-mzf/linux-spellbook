@@ -214,7 +214,7 @@ function ZpracujZnak(znak) {
         case "⫽":
             return "//";
         case "␣":
-            return "\\textvisiblespace{}";
+            return "{\\zaklinadlofamily\\textvisiblespace}";
 
         default:
             ShoditFatalniVyjimku("Nalezen nepodporovaný znak: '" znak "'");

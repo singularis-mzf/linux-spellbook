@@ -280,7 +280,7 @@ PNZ = první nebílý znak
 **:cd** {*cesta*}{_Enter_}
 
 *# vytvořit adresář*<br>
-**:!mkdir** [**-p**] {*cesta*}
+**:!mkdir** [**-p**] {*cesta*}{_Enter_}
 
 *# zapsat **kopii** souboru*<br>
 **:w** {*cílová/cesta*}{_Enter_}
@@ -588,8 +588,7 @@ Tip: jako výchozí schránku pro makra používejte schránku „q“.
 **:setfiletype** {*syntaxe*}{_Enter_}
 
 *# vypsat seznam podporovaných syntaxí*<br>
-**:setfiletype**<br>
-{_Space_}<br>
+**:setfiletype**{_Space_}<br>
 {_Ctrl_}**+**{_D_}
 
 *# zvýrazňovat klíčové slovo jako klíčové slovo/identifikátor/funkci/operátor*<br>
@@ -737,10 +736,10 @@ numberwidth=4
 **:set cc=**{*číslo-sloupce*}[**,**{*další-číslo-sloupce*}]{_Enter_}
 
 *# skrýt informace o aktuální **pozici** ve stavové řádce (nedoporučuji)*<br>
-**:set noruler**
+**:set noruler**{_Enter_}
 
 *# skrýt název aktivního **režimu** ve stavové řádce (nedoporučuji)*<br>
-**:set noshowmode**
+**:set noshowmode**{_Enter_}
 
 ### Chování
 
@@ -749,7 +748,7 @@ numberwidth=4
 
 *# vypnout a smazat dočasný odkládací soubor/nastavit, kam ho uložit*<br>
 **:set noswapfile**{_Enter_}<br>
-**:set dir=**{*cesta*}[**,**{*další/cesta*}]...
+**:set dir=**{*cesta*}[**,**{*další/cesta*}]...{_Enter_}
 
 *# zapnout **automatické** odsazování*<br>
 **:set autoindent**{_Enter_}
@@ -789,7 +788,7 @@ numberwidth=4
 
 <!--
 *# umístit odkládací soubor do /tmp*<br>
-**:set dir=/tmp//,.**
+**:set dir=/tmp//,.**{_Enter_}
 -->
 <!--
 :set background={dark|light}
