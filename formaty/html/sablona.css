@@ -997,8 +997,14 @@ nav .next {text-align:left;}
 
 /* .odkazydole */
 .odkazydole {
-    margin:3rem auto;
+    margin:3rem 0;
     text-align:center;
+}
+.odkazydole div {
+    display:inline-block;
+    /*background-color:rgb({{zb-svetla}});*/
+    border-radius:1em;
+    padding:0.25em 2em 0.25em 0;
 }
 .odkazydole a {
     display:inline-block;
@@ -1274,6 +1280,34 @@ nav.menuokna a.prehled::before {
 
 nav.menuokna a.predchozi::before {content:"« "}
 nav.menuokna a.nasledujici::after{content:" »"}
+
+/* Spodní navigace: */
+
+nav.spodni .naslkap {
+    position:relative;
+    display:inline-block;
+    margin-left:3em;
+    background-color:rgb({{zb-svetla}});
+    vertical-align:middle;
+}
+
+nav.spodni .naslkap a {
+    display:block;
+    padding:0 2em;
+}
+nav.spodni .naslkap a::after {
+    content:"⏵";
+    position:absolute;right:-0.1em;bottom:0;
+    font-size:200%;
+    line-height:2.25;
+}
+nav.spodni>div+div {
+    position:relative;top:1.1em;
+}
+nav.spodni .nazev {font-weight:bold}
+
+
+
 
 @media print {
     html, body, article {

@@ -41,7 +41,7 @@ VSECHNY_KAPITOLY += odkazy pdf perl planovani-uloh prace-s-archivy promenne regu
 # S
 VSECHNY_KAPITOLY += sed soubory-a-adresare sprava-balicku sprava-balicku-2 sprava-procesu sprava-uzivatelu stahovani-videi system
 # T, U, V, W, X, Y, Z
-VSECHNY_KAPITOLY += unicode uzivatelska-rozhrani vim wine x
+VSECHNY_KAPITOLY += unicode uzivatelska-rozhrani vim virtualbox wine x
 # Z
 VSECHNY_KAPITOLY += zpracovani-binarnich-souboru zpracovani-obrazku zpracovani-textovych-souboru zpracovani-videa-a-zvuku
 

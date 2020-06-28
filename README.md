@@ -129,10 +129,11 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [lkk](kapitoly/lkk.md) | Linux: Kniha kouzel | 2% | dítě |
 | [sprava-balicku-2](kapitoly/sprava-balicku-2) | Správa balíčků 2 | 1% | dítě |
 | [firefox](kapitoly/firefox.md) | Firefox | 1% | dítě |
-| [grub](kapitoly/grub.md) | GRUB | 1% | dítě |
+| [grub](kapitoly/grub.md) | GRUB a jádro | 1% | dítě |
 | [konverze-formatu](kapitoly/konverze-formatu.md) | Konverze formátů | 0% | embryo |
 | [wine](kapitoly/wine.md) | Wine | 0% | embryo |
 | [pdf](kapitoly/pdf.md) | PDF | 0% | embryo |
+| [virtualbox](kapitoly/virtualbox.md) | VirtualBox | 0% | embryo |
 | prehravani-videa | Přehrávání videa, zvuku a obrázků | - | přál/a bych si |
 | sifrovani | Šifrování a kryptografie | - | přál/a bych si |
 | firewall | Firewall | - | přál/a bych si |

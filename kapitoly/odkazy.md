@@ -23,6 +23,10 @@ https://creativecommons.org/licenses/by-sa/4.0/
 ## Definice
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+* Každá adresářová položka reprezentující obyčejný soubor je **pevný odkaz**. Na jeden soubor může odkazovat více pevných odkazů, ale vždy jen v rámci toho souborového systému, kde je soubor fyzicky uložen. Součástí pevného odkazu je pouze název, všechny ostatní údaje o souboru (vlastnictví, přístupová práva, velikost, čas poslední změny, umístění na disku atd.) jsou uloženy na příslušném místě mimo adresář (v tzv. i-uzlu). Soubor nemůže být odstraněn ze souborového systému, dokud na něj existuje alespoň jeden pevný odkaz, proto jsou pevné odkazy vždy platné.
+* **Symbolický odkaz** je adresářová položka, která obsahuje cestu k souboru či adresáři. Symbolické odkazy dělíme na **absolutní** (které obsahují absolutní cestu) a **relativní** (obsahující relativní cestu). Symbolický odkaz, který odkazuje na neexistující cestu, se označuje jako **neplatný**.
+* **Následovat** symbolický odkaz znamená chovat se, jako by se na jeho místě a pod jeho názvem skutečně nacházel odkazovaný soubor či adresář. Většina operací a programů symbolické odkazy následuje – pokusíte-li se spustit symbolický odkaz na program, spustí se program; pokusíte-li se symbolický odkaz otevřít v textovém editoru, otevře se odkazovaný soubor. Pokusíte-li se přejít do symbolického odkazu příkazem „cd“, přejdete do odkazovaného adresáře, atd.
+
 !ÚzkýRežim: vyp
 
 ## Zaklínadla
@@ -39,7 +43,11 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 *# vypsat počet referencí pevného odkazu*<br>
 *// bude-li cílem symbolický odkaz, L umožní vypsat jeho vlastní počítadlo; jinak se vypíše počítadlo odkazovaného souboru či adresáře*<br>
+**stat -c %h** [**\-\-**] {*cesta-k-odkazu*}
+
+<!--
 **ln -ld**[**L**] {*cesta-k-odkazu*}
+-->
 
 *# vypsat kanonickou cestu pevného odkazu*<br>
 **readlink -f** {*cesta-k-odkazu*}
@@ -118,6 +126,8 @@ Oblíbené rsync parametry:
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+Všechny použité nástroje jsou základní součástí Ubuntu přítomnou i v minimální instalaci.
+
 ## Ukázka
 <!--
 - Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
@@ -137,6 +147,10 @@ Oblíbené rsync parametry:
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 * Upřednostňujte relativní symbolické odkazy; jsou o trochu odolnější proti přesouvání a přejmenovávání adresářů. Absolutní symbolické odkazy mají svoje místo při odkazování na soubory, které mají ze systémových důvodů svou pevnou absolutní cestu (např. /etc/passwd), nebo pokud je odkaz a cíl v různých podstromech kořenového adresáře (např. při odkazování z /etc do /home); ve všech ostatních případech se vyplatí relativní symbolické odkazy, zejména při odkazování se v rámci USB flash disku. Stačí totiž když ho připojí jiný uživatel a už cesta k souborům začíná „/home/katka/WWW/“ místo „/home/petr/WWW“. Relativní odkazy mezi soubory na flash disku pak budou fungovat, ale absolutní ne.
+* Symbolický odkaz má vlastnictví a skupinu, ale nemá vlastní přístupová práva. Přístup k odkazovanému souboru či adresáři se i při přístupu přes symbolický odkaz řídí přístupovými právy odkazované položky.
+* Pokud uživatel nemá právo vstoupit do adresáře, kam symbolický odkaz odkazuje, bude se mu jevit jako neplatný, přestože ve skutečnosti neplatný nebude.
+* Maximální počet pevných odkazů na jeden soubor je omezený souborovým systémem; v souborových systémech typu ext4 je to 65000.
+* Soubor bude odstraněn z disku v momentě, kdy už na něj neexistují žádné pevné odkazy, není spuštěný jako proces a není otevřený žádným deskriptorem žádného procesu.
 
 ## Další zdroje informací
 <!--

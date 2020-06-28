@@ -288,21 +288,22 @@ uvést víckrát, jsou vyznačeny šedou trojtečkou.</td></tr>
 
 {{VARIANTY autori,kapitola,stitky}}
 
-<nav class="spodni"><span class="prev">
-{{POKUD NENÍ PRVNÍ}}
-<a href="{{PŘEDCHOZÍ ID}}.htm" rel="prev" title="{{PŘEDCHOZÍ ČÍSLO}}. {{PŘEDCHOZÍ NÁZEV}}">Předchozí&nbsp;kapitola</a>&nbsp;|
-{{KONEC POKUD}}
-</span><a href="index.htm">Přehled</a><span class="next"><!--
+<nav class="spodni">
+<a href="index.htm" class="naindex">🗐&nbsp;Přehled&nbsp;kapitol</a>
 {{POKUD NENÍ POSLEDNÍ}}
--->&nbsp;| <a href="{{NÁSLEDUJÍCÍ ID}}.htm" rel="next" title="{{NÁSLEDUJÍCÍ ČÍSLO}}. {{NÁSLEDUJÍCÍ NÁZEV}}">Následující&nbsp;kapitola</a>
+<div class="naslkap">
+<a href="{{NÁSLEDUJÍCÍ ID}}.htm" rel="next" title="{{NÁSLEDUJÍCÍ ČÍSLO}}. {{NÁSLEDUJÍCÍ NÁZEV}}">Následující&nbsp;kapitola/dodatek:<br><span class="cislo">{{NÁSLEDUJÍCÍ ČÍSLO}}</span>
+<span class="nazev">{{NÁSLEDUJÍCÍ NÁZEV}}</span></a>
+</div>
 {{KONEC POKUD}}
-{{POKUD JE POSLEDNÍ}}
--->
-{{KONEC POKUD}}
-</span>
+<!--<div><a href="index.htm">🗐&nbsp;Přehled&nbsp;kapitol</a></div>-->
 <a href="#nahore" id="odkaznahoru" title="NAHORU − na začátek stránky">▴<!--⤒--></a>
 <a href="#dole" id="odkazdolu" title="DOLŮ − na konec stránky">▾<!--⤓--></a>
 </nav>
+
+{{VARIANTA kapitola}}
+
+{{ODKAZY DOLE}}
 
 {{VARIANTY autori,index,kapitola,stitky}}
 

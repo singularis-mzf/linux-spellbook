@@ -1,5 +1,5 @@
 # Linux Kniha kouzel, postprocess.dat
-# Copyright (c) 2019 Singularis <singularis@volny.cz>
+# Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 # podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -12,122 +12,118 @@
 # Cílem je umožnit ruční doladění sazby při zachování upravitelnosti a automatického překladu.
 # Formát je popsán ve skriptu skripty/postprocess.awk.
 
-10
-pdf-b5.*
+# Číslování: {A}{B}{C}, kde: A je hlavní číslo náhrady (od 1), B je pomocné číslo (normálně 0) a C je identifikace formátu (0 pro A4, 1 pro B5)
+
+100
+pdf-a4.*
 awk
-sinus/kosinus/tangens/contangens}%
-sinus/kosinus/\\tangens/contangens}%
+Vzorek nebo blok příkazů je dovoleno vynechat; vynecháme{-}li vzorek, blok příkazů se
+Vzorek nebo blok příkazů je dovoleno vynechat; vy\-ne\-chá\-me{-}li vzorek, blok příkazů se
 
-20
-pdf-b5.*
-markdown
-nadpis první/druhé/třetí/čtvrté/páté/šesté úrovně}%
-nadpis první/druhé/třetí/\\čtvrté/páté/šesté úrovně}%
-
-30
-pdf-b5.*
-sprava-balicku
-\bfseries{}aktualizovat\mdseries{} všechny aktualizovatelné balíčky (normálně/drasticky/normálně/drasticky)}%
-\bfseries{}aktualizovat\mdseries{} všechny aktualizovatelné balíčky (normálně/drasticky/\\normálně/drasticky)}%
-
-40
-pdf-b5.*
-stahovani-videi
-\radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{{-}f \textquotedbl{}bestvideo[height{<}=?480]+bestaudio/best[height{<}=?480]/best\textquotedbl{}}%
-\radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{{-}f \textquotedbl{}bestvideo[height{<}=?480]+\-bestaudio/best[height{<}=?480]/best\textquotedbl{}}%
-
-50
-pdf-b5.*
-system
-{\footnotetext[9]{Ne, opravdu to není Ctrl+Alt+Delete...}\footnotetext[10]{Poznámka: Skutečně důležitá je pouze poslední klávesa \quotedblbase{}B\textquotedblleft{}; ty předchozí pouze vykonávají operace, díky nimž nebude restart tak drastický. Pokud chcete opravdu drastický reset, stačí na to klávesová zkratka \quotedblbase{}Alt\textquotedblleft{}+\quotedblbase{}PrintScreen\textquotedblleft{}+\quotedblbase{}B\textquotedblleft{}.}}{%
-{\footnotetext[9]{Ne, opravdu to není Ctrl+Alt+Delete...}\footnotetext[10]{\raggedright Poznámka: Skutečně důležitá je pouze poslední klávesa \quotedblbase{}B\textquotedblleft{}; ty předchozí pouze vykonávají operace, díky nimž nebude restart tak drastický. Pokud chcete opravdu drastický reset, stačí na to klávesová zkratka \quotedblbase{}Alt\textquotedblleft{}+\quotedblbase{}PrintScreen\textquotedblleft{}+\quotedblbase{}B\textquotedblleft{}.}}{%
-
-60
-pdf-b5.*
-zpracovani-videa-a-zvuku
-pomocí globálního parametru \bfseries{}{-}filter\_complex\mdseries{} (resp. \bfseries{}{-}filter\_complex\_script\mdseries{}),
-pomocí globálního parametru\\\bfseries{}{-}filter\_complex\mdseries{} (resp. \bfseries{}{-}filter\_complex\_script\mdseries{}),
-
-70
-pdf-b5.*
-zpracovani-videa-a-zvuku
-\bfseries{}rozmazat\mdseries{} obraz (normálně/maximálně/minimálně/obecně)}%
-\bfseries{}rozmazat\mdseries{} obraz (normálně/\\maximálně/minimálně/obecně)}%
-
-80
-pdf-b5.*
-licence
-creativecommons.org/compatiblelicenses, approved by Creative
-\\\mbox{creativecommons.org/compatiblelicenses}, approved by Creative
-
-85
-pdf-b5.*
-diskove-oddily
-\parametrprikazu{{\dejavusansfamily{}☐}~sync}{Zakáže používání systémové mezipaměti. Všechny operace budou prováděny přímo se zařízením.}%\n
-\parametrprikazu{{\dejavusansfamily{}☐}~sync}{Zakáže používání systémové mezipaměti. Všechny operace budou prováděny\\přímo se zařízením.}%\n
-
-90
-pdf-b5.*
-vim
-zvýrazňovat klíčové slovo jako klíčové slovo/identifikátor/funkci/operátor}%
-zvýrazňovat klíčové slovo jako klíčové slovo/identifikátor/\\funkci/operátor}%
-
-110
-pdf-a4.*
-predmluva
-příkazový řádek/příkazovou řádku, v~Linuxu zvaný/ou \quotedblbase{}terminál\textquotedblleft{},
-příkazový řádek/pří\-ka\-zovou řádku, v~Linuxu zvaný/ou \quotedblbase{}terminál\textquotedblleft{},
-
-120
-pdf-a4.*
-git
-\item{}Jednoznačný prefix heše (Nebude{-}li uvedený prefix jednoznačný, git vyvolá chybu a~umožní vám situaci napravit, takže se nebojte používat ani velmi krátké prefixy.)
-\item{}\raggedright Jednoznačný prefix heše (Nebude{-}li uvedený prefix jednoznačný, git vyvolá chybu a~umožní vám situaci napravit, takže se nebojte používat ani velmi krátké prefixy.)
-
-130
-pdf-a4.*
-markdown
-\item{}Po prvním spuštění ReTextu doporučuji otevřít Úpravy / Nastavení a~zaškrtnout políčka \quotedblbase{}Vždy použít živý náhled\textquotedblleft{}, \quotedblbase{}Zvýrazňovat aktuální řádek\textquotedblleft{} a~\quotedblbase{}Zobrazovat čísla řádků\textquotedblleft{} a~restartovat ReText. S~těmito nastaveními mi připadne práce pohodlnější.
-\item\raggedright Po prvním spuštění ReTextu doporučuji otevřít Úpravy / Nastavení a~zaškrtnout políčka \quotedblbase{}Vždy použít živý náhled\textquotedblleft{}, \quotedblbase{}Zvýrazňovat aktuální řádek\textquotedblleft{} a~\quotedblbase{}Zobrazovat čísla řádků\textquotedblleft{} a~restartovat ReText. S~těmito nastaveními mi připadne práce pohodlnější.
-
-140
+200
 pdf-a4.*
 datum-cas-kalendar
 }\begin{parametryprikazu}\parametrprikazu{{\dejavusansfamily{}○} {-}d \textquotesingle{}\dopln{datum a čas}\textquotesingle{} {\dejavusansfamily{}○} {-}d \textquotesingle{}\textquotedbl{}\dopln{původní čas. zóna}\textquotedbl{} \dopln{datum a čas}\textquotesingle{} {\dejavusansfamily{}○} {-}f \dopln{soubor} {\dejavusansfamily{}○} {-}f {-}}{Použije zadaný čas (parametr {-}d), popř. načte čas z~řádků daného souboru či ze standardního vstupu (parametr {-}f). Výchozí chování: použije aktuální čas.}%\n
-}\begin{parametryprikazu}\parametrprikazu{{\dejavusansfamily{}○} {-}d \textquotesingle{}\dopln{datum a čas}\textquotesingle{} {\dejavusansfamily{}○} {-}d \textquotesingle{}\textquotedbl{}\dopln{původní čas. zóna}\textquotedbl{} \dopln{datum a čas}\textquotesingle{} {\dejavusansfamily{}○} {-}f \dopln{soubor} {\dejavusansfamily{}○} {-}f {-}}{Použije zadaný čas (parametr {-}d),\\popř. načte čas z~řádků daného souboru či ze standardního vstupu (parametr {-}f). Výchozí chování: použije aktuální čas.}%\n
+}\begin{parametryprikazu}\parametrprikazu{{\dejavusansfamily{}○} {-}d \textquotesingle{}\dopln{datum a čas}\textquotesingle{} {\dejavusansfamily{}○} {-}d \textquotesingle{}\textquotedbl{}\dopln{původní čas. zóna}\textquotedbl{} \dopln{datum a čas}\textquotesingle{} {\dejavusansfamily{}○} {-}f \dopln{soubor} {\dejavusansfamily{}○} {-}f {-}}\\{Použije zadaný čas (parametr {-}d), popř. načte čas z~řádků daného souboru či ze standardního vstupu (parametr {-}f). Výchozí chování: použije aktuální čas.}%\n
 
-150
+210
+pdf-b5.*
+datum-cas-kalendar
+}\begin{parametryprikazu}\parametrprikazu{{\dejavusansfamily{}○} {-}d \textquotesingle{}\dopln{datum a čas}\textquotesingle{} {\dejavusansfamily{}○} {-}d \textquotesingle{}\textquotedbl{}\dopln{původní čas. zóna}\textquotedbl{} \dopln{datum a čas}\textquotesingle{} {\dejavusansfamily{}○} {-}f \dopln{soubor} {\dejavusansfamily{}○} {-}f {-}}{Použije zadaný čas (parametr {-}d), popř. načte čas z~řádků daného souboru či ze standardního vstupu (parametr {-}f). Výchozí chování: použije aktuální čas.}%\n
+}\begin{parametryprikazu}\parametrprikazu{{\dejavusansfamily{}○} {-}d \textquotesingle{}\dopln{datum a čas}\textquotesingle{} {\dejavusansfamily{}○} {-}d \textquotesingle{}\textquotedbl{}\dopln{původní čas. zóna}\textquotedbl{} \dopln{datum a čas}\textquotesingle{} {\dejavusansfamily{}○} {-}f \dopln{soubor} {\dejavusansfamily{}○} {-}f {-}}\\{Použije zadaný čas (parametr {-}d), popř. načte čas z~řádků daného souboru či ze standardního vstupu (parametr {-}f). Výchozí chování: použije aktuální čas.}%\n
+
+300
 pdf-a4.*
 diskove-oddily
 \item{}UUID souborového systému ve tvaru \quotedblbase{}UUID=61bbd562{-}0694{-}4561{-}a8e2{-}4ccfd004a660\textquotedblleft{}.
 \item{}UUID souborového systému ve tvaru\\\quotedblbase{}UUID=61bbd562{-}0694{-}4561{-}a8e2{-}4ccfd004a660\textquotedblleft{}.
 
-155
+400
+pdf-a4.*
+diskove-oddily
+\end{odstavce}\begin{parametryprikazu}\parametrprikazu{{\dejavusansfamily{}○}~errors=remount{-}ro {\dejavusansfamily{}○}~errors=panic {\dejavusansfamily{}○}~errors=continue}{V~případě kritické chyby: připojí systém jen pro čtení/zhroutí se/pokračuje. (Nezkoušel/a jsem.)}%\n
+\end{odstavce}\begin{parametryprikazu}\parametrprikazu{{\dejavusansfamily{}○}~errors=remount{-}ro {\dejavusansfamily{}○}~errors=panic {\dejavusansfamily{}○}~errors=continue}{V~případě kritické chyby: připojí systém jen pro čte\-ní/zhrou\-tí se/pokračuje. (Nezkoušel/a jsem.)}%\n
+
+500
+pdf-a4.*
+vim
+}\begin{parametryprikazu}\parametrprikazu{{\dejavusansfamily{}○} {-}o {\dejavusansfamily{}○} {-}O {\dejavusansfamily{}○} {-}p}{Je{-}li zadáno více souborů, otevře je: v~pohledech nad sebou (shora)/v~pohledech vedle sebe (zleva)/v~panelech. Výchozí chování: Je{-}li zadáno více souborů, otevře se pouze první a~ostatní jsou otevřeny skrytě a~uživatel se na ně musí přepnout příkazem \quotedblbase{}:n\textquotedblleft{}.}%\n
+}\begin{parametryprikazu}\parametrprikazu{{\dejavusansfamily{}○} {-}o {\dejavusansfamily{}○} {-}O {\dejavusansfamily{}○} {-}p}{Je{-}li zadáno více souborů, otevře je: v~pohledech nad sebou (shora)/v~pohledech vedle sebe (zleva)\newline{}/v~panelech. Výchozí chování: Je{-}li zadáno více souborů, otevře se pouze první a~ostatní jsou otevřeny skrytě a~uživatel se na ně musí přepnout příkazem \quotedblbase{}:n\textquotedblleft{}.}%\n
+
+600
+pdf-a4.*
+zpracovani-textovych-souboru
+\parametrprikazu{{\dejavusansfamily{}☐} {-}o \dopln{formát}}{Definuje pořadí sloupců na výstupu. Jednotlivé specifikace mohou mít tvar \quotedblbase{}0\textquotedblleft{} (společný sloupec), \quotedblbase{}1.\dopln{číslo}\textquotedblleft{} pro sloupec prvního souboru nebo \quotedblbase{}2.\dopln{číslo}\textquotedblleft{} pro sloupec druhého souboru. Specifikace se oddělují čárkami nebo mezerami. Příklad specifikace: \quotedblbase{}0,1.1,1.2,2.1,2.2,0\textquotedblleft{}.}%\n
+\parametrprikazu{{\dejavusansfamily{}☐} {-}o \dopln{formát}}{Definuje pořadí sloupců na výstupu. Jednotlivé specifikace mohou mít tvar \quotedblbase{}0\textquotedblleft{} (společný sloupec),\\\quotedblbase{}1.\dopln{číslo}\textquotedblleft{} pro sloupec prvního souboru nebo \quotedblbase{}2.\dopln{číslo}\textquotedblleft{} pro sloupec druhého souboru. Specifikace se oddělují čárkami nebo mezerami. Příklad specifikace: \quotedblbase{}0,1.1,1.2,2.1,2.2,0\textquotedblleft{}.}%\n
+
+710
+pdf-b5.*
+awk
+\radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{FIELDWIDTHS = \textquotedbl{}\dopln{šířka{-}prvního{-}sloupce}\volitelnyzacatek{}{\zaklinadlofamily\textvisiblespace}\dopln{šířka{-}dalšího{-}sloupce}\volitelnykonec{}{\color{seda}\bfseries\tritecky}\textquotedbl{}}%
+\radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{FIELDWIDTHS = \textquotedbl{}\dopln{šířka{-}prvního{-}sloupce}\\\volitelnyzacatek{}{\zaklinadlofamily\textvisiblespace}\dopln{šířka{-}dalšího{-}sloupce}\volitelnykonec{}{\color{seda}\bfseries\tritecky}\textquotedbl{}}%
+
+810
+pdf-b5.*
+awk
+sinus/kosinus/tangens/contangens}%
+sinus/kosinus/\\tangens/contangens}%
+
+910
 pdf-b5.*
 diskove-oddily
 \radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{UUID=\textquotedbl{}61bbd562{-}0694{-}4561{-}a8e2{-}4ccfd004a660\textquotedbl{}\textcolor{seda}{\guillemotright}{~~~~~~}/\textcolor{seda}{\guillemotright}{~~~~~~}ext4\textcolor{seda}{\guillemotright}{~~~~~~}errors={\moznyzlom}remount{-}ro,{\moznyzlom}discard,{\moznyzlom}nouser\_xattr\textcolor{seda}{\guillemotright}{~~}0\textcolor{seda}{\guillemotright}{~~~~~~}1}%
 \radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{UUID=\textquotedbl{}61bbd562{-}0694{-}4561{-}a8e2{-}4ccfd004a660\textquotedbl{}\moznyzlom{}\textcolor{seda}{\guillemotright}{~~~~~~}/\textcolor{seda}{\guillemotright}{~~~~~~}ext4\textcolor{seda}{\guillemotright}{~~~~~~}errors={\moznyzlom}remount{-}ro,{\moznyzlom}discard,{\moznyzlom}nouser\_xattr\textcolor{seda}{\guillemotright}{~~}0\textcolor{seda}{\guillemotright}{~~~~~~}1}%
 
-160
-pdf-a4.*
-diskove-oddily
-\radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{UUID=\textquotedbl{}61bbd562{-}0694{-}4561{-}a8e2{-}4ccfd004a660\textquotedbl{}\textcolor{seda}{\guillemotright}{~~~~~~}/\textcolor{seda}{\guillemotright}{~~~~~~}ext4\textcolor{seda}{\guillemotright}{~~~~~~}errors={\moznyzlom}remount{-}ro,{\moznyzlom}discard,{\moznyzlom}nouser\_xattr\textcolor{seda}{\guillemotright}{~~}0\textcolor{seda}{\guillemotright}{~~~~~~}1}%
-\radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{UUID=\textquotedbl{}61bbd562{-}0694{-}4561{-}a8e2{-}4ccfd004a660\textquotedbl{}\textcolor{seda}{\guillemotright}{~~~~~~}/\textcolor{seda}{\guillemotright}{~~~~~~}ext4{\moznyzlom}\textcolor{seda}{\guillemotright}{~~~~~~}errors={\moznyzlom}remount{-}ro,{\moznyzlom}discard,{\moznyzlom}nouser\_xattr\textcolor{seda}{\guillemotright}{~~}0\textcolor{seda}{\guillemotright}{~~~~~~}1}%
+1010
+pdf-b5.*
+docker
+\item{}\bfseries{}Repozitář\mdseries{} je soubor obrazů se společným označením (např. \quotedblbase{}ubuntu\textquotedblleft{} či \quotedblbase{}mysql\textquotedblleft{}). Jednotlivé obrazy se pak identifikují pomocí \bfseries{}tagu\mdseries{} uvedeného za název repozitáře a dvojtečku (např. \quotedblbase{}ubuntu:18.04\textquotedblleft{}). Není{-}li tag uveden, Docker automaticky doplní \quotedblbase{}latest\textquotedblleft{}.
+\item{}\bfseries{}Repozitář\mdseries{} je soubor obrazů se společným označením (např. \quotedblbase{}ubuntu\textquotedblleft{} či \quotedblbase{}mysql\textquotedblleft{}). Jednotlivé obrazy se pak identifikují pomocí \bfseries{}tagu\mdseries{} uvedeného za název repozitáře a dvojtečku (např.\newline\quotedblbase{}ubuntu:18.04\textquotedblleft{}). Není{-}li tag uveden, Docker automaticky doplní \quotedblbase{}latest\textquotedblleft{}.
 
-170
-pdf-a4.*
-vim
-}\begin{parametryprikazu}\parametrprikazu{{\dejavusansfamily{}○} {-}o {\dejavusansfamily{}○} {-}O {\dejavusansfamily{}○} {-}p}{Je{-}li zadáno více souborů, otevře je: v~pohledech nad sebou (shora)/v~pohledech vedle sebe (zleva)/v~panelech. Výchozí chování: Je{-}li zadáno více souborů, otevře se pouze první a~ostatní jsou otevřeny skrytě a~uživatel se na ně musí přepnout příkazem \quotedblbase{}:n\textquotedblleft{}.}%\n
-}\begin{parametryprikazu}\parametrprikazu{{\dejavusansfamily{}○} {-}o {\dejavusansfamily{}○} {-}O {\dejavusansfamily{}○} {-}p}{Je{-}li zadáno více souborů, otevře je: v~pohledech nad sebou (shora)/v~pohledech vedle sebe (zleva)/\newline v~panelech. Výchozí chování: Je{-}li zadáno více souborů, otevře se pouze první a~ostatní jsou otevřeny skrytě a~uživatel se na ně musí přepnout příkazem \quotedblbase{}:n\textquotedblleft{}.}%\n
+1110
+pdf-b5.*
+markdown
+\radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{![\dopln{alternativní text}](\dopln{adresa{-}odkazu}\volitelnyzacatek{}{\zaklinadlofamily\textvisiblespace}\textquotedbl{}\dopln{titulek}\textquotedbl{}\volitelnykonec{})}%
+\radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{![\dopln{alternativní text}](\dopln{adresa{-}odkazu}\\\volitelnyzacatek{}{\zaklinadlofamily\textvisiblespace}\textquotedbl{}\dopln{titulek}\textquotedbl{}\volitelnykonec{})}%
 
-180
-pdf-a4.*
-sed
-\begin{odstavce}Sed provádí zpracování vstupních souborů v~těchto krocích:
-\begin{odstavce}\hspace*{-1.25em}Sed provádí zpracování vstupních souborů v~těchto krocích:
+1210
+pdf-b5.*
+planovani-uloh
+\radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{eval \textquotedbl{}\$(egrep {-}z \textquotesingle{}\char`\^{}(DBUS\_SESSION\_BUS\_ADDRESS\textbar{}DISPLAY\textbar{}XDG\_[A{-}Z\_]+)={\moznyzlom}\textquotesingle{} /proc/\$xpid/environ \textbar{} tr \textbackslash{}\textbackslash{}0 \textbackslash{}\textbackslash{}n \textbar{} sed {-}e s/=/\textbackslash{}\textbackslash{}n/ {-}e s/\textbackslash{}\textquotesingle{}/\textbackslash{}\textquotesingle{}\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}\textquotesingle{}\textbackslash{}\textquotesingle{}/g \textbar{} xargs {-}rd \textbackslash{}\textbackslash{}n printf \textquotedbl{}export \%s=\textquotesingle{}\%s\textquotesingle{}\textbackslash{}\textbackslash{}n\textquotedbl{})\textquotedbl{}}%
+\radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{eval \textquotedbl{}\$(egrep {-}z \textquotesingle{}\char`\^{}(DBUS\_SESSION\_BUS\_ADDRESS\textbar{}DISPLAY\textbar{}{\moznyzlom}XDG\_[A{-}Z\_]+)={\moznyzlom}\textquotesingle{} /proc/\$xpid/environ \textbar{} tr \textbackslash{}\textbackslash{}0 \textbackslash{}\textbackslash{}n \textbar{} sed {-}e s/=/\textbackslash{}\textbackslash{}n/ {-}e s/\textbackslash{}\textquotesingle{}/\textbackslash{}\textquotesingle{}\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}\textquotesingle{}\textbackslash{}\textquotesingle{}/g \textbar{} xargs {-}rd \textbackslash{}\textbackslash{}n printf \textquotedbl{}export \%s=\textquotesingle{}\%s\textquotesingle{}\textbackslash{}\textbackslash{}n\textquotedbl{})\textquotedbl{}}%
 
-190
+1310
+pdf-b5.*
+stahovani-videi
+\radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{{-}f \textquotedbl{}bestvideo[height{<}=?480]+bestaudio/best[height{<}=?480]/best\textquotedbl{}}%
+\radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{{-}f \textquotedbl{}bestvideo[height{<}=?480]+bestaudio/{\moznyzlom}best[height{<}=?480]/best\textquotedbl{}}%
+
+1410
+pdf-b5.*
+system
+}\begin{parametryprikazu}\parametrprikazu{{\dejavusansfamily{}○} {-}{-}output=short{-}iso {\dejavusansfamily{}○} {-}{-}output=json{-}pretty {\dejavusansfamily{}◉} {-}{-}output=short}{Různé formáty výstupu (podporovány i~další).}%\n
+}\begin{parametryprikazu}\parametrprikazu{{\dejavusansfamily{}○} {-}{-}output=short{-}iso {\dejavusansfamily{}○} {-}{-}output=json{-}pretty {\dejavusansfamily{}◉} {-}{-}output=short}{Různé formáty výstupu\newline(podporovány i~další).}%\n
+
+1510
 pdf-b5.*
 vim
-\item{}Nastavení provedená příkazem \quotedblbase{}:set\textquotedblleft{} z~editoru jsou platná jen do ukončení procesu. Pro trvalé nastavení pro nově otevírané instance editoru zapište příkazy \quotedblbase{}:set\textquotedblleft{} do souboru \quotedblbase{}\char`\~{}/.vimrc\textquotedblleft{} nebo do \quotedblbase{}/etc/vim/vimrc.local\textquotedblleft{}.
-\item{}Nastavení provedená příkazem \quotedblbase{}:set\textquotedblleft{} z~editoru jsou platná jen do ukončení procesu. Pro trvalé nastavení pro nově otevírané instance editoru zapište příkazy \quotedblbase{}:set\textquotedblleft{} do souboru\\\quotedblbase{}\char`\~{}/.vimrc\textquotedblleft{} nebo do \quotedblbase{}/etc/vim/vimrc.local\textquotedblleft{}.
+\begin{odstavce}\quotedblbase{}\itshape{}Programátorské slovo\upshape{}\textquotedblleft{} je sekvence jakýchkoliv nebílých znaků; \quotedblbase{}\itshape{}standardních slovo\upshape{}\textquotedblleft{} je sekvence nebílých znaků, které jsou buď alfanumerické, nebo tvoří interpunkci. To znamená, že např. \quotedblbase{}a1a;;;B2B\textquotedblleft{} je jedno programátorské slovo, ale tři standardní! (Podobně \quotedblbase{}Ahoj, světe!\textquotedblleft{} jsou dvě programátoská slova, ale čtyři standardní.)
+\begin{odstavce}\quotedblbase{}\itshape{}Programátorské slovo\upshape{}\textquotedblleft{} je sekvence jakýchkoliv nebílých znaků; \quotedblbase{}\itshape{}standardních slovo\upshape{}\textquotedblleft{} je sekvence nebílých znaků, které jsou buď alfanumerické, nebo tvoří interpunkci. To znamená, že např.\\\quotedblbase{}a1a;;;B2B\textquotedblleft{} je jedno programátorské slovo, ale tři standardní! (Podobně \quotedblbase{}Ahoj, světe!\textquotedblleft{} jsou dvě programátoská slova, ale čtyři standardní.)
+
+1610
+pdf-b5.*
+zpracovani-videa-a-zvuku
+\bfseries{}rozmazat\mdseries{} obraz (normálně/maximálně/minimálně/obecně)}%
+\bfseries{}rozmazat\mdseries{} obraz (normálně/{\moznyzlom}maximálně/{\moznyzlom}minimálně/{\moznyzlom}obecně)}%
+
+1710
+pdf-b5.*
+zpracovani-videa-a-zvuku
+\radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{[\dopln{vi}] tile=\dopln{počet{-}sloupců{-}mřížky}x\dopln{počet{-}řádků{-}mřížky}\volitelnyzacatek{}:{\moznyzlom}margin={\moznyzlom}\dopln{šířka{-}okraje}\volitelnykonec{}\volitelnyzacatek{}:{\moznyzlom}padding={\moznyzlom}\dopln{rozestup{-}mřížky}\volitelnykonec{}\volitelnyzacatek{}:{\moznyzlom}color={\moznyzlom}\dopln{barva{-}pozadí}\volitelnykonec{}\volitelnyzacatek{}:{\moznyzlom}nb\_frames={\moznyzlom}\dopln{velikost{-}dávky}\volitelnykonec{} [\dopln{vo}]}%
+\radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{[\dopln{vi}] tile=\dopln{počet{-}sloupců{-}mřížky}x{\moznyzlom}\dopln{počet{-}řádků{-}mřížky}\volitelnyzacatek{}:{\moznyzlom}margin={\moznyzlom}\dopln{šířka{-}okraje}\volitelnykonec{}\volitelnyzacatek{}:{\moznyzlom}padding={\moznyzlom}\dopln{rozestup{-}mřížky}\volitelnykonec{}\volitelnyzacatek{}:{\moznyzlom}color={\moznyzlom}\dopln{barva{-}pozadí}\volitelnykonec{}\volitelnyzacatek{}:{\moznyzlom}nb\_frames={\moznyzlom}\dopln{velikost{-}dávky}\volitelnykonec{} [\dopln{vo}]}%
+
+1810
+pdf-b5.*
+zpracovani-videa-a-zvuku
+použijte místo \quotedblbase{}chromium{-}codecs{-}ffmpeg{-}extra\textquotedblleft{} jen \quotedblbase{}chromium{-}codecs{-}ffmpeg\textquotedblleft{}.
+použijte místo\\\quotedblbase{}chromium{-}codecs{-}ffmpeg{-}extra\textquotedblleft{} jen \quotedblbase{}chromium{-}codecs{-}ffmpeg\textquotedblleft{}.

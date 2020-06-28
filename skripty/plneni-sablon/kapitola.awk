@@ -112,7 +112,7 @@ function Pokud(podminka,   i, pole) {
 #       – Neobsluhuje {{ZAČÁTEK}}, {{KONEC}}, {{POKUD *}}, {{KONEC POKUD}}, {{VARIANTA *}}, {{VARIANTY *}}.
 #       – Na návratové hodnotě nezáleží.
 #
-function RidiciRadek(text) {
+function RidiciRadek(text,   prikaz, i) {
     switch (text) {
         case "TĚLO KAPITOLY":
             VyzadujePromennou("TELOKAPITOLY", "Kapitola požaduje {{TĚLO KAPITOLY}} a není nastavena proměnná TELOKAPITOLY!");
@@ -132,6 +132,21 @@ function RidiciRadek(text) {
         case "PŘEHLED ŠTÍTKŮ":
             VyzadujePromennou("IDFORMATU", "Kapitola požaduje {{PŘEHLED ŠTÍTKŮ}}, ale není nastavena proměnná IDFORMATU!");
             VypsatPrehledStitku(IDFORMATU);
+            return 0;
+
+        case "ODKAZY DOLE":
+            VyzadujeFragmentyTSV();
+            if (IDKAPITOLY == "") {ShoditFatalniVyjimku("Chybějící ID kapitoly pro {{ODKAZY DOLE}}!")}
+            if (IDFORMATU != "html") {ShoditFatalniVyjimku("{{ODKAZY DOLE}} jsou implementovány pouze pro formát HTML!")}
+            prikaz = "egrep -v '^(dodatky|kapitoly\t" IDKAPITOLY ")\t' '" FRAGMENTY_TSV "' | cut -f 2,3,11 | sort -Ru | head -n 3";
+            i = 1;
+            while (i <= 3 && (prikaz | getline)) {
+                if (i == 1) {printf("<div class=\"odkazydole\"><div>")}
+                printf("<a href=\"%s.htm\"><img src=\"obrazky/%s\" alt=\"\" width=\"32\" height=\"32\">%s</a>", $1, $3, $2);
+                ++i;
+            }
+            if (i != 1) {printf("</div></div>\n")}
+            close(prikaz);
             return 0;
 
         default:

@@ -270,7 +270,14 @@ ale čísla možná pocházejí z https://www.w3.org/TR/filter-effects/#sepiaEq
 ### Zapékání titulků
 
 *# **zapéci titulky** do obrazu (normálně)*<br>
+*// Pokud název souboru obsahuje mezery či jiné speciální znaky, uzavřete ho do apostrofů. Zadáváte-li graf filtrů přímo na příkazové řádce do apostrofů, musíte kvůli bashi apostrof zadat kombinací "'\\''".*<br>
 **[**{*vi*}**] subtitles=**{*soubor-s-titulky*} **[**{*vo*}**]**
+
+*# zapéci titulky s časovým posunem (opozdit titulky/opozdit video/příklad)*<br>
+*// Posun se zadává v sekundách s desetinnou částí, např. „2.0“ pro posun o dvě sekundy.*<br>
+**[**{*vi*}**] setpts=PTS-**{*posun-sekund*}**/TB,subtitles=**{*soubor-s-titulky*}**,setpts=PTS+**{*posun-sekund*}**/TB [**{*vo*}**]**<br>
+**[**{*vi*}**] setpts=PTS+**{*posun-sekund*}**/TB,subtitles=**{*soubor-s-titulky*}**,setpts=PTS-**{*posun-sekund*}**/TB [**{*vo*}**]**<br>
+**[vst] setpts=PTS+1.25/TB,subtitles=titulky.srt,setpts=PTS-1.25/TB [vvyst]**
 
 *# zapéci titulky do obrazu (obecně/podtrženým červeným písmem Arial velikosti 48)*<br>
 *// Nastavení stylu jsou ve formátu ASS, přičemž znaky = a , musíte odzvláštnit kvůli ffmpegu.*<br>
@@ -713,6 +720,9 @@ Ukázka vyžaduje, abyste v aktuálním adresáři měl/a video „video.mp4“
 <!--
 Zdroj: https://superuser.com/questions/1273920/deprecated-pixel-format-used-make-sure-you-did-set-range-correctly
 -->
+* Při zapékání titulků se ujistěte, že soubor s titulky je v kódování UTF-8 (což často nebývá). Titulky, které nepůjde tímto kódováním znaků dekódovat, filtr „subtitles“ bez varování vynechá!
+
+
 
 <!--
 Podle https://superuser.com/questions/435941/which-codecs-are-most-suitable-for-playback-with-windows-media-player-on-windows

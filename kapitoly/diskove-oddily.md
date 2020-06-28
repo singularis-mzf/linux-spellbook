@@ -40,7 +40,7 @@ uhelper=udisks2
 Tato kapitola se zabývá dělením pevného disku na oddíly, jejich formátováním (zejména souborové systémy ext4, FAT32 a NTFS), údržbou a připojováním (ručním i automatickým). Zabývá se také prací s ramdisky, odkládacím prostorem a LVM.
 <!-- a squash-fs.-->
 
-Tato verze kapitoly nepokrývá připojovaní souborových systémů obyčejným uživatelem;
+Tato verze kapitoly nepokrývá připojovaní souborových systémů obyčejnými uživateli;
 šifrování a nastavování kvót a další typy systému souborů, např. BTRFS a ZFS.
 Rovněž nepokrývá síťové souborové systémy, vypalování DVD ani práci s ISO obrazy CD a DVD.
 Rovněž nepokrývá práci se systémem souborů SquashFS. U LVM nepokrývá „layouty“ a „snapshoty“.
@@ -524,6 +524,7 @@ Nástroj GParted najdete v balíčku „gparted“:
 * Pomocí příkazu „mount \-\-bind“ můžete jeden ramdisk připojit na několik různých míst VFS!
 * V případě změny velikosti oddílu v LVM je třeba samostatně změnit velikost souborového systému a samostatně velikost logického oddílu. Výjimkou je souborový systém „ext4“, u kterého je možné tyto operace sloučit použitím parametru „\-\-resizefs“.
 * LVM poskytuje svůj vlastní interpret příkazové řádky, který nabízí pouze příkazy související s LVM (bez zadávání „sudo“). Spustíte ho příkazem „sudo lvm“.
+* Zadáte-li výměnnou jednotku (např. USB flash disk) v /etc/fstab a tato jednotka nebude dostupná při startu systému, zavádění selže a nabídne vám přechod do záchranného režimu. Proti tomu pomohou volby „nofail“ (v případě jakékoliv chyby se připojení systému souborů tiše přeskočí) a „noauto“ (systém se vůbec nepokusí o připojení, ale oddíl či jednotku půjde připojit zkrácenou syntaxí příkazu „mount“).
 
 ## Další zdroje informací
 

@@ -1,6 +1,6 @@
 <!--
 
-Linux Kniha kouzel, kapitola GRUB a jádro
+Linux Kniha kouzel, kapitola VirtualBox
 Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -17,9 +17,10 @@ Poznámky:
 ⊨
 -->
 
-# GRUB a jádro
+# VirtualBox
 
-!Štítky: {systém}{program}
+!Štítky: {program}{virtualizace}
+!FixaceIkon: 1754
 !ÚzkýRežim: zap
 
 ## Úvod
@@ -43,32 +44,6 @@ Poznámky:
 - Rozdělte na podsekce a naplňte „zaklínadly“.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
-
-*# minimální téma*<br>
-*// Použijete-li obrázek na pozadí, soubor umístěte do téhož adresáře jako „theme.txt“. Metoda umístění může být podle dokumentace „stretch“ (výchozí), „crop“, „padding“, „fitwidth“ nebo „fitheight“, ale nezkoušel/a jsem je.*<br>
-**title-text: "**[{*text titulku*}]**"**<br>
-**title-color: "#**{*barvatextuRRGGBB*}**"**<br>
-**desktop-color: "#**{*barvapozadíRRGGBB*}**"**<br>
-[**desktop-image: "**{*obrázek-na-pozadí.png*}**"**<br>
-**desktop-image-scale-method: "**{*metoda-umístění*}**"**]<br>
-**\+&blank;boot\_menu&blank;\{**<br>
-<odsadit1>**left = 5% width = 90% top = 10% height = 70%**<br>
-<odsadit1>**item\_height = 20**<br>
-<odsadit1>**item\_color = "#**{*barvaneaktivníRRGGBB*}**"**<br>
-<odsadit1>**selected\_item\_color = "#**{*barvaaktivníRRGGBB*}**"**<br>
-**\}**<br>
-**+&blank;label&blank;\{**<br>
-<odsadit1>**left = 5% width = 90% top = 90% height = 5%**<br>
-<odsadit1>**id = "\_\_timeout\_\_" align = "center" color = "#**{*barvatextuRRGGBB*}**"**<br>
-<odsadit1>**text = "%d s"**<br>
-**\}**
-
-*# sestavit zaváděcí ramfs (pro nejnovější jádro/pro všechna jádra/pro konkrétní jádro)*<br>
-*// Konkrétní verze jádra se zadává ve formátu „4.15.0-99-generic“.*<br>
-**sudo update-initramfs -u**[**v**]<br>
-**sudo update-initramfs -u**[**v**] **-k all**<br>
-**sudo update-initramfs -u**[**v**] **-k** {*verze-jádra*}<br>
-
 
 ## Parametry příkazů
 <!--
@@ -122,10 +97,5 @@ Co hledat:
 * Různé další praktické stránky, recenze, videa, tutorialy, blogy, ...
 * Publikované knihy
 * [Stránky TL;DR](https://github.com/tldr-pages/tldr/tree/master/pages/common)
-
-<!--
-Oficiální dokumentace ohledně motivů:
-https://www.gnu.org/software/grub/manual/grub/html_node/Theme-file-format.html
--->
 
 !ÚzkýRežim: vyp

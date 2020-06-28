@@ -54,10 +54,13 @@ Do této kapitoly nespadají takzvané zvláštní parametry (jako např. $?, $!
 * **Prostředí** je soubor pojmenovaných textových proměnných, který má v Linuxu každý proces. Prostředí nového procesu většinou vzniká jako kopie prostředí rodičovského procesu. Je-li proces spuštěn příkazem „exec“, nově spuštěný program převezme prostředí bashe beze změny.
 * **Proměnná prostředí** je jedna z proměnných v prostředí (např. „HOME“). Názvy proměnných prostředí se obvykle zapisují velkými písmeny.
 * **Proměnná interpretu** je proměnná vytvořená interpretem Bash (popř. jiným) za účelem použití ve funkcích a skriptech. Může být **řetězcová**, **pole** (indexované celými čísly od 0) či **asociativní pole** (indexované neprázdným řetězcem zvaným **klíč**). Proměnné interpretu nejsou přístupné z jiných procesů, nešíří se do nově spuštěných instancí a ukončením dané instance bashe zanikají, proto jsou vhodné i k ukládání hesel a jiných citlivých údajů.
-* **Funkce** je v bashi krátký skript, který se ukládá stejným způsobem jako proměnná interpretu. Funkci lze zavolat zadáním jejího názvu jako příkazu a podobně jako skript má svoje poziční parametry.
+* **Funkce** je v bashi krátký skript, který se ukládá do paměti, stejným způsobem jako proměnná interpretu. Funkci lze zavolat zadáním jejího názvu jako příkazu a podobně jako skript má svoje poziční parametry.
+* **Konstanta** je proměnná (interpretu, zřídka prostředí), které je jednorázově přidělena hodnota a dále již nemůže být změněna ani zrušena.
+* **Parametry** skriptu či funkce jsou v bashi přístupné jako zvláštní proměnné „1“, „2“ atd. Do těchto parametrů nelze přímo přiřadit, ale lze z nich číst jako z obyčejných proměnných.
 
 <!--
 * **Parametr skriptu** je prvek příkazové řádky, se kterým byl volán skript či funkce.
+[ ] Popsat celočíselné proměnné a konstanty.
 -->
 
 Názvy proměnných a funkcí jsou obvykle tvořeny jen velkými a malými písmeny anglické abecedy, podtržítky a číslicemi, přičemž nesmí začínat číslicí.
@@ -81,16 +84,25 @@ Kde používám označení „proměnná“, platí to pro proměnné prostřed�
 *# jde o proměnnou prostředí?*<br>
 **[[ $\{**{*název\_proměnné*}**@a} = \*x\* ]]**
 
-*# jde o řetězcovou proměnnou (interpretu nebo prostředí) (alternativy)?*<br>
+*# jde o **řetězcovou** (interpretu nebo prostředí) (alternativy)?*<br>
 **[[ -v** {*název\_proměnné*} **&amp;&amp; $\{**{*název\_proměnné*}**@a} = \*([!aA]) ]]**<br>
 **[[ -v** {*název\_proměnné*} **&amp;&amp; $\{**{*název\_proměnné*}**@a} =~ ^[<nic>^aA]\*$ ]]**<br>
 
-*# jde o pole? (alternativy)*<br>
+*# jde o **pole**? (alternativy)*<br>
 **[[ $\{**{*název\_proměnné*}**@a} = \*a\* ]]**<br>
 **compgen -A arrayvar \| fgrep -qx** {*název\_proměnné*}
 
-*# jde o asociativní pole?*<br>
+*# jde o **asociativní pole**?*<br>
 **[[ $\{**{*název\_proměnné*}**@a} = \*A\* ]]**<br>
+
+*# jde o **konstantu**?*<br>
+**[[ $\{**{*název\_proměnné*}**@a} = \*r\* ]]**
+
+*# jde o **celočíselnou** proměnnou?*<br>
+**[[ $\{**{*název\_proměnné*}**@a} = \*i\* ]]**
+
+*# jde o jmenný odkaz?*<br>
+**test -R** {*název\_proměnné*}
 
 ### Seznamy proměnných
 
@@ -125,18 +137,41 @@ proměnnou „_“, ačkoliv tu ani jako proměnnou prostředí nastavit nelze.
 *# seznam asociativních polí (bez hodnot)*<br>
 **lkk\_promenzkum \| egrep -z '^\\S+&blank;\\S\*A\\S\*&blank;' \| cut -d '&blank;' -f 1 -z \| tr \\\\0 \\\\n**
 
-### Řetězcové proměnné interpretu
+*# seznam konstant (pro člověka)*<br>
+**readonly**
 
-*# přiřadit proměnné hodnotu*<br>
+### Řetězcové a celočíselné proměnné interpretu, konstanty
+
+*# **přiřadit** proměnné hodnotu*<br>
 {*název\_proměnné*}**="**{*nová-hodnota*}**"**
 
-*# připojit novou hodnotu na začátek/konec proměnné*<br>
+*# **připojit** novou hodnotu na začátek/konec proměnné*<br>
 {*název\_proměnné*}**="**{*nová-hodnota*}**$**{*název\_proměnné*}**"**<br>
 {*název\_proměnné*}**+="**{*nová-hodnota*}**"**
 
-*# zrušit proměnnou*<br>
+*# **zrušit** proměnnou*<br>
 *// Pozor! Příkaz „unset“ uspěje i tehdy, pokud daná proměnná neexistuje.*<br>
 **unset -v** {*název\_proměnné*}
+
+*# nastavit proměnnou jako **celočíselnou** (obecně/příklady...)*<br>
+*// Hodnoty přiřazené do celočíselných proměnných se automaticky vyhodnocují jako výrazy a konvertují na celé číslo. Místo každého druhého názvu proměnné v uvedeném příkazu pochopitelně můžete uvést novou hodnotu proměnné, a to i výrazem.*<br>
+**declare -i** {*název\_proměnné*}**=$**{*název\_proměnné*} [{*další\_proměnná*}**=$**{*další\_proměnná*}]...<br>
+**declare -i x=$x**<br>
+**declare -i x=-1**<br>
+
+*# **přičíst**/**odečíst** od celočíselné proměnné*<br>
+{*název\_proměnné*}**=$**{*název\_proměnné*}**+**{*číslo*}<br>
+{*název\_proměnné*}**=$**{*název\_proměnné*}**-**{*číslo*}
+
+*# vytvořit **konstantu***<br>
+*// Konstanta je proměnná interpretu (popř. prostředí), kterou nelze zrušit ani později změnit její hodnotu (bez použití opravdu škaredých a nespolehlivých hacků). Lze ji však změnit z proměnné interpretu na proměnnou prostředí a naopak. Jde-li o proměnnou prostředí, vytvořené procesy (včetně dalších instancí bashe) ji zdědí již jako obyčejnou (přiřaditelnou) proměnnou prostředí.*<br>
+**readonly** {*název\_konstanty*}**="**{*hodnota*}**"** [{*další\_název\_konstanty*}**="**{*hodnota*}**"**]...
+
+*# automatická konverze velikosti písmen při přiřazení (na velká písmena/na malá písmena/vypnout)*<br>
+*// Pozor! Zapnutí této konverze nezmění stávající hodnotu proměnné, účinek nastane až při následujícím přiřazení!*<br>
+**declare -u** {*název\_proměnné*}...<br>
+**declare -l** {*název\_proměnné*}...<br>
+**declare +lu** {*název\_proměnné*}...<br>
 
 ### Pole
 
@@ -342,19 +377,19 @@ Prázdný klíč způsobí chybu „chybný podskript pole“.
 **$\{**{*název\_proměnné*}**@A}**
 
 
-<!--
-[ ] Parametry skriptu $0, $1, $*, $@, ...
-+ nastavit příkazem „set“
--->
+### Parametry skriptu
 
-### Dosazování parametrů skriptu
-
-*# dosadit N-tý parametr skriptu (alternativy)*<br>
-**$**{*číslice-N*}<br>
+*# dosadit N-tý parametr skriptu či funkce (alternativy)*<br>
+*// První variantu lze použít pouze pro parametry $0 až $9. Druhou variantu (tu se složenými závorkami) lze použít i pro ostatní parametry (např. ${10}) a lze ji skombinovat s pokročilými formami dosazení.*<br>
+**$**{*N*}<br>
 **$\{**{*N*}**\}**
 
+*# nastavit parametry skriptu či funkce*<br>
+*// Parametry skriptu či funkce lze nastavit pouze najednou, přičemž se všechny stávající parametry (kromě $0) ztratí.*<br>
+**set \-\-** {*parametr*}...
+
 *# dosadit všechny parametry od $1: do samostatných parametrů/jen oddělené mezerou*<br>
-*// Dvojité uvozovky zde znamenají, že pro správnou funkci musí být tyto konstrukce použity ve dvoji.*<br>
+*// Dvojité uvozovky zde znamenají, že pro správnou funkci musí být $@ (resp. $\*) uvedeny ve dvojitých uvozovkách.*<br>
 **"$@"**<br>
 **"$\*"**
 
@@ -368,24 +403,19 @@ Prázdný klíč způsobí chybu „chybný podskript pole“.
 
 ### Jmenné odkazy
 
-*# vytvořit jmenný odkaz*<br>
+*# **vytvořit** jmenný odkaz*<br>
 *// Poznámka: jmenným odkazem nelze odkazovat na normální ani asociativní pole!*<br>
 **declare -n** {*název\_odkazu*}**=**{*název\_odkazované\_proměnné*}
 
-*# zrušit jmenný odkaz*<br>
+*# **zrušit** jmenný odkaz*<br>
 **unset -n** {*název\_odkazu*}
 
 *# je proměnná jmenný odkaz?*<br>
 **test -R** {*název\_proměnné*}
 
-*# přečíst jmenný odkaz*<br>
-**if test -R** {*název\_odkazu*}**; then declare +n** {*název\_odkazu*}**; echo $**{*název\_odkazu*}**; declare -n** {*název\_odkazu*}**; else false; fi**
-<!--
-[ ] Vyzkoušet.
--->
-
-
-
+*# **přečíst** jmenný odkaz místo odkazované proměnné (alternativy)*<br>
+**if test -R** {*název\_odkazu*}**; then declare +n** {*název\_odkazu*}**; echo $**{*název\_odkazu*}**; declare -n** {*název\_odkazu*}**; else false; fi**<br>
+**test -R** {*název\_odkazu*} **&amp;&amp; eval "$(declare -p** {*název\_odkazu*} **\| sed -E '1s/^[<nic>^=]\*=/echo&blank;/')"**
 
 ## Zaklíndla: Proměnné prostředí
 
@@ -487,12 +517,12 @@ Poznámka: proměnné prostředí EDITOR, VISUAL a PAGER se obvykle nastavují 
 *# **mohu** číst prostředí daného procesu?*<br>
 **test -r /proc/**{*PID*}**/environ**
 
-*# vypsat **seznam***<br>
+*# vypsat **seznam** proměnných*<br>
 **sed -zE 's/=.\*//' /proc/**{*PID*}**/environ \| tr \\\\0 \\\\n** [**\| sort**]
 
 *# je proměnná **definovaná**/neprázdná?*<br>
-**egrep -q '^**{*název\_proměnné*}**=' /proc/**{*PID*}**/environ**<br>
-**egrep -q '^**{*název\_proměnné*}**=.' /proc/**{*PID*}**/environ**
+**egrep -zq '^**{*název\_proměnné*}**=' /proc/**{*PID*}**/environ**<br>
+**egrep -zq '^**{*název\_proměnné*}**=.' /proc/**{*PID*}**/environ**
 
 *# **přečíst** hodnotu*<br>
 **sed -znE 's/^**{*název\_proměnné*}**=//;T;p' /proc/**{*PID*}**/environ \| tr -d \\\\0**
@@ -545,9 +575,11 @@ Všechny použité nástroje jsou základní součástí Ubuntu, přítomné i 
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-* Pokud potřebujete v asociativním poli použít jako klíč prázdný řetězec, pomůže upravit kód tak, aby před každý klíč vkládal konkrétní písmeno (např. „X“).
-* Identifikátory proměnných, které mají řídicí či systémový význam (jako např. *HOME* či *PATH*) se obvykle píšou velkými písmeny, bez ohledu na to, zda jde o proměnné interpretu nebo prostředí. Identifikátory „obyčejných“ proměnných (různé dočasné a výpočetní hodnoty) ve skriptech pište malými.
-* Znak ~ se v bashi rozvíjí na hodnotu „${HOME}“, proto ho uvnitř dvojitých uvozovek můžete snadno a bezpečně nahradit za „$HOME“.
+* Pokud potřebujete v asociativním poli použít jako klíč prázdný řetězec (což není dovoleno), pomůže upravit kód tak, aby před každý klíč vkládal konkrétní písmeno (např. „X“).
+* Velkými písmeny se píšou názvy proměnných, které mají řídicí či systémový význam (jako např. *HOME*, *PATH*, *HISTSIZE* či *MANPAGER*). Vaše uživatelské proměnné ve skriptech pojmenovávejte malými písmeny, popř. kombinací malých a velkých písmen.
+* Znak ~ se v bashi rozvíjí na hodnotu „${HOME}“, proto ho uvnitř dvojitých uvozovek můžete vždy snadno a bezpečně nahradit za „$HOME“.
+* Funkce se může jmenovat stejně jako proměnná.
+* Jako celočíselné lze označit i pole, v takovém případě se vlastnosti celočíselných proměnných uplatní při každém přiřazení do kteréhokoliv prvku daného pole.
 
 
 ## Další zdroje informací

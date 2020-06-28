@@ -130,17 +130,6 @@ function KonecKapitoly(nazevKapitoly, cislaPoznamek, textyPoznamek,   i, vyslede
         #vysledek = vysledek "<div class=\"zrusitzvyrazneni\" id=\"zzv\"><a href=\"#zzv\">zrušit zvýraznění poznámky pod čarou</a></div></div>\n";
         vysledek = vysledek "</div>\n";
     }
-    #
-    prikaz = "egrep -v '^(dodatky|kapitoly\t" IDKAPITOLY ")\t' '" FRAGMENTY_TSV "' | cut -f 2,3,11 | sort -Ru | head -n 3";
-    i = 1;
-    while (i <= 3 && (prikaz | getline)) {
-        if (i == 1) {vysledek = vysledek "<div class=\"odkazydole\">"}
-        vysledek = vysledek "<a href=\"" $1 ".htm\"><img src=\"obrazky/" $3 "\" alt=\"\" width=\"32\" height=\"32\">" $2 "</a>";
-        ++i;
-    }
-    if (i != 1) {vysledek = vysledek "</div>"}
-    close(prikaz);
-
     return vysledek;
 }
 
