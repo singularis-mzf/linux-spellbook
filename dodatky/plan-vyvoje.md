@@ -16,7 +16,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 ## Chystané kapitoly
 
-* „Proměnné prostředí“ (printenv a další možnosti)
+* „Proměnné prostředí a interpretu“
+* „Zpracování binárních souborů“ (md5sum, uuencode, base64, analýzy, konverze a další)
 * „Unicode a emotikony“ („mapa znaků“, vzorníky a různé symboly)
 * „Základy Perlu“ (jednoduše, konzistentně)
 * „Komplexní textové formáty“ (JSON, XML apod.)
@@ -24,18 +25,17 @@ https://creativecommons.org/licenses/by-sa/4.0/
 * „Šifrování a kryptografie“ (gpg, šifrování archivů, elektronické podpisy, HTTPS certifikáty)
 * „X (správce oken)“ (práce s okny, se schránkou, oznámení a další)
 * „Zpracování obrázků“ (ImageMagick, konverze RAW z fotoaparátů, zatím asi bez animovaných gifů)
-* „Zpracování binárních souborů“ (md5sum, uuencode, base64, analýzy, konverze a další)
 * „Firewall“ (asi hlavně iptables)
-* „GRUB“ (konfigurace, dualboot, nastavení grafického pozadí)
-* „Vim“ (základní a mírně pokročilé ovládání)
-* „Záznam obrazovky“ (maim, ffmpeg a další)
 * „Pevné a symbolické odkazy“
+* „Jádro a GRUB“ (konfigurace, dualboot, nastavení grafického pozadí)
+* „Záznam obrazovky“ (maim, ffmpeg a další)
 * „Bash“ (syntaxe, rozvoj proměnných, exec, přesměrování, roury a další)
 * „LaTeX“ (základní struktura dokumentu, standardní značky, překlad do PDF, důležité balíčky)
 * „SQL“ (SQLite, MySQL, MariaDB; všechno možné)
 * „ASCII art“ (banner, toilet a další)
 * „DOSBox“ (ovládání, konfigurace, spouštění)
 * „Wine“ (parametry, konfigurace, zkušenosti, wine-prefixy apod.)
+* „VirtualBox“ (ovládání z terminálu)
 * „Správa balíčků 2“ (apt-src, apt-mirror, aptly)
 * „Matematické výpočty“ (bc, dc, expr apod.)
 

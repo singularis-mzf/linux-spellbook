@@ -15,7 +15,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 „Linux: Kniha kouzel“ je open source sbírka velmi krátkých řešených příkladů pro příkazovou řádku/příkazový řádek systému Linux, především distribuce Ubuntu. V současnosti je dostupná ve formátu HTML pro zobrazení na počítači a ve formátu PDF pro tisk na papír.
 
-Verze *vanilková příchuť 1.8 Darja Drážní*, je cílena na *Ubuntu 18.04 Bionic Beaver* a jeho deriváty.
+Verze *vanilková příchuť 1.9 Eliáš Ečer*, je cílena na *Ubuntu 18.04 Bionic Beaver* a jeho deriváty.
 
 Příručka podléhá licenci [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 Podrobné údaje o autorství zdrojových souborů jsou uvedeny v komentářích v jejich záhlaví;
@@ -152,13 +152,20 @@ Zvláštní kapitoly:
 
 ## Podobné projekty
 
-* [GNU/Linux Desktop Survival Guide](https://togaware.com/linux/survivor/) (anglicky, licence: GPL v2+ nebo CC BY 2.0+) je vynikající, pro mě fascinující a stále udržovaný zdroj podobný Linuxu: Knize kouzel. Na rozdíl od Linuxu: Knihy kouzel již vychází knižně a PDF verze příručky je placená (HTML verze je dostupná online a zdarma). Také pravděpodobně není tak vázaná na konkrétní verzi konkrétní distribuce (ale zatím jsem neměl čas se s ní podrobně seznámit).
-* [Pure Bash Bible](https://github.com/dylanaraps/pure-bash-bible) (anglicky, licence: MIT) je také kniha řešených příkladů (ačkoliv e-book) a rovněž se snaží nabízet ověřená a co nejlepší řešení. (Autor dokonce na svoje příkazy píše automatizované testy.) Ve srovnání s Linuxem: Knihou kouzel je ale omezená pouze na příkazový interpret „bash“, zatímco Linux: Kniha kouzel se snaží pokrýt celou škálu nástrojů dostupných na linuxových systémech a nabízí větší kvantitu.
-* [The Linux Documentation Project](http://www.tldp.org/) (anglicky, licence: GFDL 1.2, některé části i pod jinými svobodnými licencemi) je monumentální sbírka návodů a příruček mapující Linux. Je již ovšem prakticky neudržovaná a většinou velmi zastaralá. K návštěvě ji mohu doporučit jen „počítačovým archeologům“, rozhodně ne současným začátečníkům.
+*Poznámka: Uvedené údaje o licencích jsou orientační, a ačkoliv je uvádím v dobré víře, nemusí již být aktuální!*
+
+* [Sallyx.org](https://www.sallyx.org/) (nesvobodná licence CC BY-NC-SA 3.0) jsou vynikající, obsáhlé a dodnes velmi dobře udržované stránky o Linuxu a programování. Na rozdíl od *Linuxu: Knihy kouzel* nejsou open-source (autor je udržuje sám, v podstatě jde o freeware) a nemají knižní ambice, jsou však optimalizovány pro samouky, aby se z nich uváděné nástroje mohli snadno naučit. Dle mého názoru jde o nejlepší konkurenční zdroj v češtině.
+* [Pure Bash Bible](https://github.com/dylanaraps/pure-bash-bible) (anglicky, licence: MIT) je stejně jako *Linux: Kniha kouzel* knihou řešených příkladů (ačkoliv jde o e-book) a také se snaží nabízet ověřená a co nejlepší řešení, autor dokonce na svoje příkazy píše automatizované testy. Oproti Linuxu: Knize kouzel je ale Pure Bash Bible zaměřená pouze na příkazový interpret „bash“.
+* [Linux Journey](https://linuxjourney.com/) (anglicky, licence pouze textu: CC BY-SA 4.0) je rozsáhlý a kvalitní výukový kurz linuxových příkazů z různých oblastí. Hlavním rozdílem oproti Linuxu: Knize kouzel zde je, že je zaměřený na výuku (dokonce u jednotlivých sekcí nabízí i úkoly k procvičení), není však tak podrobný a vyhýbá se komplikovaným a nejmodernějším technologiím (např. tam nenajdete vysvětlení ACL, LVM apod.).
 * [TL;DR](https://github.com/tldr-pages/tldr) (anglicky − „Too Long; Didn't Read“, licence: MIT) představuje výrazně zjednodušené manuálové stránky s krátkými příklady k jednotlivým nástrojům. Na rozdíl od *Linuxu: Knihy kouzel* je organizován po nástrojích, takže musíte vědět, k čemu chcete nápovědu, a neporadí vám lepší nástroje k provedení dané činnosti. Ke každému nástrojí navíc uvádí jen nejběžnější příklady. Kladem je, že jeden z jeho klientů je dostupný jako balíček [Ubuntu](https://packages.ubuntu.com/bionic/tldr) a [Debianu](https://packages.debian.org/buster/tldr).
-* [eg](https://github.com/srsudar/eg) (anglicky, licence MIT) je projektu *Linux: Kniha kouzel* asi nejpodobnější. Nabízí zjednodušené a velmi praktické „manuálové stránky“ s vynikajícím zvýrazňováním syntaxe, snadným přístupem a možností je snadno upravovat (v Markdownu). Jediným jeho nedostatkem je opět orientace na dokumentaci nástrojů spíš než na řešení úloh. Také již není příliš aktivně vyvíjen (poslední verze 1.1.1 je z října 2018). (Mimochodem, autor má smysl pro humor, když radí přejmenovat „eg“ na „woman“.)
+* Projekt [eg](https://github.com/srsudar/eg) (anglicky, licence MIT) nabízí zjednodušené a velmi praktické „manuálové stránky“ s vynikajícím zvýrazňováním syntaxe, snadným přístupem a možností je snadno upravovat (v Markdownu). Jeho nedostatkem je orientace na dokumentaci nástrojů spíš než na řešení úloh. Také již není příliš aktivně vyvíjen (poslední verze 1.1.1 je z října 2018). (Mimochodem, autor má smysl pro humor, když radí přejmenovat „eg“ na „woman“.)
 * [Cheat](https://github.com/chrisallenlane/cheat) (anglicky, licence: MIT) je nástroj pro správu vlastních jednoduchých „manuálových stránek“. Používá se snadno, ale není určen k objevování nových programů a ve srovnání s klasickými manuálovými stránkami má horší zvýrazňování syntaxe.
 * [Bro Pages](http://bropages.org) (anglicky, pozor − proprietární licence) nabízejí stejně jako *Linux: Kniha kouzel* obsáhlejší přehled možností, ale stále organizovaný po jednotlivých nástrojích a bez kategorizace do logických skupin.
+
+### Zastaralé podobné projekty
+
+* [The Linux Documentation Project](http://www.tldp.org/) (anglicky, licence: GFDL 1.2, některé části i pod jinými svobodnými licencemi) je monumentální historická sbírka návodů a příruček mapující Linux. Je již ovšem prakticky neudržovaná a většinou velmi zastaralá. K návštěvě ji mohu doporučit jen „počítačovým archeologům“, rozhodně ne současným začátečníkům.
+* [GNU/Linux Desktop Survival Guide](https://togaware.com/linux/survivor/) (anglicky, licence: GPL v2+ nebo CC BY 2.0+) je původně rozsáhlá sbírka jednostránkových článků o konkrétních problémech uživatele GNU/Linuxu. Ačkoliv je dodnes udržovaná, připadá mi, že jedinou formou aktualizace je odstraňování již neaktuálního obsahu, po kterém bohužel zůstávají prázdné články. Na rozdíl od Linuxu: Knihy kouzel již vyšel knižně a PDF verze je placená (HTML verze je dostupná online a zdarma).
 
 ## Licence
 

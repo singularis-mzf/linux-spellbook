@@ -168,9 +168,22 @@ Pokud některá kapitola odkazuje na nesvobodný software, vždy na to výslovn�
 
 ## Aktuální poznámka k verzi „vanilková příchuť 1.9 Eliáš Ečer“
 
-(rozepsáno...)
+Verze 1.9, jménem Eliáš Ečer, nepřináší žádnou novou kapitolu.
+Hlavními novinkami jsou designová vylepšení ve formátech PDF a HTML.
 
-Vydání verze 1.10, jménem Františka Fučíková, očekávám v druhé polovině července 2020. (Neexistuje žádné české rodné jméno začínající písmenem É či Ě.)
+Formát PDF nyní používá písmo Free Helvetian. Rozhodl/a jsem se pro bezpatkové písmo,
+protože patky poutají oko čtenáře na řádek, což je nevhodné pro rychlé vyhledávání.
+
+Ve formátu HTML jsem vylepšil/a design navigace na konci stránky každé kapitoly,
+aby nebyl tak matoucí. Tímto děkuji čtenáři, který mě na to upozornil.
+
+Původně plánovanou kapitolu „Proměnné prostředí a interpretu“ se mi nepodařilo
+včas dokončit, již nyní je ale (nedokončená a bez záruky kvality) dostupná
+pro tisk v odpovídajícím vydání řady „Sid“. Předpokládám,
+že vyjde v následující verzi vanilkové příchuti.
+
+Vydání verze 1.10, jménem Františka Fučíková, očekávám v druhé polovině července 2020.
+(Neexistuje žádné české rodné jméno začínající písmenem É či Ě.)
 
 &nbsp;
 
