@@ -20,8 +20,6 @@ Poznámky:
 
 [ ] Přednastavování proměnných prostředí (.profile, /etc/environment apod.)
 [ ] Pattern matching (možná spíš do jiné kapitoly): https://www.gnu.org/software/bash/manual/html_node/Pattern-Matching.html#Pattern-Matching
-[ ] Proměnné jen pro čtení (a další atributy „declare“).
-[ ] Zvláštní proměnné interpretu?
 
 -->
 
@@ -33,30 +31,32 @@ Poznámky:
 
 ## Úvod
 
-Tato kapitola pokrývá veškerou práci s proměnnými prostředí v Linuxu
-a dále také veškerou práci s proměnnými a funkcemi interpretu Bash.
-Rovněž uvádí některé důležité proměnné prostředí, kterými lze ovlivnit funkci programů
-a systému, a pokrývá také práci s parametry skriptů a funkcí v Bashi.
+Tato kapitola pokrývá veškerou práci s proměnnými a funkcemi interpretu Bash
+a uvádí některé systémově důležité proměnné prostředí.
+Rovněž pokrývá práci s parametry skriptů a funkcí v Bashi.
 
-<!--
-- Obecně popište základní principy, na kterých fungují používané nástroje.
-?
--->
+Proměnné se v bashi (zejména ve skriptech a funkcích) používají k dočasnému
+uchování krátkých textových dat (popř. čísel) mezi příkazy. Většina proměnných
+je viditelná pouze v rámci dané instance interpretu; pro práci s prostředím
+se používají „exportované“ proměnné, které instance bashe vytvoří z proměnných
+prostředí v momentě svého spuštění a ze kterých sestaví prostředí každého
+procesu, který spustí.
 
-Tato verze kapitoly nepokrývá proměnné interpretu bash, které řídí jeho funkci,
-ale normálně nejsou proměnnými prostředí a nešíří se do nově vytvořených procesů.
-Také nepokrývá atributy proměnných (např. proměnné jen pro čtení) a nedostatečně
-pokrývá lokální proměnné ve funkcích.
+Tato verze kapitoly nepokrývá zvláštní proměnné interpretu bash,
+které řídí jeho funkci, ale nebývají proměnnými prostředí;
+nedostatečně pokrývá lokální proměnné ve funkcích;
+nepokrývá možnosti přednastavení proměnných v souborech jako
+/etc/environment, „.profile“ či „.bashrc“.
 Do této kapitoly nespadají takzvané zvláštní parametry (jako např. $?, $! apod.).
 
 ## Definice
 
-* **Prostředí** je soubor pojmenovaných textových proměnných, který má v Linuxu každý proces. Prostředí nového procesu většinou vzniká jako kopie prostředí rodičovského procesu. Je-li proces spuštěn příkazem „exec“, nově spuštěný program převezme prostředí bashe beze změny.
-* **Proměnná prostředí** je jedna z proměnných v prostředí (např. „HOME“). Názvy proměnných prostředí se obvykle zapisují velkými písmeny.
-* **Proměnná interpretu** je proměnná vytvořená interpretem Bash (popř. jiným) za účelem použití ve funkcích a skriptech. Může být **řetězcová**, **pole** (indexované celými čísly od 0) či **asociativní pole** (indexované neprázdným řetězcem zvaným **klíč**). Proměnné interpretu nejsou přístupné z jiných procesů, nešíří se do nově spuštěných instancí a ukončením dané instance bashe zanikají, proto jsou vhodné i k ukládání hesel a jiných citlivých údajů.
-* **Funkce** je v bashi krátký skript, který se ukládá do paměti, stejným způsobem jako proměnná interpretu. Funkci lze zavolat zadáním jejího názvu jako příkazu a podobně jako skript má svoje poziční parametry.
-* **Konstanta** je proměnná (interpretu, zřídka prostředí), které je jednorázově přidělena hodnota a dále již nemůže být změněna ani zrušena.
-* **Parametry** skriptu či funkce jsou v bashi přístupné jako zvláštní proměnné „1“, „2“ atd. Do těchto parametrů nelze přímo přiřadit, ale lze z nich číst jako z obyčejných proměnných.
+* Bash rozeznává tři základní typy proměnných: **řetězcové proměnné**, **pole** (indexované celými čísly od nuly) a **asociativní pole** (indexované neprázdným řetězcem zvaným **klíč**).
+* **Prostředí** je soubor řetězcových proměnných (tzv. **proměnných prostředí**), který má nejen bash, ale každý proces (s výjimkou jaderných démonů). Obvykle vzniká jako kopie prostředí rodičovského procesu (což umožňuje šířit proměnné prostředí přes meziprocesy, které se o ně nezajímají); to ovšem neplatí, je-li rodičovským procesem bash; ten vytváří prostředí spuštěných procesů ze svých **exportovaných proměnných**. Exportované proměnné bash vytvoří z prostředí v momentě svého spuštění a dál se s nimi pracuje stejně jako s ostatními řetězcovými proměnnými, včetně možnosti je vytvářet a rušit.
+* **Funkce** je krátký skript, který se místo do souboru ukládá do paměti (stejně jako proměnná). Na rozdíl od skriptu se také vždy spouští v rámci stávající instance bashe. Stejně jako skript lze funkci zavolat zadáním jejího názvu jako příkazu a má svoje poziční parametry. Funkce se často používají ve skriptech jako podprogramy, ale užitečné jsou i v interaktivním režimu.
+* **Konstanta** je proměnná (jen zřídka exportovaná), které je jednorázově přidělena hodnota a dále již nemůže být změněna ani zrušena.
+* **Parametry** (také **poziční parametry**) jsou v bashi přístupné jako zvláštní proměnné „1“, „2“ atd. Poziční parametry lze číst jako obyčejné proměnné, ale přiřadit jde jen do všech najednou, a to voláním skriptu, volání funkce nebo příkazem „set“.
+* **Celočíselné proměnné** jsou řetězcové proměnné a prvky polí či asociativních polí, kterým byl nastaven atribut „i“. Při každém přiřazení do takové proměnné (resp. prvku) se přiřazovaný text vyhodnotí jako celočíselný výraz a do proměnné/prvku se přiřadí výsledná celočíselná hodnota.
 
 <!--
 * **Parametr skriptu** je prvek příkazové řádky, se kterým byl volán skript či funkce.
@@ -65,107 +65,35 @@ Do této kapitoly nespadají takzvané zvláštní parametry (jako např. $?, $!
 
 Názvy proměnných a funkcí jsou obvykle tvořeny jen velkými a malými písmeny anglické abecedy, podtržítky a číslicemi, přičemž nesmí začínat číslicí.
 
-Kde používám označení „proměnná“, platí to pro proměnné prostředí i interpretu bez rozdílu.
-
 !ÚzkýRežim: vyp
 
-## Zaklínadla: Bash
+## Zaklínadla: Proměnné v bashi
 
-
-### Testy proměnných
-
-*# jde o proměnnou?*<br>
-**test -v** {*název\_proměnné*}
-
-*# jde o proměnnou interpretu? (alternativy)*<br>
-**[[ -v** {*název\_proměnné*} **&amp;&amp; $\{**{*název\_proměnné*}**@a} = \*([!x]) ]]**<br>
-**[[ -v** {*název\_proměnné*} **&amp;&amp; $\{**{*název\_proměnné*}**@a} =~ ^[<nic>^x]\*$ ]]**<br>
-
-*# jde o proměnnou prostředí?*<br>
-**[[ $\{**{*název\_proměnné*}**@a} = \*x\* ]]**
-
-*# jde o **řetězcovou** (interpretu nebo prostředí) (alternativy)?*<br>
-**[[ -v** {*název\_proměnné*} **&amp;&amp; $\{**{*název\_proměnné*}**@a} = \*([!aA]) ]]**<br>
-**[[ -v** {*název\_proměnné*} **&amp;&amp; $\{**{*název\_proměnné*}**@a} =~ ^[<nic>^aA]\*$ ]]**<br>
-
-*# jde o **pole**? (alternativy)*<br>
-**[[ $\{**{*název\_proměnné*}**@a} = \*a\* ]]**<br>
-**compgen -A arrayvar \| fgrep -qx** {*název\_proměnné*}
-
-*# jde o **asociativní pole**?*<br>
-**[[ $\{**{*název\_proměnné*}**@a} = \*A\* ]]**<br>
-
-*# jde o **konstantu**?*<br>
-**[[ $\{**{*název\_proměnné*}**@a} = \*r\* ]]**
-
-*# jde o **celočíselnou** proměnnou?*<br>
-**[[ $\{**{*název\_proměnné*}**@a} = \*i\* ]]**
-
-*# jde o jmenný odkaz?*<br>
-**test -R** {*název\_proměnné*}
-
-### Seznamy proměnných
-
-*# seznam všech proměnných (s hodnotami pro člověka/bez hodnot)*<br>
-**(set -o posix; set)**<br>
-**compgen -v**
-
-<!--
-**lkk\_promenzkum \| sed -zE 's/^(\\S+)&blank;\\S+&blank;/\\1=/' \| tr \\\\0 \\\\n**<br>
--->
-
-*# seznam všech proměnných interpretu (s hodnotami/bez hodnot)*<br>
-**lkk\_promenzkum \| sed -znE '/^\\S+\\s+[<nic>^x]+\\s+\\S+$/{s/^(\\S+)&blank;\\S+&blank;/\\1=/;p}' \| tr \\\\0 \\\\n**<br>
-**lkk\_promenzkum \| sed -znE '/^\\S+\\s+[<nic>^x]+\\s+\\S+$/{s/.\*\\s//;p}' \| tr \\\\0 \\\\n**
-
-*# seznam proměnných prostředí (s hodnotami/bez hodnot/s hodnotami ve formátu txtz)*<br>
-**env -0 \| egrep -zv '^\_=' \| tr \\\\0 \\\\n**<br>
-**compgen -e**<br>
-**env -0 \| egrep -zv '^\_='**
-<!--
-Poznámka: příkaz „printenv“ z nějakého důvodu vypisuje kromě proměnných prostředí také
-proměnnou „_“, ačkoliv tu ani jako proměnnou prostředí nastavit nelze.
--->
-
-*# seznam řetězcových proměnných interpretu (s hodnotami/bez hodnot)*<br>
-**lkk\_promenzkum \| sed -znE '/^\\S+\\s+[<nic>^aAx]+\\s+\\S+$/{s/^(\\S+)&blank;\\S+&blank;/\\1=/;p}' \| tr \\\\0 \\\\n**<br>
-**lkk\_promenzkum \| sed -znE '/^\\S+\\s+[<nic>^aAx]+\\s+\\S+$/{s/\\s.\*//;p}' \| tr \\\\0 \\\\n**
-
-*# seznam polí (bez hodnot)*<br>
-**compgen -A arrayvar**
-
-*# seznam asociativních polí (bez hodnot)*<br>
-**lkk\_promenzkum \| egrep -z '^\\S+&blank;\\S\*A\\S\*&blank;' \| cut -d '&blank;' -f 1 -z \| tr \\\\0 \\\\n**
-
-*# seznam konstant (pro člověka)*<br>
-**readonly**
-
-### Řetězcové a celočíselné proměnné interpretu, konstanty
+### Řetězcové proměnné
 
 *# **přiřadit** proměnné hodnotu*<br>
 {*název\_proměnné*}**="**{*nová-hodnota*}**"**
-
-*# **připojit** novou hodnotu na začátek/konec proměnné*<br>
-{*název\_proměnné*}**="**{*nová-hodnota*}**$**{*název\_proměnné*}**"**<br>
-{*název\_proměnné*}**+="**{*nová-hodnota*}**"**
 
 *# **zrušit** proměnnou*<br>
 *// Pozor! Příkaz „unset“ uspěje i tehdy, pokud daná proměnná neexistuje.*<br>
 **unset -v** {*název\_proměnné*}
 
-*# nastavit proměnnou jako **celočíselnou** (obecně/příklady...)*<br>
-*// Hodnoty přiřazené do celočíselných proměnných se automaticky vyhodnocují jako výrazy a konvertují na celé číslo. Místo každého druhého názvu proměnné v uvedeném příkazu pochopitelně můžete uvést novou hodnotu proměnné, a to i výrazem.*<br>
-**declare -i** {*název\_proměnné*}**=$**{*název\_proměnné*} [{*další\_proměnná*}**=$**{*další\_proměnná*}]...<br>
-**declare -i x=$x**<br>
-**declare -i x=-1**<br>
+*# vypsat **seznam** (s hodnotami/bez hodnot/s hodnotami ve formátu txtz)*<br>
+**for \_ in $(compgen -v); do [[ ${!\_@a} = \*[aA]\* ]] \|\| declare -p "$\_"; done**<br>
+**for \_ in $(compgen -v); do [[ ${!\_@a} = \*[aA]\* ]] \|\| printf '%s\\n' "$\_"; done**<br>
+**for \_ in $(compgen -v); do [[ ${!\_@a} = \*[aA]\* ]] \|\| printf '%s=%s\\0' "$\_" "${!\_}"; done**
+<!--
+**lkk\_promenzkum \| sed -znE '/^\\S+\\s+[<nic>^aAx]+\\s+\\S+$/{s/^(\\S+)&blank;\\S+&blank;/\\1=/;p}' \| tr \\\\0 \\\\n**<br>
+**lkk\_promenzkum \| sed -znE '/^\\S+\\s+[<nic>^aAx]+\\s+\\S+$/{s/\\s.\*//;p}' \| tr \\\\0 \\\\n**
+-->
 
-*# **přičíst**/**odečíst** od celočíselné proměnné*<br>
-{*název\_proměnné*}**=$**{*název\_proměnné*}**+**{*číslo*}<br>
-{*název\_proměnné*}**=$**{*název\_proměnné*}**-**{*číslo*}
+*# **připojit** text na začátek/konec proměnné*<br>
+{*název\_proměnné*}**="**{*nová-hodnota*}**$**{*název\_proměnné*}**"**<br>
+{*název\_proměnné*}**+="**{*nová-hodnota*}**"**
 
-*# vytvořit **konstantu***<br>
-*// Konstanta je proměnná interpretu (popř. prostředí), kterou nelze zrušit ani později změnit její hodnotu (bez použití opravdu škaredých a nespolehlivých hacků). Lze ji však změnit z proměnné interpretu na proměnnou prostředí a naopak. Jde-li o proměnnou prostředí, vytvořené procesy (včetně dalších instancí bashe) ji zdědí již jako obyčejnou (přiřaditelnou) proměnnou prostředí.*<br>
-**readonly** {*název\_konstanty*}**="**{*hodnota*}**"** [{*další\_název\_konstanty*}**="**{*hodnota*}**"**]...
+*# jde o **řetězcovou** proměnnou? (alternativy)*<br>
+**[[ -v** {*název\_proměnné*} **&amp;&amp; $\{**{*název\_proměnné*}**@a} = \*([!aA]) ]]**<br>
+**[[ -v** {*název\_proměnné*} **&amp;&amp; $\{**{*název\_proměnné*}**@a} =~ ^[<nic>^aA]\*$ ]]**
 
 *# automatická konverze velikosti písmen při přiřazení (na velká písmena/na malá písmena/vypnout)*<br>
 *// Pozor! Zapnutí této konverze nezmění stávající hodnotu proměnné, účinek nastane až při následujícím přiřazení!*<br>
@@ -173,20 +101,110 @@ proměnnou „_“, ačkoliv tu ani jako proměnnou prostředí nastavit nelze.
 **declare -l** {*název\_proměnné*}...<br>
 **declare +lu** {*název\_proměnné*}...<br>
 
-### Pole
+### Exportování proměnných
+
+*# **exportovat**/neexportovat proměnnou*<br>
+**export** {*název\_proměnné*}[**=**{*nová-hodnota*}]<br>
+**export -n** {*název\_proměnné*}...
+
+*# jde o **exportovanou**/neexportovanou proměnnou?*<br>
+**[[ $\{**{*název\_proměnné*}**@a} = \*x\* ]]**<br>
+**[[ -v** {*název\_proměnné*} **&amp;&amp; ! $\{**{*název\_proměnné*}**@a} = \*x\* ]]**
+<!--
+**[[ -v** {*název\_proměnné*} **&amp;&amp; $\{**{*název\_proměnné*}**@a} =~ ^[<nic>^x]\*$ ]]**
+**[[ -v** {*název\_proměnné*} **&amp;&amp; $\{**{*název\_proměnné*}**@a} = \*([!x]) ]]**<br>
+-->
+
+*# **seznam** exportovaných proměnných (s hodnotami/bez hodnot)*<br>
+**(set -o posix; declare -x)**<br>
+**compgen -e**
+<!--
+Poznámka: příkaz „printenv“ z nějakého důvodu vypisuje kromě proměnných prostředí také
+proměnnou „_“, ačkoliv tu ani jako proměnnou prostředí nastavit nelze.
+
+**env -0 \| egrep -zv '^\_=' \| tr \\\\0 \\\\n**<br>
+**env -0 \| egrep -zv '^\_='**
+<br>
+**for X in $(compgen -e); do printf '%s=%s\\0' "$X" "${!X}"; done**
+-->
+
+*# seznam neexportovaných proměnných (s hodnotami/bez hodnot)*<br>
+**(set -o posix; declare +x)**<br>
+**for \_ in $(compgen -v); do [[ ${!\_@a} = \*x\* ]] \|\| printf '%s\\n' "$\_"; done**
+<!--
+<br>
+**for \_ in $(compgen -v); do [[ ${!\_@a} = \*x\* ]] \|\| printf '%s=%s\\0' "$\_" "${!\_}"; done**
+-->
+<!--
+**lkk\_promenzkum \| sed -znE '/^\\S+\\s+[<nic>^x]+\\s+\\S+$/{s/^(\\S+)&blank;\\S+&blank;/\\1=/;p}' \| tr \\\\0 \\\\n**<br>
+**lkk\_promenzkum \| sed -znE '/^\\S+\\s+[<nic>^x]+\\s+\\S+$/{s/.\*\\s//;p}' \| tr \\\\0 \\\\n**
+-->
+
+### Obecné
+
+*# jde o proměnnou?*<br>
+**test -v** {*název\_proměnné*}
+
+*# **seznam** všech proměnných (s hodnotami/bez hodnot)*<br>
+**(set -o posix; set)**<br>
+**compgen -v**
+<!--
+<br>
+**for \_ in $(compgen -v); do printf '%s=%s\\0' "$\_" "${!\_}"; done**
+
+**lkk\_promenzkum \| sed -zE 's/^(\\S+)&blank;\\S+&blank;/\\1=/' \| tr \\\\0 \\\\n**<br>
+-->
+
+*# dosadit názvy všech proměnných, které začínají určitou předponou*<br>
+*// Názvy proměnných se dosadí jako samostatné parametry (podobně jako u speciálního parametru $@).*<br>
+**${!**{*předpona*}**@}** ⊨ PATH PIPESTATUS PPID PROMPT\_COMMAND PS1 PS2 PS4 PWD
+
+### Pole (jako celek)
 
 *# **vytvořit** či přepsat/**zrušit**/vyprázdnit*<br>
 *// Prvky pole se zadávají stejně jako parametry příkazu, tzn. oddělují se mezerami; obsahují-li zvláštní znaky, budou interpretovány, pokud je neodzvláštníte (vhodné je umístění do uvozovek či apostrofů).*<br>
 {*název\_pole*}**=(**[{*prvky*}]...**)**
-**unset** {*název\_pole*}<br>
+**unset -v** {*název\_pole*}<br>
 {*název\_pole*}**=()**
+
+*# **seznam** polí (bez hodnot)*<br>
+**compgen -A arrayvar**
+
+*# dosadit **počet** prvků*<br>
+**${#**{*názevpole*}**[@]}**
+
+*# jde o **pole**?*<br>
+**[[ $\{**{*název\_proměnné*}**@a} = \*a\* ]]**
+<!--
+<br>**compgen -A arrayvar \| fgrep -qx** {*název\_proměnné*}
+-->
 
 *# **zkopírovat** (celé pole/výřez)*<br>
 {*cílové\_pole*}**=("$\{**{*zdrojové\_pole*}**[@]}")**<br>
 {*cílové\_pole*}**=("$\{**{*zdrojové\_pole*}**[@]:**{*první-kopírovaný-index*}[**:**{*maximální-počet*}]**}")**
 
-*# zjistit **počet** prvků*<br>
-**${#**{*názevpole*}**[@]}**
+*# **spojit** dvě pole*<br>
+{*cílové\_pole*}**=("$\{**{*první\_pole*}**[@]}" "$\{**{*druhé\_pole*}**[@]}")**
+
+*# **rozdělit** pole na poloviny*<br>
+{*první\_cíl*}**=("${**{*názevpole*}**[@]:0:$((${#**{*název\_pole*}**[@]}/2+1))}")**<br>
+{*druhý\_cíl*}**=("${**{*názevpole*}**[@]:$((${#**{*název\_pole*}**[@]}/2+1))}")**
+
+*# **obrátit** pořadí prvků pole*<br>
+*// V případě potřeby změňte názvy pomocných proměnných „i“, „j“ a „x“.*<br>
+**i=-1 j=${#**{*název\_pole*}**[@]}**<br>
+**while test $((++i)) -lt $((\-\-j))**<br>
+**do**<br>
+<odsadit1>**x=$\{**{*název\_pole*}**[i]}**<br>
+<odsadit1>{*název\_pole*}**[i]=$\{**{*název\_pole*}**[j]}**<br>
+<odsadit1>{*název\_pole*}**[j]=$x**<br>
+**done**<br>
+[**unset -v i j x**]
+
+*# přiřadit do pole **parametry** skriptu či funkce*<br>
+{*cílové\_pole*}**=("$@")**
+
+### Pole (práce s prvky)
 
 *# **přečíst** prvek na indexu N/**přiřadit** do něj*<br>
 *// Je dovoleno přiřadit do prvku libovolně daleko za koncem pole; Bash v takovém případě pole automaticky prodlouží prázdnými řetězci, aby index byl platný.*<br>
@@ -197,7 +215,12 @@ proměnnou „_“, ačkoliv tu ani jako proměnnou prostředí nastavit nelze.
 **for** {*iterační\_proměnná*} **in "$\{**{*název\_pole*}**[@]}"; do** {*...*}**; done**<br>
 **for** {*iterační\_proměnná*} **in "${!**{*název\_pole*}**[@]}"; do** {*...*}**; done**
 
+*# dosadit **výřez** pole*<br>
+*// Výřez se dosadí jako samostatné parametry (podobně jako u zvláštního parametru $@).*<br>
+**"$\{**{*zdrojové\_pole*}**[@]:**{*první-kopírovaný-index*}[**:**{*maximální-počet*}]**}"**
+
 *# **vložit** nový prvek na začátek/konec*<br>
+*// Pozor! Vkládání prvků na začátek je v případě rozsáhlého pole velmi pomalé! Snažte se mu vyhnout a vkládat prvky raději na konec. Pro vložení prvku doprostřed použijte spojování polí (které je ale také pomalé).*<br>
 {*název\_pole*}**=("**{*nový prvek*}**" "$\{**{*název\_pole*}**[@]}")**<br>
 {*název\_pole*}**+=("**{*nový prvek*}**")**
 
@@ -205,31 +228,45 @@ proměnnou „_“, ačkoliv tu ani jako proměnnou prostředí nastavit nelze.
 {*název\_pole*}**=("${**{*názevpole*}**[@]:**{*N*}**\}")**
 {*název\_pole*}**=("${**{*názevpole*}**[@]:0:$((${#**{*název\_pole*}**[@]}-**{*N*}**))}")**
 
-*# přiřadit do pole parametry této instance bashe*<br>
-{*cílové\_pole*}**=("$@")**
-
-*# spojit dvě pole*<br>
-{*cílové\_pole*}**=("$\{**{*první\_pole*}**[@]}" "$\{**{*druhé\_pole*}**[@]}")**
-
-*# rozdělit pole na poloviny*<br>
-{*první\_cíl*}**=("${**{*názevpole*}**[@]:0:$((${#**{*název\_pole*}**[@]}/2+1))}")**<br>
-{*druhý\_cíl*}**=("${**{*názevpole*}**[@]:$((${#**{*název\_pole*}**[@]}/2+1))}")**
-
-### Asociativní pole
+### Asociativní pole (jako celek)
 
 <!--
 https://www.artificialworlds.net/blog/2012/10/17/bash-associative-array-examples/
 -->
 
-Pozor! Klíčem v asociativním poli může být pouze neprázdný řetězec!
-Prázdný klíč způsobí chybu „chybný podskript pole“.
-
 *# **vytvořit** = vyprázdnit*<br>
-**unset** {*název*}<br>
-**declare -A** {*název*}
+**unset -v** {*název*} **&amp;&amp; declare -A** {*název*}
 
 *# **zrušit***<br>
 **unset -v** {*název*}
+
+*# jde o **asociativní pole**?*<br>
+**[[ $\{**{*název\_proměnné*}**@a} = \*A\* ]]**<br>
+
+*# seznam asociativních polí (bez hodnot)*<br>
+**for \_ in $(compgen -v); do [[ ! ${!\_@a} = \*A\* ]] \|\| printf '%s\\n' "$\_"; done**
+<!--
+**lkk\_promenzkum \| egrep -z '^\\S+&blank;\\S\*A\\S\*&blank;' \| cut -d '&blank;' -f 1 -z \| tr \\\\0 \\\\n**
+-->
+
+*# dosadit **počet** prvků*<br>
+**${#**{*název*}**[@]}**
+
+*# **zkopírovat***<br>
+**unset -v** {*cílovépole*}<br>
+**declare -A** {*cílovépole*}<br>
+**for \_ in "${!**{*zdrojovépole*}**[@]}"; do cílovépole[$\_]=$\{**{*zdrojovépole*}**[$\_]}; done**
+<!--
+**lkk\_asockopirovat** {*zdrojovépole*} {*cílovépole*}
+-->
+
+*# **sloučit** dvě asociativní pole*<br>
+**for \_ in "${!**{*zdrojovépole*}**[@]}"; do cílovépole[$\_]=$\{**{*zdrojovépole*}**[$\_]}; done**
+
+### Asociativní pole (práce s klíči a prvky)
+
+Pozor! Klíčem v asociativním poli může být pouze neprázdný řetězec!
+Prázdný klíč způsobí chybu „chybný podskript pole“.
 
 *# **přečíst** hodnotu prvku (klíč je řetězec/hodnota proměnné)*<br>
 *// Tyto tvary uvádějte vždy ve dvojitých uvozovkách. Klíč se v tomto případě vyhodnocuje, jako by byl sám uvnitř samostatných dvojitých uvozovek, což umožňuje i vícenásobné vnoření této konstrukce, ačkoliv to je špatně čitelné.*<br>
@@ -248,6 +285,10 @@ Prázdný klíč způsobí chybu „chybný podskript pole“.
 **: '**{*klíč*}**'** [**&amp;&amp;**]<br>
 **test -v "**{*názevpole*}**[${\_@Q}]"**
 
+*# dosadit **klíče**/**hodnoty***<br>
+**"${!**{*název\_pole*}**[@]}"**<br>
+**"$\{**{*název\_pole*}**[@]}"**
+
 *# **iterovat** přes klíče/přes hodnoty*<br>
 **for** {*iterační\_proměnná*} **in "${!**{*název\_pole*}**[@]}"; do** {*...*}**; done**<br>
 **for** {*iterační\_proměnná*} **in "$\{**{*název\_pole*}**[@]}"; do** {*...*}**; done**
@@ -256,22 +297,8 @@ Prázdný klíč způsobí chybu „chybný podskript pole“.
 **unset -v "**{*názevpole*}**[$\{**{*proměnná\_s\_klíčem*}**@Q}]"**
 
 *# **odstranit** prvek podle klíče (klíč je řetězec)*<br>
-**: "**{*klíč*}**"**<br>
+**: "**{*klíč*}**"** [**&amp;&amp;**]<br>
 **unset -v "**{*názevpole*}**[${\_@Q}]"**
-
-*# zjistit **počet** prvků*<br>
-**${#**{*název*}**[@]}**
-
-*# **zkopírovat***<br>
-**unset -v** {*cílovépole*}<br>
-**declare -A** {*cílovépole*}<br>
-**for \_ in "${!**{*zdrojovépole*}**[@]}"; do cílovépole[$\_]=$\{**{*zdrojovépole*}**[$\_]}; done**
-<!--
-**lkk\_asockopirovat** {*zdrojovépole*} {*cílovépole*}
--->
-
-*# **sloučit** dvě asociativní pole*<br>
-**for \_ in "${!**{*zdrojovépole*}**[@]}"; do cílovépole[$\_]=$\{**{*zdrojovépole*}**[$\_]}; done**
 
 *# příklady: přiřadit do proměnné „x“ hodnotu z asociativního pole „a“, kde klíčem je: zpětné lomítko/dvě zpětná lomítka/apostrof/dvojitá uvozovka/„A B“/„} }“*<br>
 **x="${a["\\\\"]}"**<br>
@@ -289,117 +316,46 @@ Prázdný klíč způsobí chybu „chybný podskript pole“.
 [{*tělo-funkce*}]<br>
 **\}**
 
-*# zavolat funkci*<br>
+*# **zavolat** funkci*<br>
 {*název\_funkce*} [{*parametry*}]...
+
+*# **seznam** funkcí (s těly/bez těl)*<br>
+**declare -f**<br>
+**compgen -A function**
+
+*# **existuje** funkce?*<br>
+**declare -f** {*název\_funkce*} **&gt;/dev/null**
 
 *# **zrušit** funkci*<br>
 **unset -f** {*název\_funkce*}
 
-*# vypsat definici funkce*<br>
+*# vypsat **definici** funkce*<br>
 **declare -f** {*název\_funkce*}
 
-*# existuje funkce?*<br>
-**declare -f** {*název\_funkce*} **&gt;/dev/null**
-
-*# seznam funkcí (s těly/bez těl)*<br>
-**declare -f**<br>
-**compgen -A function**
-
 *# exportovat/neexportovat funkci*<br>
-*// Exportované funkce se uloží do zvláštních proměnných prostředí a další instance bashe, která je tímto způsobem „zdědí“, je opět načte jako funkce. Doporučuji příliš nepoužívat, protože tak můžete snadno ztratit kontrolu nad tím, kam všude se vaše funkce dostanou.*<br>
+*// Exportované funkce se uloží do zvláštních proměnných prostředí a další instance bashe, která je tímto způsobem „zdědí“, je opět načte jako funkce. Doporučuji exportování funkcí příliš nepoužívat, protože tak můžete snadno ztratit kontrolu nad tím, kam všude se vaše funkce dostanou.*<br>
 **export -f** {*název\_funkce*}<br>
 **export -fn** {*název\_funkce*}
 
-### Pokročilé dosazování proměnných
+### Celočíselné proměnné
 
-*# dosadit hodnotu proměnné (alternativy)*<br>
-**$**{*název\_proměnné*}
-**$\{**{*název\_proměnné*}**\}**
+*# jde o celočíselnou proměnnou?*<br>
+*// Tento test odpoví kladně i v případě, že půjde o pole celočíselných hodnot či asociativní pole celočíselných hodnot.*<br>
+**[[ $\{**{*název\_proměnné*}**@a} = \*i\* ]]**
 
-*# dosadit hodnotu proměnné, jejíž název je v jiné proměnné*<br>
-*// Tuto konstrukci lze skombinovat s většinou ostatních druhů dosazení.*<br>
-**${!**{*název\_jiné\_proměnné*}[{*zbytek výrazu*}]**\}**
+*# **nastavit** řetězcovou proměnnou jako celočíselnou (obecně/příklady...)*<br>
+*// Hodnoty přiřazené do celočíselných proměnných se automaticky vyhodnocují jako výrazy a konvertují na celé číslo. Místo každého druhého názvu proměnné v uvedeném příkazu pochopitelně můžete uvést novou hodnotu proměnné, a to i výrazem.*<br>
+**declare -i** {*název\_proměnné*}**=$**{*název\_proměnné*} [{*další\_proměnná*}**=$**{*další\_proměnná*}]...<br>
+**declare -i x=$x**<br>
+**declare -i x=-1**<br>
 
-*# dosadit hodnotu proměnné, která musí být definovaná/neprázdná; jinak zobrazit chybové hlášení a ukončit skript*<br>
-**$\{**{*název\_proměnné*}**?**[**"**]<nic>{*chybové hlášení*}]<nic>[**"**]**\}**<br>
-**$\{**{*název\_proměnné*}**:?**[**"**]<nic>{*chybové hlášení*}]<nic>[**"**]**\}**
+*# nastavit pole či asociativní pole, že jeho prvky budou celočíselné*<br>
+*// Pozor! Účinek této deklarace nastává až při následujícím přiřazení. Pokud tedy deklarované pole či asociativní pole již obsahuje neceločíselné hodnoty, zůstanou v původní podobě, dokud nebudou přepsány!*<br>
+**declare -i** {*název\_pole\_či\_asoc\_pole*}...
 
-*# je-li proměnná definovaná/neprázdná, dosadit; jinak použít náhradní řetězec*<br>
-*// Pokud má náhradní řetězec obsahovat zvláštní znaky či znak „}“, doporučuji uzavřít jej do dvojitých uvozovek. To funguje i tehdy, pokud je dosazovací výraz jako celek použit uvnitř dvojitých uvozovek.*<br>
-**$\{**{*název\_proměnné*}**-**[**"**]{*náhradní řetězec*}[**"**]**\}**<br>
-**$\{**{*název\_proměnné*}**:-**[**"**]{*náhradní řetězec*}[**"**]**\}**
-
-*# je-li proměnná definovaná/neprázdná, dosadit; jinak jí přiřadit náhradní hodnotu a dosadit*<br>
-**$\{**{*název\_proměnné*}**=**[**"**]{*náhradní řetězec*}[**"**]**\}**<br>
-**$\{**{*název\_proměnné*}**:=**[**"**]{*náhradní řetězec*}[**"**]**\}**
-
-*# dosadit náhradní řetězec, jen pokud je proměnná definovaná/neprázdná; jinak dosadit prázdný řetězec*<br>
-**$\{**{*název\_proměnné*}**+**[**"**]{*náhradní řetězec*}[**"**]**\}**<br>
-**$\{**{*název\_proměnné*}**:+**[**"**]{*náhradní řetězec*}[**"**]**\}**
-
-*# dosadit **délku** hodnoty proměnné ve znacích*<br>
-**${#**{*název\_proměnné*}**\}**
-
-*# dosadit **podřetězec** hodnoty proměnné*<br>
-*// Tip: kolem indexu a délku mohou být mezery, kolem názvu proměnné ne.*<br>
-**$\{**{*název\_proměnné*}**:** {*index-prvního-znaku-od-0*} **:** {*maximální-délka*} **\}**
-
-*# dosadit hodnotu proměnné po odebrání nejkratší/nejdelší shody začátku hodnoty se vzorkem*<br>
-**$\{**{*název\_proměnné*}**#**{*vzorek*}**\}**<br>
-**$\{**{*název\_proměnné*}**##**{*vzorek*}**\}**
-
-*# dosadit hodnotu proměnné po odebrání nejkratší/nejdelší shody konce hodnoty se vzorkem*<br>
-**$\{**{*název\_proměnné*}**%**{*vzorek*}**\}**<br>
-**$\{**{*název\_proměnné*}**%%**{*vzorek*}**\}**
-
-*# dosadit hodnotu proměnné po nahrazení první/všech shod se vzorkem náhradním řetězcem*<br>
-**$\{**{*název\_proměnné*}**/**{*vzorek*}[**/**{*náhradní řetězec*}]**\}**<br>
-**$\{**{*název\_proměnné*}**//**{*vzorek*}[**/**{*náhradní řetězec*}]**\}**
-
-*# dosadit hodnotu proměnné velkými/malými písmeny*<br>
-**$\{**{*název\_proměnné*}**^^}**<br>
-**$\{**{*název\_proměnné*}**,,}**
-
-*# dosadit názvy všech definovaných proměnných, které začínají určitou předponou*<br>
-**${!**{*předpona*}**@}**
-
-*# dosadit hodnotu proměnné s odzvláštněním*<br>
-*// Hodnota bude typicky v apostrofech či konstrukci „$''“. Konkrétní tvar se může lišit, ale vždy bude možno ho bezpečně dosadit do skriptu.*<br>
-**$\{**{*název\_proměnné*}**@Q}**<br>
-
-*# interpretovat hodnotu jako by byla uvedena v konstrukci $'' a výsledek dosadit*<br>
-**$\{**{*název\_proměnné*}**@E}**<br>
-
-*# dosadit znaky reprezentující zapnuté atributy dané proměnné*<br>
-**$\{**{*název\_proměnné*}**@a}**
-
-*# dosadit příkaz bashe, který vytvoří danou proměnnou včetně atributů a hodnoty*<br>
-**$\{**{*název\_proměnné*}**@A}**
-
-
-### Parametry skriptu
-
-*# dosadit N-tý parametr skriptu či funkce (alternativy)*<br>
-*// První variantu lze použít pouze pro parametry $0 až $9. Druhou variantu (tu se složenými závorkami) lze použít i pro ostatní parametry (např. ${10}) a lze ji skombinovat s pokročilými formami dosazení.*<br>
-**$**{*N*}<br>
-**$\{**{*N*}**\}**
-
-*# nastavit parametry skriptu či funkce*<br>
-*// Parametry skriptu či funkce lze nastavit pouze najednou, přičemž se všechny stávající parametry (kromě $0) ztratí.*<br>
-**set \-\-** {*parametr*}...
-
-*# dosadit všechny parametry od $1: do samostatných parametrů/jen oddělené mezerou*<br>
-*// Dvojité uvozovky zde znamenají, že pro správnou funkci musí být $@ (resp. $\*) uvedeny ve dvojitých uvozovkách.*<br>
-**"$@"**<br>
-**"$\*"**
-
-*# dosadit úsek parametrů (samostatně/oddělené mezerou)*<br>
-**"${@:** {*číslo-prvního-parametru*} [**:** {*maximální-počet*}] **\}"**<br>
-**"${\*:** {*číslo-prvního-parametru*} [**:** {*maximální-počet*}] **\}"**
-
-*# dosadit všechny parametry od $0 (samostatně/oddělené mezerou)*<br>
-**"${@:0}"**<br>
-**"${\*:0}"**
+*# **přičíst**/**odečíst** od celočíselné proměnné*<br>
+**: $((**{*název\_proměnné*} **+=** {*číslo*}**))**<br>
+**: $((**{*název\_proměnné*} **-=** {*číslo*}**))**
 
 ### Jmenné odkazy
 
@@ -417,7 +373,160 @@ Prázdný klíč způsobí chybu „chybný podskript pole“.
 **if test -R** {*název\_odkazu*}**; then declare +n** {*název\_odkazu*}**; echo $**{*název\_odkazu*}**; declare -n** {*název\_odkazu*}**; else false; fi**<br>
 **test -R** {*název\_odkazu*} **&amp;&amp; eval "$(declare -p** {*název\_odkazu*} **\| sed -E '1s/^[<nic>^=]\*=/echo&blank;/')"**
 
-## Zaklíndla: Proměnné prostředí
+### Konstanty
+
+*# **seznam** konstant (pro člověka/bez hodnot)*<br>
+**readonly**<br>
+**for \_ in $(compgen -v); do [[ ! ${!\_@a} = \*r\* ]] \|\| printf '%s\\n' "$\_"; done**
+
+*# jde o konstantu?*<br>
+**[[ $\{**{*název\_proměnné*}**@a} = \*r\* ]]**
+
+*# **vytvořit** konstantu*<br>
+*// Konstanta je proměnná interpretu (popř. prostředí), kterou nelze zrušit ani později změnit její hodnotu (bez použití opravdu škaredých a nespolehlivých hacků). Lze ji však změnit z proměnné interpretu na proměnnou prostředí a naopak. Jde-li o proměnnou prostředí, vytvořené procesy (včetně dalších instancí bashe) ji zdědí již jako obyčejnou (přiřaditelnou) proměnnou prostředí.*<br>
+**readonly** {*název\_konstanty*}**="**{*hodnota*}**"** [{*další\_název\_konstanty*}**="**{*hodnota*}**"**]...
+
+## Zaklínadla: Dosazování proměnných
+
+### Jednoduché a nepřímé dosazení
+
+*# **dosadit** hodnotu řetězcové proměnné (alternativy)*<br>
+**$**{*název\_proměnné*} ⊨ Hello, world!
+**$\{**{*název\_proměnné*}**\}**
+
+*# dosadit hodnotu řetězcové proměnné s **odzvláštněním***<br>
+*// Hodnota bude typicky v apostrofech či konstrukci „$''“. Konkrétní tvar se může lišit, ale vždy bude možno ho bezpečně dosadit do skriptu.*<br>
+**$\{**{*název\_proměnné*}**@Q}** ⊨ 'Hello, world!'
+
+*# **nepřímé** dosazení*<br>
+*// Tuto konstrukci lze skombinovat s většinou ostatních druhů dosazení.*<br>
+**${!**{*proměnná*}[{*zbytek výrazu*}]**\}**
+
+*# dosadit prvky **pole** (všechny prvky/jeden prvek/výřez/poslední prvek)*<br>
+**"$\{**{*název\_pole*}**[@]}"**<br>
+**"$\{**{*název\_pole*}**[**{*index*}**]}"**<br>
+**"$\{**{*název\_pole*}**[@]:**{*první-kopírovaný-index*}[**:**{*maximální-počet*}]**}"**<br>
+**"$\{**{*název\_pole*}**[-1]}"**
+
+*# dosadit hodnotu z **asociativního pole** (klíč je řetězec/hodnota proměnné)*<br>
+*// Tyto tvary uvádějte vždy ve dvojitých uvozovkách. Klíč se v tomto případě vyhodnocuje, jako by byl sám uvnitř samostatných dvojitých uvozovek, což umožňuje i vícenásobné vnoření této konstrukce, ačkoliv to je špatně čitelné.*<br>
+[**"**{*...*}]**$\{**{*název\_asoc\_pole*}**["**{*klíč*}**"]\}**[{*...*}**"**]<br>
+[**"**{*...*}]**$\{**{*název\_asoc\_pole*}**["$**{*klíč\_proměnná*}**"]\}**[{*...*}**"**]
+
+*# dosadit všechny klíče/všechny hodnoty z asociativního pole*<br>
+**"${!**{*název\_asoc\_pole*}**[@]}"**<br>
+**"$\{**{*název\_asoc\_pole*}**[@]}"**
+
+### Vlastnosti proměnné
+
+*# dosadit **délku** hodnoty proměnné ve znacích*<br>
+**${#**{*název\_proměnné*}**\}** ⊨ 0
+
+*# dosadit znaky reprezentující zapnuté **atributy** dané proměnné*<br>
+*// Nemá-li proměnná zapnutý žádný atribut, dosadí se prázdný řetězec.*<br>
+**$\{**{*název\_proměnné*}**@a}** ⊨ x
+
+*# dosadit **příkaz** bashe, který vytvoří danou proměnnou včetně atributů a hodnoty*<br>
+**$\{**{*název\_proměnné*}**@A}** ⊨ declare -x PATH='/home/nana/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games'
+
+### Podmíněné dosazení
+
+*# je-li proměnná definovaná/neprázdná, dosadit; jinak použít **náhradní řetězec***<br>
+*// Pokud má náhradní řetězec obsahovat zvláštní znaky či znak „}“, doporučuji uzavřít jej do dvojitých uvozovek. To funguje i tehdy, pokud je dosazovací výraz jako celek použit uvnitř dvojitých uvozovek.*<br>
+**$\{**{*název\_proměnné*}**-**[**"**]{*náhradní řetězec*}[**"**]**\}**<br>
+**$\{**{*název\_proměnné*}**:-**[**"**]{*náhradní řetězec*}[**"**]**\}**
+
+*# dosadit hodnotu proměnné, která **musí být** definovaná/neprázdná; jinak zobrazit chybové hlášení a ukončit skript*<br>
+**$\{**{*název\_proměnné*}**?**[**"**]<nic>{*chybové hlášení*}]<nic>[**"**]**\}**<br>
+**$\{**{*název\_proměnné*}**:?**[**"**]<nic>{*chybové hlášení*}]<nic>[**"**]**\}**
+
+*# je-li proměnná definovaná/neprázdná, dosadit; jinak jí **přiřadit** náhradní hodnotu a dosadit*<br>
+**$\{**{*název\_proměnné*}**=**[**"**]{*náhradní řetězec*}[**"**]**\}**<br>
+**$\{**{*název\_proměnné*}**:=**[**"**]{*náhradní řetězec*}[**"**]**\}**
+
+*# dosadit **řetězec**, jen pokud je proměnná definovaná/neprázdná*<br>
+*// Nebude-li splněna podmínka dosazení, dosadí se prázdný řetězec.*<br>
+**$\{**{*název\_proměnné*}**+**[**"**]{*řetězec*}[**"**]**\}**<br>
+**$\{**{*název\_proměnné*}**:+**[**"**]{*řetězec*}[**"**]**\}**
+
+### Dosazení podřetězce či se substitucí
+
+*# dosadit **podřetězec** hodnoty proměnné*<br>
+*// Tip: kolem indexu a délku mohou být mezery, kolem názvu proměnné ne.*<br>
+**$\{**{*název\_proměnné*}**:** {*index-prvního-znaku-od-0*} **:** {*maximální-délka*} **\}**
+
+*# dosadit hodnotu proměnné po odebrání nejkratší/nejdelší shody **začátku** hodnoty se vzorkem*<br>
+**$\{**{*název\_proměnné*}**#**{*vzorek*}**\}**<br>
+**$\{**{*název\_proměnné*}**##**{*vzorek*}**\}**
+
+*# dosadit hodnotu proměnné po odebrání nejkratší/nejdelší shody **konce** hodnoty se vzorkem*<br>
+**$\{**{*název\_proměnné*}**%**{*vzorek*}**\}**<br>
+**$\{**{*název\_proměnné*}**%%**{*vzorek*}**\}**
+
+*# dosadit hodnotu proměnné po **nahrazení** první/všech shod se vzorkem řetězcem náhrady*<br>
+**$\{**{*název\_proměnné*}**/**{*vzorek*}[**/**{*řetězec náhrady*}]**\}**<br>
+**$\{**{*název\_proměnné*}**//**{*vzorek*}[**/**{*řetězec náhrady*}]**\}**
+
+*# dosadit hodnotu proměnné **velkými/malými písmeny***<br>
+**$\{**{*název\_proměnné*}**^^}**<br>
+**$\{**{*název\_proměnné*}**,,}**
+
+*# interpretovat hodnotu jako by byla uvedena v konstrukci $'text' a výsledek dosadit*<br>
+**$\{**{*název\_proměnné*}**@E}**<br>
+
+### Parametry skriptu
+
+*# dosadit N-tý **poziční parametr** (alternativy)*<br>
+*// První variantu lze použít pouze pro parametry $0 až $9. Druhou variantu (tu se složenými závorkami) lze použít i pro ostatní parametry (např. ${10}) a lze ji skombinovat s pokročilými formami dosazení.*<br>
+**$**{*N*}<br>
+**$\{**{*N*}**\}**
+
+*# dosadit **všechny parametry** od $1: do samostatných parametrů/jen oddělené mezerou*<br>
+*// Dvojité uvozovky zde znamenají, že pro správnou funkci musí být $@ (resp. $\*) uvedeny uvnitř dvojitých uvozovek.*<br>
+**"$@"**<br>
+**"$\*"**
+
+*# **nastavit** poziční parametry*<br>
+*// Parametry lze nastavit pouze najednou, přičemž se všechny stávající parametry (kromě $0) ztratí.*<br>
+**set \-\-** {*parametr*}...
+
+*# dosadit **úsek** parametrů (samostatně/oddělené mezerou)*<br>
+**"${@:** {*číslo-prvního-parametru*} [**:** {*maximální-počet*}] **\}"**<br>
+**"${\*:** {*číslo-prvního-parametru*} [**:** {*maximální-počet*}] **\}"**
+
+*# dosadit všechny parametry počínaje $0 (samostatně/oddělené mezerou)*<br>
+**"${@:0}"**<br>
+**"${\*:0}"**
+
+### Aritmetické operace při dosazení
+
+*# **inkrementovat**/dekrementovat a dosadit*<br>
+**$((++**{*název\_proměnné*}**))**<br>
+**$((\-\-**{*název\_proměnné*}**))**
+
+*# přičíst/odečíst číslo, přiřadit a dosadit*<br>
+**$((**{*název\_proměnné*} **+=** {*číslo*}**))**<br>
+**$((**{*název\_proměnné*} **-=** {*číslo*}**))**
+
+*# přičíst/odečíst číslo a dosadit (bez přiřazení)*<br>
+**$((**{*název\_proměnné*} **+** {*číslo*}**))**<br>
+**$((**{*název\_proměnné*} **-** {*číslo*}**))**
+
+### Různé příklady
+
+*# dosadit první neprázdnou z proměnných „a“, „b“ a „c“*<br>
+**${a:-${b:-${c:-}}}**
+
+*# dosadit proměnnou „abc“ s odstraněním všech konců řádků*<br>
+**${abc//$'\\n'}**
+
+*# dosadit proměnnou „abc“ s tím, že všechny číslice se nahradí nulami*<br>
+**${abc//[0123456789]/0}**
+
+*# z proměnné „abc“ dosadit jen číslice*<br>
+**${abc//[!0123456789]}**
+
+## Zaklínadla: Proměnné prostředí
 
 ### Spouštění programů s upraveným prostředím
 
@@ -430,23 +539,6 @@ Prázdný klíč způsobí chybu „chybný podskript pole“.
 *# spustit s upraveným prostředím (**komplexní** varianta)*<br>
 *// -i prostředí zcela vyprázdní; \-\-unset z něj odebírá uvedené proměnné, přiřazení proměnné prostředí nastavuje a parametr „-C“ změní aktuální adresář.*<br>
 [[**/usr/bin/**]**env**] <nic>[**-i**] <nic>[**\-\-unset=**{*PROMÉNNÁ*}]... [{*PROMÉNNÁ*}**=**{*hodnota*}]... [**-C** {*nový/aktuální/adresář*}] {*příkaz*} [{*parametr*}]...
-
-### Základní operace
-
-*# **přiřadit** proměnné hodnotu*<br>
-{*název\_proměnné*}**="**{*nová-hodnota*}**"**
-
-*# **připojit** novou hodnotu na začátek/konec proměnné*<br>
-{*název\_proměnné*}**="**{*nová-hodnota*}**$**{*název\_proměnné*}**"**<br>
-{*název\_proměnné*}**+="**{*nová-hodnota*}**"**
-
-*# změnit proměnnou interpretu na proměnnou prostředí/naopak*<br>
-**export** {*název\_proměnné*}[**=**{*nová-hodnota*}]<br>
-**export -n** {*název\_proměnné*}...
-
-*# **zrušit** proměnnou*<br>
-*// Pozor! Příkaz „unset“ uspěje i tehdy, pokud daná proměnná neexistuje.*<br>
-**unset -v** {*název\_proměnné*}...
 
 ### Předdefinované proměnné
 
@@ -543,70 +635,57 @@ man 8 ld.so
 *# vynutit načtení funkcí ze zadané sdílené knihovny do aplikace (nezkoušeno, bez záruky).*<br>
 **LD\_PRELOAD=/home/petr/moje.so**
 
-
-
-
-## Parametry příkazů
 <!--
+## Parametry příkazů
+<!- -
 - Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.
 - Jinak by zde měl být přehled nejužitečnějších parametrů používaných nástrojů.
--->
+- ->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+### env
+-->
 
 ## Instalace na Ubuntu
 
 Všechny použité nástroje jsou základní součástí Ubuntu, přítomné i v minimální instalaci.
 
-## Ukázka
 <!--
+## Ukázka
+<!- -
 - Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
 - Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti – ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
 - Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
--->
+- ->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
+-->
 
 !ÚzkýRežim: zap
 
 ## Tipy a zkušenosti
-<!--
-- Do odrážek uveďte konkrétní zkušenosti, které jste při práci s nástrojem získali; zejména případy, kdy vás chování programu překvapilo nebo očekáváte, že by mohlo překvapit začátečníky.
-- Popište typické chyby nových uživatelů a jak se jim vyhnout.
-- Buďte co nejstručnější; neodbíhejte k popisování čehokoliv vedlejšího, co je dost možné, že už čtenář zná.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-* Pokud potřebujete v asociativním poli použít jako klíč prázdný řetězec (což není dovoleno), pomůže upravit kód tak, aby před každý klíč vkládal konkrétní písmeno (např. „X“).
-* Velkými písmeny se píšou názvy proměnných, které mají řídicí či systémový význam (jako např. *HOME*, *PATH*, *HISTSIZE* či *MANPAGER*). Vaše uživatelské proměnné ve skriptech pojmenovávejte malými písmeny, popř. kombinací malých a velkých písmen.
-* Znak ~ se v bashi rozvíjí na hodnotu „${HOME}“, proto ho uvnitř dvojitých uvozovek můžete vždy snadno a bezpečně nahradit za „$HOME“.
+* Pozor! Kolem znaku „=“ při přiřazování do proměnných nesmí být žádné bílé znaky! Jedinou výjimkou je tzv. aritmetický kontext (tedy např. uvnitř konstrukce „$((text))“).
+* Náhradní řetězce a vzorky v pokročilých formách dosazení (např. „${X%.txt}“) vytvářejí nový kontext pro odzvláštnění, ve kterém můžete použít podle potřeby zpětná lomítka, uvozovky, apostrofy, a dokonce vnořené dosazení proměnných! Takže chcete-li např. dosadit hodnotu proměnné X po odebrání podřetězce „%\\}“ z jeho konce, použijte tvar "${X%'%\\}'}".
+* Do řetězcových proměnných můžete ukládat jakékoliv znaky UTF-8 kromě nulového bajtu, takže konce řádek, tabulátory, Escape apod. nejsou žádný problém.
+* Pokud potřebujete v asociativním poli použít jako klíč prázdný řetězec (což není dovoleno), pomůže upravit kód tak, aby před každý klíč vkládal konkrétní písmeno (např. „X“) a před výpisem toto písmeno zase odstraňoval (např. „${klíč#X}“).
+* Velkými písmeny (např. *HOME* či *HISTSIZE*) se píšou názvy proměnných, které mají řídicí či systémový význam, ať už jde o proměnné prostředí či jen interpretu. Vaše uživatelské proměnné ve skriptech nazývejte malými písmeny (např. „cesta\_zpet“), popř. kombinací malých a velkých písmen (např. „CestaZpet“).
+* Znak ~ se v bashi rozvíjí na hodnotu „${HOME}“, proto ho uvnitř dvojitých uvozovek (kde by se nerozvinul) můžete vždy snadno a bezpečně nahradit za „${HOME}“.
 * Funkce se může jmenovat stejně jako proměnná.
-* Jako celočíselné lze označit i pole, v takovém případě se vlastnosti celočíselných proměnných uplatní při každém přiřazení do kteréhokoliv prvku daného pole.
-
+* V bashi vznikají proměnné automaticky při prvním přiřazení, není tedy třeba je deklarovat. Ve výchozím nastavení navíc pokus o dosazení neexistující proměnné povede k dosazení prázdného řetězce bez jakékoliv chyby (toto lze změnit nastavením „set -u“).
 
 ## Další zdroje informací
-<!--
-- Uveďte, které informační zdroje jsou pro začátečníka nejlepší k získání rychlé a obsáhlé nápovědy. Typicky jsou to manuálové stránky, vestavěná nápověda programu nebo webové zdroje. Můžete uvést i přímé odkazy.
-- V seznamu uveďte další webové zdroje, knihy apod.
-- Pokud je vestavěná dokumentace programů (typicky v adresáři /usr/share/doc) užitečná, zmiňte ji také.
-- Poznámka: Protože se tato sekce tiskne v úzkém režimu, zaklínadla smíte uvádět pouze bez titulku a bez poznámek pod čarou!
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-Co hledat:
-
-* [Článek na Wikipedii](https://cs.wikipedia.org/wiki/Hlavn%C3%AD_strana)
-* Oficiální stránku programu
-* Oficiální dokumentaci
-* [Manuálovou stránku](http://manpages.ubuntu.com/)
-* [Balíček](https://packages.ubuntu.com/)
-* Online referenční příručky
-* Různé další praktické stránky, recenze, videa, tutorialy, blogy, ...
-* Publikované knihy
-* [Stránky TL;DR](https://github.com/tldr-pages/tldr/tree/master/pages/common)
-
+* [YouTube: Programování v Shellu](https://www.youtube.com/watch?v=cv1V9GE2Ag0) (proměnných se týká začátek videa)
+* [Linuxexpres: Proměnné prostředí](https://www.linuxexpres.cz/praxe/bash-4-dil)
+* [YouTube: Fedora Linux Proměnné](https://www.youtube.com/watch?v=y\_j2H2wbSRg) (jen úplné základy)
+* [Wikipedie: Proměnná](https://cs.wikipedia.org/wiki/Prom%C4%9Bnn%C3%A1\_(programov%C3%A1n%C3%AD\))
 * [Ubuntu Documentation: EnvironmentVariables](https://help.ubuntu.com/community/EnvironmentVariables) (anglicky)
+* [Bash Reference Manual: Shell Parameter Expansion](https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html) (anglicky)
+* [TL;DR: env](https://github.com/tldr-pages/tldr/blob/master/pages/common/env.md) (anglicky)
 
 !ÚzkýRežim: vyp
 
+<!--
 ## Pomocné funkce
 
 *# lkk\_promenzkum() – vypíše údaje o proměnných ve formátu vhodném pro další zpracování*<br>
@@ -617,3 +696,4 @@ Co hledat:
 <odsadit2>**printf \\\\0**<br>
 <odsadit1>**done \| sed -zE 's/^\\S+\\s+(\\S+)\\s+([<nic>^&blank;=]+)=/\\2&blank;\\1&blank;/;s/\\n$//'**<br>
 **\}**
+-->

@@ -86,6 +86,37 @@ https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/The_about_protocol
 **media.videocontrols.picture-in-picture.enabled = FALSE**<br>
 **media.videocontrols.picture-in-picture.video-toggle.enabled = FALSE**
 
+### Ostatní
+
+*# vypnout „navigator.sendBeacon()“ (slouží k odeslání analytických dat při uzavření stránky)*<br>
+**user\_pref("beacon.enabled", false);**
+<!--
+TODO: [ ] TEST
+-->
+
+*# výchozí barva nenavštíveného/navštíveného/aktivního odkazu*<br>
+**user\_pref("browser.anchor\_color", "#**{*RRGGBB*}**");**<br>
+?<br>
+**user\_pref("browser.active\_color", "#**{*RRGGBB*}**");**
+
+*# vypnout kešování na disk/do paměti*<br>
+**user\_pref("browser.cache.disk.enable", false);**<br>
+**user\_pref("browser.cache.memory.enable", false);**
+
+*# velikost keše v paměti (dynamicky/pevná velikost/příklad)*<br>
+**user\_pref("browser.cache.memory.capacity", -1);**<br>
+**user\_pref("browser.cache.memory.capacity",** {*kilobajtů*}**);**<br>
+**user\_pref("browser.cache.memory.capacity", 4096);** ⊨ 4 MB
+
+
+*# výchozí barva pozadí(?)*<br>
+**user\_pref("browser.display.background\_color", "#**{*RRGGBB*}**");**
+
+*# zakázat stránkám nastavovat barvy textu a pozadí*<br>
+**user\_pref("browser.display.document\_color\_use", 2);**
+
+
+
 ## Parametry příkazů
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 

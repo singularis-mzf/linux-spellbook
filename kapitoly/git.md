@@ -64,7 +64,7 @@ Každá revize je jednoznačně identifikována pomocí své MD5 heše. Kromě t
 *# **vytvořit** nový repozitář v aktuálním adresáři*<br>
 **git init** [**\-\-bare**]
 
-*# vytořit lokální repozitář **ze vzdáleného***<br>
+*# vytvořit lokální repozitář **ze vzdáleného***<br>
 **git clone** {*vzdálená-adresa*} [{*místní-adresář*}]
 
 *# získat do samostatného nového adresáře konkrétní revizi*<br>
