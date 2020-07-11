@@ -36,13 +36,13 @@ function VyzadujeFragmentyTSV() {
     if (!Test("-r " FRAGMENTY_TSV)) {
         ShoditFatalniVyjimku("Nemohu číst ze souboru " FRAGMENTY_TSV "!");
     }
-    POCET_KAPITOL = 0;
-    while (getline < FRAGMENTY_TSV) {
-        FRAGMENTY_TSV_RADKY[++POCET_KAPITOL] = $0;
-        FRAGMENTY_TSV_RADKY[$2] = $0; # $2 = id
-    }
-    close(FRAGMENTY_TSV);
-    return POCET_KAPITOL;
+    return POCET_KAPITOL = NacistFragmentyTSV(FRAGMENTY_TSV);
+#    while (getline < FRAGMENTY_TSV) {
+#        FRAGMENTY_TSV_RADKY[++POCET_KAPITOL] = $0;
+#        FRAGMENTY_TSV_RADKY[$2] = $0; # $2 = id
+#    }
+#    close(FRAGMENTY_TSV);
+#    return POCET_KAPITOL;
 }
 
 function VyzadujePromennou(nazev, popisChyby) {
@@ -195,9 +195,8 @@ function RidiciRadekSpolecnaObsluha(text,   i, soubor) {
         case "MENU KAPITOLY":
             if (IDFORMATU != "html") {ShoditFatalniVyjimku("{{MENU KAPITOLY}} je podporováno jen pro formát HTML!")}
             VyzadujeFragmentyTSV();
-            for (i = 1; i <= POCET_KAPITOL; ++i) {
-                $0 = FRAGMENTY_TSV_RADKY[i];
-                printf("<a href=\"%s.htm\" class=\"kapitola\"><span class=\"ikona\"><img src=\"obrazky/%s\" alt=\"[]\"></span><span class=\"cislo\">%d</span><span class=\"nazev\">%s</span></a>\n", $2, $11, i, $3);
+            for (i = 1; i in FRAGMENTY; ++i) {
+                printf("<a href=\"%s.htm\" class=\"kapitola\"><span class=\"ikona\"><img src=\"obrazky/%s\" alt=\"[]\"></span><span class=\"cislo\">%d</span><span class=\"nazev\">%s</span></a>\n", FRAGMENTY[i "/id"], FRAGMENTY[i "/ikkap"], i, FRAGMENTY[i "/nazev"]);
             }
             return 0;
 
@@ -217,10 +216,10 @@ function RidiciRadekSpolecnaObsluha(text,   i, soubor) {
         case "MENU NÁPOVĚDA":
             if (IDFORMATU != "html") {ShoditFatalniVyjimku("{{MENU NÁPOVÉDA}} je podporováno jen pro formát HTML!")}
             VyzadujeFragmentyTSV();
-            if ("predmluva" in FRAGMENTY_TSV_RADKY) {
+            if ("id/predmluva" in FRAGMENTY) {
                 printf("<a href=\"predmluva.htm\">Předmluva</a>\n");
             }
-            if ("koncepce-projektu" in FRAGMENTY_TSV_RADKY) {
+            if ("id/koncepce-projektu" in FRAGMENTY) {
                 printf("<a href=\"koncepce-projektu.htm\">Koncepce projektu</a>\n");
             }
             printf("<a href=\"https://singularis-mzf.github.io/\">Ostatní verze knihy</a>\n");

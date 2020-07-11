@@ -222,7 +222,7 @@ $(VYSTUP_PREKLADU)/html/index.htm: $(SOUBORY_PREKLADU)/fragmenty.tsv \
 # ----------------------------------------------------------------------------
 $(SOUBORY_PREKLADU)/html/kap-copys.htm: $(SOUBORY_PREKLADU)/fragmenty.tsv skripty/extrakce/copyrighty.awk $(VSECHNY_DODATKY:%=dodatky/%.md) $(VSECHNY_KAPITOLY:%=kapitoly/%.md)
 	mkdir -pv $(SOUBORY_PREKLADU)/html
-	$(AWK) -f skripty/extrakce/copyrighty.awk $(shell cut -f 1,2 --output-delimiter=/ $< | sed 's/$$/.md/') >$@
+	$(AWK) -f skripty/extrakce/copyrighty.awk $(shell sed -E 's/^[^\t]*\t([^\t]+)\t[^\t]*\t([^\t]+)\t.*$$/\2\/\1.md/' $<) >$@
 
 # 7. sepsat copyrighty k obrázkům
 # ----------------------------------------------------------------------------
@@ -541,7 +541,7 @@ $(SOUBORY_PREKLADU)/deb/usr/share/lkk/lkk.awk: skripty/lkk/lkk.awk $(JMENO_SESTA
 # ----------------------------------------------------------------------------
 $(SOUBORY_PREKLADU)/deb/usr/share/lkk/skripty/pomocne-funkce: skripty/extrakce/pomocne-funkce.awk $(SOUBORY_PREKLADU)/fragmenty.tsv skripty/utility.awk $(VSECHNY_KAPITOLY:%=kapitoly/%.md)
 	mkdir -pv $(dir $@)
-	$(AWK) -f skripty/extrakce/pomocne-funkce.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
+	$(AWK) -f skripty/extrakce/pomocne-funkce.awk
 
 # 5. COPYRIGHT-DEB => soubory_prekladu/deb/usr/share/doc/lkk/copyright
 # ----------------------------------------------------------------------------

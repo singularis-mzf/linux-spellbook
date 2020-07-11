@@ -1,5 +1,5 @@
 # Linux Kniha kouzel, skript preklad/hlavni.awk
-# Copyright (c) 2019 Singularis <singularis@volny.cz>
+# Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 # podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -503,19 +503,16 @@ BEGIN {
     gsub(/^.*\/|\.md$/, "", IDKAPITOLY);
 
     # Načíst a zpracovat údaje z fragmenty.tsv, jsou-li k dispozici:
-    $0 = "";
-    prikaz = "egrep '^[^\t]*\t" IDKAPITOLY "\t' '" FRAGMENTY_TSV "'";
-    prikaz | getline;
-    close(prikaz);
-    if ($0 != "") {
+    NacistFragmentyTSV(FRAGMENTY_TSV);
+    if ("id/" IDKAPITOLY in FRAGMENTY) {
         # číslo kapitoly
-        C_KAPITOLY = $8 - 1;
+        C_KAPITOLY = FRAGMENTY["id/" IDKAPITOLY];
         # štítky
-        STITKY = gensub(/\}\{/, "|", "g", gensub(/^\{|\}$|^NULL$/, "", "g", $9));
+        STITKY = gensub(/\}\{/, "|", "g", gensub(/^\{|\}$|^NULL$/, "", "g", FRAGMENTY[C_KAPITOLY "/stitky"]));
         # ikona kapitoly
-        IKONA_KAPITOLY = $11;
+        IKONA_KAPITOLY = FRAGMENTY[C_KAPITOLY "/ikkap"];
         # je dodatek?
-        JE_DODATEK = $1 == "dodatky";
+        JE_DODATEK = FRAGMENTY[C_KAPITOLY "/adr"] == "dodatky";
     } else {
         C_KAPITOLY = 0;
         STITKY = "";
@@ -536,8 +533,7 @@ BEGIN {
     }
 
     # Inicializovat globální proměnné:
-    ID_KAPITOLY_OMEZENE = IDKAPITOLY;
-    gsub(/[^A-Za-z0-9]/, "", ID_KAPITOLY_OMEZENE);
+    ID_KAPITOLY_OMEZENE = GenerovatOmezeneId("", IDKAPITOLY);
     NULL_STRING = "\x01\x02";
     KAPITOLA = "";
     SEKCE = "";

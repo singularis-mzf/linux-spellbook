@@ -46,27 +46,23 @@ BEGIN {
 function Zacatek() {
     datum = sprintf("%d. %s %s", substr(DATUMSESTAVENI, 7, 2), MesicVDruhemPade(sprintf("%d", substr(DATUMSESTAVENI, 5, 2))), substr(DATUMSESTAVENI, 1, 4));
 
-    while (getline < FRAGMENTY_TSV) {
-        if ($2 == IDKAPITOLY) {break}
-    }
-    close(FRAGMENTY_TSV);
-    if ($2 == IDKAPITOLY) {
-        adresar = $1;
-        nazev_kapitoly = $3;
-        if ($4 != "NULL") {
-            id_predchozi = $4;
-            nazev_predchozi = $5;
+    if ("id/" IDKAPITOLY in FRAGMENTY) {
+        cislo_kapitoly = FRAGMENTY["id/" IDKAPITOLY];
+        adresar = FRAGMENTY[cislo_kapitoly "/adr"];
+        nazev_kapitoly = FRAGMENTY[cislo_kapitoly "/nazev"];
+        if (cislo_kapitoly != 1) {
+            id_predchozi = FRAGMENTY[(cislo_kapitoly - 1) "/id"];
+            nazev_predchozi = FRAGMENTY[(cislo_kapitoly - 1) "/nazev"];
         } else {
             id_predchozi = nazev_predchozi = "";
         }
-        if ($6 != "NULL") {
-            id_nasledujici = $6;
-            nazev_nasledujici = $7;
+        if ((cislo_kapitoly + 1) in FRAGMENTY) {
+            id_nasledujici = FRAGMENTY[(cislo_kapitoly + 1) "/id"];
+            nazev_nasledujici = FRAGMENTY[(cislo_kapitoly + 1) "/nazev"];
         } else {
             id_nasledujici = nazev_nasledujici = "";
         }
-        cislo_kapitoly = $8;
-        ikona_kapitoly = $11;
+        ikona_kapitoly = FRAGMENTY[cislo_kapitoly "/ikkap"];
     } else if (IDKAPITOLY ~ /^_(autori|stitky)$/) {
         id_predchozi = id_nasledujici = nazev_predchozi = nazev_nasledujici = "";
         cislo_kapitoly = 0;
@@ -138,14 +134,24 @@ function RidiciRadek(text,   prikaz, i) {
             VyzadujeFragmentyTSV();
             if (IDKAPITOLY == "") {ShoditFatalniVyjimku("Chybějící ID kapitoly pro {{ODKAZY DOLE}}!")}
             if (IDFORMATU != "html") {ShoditFatalniVyjimku("{{ODKAZY DOLE}} jsou implementovány pouze pro formát HTML!")}
-            prikaz = "egrep -v '^(dodatky|kapitoly\t" IDKAPITOLY ")\t' '" FRAGMENTY_TSV "' | cut -f 2,3,11 | sort -Ru | head -n 3";
+            prikaz = "seq 1 " FRAGMENTY["pocet"] " | shuf";
             i = 1;
             while (i <= 3 && (prikaz | getline)) {
+                if (!($0 in FRAGMENTY)) {ShoditFatalniVyjimku("Chybná iterační hodnota: \"" $0 "\"!")}
+                # Aby byla kapitola přijatelná pro odkazy dole...
+                # 1. Musí to být jiná kapitola než ta současná
+                if (FRAGMENTY[$0 "/id"] == IDKAPITOLY) {continue}
+                # 2. Musí to být kapitola
+                if (FRAGMENTY[$0 "/adr"] != "kapitoly") {continue}
+                # 3. Musí mít štítky
+                if (FRAGMENTY[$0 "/stitky"] == "NULL") {continue}
+                #
                 if (i == 1) {printf("<div class=\"odkazydole\"><div>")}
-                printf("<a href=\"%s.htm\"><img src=\"obrazky/%s\" alt=\"\" width=\"32\" height=\"32\">%s</a>", $1, $3, $2);
+                printf("<a href=\"%s.htm\"><img src=\"obrazky/%s\" alt=\"\" width=\"32\" height=\"32\">%s</a>", FRAGMENTY[$0 "/id"], FRAGMENTY[$0 "/ikkap"], FRAGMENTY[$0 "/nazev"]);
                 ++i;
             }
             if (i != 1) {printf("</div></div>\n")}
+            while (prikaz | getline) {}
             close(prikaz);
             return 0;
 
@@ -195,23 +201,12 @@ function Konec() {
 # Soukromé funkce a proměnné:
 # ============================================================================
 
-function VypsatPrehledStitku(format,   i, n, s, nazvy_kapitol, cisla_kapitol, stitky_kapitol, stitky_kapitoly, ikony_kapitol) {
+function VypsatPrehledStitku(format,   i, n, s, cislo_kapitoly, stitky_kapitol, stitky_kapitoly, ikony_kapitol) {
     if (format != "html") {
         ShoditFatalniVyjimku("Přehled štítků pro formát " format " není podporován!");
     }
 
-    delete nazvy_kapitol; # $8
-    delete cisla_kapitol; # $3
-    delete stitky_kapitol; # $9
-    delete ikony_kapitol; # $11
     VyzadujeFragmentyTSV();
-    for (i = 1; i <= POCET_KAPITOL; ++i) {
-        $0 = FRAGMENTY_TSV_RADKY[i];
-        cisla_kapitol[$2] = $8;
-        nazvy_kapitol[$2] = $3;
-        stitky_kapitol[$2] = $9;
-        ikony_kapitol[$2] = $11;
-    }
 
     # Načíst štítky ze stitky.tsv:
     stitky_tsv = gensub(/fragmenty/, "stitky", 1, FRAGMENTY_TSV);
@@ -221,18 +216,17 @@ function VypsatPrehledStitku(format,   i, n, s, nazvy_kapitol, cisla_kapitol, st
         # $1 = štítek $2 = omezené id štítku $3..$NF = id kapitol
         print "<dt id=\"" $2 "\" class=\"stitky\"><span><a href=\"#" $2 "\">" $1 "</a></span></dt><dd>";
         for (i = 3; i <= NF; ++i) {
-            if (!($i in cisla_kapitol)) {ShoditFatalniVyjimku("Nečekané id kapitoly: " $i)}
+            if (!("id/" $i in FRAGMENTY)) {ShoditFatalniVyjimku("Nečekané id kapitoly: " $i)}
+            cislo_kapitoly = FRAGMENTY["id/" $i];
 
-            print "<div><a href=\"" $i ".htm\"><span class=\"cislo\">" cisla_kapitol[$i] ".</span>\n<img src=\"obrazky/" ikony_kapitol[$i] "\" width=\"64\" height=\"64\" alt=\"\">\n<span class=\"nazev\">" nazvy_kapitol[$i] "</span></a><span class=\"dalsistitky\">";
-            n = split(gensub(/^\{|\}$/, "", "g", stitky_kapitol[$i]), stitky_kapitoly, "\\}\\{");
-            for (j = 1; j <= n; ++j) {
-                print "<a href=\"#" GenerovatOmezeneId("s", stitky_kapitoly[j]) "\">" stitky_kapitoly[j] "</a>";
+            print "<div><a href=\"" $i ".htm\"><span class=\"cislo\">" cislo_kapitoly ".</span>\n<img src=\"obrazky/" FRAGMENTY[cislo_kapitoly "/ikkap"] "\" width=\"64\" height=\"64\" alt=\"\">\n<span class=\"nazev\">" FRAGMENTY[cislo_kapitoly "/nazev"] "</span></a><span class=\"dalsistitky\">";
+            if (FRAGMENTY[cislo_kapitoly "/stitky"] != "NULL") {
+                n = split(gensub(/^\{|\}$/, "", "g", FRAGMENTY[cislo_kapitoly "/stitky"]), stitky_kapitoly, "\\}\\{");
+                for (j = 1; j <= n; ++j) {
+                    print "<a href=\"#" GenerovatOmezeneId("s", stitky_kapitoly[j]) "\">" stitky_kapitoly[j] "</a>";
+                }
             }
             print "</span></div>";
-
-            #print "<tr><td>" cisla_kapitol[$i] ".</td><td><img src=\"obrazky/ik-vychozi.png\" width=\"64\" height=\"64\" alt=\"\"></td><td><a href=\"" $i "\">" nazvy_kapitol[$i] "</a></td></tr>";
-
-            #print "<div><span class=\"cislo\">" cisla_kapitol[$i] "</span><a href=\"" $i ".htm\">" nazvy_kapitol[$i] "</a></div>";
         }
         print "</dd>";
     }

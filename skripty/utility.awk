@@ -1,5 +1,5 @@
 # Linux Kniha kouzel, skript utility.awk
-# Copyright (c) 2019 Singularis <singularis@volny.cz>
+# Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 # podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -250,4 +250,29 @@ function ZjistitOznaceniVerze(textverze, pridatZkratku,   i, s) {
 function ZjistitJmenoVerze(textverze,   i) {
     i = index(textverze, ",");
     return i != 0 ? gensub(/^\s*|\s*$/, "", "g", substr(textverze, i + 1)) : "";
+}
+
+function NacistFragmentyTSV(soubor,   oldFS, oldRS, oldLN, i, tmp) {
+    delete FRAGMENTY;
+    i = 0;
+    oldFS = FS; FS = "\t";
+    oldRS = RS; RS = "\n";
+    oldLN = $0;
+    while (getline < soubor) {
+        ++i;
+        FRAGMENTY[i] = $0;
+        FRAGMENTY["id/" $2] = i;
+        FRAGMENTY[i "/id"] = $2;
+        FRAGMENTY[i "/nazev"] = $3;
+        FRAGMENTY[i "/adr"] = $4;
+        FRAGMENTY[i "/omezid"] = $5;
+        FRAGMENTY[i "/ikkap"] = $6;
+        FRAGMENTY[i "/stitky"] = $7;
+    }
+    close(soubor);
+
+    FS = oldFS;
+    RS = oldRS;
+    $0 = oldLN;
+    return FRAGMENTY["pocet"] = i;
 }

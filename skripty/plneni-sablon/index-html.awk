@@ -1,5 +1,5 @@
 # Linux Kniha kouzel, skript plneni-sablon/index-html.awk
-# Copyright (c) 2019 Singularis <singularis@volny.cz>
+# Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 # podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -38,30 +38,9 @@ function Zacatek() {
     if (IDFORMATU == "") {IDFORMATU = "html"}
     datum = sprintf("%d. %s %s", substr(DATUMSESTAVENI, 7, 2), MesicVDruhemPade(sprintf("%d", substr(DATUMSESTAVENI, 5, 2))), substr(DATUMSESTAVENI, 1, 4));
 
-    delete adresar;
-    delete id;
-    delete nazev;
-    delete cislo;
-    delete stitky;
-    delete ikony;
-    delete vycleneno;
-
     predevsim_pro = ZjistitPredevsimPro(JMENOVERZE);
-
-    pocet = 0;
-    while (getline < FRAGMENTY_TSV) {
-# 1=Adresář|2=ID|3=Název|4=Předchozí ID|5=Předchozí název|6=Následující ID|7=Následující název
-# 8=Číslo dodatku/kapitoly|9=Štítky v {}|10=Omezené id|11=ikona kapitoly
-        ++pocet;
-        adresar[pocet] = $1;
-        id[pocet] = $2;
-        nazev[pocet] = $3;
-        cislo[pocet] = $8;
-        stitky[pocet] = $9 != "NULL" ? $9 : "";
-        ikony[pocet] = $11;
-        vycleneno[pocet] = 0;
-    }
-    close(FRAGMENTY_TSV);
+    pocet = NacistFragmentyTSV(FRAGMENTY_TSV);
+    for (i = 1; i <= pocet; ++i) {vycleneno[i] = 0}
     return 0;
 }
 
@@ -78,8 +57,8 @@ function Pokud(podminka) {
 function RidiciRadek(text,   i, s) {
     s = text;
     if (sub(/^VYČLENIT SEM PODLE ID:/, "", s) && s !~ /^$|\}/) {
-        for (i = 1; i <= pocet; ++i) {
-            if (id[i] == s) {VypsatOdkazNaKapitolu(i, 1)}
+        if ("id/" s in FRAGMENTY) {
+            VypsatOdkazNaKapitolu(FRAGMENTY["id/" s], 1);
         }
         return 0;
     }
@@ -87,7 +66,7 @@ function RidiciRadek(text,   i, s) {
     s = text;
     if (sub(/^VYČLENIT SEM PODLE ŠTÍTKU:/, "", s) && s !~ /^$|\}/) {
         for (i = 1; i <= pocet; ++i) {
-            if (index(stitky[i], "{" s "}")) {VypsatOdkazNaKapitolu(i, 1)}
+            if (index(FRAGMENTY[i "/stitky"], "{" s "}")) {VypsatOdkazNaKapitolu(i, 1)}
         }
         return 0;
     }
@@ -101,13 +80,13 @@ function RidiciRadek(text,   i, s) {
 
         case "VYPSAT ZBYTEK KAPITOL":
             for (i = 1; i <= pocet; ++i) {
-                if (!vycleneno[i] && adresar[i] == "kapitoly") {VypsatOdkazNaKapitolu(i, 1)}
+                if (!vycleneno[i] && FRAGMENTY[i "/adr"] == "kapitoly") {VypsatOdkazNaKapitolu(i, 1)}
             }
             return 0;
 
         case "VYPSAT ZBYTEK DODATKŮ":
             for (i = 1; i <= pocet; ++i) {
-                if (!vycleneno[i] && adresar[i] == "dodatky") {VypsatOdkazNaKapitolu(i, 1)}
+                if (!vycleneno[i] && FRAGMENTY[i "/adr"] == "dodatky") {VypsatOdkazNaKapitolu(i, 1)}
             }
             return 0;
 
@@ -137,12 +116,12 @@ function Konec() {
 # ============================================================================
 
 function VypsatOdkazNaKapitolu(i, vyclenit) {
-    print "<div><a href=\"" id[i] ".htm\"><span class=\"cislo\">" cislo[i] \
-        "</span> <span class=\"ikona\"><img src=\"obrazky/" ikony[i] "\" alt=\"\"></span>" \
-        "<span class=\"nazev\">" nazev[i] "</span></a></div>";
-    if (vyclenit) {
-        vycleneno[i] = 1;
-    }
+    if (!(i in FRAGMENTY)) {ShoditFatalniVyjimku("Nemohu vypsat odkaz na kapitolu číslo " i "!")}
+
+    print "<div><a href=\"" FRAGMENTY[i "/id"] ".htm\"><span class=\"cislo\">" i \
+        "</span> <span class=\"ikona\"><img src=\"obrazky/" FRAGMENTY[i "/ikkap"] "\" alt=\"\"></span>" \
+        "<span class=\"nazev\">" FRAGMENTY[i "/nazev"] "</span></a></div>";
+    if (vyclenit) {vycleneno[i] = 1}
     return 0;
 }
 

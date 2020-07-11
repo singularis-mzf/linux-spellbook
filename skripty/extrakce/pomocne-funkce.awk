@@ -1,5 +1,5 @@
 # Linux Kniha kouzel, skript extrakce/pomocne-funkce.awk
-# Copyright (c) 2019 Singularis <singularis@volny.cz>
+# Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 # podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -144,29 +144,28 @@ BEGIN {
     typ = "";
     jmeno = "";
     telo = "";
+
+    NacistFragmentyTSV("soubory_prekladu/fragmenty.tsv");
+    i = 1;
+    while (i in FRAGMENTY) {
+        if (FRAGMENTY[i "/adr"] == "kapitoly") {
+            f = "kapitoly/" FRAGMENTY[i "/id"] ".md";
+            if (!Test("-r " f)) {
+                ShoditFatalniVyjimku("Nemohu číst ze souboru " f "!");
+            }
+            idkapitol[ARGC] = $2;
+            ARGV[ARGC++] = f;
+        }
+        ++i;
+    }
+    if (i > 1) {
+        print "=== Zahajuji extrakci pomocných funkcí a skriptů. ===";
+    }
 }
 
 BEGINFILE {
     zapnuto = 0;
-    if (ARGIND == 2) {
-        print "=== Zahajuji extrakci pomocných funkcí a skriptů. ===";
-    }
-    if (LADENI) {
-        print "LADĚNÍ: otevírám soubor " FILENAME > "/dev/stderr";
-    }
-}
-
-# zvláštní zpracování pro fragmenty.tsv
-ARGIND < 2 {
-    if ($1 == "kapitoly") {
-        f = "kapitoly/" $2 ".md";
-        if (!Test("-r " f)) {
-            ShoditFatalniVyjimku("Nemohu číst ze souboru " f "!");
-        }
-        idkapitol[ARGC] = $2;
-        ARGV[ARGC++] = f;
-    }
-    next;
+    if (LADENI) {print "LADĚNÍ: otevírám soubor " FILENAME > "/dev/stderr"}
 }
 
 # vynechat zakomentované úseky

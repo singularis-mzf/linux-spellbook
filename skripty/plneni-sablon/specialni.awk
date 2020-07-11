@@ -1,5 +1,5 @@
 # Linux Kniha kouzel, skript specialni.awk
-# Copyright (c) 2019 Singularis <singularis@volny.cz>
+# Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 # podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -50,35 +50,35 @@ function Pokud(podminka) {
 function RidiciRadek(text) {
     switch (text) {
         case "PŘEHLED PODLE ŠTÍTKŮ": # zatím výhradně pro PDF
-# FRAGMENTY_TSV:
-# 1=Adresář|2=ID|3=Název|4=Předchozí ID|5=Předchozí název|6=Následující ID|7=Následující název
-# 8=Číslo dodatku/kapitoly|9=Štítky v {}
+            # 1. Shromáždit a seřadit existující štítky
             delete stitky;
-            prikaz = "cut -f 9 " FRAGMENTY_TSV " | egrep -o '\\{[^}]*\\}' | tr -d '{}' | LC_ALL=\"cs_CZ.UTF-8\" sort -fu";
-            i = 0;
-            while (prikaz | getline) {
-                stitky[++i] = $0;
+            prikaz = "printf %s '";
+            for (i = 1; i in FRAGMENTY; ++i) {
+                if (FRAGMENTY[i "/stitky"] != "NULL") {
+                    prikaz = prikaz gensub(/\{|\}|\|/, "\n", "g", gensub(/'/, "'\\\\''", "g", FRAGMENTY[i "/stitky"]));
+                }
             }
+            prikaz = prikaz "\n' | LC_ALL=\"cs_CZ.UTF-8\" sort -fu";
+            i = 0;
+            while (prikaz | getline) {if ($0 != "") {stitky[++i] = $0}}
             close(prikaz);
-            l = i;
+            l = i; # počet štítků
+
             for (i = 1; i <= l; ++i) {
                 prvniZaznamNaStitek = 1;
-                while (getline < FRAGMENTY_TSV) {
-                    if (index($9, "{" stitky[i] "}")) {
+                for (j = 1; j in FRAGMENTY; ++j) {
+                    stitkykapitoly = FRAGMENTY[j "/stitky"];
+                    if (index(stitkykapitoly, "{" stitky[i] "}")) {
                         if (prvniZaznamNaStitek) {
                             prvniZaznamNaStitek = 0;
                             print "\\begin{ppsstitek}{" stitky[i] "}";
                         }
-                        stitkykapitoly = $9;
                         gsub(/\{/, "\\ppsstitekpolozky{", stitkykapitoly); /\}/; # „/\}/“ jen kvůli zvýrazňování syntaxe, nic nedělá
-                        omezene_id = gensub(/[^A-Za-z0-9]/, "", "g", $2);
-                        print "\\ppspolozka{" $3 "}{" stitkykapitoly "}{kapx" omezene_id "}%";
+                        print "\\ppspolozka{" $3 "}{" stitkykapitoly "}{" FRAGMENTY[j "/omezid"] "}%";
                     }
                 }
                 close(FRAGMENTY_TSV);
-                if (!prvniZaznamNaStitek) {
-                    print "\\end{ppsstitek}";
-                }
+                if (!prvniZaznamNaStitek) {print "\\end{ppsstitek}"}
             }
             return 0;
 

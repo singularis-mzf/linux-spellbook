@@ -1,5 +1,5 @@
 # Linux Kniha kouzel, skript extrakce/fragmenty.awk
-# Copyright (c) 2019 Singularis <singularis@volny.cz>
+# Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 # podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -176,12 +176,14 @@ END {
     close(STITKY_TSV);
 
     for (i = 1; i <= pocet_kapitol; ++i) {
-        # fragmenty.tsv:
+        # fragmenty.tsv (PŮVODNĚ):
         #   1=Adresář|2=ID|3=Název|4=Předchozí ID|5=Předchozí název|
         #   6=Následující ID|7=Následující název|
         #   8=Číslo dodatku/kapitoly|9=Štítky v {}|
         #   10=Omezené ID|11=ikona kapitoly ("ik_vychozi.png", nebo "ik/" + ID.png)
         #
+        # fragmenty.tsv (nově):
+        #   #1=Číslo|#2=ID|#3=Název|#4=Adresář|#5=Omezené ID|#6=ikona kapitoly (ik_vychozi.png, nebo ik/{id}.png)|#7=štítky v {}
         # Prázdná hodnota se nahrazuje „NULL“.
         #
         if (system("test -e obrazky/ik/" id[i] ".png") == 0) {
@@ -190,12 +192,6 @@ END {
             ikonakapitoly = "ik-vychozi.png";
         }
 
-        print adresar[i], id[i], nazev[i], \
-            i == 1 ? "NULL\tNULL" : id[i - 1] "\t" nazev[i - 1], \
-            i + 1 == ARGC - 1 ? "NULL\tNULL" : id[i + 1] "\t" nazev[i + 1], \
-            i, \
-            serazene_stitky[i] == "" ? "NULL" : serazene_stitky[i], \
-            omezeneid[i], ikonakapitoly \
-            > FRAGMENTY_TSV;
+        print i, id[i], nazev[i], adresar[i], omezeneid[i], ikonakapitoly, serazene_stitky[i] == "" ? "NULL" : serazene_stitky[i] > FRAGMENTY_TSV;
     }
 }
