@@ -49,6 +49,7 @@ BEGIN {
     DeklarovatVolbu("-p", "--vypsat", "", "akce");
     DeklarovatVolbu("-r", "--spustit", "", "akce");
     DeklarovatVolbu("-t", "--existuje", "", "akce");
+    DeklarovatVolbu("-F", "--funkce", "", "akce");
 
     DeklarovatVolbu("-P", "--seznam-cest", "", "akce");
 
@@ -71,7 +72,7 @@ BEGIN {
     # 2. Skript musí být zadán, ledaže ho akce nevyžaduje.
     if (akce ~ /^[hlP]$/) {
         if (POCET_ARGUMENTU != 0) {ShoditFatalniVyjimku("lkk: Chybné použití: akce -" akce " nepřijímá název skriptu!")}
-    } else {
+    } else if (akce !~ /^[F]$/) {
         if (POCET_ARGUMENTU == 0 || ARGUMENTY[0] == "") {ShoditFatalniVyjimku("Chybí název skriptu!")}
         if (ARGUMENTY[0] ~ /\//) {ShoditFatalniVyjimku("lkk: Název skriptu nesmí obsahovat lomítko: " ARGUMENTY[0])}
     }
@@ -86,6 +87,7 @@ BEGIN {
         print "\tlkk [-r] [--] {skript} [parametry...] :: Spustí skript se zadanými parametry." > stdout;
         print "\tlkk -t {skript} :: Jen ověří, že daný skript existuje." > stdout;
         print "\tlkk --seznam-cest :: Vypíše seznam cest (i neexistujících), kde hledá skripty." > stdout;
+        print "\tlkk --funkce [funkce] :: Vypíše pomocnou funkci (všechny, není-li zadána konkrétní)." > stdout;
         print "\nDalší volby:\n" > stdout;
         print "\t--bash :: Je-li zadáno -e na neexistující skript, vytvoří skript s hlavičkou „#!/bin/bash“." > stdout;
         print "\t-s :: Skripty hledat jen v /usr/share/lkk/skripty; ignorovat proměnnou LKKPATH a uživatelské úložiště ~/.local/share/lkk/skripty." > stdout;
@@ -122,6 +124,12 @@ BEGIN {
     if (akce == "P") {
         for (i = 1; i <= cest; ++i) {print cesty[i] > stdout}
         exit;
+    }
+
+    # akce "F" (vypsat pomocnou funkci)
+    if (akce == "F") {
+        ARGUMENTY[1] = ARGUMENTY[0];
+        ARGUMENTY[0] = "pomocne-funkce";
     }
 
     # 4. Vyhledat skript.
@@ -168,6 +176,37 @@ BEGIN {
                 ShoditFatalniVyjimku("skript či úryvek " ARGUMENTY[0] " nenalezen!");
             }
             print "exec cat " DoApostrofu(nova_cesta) > bashout;
+            exit;
+
+        case "F": # vypsat pomocnou funkci
+            if (nova_cesta == "") {
+                ShoditFatalniVyjimku("skript \"pomocne-funkce\" nenalezen!");
+            }
+            FS = "\n";
+            if (ARGUMENTY[1] == "") {
+                # vypsat všechny pomocné funkce
+                print "exec egrep -v '^#' '" DoApostrofu(nova_cesta) "'" > bashout;
+                exit;
+            }
+            # vypsat jednu pomocnou funkci
+            if (ARGUMENTY[1] !~ /^lkk_/) {ARGUMENTY[1] = "lkk_" ARGUMENTY[1]}
+            i = 1;
+            zacatek = -1;
+            konec = -1;
+            while (getline < nova_cesta) {
+                if (zacatek == -1 && $0 == "#začátek " ARGUMENTY[1]) {zacatek = i}
+                if (konec == -1 && $0 == "#konec "ARGUMENTY[1]) {
+                    konec = i;
+                    if (konec - zacatek > 1) {
+                        print "exec sed -n " (zacatek + 1) "," (konec - 1) "p '" DoApostrofu(nova_cesta) "'" > bashout;
+                        exit;
+                    } else {
+                        ShoditFatalniVyjimku("Pomocná funkce \"" ARGUMENTY[1] "\" je prázdná!");
+                    }
+                }
+                ++i;
+            }
+            ShoditFatalniVyjimku("Pomocná funkce \"" ARGUMENTY[1] "\" nenalezena!");
             exit;
 
         case "r": # spustit skript
