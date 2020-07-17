@@ -110,16 +110,20 @@ nástroje k dosažení daných cílů.
 
 Některé úkoly, přestože zní jednoduše, jsou pro terminál ve skutečnosti dost složité,
 takže je ve výchozí instalaci není možné vykonat krátkým příkazem. Tradičním a stále
-efektivním linuxovým řešením takových situací je použití skriptů, které lze zavolat
+efektivním linuxovým řešením takových situací je použití skriptů a funkcí, které lze zavolat
 jednoduchým příkazem a vykonají za vás automaticky mnoho, často i velmi složitých příkazů,
 které danou úlohu vyřeší.
 
-Každá kapitola, která tyto pomocné skripty vyžaduje, obsahuje jejich úplný zdrojový kód,
-což vám umóžňuje si je vytvořit sám/a pouhým zkopírováním či ručním přepsáním
-(což nedoporučuji kvůli riziku překlepů); pro vaše pohodlí je ovšem
-ke každé vydané verzi knihy online distribuován balíček ve formátu „.deb“,
-který si můžete nainstalovat na svůj systém a umožní vám spouštění skriptů z knihy
-příkazem „lkk“, takže je nebudete muset ručně kopírovat.
+Každá kapitola, která tyto pomocné či funkce skripty vyžaduje, obsahuje jejich
+úplný zdrojový kód, což vám umóžňuje si je vytvořit sám/a pouhým zkopírováním
+či ručním přepsáním (což nedoporučuji kvůli riziku překlepů);
+pro vaše pohodlí je ovšem ke každé vydané verzi knihy online distribuován balíček
+ve formátu „.deb“, který si můžete nainstalovat na svůj systém.
+Tento balíček obsahuje aktuální verze pomocných skriptů a funkcí
+a příkaz „lkk“, kterým můžete spouštět pomocné skripty nebo importovat
+pomocné funkce (příkazem „source &lt;(lkk \-\-funkce)“).
+Podrobnosti a další možnosti zjistíte příkazem „lkk \-\-help“
+(manuálovou stránku spouštěč *lkk* zatím nemá).
 
 ## Pro pokročilé uživatele
 
@@ -166,24 +170,19 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 <neodsadit>Všechen software potřebný k sestavení projektu je svobodný.
 Pokud některá kapitola odkazuje na nesvobodný software, vždy na to výslovně upozorní.
 
-## Aktuální poznámka k verzi „vanilková příchuť 1.9 Eliáš Ečer“
+## Aktuální poznámka k verzi „vanilková příchuť 1.10 Františka Fučíková“
 
-Verze 1.9, jménem Eliáš Ečer, nepřináší žádnou novou kapitolu.
-Hlavními novinkami jsou designová vylepšení ve formátech PDF a HTML.
+Verze 1.10, jménem Františka Fučíková, přináší novou kapitolu Proměnné prostředí a interpretu,
+jejíž sestavení a uspořádání bylo velmi náročné, ale zato je nyní velice povedená.
 
-Formát PDF nyní používá písmo Free Helvetian. Rozhodl/a jsem se pro bezpatkové písmo,
-protože patky poutají oko čtenáře na řádek, což je nevhodné pro rychlé vyhledávání.
+Hlavní novinkou je však nový parametr \-\-funkce u spouštěče „lkk“, který umožňuje
+importovat konkrétní jednu nebo všechny pomocné funkce snáze než v předchozích verzích.
+Díky tomu se jeho používání pomalu stává praktickým.
 
-Ve formátu HTML jsem vylepšil/a design navigace na konci stránky každé kapitoly,
-aby nebyl tak matoucí. Tímto děkuji čtenáři, který mě na to upozornil.
+Vnitřní novinkou mechanismu překladu je také nový způsob zpracování pomocného souboru
+fragmenty.tsv, který se nově načítá do paměti.
 
-Původně plánovanou kapitolu „Proměnné prostředí a interpretu“ se mi nepodařilo
-včas dokončit, již nyní je ale (nedokončená a bez záruky kvality) dostupná
-pro tisk v odpovídajícím vydání řady „Sid“. Předpokládám,
-že vyjde v následující verzi vanilkové příchuti.
-
-Vydání verze 1.10, jménem Františka Fučíková, očekávám v druhé polovině července 2020.
-(Neexistuje žádné české rodné jméno začínající písmenem É či Ě.)
+Vydání verze 1.11, jménem Gustav Glocový, očekávám 1. srpna 2020.
 
 &nbsp;
 

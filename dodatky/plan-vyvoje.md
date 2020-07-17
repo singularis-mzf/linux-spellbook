@@ -16,19 +16,17 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 ## Chystané kapitoly
 
-* „Proměnné prostředí a interpretu“
 * „Zpracování binárních souborů“ (md5sum, uuencode, base64, analýzy, konverze a další)
+* „Pevné a symbolické odkazy“
 * „Unicode a emotikony“ („mapa znaků“, vzorníky a různé symboly)
-* „Základy Perlu“ (jednoduše, konzistentně)
-* „Komplexní textové formáty“ (JSON, XML apod.)
-* „Přehrávání videa, zvuku a obrázků“ (mplayer, feh, gpicview, ristretto)
-* „Šifrování a kryptografie“ (gpg, šifrování archivů, elektronické podpisy, HTTPS certifikáty)
 * „X (správce oken)“ (práce s okny, se schránkou, oznámení a další)
 * „Zpracování obrázků“ (ImageMagick, konverze RAW z fotoaparátů, zatím asi bez animovaných gifů)
+* „Komplexní textové formáty“ (JSON, XML apod.)
+* „Základy Perlu“ (jednoduše, konzistentně)
+* „Přehrávání videa, zvuku a obrázků“ (mplayer, feh, gpicview, ristretto)
+* „Šifrování a kryptografie“ (gpg, šifrování archivů, elektronické podpisy, HTTPS certifikáty)
 * „Firewall“ (asi hlavně iptables)
-* „Pevné a symbolické odkazy“
 * „Jádro a GRUB“ (konfigurace, dualboot, nastavení grafického pozadí)
-* „Záznam obrazovky“ (maim, ffmpeg a další)
 * „Bash“ (syntaxe, rozvoj proměnných, exec, přesměrování, roury a další)
 * „LaTeX“ (základní struktura dokumentu, standardní značky, překlad do PDF, důležité balíčky)
 * „SQL“ (SQLite, MySQL, MariaDB; všechno možné)
@@ -36,8 +34,10 @@ https://creativecommons.org/licenses/by-sa/4.0/
 * „DOSBox“ (ovládání, konfigurace, spouštění)
 * „Wine“ (parametry, konfigurace, zkušenosti, wine-prefixy apod.)
 * „VirtualBox“ (ovládání z terminálu)
+* „Záznam obrazovky“ (maim, ffmpeg a další)
 * „Správa balíčků 2“ (apt-src, apt-mirror, aptly)
 * „Matematické výpočty“ (bc, dc, expr apod.)
+* „Firefox“ (zejm. konfigurační volby a volání z terminálu)
 
 <!--
 * „HTTP, FTP, MySQL a spol. (klientská strana – ftp, wget, curl, ...)“

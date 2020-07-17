@@ -427,7 +427,7 @@ Prázdný klíč způsobí chybu „chybný podskript pole“.
 **$\{**{*název\_proměnné*}**@a}** ⊨ x
 
 *# dosadit **příkaz** bashe, který vytvoří danou proměnnou včetně atributů a hodnoty*<br>
-**$\{**{*název\_proměnné*}**@A}** ⊨ declare -x PATH='/home/nana/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games'
+**$\{**{*název\_proměnné*}**@A}** ⊨ declare -x HOME='/home/kalandira'
 
 ### Podmíněné dosazení
 
@@ -547,7 +547,7 @@ Prázdný klíč způsobí chybu „chybný podskript pole“.
 
 *# vyhledávací cesty externích příkazů*<br>
 *// Cesty jsou odděleny. Bývají absolutní, ale mohou být i relativní. Zahrnout aktuální adresář „.“ je možné, ale z bezpečnostních důvodů se to striktně nedoporučuje.*<br>
-**$PATH** ⊨ /home/petr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+**$PATH** ⊨ /home/petr/bin:/usr/local/sbin:/usr/local/bin:<br>/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
 
 *# označení příslušného grafického zobrazovacího rozhraní*<br>
 **$DISPLAY** ⊨ :0.0

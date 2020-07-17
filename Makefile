@@ -148,6 +148,7 @@ $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/osnova/%.tsv): $(SOUBORY_PREKLADU)/osnov
 # 3. soubory_prekladu/postprocess.dat
 # ----------------------------------------------------------------------------
 $(SOUBORY_PREKLADU)/postprocess.dat: $(wildcard postprocess.dat)
+	mkdir -pv $(dir $@)
 	-test -r postprocess.dat && cat postprocess.dat >"$@"
 	touch "$@"
 

@@ -38,6 +38,12 @@ diskove-oddily
 \item{}UUID souborového systému ve tvaru \quotedblbase{}UUID=61bbd562{-}0694{-}4561{-}a8e2{-}4ccfd004a660\textquotedblleft{}.
 \item{}UUID souborového systému ve tvaru\\\quotedblbase{}UUID=61bbd562{-}0694{-}4561{-}a8e2{-}4ccfd004a660\textquotedblleft{}.
 
+301
+pdf-a4.*
+diskove-oddily
+\radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{UUID=\textquotedbl{}61bbd562{-}0694{-}4561{-}a8e2{-}4ccfd004a660\textquotedbl{}\textcolor{seda}{\guillemotright}{~~~~~~}/\textcolor{seda}{\guillemotright}{~~~~~~}ext4\textcolor{seda}{\guillemotright}{~~~~~~}errors={\moznyzlom}remount{-}ro,{\moznyzlom}discard,{\moznyzlom}nouser\_xattr\textcolor{seda}{\guillemotright}{~~}0\textcolor{seda}{\guillemotright}{~~~~~~}1}%
+\radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{UUID=\textquotedbl{}61bbd562{-}0694{-}4561{-}a8e2{-}4ccfd004a660\textquotedbl{}\textcolor{seda}{\guillemotright}{~~~~~~}/\textcolor{seda}{\guillemotright}{~~~~~~}\\ext4\textcolor{seda}{\guillemotright}{~~~~~~}errors={\moznyzlom}remount{-}ro,{\moznyzlom}discard,{\moznyzlom}nouser\_xattr\textcolor{seda}{\guillemotright}{~~}0\textcolor{seda}{\guillemotright}{~~~~~~}1}%
+
 400
 pdf-a4.*
 diskove-oddily
@@ -56,6 +62,12 @@ zpracovani-textovych-souboru
 \parametrprikazu{{\dejavusansfamily{}☐} {-}o \dopln{formát}}{Definuje pořadí sloupců na výstupu. Jednotlivé specifikace mohou mít tvar \quotedblbase{}0\textquotedblleft{} (společný sloupec), \quotedblbase{}1.\dopln{číslo}\textquotedblleft{} pro sloupec prvního souboru nebo \quotedblbase{}2.\dopln{číslo}\textquotedblleft{} pro sloupec druhého souboru. Specifikace se oddělují čárkami nebo mezerami. Příklad specifikace: \quotedblbase{}0,1.1,1.2,2.1,2.2,0\textquotedblleft{}.}%\n
 \parametrprikazu{{\dejavusansfamily{}☐} {-}o \dopln{formát}}{Definuje pořadí sloupců na výstupu. Jednotlivé specifikace mohou mít tvar \quotedblbase{}0\textquotedblleft{} (společný sloupec),\\\quotedblbase{}1.\dopln{číslo}\textquotedblleft{} pro sloupec prvního souboru nebo \quotedblbase{}2.\dopln{číslo}\textquotedblleft{} pro sloupec druhého souboru. Specifikace se oddělují čárkami nebo mezerami. Příklad specifikace: \quotedblbase{}0,1.1,1.2,2.1,2.2,0\textquotedblleft{}.}%\n
 
+610
+pdf-a4.*
+zpracovani-textovych-souboru
+\item{}\bfseries{}Řetězec\mdseries{} (string) je libovolná posloupnost znaků, i~prázdná či tvořená jedním znakem.
+\item{}\bfseries{}Řetězec\mdseries{} (string) je libovolná posloupnost znaků, i~prá\-zdná či tvořená jedním znakem.
+
 710
 pdf-b5.*
 awk
@@ -73,6 +85,12 @@ pdf-b5.*
 diskove-oddily
 \radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{UUID=\textquotedbl{}61bbd562{-}0694{-}4561{-}a8e2{-}4ccfd004a660\textquotedbl{}\textcolor{seda}{\guillemotright}{~~~~~~}/\textcolor{seda}{\guillemotright}{~~~~~~}ext4\textcolor{seda}{\guillemotright}{~~~~~~}errors={\moznyzlom}remount{-}ro,{\moznyzlom}discard,{\moznyzlom}nouser\_xattr\textcolor{seda}{\guillemotright}{~~}0\textcolor{seda}{\guillemotright}{~~~~~~}1}%
 \radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{UUID=\textquotedbl{}61bbd562{-}0694{-}4561{-}a8e2{-}4ccfd004a660\textquotedbl{}\moznyzlom{}\textcolor{seda}{\guillemotright}{~~~~~~}/\textcolor{seda}{\guillemotright}{~~~~~~}ext4\textcolor{seda}{\guillemotright}{~~~~~~}errors={\moznyzlom}remount{-}ro,{\moznyzlom}discard,{\moznyzlom}nouser\_xattr\textcolor{seda}{\guillemotright}{~~}0\textcolor{seda}{\guillemotright}{~~~~~~}1}%
+
+911
+pdf-b5.*
+diskove-oddily
+\parametrprikazu{{\dejavusansfamily{}○}~umask=\dopln{mód} {\dejavusansfamily{}○}~dmask=\dopln{mód},fmask=\dopln{mód}}{Nastaví přístupová práva všech adresářových položek/všech adresářů a~souborů.}%\n
+\parametrprikazu{{\dejavusansfamily{}○}~umask=\dopln{mód} {\dejavusansfamily{}○}~dmask=\dopln{mód},fmask=\dopln{mód}}{Nastaví přístupová práva všech adresářových položek/\\všech adresářů a~souborů.}%\n
 
 1010
 pdf-b5.*
@@ -127,3 +145,9 @@ pdf-b5.*
 zpracovani-videa-a-zvuku
 použijte místo \quotedblbase{}chromium{-}codecs{-}ffmpeg{-}extra\textquotedblleft{} jen \quotedblbase{}chromium{-}codecs{-}ffmpeg\textquotedblleft{}.
 použijte místo\\\quotedblbase{}chromium{-}codecs{-}ffmpeg{-}extra\textquotedblleft{} jen \quotedblbase{}chromium{-}codecs{-}ffmpeg\textquotedblleft{}.
+
+1910
+pdf-b5.*
+sed
+\item{}Malé textové soubory je často výhodné zpracovat najednou zadáním parametru \quotedblbase{}{-}z\textquotedblleft{}. Když vstupní soubor neobsahuje nulový bajt, sed v~takovém případě načte celý soubor jako jeden záznam.
+\item{}Malé textové soubory je často výhodné zpracovat najednou zadáním parametru \quotedblbase{}{-}z\textquotedblleft{}. Když vstup\-ní soubor neobsahuje nulový bajt, sed v~takovém případě načte celý soubor jako jeden záznam.
