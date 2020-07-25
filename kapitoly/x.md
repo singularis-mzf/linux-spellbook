@@ -266,7 +266,7 @@ https://github.com/Wh1t3Rh1n0/xinput-keylog-decoder
 ## Instalace na Ubuntu
 <!--
 - Jako zaklínadlo bez titulku uveďte příkazy (popř. i akce) nutné k instalaci a zprovoznění všech nástrojů požadovaných kterýmkoliv zaklínadlem uvedeným v kapitole. Po provedení těchto činností musí být nástroje plně zkonfiguraované a připravené k práci.
-- Ve výčtu balíků k instalaci vycházejte z minimální instalace Ubuntu.
+- Ve výčtu balíčků k instalaci vycházejte z minimální instalace Ubuntu.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 

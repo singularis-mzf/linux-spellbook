@@ -102,6 +102,7 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [markdown](kapitoly/markdown.md) | Markdown | 100% | vydána (od verze 1.0) |
 | [planovani-uloh](kapitoly/planovani-uloh.md) | Plánování úloh | 100% | vydána (od verze 1.0) |
 | [prace-s-archivy](kapitoly/prace-s-archivy.md) | Práce s archivy | 100% | vydána (od verze 1.1) |
+| [promenne](kapitoly/promenne.md) | Proměnné prostředí a interpretu | 100% | vydána (od verze 1.9) |
 | [regularni-vyrazy](kapitoly/regularni-vyrazy.md) | Regulární výrazy | 100% | vydána (od verze 1.1) |
 | [sed](kapitoly/sed.md) | Sed | 100% | vydána (od verze 1.8) |
 | [soubory-a-adresare](kapitoly/soubory-a-adresare.md) | Soubory a adresáře | 100% | vydána (od verze 1.5) |
@@ -112,8 +113,7 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [vim](kapitoly/vim.md) | Vim | 100% | vydána (od verze 1.8) |
 | [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) | Zpracování textových souborů | 100% | vydána (od verze 1.2) |
 | [zpracovani-videa-a-zvuku](kapitoly/zpracovani-videa-a-zvuku.md) | Zpracování videa a zvuku | 100% | vydána (od verze 1.0) |
-| [promenne](kapitoly/promenne.md) | Proměnné prostředí a interpretu | 100% | připravena k vydání |
-| [sprava-uzivatelu](kapitoly/sprava-uzivatelu.md) | Správa uživatelů | 80% | dítě |
+| [sprava-uzivatelskych-uctu](kapitoly/sprava-uzivatelskych-uctu.md) | Správa uživatelských účtů | 100% | připravena k vydání |
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
 | [zpracovani-obrazku](kapitoly/zpracovani-obrazku.md) | Zpracování obrázků | 40% | dítě |
 | [odkazy](kapitoly/odkazy.md) | Pevné a symbolické odkazy | 20% | dítě |
@@ -134,6 +134,7 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [wine](kapitoly/wine.md) | Wine | 0% | embryo |
 | [pdf](kapitoly/pdf.md) | PDF | 0% | embryo |
 | [virtualbox](kapitoly/virtualbox.md) | VirtualBox | 0% | embryo |
+| [stahovani-web](kapitoly/stahovani-web.md) | Stahování webových stránek | 0% | embryo |
 | prehravani-videa | Přehrávání videa, zvuku a obrázků | - | přál/a bych si |
 | sifrovani | Šifrování a kryptografie | - | přál/a bych si |
 | firewall | Firewall | - | přál/a bych si |

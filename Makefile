@@ -39,7 +39,7 @@ VSECHNY_KAPITOLY += hledani-souboru konverze-formatu latex lkk make markdown mod
 # N, O, P, Q, R, S
 VSECHNY_KAPITOLY += odkazy pdf perl planovani-uloh prace-s-archivy promenne regularni-vyrazy
 # S
-VSECHNY_KAPITOLY += sed soubory-a-adresare sprava-balicku sprava-balicku-2 sprava-procesu sprava-uzivatelu stahovani-videi system
+VSECHNY_KAPITOLY += sed soubory-a-adresare sprava-balicku sprava-balicku-2 sprava-procesu sprava-uzivatelskych-uctu stahovani-videi stahovani-web system
 # T, U, V, W, X, Y, Z
 VSECHNY_KAPITOLY += unicode uzivatelska-rozhrani vim virtualbox wine x
 # Z
@@ -54,7 +54,9 @@ OBRAZKY := favicon.png by-sa.png logo-knihy-velke.png make.png barvy.png ve-vyst
 OBRAZKY += ik-vychozi.png
 SVG_OBRAZKY := kalendar.svg graf-filtru.svg
 OBRAZKY_IK := awk.png barvy-a-titulek.png datum-cas-kalendar.png diskove-oddily.png docker.png git.png hledani-souboru.png
-OBRAZKY_IK += make.png markdown.png planovani-uloh.png prace-s-archivy.png promenne.png regularni-vyrazy.png sed.png soubory-a-adresare.png sprava-balicku.png sprava-procesu.png stahovani-videi.png system.png vim.png
+OBRAZKY_IK += make.png markdown.png planovani-uloh.png prace-s-archivy.png promenne.png regularni-vyrazy.png
+OBRAZKY_IK += sed.png soubory-a-adresare.png sprava-balicku.png sprava-procesu.png sprava-uzivatelskych-uctu.png
+OBRAZKY_IK += stahovani-videi.png system.png vim.png
 OBRAZKY_IK += zpracovani-textovych-souboru.png zpracovani-videa-a-zvuku.png
 OBRAZKY_IK += predmluva.png koncepce-projektu.png
 

@@ -61,8 +61,9 @@ Každá revize je jednoznačně identifikována pomocí své MD5 heše. Kromě t
 
 ### Práce s repozitáři
 
-*# **vytvořit** nový repozitář v aktuálním adresáři*<br>
-**git init** [**\-\-bare**]
+*# **vytvořit** nový repozitář v aktuálním adresáři (normální/bare)*<br>
+**git init** [**&amp;&amp; git checkout -b** {*název\_výchozí\_větve*}]<br>
+**git init \-\-bare**
 
 *# vytvořit lokální repozitář **ze vzdáleného***<br>
 **git clone** {*vzdálená-adresa*} [{*místní-adresář*}]
@@ -90,7 +91,6 @@ Každá revize je jednoznačně identifikována pomocí své MD5 heše. Kromě t
 *// Jsou-li v pracovním adresáři změny, tento příkaz se je pokusí zachovat.*<br>
 **git checkout** {*revize*}<br>
 **git checkout -b** {*nová-větev*} [{*revize*}]
-
 
 *# přenést do indexu změny v pracovním repozitáři (všech souborů/jen již verzovaných)*<br>
 *// Normálně „git add“ přenese smazání souboru jen tehdy, je-li daný soubor výslovně jmenován na příkazovém řádku. S parametrem „-A“ přenese všechna smazání.*<br>

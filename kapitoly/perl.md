@@ -639,7 +639,7 @@ https://www.tutorialspoint.com/perl/perl_special_variables.htm
 ## Instalace na Ubuntu
 <!--
 - Jako zaklínadlo bez titulku uveďte příkazy (popř. i akce) nutné k instalaci a zprovoznění všech nástrojů požadovaných kterýmkoliv zaklínadlem uvedeným v kapitole. Po provedení těchto činností musí být nástroje plně zkonfigurované a připravené k práci.
-- Ve výčtu balíků k instalaci vycházejte z minimální instalace Ubuntu.
+- Ve výčtu balíčků k instalaci vycházejte z minimální instalace Ubuntu.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 

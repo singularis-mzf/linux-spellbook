@@ -66,15 +66,15 @@ Poznámky:
 **zbarimg -q \-\-raw** {*vstupní-obrázek*}<br>
 **zbarimg** {*vstupní-obrázek*}
 <!--
-Vyžaduje balík „zbar-tools“.
+Vyžaduje balíček „zbar-tools“.
 -->
 
 *# vygenerovat EAN kód*<br>
 *// Zadané číslo musí být dlouhé 12 nebo 7 číslic, případně 13 nebo 8 číslic s platným kontrolním součtem. Šířka a výška mohou být libovolné, ale pro EAN kódy je vhodné, když jsou v poměru 5:4, např. „1024x819“. Výstupní obrázek bude ve skutečnosti ještě o něco větší, protože kromě samotného kódu zahrnuje i text a okraje.*<br>
 **barcode -b** {*číslobezpomlček*} **-e EAN -E** [**-g** {*šířka-kódu*}**x**{*výška-kódu*}] **\| ps2pdf -dEPSCrop -** {*název-souboru.pdf*}
 <!--
-Vyžaduje balík „barcode“ a povolit čtení formátu EPS.
-Také možno „**epspdf** {*název-souboru*}**.eps**“ a umí konverzi na grayscale, ale vyžaduje balík „texlive-pictures“.
+Vyžaduje balíček „barcode“ a povolit čtení formátu EPS.
+Také možno „**epspdf** {*název-souboru*}**.eps**“ a umí konverzi na grayscale, ale vyžaduje balíček „texlive-pictures“.
 -->
 
 *# vygenerovat EAN kód pro ISBN*<br>
@@ -167,14 +167,37 @@ sudo apt-get install espeak
 
 ### URL encode
 
-*# zakódovat cestu*<br>
+*# zakódovat konkrétní text (např. cestu)(silné kódování/slabé kódování)*<br>
+**printf %s "**{*text*}**" \| perl -CSLA -n -l12 -0 -Mstrict -MEnglish -MURI::Escape -e 'print(uri_escape_utf8($ARG));'**<br>
+?
+<!--
+**printf %s "**{*text*}**" \| perl -CSLA -n -l12 -0 -Mstrict -MEnglish -MURI::Escape -e 'print(uri_escape_utf8($ARG, "^][A-Za-z0-9._~:/?#-@!\\$&'\\''()\*+,;=-"));'**
+-->
+
+*# zakódovat vstup po řádkách*<br>
+{*vstup*} **\| perl -CSLA -n -l12 -012 -Mstrict -MEnglish -MURI::Escape -e 'print(uri_escape_utf8($ARG));'**
+
+*# zakódovat vstup po záznamech ukončených nulovým bajtem*<br>
+{*vstup*} **\| perl -CSLA -n -l0 -0 -Mstrict -MEnglish -MURI::Escape -e 'print(uri_escape_utf8($ARG));'**
+
+*# dekódovat konkrétní text*<br>
 ?
 
-*# zakódovat text*<br>
+*# dekódovat po řádcích*<br>
 ?
+
+*# dekódovat po záznamech ukončených nulovým bajtem*<br>
+?
+
+<!--
+**urlencode \-\- "**{*text*}**" \| tail -c +6**
+Nefunguje:
+1. „urlencode "-m"“ nevypíše nic (mělo by konverzi „-m“)
+2. ne-ASCII bajty vypisuje jako %FF, což zničí znaky UTF-8
 
 *# dekódovat*<br>
-?
+**urlencode -d "**{*text*}**"**
+-->
 
 ## Parametry příkazů
 <!--

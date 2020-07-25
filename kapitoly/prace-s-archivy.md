@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, kapitola Práce s archivy
-Copyright (c) 2019 Singularis <singularis@volny.cz>
+Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -38,7 +38,7 @@ Oproti tomu příkazy pro práci s určitým typem archivu (např. 7z, tar či 
 pracují s archivem samy.
 
 Tato kapitola se nezabývá zálohováním ani správou verzí.
-Nepokrývá práci s obrazy souborových systémů ani různé typy softwarových balíků
+Nepokrývá práci s obrazy souborových systémů ani různé typy softwarových balíčků
 (např. .deb či .rpm). Nezabývá se konverzí jednoho archivního formátu na jiný.
 
 Tato verze kapitoly nepokrývá formát SquashFS.
