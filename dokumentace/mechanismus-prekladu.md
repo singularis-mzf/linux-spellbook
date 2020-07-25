@@ -1,6 +1,6 @@
 <!--
 
-Linux Kniha kouzel, dokumentace
+Linux Kniha kouzel, dokumentace: Mechanismus překladu
 Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -11,9 +11,9 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
-# Dokumentace mechanismu překladu
+# Mechanismus překladu
 
-**(Dokumentace je rozepsaná; počkejte prosím na finální verzi...)**
+**STAV TEXTU:** 🚧 rozepsaný
 
 ## Vstup
 
@@ -25,8 +25,8 @@ konstrukcí se nachází ve speciální kapitole [Ukázka](../kapitoly/_ukazka.m
 ## Výstup
 
 Mechanismus překladu dodržuje „čistotu stromu zdrojového kódu“ – zapisuje pouze
-do dvou zvláštních adresářů, které si v případě potřeby vytvoří a které můžete
-kdykoliv bezpečně smazat:
+do dvou zvláštních adresářů, které si v případě potřeby vytvoří
+a které lze vždy znovu vygenerovat:
 
 * „soubory\_prekladu“ – obsahuje dočasné, pomocné a pracovní soubory potřebné při překladu.
 * „vystup\_prekladu“ – obsahuje koncový výsledek překladu – Linux: Knihu kouzel v různých výstupních formátech.
@@ -45,209 +45,225 @@ kdykoliv bezpečně smazat:
 
 Soubor „fragmenty.tsv“ je tabulka ve formátu TSV, kterou generuje skript
 [skripty/extrakce/fragmenty.awk](../skripty/extrakce/fragmenty.awk).
-Každý záznam představuje kapitolu či dodatek k vygenerování a zařazení na výstup
-(viz „poradi-kapitol.lst“). Tímto souborem je určeno pořadí kapitol a dodatků na výstupu.
+Uvádí dodatky a kapitoly určené k zařazení na výstup (vychází se
+z „poradi-kapitol.lst“). Každý záznam představuje jednu kapitolu či dodatek.
+Ostatní kapitoly a dodatky (podle Makefile) se překládají
+(především kvůli kontrole syntaxe), ale na výstup se nedostanou.
+Tento soubor udává pořadí kapitol a dodatků na výstupu.
 
-Sloupce jsou následující:
+Sloupce *fragmenty.tsv* jsou následující:
 
-* \[1\] Adresář („dodatky“ nebo „kapitoly“).
-* \[2\] ID dodatku či kapitoly (název souboru bez přípony).
-* \[3\] Název dodatku či kapitoly (podle zdrojového souboru).
-* \[4\] Předchozí ID, nebo „NULL“.
-* \[5\] Předchozí název, nebo „NULL“.
-* \[6\] Následující ID, nebo „NULL“.
-* \[7\] Následující název, nebo „NULL“.
-* \[8\] Pořadové číslo.
-* \[9\] Štítky uzavřené v závorkách {}, nebo „NULL“. Např. „{barvy}{čas}“. Extrahují se ze zdrjového souboru a zde jsou již abecedně seřazené.
-* \[10\] Zjednodušené ID sestávající jen z písmen anglické abecedy.
-* \[11\] Odkaz na ikonu kapitoly (soubor s obrázkem).
+| # | Identifikátor | Popis | Příklad |
+| ---: | --- | :--- | :--- |
+| 1 | *není* | Pořadové číslo (od 1). Vždy odpovídá číslu záznamu. | 7 |
+| 2 | id | ID dodatku či kapitoly (název souboru bez přípony). | stahovani-web |
+| 3 | nazev | Název dodatku či kapitoly (extrahuje se ze zdrojového souboru). | Stahování webových stránek |
+| 4 | adr | Adresář („dodatky“ nebo „kapitoly“). | kapitoly |
+| 5 | omezid | Takzvané omezené ID kapitoly. Používá se především ve formátu PDF. Začíná prefixem „kap“ a obsahuje pouze malá písmena anglické abecedy. | kapxstahovniwebovchstrnek |
+| 6 | ikkap | Ikona kapitoly (obrázek ve formátu „png“; cesta je relativní k adresáři „obrazky“). Pokud kapitola nemá vlastní ikonu, uvede se generická. | ik/ik-kap.png |
+| 7 | stitky | Štítky kapitoly ve složených závorkách bez oddělovačů; nejsou-li, hodnota „NULL“. | \{internet\}\{tematický okruh\} |
 
-Kapitoly a dodatky, které na výstup nebudou zapsány, se do tabulky „fragmenty.tsv“ neuvádí.
+### postprocess.dat a postprocessing
 
-### postprocess.dat
-
-Soubor „postprocess.dat“ v adresáři „soubory\_prekladu“ vzniká kopií stejnojmenného souboru
+Soubor **postprocess.dat** v adresáři „soubory\_prekladu“ vzniká kopií stejnojmenného souboru
 v hlavním adresáři a obsahuje definice pro postprocessing zdrojového kódu pro formáty PDF.
+Postprocessing slouží k doladění sazby pro jednotlivé formáty. Umožňuje např. vložit nucené
+zalomení řádky jen ve formátu A4, které se neuplatní ve formátu B5.
 
-Jako záznam o samotném postprocessingu zde vzniká také soubor „postprocess.log“.
+Do souboru **postprocess.log** se zapisuje seznam proběhlých korekcí s počtem provedených náhrad,
+což umožňuje odhalit zastaralé (již nefunkční) korekce nebo korekce,
+které omylem zasáhly nechtěný řádek.
+
+Záznamy v postprocess.dat jsou odděleny sekvencí prázdných řádek (obvykle jedna prázdná řádka); sloupce v záznamech jsou odděleny znakem konce řádku (\\n). Záznam, který začíná znakem „#“ je komentář a celý se ignoruje.
+
+Sloupce *postprocess.dat* mají následující význam:
+
+| # | Popis | Příklad |
+| ---: | :--- | :--- |
+| 1 | Číslo opravy (nezáporné celé číslo jednoznačně identifikující záznam). | 110 |
+| 2 | Regulární výraz určující, na které formáty bude oprava uplatněna. Oprava může být uplatněna i na více formátu, pokud všechny jejich identifikátory odpovídají uvedenému regulárnímu výrazu. | pdf-a4.\* |
+| 3 | ID dodatku či kapitoly, na kterou bude oprava uplatněna. Jedna oprava může být uplatněna pouze na jeden dodatek či kapitolu. | stahovani-web |
+| 4 | Původní znění opravované řádky v souboru „soubory\_prekladu/\{formát\}/\{id\}.kap“. | test \\textbf\{něčeho\} |
+| 5 | Opravené znění opravované řádky. | test \\emph\{něčeho\} |
+
+Mechanismus postprocessingu se spouští samostatně nad každou kapitolou, pro každý jednotlivý PDF formát.
+Funguje tak, že vyhledá výskyt řádky podle čtvrtého sloupce záznamu v souboru postprocess.dat a nahradí ho textem pátého sloupce téhož záznamu.
 
 ### stitky.tsv
 
-Tabulka ve formátu TSV, vzniká jako vedlejší produkt skriptu
-[skripty/extrakce/fragmenty.awk](../skripty/extrakce/fragmenty.awk).
-Jde o abecedně řazený seznam štítků a jim odpovídajících kapitol.
+Tabulka ve formátu TSV, která uvádí seznam kapitol k jednotlivým štítkům.
+Vzniká jako vedlejší produkt skriptu [skripty/extrakce/fragmenty.awk](../skripty/extrakce/fragmenty.awk).
 
-Sloupce jsou následující:
+Sloupce *stitky.tsv* jsou následující:
 
-* \[1\] Text štítku.
+| # | Popis | Příklad |
+| ---: | :--- | :--- |
+| 1 | Text štítku. | zpracování textu |
+| 2 | Omezené ID štítku. Začíná písmenem „s“. | szprcovnitextu |
+| 3 atd. | ID kapitol, které mají daný štítek. |
 
+U každého štítku musí být uvedena alespoň jedna kapitola a každá uvedená kapitola
+musí být určena na výstup (tzn. musí mít záznam ve *fragmenty.tsv*).
+Štítky, které by neměly žádnou příslušnou kapitolu na výstupu, se neuvádí.
 
+### ucs\_ikony.dat
 
+Textový soubor v kódování UTF-8, který vzniká skriptem [skripty/extrakce/ikony-zaklinadel.awk](../skripty/extrakce/ikony-zaklinadel.awk) ze souboru [ucs\_ikony/ikony.txt](../ucs\_ikony/ikony.txt) po přefiltrování podle [ucs\_ikony/povolene-ikony.tsv](../ucs\_ikony/povolene-ikony.tsv).
+Je tvořen dvěma dlouhými řádky. První řádka obsahuje znaky UTF-8 používané jako ikony zaklínadel, druhá udává jednopísmennými zkratkami na odpovídající pozici, jaké písmo se má použít k jejich vypsání (D znamená „DejaVu Sans“, L znamená „Latin Modern Math“).
 
+### osnova/\{id\}.tsv
 
+Soubory v adresáři „osnova“ obsahují záznamy odkazující na konkrétní místa jednotlivých kapitol.
+V této verzi jsou to jen záznamy sekcí a podsekcí. Vstupem jsou pro ně zdrojové kódy kapitol
+a dodatků a generuje je skript [skripty/extrakce/osnova.awk](../skripty/extrakce/osnova.awk).
 
+Pro kapitoly, které nejsou určeny na výstup, se tyto soubory vygenerují prázdné.
+Jinak obsahují údaje o sekcích a podsekcích v dané kapitole:
 
+Sloupce *osnova/\*.tsv* jsou následující:
 
+| # | Popis | Příklad |
+| ---: | :--- | :--- |
+| 1 | Typ záznamu (KAPITOLA, SEKCE, nebo PODSEKCE). | PODSEKCE |
+| 2 | Identifikátor záznamu, jehož formát se liší podle typu záznamu. | 5x4 |
+| 3 | Číslo řádky ve vstupním zdrojovém kódu (slouží výhradně k ladění). | 374 |
+| 4 | Text (např. název kapitoly). | Ostatní |
+| 5 | Středník (vyhrazeno pro budoucí použití). | ; |
 
-<!--
+Formáty identifikátoru záznamu jsou následující:
 
-Jsou podporovány tři hlavní skupiny výstupních formátů:
+| Typ záznamu | Popis formátu | Příklad |
+| --- | :--- | --- |
+| KAPITOLA | Prázdný řetězec. | |
+| SEKCE | Pořadové číslo sekce v kapitole. | 3 |
+| PODSEKCE | Číslo sekce, „x“ a pořadové číslo podsekce v sekci. | 3x2 |
 
-* Formáty PDF (pdf-a4, pdf-b5, pdf-a5) jsou určeny pro tisk.
-Skript [do\_pdf.awk](../skripty/do_pdf.awk) převede zdrojový kód kapitoly
-či dodatku do formátu LaTeXu. Skript [kapitola.awk](../skripty/kapitola.awk)
-ho má „obalit“ do šablony, ale v současnosti tato operace nic nedělá.
-Skript [postprocess.awk](../skripty/postprocess.awk) na přeloženou kapitolu
-aplikuje předtiskové korekce, jsou-li definovány.
-Skript [kniha.awk](../skripty/kniha.awk) pak kapitoly složí do jednoho
-zdrojového souboru ve formátu LaTeX, jehož celková podoba je definovaná
-v souboru [formaty/pdf/sablona.tex](../formaty/pdf/sablona.tex).
-Nakonec se zavolá pdflatex a přeloží tento zdrojový kód do PDF.
-Souběžně s tím jsou zpracovány obrázky pomocí nástroje ImageMagick.
-* Formát HTML (html) je určený pro zobrazení na počítači a jeho hlavním účelem
-je, abyste mohl/a snadno vykopírovat úseky kódu a přímo je použít bez rizika
-překlepů. Skript [do\_html.awk](../skripty/do_html.awk) převede zdrojový kód
-kapitoly či dodatku do formátu HTML, skript [kapitola.awk](../skripty/kapitola.awk)
-pak zpracuje pouze kapitoly, které mají být vygenerovány, a vytvoří z nich
-finální HTML soubory. Současně s tím se překopíruje
-[sablona.css](../formaty/html/sablona.css) a požadované obrázky.
-Součástí tohoto procesu je i shromáždění licenčních informací k obrázkům
-ze souboru [COPYING](../COPYING) a ke kapitolám z jejich zdrojových kódů
-a jejich sepsání pomocí skriptu [kapitola.awk](../skripty/kapitola.awk).
-Pomocí skriptu [generovat-index-html.awk](../skripty/generovat-index-html.awk)
-se pak vygeneruje hlavní HTML stránka s přehledem kapitol.
-* Formát LOG (log) je určen především pro ladění lexikálně syntaktického
-analyzátoru, který se nachází ve skriptu [hlavni.awk](skripty/hlavni.awk).
-Tento analyzátor je společný pro všechny formáty a ve výstupu ve formátu
-LOG můžete dohledat, které funkce byly volány pro zpracování jednotlivých
-částí každé kapitoly. Druhou podstatnou úlohou překladu do tohoto formátu
-je poměrně striktní kontrola některých požadavků a předpokladů,
-která se u ostatních formátů nevyskytuje.
+### symboly/\*
 
-U každého formátu je prvním krokem překlad zdrojového textu po jednotlivých kapitolách
-do základní podoby kapitol v daném formátu. Tento krok dělá skript
-„skripty/do\_{*formát*}u.awk“ a u formátu LOG je to jediný krok.
-Společným jádrem skriptů pro všechny formáty je lexikálně syntaktický analyzátor
-ve skriptu „skripty/hlavni.awk“. Skripty pro jednotlivé formáty definují pouze
-konkrétní funkce, které pak analyzátor volá. Velmi podstatná je funkce
-*ZpracujZnak()*, která se volá pro každý nebílý znak textu po
-odstranění escapování a všech řídicích konstrukcí. Např. nezlomitelnou mezeru
-přeloží ve formátu PDF na „\~“ a ve formátu HTML na „&amp;nbsp;“.
+Podadresář soubory\_prekladu/symboly slouží k tomu, aby program „make“
+provedl nový překlad v případě, že se změní jedno z podstatných nastavení
+(datum sestavení nebo jeho jméno). Podrobnosti najdete v souboru Makefile;
+obvykle se ale tímto adresářem nemusíte zabývat.
 
-U formátu HTML probíhá současně s tím zpracování obrázků a zkopírování stylového předpisu.
+## Obsah adresáře „soubory\_prekladu/deb“ (balíček DEB)
 
-Překlad do formátů PDF je nejsložitější. Výsledkem prvního kroku jsou části
-kódu ve formátu LaTeX, které se pak skriptem „skripty/kniha.awk“ spojí do jednoho
-velkého zdrojového kódu a ten se příkazem „pdflatex“ přeloží do formátu PDF.
+### DEBIAN/control
 
-Při překladu se používají dva adresáře: Adresář „soubory\_prekladu“ slouží pro
-pomocné a nehotové soubory vznikající během překladu; adresář „vystup\_prekladu“
-pak obsahuje pouze požadované výstupní soubory.
+Vygenerované údaje o balíčku pro balíčkovací systém „dpkg“.
 
-## Interní soubory
+### DEBIAN/md5sums
 
-### soubory\_prekladu/osnova/\*.tsv
+Vygenerované kontrolní součty MD5 pro soubory zařazené do balíčku.
 
-Do těchto souborů se sepisují záznamy o sekcích a podsekcích v jednotlivých
-kapitolách. Slouží především ke generování křížových odkazů ve formátu HTML.
+### usr/bin/lkk
 
-Význam sloupců je následující:
+Spouštěč „lkk“, skript, který vzniká kopií [skripty/lkk/lkk](../skripty/lkk/lkk).
 
-1. Typ záznamu (KAPITOLA, SEKCE či PODSEKCE; v budoucnu přibudou další).
-2. ID (např. číslo kapitoly)
-3. číslo řádku, ze kterého záznam pochází
-4. text (např. název kapitoly)
-5. středník (jen pro ukončení a kontrolu korektního zpracování)
+### usr/share/bash-completion/completions/lkk
 
-### soubory\_prekladu/fragmenty.tsv
+Definice automatického doplňování pro příkaz „lkk“. Soubor vzniká kopií [skripty/lkk/bash-doplnovani.sh](../skripty/lkk/bash-doplnovani.sh).
 
-Do tohoto souboru se zapisuje seznam kapitol a dodatků v pořadí, v jakém mají
-být zapsány na výstup.
+### usr/share/doc/lkk/copyright
 
-Význam sloupců je následující:
+Licenční informace pro balíček. Soubor vzniká kopií [COPYRIGHT-DEB](../COPYRIGHT-DEB).
 
-1. Typ („kapitoly“ nebo „dodatky“).
-2. ID kapitoly či dodatku.
-3. Název kapitoly či dodatku.
-4. ID předchozí kapitoly či dodatku (nebo „NULL“).
-5. Název předchozí kapitoly či dodatku (nebo „NULL“).
-6. ID následující kapitoly či dodatku (nebo „NULL“).
-7. Název následující kapitoly či dodatku (nebo „NULL“).
-8. Číslo kapitoly či dodatku (odpovídá číslu řádku).
-9. Seřazený výčet štítků ve formátu „{a}{b}...“, nebo „NULL“, pokud kapitola štítky nemá.
+### usr/share/lkk/awkvolby.awk
 
-### soubory\_prekladu/postprocess.tsv
+Vnitřní pomocný skript pro analýzu voleb zadaných na příkazové řádce. Soubor vzniká kopií [skripty/lkk/awkvolby.awk](../skripty/lkk/awkvolby.awk) a používá se v lkk.awk.
 
-Předtiskové korekce, které mají být aplikovány. Korekce se aplikují formou
-úplné náhrady původního řádku za nový a jsou specifické pouze pro jeden
-výstupní formát (tzn. korekce pro výstup na papír formátu A5 se neuplatní
-při výstupu na papír formátu A4).
+### usr/share/lkk/lkk.awk
 
-Význam sloupců je následující.
+Vnitřní pomocný skript, který vykonává hlavní činnost spouštěče lkk. Soubor vzniká z [skripty/lkk/lkk.awk](../skripty/lkk/lkk.awk), kde se značka „\{\{JMÉNO VERZE\}\}“ nahradí za jméno sestavení.
 
-1. ID náhrady (jedinečné číslo)
-2. ID formátu (např. „pdf-b5“; musí přesně odpovídat)
-3. ID kapitoly (např. „make“)
-4. původní řádek
-5. nový řádek
+### usr/share/lkk/skripty/\*
 
-### soubory\_prekladu/postprocess.log
+Pomocné skripty vyextrahované ze zdrojových kódů kapitol skriptem [skripty/extrakce/pomocne-funkce.awk](../skripty/extrakce/pomocne-funkce.awk). Zvláštním případem je skript „pomocne-funkce“, který jako jediný není přímo spustitelný, ale obsahuje definice pomocných funkcí.
 
-Do tohoto souboru se zapisuje seznam proběhlých korekcí s počtem provedených
-náhrad. Má umožnit odhalit zastaralé korekce či korekce, které omylem zasáhly
-nechtěný řádek.
+## Obsah adresáře „soubory\_prekladu/html“ (formát HTML)
 
-## Konfigurace
+### \* (soubory bez přípony)
 
-To, které kapitoly a v jakém pořadí budou vygenerovány, se zaznamená do souboru
-„soubory\_prekladu/poradi-kapitol.lst“; tento soubor se získá následovně:
+Tyto mezisoubory vznikají překladem zdrojových kódů jednotlivých kapitol skriptem [skripty/preklad/do_html.awk](../skripty/preklad/do_html.awk) a později se z nich sestavují úplné HTML soubory pomocí skriptu [skripty/plneni-sablon/kapitola.awk](../skripty/plneni-sablon/kapitola.awk) a šablony [formaty/html/sablona.htm](../formaty/html/sablona.htm).
 
-1. Existuje-li soubor poradi-kapitol.lst, zkopíruje se ten.
-2. Existuje-li soubor poradi-kapitol.vychozi.lst, zkopíruje se ten.
-3. Jinak se seřadí podle abecedy všechny kapitoly a za ně všechny dodatky podle Makefile, s výjimkou předmluvy, která se umístí jako první, a použije se výsledek.
+### kap-copys.htm
 
-Druhým místem ke konfiguraci je soubor „konfig.ini“, který v současnosti
-obsahuje pouze sekci [Obrázky], která určuje šířku vložených obrázků
-ve formátu PDF. (Zadává se ve formátu, v jakém ji přijme zdrojový kód LaTeXu.)
+Obsahuje licenční hlavičky kapitol, ve formátu HTML. Generuje se skriptem [skripty/extrakce/copyrighty.awk](../skripty/extrakce/copyrighty.awk) ze zdrojových souborů kapitol a dodatků.
 
-### Předtiskové korekce
+### obr-copys.htm
 
-Zmínit je potřeba také předtiskové korekce. Ty se zapisují do souboru
-„postprocess.tsv“, kde jsou následující sloupce:
+Obsahuje licenční informace k obrázkům, ve formátu HTML. Generuje se skriptem [skripty/extrakce/copykobr.awk](../skripty/extrakce/copykobr.awk) ze souboru [COPYRIGHT](../COPYRIGHT).
 
+## Obsah adresáře „soubory\_prekladu/log“ (formát LOG)
 
-Při překladu se pak u dané kapitoly v daném formátu vyhledají řádky,
-které se *přesně* shodují s uvedeným „původním řádkem“ a ty se nahradí
-uvedeným „novým řádkem“.
+Tento adresář obsahuje pro každou kapitolu či dodatek dva soubory:
 
-Pozor! Mechanismus překladu přijme soubor „postprocess.tsv“ jen poprvé;
-pokud ho změníte, musíte smazat soubor „soubory\_prekladu/postprocess.tsv“,
-aby se uplatnily nové korekce.
+* Soubor bez přípony (např. „awk“) vzniká skriptem [skripty/preklad/do\_logu.awk](../skripty/preklad/do\_logu.awk) ze zdrojového kódu kapitoly či dodatku. Obsahuje čitelný záznam o volání jednotlivých funkcí při překladu, což umožňuje pohodlné ladění mechanismu překladu.
+* Soubor s příponou „kap“ (např. „awk.kap“) vzniká ze souboru bez přípony, jeho obalením pomocí šablony [formaty/log/sablona](../formaty/log/sablona), které provede skript [skripty/plneni-sablon/kapitola.awk](../skripty/plneni-sablon/kapitola.awk).
 
-## Jak přidat novou kapitolu
+## Obsah adresáře „soubory\_prekladu/pdf-spolecne“ (formáty PDF)
 
-Toto je poměrně snadný úkol.
+### \*.kap
 
-1. Vytvořte ze šablony [\_sablona.md](../kapitoly/_sablona.md) nový zdrojový soubor v adresáři „kapitoly“. Jeho název bez přípony „.md“ bude sloužit jako ID kapitoly.
-2. Doplňte do souboru název kapitoly (na 2 místa) a vlastní copyright do hlavičky (původní ponechejte).
-3. ID nové kapitoly doplňte v Makefilu do proměnné „VSECHNY\_KAPITOLY“.
-4. ID nové kapitoly doplňte jako nový řádek do souboru „poradi-kapitol.lst“, aby se kapitola generovala na výstup.
-5. Zkuste vše přeložit příkazem „make“ a zkontrolujte, že se nová kapitola přeložila.
+Obsahuje jednotlivé kapitoly a dodatky přeložené skriptem [skripty/preklad/do\_pdf.awk](../skripty/preklad/do\_pdf.awk) ze zdrojového kódu kapitoly či dodatku do mezistavu, který projde postprocessingem a bude spojen do kompletního zdrojového kódu knihy ve formátu LaTeX (pro každý formát papíru zvlášť).
 
-Pak už můžete novou kapitolu začít plnit obsahem.
+### qr.eps
 
-## Jak přidat podporu nového znaku
+Obsahuje QR kód pro použití v knize. Generuje se v Makefile příkazem „qrencode“.
 
-1. Zjistěte, jak daný znak vysázet v LaTeXu.
-2. Ve skriptu [do\_latexu.awk](../skripty/do_latexu.awk) ve funkci ZpracujZnak() přidejte novou větev přepínače pro obsluhu vámi zvoleného znaku.
-3. Pokud daný znak vyžaduje zvláštní zacházení ve formátu HTML, učiňte totéž i ve skriptu [do\_html.awk](../skripty/do_html.awk), většinu znaků však bude možno do HTML zkopírovat přímo.
-4. Do speciální kapitoly [\_ukazka](../kapitoly/_ukazka.md) doplňte nový znak do seznamu podporovaných znaků.
-5. Pokud kapitola „\_ukazka“ není uvedena v souboru „poradi-kapitol.lst“, doplňte ji tam.
-6. Zkuste přeložit všechny výstupní formáty příkazem „make“ a zkontrolujte překlad kapitoly „Ukázka“, zda v každém výstupním formátu, kromě formátu LOG, obsahuje korektně vysázený nový znak.
+### \_obrazky/\*
 
-Pokud má být nový znak zadávaný HTML entitou nebo jiným nestandardním způsobem,
-budete muset navíc navštívit skript [hlavni.awk](../skripty/hlavni.awk)
-a doplnit interpretaci nové entity do funkce FormatovatRadek(), případně
-i do funkce ZpracujZnaky(), pokud má být entita interpretována v kontextech
-nepodporujících formátování jako např. URL adresy.
--->
+Obsahuje soubory obrázků pro použití v knize, předzpracované podle konfigurace.
+V této verzi předzpracování spočívá především v převodu do stupňů šedi a převodu
+vektorových obrázků z SVG do PDF (XeLaTeX vložit SVG přímo neumí).
+
+## Obsah adresáře „soubory\_prekladu/pdf-\*“ (PDF, konkrétní formáty papíru)
+
+### \*.kap
+
+Obsahuje jednotlivé kapitoly a dodatky po průchodu postprocessingem.
+
+### \_all.kap
+
+Obsahuje soubory \*.kap pospojované za sebe v pořadí podle *fragmenty.tsv*.
+
+### kniha.tex
+
+Vznikne z \_all.kap pomocí skriptu [skripty/plneni-sablon/specialni.awk](../skripty/plneni-sablon/specialni.awk) a šablony [formaty/pdf/sablona.tex](../formaty/pdf/sablona.tex).
+
+Dále tento adresář obsahuje pomocné soubory XeLaTeXu a výstup ve formátu PDF („kniha.pdf“).
+
+### skripty
+
+Symbolický odkaz na adresář „skripty“. Kvůli spouštění některých skriptů.
+
+## Konfigurační soubory
+
+### poradi-kapitol.lst a poradi-kapitol.vychozi.lst
+
+Úplný seznam překládaných kapitol a dodatků je uveden v proměnných
+*VSECHNY\_KAPITOLY* a *VSECHNY\_DODATKY* v [Makefile](../Makefile).
+Mechanismus překladu však potřebuje vědět, které z nich a v jakém pořadí
+patří na výstup. To se určí jedním ze tří způsobů:
+
+* Pokud v hlavním adresáři existuje soubor „poradi-kapitol.lst“, vezmou se z něj neprázdné řádky nezačínající znakem „#“ a každý se interpretuje jako ID dodatku či kapitoly. (Tento soubor je uvedený v .gitignore, takže se nedostane do repozitáře.)
+* Jinak, pokud v hlavním adresáři existuje soubor „poradi-kapitol.vychozi.lst“, zpracuje se stejným způsobem. (Tento soubor se na rozdíl od předchozího do repozitáře ukládá.)
+* Jinak se vezmou všechny dodatky a kapitoly podle Makefile.
+
+Poznámka: jako první by měla být v každém případě Předmluva („predmluva“);
+není to sice vyžadováno, ale překlad bez splnění tohoto předpokladu jsem nikdy netestoval/a.
+
+### konfig.ini
+
+Soubor v klasickém formátu „INI-file“. Dělí se na tři sekce:
+
+*\[Filtry\]*
+
+* **../obrazky/***název* – Určuje filtry příkazu „convert“, které se použijí při předzpracování daného bitmapového obrázku pro vložení do PDF. Nelze aplikovat na vektorové obrázky.
+
+*\[Obrázky\]*
+
+* **../obrazky/***název* – Určuje šířku obrázku při vložení do formátu PDF. Šířka se uvádí v takovém formátu, aby ji bylo možno použít v LaTeXu v příkazu \\includegraphics; může obsahovat i délkové registry (např. \\textwidth).
+
+*\[Adresy\]*
+
+* **do-qr** – Text, který se má zakódovat do QR kódu.

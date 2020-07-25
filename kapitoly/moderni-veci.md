@@ -168,17 +168,17 @@ sudo apt-get install espeak
 ### URL encode
 
 *# zakódovat konkrétní text (např. cestu)(silné kódování/slabé kódování)*<br>
-**printf %s "**{*text*}**" \| perl -CSLA -n -l12 -0 -Mstrict -MEnglish -MURI::Escape -e 'print(uri_escape_utf8($ARG));'**<br>
+**printf %s "**{*text*}**" \| perl -CSLA -n -l12 -0 -Mstrict -MEnglish -MURI::Escape -e 'print(uri\_escape\_utf8($ARG));'**<br>
 ?
 <!--
-**printf %s "**{*text*}**" \| perl -CSLA -n -l12 -0 -Mstrict -MEnglish -MURI::Escape -e 'print(uri_escape_utf8($ARG, "^][A-Za-z0-9._~:/?#-@!\\$&'\\''()\*+,;=-"));'**
+**printf %s "**{*text*}**" \| perl -CSLA -n -l12 -0 -Mstrict -MEnglish -MURI::Escape -e 'print(uri\_escape\_utf8($ARG, "^][A-Za-z0-9._~:/?#-@!\\$&'\\''()\*+,;=-"));'**
 -->
 
 *# zakódovat vstup po řádkách*<br>
-{*vstup*} **\| perl -CSLA -n -l12 -012 -Mstrict -MEnglish -MURI::Escape -e 'print(uri_escape_utf8($ARG));'**
+{*vstup*} **\| perl -CSLA -n -l12 -012 -Mstrict -MEnglish -MURI::Escape -e 'print(uri\_escape\_utf8($ARG));'**
 
 *# zakódovat vstup po záznamech ukončených nulovým bajtem*<br>
-{*vstup*} **\| perl -CSLA -n -l0 -0 -Mstrict -MEnglish -MURI::Escape -e 'print(uri_escape_utf8($ARG));'**
+{*vstup*} **\| perl -CSLA -n -l0 -0 -Mstrict -MEnglish -MURI::Escape -e 'print(uri\_escape\_utf8($ARG));'**
 
 *# dekódovat konkrétní text*<br>
 ?

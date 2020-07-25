@@ -299,29 +299,23 @@ $(VYSTUP_PREKLADU)/log/index.log: \
 # PDF (společná část):
 # ============================================================================
 
-# 1A. kapitoly/{kapitola}.md => soubory_prekladu/pdf-spolecne/{kapitola}
+# 1A. kapitoly/{kapitola}.md => soubory_prekladu/pdf-spolecne/{kapitola}.kap
 # ----------------------------------------------------------------------------
-$(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%): \
-  $(SOUBORY_PREKLADU)/pdf-spolecne/%: \
+$(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap): \
+  $(SOUBORY_PREKLADU)/pdf-spolecne/%.kap: \
   kapitoly/%.md $(SOUBORY_PREKLADU)/osnova/%.tsv skripty/preklad/do_latexu.awk skripty/preklad/hlavni.awk skripty/utility.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(dir $@)
 	$(AWK) -v FRAGMENTY_TSV=$(SOUBORY_PREKLADU)/fragmenty.tsv -f skripty/preklad/do_latexu.awk $< > $@
 
-# 1B. dodatky/{dodatek}.md => soubory_prekladu/pdf-spolecne/{dodatek}
+# 1B. dodatky/{dodatek}.md => soubory_prekladu/pdf-spolecne/{dodatek}.kap
 # ----------------------------------------------------------------------------
-$(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%): \
-  $(SOUBORY_PREKLADU)/pdf-spolecne/%: \
+$(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap): \
+  $(SOUBORY_PREKLADU)/pdf-spolecne/%.kap: \
   dodatky/%.md $(SOUBORY_PREKLADU)/osnova/%.tsv skripty/preklad/do_latexu.awk skripty/preklad/hlavni.awk skripty/utility.awk $(SOUBORY_PREKLADU)/fragmenty.tsv
 	mkdir -pv $(dir $@)
 	$(AWK) -v FRAGMENTY_TSV=$(SOUBORY_PREKLADU)/fragmenty.tsv -f skripty/preklad/do_latexu.awk $< > $@
 
-# 2. soubory_prekladu/pdf-spolecne/{id} => soubory_prekladu/pdf-spolecne/{id}.kap
-# ----------------------------------------------------------------------------
-$(VSECHNY_KAPITOLY_A_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/%.kap): \
-  %.kap: \
-  %
-	cat $< >$@
-	#$(AWK) -f skripty/plneni-sablon/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDKAPITOLY=$(basename $(notdir $@)) -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v TELOKAPITOLY=$< formaty/pdf/sablona.tex > $@
+# 2. (zrušeno)
 
 # 3. obrazky/{obrazek} => soubory_prekladu/pdf-spolecne/_obrazky/{obrazek}
 # ----------------------------------------------------------------------------
