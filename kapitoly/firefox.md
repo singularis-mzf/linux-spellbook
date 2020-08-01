@@ -115,7 +115,9 @@ TODO: [ ] TEST
 *# zakázat stránkám nastavovat barvy textu a pozadí*<br>
 **user\_pref("browser.display.document\_color\_use", 2);**
 
-
+*# zapnout WebRender místo Gecko*<br>
+**user\_pref("gfx.webrender.enabled", true);**<br>
+**user\_pref("gfx.webrender.all", true);**
 
 ## Parametry příkazů
 ![ve výstavbě](../obrazky/ve-vystavbe.png)

@@ -170,19 +170,24 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 <neodsadit>Všechen software potřebný k sestavení projektu je svobodný.
 Pokud některá kapitola odkazuje na nesvobodný software, vždy na to výslovně upozorní.
 
-## Aktuální poznámka k verzi „vanilková příchuť 1.10 Františka Fučíková“
+## Aktuální poznámka k verzi „vanilková příchuť 1.11 Gustav Glocový“
 
-Verze 1.10, jménem Františka Fučíková, přináší novou kapitolu Proměnné prostředí a interpretu,
-jejíž sestavení a uspořádání bylo velmi náročné, ale zato je nyní velice povedená.
+Verze 1.11, jménem Gustav Glocový, přináší novou kapitolu Správa uživatelských účtů.
 
-Hlavní novinkou je však nový parametr \-\-funkce u spouštěče „lkk“, který umožňuje
-importovat konkrétní jednu nebo všechny pomocné funkce snáze než v předchozích verzích.
-Díky tomu se jeho používání pomalu stává praktickým.
+Z PDF verzí byl vypuštěn Přehled podle štítků, protože se ukázal jako velmi nepraktický
+a nestál za ten papír.
 
-Vnitřní novinkou mechanismu překladu je také nový způsob zpracování pomocného souboru
-fragmenty.tsv, který se nově načítá do paměti.
+V repozitáři také proběhla nějaká práce na dokumentaci mechanismu překladu,
+ale tato dokumentace je stále rozepsaná.
 
-Vydání verze 1.11, jménem Gustav Glocový, očekávám 1. srpna 2020.
+Vydání verze 1.12, jménem Hana Hlavní, očekávám v průběhu září 2020.
+
+Od 1. srpna 2020 zahajuji v nové větvi „v2-beta“ vývoj verze vanilková příchuť 2.0, jejíž jméno bude ještě ohlášeno
+a která bude cílena na Ubuntu 20.04 Focal Fossa a jeho deriváty. Vydání této verze očekávám v průběhu října 2020,
+do té doby budu muset vyzkoušet velké množství zaklínadel a tvrzení a ověřit, zda jsou v nové verzi Ubuntu stále
+platná. Po vydání verze 2.0 přejde větev 1.x do stádia dlouhodobé pasivní údržby a již nebude aktivně vyvíjena,
+ale nahlášené chyby budou opravovány a podle potřeby vydávány nové (již bezejmenné) verze. Větev 1.x bude
+tímto způsobem udržována nejpozději do 1. března 2023.
 
 &nbsp;
 

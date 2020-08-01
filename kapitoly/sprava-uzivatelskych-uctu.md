@@ -17,6 +17,7 @@ Poznámky:
 [ ] Patří do této kapitoly automatické přihlašování? Nebo patří spíš do kapitoly Systém?
 Nebo udělat samostatnou kapitolu Zavádění a přihlašování?
 [ ] Co znamenají uživatelé guest a nobody?
+[ ] Prozkoumat účet „Host“ (guest) a možnosti přihlášení k němu.
 
 ⊨
 -->
@@ -171,7 +172,8 @@ gawk -F : '$3 == 0 || $3 &gt;= 1000 {print $1;}'** [**\| LC\_ALL=C.utf8 sort**]<
 **id -G** {*uživatel*} **\| sed -E 's/\\s.\*//'**
 
 *# získat **avatar***<br>
-?
+*// Avatar čtvercový obrázek je ve formátu PNG. Počet pixelů tvořících stranu čtverce může být různý.*<br>
+[**sudo**] **cp ~**{*uživatel*}**/.face** {*cíl.png*}
 
 ### Změnit nastavení uživatelského účtu (kromě hesla)
 
@@ -183,12 +185,7 @@ gawk -F : '$3 == 0 || $3 &gt;= 1000 {print $1;}'** [**\| LC\_ALL=C.utf8 sort**]<
 **sudo usermod -m -d** {*/nový/adresář*} {*uživatelské-jméno*}
 
 *# **avatar***<br>
-?
-<!--
-Vzít obrázek, zkonvertovat na 480x480 PNG 8bit RGB a uložit do souboru
-~/.face. Změna se projeví okamžitě.
-
--->
+**convert** {*obrázek*} **-gravity center -crop "$(identify -format "%[fx:min(w,h)]x%[fx:min(w,h)]"** {*obrázek*}**)" +repage -delete -1 png24:- \|** [**sudo**] **tee ~**{*uživatel*}**/.face**
 
 *# **příkazový interpret** (shell)*<br>
 **sudo chsh** [**-s** {*/cesta/k/novému/shellu*}] {*uživatel*}<br>
@@ -228,7 +225,8 @@ Vzít obrázek, zkonvertovat na 480x480 PNG 8bit RGB a uložit do souboru
 **getent passwd "$(whoami)" \| cut -d : -f 7**
 
 *# získat **avatar***<br>
-?
+*// Avatar čtvercový obrázek je ve formátu PNG. Počet pixelů tvořících stranu čtverce může být různý.*<br>
+**cp ~/.face** {*cíl.png*}
 
 *# **výchozí skupina** (názvem/GID)*<br>
 **id -Gn \| sed -E 's/\\s.\*//'**<br>
@@ -243,10 +241,17 @@ Vzít obrázek, zkonvertovat na 480x480 PNG 8bit RGB a uložit do souboru
 
 *# příkazový **interpret** (pro člověka)*<br>
 **chsh** [**-s** {*/cesta/k/novému/interpretu*}]<br>
-!: Na výzvu zadejte svoje heslo a potvrďte Enter.
+!: Na výzvu zadejte svoje heslo a potvrďte klávesou Enter.
 
 *# změnit **avatar***<br>
-?
+*// Pozor, pokud konverze obrázku selže, uvedený příkaz smaže váš současný avatar bez náhrady.*<br>
+**convert** {*obrázek*} **-gravity center -crop "$(identify -format "%[fx:min(w,h)]x%[fx:min(w,h)]"** {*obrázek*}**)" +repage -delete -1 png24:- &gt;~/.face**
+
+*# změnit **celé jméno** (musí povolit správce)*<br>
+*// Aby uvedený příkaz fungoval, musí superuživatel v souboru „/etc/login.defs“ do konfigurační volby „CHFN\_RESTRICT“ doplnit písmeno „f“ nebo ji nastavit na „no“. I bez toho ovšem můžete změnit svoje celé jméno GUI programem „mugshot“ (nutno doinstalovat stejnojmenný balíček).*<br>
+^^**sudo sed -iE '/^CHFN\_RESTRICT/s/\\&lt;rwh\\&gt;/f&amp;/' /etc/login.defs**<br>
+**chfn -f "**{*Nové celé jméno*}**"**<br>
+!: Na výzvu zadejte svoje heslo a potvrďte klávesou Enter.
 
 ## Zaklínadla (správa skupin)
 
@@ -288,10 +293,10 @@ Vzít obrázek, zkonvertovat na 480x480 PNG 8bit RGB a uložit do souboru
 **sudo deluser** {*uživatel*} {*skupina*}
 
 *# **vypsat** účty ve skupině (po řádcích)*<br>
-?
+**getent group** {*skupina*} **&gt;/dev/null &amp;&amp; (gid=$(getent group** {*skupina*} **\| cut -d : -f 3); sed -E "/^([^<nic>:]\*:)\{3\}$gid:/!d;s/:.\*//" /etc/passwd; getent group $gid \| cut -d : -f 4 \| sed -E '/^$/d;s/,/\\n/g') \| LC\_ALL=C.utf8 sort -u**
 <!--
-**getent group** {*skupina*} **\| sed -E 's/^([<nic>^:]\*:){3}([<nic>^:]\*).\*$/\\2/;/^$/d;s/,/\\n/g'** [**\| LC\_ALL=C.utf8 sort**]
-[ ] CHYBA: Nevypisuje účty, pro které je skupina výchozí skupinou! (Použít members?)
+Problém: vetšina příkazů nevypisuje výchozí skupiny.
+[ ] Vyčlenit do pomocné funkce!
 -->
 
 *# je účet členem skupiny? (podle názvu/podle GID)(uspěje, pokud ano)*<br>
@@ -402,6 +407,7 @@ Všechny použité nástroje jsou základními součástmi Ubuntu přítomnými 
 * [Wikipedie: Uživatelský účet v Unixu](https://cs.wikipedia.org/wiki/U%C5%BEivatelsk%C3%BD\_%C3%BA%C4%8Det\_v\_Unixu)
 * [YouTube: Linux Add, Delete and Modify Users](https://www.youtube.com/watch?v=DSDsaDnFpWI) (anglicky)
 * [YouTube: Linux Tip: How to add and delete user accounts](https://www.youtube.com/watch?v=933Uo9T4kfk) (anglicky)
+* [HowTo: Linux Add User To Group](https://www.hostingadvice.com/how-to/linux-add-user-to-group/) (anglicky)
 * [TL;DR stránka „adduser“](https://github.com/tldr-pages/tldr/blob/master/pages/linux/adduser.md) (anglicky)
 
 !ÚzkýRežim: vyp

@@ -12,8 +12,6 @@
 # Cílem je umožnit ruční doladění sazby při zachování upravitelnosti a automatického překladu.
 # Formát je popsán ve skriptu skripty/postprocess.awk.
 
-# Číslování: {A}{B}{C}, kde: A je hlavní číslo náhrady (od 1), B je pomocné číslo (normálně 0) a C je identifikace formátu (0 pro A4, 1 pro B5)
-
 100
 pdf-a4.*
 awk
@@ -151,3 +149,15 @@ pdf-b5.*
 sed
 \item{}Malé textové soubory je často výhodné zpracovat najednou zadáním parametru \quotedblbase{}{-}z\textquotedblleft{}. Když vstupní soubor neobsahuje nulový bajt, sed v~takovém případě načte celý soubor jako jeden záznam.
 \item{}Malé textové soubory je často výhodné zpracovat najednou zadáním parametru \quotedblbase{}{-}z\textquotedblleft{}. Když vstup\-ní soubor neobsahuje nulový bajt, sed v~takovém případě načte celý soubor jako jeden záznam.
+
+2000
+pdf-a4.*
+sprava-uzivatelskych-uctu
+\radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{\dopln{přihlašovací{-}jméno}:{\moznyzlom}x:\dopln{UID}:{\moznyzlom}\dopln{GID{-}výchozí{-}skupiny}:{\moznyzlom}\dopln{celé jméno}[,\dopln{další údaje}\volitelnykonec{}:\dopln{/domovský/adresář}\volitelnyzacatek{}:\dopln{/výchozí/shell}\volitelnykonec{}}%
+\radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{\dopln{přihlašovací{-}jméno}:{\moznyzlom}x:\dopln{UID}:{\moznyzlom}\dopln{GID{-}výchozí{-}skupiny}:{\moznyzlom}\dopln{celé jméno}[,\dopln{další údaje}\volitelnykonec{}:\dopln{/domovský/adresář}{\moznyzlom}\volitelnyzacatek{}:{\moznyzlom}\dopln{/výchozí/shell}\volitelnykonec{}}%
+
+2001
+pdf-b5.*
+sprava-uzivatelskych-uctu
+\radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{\dopln{přihlašovací{-}jméno}:{\moznyzlom}x:\dopln{UID}:{\moznyzlom}\dopln{GID{-}výchozí{-}skupiny}:{\moznyzlom}\dopln{celé jméno}[,\dopln{další údaje}\volitelnykonec{}:\dopln{/domovský/adresář}\volitelnyzacatek{}:\dopln{/výchozí/shell}\volitelnykonec{}}%
+\radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{\dopln{přihlašovací{-}jméno}:{\moznyzlom}x:\dopln{UID}:{\moznyzlom}\dopln{GID{-}výchozí{-}skupiny}:{\moznyzlom}\dopln{celé jméno}[,\dopln{další údaje}\volitelnykonec{}:\dopln{/domovský/adresář}{\moznyzlom}\volitelnyzacatek{}:\dopln{/výchozí/shell}\volitelnykonec{}}%

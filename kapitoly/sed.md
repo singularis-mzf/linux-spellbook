@@ -339,6 +339,7 @@ GNU sed je základní součástí Ubuntu přítomnou i v minimální instalaci
 * [Oficiální manuál](https://www.gnu.org/software/sed/manual/sed.html) (anglicky)
 * [An Introduction and Tutorial by Bruce Barnett](https://www.grymoire.com/Unix/Sed.html) (anglicky)
 * [YouTube: Understanding How Sed Works](https://www.youtube.com/playlist?list=PLUQzXLQ6jvHL-Kw9I5H6dvFHal-ynWSTA) (anglicky)
+* [The Sed $HOME](http://sed.sourceforge.net/) (anglicky)
 * [Computer Hope: Linux sed Command Help and Examples](https://www.computerhope.com/unix/used.htm) (anglicky)
 * [Oficiální stránka GNU sed](https://www.gnu.org/software/sed/) (anglicky)
 * [Balíček](https://packages.ubuntu.com/bionic/sed) (anglicky)

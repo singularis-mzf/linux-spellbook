@@ -18,6 +18,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 * „Zpracování binárních souborů“ (md5sum, uuencode, base64, analýzy, konverze a další)
 * „Pevné a symbolické odkazy“
+* „PDF“ (dělení, slučování, operace po stránkách, transformace, konverze apod.)
 * „Unicode a emotikony“ („mapa znaků“, vzorníky a různé symboly)
 * „X (správce oken)“ (práce s okny, se schránkou, oznámení a další)
 * „Zpracování obrázků“ (ImageMagick, konverze RAW z fotoaparátů, zatím asi bez animovaných gifů)
@@ -27,7 +28,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 * „Šifrování a kryptografie“ (gpg, šifrování archivů, elektronické podpisy, HTTPS certifikáty)
 * „Firewall“ (asi hlavně iptables)
 * „Jádro a GRUB“ (konfigurace, dualboot, nastavení grafického pozadí)
-* „Bash“ (syntaxe, rozvoj proměnných, exec, přesměrování, roury a další)
+* „Bash“ (syntaxe, exec, přesměrování, roury a další)
 * „LaTeX“ (základní struktura dokumentu, standardní značky, překlad do PDF, důležité balíčky)
 * „SQL“ (SQLite, MySQL, MariaDB; všechno možné)
 * „ASCII art“ (banner, toilet a další)
@@ -35,7 +36,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 * „Wine“ (parametry, konfigurace, zkušenosti, wine-prefixy apod.)
 * „VirtualBox“ (ovládání z terminálu)
 * „Záznam obrazovky“ (maim, ffmpeg a další)
-* „Správa balíčků 2“ (apt-src, apt-mirror, aptly)
+* „Správa balíčků 2“ (apt-src, aptly apod.)
 * „Matematické výpočty“ (bc, dc, expr apod.)
 * „Firefox“ (zejm. konfigurační volby a volání z terminálu)
 
