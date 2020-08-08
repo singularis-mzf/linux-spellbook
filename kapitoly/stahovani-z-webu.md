@@ -1,6 +1,6 @@
 <!--
 
-Linux Kniha kouzel, kapitola Stahování webových stránek
+Linux Kniha kouzel, kapitola Stahování z webu
 Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -17,7 +17,7 @@ Poznámky:
 ⊨
 -->
 
-# Stahování webových stránek
+# Stahování z webu
 
 !Štítky: {tematický okruh}
 !FixaceIkon: 1754

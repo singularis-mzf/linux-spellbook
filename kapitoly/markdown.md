@@ -253,10 +253,10 @@ Velmi obsáhlým a formálně přesným zdrojem je „Specifikace GitHub Flavor
 * [Video: Markdown Tutorial](https://www.youtube.com/watch?v=6A5EpqqDOdk) (anglicky)
 * [Video: How to Write MarkDown](https://www.youtube.com/watch?v=eJojC3lSkwg) (anglicky)
 * [Specifikace GitHub Flavored Markdown](https://github.github.com/gfm/) (anglicky)
-* [Manuálová stránka o Markdownu](http://manpages.ubuntu.com/manpages/bionic/en/man7/markdown.7.html) (anglicky)
-* [Manuálová stránka příkazu markdown](http://manpages.ubuntu.com/manpages/bionic/en/man1/markdown.1.html) (anglicky)
-* [Balíček pandoc](https://packages.ubuntu.com/bionic/pandoc) (anglicky)
-* [Balíček retext](https://packages.ubuntu.com/bionic/retext) (anglicky)
+* [Manuálová stránka o Markdownu](http://manpages.ubuntu.com/manpages/focal/en/man7/markdown.7.html) (anglicky)
+* [Manuálová stránka příkazu markdown](http://manpages.ubuntu.com/manpages/focal/en/man1/markdown.1.html) (anglicky)
+* [Balíček pandoc](https://packages.ubuntu.com/focal/pandoc) (anglicky)
+* [Balíček retext](https://packages.ubuntu.com/focal/retext) (anglicky)
 * [Balíček Remarkable v ALUR](https://aur.archlinux.org/packages/remarkable/) (anglicky)
 
 !ÚzkýRežim: vyp

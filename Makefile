@@ -39,7 +39,7 @@ VSECHNY_KAPITOLY += hledani-souboru konverze-formatu latex lkk make markdown mod
 # N, O, P, Q, R, S
 VSECHNY_KAPITOLY += odkazy pdf perl planovani-uloh prace-s-archivy promenne regularni-vyrazy
 # S
-VSECHNY_KAPITOLY += sed soubory-a-adresare sprava-balicku sprava-balicku-2 sprava-procesu sprava-uzivatelskych-uctu stahovani-videi stahovani-web system
+VSECHNY_KAPITOLY += sed soubory-a-adresare sprava-balicku sprava-balicku-2 sprava-procesu sprava-uzivatelskych-uctu stahovani-videi stahovani-z-webu system
 # T, U, V, W, X, Y, Z
 VSECHNY_KAPITOLY += unicode uzivatelska-rozhrani vim virtualbox wine x
 # Z

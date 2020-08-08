@@ -15,7 +15,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 „Linux: Kniha kouzel“ je open source sbírka velmi krátkých řešených příkladů pro příkazovou řádku/příkazový řádek systému Linux, především distribuce Ubuntu. V současnosti je dostupná ve formátu HTML pro zobrazení na počítači a ve formátu PDF pro tisk na papír.
 
-Verze *vanilková příchuť 1.11 Gustav Glocový*, je cílena na *Ubuntu 18.04 Bionic Beaver* a jeho deriváty.
+Verze *vanilková příchuť 2.0* bude cílena na *Ubuntu 20.04 Focal Fossa* a jeho deriváty.
 
 Příručka podléhá licenci [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 Podrobné údaje o autorství zdrojových souborů jsou uvedeny v komentářích v jejich záhlaví;
@@ -87,33 +87,38 @@ Chcete-li si sám/a vybrat, které kapitoly se sestaví do výstupního adresá�
 Píše se jedno id kapitoly či dodatku na řádek (id je název souboru bez adresářové cesty a bez přípony)
 a kapitoly ani dodatky se nesmějí opakovat.
 
-## Stav vývoje kapitol (podle ID)
+## Přechod z Ubuntu 18.04
+
+| ID | Název kapitoly | % | Stav |
+| :--- | :--- | ---: | :--- |
+| [markdown](kapitoly/markdown.md) | Markdown | 100% | schválena k vydání |
+| [regularni-vyrazy](kapitoly/regularni-vyrazy.md) | Regulární výrazy | 100% | schválena k vydání |
+| [awk](kapitoly/awk.md) | AWK | 0% | ve frontě |
+| [barvy-a-titulek](kapitoly/barvy-a-titulek.md) | Barvy, titulek a výzva terminálu | 0% | ve frontě |
+| [datum-cas-kalendar](kapitoly/datum-cas-kalendar.md) | Datum, čas a kalendář | 0% | ve frontě |
+| [diskove-oddily](kapitoly/diskove-oddily.md) | Diskové oddíly | 0% | ve frontě |
+| [docker](kapitoly/docker.md) | Docker | 0% | bude stažena |
+| [git](kapitoly/git.md) | Git | 0% | ve frontě |
+| [hledani-souboru](kapitoly/hledani-souboru.md) | Hledání souborů | 0% | ve frontě |
+| [make](kapitoly/make.md) | Make | 0% | ve frontě |
+| [planovani-uloh](kapitoly/planovani-uloh.md) | Plánování úloh | 0% | ve frontě |
+| [prace-s-archivy](kapitoly/prace-s-archivy.md) | Práce s archivy | 0% | ve frontě |
+| [promenne](kapitoly/promenne.md) | Proměnné prostředí a interpretu | 0% | ve frontě |
+| [sed](kapitoly/sed.md) | Sed | 0% | ve frontě |
+| [soubory-a-adresare](kapitoly/soubory-a-adresare.md) | Soubory a adresáře | 0% | ve frontě |
+| [sprava-balicku](kapitoly/sprava-balicku.md) | Správa balíčků | 0% | ve frontě |
+| [sprava-procesu](kapitoly/sprava-procesu) | Správa procesů | 0% | ve frontě |
+| [sprava-uzivatelskych-uctu](kapitoly/sprava-uzivatelskych-uctu.md) | Správa uživatelských účtů | 0% | ve frontě |
+| [stahovani-videi](kapitoly/stahovani-videi.md) | Stahování videí | 0% | ve frontě |
+| [system](kapitoly/system.md) | Systém | 0% | ve frontě |
+| [vim](kapitoly/vim.md) | Vim | 0% | ve frontě |
+| [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) | Zpracování textových souborů | 0% | ve frontě |
+| [zpracovani-videa-a-zvuku](kapitoly/zpracovani-videa-a-zvuku.md) | Zpracování videa a zvuku | 0% | ve frontě |
+
+## Stav vývoje budoucích kapitol (podle ID)
 
 | ID | Název kapitoly | Růst | Stav |
 | :--- | :--- | ---: | :--- |
-| [awk](kapitoly/awk.md) | AWK | 100% | vydána (od verze 1.2) |
-| [barvy-a-titulek](kapitoly/barvy-a-titulek.md) | Barvy, titulek a výzva terminálu | 100% | vydána (od verze 1.0) |
-| [datum-cas-kalendar](kapitoly/datum-cas-kalendar.md) | Datum, čas a kalendář | 100% | vydána (od verze 1.1) |
-| [diskove-oddily](kapitoly/diskove-oddily.md) | Diskové oddíly | 100% | vydána (od verze 1.6) |
-| [docker](kapitoly/docker.md) | Docker | 100% | vydána (od verze 1.0) |
-| [git](kapitoly/git.md) | Git | 100% | vydána (od verze 1.0) |
-| [hledani-souboru](kapitoly/hledani-souboru.md) | Hledání souborů | 100% | vydána (od verze 1.5) |
-| [make](kapitoly/make.md) | Make | 100% | vydána (od verze 1.0) |
-| [markdown](kapitoly/markdown.md) | Markdown | 100% | vydána (od verze 1.0) |
-| [planovani-uloh](kapitoly/planovani-uloh.md) | Plánování úloh | 100% | vydána (od verze 1.0) |
-| [prace-s-archivy](kapitoly/prace-s-archivy.md) | Práce s archivy | 100% | vydána (od verze 1.1) |
-| [promenne](kapitoly/promenne.md) | Proměnné prostředí a interpretu | 100% | vydána (od verze 1.9) |
-| [regularni-vyrazy](kapitoly/regularni-vyrazy.md) | Regulární výrazy | 100% | vydána (od verze 1.1) |
-| [sed](kapitoly/sed.md) | Sed | 100% | vydána (od verze 1.8) |
-| [soubory-a-adresare](kapitoly/soubory-a-adresare.md) | Soubory a adresáře | 100% | vydána (od verze 1.5) |
-| [sprava-balicku](kapitoly/sprava-balicku.md) | Správa balíčků | 100% | vydána (od verze 1.1) |
-| [sprava-procesu](kapitoly/sprava-procesu) | Správa procesů | 100% | vydána (od verze 1.4) |
-| [stahovani-videi](kapitoly/stahovani-videi.md) | Stahování videí | 100% | vydána (od verze 1.0) |
-| [system](kapitoly/system.md) | Systém | 100% | vydána (od verze 1.2) |
-| [vim](kapitoly/vim.md) | Vim | 100% | vydána (od verze 1.8) |
-| [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) | Zpracování textových souborů | 100% | vydána (od verze 1.2) |
-| [zpracovani-videa-a-zvuku](kapitoly/zpracovani-videa-a-zvuku.md) | Zpracování videa a zvuku | 100% | vydána (od verze 1.0) |
-| [sprava-uzivatelskych-uctu](kapitoly/sprava-uzivatelskych-uctu.md) | Správa uživatelských účtů | 100% | připravena k vydání |
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
 | [zpracovani-obrazku](kapitoly/zpracovani-obrazku.md) | Zpracování obrázků | 40% | dítě |
 | [odkazy](kapitoly/odkazy.md) | Pevné a symbolické odkazy | 20% | dítě |
@@ -134,7 +139,7 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [wine](kapitoly/wine.md) | Wine | 0% | embryo |
 | [pdf](kapitoly/pdf.md) | PDF | 0% | embryo |
 | [virtualbox](kapitoly/virtualbox.md) | VirtualBox | 0% | embryo |
-| [stahovani-web](kapitoly/stahovani-web.md) | Stahování webových stránek | 0% | embryo |
+| [stahovani-z-webu](kapitoly/stahovani-z-webu.md) | Stahování z webu | 0% | embryo |
 | prehravani-videa | Přehrávání videa, zvuku a obrázků | - | přál/a bych si |
 | sifrovani | Šifrování a kryptografie | - | přál/a bych si |
 | firewall | Firewall | - | přál/a bych si |
@@ -145,7 +150,7 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | css | Kaskádové styly CSS | - | přál/a bych si |
 | nabidka-aplikaci | Nabídka aplikací | - | přál/a bych si |
 
-Zvláštní kapitoly:
+## Zvláštní kapitoly
 
 * [_ostatni](kapitoly/_ostatni.md) − Slouží k dočasnému shromážďování dosud nezařazených zaklínadel.
 * [_sablona](kapitoly/_sablona.md) − Nepřekládá se. Slouží jako výchozí podoba pro nově založené kapitoly.

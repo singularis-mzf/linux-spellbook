@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, kapitola Regulární výrazy
-Copyright (c) 2019 Singularis <singularis@volny.cz>
+Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -379,10 +379,10 @@ Pro zmíněné programy:
 * [Online příručka GNU awk](https://www.gnu.org/software/gawk/manual/) (anglicky)
 * [Online příručka GNU sed](https://www.gnu.org/software/sed/manual/) (anglicky)
 * [Online příručka modulu perlre](https://perldoc.perl.org/perlre.html) (anglicky)
-* [Manuálová stránka: grep](http://manpages.ubuntu.com/manpages/bionic/en/man1/grep.1.html) (anglicky)
-* [Manuálová stránka: pcrepattern](http://manpages.ubuntu.com/manpages/bionic/en/man3/pcrepattern.3.html) (anglicky)
-* [Balíček „gawk“](https://packages.ubuntu.com/bionic/gawk) (anglicky)
-* [Balíček „perl“](https://packages.ubuntu.com/bionic/perl) (anglicky)
-* [Balíček „sed“](https://packages.ubuntu.com/bionic/sed) (anglicky)
+* [Manuálová stránka: grep](http://manpages.ubuntu.com/manpages/focal/en/man1/grep.1.html) (anglicky)
+* [Manuálová stránka: pcrepattern](http://manpages.ubuntu.com/manpages/focal/en/man3/pcrepattern.3.html) (anglicky)
+* [Balíček „gawk“](https://packages.ubuntu.com/focal/gawk) (anglicky)
+* [Balíček „perl“](https://packages.ubuntu.com/focal/perl) (anglicky)
+* [Balíček „sed“](https://packages.ubuntu.com/focal/sed) (anglicky)
 
 !ÚzkýRežim: vyp
