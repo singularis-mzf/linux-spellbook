@@ -91,17 +91,15 @@ a kapitoly ani dodatky se nesmějí opakovat.
 
 | ID | Název kapitoly | % | Stav |
 | :--- | :--- | ---: | :--- |
+| [awk](kapitoly/awk.md) | AWK | 100% | rozšířena, schválena k vydání |
 | [markdown](kapitoly/markdown.md) | Markdown | 100% | schválena k vydání |
 | [regularni-vyrazy](kapitoly/regularni-vyrazy.md) | Regulární výrazy | 100% | schválena k vydání |
-| [awk](kapitoly/awk.md) | AWK | 0% | ve frontě |
 | [barvy-a-titulek](kapitoly/barvy-a-titulek.md) | Barvy, titulek a výzva terminálu | 0% | ve frontě |
 | [datum-cas-kalendar](kapitoly/datum-cas-kalendar.md) | Datum, čas a kalendář | 0% | ve frontě |
 | [diskove-oddily](kapitoly/diskove-oddily.md) | Diskové oddíly | 0% | ve frontě |
-| [docker](kapitoly/docker.md) | Docker | 0% | bude stažena |
 | [git](kapitoly/git.md) | Git | 0% | ve frontě |
 | [hledani-souboru](kapitoly/hledani-souboru.md) | Hledání souborů | 0% | ve frontě |
 | [make](kapitoly/make.md) | Make | 0% | ve frontě |
-| [planovani-uloh](kapitoly/planovani-uloh.md) | Plánování úloh | 0% | ve frontě |
 | [prace-s-archivy](kapitoly/prace-s-archivy.md) | Práce s archivy | 0% | ve frontě |
 | [promenne](kapitoly/promenne.md) | Proměnné prostředí a interpretu | 0% | ve frontě |
 | [sed](kapitoly/sed.md) | Sed | 0% | ve frontě |
@@ -114,6 +112,8 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [vim](kapitoly/vim.md) | Vim | 0% | ve frontě |
 | [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) | Zpracování textových souborů | 0% | ve frontě |
 | [zpracovani-videa-a-zvuku](kapitoly/zpracovani-videa-a-zvuku.md) | Zpracování videa a zvuku | 0% | ve frontě |
+| [docker](kapitoly/docker.md) | Docker | 0% | bude stažena |
+| [planovani-uloh](kapitoly/planovani-uloh.md) | Plánování úloh | 0% | bude stažena |
 
 ## Stav vývoje budoucích kapitol (podle ID)
 

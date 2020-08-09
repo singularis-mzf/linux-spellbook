@@ -31,27 +31,29 @@ __git_ps1
 
 ## Úvod
 
-Tato kapitola pokrývá ovládání barvy písma, barvy pozadí, použitého fontu, titulku terminálového okna a pozice a vlastností kurzoru. Rovněž pokrývá nastavování výzev interpretu bash (PS1 a dalších). Logicky by patřila do kapitoly o příkazovém interpretu bash, ale ta bude velmi rozsáhlá a náročná na zpracování, proto jsem toto téma vydělil/a do samostatné kapitoly.
+Tato kapitola pokrývá způsoby, kterými můžete učinit okno emulátoru terminálu praktičtější, barevnější a méně jednotvárné, aniž byste museli opustit příkazový interpret bash.
 
-Barvy a font se v příkazové řádce Linuxu nastavují pomocí takzvaných escape sekvencí, což jsou zvláštní řídicí sekvence bajtů, kterým daný terminál rozumí a místo jejich vypsání na obrazovku změní písmo, přesune kurzor nebo udělá jinou akci, která je v dané sekvenci zakódována. Abychom se tyto sekvence nemuseli učit, používáme místo nich moderní příkaz „tput“, který načte příslušnou sekvenci ze své databáze a vypíše ji na svůj standardní výstup. Pokud tento výstup směřuje přímo na terminál, požadovaná akce se ihned provede; častěji se ale sekvence ukládá do proměnné k pozdějšímu použití; k její aktivaci pak stačí danou proměnnou vypsat na terminál příkazem jako „printf“ či „echo“.
+Barva písma a pozadí se nastavují vypsáním takzvaných *escape sekvencí*, což jsou zvláštní řídicí sekvence bajtů, kterým daný terminál rozumí a místo vypsání něčeho na obrazovku vykoná akci, která je v sekvenci zakódovaná. Abychom se tyto sekvence nemuseli učit, používáme místo nich moderní příkaz „tput“, který načte příslušnou sekvenci ze své databáze a vypíše ji na svůj standardní výstup. Tento výstup můžeme buď uložit do proměnné pro pozdější použití, nebo vypsat na terminál přímo. Uložení do souboru není vhodné, protože v jiném terminálu by se mohla sekvence lišit.
 
-Tato verze kapitoly nepokrývá zvláštní schopnosti konkrétních terminálových programů (např. rozdíly mezi Terminatorem a Konsolí) a podporu šestnácti milionů barev, která zatím v terminálových programech není dostatečně rozšířena (ačkoliv některé už příslušné escape sekvence podporují).
+Tato verze kapitoly se omezuje na sekvence široce podporované většinou emulátorů terminálu. Kde není dostupná podpora v textovém režimu, bude to zmíněno. Dále nepokrývá podporu šestnácti milionů barev. Tato verze kapitoly nepokrývá vypisování zvláštních znaků (např. grafických znaků či emoji).
 
-Jedna z prvních věcí, která mě po otevření linuxového terminálu naštvala, bylo to, že neustále barevně zdůrazňoval moje uživatelské jméno a uváděl ho do titulku snad každého terminálového okna. Když si v Xubuntu ve výchozím nastavení poprvé otevřete Terminator a rozdělíte ho na čtyři podokna, svoje uživatelské jméno uvidíte na *deseti* místech a zopakuje se pokaždé, když máte zadat další příkaz. Mám z toho pocit, že toto nastavení musel navrhovat někdo s narcistickou poruchou osobnosti... Pokud si to chcete předělat, tato kapitola vám poradí jak.
+### Motivace
+
+Jedna z prvních věcí, která mě po otevření linuxového terminálu naštvala, bylo to, že neustále barevně zdůrazňoval moje uživatelské jméno a uváděl ho do titulku snad každého terminálového okna. Když si v Xubuntu ve výchozím nastavení poprvé otevřete Terminator a rozdělíte ho na čtyři podokna, svoje uživatelské jméno uvidíte na *deseti* místech a zopakuje se pokaždé, když máte zadat další příkaz. Mám z toho pocit, že toto nastavení musel navrhovat někdo s narcistickou poruchou osobnosti...
 
 ## Definice
 
-* **Výzva terminálu** (zkráceně „výzva“) je řetězec, který interpret příkazové řádky vypisuje před, během nebo po přijetí příkazu od uživatele (tzn. v interaktivním režimu). V interpretu „bash“ se rozeznávají tři druhy výzvy a jejich šablony jsou uloženy v proměnných PS0, PS1 a PS2: **hlavní výzva** (PS1) značí, že bash očekává příkaz, **vedlejší výzva** (PS2) značí, že bash očekává pokračování příkazu na dalším řádku, **potvrzující výzva** (PS0) se vypisuje po přijetí příkazu a před zahájením jeho vykonávání.
-* **Escape sekvence** je posloupnost bajtů, na kterou terminál zareaguje změnou nastavení (např. barvy písma) či nějakou akcí. Escape sekvence začínají netisknutelným znakem „escape“ (ASCII kód 0x1b). V minulosti se zapisovaly ručně a děsily nezkušené uživatele; dnes je však můžeme pohodlně generovat moderním příkazem „tput“, který současně redukuje problémy s kompatibilitou jednotlivých typů terminálů.
-* **Paleta** je v této kapitole pole barev, které daný terminál podporuje, *indexované od nuly*. Typicky se vyskytují pouze dvě palety: s 8 barvami a s 256 barvami, ačkoliv realizace konkrétních barev v těchto paletách se mohou v jednotlivých terminálech mírně lišit.
+* **Výzva terminálu** (zkráceně „výzva“) je řetězec, který interpret příkazové řádky (v našem případě bash) vypisuje před, během nebo po přijetí příkazu od uživatele (tzn. v interaktivním režimu). V interpretu „bash“ se rozeznávají tři druhy výzvy a jejich šablony jsou uloženy v proměnných PS0, PS1 a PS2: **hlavní výzva** (PS1) značí, že bash očekává příkaz, **vedlejší výzva** (PS2) značí, že bash očekává pokračování příkazu na dalším řádku, **potvrzující výzva** (PS0) se vypisuje po přijetí příkazu a před zahájením jeho vykonávání.
+* **Escape sekvence** je posloupnost ASCII znaků se zvláštním významem pro terminál, která začíná netisknutelným znakem „\\e“. V minulosti se tyto sekvence zapisovaly ručně a děsily nezkušené uživatele; dnes je však většinou můžeme pohodlně generovat moderním příkazem „tput“, který současně redukuje problémy s kompatibilitou jednotlivých emulátorů terminálu.
+* **Paleta** je (v této kapitole) pole barev, které daný terminál podporuje, *indexované od nuly*. Běžně se vyskytují pouze dvě palety: s 8 barvami a s 256 barvami, ačkoliv realizace konkrétních barev v těchto paletách se mohou v jednotlivých emulátorech mírně lišit (často jdou nastavit).
 
 !ÚzkýRežim: VYP
 
-## Zaklínadla
+## Zaklínadla: obecná
 
 ### Titulek
-*# nastavit **titulek** okna terminálu*<br>
-*// Ve výchozím nastavení nastavuje titulek terminálu jeho hlavní výzva PS1. Proto ji musíte před experimentováním vypnout, např. příkazem „PS=""“, jinak vám vaše nové nastavení hned přepíše a ani si toho nevšimnete.*<br>
+*# nastavit **titulek** okna emulátoru terminálu*<br>
+*// Poznámka: Protože ve výchozím nastavení nastavuje titulek terminálu výzva PS1, před jakýmkoliv experimentováním ji musíte vypnout nebo změnit (např. příkazem „PS=""“), jinak vám vaše nové nastavení hned přepíše, takže se vám bude zdát, že nefunguje.*<br>
 **printf %s\\\\n "$TERM" \| egrep -isq "^(xterm|rxvt)" &amp;&amp; printf "\\\\e]2;%s\\\\a" "**{*nový titulek*}**"**
 
 ### Barvy
@@ -173,9 +175,9 @@ Zde uvedené příkazy nevypisují escape sekvence, ale konkrétní hodnoty.
 *# odstranit N řádků od aktuální řádky (včetně) dolů*<br>
 ?
 
-## Zaklínadla (PS0, PS1 a PS2)
+## Zaklínadla: PS0, PS1 a PS2
 
-Poznámka: z hlediska odzvláštnění jsou zaklínadla v této sekci upravena pro uvedení uvnitř dvojitých uvozovek v bashi. Při uvedení jiným způsobem (např. v jednoduchých uvozovkách nebo při načítání ze souboru) je tomu nutno zpětná lomítka přizpůsobit.
+Poznámka: znění zaklínadel v této sekci je upraveno pro uvedení uvnitř dvojitých uvozovek. Při uvedení jiným způsobem (např. v jednoduchých uvozovkách nebo při načítání ze souboru) je tomu nutno uzpůsobit umístění zpětných lomítek.
 
 ### Častá
 *# **znak $** pro normálního uživatele a # pro uživatele „root“*<br>
@@ -203,7 +205,7 @@ Poznámka: z hlediska odzvláštnění jsou zaklínadla v této sekci upravena
 **\\\\D{%F}** ⊨ 2020-01-29<br>
 **\\\\D\{**{*formát*}**\}**
 
-*# **název počítače** (úplný/jen před první „.“)*<br>
+*# **název počítače** (úplný/jen do první „.“)*<br>
 **\\\\H** ⊨ mars.podnik<br>
 **\\\\h** ⊨ mars
 
@@ -314,10 +316,10 @@ Různé další tipy se dají najít v článku Bash/Prompt customization (angl
 * [Command tput](http://www.linuxcommand.org/lc3\_adv\_tput.php) (anglicky)
 * [Wikipedie: ANSI escape code](https://en.wikipedia.org/wiki/ANSI\_escape\_code) (anglicky)
 * [xterm-256 Color Chart](http://www.calmar.ws/vim/256-xterm-24bit-rgb-color-chart.html) (anglicky)
-* [Manuálová stránka: bash](http://manpages.ubuntu.com/manpages/bionic/en/man1/bash.1.html) (anglicky)
+* [Manuálová stránka: bash](http://manpages.ubuntu.com/manpages/focal/en/man1/bash.1.html) (anglicky)
 * [Video: Customizing Your Terminal \| Linux Terminal Beautification](https://www.youtube.com/watch?v=iaXQdyHRL8M)
 * [Oficiální příručka příkazu tput](https://www.gnu.org/software/termutils/manual/termutils-2.0/html\_chapter/tput\_1.html) (anglicky)
-* [Balíček Bionic: ncurses-bin](https://packages.ubuntu.com/bionic/ncurses-bin) (anglicky)
+* [Balíček: ncurses-bin](https://packages.ubuntu.com/focal/ncurses-bin) (anglicky)
 * [Video: Customize the Bash Prompt](https://www.youtube.com/watch?v=wOUYzKrGZaA) (anglicky)
 * [Video: Customize &amp; Colorize Your Bash Prompt/Terminal](https://www.youtube.com/watch?v=C92eaq\_bZR8) (anglicky)
 * [Video: Color Variables BASH Shell Script Linux Tutorial](https://www.youtube.com/watch?v=N8pdAvIwj28) (anglicky)
@@ -345,7 +347,3 @@ Různé další tipy se dají najít v článku Bash/Prompt customization (angl
 **function lkk\_pstput () \{**<br>
 <odsadit1>**printf \\\\[; tput "$@" &amp;&amp; printf \\\\]**<br>
 **\}**
-
-## Snímek obrazovky
-
-![snímek obrazovky](../obrazky/barvy.png)

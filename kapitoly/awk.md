@@ -13,7 +13,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 -->
 <!--
 
->> Ve verzi 5.0 prý jsou „namespaces“.
+Chybí typeof(). Viz https://www.gnu.org/software/gawk/manual/html_node/Type-Functions.html
 
 Tip pro mawk: používat mawk -W sprintf=2123456789
 Poznámka: mawk pracuje po bajtech a neumí zpracovat nulový bajt (končí řetězec), což je závažné omezení.
@@ -30,21 +30,18 @@ Poznámka:
 
 ## Úvod
 
-AWK je skriptovací nástroj pro jednoduché řádkově orientované zpracování textových souborů.
-Jeho syntaxe vychází z bashe a jazyka C a navíc přidává literály regulárních výrazů
-v obyčejných lomítkách. Ve srovnání s jemu příbuzným Perlem je syntaxe AWK
-velmi umírněná a elegantní a jeho schopnosti omezené, což ho činí vhodným pro začátečníky,
-ale nedostačujícím pro rozsáhlé projekty nebo projekty vyžadující specializovanou
-funkcionalitu. GNU awk také není vhodné v situacích, kdy je nezbytný vysoký výkon
-a nízká spotřeba paměti.
+AWK je skriptovací nástroj pro řádkově orientované zpracování textových souborů.
+Nabízí podstatně více možností než „sed“, ale ve srovnání s Perlem zůstává velmi omezený
+(např. jeho jedinou datovou strukturou je asociativní pole), což ho činí velmi vhodným
+pro začátečníky, ale nedostačujícím pro komplikovanější projekty.
+Syntaxe AWK je (zvlášť ve srovnání s Perlem) elegantní a umírněná.
 
 Skript AWK se skládá ze sekvence takzvaných „vzorků“ (podmínek)
-a k nim příslušejících bloků příkazů. Jeho provádění si lze dobře představit,
-jako by šlo o sérii podmínek „if“ v cyklu „foreach“. AWK dělí vstupní soubory
-po řádcích (záznamech) a každý záznam rozdělí na sloupce a postupně testuje jeden
-vzorek po druhém. Když vzorek vyhoví, příslušný blok příkazů se vykoná, jinak se přeskočí.
-Navíc provádí AWK několik dalších, speciálních iterací, které vykonávají pouze bloky
-příkazů označené určitým klíčovým slovem (např. BEGIN).
+a k nim příslušejících bloků příkazů. AWK rozdělí vstupní soubory po řádcích (záznamech),
+každý záznam rozdělí na sloupce a pro každý záznam postupně prochází celý skript
+a testuje jeden vzorek po druhém. Když vzorek vyhoví, příslušný blok příkazů se vykoná,
+jinak se přeskočí. Kromě toho AWK spouští i několik dalších (zvláštních) iterací,
+kdy se vykonají bloky označené určitým klíčovým slovem (např. BEGIN).
 
 Vzorek nebo blok příkazů je dovoleno vynechat; vynecháme-li vzorek, blok příkazů se
 vykoná pro každou řádku (ale ne ve speciálních iteracích); vynecháme-li blok příkazů,
@@ -54,18 +51,19 @@ Nejčastějším tvarem vzorku je podmínka tvořená pouze literálem regulárn
 (např. „/^a/“), taková podmínka se (nejen v tomto kontextu) automaticky rozšíří na
 výraz „($0 ~ /^a/)“, tedy porovnání načteného řádku s uvedeným regulárním výrazem.
 
-Pozor! V AWK se řádky v souboru, indexy sloupců v záznamu, indexy čísly indexovaných polí i pozice znaků v řetězci počítají vždy od 1, nikdy od nuly!
+Pozor! V AWK se všechny druhy indexů a číslování číslují vždy od jedničky, nikdy od nuly!
 
 ## Definice
 
-* **Vzorek** (pattern) je podmínka, která určuje, zda se daný blok příkazů má v dané iteraci skriptu provést. Podmínkou může být obecný výraz, nebo jedno z klíčových slov, která identifikují speciální iterace.
-* **Záznam** (record) je typicky řádka vstupního souboru. Způsob ukončení záznamu ve vstupních souborech lze změnit nastavením speciální proměnné „RS“ (record separator) na jiný než výchozí oddělovač (výchozí oddělovač je "\\n").
-* Záznam se po načtení rozdělí do **sloupců** (fields). Způsob oddělení záznamů se nastavuje speciální proměnnou „FS“ (field separator); její výchozí hodnotou je mezera, která má speciální význam a považuje za oddělovač sloupců jakoukoliv neprázdnou posloupnost bílých znaků (odpovídá regulárnímu výrazu „\\s+“).
-* Regulární výraz může být zadán buď jako **literál** do lomítek, např. „/^a/“, nebo jako **dynamický regulární výraz**, kterým může být jakýkoliv řetězec či řetězcový výraz (např. "^a"). Tyto dva způsoby zadání jsou většinou víceméně rovnocenné, liší se požadavky na odzvláštnění (v literálu musíte odzvláštnit všechny výskyty znaku „/“, a to i uvnitř hranatých závorek) a tím, že dynamický regularní výraz se nikdy automaticky nedoplní o prefix „$0&blank;~“, zatímco literál to dělá skoro vždy.
+* **Vzorek** (pattern) je podmínka, která určuje, zda se daný blok příkazů má v dané iteraci skriptu provést. Podmínkou může být obecný výraz nebo jedno z klíčových slov, která identifikují speciální iterace.
+* **Záznam** (record) je typicky řádka vstupního souboru. Způsob ukončení záznamu ve vstupních souborech určuje zvláštní proměnná „RS“ (record separator), jejíž výchozí hodnota je "\\n".
+* Záznam se po načtení rozdělí do **sloupců** (fields). Způsob oddělení záznamů se nastavuje zvláštní proměnnou „FS“ (field separator), jejíž výchozí hodnotou je mezera, která má zvláštní význam odpovídající regulárnímu výrazu „\\s+“.
+* Regulární výraz může být ve skriptu AWK zadán buď jako **literál** do lomítek, např. „/^a/“, nebo jako **dynamický regulární výraz**, což je jakýkoliv řetězec či řetězcový výraz zadaný v místě, kde se očekává regulární výraz. Tyto dva způsoby zadání jsou většinou víceméně rovnocenné, ale liší se požadavky na odzvláštnění (v literálu musíte odzvláštnit všechny výskyty znaku „/“, a to i uvnitř hranatých závorek) a tím, že dynamický regularní výraz se nikdy automaticky nedoplní o prefix „$0&blank;~“, zatímco literál to dělá skoro vždy.
+* **Jmenný prostor** (namespace) je oblast platnosti pro globální identifikátory. Výchozí je jmenný prostor „awk“, také zvaný **globální jmenný prostor**. Jmenné prostory neplatí pro identifikátory tvořené pouze velkými písmeny anglické abecedy (např. „ABC“ nebo „PROMENNA“) a pro klíčová slova (např. „sin“ nebo „if“). Rovněž se nevztahují na lokální identifikátory (názvy parametrů funkcí).
 
 !ÚzkýRežim: vyp
 
-## Zaklínadla
+## Zaklínadla: Hlavní
 
 ### Vzorky a bloky příkazů
 
@@ -106,42 +104,45 @@ Pozor! V AWK se řádky v souboru, indexy sloupců v záznamu, indexy čísly
 
 ### Skalární proměnné
 
-*# **přečíst** hodnotu proměnné*<br>
-{*název\_proměnné*}
+*# **přečíst** hodnotu proměnné (z aktivního jmenného prostoru/z globálního/z konkrétního)*<br>
+{*název\_proměnné*}<br>
+**awk\:\:**{*název\_proměnné*}<br>
+{*jmenny\_prostor*}**\:\:**{*název\_proměnné*}
 
 *# **přiřadit** hodnotu proměnné*<br>
-{*název\_proměnné*} **=** {*hodnota*}
+[{*jmenny\_prostor*}**\:\:**]{*název\_proměnné*} **=** {*hodnota*}
 
 *# získat hodnotu proměnné prostředí (obecně/příklad)*<br>
 **ENVIRON[**{*řetězec-s-názvem-proměnné*}**]**<br>
 **ENVIRON["PATH"]**
 
-*# přiřadit hodnotu proměnné prostředí*<br>
-?
+*# přiřadit hodnotu proměnné prostředí (obecně/příklad)*<br>
+**ENVIRON[**{*řetězec-s-názvem-proměnné*}**] =** {*řetězec*}<br>
+**ENVIRON["PATH"] = "/bin:/usr/bin";**
 
 *# nepřímý přístup k proměnné (příklad)*<br>
-**PROMENNA = "hodnota";**<br>
-**UKAZATEL = "PROMENNA";**<br>
+[{*jmenny\_prostor*}**\:\:**]{*nazev\_promenne*} **= "**{*hodnota*}**";**<br>
+**UKAZATEL = "**[{*jmenny\_prostor*}**\:\:**]{*nazev\_promenne*}**";**<br>
 **print SYMTAB[UKAZATEL];**<br>
 **SYMTAB[UKAZATEL] = "nova hodnota"**
 
 ### Asociativní pole
 
 *# **přečíst** hodnotu prvku pole*<br>
-{*pole*}**[**{*index*}**]**
+[{*jmenny\_prostor*}**\:\:**]{*pole*}**[**{*index*}**]**
 
 *# **přiřadit** hodnotu prvku pole*<br>
-{*pole*}**[**{*index*}**] =** {*hodnota*}
+[{*jmenny\_prostor*}**\:\:**]{*pole*}**[**{*index*}**] =** {*hodnota*}
 
 *# **existuje** prvek pole?*<br>
-{*index*} **in** {*pole*}
+{*index*} **in** [{*jmenny\_prostor*}**\:\:**]{*pole*}
 
 *# **smazat** z pole jeden prvek/všechny prvky*<br>
-**delete** {*pole*}**[**{*index*}**];**
-**delete** {*pole*}**;**
+**delete** [{*jmenny\_prostor*}**\:\:**]{*pole*}**[**{*index*}**];**
+**delete** [{*jmenny\_prostor*}**\:\:**]{*pole*}**;**
 
 *# **počet prvků***<br>
-**length(**{*pole*}**)**
+**length(**[{*jmenny\_prostor*}**\:\:**]{*pole*}**)**
 
 *# zkopírovat celé pole*<br>
 **delete** {*cílové\_pole*}**;**<br>
@@ -174,7 +175,7 @@ V následujících příkazech: „**typ**“ může být „num“ (řadit jak
 **asorti(**{*pole*}**,** {*cílové\_pole*}**, "**{*jméno\_funkce*}**")**
 
 *# **příklad** řazení*<br>
-**pocet\_jmen = asort(jmena, serazena\_jmena, "@val\_str\_asc");**
+**pocet\_jmen = asort(prostor::jmena, prostor::serazena\_jmena, "@val\_str\_asc");**
 
 <!--
 nevyzkoušeno
@@ -242,29 +243,28 @@ nevyzkoušeno
 
 ### Dělení záznamů na sloupce
 
+Poznámka: Dělení záznamů na sloupce určují proměnné FS, FPAT a FIELDWIDTHS.
+
 *# dělit sloupce libovolnou sekvencí **bílých znaků***<br>
-**FS = "&blank;";**
+[**FPAT = FIELDWIDTHS = "";**] **FS = "&blank;";**
 
 *# dělit sloupce tabulátorem*<br>
-**FS = "\\t";**
+[**FPAT = FIELDWIDTHS = "";**] **FS = "\\t";**
 
 *# dělit sloupce regulárním výrazem*<br>
-**FS =** {*"regulární výraz"*}**;**
+[**FPAT = FIELDWIDTHS = "";**] **FS =** {*"regulární výraz"*}**;**
 
 *# zapnout/vypnout režim **sloupců pevné šířky***<br>
-**FIELDWIDTHS = "**{*šířka-prvního-sloupce*}[&blank;{*šířka-dalšího-sloupce*}]...**"**<br>
+*// Je-li uvedena hodnota „kolik-přeskočit“, před načtením sloupce se přeskočí daný počet znaků. Výhradně u posledního sloupce můžete místo počtu znaků zadat „\*“; v takovém případě se do daného sloupce uloží všechny zbylé znaky.*<br>
+**FIELDWIDTHS = "**[[{*kolik-přeskočit*}**:**]{*šířka-dalšího-sloupce*}**&blank;**]...[{*kolik-přeskočit*}**:**]{*šířka-posl-sloupce*}**"**<br>
 **FIELDWIDTHS = ""**
 
-<!--
-Od verze 4.2 může být před každým polem „šířka k přeskočení“ oddělená :
-a na konci může být sloupec „*“, který přijme libovolné množství dalších znaků.
--->
-
-*# režim sloupců pevné šířky (příklad)*<br>
-**FIELDWIDTHS = "5 2 7"** ⊨ $1 = „12345“ $2 = „67“ $3 = „8901234“
+*# režim sloupců pevné šířky (příklady)*<br>
+**FIELDWIDTHS = "5 2 7"** ⊨ $1 = „12345“ $2 = „67“ $3 = „89ABCDE“<br>
+**FIELDWIDTHS = "1:3 2:2 1:\*"** ⊨ $1 = „234“ $2 = „78“ $3 = „ABCDEF“
 
 *# **vypnout** dělení na sloupce*<br>
-**FS = RS;**
+**FS = RS; FPAT = FIELDWIDTHS = "";**
 
 *# každý znak jako samostatný sloupec*<br>
 **FS = "";**
@@ -328,7 +328,7 @@ a na konci může být sloupec „*“, který přijme libovolné množství da
 *// Znak # není interpretován jako začátek komentáře uvnitř řetězců ani literálů regulárních výrazů.*<br>
 **#**{*libovolný obsah až do konce řádky*}
 
-## Zaklínadla (výstup, vstup a interakce s bashem)
+## Zaklínadla: Výstup, vstup a interakce s bashem
 
 ### Příkazy výstupu
 
@@ -435,9 +435,9 @@ Nevyzkoušeno:
 **PROCINFO["ppid"]** ⊨ 4052
 
 *# verze GNU awk*<br>
-**PROCINFO["version"]** ⊨ 4.1.4
+**PROCINFO["version"]** ⊨ 5.0.1
 
-## Zaklínadla (funkce)
+## Zaklínadla: Funkce
 
 ### Uživatelské funkce
 
@@ -584,7 +584,13 @@ TODO: Test.
 
 ### Pokročilé konstrukce
 
-*# načíst jiný zdrojový soubor, jako by jeho obsah byl zapsán zde*<br>
+*# přepnout se do jmenného prostoru/do globálního jmenného prostoru*<br>
+*// Direktiva „@namespace“ musí být použita na úrovni souboru (tj. mimo jakýkoliv blok) a platí do nejbližší další direktivy @namespace nebo do konce souboru. Účinkuje pouze v souboru, ve kterém je uvedena. Je-li vložen nebo připojen kód z jiného souboru (např. direktivou „@include“), ten má svoje vlastní řízení jmenného prostoru a začíná vždy globálním jmenným prostorem „awk“.*<br>
+**@namespace "**{*jmenný\_prostor*}**"**<br>
+**@namespace "awk"**
+
+*# vložit kód z jiného zdrojového souboru*<br>
+*// Aktuální jmenný prostor nemá vliv na interpretaci identifkátorů ve vkládaném souboru! Na jeho počátku bude platit jmenný prostor „awk“, dokud nebude změněn direktivou „@namespace“.*<br>
 **@include "**{*cesta/k/souboru.awk*}**"**
 
 *# implementovat načítání řádek rozdělených znakem \\ před znakem konce řádku (tento kód vložit na začátek skriptu)*<br>
@@ -606,6 +612,7 @@ TODO: Test.
 * -f {*soubor*} :: Načte kód ke spuštění z daného souboru.
 * -e {*kód*} :: Vezme uvedený kód ke spuštění.
 * -b :: Vstup a výstup realizuje po bajtech, ne v UTF-8.
+* --dump-variables={*soubor*} :: Po skončení zapsat hodnoty všech proměnných do daného souboru.
 * --profile={*soubor*} :: Shromáždí „profilovací“ data a po skončení programu je zapíše do uvedeného souboru. (Nezkoušeno.)
 * --sandbox :: Vypne všechny funkce, které by mohl skript použít k přístupu k jiným souborům než těm, které mu byly předány na příkazovém řádku; to zahrnuje např. funkci „system()“, přesměrování výstupů apod.
 
@@ -632,15 +639,17 @@ Poznámka: Parametry -f a -e můžete kombinovat a zadávat opakovaně. Každ�
 ## Tipy a zkušenosti
 
 * V AWK jsou všechna pole asociativní (včetně těch indexovaných celými čísly), a tedy neuspořádaná. Při indexování pole číslem se číslo nejprve převede na řetězec.
-* Je velmi často využívána syntaktická zkratka, že literál regulárního výrazu (např. /^a/) se automaticky rozšířít na test načteného řádku (např. „($0 ~ /^a/)“).
+* Je velmi často využívána syntaktická zkratka, že literál regulárního výrazu (např. /^a/) se automaticky rozšíří na test načteného řádku (např. „($0 ~ /^a/)“).
 * V AWK je středník potřeba jen k oddělení příkazů na jednom řádku, přesto z důvodu přehlednosti doporučuji ho psát na konci příkazu s výjimkou případu, kdy jde o jediný příkaz v bloku, k němuž těsně přiléhají složené závorky, např. „{print $0}“.
 * Skalární proměnné se do funkcí předávají hodnotou, pole odkazem.
 * Hodnoty ARGC a ARGV je možno za běhu skriptu bez omezení měnit, a tím ovlivňovat, které další soubory gawk či mawk otevře. Na již otevřené soubory to ale nemá vliv.
-* Používání koprocesů vyžaduje pečlivou synchronizaci mezi procesy. Existuje dvě situace, které vedou k zamrznutí programu a musíte se jim vyhnout: 1) Pokus o přečtení řádku z výstupu koprocesu, zatímco koproces nezapisuje, ale sám čeká na další vstup. 2) Zapsání velkého množství dat (cca od desítek kilobajtů) na vstup koprocesu, která koproces nenačte. (V takovém případě se naplní buffer roury.)
+* Používání koprocesů vyžaduje pečlivou synchronizaci mezi procesy. Existují dvě situace, které vedou k zamrznutí programu a musíte se jim vyhnout: 1) Pokus o přečtení řádku z výstupu koprocesu, zatímco koproces nezapisuje, ale sám čeká na další vstup. 2) Zapsání velkého množství dat (cca od desítek kilobajtů) na vstup koprocesu, která koproces nenačte. (V takovém případě se naplní buffer roury.)
 * V literálech regulárních výrazů je nutno odzvláštňovat obyčejná lomítka, a to dokonce i uvnitř hranatých závorek, např. „a\*[x\\/y]+“, v dynamických regulárních výrazech je není nutno odzvláštňovat.
 * Chcete-li příkaz pokračovat na další řádce, vložte před konec řádky „\\“.
 * Obsahuje-li skript pouze vzorky BEGIN a žádné jiné, AWK nebude otevírat vstupní soubory a po vykonání průchodu BEGIN okamžitě skončí. Toho lze využít k napsání programu, který vstup nezpracovává.
 * Nestojí-li za sekvencí zpětných lomítek v řetězci náhrady funkcí sub() a gsub() „&amp;“, chová se toto odzvláštňování nelogicky – méně než tři zpětná lomítka se použijí tak, jak jsou, a každá čtveřice zpětných lomítek se zredukuje na dvě zpětná lomítka a zbytek sekvence se bere jako od začátku, takže např. 6 zpětných lomítek (v řetězci zapsaných jako 12) zapíše při náhradě čtyři zpětná lomítka, protože první čtyři lomítka se zredukovala na dvě a zbylá dvě se vzala tak, jak jsou. Toto neplatí ve funkci gensub(), ta se chová konzistentně a každou dvojici zpětných lomítek zredukuje na jedno, ať za ní následuje ampresand nebo ne. Pokud tedy potřebujete nahrazovat shody regulárního výrazu zpětnými lomítky, doporučuji vždy řetězec náhrady předem otestovat a pamatovat, že funkce sub() a gsub() zachází se zpětnými lomítky, za kterými nenásleduje ampresand, jinak než funkce gensub().
+* Soubory s konci řádek CR-LF (typicky z Windows) lze snadno zpracovat při nastavení „RS="\\r\\n"“; analogicky soubory s řádky ukončenými LF lze zpracovat s nastavením „RS="\\r"“.
+* GNU awk plně podporuje znaky UTF-8 cca do hodnoty 50000. Od určité hodnoty dál s nimi pracuje chybně, takže není vhodný např. ke zpracování emoji-znaků.
 
 ## Další zdroje informací
 
@@ -650,7 +659,7 @@ Poznámka: Parametry -f a -e můžete kombinovat a zadávat opakovaně. Každ�
 * [Oficiální manuál: Řetězcové funkce (reference)](https://www.gnu.org/software/gawk/manual/html_node/String-Functions.html) (anglicky)
 * [Oficiální manuál od GNU](https://www.gnu.org/software/gawk/manual/) (anglicky)
 * *man 1 gawk* (anglicky)
-* [Balíček gawk](https://packages.ubuntu.com/bionic/gawk)
+* [Balíček gawk](https://packages.ubuntu.com/focal/gawk)
 * [Video „Using AWK to filter Data from Fields in Linux“](https://www.youtube.com/watch?v=i67fbJNfihU) (anglicky)
 * [Video „Controlling Array Sorting in AWK“](https://www.youtube.com/watch?v=88oVSJMm8xI) (anglicky)
 * [Awk tutorial](https://www.grymoire.com/Unix/Awk.html) (anglicky)
