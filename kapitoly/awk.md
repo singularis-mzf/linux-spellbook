@@ -632,11 +632,11 @@ Poznámka: Parametry -f a -e můžete kombinovat a zadávat opakovaně. Každ�
 ## Tipy a zkušenosti
 
 * V AWK jsou všechna pole asociativní (včetně těch indexovaných celými čísly), a tedy neuspořádaná. Při indexování pole číslem se číslo nejprve převede na řetězec.
-* Je velmi často využívána syntaktická zkratka, že literál regulárního výrazu (např. /^a/) se automaticky rozšířít na test načteného řádku (např. „($0 ~ /^a/)“).
+* Je velmi často využívána syntaktická zkratka, že literál regulárního výrazu (např. /^a/) se automaticky rozšíří na test načteného řádku (např. „($0 ~ /^a/)“).
 * V AWK je středník potřeba jen k oddělení příkazů na jednom řádku, přesto z důvodu přehlednosti doporučuji ho psát na konci příkazu s výjimkou případu, kdy jde o jediný příkaz v bloku, k němuž těsně přiléhají složené závorky, např. „{print $0}“.
 * Skalární proměnné se do funkcí předávají hodnotou, pole odkazem.
 * Hodnoty ARGC a ARGV je možno za běhu skriptu bez omezení měnit, a tím ovlivňovat, které další soubory gawk či mawk otevře. Na již otevřené soubory to ale nemá vliv.
-* Používání koprocesů vyžaduje pečlivou synchronizaci mezi procesy. Existuje dvě situace, které vedou k zamrznutí programu a musíte se jim vyhnout: 1) Pokus o přečtení řádku z výstupu koprocesu, zatímco koproces nezapisuje, ale sám čeká na další vstup. 2) Zapsání velkého množství dat (cca od desítek kilobajtů) na vstup koprocesu, která koproces nenačte. (V takovém případě se naplní buffer roury.)
+* Používání koprocesů vyžaduje pečlivou synchronizaci mezi procesy. Existují dvě situace, které vedou k zamrznutí programu a musíte se jim vyhnout: 1) Pokus o přečtení řádku z výstupu koprocesu, zatímco koproces nezapisuje, ale sám čeká na další vstup. 2) Zapsání velkého množství dat (cca od desítek kilobajtů) na vstup koprocesu, která koproces nenačte. (V takovém případě se naplní buffer roury.)
 * V literálech regulárních výrazů je nutno odzvláštňovat obyčejná lomítka, a to dokonce i uvnitř hranatých závorek, např. „a\*[x\\/y]+“, v dynamických regulárních výrazech je není nutno odzvláštňovat.
 * Chcete-li příkaz pokračovat na další řádce, vložte před konec řádky „\\“.
 * Obsahuje-li skript pouze vzorky BEGIN a žádné jiné, AWK nebude otevírat vstupní soubory a po vykonání průchodu BEGIN okamžitě skončí. Toho lze využít k napsání programu, který vstup nezpracovává.

@@ -18,6 +18,10 @@ https://creativecommons.org/licenses/by-sa/4.0/
 [ ] Nějak zpracovat řešení konfliktů při slučování větví.
 [ ] Zpracovat „git remote add“
 [ ] Zpracovat „git stash“
+
+
+[ ] Vypsat větve, které jsou/nejsou připojeny ke vzdálené větvi.
+
 -->
 
 # Git

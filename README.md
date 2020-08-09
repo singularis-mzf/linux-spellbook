@@ -108,12 +108,12 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [soubory-a-adresare](kapitoly/soubory-a-adresare.md) | Soubory a adresáře | 100% | vydána (od verze 1.5) |
 | [sprava-balicku](kapitoly/sprava-balicku.md) | Správa balíčků | 100% | vydána (od verze 1.1) |
 | [sprava-procesu](kapitoly/sprava-procesu) | Správa procesů | 100% | vydána (od verze 1.4) |
+| [sprava-uzivatelskych-uctu](kapitoly/sprava-uzivatelskych-uctu.md) | Správa uživatelských účtů | 100% | vydána (od verze 1.11) |
 | [stahovani-videi](kapitoly/stahovani-videi.md) | Stahování videí | 100% | vydána (od verze 1.0) |
 | [system](kapitoly/system.md) | Systém | 100% | vydána (od verze 1.2) |
 | [vim](kapitoly/vim.md) | Vim | 100% | vydána (od verze 1.8) |
 | [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) | Zpracování textových souborů | 100% | vydána (od verze 1.2) |
 | [zpracovani-videa-a-zvuku](kapitoly/zpracovani-videa-a-zvuku.md) | Zpracování videa a zvuku | 100% | vydána (od verze 1.0) |
-| [sprava-uzivatelskych-uctu](kapitoly/sprava-uzivatelskych-uctu.md) | Správa uživatelských účtů | 100% | připravena k vydání |
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
 | [zpracovani-obrazku](kapitoly/zpracovani-obrazku.md) | Zpracování obrázků | 40% | dítě |
 | [odkazy](kapitoly/odkazy.md) | Pevné a symbolické odkazy | 20% | dítě |
@@ -135,10 +135,10 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [pdf](kapitoly/pdf.md) | PDF | 0% | embryo |
 | [virtualbox](kapitoly/virtualbox.md) | VirtualBox | 0% | embryo |
 | [stahovani-web](kapitoly/stahovani-web.md) | Stahování webových stránek | 0% | embryo |
+| [mysql](kapitoly/mysql.md) | MySQL | 0% | embryo |
 | prehravani-videa | Přehrávání videa, zvuku a obrázků | - | přál/a bych si |
 | sifrovani | Šifrování a kryptografie | - | přál/a bych si |
 | firewall | Firewall | - | přál/a bych si |
-| sql | SQL | - | přál/a bych si |
 | ascii-art | ASCII art | - | přál/a bych si |
 | matematicke-vypocty | Matematické výpočty | - | přál/a bych si |
 | zaznam-x | Záznam obrazovky | - | přál/a bych si |

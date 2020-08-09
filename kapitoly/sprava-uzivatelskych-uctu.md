@@ -42,21 +42,16 @@ veškeré nastavení specifické pro daný účet a obvykle rovněž většina 
 
 Do této kapitoly nespadá nastavování přihlašování do systému a většina nastavení
 specifických pro určité grafické prostředí (např. nastavení pozadí plochy).
-Tato verze kapitoly nepokrývá nastavení avatarů uživatelů a nevysvětluje význam
-důležitých systémových skupin (jako např. skupiny „sudo“).
+Tato verze kapitoly nevysvětluje význam důležitých systémových skupin (jako např. skupiny „sudo“).
 
 ## Definice
 
-* **Uživatelský účet** je v této kapitole systémový účet jednoznačně identifikovaný pomocí **uživatelského jména** a také pomocí čísla **UID**. Existují tři typy uživatelských účtů: **běžný účet** (UID ≥ 1000), **systémový účet** (UID 1 až 999) a **superuživatel** (UID 0). Každý soubor nebo běžící proces přísluší nějakému uživatelskému účtu.
+* **Uživatelský účet** je v této kapitole systémový účet jednoznačně identifikovaný pomocí **uživatelského jména** (také „přihlašovacího jména“; pozor, neplést si s „celým jménem“) a také pomocí čísla **UID**. Existují tři typy uživatelských účtů: **běžný účet** (UID ≥ 1000), **systémový účet** (UID 1 až 999) a **superuživatel** (UID 0). Každý soubor nebo běžící proces přísluší nějakému uživatelskému účtu.
 * Běžné účty slouží k přihlášení osob k systému, a to jak v grafickém, tak i v textovém režimu.
 * Systémové účty slouží k vnitřním účelům systému, zejména k omezení práv některých démonů.
 * Superuživatel „root“ slouží ke správě systému. Má nejvyšší možná oprávnění, neplatí pro něj většina omezení a jako jediný může spouštět procesy s právy jiných uživatelů a skupin bez znalosti jakéhokoliv hesla.
-* **Skupina** je množina uživatelských účtů, jednoznačně identifikovaná **názvem skupiny** a také číslem **GID**. Skupina může být prázdná. Do skupin se přihlašují procesy a přiřazují se souborům na disku, kde umožňují efektivně nastavit sdílení adresářů a souborů mezi uživateli. Každý soubor nebo běžící proces přísluší nějaké skupině (vždy jen jedné).
+* **Skupina** je množina uživatelských účtů, jednoznačně identifikovaná **názvem skupiny** a také číslem **GID**. Skupina může být prázdná. Skupiny obvykle slouží k přidělování dodatečných práv k těm, která má daný uživatelský účet sám o sobě; umožňují také efektivně nastavit sdílení adresářů a souborů mezi uživateli. Každý soubor nebo běžící proces přísluší nějaké skupině (vždy jen jedné).
 * Každý uživatel je členem právě jedné **výchozí skupiny** (login group)(zpravidla stejnojmenné, ale není to podmínkou).
-
-<!--
-[ ] Celé jméno?
--->
 
 ### Uživatelé a hesla
 
@@ -161,19 +156,19 @@ gawk -F : '$3 == 0 || $3 &gt;= 1000 {print $1;}'** [**\| LC\_ALL=C.utf8 sort**]<
 *# **domovský adresář***<br>
 **getent passwd** {*uživatel*} **\| cut -d : -f 6**
 
-*# **příkazový interpret***<br>
-**getent passwd** {*uživatel*} **\| cut -d : -f 7**
-
 *# uživatelské **jméno** (podle UID)*<br>
 **id -un** {*UID*}
+
+*# získat **avatar***<br>
+*// Avatar čtvercový obrázek je ve formátu PNG. Počet pixelů tvořících stranu čtverce může být různý.*<br>
+[**sudo**] **cp ~**{*uživatel*}**/.face** {*cíl.png*}
 
 *# vypsat uživatelovu **výchozí skupinu** (názvem/GID)*<br>
 **id -Gn** {*uživatel*} **\| sed -E 's/\\s.\*//'**<br>
 **id -G** {*uživatel*} **\| sed -E 's/\\s.\*//'**
 
-*# získat **avatar***<br>
-*// Avatar čtvercový obrázek je ve formátu PNG. Počet pixelů tvořících stranu čtverce může být různý.*<br>
-[**sudo**] **cp ~**{*uživatel*}**/.face** {*cíl.png*}
+*# **příkazový interpret***<br>
+**getent passwd** {*uživatel*} **\| cut -d : -f 7**
 
 ### Změnit nastavení uživatelského účtu (kromě hesla)
 
@@ -221,12 +216,12 @@ gawk -F : '$3 == 0 || $3 &gt;= 1000 {print $1;}'** [**\| LC\_ALL=C.utf8 sort**]<
 *# **celé jméno***<br>
 **getent passwd $(whoami) \| cut -d : -f 5 \| cut -d , -f 1**
 
-*# **příkazový interpret***<br>
-**getent passwd "$(whoami)" \| cut -d : -f 7**
-
 *# získat **avatar***<br>
 *// Avatar čtvercový obrázek je ve formátu PNG. Počet pixelů tvořících stranu čtverce může být různý.*<br>
 **cp ~/.face** {*cíl.png*}
+
+*# **příkazový interpret***<br>
+**getent passwd "$(whoami)" \| cut -d : -f 7**
 
 *# **výchozí skupina** (názvem/GID)*<br>
 **id -Gn \| sed -E 's/\\s.\*//'**<br>
@@ -239,13 +234,13 @@ gawk -F : '$3 == 0 || $3 &gt;= 1000 {print $1;}'** [**\| LC\_ALL=C.utf8 sort**]<
 !: Na výzvu zadejte původní heslo. Potvrďte klávesou Enter.<br>
 !: Dvakrát zadejte nové heslo. Každé potvrďte klávesou Enter.
 
-*# příkazový **interpret** (pro člověka)*<br>
-**chsh** [**-s** {*/cesta/k/novému/interpretu*}]<br>
-!: Na výzvu zadejte svoje heslo a potvrďte klávesou Enter.
-
 *# změnit **avatar***<br>
 *// Pozor, pokud konverze obrázku selže, uvedený příkaz smaže váš současný avatar bez náhrady.*<br>
 **convert** {*obrázek*} **-gravity center -crop "$(identify -format "%[fx:min(w,h)]x%[fx:min(w,h)]"** {*obrázek*}**)" +repage -delete -1 png24:- &gt;~/.face**
+
+*# příkazový **interpret** (pro člověka)*<br>
+**chsh** [**-s** {*/cesta/k/novému/interpretu*}]<br>
+!: Na výzvu zadejte svoje heslo a potvrďte klávesou Enter.
 
 *# změnit **celé jméno** (musí povolit správce)*<br>
 *// Aby uvedený příkaz fungoval, musí superuživatel v souboru „/etc/login.defs“ do konfigurační volby „CHFN\_RESTRICT“ doplnit písmeno „f“ nebo ji nastavit na „no“. I bez toho ovšem můžete změnit svoje celé jméno GUI programem „mugshot“ (nutno doinstalovat stejnojmenný balíček).*<br>
@@ -286,9 +281,9 @@ gawk -F : '$3 == 0 || $3 &gt;= 1000 {print $1;}'** [**\| LC\_ALL=C.utf8 sort**]<
 [**sudo**] **gpasswd -a** {*uživatel*} {*skupina*}<br>
 **sudo adduser** {*uživatel*} {*skupina*}
 
-*# **odebrat** účet ze skupiny*<br>
+*# **odebrat** účet ze skupiny (alternativy)*<br>
 *// Použít „gpasswd“ bez sudo je oprávněn pouze správce skupiny.*<br>
-*// Uživatele nelze odebrat z jeho výchozí skupiny. Pokud to chcete udělat, musíme mu nejprve nastavit jinou výchozí skupinu.*<br>
+*// Uživatele nelze odebrat z jeho výchozí skupiny. Pokud to chcete udělat, musíte mu nejprve nastavit jinou výchozí skupinu.*<br>
 [**sudo**] **gpasswd -d** {*uživatel*} {*skupina*}<br>
 **sudo deluser** {*uživatel*} {*skupina*}
 
@@ -394,11 +389,11 @@ Všechny použité nástroje jsou základními součástmi Ubuntu přítomnými 
 
 ## Tipy a zkušenosti
 
+* Používat hesla skupin se nedoporučuje; jsou neintuitivní, nepraktická a jsou s nimi bezpečnostní problémy.
 * Jméno uživatelského účtu či název skupiny musí začínat malým písmenem anglické abecedy a ve zbytku může obsahovat malá písmena anglické abecedy, číslice, pomlčky a podtržítka.
 * Standardní způsob sdílení určitého adresáře více uživateli spočívá v tom, že vytvoříme skupinu (addgroup), přidáme do ní všechny uživatelské účty (gpasswd -a), které mají adresář sdílet, nastavíme skupinu sdílenému adresáři (chgrp) a nastavíme mu příznak zmocnění skupiny (chmod g+s), aby se skupinová příslušnost rozšířila i na nové podadresáře. V případě malého počtu uživatelů můžeme místo vytvoření nové skupiny použít výchozí skupinu některého z uživatelů.
-* Obyčejný uživatel není oprávněn změnit ani svoje vlastní celé jméno.
+* Při výchozím nastavení uživatel nemůže změnit „celé jméno“ vlastního účtu příkazem „chfn“, může ho však změnit z GUI, např. programem „mugshot“.
 * Do každého nově vytvořeného domovského adresáře se nakopíruje obsah adresáře „/etc/skel“.
-* Používat hesla skupin se nedoporučuje; jsou neintuitivní, nepraktická a jsou s nimi bezpečnostní problémy.
 
 ## Další zdroje informací
 

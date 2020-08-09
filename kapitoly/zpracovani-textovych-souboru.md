@@ -57,7 +57,7 @@ V této kapitole rozlišuji následující formáty textových souborů:
 
 !ÚzkýRežim: vyp
 
-## Zaklínadla: Konverze
+## Zaklínadla: Konverze a náhrady
 
 ### Konverze ukončení řádky
 
@@ -109,6 +109,18 @@ Příkaz „flip“ nefunguje moc dobře:
 
 *# pokusit se zjistit kódování textu*<br>
 ?
+
+<!--
+### Nahradit/odstranit
+
+Tip: Odstranění dosáhnete nahrazením prázdným řetězcem.
+
+*# nahradit všechny výskyty znaků (transliterace)*<br>
+**sed -**[**z**]**E 'y/**{*znaky-z*}**/**{*znaky-na*}**/'** [{*vstupní-soubor*}]...
+
+*# nahradit všechny výskyty regulárního výrazu řetězcem*<br>
+**sed -**[**z**]**E 's/**{*regulární výraz*}**/**{*řetězec náhrady*}**/g'** [{*vstupní-soubor*}]...
+-->
 
 ### Konverze velikosti písmen
 

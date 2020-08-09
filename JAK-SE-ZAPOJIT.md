@@ -69,7 +69,10 @@ hypertextovými odkazy přímo na jednotlivá zaklínadla.
 
 Chyby je třeba hlásit, protože tím pomůžete nejen mě, ale také ostatním uživatelům
 (a případně i sobě, pokud budete Linux: Knihu kouzel nadále používat).
-Hlašte chyby buď formou „issue“ na GitHubu, nebo přímo mně e-mailem.
+Hlašte chyby buď formou „issue“ na GitHubu, nebo přímo mně e-mailem
+na adresu [singularis@volny.cz](mailto:singularis@volny.cz).
+(VAROVÁNÍ: Při hlášení e-mailem mi neposílejte žádný kód k zařazení do projektu,
+takto zaslaný kód nebudu moci přijmout.)
 
 Při hlášení, prosím, použijte následující postup:
 
