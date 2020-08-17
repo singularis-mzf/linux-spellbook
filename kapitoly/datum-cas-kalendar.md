@@ -241,8 +241,8 @@ pro zarovnání mezerami místo nulami tam vložte „\_“, např. „%\_m“ v
 **date -ud "**{*čas*}**" +%s**
 
 *# konverze časové známky Unixu na lokální čas/UTC*<br>
-**date -d %**{*časová-známka*} **"+%F %T**[**&blank;%z**]**"**<br>
-**date -ud %**{*časová-známka*} **"+%F %T"**
+**date -d @**{*časová-známka*} **"+%F %T**[**&blank;%z**]**"**<br>
+**date -ud @**{*časová-známka*} **"+%F %T"**
 
 *# **přičíst/odečíst** N sekund (v UTC)*<br>
 **date -ud @$(($(date -ud "**{*datum čas*}**" +%s) +** {*N*} **)) "+%F %T"**<br>
