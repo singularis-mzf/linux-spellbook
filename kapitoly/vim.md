@@ -677,6 +677,10 @@ Další skupiny na: http://vimdoc.sourceforge.net/htmldoc/syntax.html#{group-nam
 *# nastavit všechna rozdělení rovnoměrně*<br>
 {_Ctrl_}**+**{_W_}{_=_}
 
+*# nahradit aktivní pohled novým **terminálem***<br>
+*// Zdá se, že jediný způsob, jak se z pohledu terminálu dostat, je klávesová zkratka „Ctrl+WW“, jiné kombinace v něm nefungují.*<br>
+**:term \+\+curwin**
+
 *# **rotovat** pohledy*<br>
 {_Ctrl_}**+**{_W_}{_R_}
 
@@ -896,7 +900,7 @@ kurz spouštěný příkazem „vimtutor“.
 * [Vim Tips Wiki](https://vim.fandom.com/wiki/Vim_Tips_Wiki) (anglicky)
 * [Oficiální stránka Vim](https://www.vim.org/) (anglicky)
 * [Official Vim FAQ](https://vimhelp.org/vim_faq.txt.html) (anglicky)
-* [Balíček Bionic](https://packages.ubuntu.com/bionic/vim) (anglicky)
+* [Balíček Ubuntu](https://packages.ubuntu.com/focal/vim) (anglicky)
 * [What Is Your Most Productive Shortcut with Vim?](https://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim) (anglicky)
 
 K referenční příručce můžete získat přístup také přímo v editoru Vim příkazem „:help“,

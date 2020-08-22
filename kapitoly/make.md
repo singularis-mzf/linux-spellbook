@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, kapitola Make
-Copyright (c) 2019 Singularis <singularis@volny.cz>
+Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -39,7 +39,7 @@ jemuž se bude věnovat většina této kapitoly.
 ## Zaklínadla (v souboru Makefile)
 ### Nastavení proměnných
 *# **nastavit** proměnnou (expandovat v místě definice)*<br>
-{*NÁZEV\_PROMĚNNÉ*} **:=** {*hodnota včetně mezer*}
+{*NÁZEV\_PROMĚNNÉ*} **:=** {*hodnota včetně mezer*}<br>
 
 *# **připojit** obsah na konec proměnné (expanze stejně jako v původní definici)*<br>
 {*NÁZEV\_PROMĚNNÉ*} **\+=** {*hodnota včetně mezer*}
@@ -47,12 +47,20 @@ jemuž se bude věnovat většina této kapitoly.
 *# **nastavit** proměnnou (expandovat v každém místě použití)*<br>
 {*NÁZEV\_PROMĚNNÉ*} **=** {*hodnota včetně mezer*}
 
+*# nastavit proměnnou, pokud ještě nebyla nastavena (expandovat v místě definice)*<br>
+**ifeq&blank;($(origin** {*NÁZEV\_PROMĚNNÉ*}**, undefined)**<br>
+<odsadit1>{*NÁZEV\_PROMĚNNÉ*} **:=** {*hodnota včetně mezer*}<br>
+**endif**
+
+*# nastavit proměnnou, pokud ještě nebyla nastavena (expandovat v každém místě použití)*<br>
+{*NÁZEV\_PROMĚNNÉ*} **?=** {*hodnota včetně mezer*}
+
 *# přiřadit do proměnné mezeru (trik)*<br>
 **PRAZDNA :=**<br>
 {*NÁZEV\_PROMĚNNÉ*} **:= $(PRAZDNA)&blank;$(PRAZDNA)**
 
 *# nastavit/připojit víceřádkový obsah*<br>
-*// „endef“ musí být na samostatném řádku; operátor může být „=“, „:=“ nebo „+=“.*<br>
+*// „endef“ musí být na samostatném řádku; operátor může být „=“, „:=“ nebo „+=“. Jeden znak konce řádky bezprostředně před začátkem víceřádkového obsahu a jeden znak konce řádku za jeho koncem jsou vypuštěny, ostatní znaky konce řádky jsou ponechány.*<br>
 **define** {*NÁZEV\_PROMĚNNÉ*} [{*operátor*}]<br>
 {*víceřádkový obsah*}<br>
 **endef**
@@ -328,13 +336,9 @@ jemuž se bude věnovat většina této kapitoly.
 * [Rychlo-školička pro Makefile](http://www.linux.cz/noviny/1999-0304/clanek12.html)
 * [Správa projektů pomocí programu Make](http://www.fit.vutbr.cz/~martinek/clang/make.html)
 * [Oficiální manuál GNU make](https://www.gnu.org/software/make/manual/make.html) (anglicky)
-* [Manuálová stránka](http://manpages.ubuntu.com/manpages/bionic/en/man1/make.1.html) (anglicky)
-* [Balíček Ubuntu Bionic Beaver](https://packages.ubuntu.com/bionic/make) (anglicky)
+* [Manuálová stránka](http://manpages.ubuntu.com/manpages/focal/en/man1/make.1.html) (anglicky)
+* [Balíček Ubuntu](https://packages.ubuntu.com/focal/make) (anglicky)
 * [Oficiální stránka GNU make](https://www.gnu.org/software/make/) (anglicky)
 * [TL;DR stránka „make“](https://github.com/tldr-pages/tldr/blob/master/pages/common/make.md) (anglicky)
 
 !ÚzkýRežim: vyp
-
-## Snímek obrazovky
-
-![(snímek obrazovky)](../obrazky/make.png)

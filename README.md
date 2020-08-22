@@ -92,24 +92,24 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | ID | Název kapitoly | % | Stav |
 | :--- | :--- | ---: | :--- |
 | [awk](kapitoly/awk.md) | AWK | 100% | rozšířena, schválena k vydání |
+| [diskove-oddily](kapitoly/diskove-oddily.md) | Diskové oddíly | 100% | schválena k vydání |
+| [git](kapitoly/git.md) | Git | 100% | schválena k vydání |
+| [make](kapitoly/make.md) | Make | 100% | schválena k vydání |
 | [markdown](kapitoly/markdown.md) | Markdown | 100% | schválena k vydání |
+| [promenne](kapitoly/promenne.md) | Proměnné prostředí a interpretu | 100% | schválena k vydání |
 | [regularni-vyrazy](kapitoly/regularni-vyrazy.md) | Regulární výrazy | 100% | schválena k vydání |
+| [sed](kapitoly/sed.md) | Sed | 100% | schválena k vydání |
+| [soubory-a-adresare](kapitoly/soubory-a-adresare.md) | Soubory a adresáře | 100% | schválena k vydání |
+| [sprava-procesu](kapitoly/sprava-procesu) | Správa procesů | 100% | schválena k vydání |
+| [vim](kapitoly/vim.md) | Vim | 100% | schválena k vydání |
 | [barvy-a-titulek](kapitoly/barvy-a-titulek.md) | Barvy, titulek a výzva terminálu | 0% | ve frontě |
 | [datum-cas-kalendar](kapitoly/datum-cas-kalendar.md) | Datum, čas a kalendář | 0% | ve frontě |
-| [diskove-oddily](kapitoly/diskove-oddily.md) | Diskové oddíly | 0% | ve frontě |
-| [git](kapitoly/git.md) | Git | 0% | ve frontě |
 | [hledani-souboru](kapitoly/hledani-souboru.md) | Hledání souborů | 0% | ve frontě |
-| [make](kapitoly/make.md) | Make | 0% | ve frontě |
 | [prace-s-archivy](kapitoly/prace-s-archivy.md) | Práce s archivy | 0% | ve frontě |
-| [promenne](kapitoly/promenne.md) | Proměnné prostředí a interpretu | 0% | ve frontě |
-| [sed](kapitoly/sed.md) | Sed | 0% | ve frontě |
-| [soubory-a-adresare](kapitoly/soubory-a-adresare.md) | Soubory a adresáře | 0% | ve frontě |
 | [sprava-balicku](kapitoly/sprava-balicku.md) | Správa balíčků | 0% | ve frontě |
-| [sprava-procesu](kapitoly/sprava-procesu) | Správa procesů | 0% | ve frontě |
 | [sprava-uzivatelskych-uctu](kapitoly/sprava-uzivatelskych-uctu.md) | Správa uživatelských účtů | 0% | ve frontě |
 | [stahovani-videi](kapitoly/stahovani-videi.md) | Stahování videí | 0% | ve frontě |
 | [system](kapitoly/system.md) | Systém | 0% | ve frontě |
-| [vim](kapitoly/vim.md) | Vim | 0% | ve frontě |
 | [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) | Zpracování textových souborů | 0% | ve frontě |
 | [zpracovani-videa-a-zvuku](kapitoly/zpracovani-videa-a-zvuku.md) | Zpracování videa a zvuku | 0% | ve frontě |
 | [docker](kapitoly/docker.md) | Docker | 0% | bude stažena |
@@ -140,8 +140,8 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [pdf](kapitoly/pdf.md) | PDF | 0% | embryo |
 | [virtualbox](kapitoly/virtualbox.md) | VirtualBox | 0% | embryo |
 | [stahovani-z-webu](kapitoly/stahovani-z-webu.md) | Stahování z webu | 0% | embryo |
+| [sifrovani](kapitoly/sifrovani.md) | Šifrování a kryptografie | 0% | embryo |
 | prehravani-videa | Přehrávání videa, zvuku a obrázků | - | přál/a bych si |
-| sifrovani | Šifrování a kryptografie | - | přál/a bych si |
 | firewall | Firewall | - | přál/a bych si |
 | sql | SQL | - | přál/a bych si |
 | ascii-art | ASCII art | - | přál/a bych si |

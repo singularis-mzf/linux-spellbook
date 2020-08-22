@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, kapitola Git
-Copyright (c) 2019 Singularis <singularis@volny.cz>
+Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -18,6 +18,11 @@ https://creativecommons.org/licenses/by-sa/4.0/
 [ ] Nějak zpracovat řešení konfliktů při slučování větví.
 [ ] Zpracovat „git remote add“
 [ ] Zpracovat „git stash“
+[ ] Zpracovat „git for-each-ref“
+
+Ubuntu 22.04:
+git config --global init.defaultBranch {název} // od git 2.28 je možno změnit výchozí název větve
+
 -->
 
 # Git
@@ -70,7 +75,7 @@ Každá revize je jednoznačně identifikována pomocí své MD5 heše. Kromě t
 
 *# získat do samostatného nového adresáře konkrétní revizi*<br>
 *// Poznámka: nový adresář musí ležet mimo stávající pracovní adresář. Můžete jej zadat jak relativní, tak i absolutní cestou.*<br>
-**git worktree add \-\-detach** {*nový/adresář*} {*revize*} **&amp;&amp;rm** {*nový/adresář*}**/.git &amp;&amp; git worktree prune**
+**git worktree add \-\-detach** {*nový/adresář*} {*revize*} **&amp;&amp; rm** {*nový/adresář*}**/.git &amp;&amp; git worktree prune**
 
 *# konverze bare repozitáře na normální*<br>
 **git -C** {*repozitář*} **config core.bare false**<br>
@@ -342,7 +347,7 @@ Každá revize je jednoznačně identifikována pomocí své MD5 heše. Kromě t
 **git config \-\-global user.name "**{*vaše celé jméno*}**"**<br>
 **git config \-\-global user.email "**{*váš e-mail*}**"**
 
-Celé jméno a e-mail se používají k označení autorství revizí. Musíte je zadat, jinak git nebude fungovat, ale nemusí být pochopitelně pravdivé. Pro konkrétní repozitář můžete nastavit jiné hodnoty použitím stejných konfiguračních příkazů bez parametru **\-\-global**.
+Celé jméno a e-mail se používají k označení autorství revizí. Musíte je zadat, jinak git odmítne pracovat a vyzve vás k jejich nastavení. Pro konkrétní repozitář můžete nastavit jiné hodnoty použitím stejných konfiguračních příkazů bez parametru **\-\-global**. Nastavení platí pro daný systémový uživatelský účet; chcete-li git používat z více uživatelských účtů, musíte uvedené dvě volby nastavit z každého zvlášť.
 
 ## Ukázka
 *# Příprava ukázkového adresáře a souborů*<br>
@@ -393,8 +398,8 @@ Přehled podporovaných konfiguračních voleb pro příkaz „git config“ naj
 * [Video: Git - rýchly úvod, prvé príkazy](https://www.youtube.com/watch?v=8o5jutq2TEU) (slovensky)
 * [Oficiální online referenční příručka](https://git-scm.com/docs) (anglicky)
 * [Oficiální stránka programu](https://git-scm.com/) (anglicky)
-* [Manuálová stránka](http://manpages.ubuntu.com/manpages/bionic/en/man1/git.1.html) (anglicky)
-* [Balíček Bionic „git“](https://packages.ubuntu.com/bionic/git) (anglicky)
-* [Balíček Bionic „gitk“](https://packages.ubuntu.com/bionic/gitk) (anglicky)
+* [Manuálová stránka](http://manpages.ubuntu.com/manpages/focal/en/man1/git.1.html) (anglicky)
+* [Balíček Ubuntu „git“](https://packages.ubuntu.com/focal/git) (anglicky)
+* [Balíček Ubuntu „gitk“](https://packages.ubuntu.com/focal/gitk) (anglicky)
 
 !ÚzkýRežim: vyp

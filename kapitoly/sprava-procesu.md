@@ -14,6 +14,9 @@ https://creativecommons.org/licenses/by-sa/4.0/
 <!--
 
 ⊨
+
+[ ] lkk procesy přepsat do Perlu
+
 -->
 
 # Správa procesů
@@ -367,6 +370,7 @@ Většina uvedených příkazů je základními součástmi Ubuntu.
 Pouze některé konkrétní příkazy ve stejnojmenných balíčcích je potřeba doinstalovat,
 pokud je chcete použít:
 
+*# *<br>
 **sudo apt-get install iotop powertop**
 
 V kapitole je použit také příkaz gawk:
@@ -401,8 +405,8 @@ V kapitole je použit také příkaz gawk:
 * [Video: How to use lsof command](https://www.youtube.com/watch?v=fsfquzq5Efo) (anglicky)
 * [Tutorialspoint: pgrep, pkill](https://www.tutorialspoint.com/unix_commands/pgrep.htm) (anglicky)
 * [A guide to the Linux „top“ command](https://www.booleanworld.com/guide-linux-top-command/) (anglicky)
-* [Manual Page: pgrep, pkill](http://manpages.ubuntu.com/manpages/bionic/en/man1/pgrep.1.html) (anglicky)
-* [Manual Page: ps](http://manpages.ubuntu.com/manpages/bionic/en/man1/ps.1.html) (anglicky)
+* [Manual Page: pgrep, pkill](http://manpages.ubuntu.com/manpages/focal/en/man1/pgrep.1.html) (anglicky)
+* [Manual Page: ps](http://manpages.ubuntu.com/manpages/focal/en/man1/ps.1.html) (anglicky)
 * [TL;DR: ps](https://github.com/tldr-pages/tldr/blob/master/pages/common/ps.md) (anglicky)
 * [Tutorialspoint: Process Management](https://www.tutorialspoint.com/unix/unix-processes.htm) (anglicky)
 * [TL;DR: pgrep](https://github.com/tldr-pages/tldr/blob/master/pages/common/pgrep.md) (anglicky)

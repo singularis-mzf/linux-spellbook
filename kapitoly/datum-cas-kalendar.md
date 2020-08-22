@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, kapitola Datum, čas a kalendář
-Copyright (c) 2019 Singularis <singularis@volny.cz>
+Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -15,6 +15,13 @@ https://creativecommons.org/licenses/by-sa/4.0/
 Poznámky:
 
 ⊨
+
+
+libdatetime-event-sunrise-perl
+
+
+
+
 -->
 
 # Datum, čas a kalendář
@@ -26,10 +33,11 @@ Poznámky:
 ## Úvod
 
 Obsahem této kapitoly je veškerá práce s hodnotami času a data a kalendářem jako takovým,
-to znamená výpočty, formátování, konverze časových zón a vizualizace.
+to znamená výpočty, formátování, práci s časovými zónami a vizualizace. Kapitola rovněž
+pokrývá nastavování systémového a hardwarového času.
 
-Tato verze kapitoly nepokrývá menstruační kalendář, výpočet časů astronomických jevů včetně východu a západu slunce, výpočet času muslimských modliteb ani méně obvyklé druhy
-kalendářů (čínský apod.).
+Tato verze kapitoly nepokrývá menstruační kalendář, výpočet času muslimských modliteb
+ani konverze mezi druhy kalendářů (juliánský, gregoriánský, hebrejský, čínský apod.).
 
 Plánovní úloh na konkrétní čas do této kapitoly nespadá.
 
@@ -241,8 +249,8 @@ pro zarovnání mezerami místo nulami tam vložte „\_“, např. „%\_m“ v
 **date -ud "**{*čas*}**" +%s**
 
 *# konverze časové známky Unixu na lokální čas/UTC*<br>
-**date -d %**{*časová-známka*} **"+%F %T**[**&blank;%z**]**"**<br>
-**date -ud %**{*časová-známka*} **"+%F %T"**
+**date -d @**{*časová-známka*} **"+%F %T**[**&blank;%z**]**"**<br>
+**date -ud @**{*časová-známka*} **"+%F %T"**
 
 *# **přičíst/odečíst** N sekund (v UTC)*<br>
 **date -ud @$(($(date -ud "**{*datum čas*}**" +%s) +** {*N*} **)) "+%F %T"**<br>
@@ -251,7 +259,28 @@ pro zarovnání mezerami místo nulami tam vložte „\_“, např. „%\_m“ v
 *# **rozdíl** UTC časů v sekundách*<br>
 **printf %s\\\\n $(($(date -ud** {*čas*} **+%s) - $(date -ud** {*odečítaný-čas*} **+%s)))**
 
-### Svátky
+### Východ a západ slunce, Velikonoce
+
+*# zjistit čas východu a západu slunce (obecně/příklad: Václavské náměstí v Praze)*<br>
+*// Čas východu slunce bude na první řádce výstupu, čas západu slunce na druhé. Pozice-NS je zeměpisná šířka a musí začínat písmenem N (severní) nebo S (jižní) a pokračovat číslem ve stupních a následně buď tečkou a desetinnou částí (např. N50.08105), nebo minutami a sekundami oddělenými dvojtečkami (např. N50:4:52). Pozice-WE je zeměpisná šířka ve stejném formátu, ale písmeno je W (západní) nebo E (východní). Datum se zadává ve standardním formátu YYYY-MM-DD. Přesnost výpočtu jsem podrobně nezkoumal/a, ale neočekávajte vyšší přesnost než tak plus minus dvě minuty.*<br>
+**TZ=UTC hdate -qsT -l** {*pozice-NS*} **-L** {*pozice-WE*} **$(($(date -d '**{*datum*}**&blank;00:00:00' +%s) / 86400 + 2440589)) \| sed -E '/^[0-9]/!d;s/\\.([0-9])\\./.0\\1./g;s/^([0-9]+)\\.([0-9]+)\\.([0-9]+),[<nic>^,]\*,([<nic>^,]+),([<nic>^,]+).\*/TZ="UTC" \\3-\\2-\\1&blank;\\4:00\\nTZ="UTC" \\3-\\2-\\1&blank;\\5:00/'** [**\|** [**TZ="**{*časová/zóna*}**"**] **date -f - "+%F %T %z"**]<br>
+**TZ=UTC hdate -qsT -l N50.0810578 -L E14.4279506 $(($(date -d '2020-08-19&blank;00:00:00' +%s) / 86400 + 2440589)) \| sed -E '/^[0-9]/!d;s/\\.([0-9])\\./.0\\1./g;s/^([0-9]+)\\.([0-9]+)\\.([0-9]+),[<nic>^,]\*,([<nic>^,]+),([<nic>^,]+).\*/TZ="UTC" \\3-\\2-\\1&blank;\\4:00/' \| date -f - "+%F %T %z"**
+
+<!--
+Význam skriptu v sedu:
+
+/^[0-9]/!d; # vyloučí řádky nezačínající číslicí (zejména záhlaví tabulky vypsané příkazem „hdate“)
+s/\\.([0-9])\\./.0\\1./g; # vloží nulu před číslo dne či měsíce, je-li tvořeno jedinou číslicí
+s/
+    ^([0-9]+)\\.([0-9]+)\\.([0-9]+),[<nic>^,]\*,([<nic>^,]+),([<nic>^,]+).\*
+/
+    TZ="UTC" \\3-\\2-\\1&blank;\\4:00\\nTZ="UTC" \\3-\\2-\\1&blank;\\5:00
+/ # načte datum a čas z výstupu „hdate“ a zformátuje je na vstup „date“
+
+Poznámka: podle Wikipedie se má při konverzi na JDN přičítat 2440587.5, ale „hdate“ v takovém případě vypisuje jiné datum. Toto by si zasloužilo prozkoumat.
+
+-->
+
 *# zjistit datum Velikonoční neděle*<br>
 **date -d "$(LC\_ALL=C ncal -e** [{*rok*}]**)" +%F**
 
@@ -315,7 +344,11 @@ timedatectl set-ntp on && sleep 1 && timedatectl set-ntp off
 
 ## Instalace na Ubuntu
 
-Veškeré použité nástroje jsou základními součástmi Ubuntu dostupnými v minimální instalaci.
+Většina použitých nástrojů je součástí minimální instalace Ubuntu; výjimkou je příkaz „hdate“,
+který je třeba doinstalovat:
+
+*# *<br>
+**sudo apt-get install hdate**
 
 ## Ukázka
 
@@ -341,8 +374,8 @@ Veškeré použité nástroje jsou základními součástmi Ubuntu dostupnými v
 **man ncal**
 
 * [Reference funkce strftime](https://en.cppreference.com/w/c/chrono/strftime) (anglicky)
-* [Manuálová stránka „date“](http://manpages.ubuntu.com/manpages/bionic/en/man1/date.1.html) (anglicky)
-* [Manuálová stránka „ncal“](http://manpages.ubuntu.com/manpages/bionic/en/man1/ncal.1.html) (anglicky)
+* [Manuálová stránka „date“](http://manpages.ubuntu.com/manpages/focal/en/man1/date.1.html) (anglicky)
+* [Manuálová stránka „ncal“](http://manpages.ubuntu.com/manpages/focal/en/man1/ncal.1.html) (anglicky)
 * [Video Linux Operating System \| Commands \| Date And Time](https://www.youtube.com/watch?v=FMrV5FdmBVI) (anglicky)
 * [TL;DR stránka „date“](https://github.com/tldr-pages/tldr/blob/master/pages/common/date.md) (anglicky)
 

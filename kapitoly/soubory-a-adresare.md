@@ -276,6 +276,10 @@ Poznámka: srovnávané položky nemusejí být v tomtéž adresáři; můžete
 *# vytvořit symbolický odkaz*<br>
 **ln -s "**{*obsah/odkazu*}**"** {*název*}
 
+*# vytvořit soubor vyplněný **nulami** (velikost zadat/odvodit)*<br>
+**rm -f** [**\-\-**] {*cesta/k/souboru*}... **&amp;&amp; truncate -s** {*velikost*} {*cesta/k/souboru*}...<br>
+**rm -f** [**\-\-**] {*cesta/k/souboru*}... **&amp;&amp; truncate -r** {*cesta/ke/vzorovému/souboru*} {*cesta/k/souboru*}...
+
 *# vytvořit pojmenovanou rouru*<br>
 **mkfifo** [**-m** {*práva*}] {*název*}...
 
@@ -501,11 +505,11 @@ Mód je číselné vyjádření základních práv a zvláštních příznaků 
 
 ## Instalace na Ubuntu
 
-Všechny použité nástroje jsou základními součástmi Ubuntu, s výjimkou příkazu „tree“,
-který můžete doinstalovat takto:
+Všechny použité nástroje jsou základními součástmi Ubuntu, s výjimkou příkazů „tree“ a „xattr“,
+které můžete doinstalovat takto:
 
 *# *<br>
-**sudo apt-get install tree**
+**sudo apt-get install tree xattr**
 
 <!--
 ## Ukázka

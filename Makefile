@@ -39,7 +39,7 @@ VSECHNY_KAPITOLY += hledani-souboru konverze-formatu latex lkk make markdown mod
 # N, O, P, Q, R, S
 VSECHNY_KAPITOLY += odkazy pdf perl planovani-uloh prace-s-archivy promenne regularni-vyrazy
 # S
-VSECHNY_KAPITOLY += sed soubory-a-adresare sprava-balicku sprava-balicku-2 sprava-procesu sprava-uzivatelskych-uctu stahovani-videi stahovani-z-webu system
+VSECHNY_KAPITOLY += sed sifrovani soubory-a-adresare sprava-balicku sprava-balicku-2 sprava-procesu sprava-uzivatelskych-uctu stahovani-videi stahovani-z-webu system
 # T, U, V, W, X, Y, Z
 VSECHNY_KAPITOLY += unicode uzivatelska-rozhrani vim virtualbox wine x
 # Z
@@ -50,7 +50,7 @@ VSECHNY_KAPITOLY_A_DODATKY_MD = $(VSECHNY_KAPITOLY:%=kapitoly/%.md) $(VSECHNY_DO
 
 # Obrázky (bitmapové a SVG)
 # ----------------------------------------------------------------------------
-OBRAZKY := favicon.png by-sa.png logo-knihy-velke.png make.png ve-vystavbe.png marsh.jpg udoli.jpg banner.png
+OBRAZKY := favicon.png by-sa.png logo-knihy-velke.png ve-vystavbe.png marsh.jpg udoli.jpg banner.png
 OBRAZKY += ik-vychozi.png
 SVG_OBRAZKY := kalendar.svg graf-filtru.svg
 OBRAZKY_IK := awk.png barvy-a-titulek.png datum-cas-kalendar.png diskove-oddily.png docker.png git.png hledani-souboru.png

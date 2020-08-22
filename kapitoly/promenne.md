@@ -52,10 +52,10 @@ Do této kapitoly nespadají takzvané zvláštní parametry (jako např. $?, $!
 ## Definice
 
 * Bash rozeznává tři základní typy proměnných: **řetězcové proměnné**, **pole** (indexované celými čísly od nuly) a **asociativní pole** (indexované neprázdným řetězcem zvaným **klíč**).
-* **Prostředí** je soubor řetězcových proměnných (tzv. **proměnných prostředí**), který má nejen bash, ale každý proces (s výjimkou jaderných démonů). Obvykle vzniká jako kopie prostředí rodičovského procesu (což umožňuje šířit proměnné prostředí přes meziprocesy, které se o ně nezajímají); to ovšem neplatí, je-li rodičovským procesem bash; ten vytváří prostředí spuštěných procesů ze svých **exportovaných proměnných**. Exportované proměnné bash vytvoří z prostředí v momentě svého spuštění a dál se s nimi pracuje stejně jako s ostatními řetězcovými proměnnými, včetně možnosti je vytvářet a rušit.
-* **Funkce** je krátký skript, který se místo do souboru ukládá do paměti (stejně jako proměnná). Na rozdíl od skriptu se také vždy spouští v rámci stávající instance bashe. Stejně jako skript lze funkci zavolat zadáním jejího názvu jako příkazu a má svoje poziční parametry. Funkce se často používají ve skriptech jako podprogramy, ale užitečné jsou i v interaktivním režimu.
+* **Prostředí** je soubor řetězcových proměnných (tzv. **proměnných prostředí**), který má nejen bash, ale každý proces (s výjimkou jaderných démonů). Prostředí se kopíruje do každého nově spuštěného procesu a bash ho reprezentuje souborem **exportovaných proměnných**, což umožňuje prostředí nově vytvořených procesů měnit.
+* **Funkce** je krátký skript, který se místo do souboru ukládá do paměti (stejně jako proměnná). Na rozdíl od skutečného skriptu se vždy spouští v rámci stávající instance bashe. Stejně jako skript lze funkci zavolat zadáním jejího názvu jako příkazu a má svoje poziční parametry. Funkce se často používají ve skriptech jako podprogramy, ale užitečné jsou i v interaktivním režimu.
 * **Konstanta** je proměnná (jen zřídka exportovaná), které je jednorázově přidělena hodnota a dále již nemůže být změněna ani zrušena.
-* **Parametry** (také **poziční parametry**) jsou v bashi přístupné jako zvláštní proměnné „1“, „2“ atd. Poziční parametry lze číst jako obyčejné proměnné, ale přiřadit jde jen do všech najednou, a to voláním skriptu, volání funkce nebo příkazem „set“.
+* **Parametry** (také **poziční parametry**) jsou v bashi přístupné jako zvláštní proměnné „1“, „2“ atd. Poziční parametry lze číst všemi způsoby, jakými lze číst obyčejné proměnné, ale přiřadit lze jen do všech najednou, a to voláním skriptu, volání funkce nebo příkazem „set“.
 * **Celočíselné proměnné** jsou řetězcové proměnné a prvky polí či asociativních polí, kterým byl nastaven atribut „i“. Při každém přiřazení do takové proměnné (resp. prvku) se přiřazovaný text vyhodnotí jako celočíselný výraz a do proměnné/prvku se přiřadí výsledná celočíselná hodnota.
 
 <!--
@@ -531,14 +531,14 @@ Prázdný klíč způsobí chybu „chybný podskript pole“.
 ### Spouštění programů s upraveným prostředím
 
 *# **spustit** s upraveným prostředím (jednodušší varianta)*<br>
-[[**/usr/bin/**]**env**] {*PROMÉNNÁ*}**=**{*hodnota*} [{*DALŠÍ\_PROMÉNNÁ*}**=**{*další-hodnota*}]... {*příkaz*} [{*parametr*}]...
+[[**/usr/bin/**]**env**] {*PROMĚNNÁ*}**=**{*hodnota*} [{*DALŠÍ\_PROMĚNNÁ*}**=**{*další-hodnota*}]... {*příkaz*} [{*parametr*}]...
 
 *# spustit v jiném aktuálním **adresáři***<br>
 **env -C** {*cesta*} {*příkaz*} [{*parametr*}]...
 
 *# spustit s upraveným prostředím (**komplexní** varianta)*<br>
 *// -i prostředí zcela vyprázdní; \-\-unset z něj odebírá uvedené proměnné, přiřazení proměnné prostředí nastavuje a parametr „-C“ změní aktuální adresář.*<br>
-[[**/usr/bin/**]**env**] <nic>[**-i**] <nic>[**\-\-unset=**{*PROMÉNNÁ*}]... [{*PROMÉNNÁ*}**=**{*hodnota*}]... [**-C** {*nový/aktuální/adresář*}] {*příkaz*} [{*parametr*}]...
+[[**/usr/bin/**]**env** <nic>[**-i**] <nic>[**\-\-unset=**{*PROMĚNNÁ*}]... [**-C** {*nový/aktuální/adresář*}]] [{*PROMĚNNÁ*}**=**{*hodnota*}]... {*příkaz*} [{*parametr*}]...
 
 ### Předdefinované proměnné
 
@@ -581,14 +581,14 @@ Prázdný klíč způsobí chybu „chybný podskript pole“.
 **LC\_ALL=C**
 
 *# vypnout lokalizaci, ale ponechat kódování UTF-8*<br>
-**LC\_ALL=C.utf8**
+**LC\_ALL=C.UTF-8**
 
 *# preferovaná časová zóna*<br>
 **TZ=UTC**<br>
 **TZ=Europe/Prague**
 
 *# nelokalizovat výpisy a hlášení*<br>
-**LC\_MESSAGES=C.utf8**
+**LC\_MESSAGES=C.UTF-8**
 
 *# požádat aplikaci o použití určitého dočasného adresáře*<br>
 **TMPDIR=**{*/absolutní/cesta*}
@@ -664,14 +664,15 @@ Všechny použité nástroje jsou základní součástí Ubuntu, přítomné i 
 
 ## Tipy a zkušenosti
 
-* Pozor! Kolem znaku „=“ při přiřazování do proměnných nesmí být žádné bílé znaky! Jedinou výjimkou je tzv. aritmetický kontext (tedy např. uvnitř konstrukce „$((text))“).
-* Náhradní řetězce a vzorky v pokročilých formách dosazení (např. „${X%.txt}“) vytvářejí nový kontext pro odzvláštnění, ve kterém můžete použít podle potřeby zpětná lomítka, uvozovky, apostrofy, a dokonce vnořené dosazení proměnných! Takže chcete-li např. dosadit hodnotu proměnné X po odebrání podřetězce „%\\}“ z jeho konce, použijte tvar "${X%'%\\}'}".
+* Pozor! Kolem znaku „=“ při přiřazování do proměnných nesmí být žádné bílé znaky! Jedinou výjimkou je tzv. aritmetický kontext (tedy např. uvnitř konstrukce „$(( prom = 1 + 1 ))“).
+* Náhradní řetězce a vzorky v pokročilých formách dosazení (např. „${X%.txt}“) vytvářejí nový kontext pro odzvláštnění, ve kterém můžete použít podle potřeby zpětná lomítka, uvozovky, apostrofy, a dokonce vnořené dosazení proměnných! Takže chcete-li např. dosadit hodnotu proměnné X po odebrání podřetězce „%\\}“ z jejího konce, použijte tvar "${X%'%\\}'}".
 * Do řetězcových proměnných můžete ukládat jakékoliv znaky UTF-8 kromě nulového bajtu, takže konce řádek, tabulátory, Escape apod. nejsou žádný problém.
 * Pokud potřebujete v asociativním poli použít jako klíč prázdný řetězec (což není dovoleno), pomůže upravit kód tak, aby před každý klíč vkládal konkrétní písmeno (např. „X“) a před výpisem toto písmeno zase odstraňoval (např. „${klíč#X}“).
 * Velkými písmeny (např. *HOME* či *HISTSIZE*) se píšou názvy proměnných, které mají řídicí či systémový význam, ať už jde o proměnné prostředí či jen interpretu. Vaše uživatelské proměnné ve skriptech nazývejte malými písmeny (např. „cesta\_zpet“), popř. kombinací malých a velkých písmen (např. „CestaZpet“).
 * Znak ~ se v bashi rozvíjí na hodnotu „${HOME}“, proto ho uvnitř dvojitých uvozovek (kde by se nerozvinul) můžete vždy snadno a bezpečně nahradit za „${HOME}“.
 * Funkce se může jmenovat stejně jako proměnná.
 * V bashi vznikají proměnné automaticky při prvním přiřazení, není tedy třeba je deklarovat. Ve výchozím nastavení navíc pokus o dosazení neexistující proměnné povede k dosazení prázdného řetězce bez jakékoliv chyby (toto lze změnit nastavením „set -u“).
+* Při čtení prostředí ostatních procesů je třeba si dát pozor na to, že bash změny exportovaných proměnných nereflektuje do svého vlastního prostředí, ale až do prostředí procesů, které spustí (počítá se i spuštění příkazem „exec“).
 
 ## Další zdroje informací
 

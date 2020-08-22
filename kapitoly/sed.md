@@ -296,6 +296,7 @@ Volba může být také „p“ (došlo-li k náhradě, provést příkaz „p�
 * ☐ -n :: Odstranit z cyklu automatické vypisování pracovního prostoru.
 * ☐ -z :: Záznamy jsou ukončeny „\\0“ místo „\\n“.
 * ☐ -i :: Místo vypsání na výstup přepíše výstupem vstupní soubor.
+* ☐ --debug :: Na výstup vypíše čitelné ladicí informace o činnosti skriptu.
 * ☐ -u :: Ze vstupu načítá jen minimální množství dat.
 
 ## Instalace na Ubuntu
@@ -342,7 +343,7 @@ GNU sed je základní součástí Ubuntu přítomnou i v minimální instalaci
 * [The Sed $HOME](http://sed.sourceforge.net/) (anglicky)
 * [Computer Hope: Linux sed Command Help and Examples](https://www.computerhope.com/unix/used.htm) (anglicky)
 * [Oficiální stránka GNU sed](https://www.gnu.org/software/sed/) (anglicky)
-* [Balíček](https://packages.ubuntu.com/bionic/sed) (anglicky)
+* [Balíček](https://packages.ubuntu.com/focal/sed) (anglicky)
 * [TL;DR: sed](https://github.com/tldr-pages/tldr/blob/master/pages/common/sed.md) (anglicky)
 
 

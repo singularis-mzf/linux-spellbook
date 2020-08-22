@@ -17,6 +17,7 @@ Poznámky:
 [ ] BTRFS
 [ ] Šifrování LVM?
 [ ] Připojování obyčejným uživatelem
+[ ] SquashFS.
 
 Článek o btrfs: https://www.root.cz/clanky/souborovy-system-btrfs-vlastnosti-a-vyhody-moderniho-ukladani-dat/
 
@@ -49,21 +50,29 @@ Rovněž nepokrývá práci se systémem souborů SquashFS. U LVM nepokrývá �
 
 ### Obecné definice
 
-* **Systém souborů** je něco, co nabízí adresářovou strukturu kompatibilní se způsobem, jakým Linux nahlíží na adresáře a soubory. Některé systémy souborů jsou „fyzické“ (uložené na skutečném zařízení), jiné jsou čistě virtuální (generované za běhu ovladačem v jádře).
-* **Virtuální souborový systém** (VFS) je způsob, jakým Linux nahlíží na strukturu souborů v počítači; není to skutečný systém souborů. Existuje pouze jeden, je pouze pro čtení a neobsahuje nic jiného než prázdný počáteční kořenový adresář. Při startu systému je na tento adresář připojen kořenový adresář kořenového systému souborů.
-* **Připojení** systému souborů znamená, že systém vezme existující adresář ve VFS (takzvaný **přípojný bod**, anglicky „mount point“) a „překryje“ ho kořenovým adresářem připojovaného systému souborů včetně jeho vlastnictví, příznaků a přístupových práv. Celá adresářová struktura připojeného systému souborů se pak stane součástí VFS, dostupnou přes daný přípojný bod. Naopak původní překrytý adresář (včetně svého obsahu) tímto z VFS odpadne. Opačným úkonem je **odpojení** systému souborů; při něm dojde k opětovnému zpřístupnění původního adresáře. Zvláštním (ale komplikovaným a méně častým) případem je připojení jiného než kořenového adresáře systému souborů.
-* **Typ systému souborů** je buď způsob uložení souborů a adresářů na diskovém oddílu (např. „ext4“) nebo druh ovladače, který poskytuje nějakým způsobem získanou adresářovou strukturu (např. „tmpfs“). Zvláštním typem systému souborů je „swap“, tedy odkládací oddíl, protože ten adresářovou strukturu neposkytuje.
-* K identifikaci konkrétního systémů souborů se používají: **UUID**, což je identifikátor souborového systému přidělovaný při formátování (tzn. dalším formátováním se změní); ne všechny souborové systémy mají nějakou formu UUID, ale ext4, FAT32 a NTFS ano; **PARTUUID**, což je identifikátor oddílu na disku, je-li dělen metodou GPT (na discích dělených starší metodou MBR se emuluje, u logických oddílů LVM není dostupný vůbec); **jmenovka**, což je textový identifikátor souborového systému přidělovaný uživatelem, zpravidla při formátování. Poslední možností je cesta k idenfikátoru zařízení v /dev, např. „/dev/sda1“.
+* **Virtuální souborový systém** (VFS) je způsob, jakým Linux nahlíží na strukturu adresářů. Při startu počítače obsahuje jen prázdný kořenový adresář „/“, na který jádro „připojí“ (viz níže) kořenový adresář kořenového systému souborů.
+* **Systém souborů** je vymezená část adresářové struktury uložená nebo zpřístupněná jednotným způsobem (např. na jednom oddílu pevného disku). Každý systém souborů má svůj **kořenový adresář**, který může být „připojen“ (viz níže) na některý z adresářů VFS. Systémy souborů mohou být fyzické (uložené fyzicky na nějakém paměťovém médiu), virtuální (generované za běhu jádrem operačního systému), vzdálené (připojované přes síť) nebo vnořené (uložené v souboru – to bývá např. SquashFS). Konkrétní způsob fyzické organizace systému souborů na úložném médiu nazývá **typ systému souborů**, to je např. ext4 nebo NTFS.
+* **Připojení** systému souborů znamená, že systém vezme existující adresář ve VFS, na který dosud není žádný systém souborů připojen, a „překryje“ ho kořenovým adresářem připojovaného systému souborů včetně jeho vlastnictví, příznaků a přístupových práv. Překrytý adresář se nazývá **přípojný bod** (anglicky „mount point“). Celá adresářová struktura připojeného systému souborů se pak stane součástí VFS, dostupnou přes daný přípojný bod. Naopak původní překrytý adresář (včetně svého obsahu) tímto z VFS odpadne. Opačným úkonem je **odpojení** systému souborů; při něm dojde k opětovnému zpřístupnění původního adresáře. Zvláštním (ale komplikovaným a méně častým) případem je připojení jiného než kořenového adresáře systému souborů.
+* **Odkládací oddíl** je úložný prostor sloužící k odkládání paměťových stránek, popř. k hibernaci. V Linuxu se s ním zachází podobně jako se souborovým systémem, proto je předmětem této kapitoly.
+
+### Identifkátory souborových systémů
+
+K identifikaci konkrétního systémů souborů se používá několik druhů identifikátorů:
+
+* **UUID** je identifikátor přidělovaný souborovému systému při formátování (tzn. dalším formátováním se změní, ale naopak překopírování po bajtech ho neohrozí); ne všechny souborové systémy mají nějakou formu UUID, ale ext4, FAT32 a NTFS ano.
+* **PARTUUID** je identifikátor oddílu na disku, je-li dělen metodou GPT (na discích dělených starší metodou MBR se emuluje, u logických oddílů LVM není dostupný vůbec).
+* **Jmenovka** je textový identifikátor souborového systému přidělovaný uživatelem, zpravidla při formátování.
+* Poslední možností je cesta k zařízení v /dev, např. „/dev/sda1“. Tato možnost je preferována u logických oddílů LVM; u oddílů na discích se nedoporučuje, protože označení disku či oddílu na něm se může snadno změnit.
 
 ### LVM
 
-LVM (logical volume management) je metoda rozložení oddílů na pevném disku, který má
+LVM (logical volume management) je metoda rozložení oddílů na pevném disku, která má
 odstínit uživatele od fyzického rozložení dat a poskytnout nové možnosti, např. rozložení
 jednoho oddílu přes několik fyzických disků nebo snadné přesouvání oddílů a změnu jejich velikosti, často i bez nutnosti restartu počítače.
 
 * **Logický oddíl** je v LVM obdoba běžného diskového oddílu (tzn. je možno ho naformátovat a používat k ukládání dat); na rozdíl od něj ale nemá pevné fyzické umístění na disku, jeho fyzické umístění je vymezené skupinou svazků, ve které je vytvořen. Logický oddíl LVM je dostupný pod cestou „/dev/{*skupina-svazků*}/{*název-oddílu*}“.
-* **Skupina svazků** je v LVM neprázdná pojmenovaná skupina fyzických svazků k vytváření logických oddílů. Data každého logického oddílu se fyzicky nacházejí pouze na fyzických svazcích příslušných do stejné skupiny.
-* **Fyzický svazek** je v LVM blokové zařízení (celý disk nebo jeho oddíl), které je nastavené a naformátované k ukládání dat logických oddílů. Nemůže to být logický oddíl.
+* **Skupina svazků** je v LVM neprázdná pojmenovaná skupina fyzických svazků k vytváření logických oddílů. Data každého logického oddílu se fyzicky nacházejí pouze na fyzických svazcích příslušných do dané skupiny.
+* **Fyzický svazek** je v LVM blokové zařízení (celý disk nebo jeho oddíl), které je nastavené a naformátované k ukládání dat logických oddílů. Nemůže to být logický oddíl LVM.
 
 ### Co a kam připojit
 
@@ -73,8 +82,8 @@ V následujících zaklínadlech platí:
 
 * UUID souborového systému ve tvaru „UUID=61bbd562-0694-4561-a8e2-4ccfd004a660“.
 * PARTUUID ve tvaru „PARTUUID=0337a362-e7b3-4c50-a81d-9a5d45755e75“.
-* Jmenovka ve tvaru LABEL="Jmenovka" pro připojení diskového oddílu s danou jmenovkou.
-* Cesta diskového oddílu či zařízení (např. „/dev/sda1“). Tento tvar je vhodný pouze u logických oddílům LVM či při jednorázovém připojování příkazem „mount“. V ostatních případech se nedoporučuje, protože cesta k diskovému oddílu se může změnit po každém restartu v závislosti na počtu oddílů, připojeném hardware apod.
+* Jmenovka ve tvaru LABEL="Jmenovka".
+* Cesta diskového oddílu či zařízení (např. „/dev/sda1“). Tento tvar je vhodný pouze u logických oddílů LVM či při jednorázovém připojování příkazem „mount“. V ostatních případech se nedoporučuje, protože cesta k diskovému oddílu se může změnit po každém restartu v závislosti na počtu oddílů, připojeném hardware apod.
 * U některých typů souborových systémů je to jiný řetězec (např. „tmpfs“, „none“ apod.)
 * Existuje ještě tvar pro síťový souborový systém, viz manuálovou stránku „man 5 fstab“.
 
@@ -293,6 +302,8 @@ asi PHY-SEC/LOG-SEC u lsblk
 
 ### Jmenovka (nastavit)
 
+Poznámka: při nastavování jmenovky musí být souborový systém zpravidla odpojený!
+
 *# nastavit/smazat jmenovku **odkládacího** oddílu*<br>
 **sudo swaplabel -L "**{*novájmenovka*}**"** {*/dev/oddíl*}
 **sudo swaplabel -L ""** {*/dev/oddíl*}
@@ -302,20 +313,17 @@ asi PHY-SEC/LOG-SEC u lsblk
 **sudo e2label** {*/dev/oddíl*} **""**
 
 *# nastavit/smazat jmenovku **FAT32***<br>
-?<br>
-?
+*// Jmenovka souborového systému FAT32 může mít nejvýše 11 znaků. Z důvodu kompatibility by měla být tvořena pouze velkými písmeny anglické abecedy, číslicemi, pomlčkami a podtržítky. Ostatní typy systému souborů mají omezení na jmenovku podstatně volnější.*<br>
+**sudo fatlabel** {*/dev/oddíl*} **"**{*novájmenovka*}**"**<br>
+**sudo fatlabel** {*/dev/oddíl*} **""**
 
 *# nastavit/smazat jmenovku **NTFS***<br>
-?<br>
-?
+**sudo ntfslabel** [**\-\-new-serial**] {*/dev/oddíl*} **"**{*novájmenovka*}**"**<br>
+**sudo ntfslabel** [**\-\-new-serial**] {*/dev/oddíl*} **""**<br>
 
-<!--
-*# zjistit jmenovku odkládacího oddílu/ext4/NTFS/FAT32*<br>
-**sudo swaplabel** {*/dev/oddíl*} **\| sed -nE 's/^LABEL:\\s\*//;T;p'**<br>
-**sudo e2label** {*/dev/oddíl*}<br>
-?<br>
-?
--->
+*# zjistit jmenovku jakéhokoliv oddílu*<br>
+**lsblk -ln -o LABEL** {*/dev/oddíl*}<br>
+**lsblk -ln -o LABEL** {*/dev/oddíl*}
 <!--
 Viz: https://wiki.archlinux.org/index.php/Persistent_block_device_naming
 -->
