@@ -94,11 +94,11 @@ Pro skupiny platí:
 **getent passwd** {*uživatel*} **&gt;/dev/null**
 
 *# **vypsat** všechny uživatele kromě systémových/úplně všechny*<br>
-**getent passwd \| sed -E '/^([<nic>^:]\*:){2}(0\|[0-9]{4,}):/!d;s/:.\*//'** [**\| LC\_ALL=C.utf8 sort**]<br>
+**getent passwd \| sed -E '/^([<nic>^:]\*:){2}(0\|[0-9]{4,}):/!d;s/:.\*//'** [**\| LC\_ALL=C.UTF-8 sort**]<br>
 <!--
-gawk -F : '$3 == 0 || $3 &gt;= 1000 {print $1;}'** [**\| LC\_ALL=C.utf8 sort**]<br>
+gawk -F : '$3 == 0 || $3 &gt;= 1000 {print $1;}'** [**\| LC\_ALL=C.UTF-8 sort**]<br>
 -->
-**getent passwd \| cut -d : -f 1** [**\| LC\_ALL=C.utf8 sort**]
+**getent passwd \| cut -d : -f 1** [**\| LC\_ALL=C.UTF-8 sort**]
 
 *# vypsat uživatele, kteří jsou právě přihlášeni k systému (pro člověka/pro skript)*<br>
 **who**<br>
@@ -142,7 +142,7 @@ gawk -F : '$3 == 0 || $3 &gt;= 1000 {print $1;}'** [**\| LC\_ALL=C.utf8 sort**]<
 
 *# vypsat **skupiny**, ve kterých je účet členem (pro člověka/pro skript)*<br>
 **groups** {*uživatel*}<br>
-**id -Gn** {*uživatel*} **\| tr "&blank;" \\\\n \|** [**LC\_ALL=C.utf8**] **sort**
+**id -Gn** {*uživatel*} **\| tr "&blank;" \\\\n \|** [**LC\_ALL=C.UTF-8**] **sort**
 
 *# **UID***<br>
 **id -u** {*uživatelské-jméno*}<br>
@@ -203,7 +203,7 @@ gawk -F : '$3 == 0 || $3 &gt;= 1000 {print $1;}'** [**\| LC\_ALL=C.utf8 sort**]<
 
 *# skupiny, ve kterých je členem (pro člověka/pro skript)*<br>
 **groups**<br>
-**id -Gn \| tr "&blank;" \\\\n \|** [**LC\_ALL=C.utf8**] **sort**<br>
+**id -Gn \| tr "&blank;" \\\\n \|** [**LC\_ALL=C.UTF-8**] **sort**<br>
 
 *# domovský adresář (doporučená varianta/spolehlivá varianta)*<br>
 **printf %s\\\\n "$HOME"**<br>
@@ -260,11 +260,11 @@ gawk -F : '$3 == 0 || $3 &gt;= 1000 {print $1;}'** [**\| LC\_ALL=C.utf8 sort**]<
 **sudo delgroup** [**\-\-only-if-empty**] {*skupina*}
 
 *# **vypsat** všechny skupiny kromě systémových/úplně všechny*<br>
-**getent group \| sed -E '/^([<nic>^:]\*:){2}(0\|[0-9]{4,}):/!d;s/:.\*//'** [**\| LC\_ALL=C.utf8 sort**]<br>
-**getent group \| cut -d : -f 1** [**\| LC\_ALL=C.utf8 sort**]
+**getent group \| sed -E '/^([<nic>^:]\*:){2}(0\|[0-9]{4,}):/!d;s/:.\*//'** [**\| LC\_ALL=C.UTF-8 sort**]<br>
+**getent group \| cut -d : -f 1** [**\| LC\_ALL=C.UTF-8 sort**]
 <!--
-**gawk -F : '$3 == 0 || $3 &gt;= 1000 {print $1;}' /etc/group** [**\| LC\_ALL=C.utf8 sort**]<br>
-**cut -d : -f 1 /etc/group** [**\| LC\_ALL=C.utf8 sort**]
+**gawk -F : '$3 == 0 || $3 &gt;= 1000 {print $1;}' /etc/group** [**\| LC\_ALL=C.UTF-8 sort**]<br>
+**cut -d : -f 1 /etc/group** [**\| LC\_ALL=C.UTF-8 sort**]
 -->
 
 *# vypsat GID skupiny podle názvu/název podle GID*<br>
@@ -288,7 +288,7 @@ gawk -F : '$3 == 0 || $3 &gt;= 1000 {print $1;}'** [**\| LC\_ALL=C.utf8 sort**]<
 **sudo deluser** {*uživatel*} {*skupina*}
 
 *# **vypsat** účty ve skupině (po řádcích)*<br>
-**getent group** {*skupina*} **&gt;/dev/null &amp;&amp; (gid=$(getent group** {*skupina*} **\| cut -d : -f 3); sed -E "/^([^<nic>:]\*:)\{3\}$gid:/!d;s/:.\*//" /etc/passwd; getent group $gid \| cut -d : -f 4 \| sed -E '/^$/d;s/,/\\n/g') \| LC\_ALL=C.utf8 sort -u**
+**getent group** {*skupina*} **&gt;/dev/null &amp;&amp; (gid=$(getent group** {*skupina*} **\| cut -d : -f 3); sed -E "/^([^<nic>:]\*:)\{3\}$gid:/!d;s/:.\*//" /etc/passwd; getent group $gid \| cut -d : -f 4 \| sed -E '/^$/d;s/,/\\n/g') \| LC\_ALL=C.UTF-8 sort -u**
 <!--
 Problém: vetšina příkazů nevypisuje výchozí skupiny.
 [ ] Vyčlenit do pomocné funkce!

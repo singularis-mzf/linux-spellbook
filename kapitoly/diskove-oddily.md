@@ -57,7 +57,7 @@ Rovněž nepokrývá práci se systémem souborů SquashFS. U LVM nepokrývá �
 
 ### LVM
 
-LVM (logical volume management) je metoda rozložení oddílů na pevném disku, který má
+LVM (logical volume management) je metoda rozložení oddílů na pevném disku, která má
 odstínit uživatele od fyzického rozložení dat a poskytnout nové možnosti, např. rozložení
 jednoho oddílu přes několik fyzických disků nebo snadné přesouvání oddílů a změnu jejich velikosti, často i bez nutnosti restartu počítače.
 
@@ -74,7 +74,7 @@ V následujících zaklínadlech platí:
 * UUID souborového systému ve tvaru „UUID=61bbd562-0694-4561-a8e2-4ccfd004a660“.
 * PARTUUID ve tvaru „PARTUUID=0337a362-e7b3-4c50-a81d-9a5d45755e75“.
 * Jmenovka ve tvaru LABEL="Jmenovka" pro připojení diskového oddílu s danou jmenovkou.
-* Cesta diskového oddílu či zařízení (např. „/dev/sda1“). Tento tvar je vhodný pouze u logických oddílům LVM či při jednorázovém připojování příkazem „mount“. V ostatních případech se nedoporučuje, protože cesta k diskovému oddílu se může změnit po každém restartu v závislosti na počtu oddílů, připojeném hardware apod.
+* Cesta diskového oddílu či zařízení (např. „/dev/sda1“). Tento tvar je vhodný pouze u logických oddílů LVM či při jednorázovém připojování příkazem „mount“. V ostatních případech se nedoporučuje, protože cesta k diskovému oddílu se může změnit po každém restartu v závislosti na počtu oddílů, připojeném hardware apod.
 * U některých typů souborových systémů je to jiný řetězec (např. „tmpfs“, „none“ apod.)
 * Existuje ještě tvar pro síťový souborový systém, viz manuálovou stránku „man 5 fstab“.
 
@@ -83,9 +83,9 @@ V následujících zaklínadlech platí:
 * Absolutní cesta k adresáři, který v dané chvíli ve VFS existuje, ale není ještě přípojným bodem. (V příkazu „mount“ lze zadat i relativní cestu.)
 * „none“ pro odkládací prostor.
 
-{*typ-soub-sys*} je identifikátor typu souborového systému (např. ext4, vfat, ntfs, tmpfs apod.) Lze použít i „auto“; systém se pak typ pokusí detekovat automaticky.
+{*typ-soub-sys*} je identifikátor typu systému souborů (např. ext4, vfat, ntfs, tmpfs apod.) Lze použít i „auto“; systém se pak pokusí typ systému souborů detekovat automaticky.
 
-{*volby-připojení*} je seznam čárkami oddělených voleb nebo klíčové slovo „defaults“, které má význam „rw,suid,dev,exec,auto,nouser,async“.
+{*volby-připojení*} jsou seznam čárkami oddělených voleb nebo klíčové slovo „defaults“, které má význam „rw,suid,dev,exec,auto,nouser,async“.
 
 !ÚzkýRežim: vyp
 
@@ -293,6 +293,8 @@ asi PHY-SEC/LOG-SEC u lsblk
 
 ### Jmenovka (nastavit)
 
+Poznámka: při nastavování jmenovky musí být souborový systém zpravidla odpojený!
+
 *# nastavit/smazat jmenovku **odkládacího** oddílu*<br>
 **sudo swaplabel -L "**{*novájmenovka*}**"** {*/dev/oddíl*}
 **sudo swaplabel -L ""** {*/dev/oddíl*}
@@ -302,20 +304,17 @@ asi PHY-SEC/LOG-SEC u lsblk
 **sudo e2label** {*/dev/oddíl*} **""**
 
 *# nastavit/smazat jmenovku **FAT32***<br>
-?<br>
-?
+*// Jmenovka souborového systému FAT32 může mít nejvýše 11 znaků. Z důvodu kompatibility by měla být tvořena pouze velkými písmeny anglické abecedy, číslicemi, pomlčkami a podtržítky. Ostatní typy systému souborů mají omezení na jmenovku podstatně volnější.*<br>
+**sudo fatlabel** {*/dev/oddíl*} **"**{*novájmenovka*}**"**<br>
+**sudo fatlabel** {*/dev/oddíl*} **""**
 
 *# nastavit/smazat jmenovku **NTFS***<br>
-?<br>
-?
+**sudo ntfslabel** [**\-\-new-serial**] <nic>[**\-\-verbose**] {*/dev/oddíl*} **"**{*novájmenovka*}**"**<br>
+**sudo ntfslabel** [**\-\-new-serial**] <nic>[**\-\-verbose**]{*/dev/oddíl*} **""**<br>
 
-<!--
-*# zjistit jmenovku odkládacího oddílu/ext4/NTFS/FAT32*<br>
-**sudo swaplabel** {*/dev/oddíl*} **\| sed -nE 's/^LABEL:\\s\*//;T;p'**<br>
-**sudo e2label** {*/dev/oddíl*}<br>
-?<br>
-?
--->
+*# zjistit jmenovku jakéhokoliv oddílu*<br>
+**lsblk -ln -o LABEL** {*/dev/oddíl*}<br>
+**lsblk -ln -o LABEL** {*/dev/oddíl*}
 <!--
 Viz: https://wiki.archlinux.org/index.php/Persistent_block_device_naming
 -->
@@ -349,7 +348,7 @@ Viz: https://wiki.archlinux.org/index.php/Persistent_block_device_naming
 **sudo dd if=**{*/dev/oddíl*} [**status=progress**] **\| gzip -n**[**9**] **&gt;**{*cesta.gz*}
 
 *# **obnovit** diskový oddíl (přímo/komprimovaný)*<br>
-*// Pozor! Tato operace je nebezpečná! Pokud zadáte chybný cílový oddíl, daný oddíl se nevratně přepíše daty určenými pro ten správný. Pokud velikost zálohy neodpovídá přesně velikosti cílového oddílu, nemusí být oddíl po obnově dobře použitelný. Tento příkaz používejte s velkou opatrností!*<br>
+*// Pozor! Tato operace je velmi nebezpečná! Pokud zadáte chybný cílový oddíl, daný oddíl se nevratně přepíše daty určenými pro ten správný. Pokud velikost zálohy neodpovídá přesně velikosti cílového oddílu, nemusí být oddíl po obnově dobře použitelný. Tento příkaz používejte s velkou opatrností!*<br>
 **sudo dd if=**{*cesta*} **of=/dev/**{*oddíl*} [**status=progress**]<br>
 **gunzip -cd** {*cesta.gz*} **\| sudo dd of=**{*/dev/oddíl*} [**status=progress**]
 

@@ -78,24 +78,7 @@ Při hlášení, prosím, použijte následující postup:
 
 1. Pokud používáte jinou distribuci než Ubuntu nebo jinou verzi než tu, která je výslovně podporovaná, pokuste se chybu zopakovat na podporované verzi Ubuntu.
 2. Pokud systém hlásí chybějící příkaz, zkontrolujte sekci kapitoly „Instalace na Ubuntu“, zda nepotřebujete něco doinstalovat či nastavit.
-3. Při hlášení použijte následující vzor:
-
-**Přesný postup, jak navodit chybu na „čistém systému“:**
-
-    sudo apt-get install gawk
-    gawk -version
-
-**Co by měl příkaz podle Linuxu: Knihy kouzel správně udělat:**<br>
-Příkaz by měl vypsat nainstalovanou verzi gawk.
-
-**Co ve vašem případě udělá:**<br>
-Příkaz mi vypíše: „gawk: \`ersion' argument to \`-v' not in \`var=value' form“.
-
-**Přesná verze LKK, název kapitoly a umístění zaklínadla:**<br>
-Vanilková příchuť 1.0, kapitola „AWK“, sekce 6 „Parametry příkazů“.
-
-**Jak by to mělo být správně (nepovinné; jen pokud to víte):**<br>
-Správně by mělo být --version.
+3. Pokud je to možné, při hlášení se držte [vzoru](https://github.com/singularis-mzf/linux-spellbook/issues/2).
 
 ## Sehnat či nakreslit lepší ikony kapitol
 

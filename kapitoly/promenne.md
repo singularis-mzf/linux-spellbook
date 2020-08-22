@@ -11,17 +11,6 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
-<!--
-Poznámky:
-
-⊨
-☐
-○ ◉
-
-[ ] Přednastavování proměnných prostředí (.profile, /etc/environment apod.)
-[ ] Pattern matching (možná spíš do jiné kapitoly): https://www.gnu.org/software/bash/manual/html_node/Pattern-Matching.html#Pattern-Matching
-
--->
 
 # Proměnné prostředí a interpretu
 
@@ -531,14 +520,14 @@ Prázdný klíč způsobí chybu „chybný podskript pole“.
 ### Spouštění programů s upraveným prostředím
 
 *# **spustit** s upraveným prostředím (jednodušší varianta)*<br>
-[[**/usr/bin/**]**env**] {*PROMÉNNÁ*}**=**{*hodnota*} [{*DALŠÍ\_PROMÉNNÁ*}**=**{*další-hodnota*}]... {*příkaz*} [{*parametr*}]...
+[[**/usr/bin/**]**env**] {*PROMĚNNÁ*}**=**{*hodnota*} [{*DALŠÍ\_PROMĚNNÁ*}**=**{*další-hodnota*}]... {*příkaz*} [{*parametr*}]...
 
 *# spustit v jiném aktuálním **adresáři***<br>
 **env -C** {*cesta*} {*příkaz*} [{*parametr*}]...
 
 *# spustit s upraveným prostředím (**komplexní** varianta)*<br>
 *// -i prostředí zcela vyprázdní; \-\-unset z něj odebírá uvedené proměnné, přiřazení proměnné prostředí nastavuje a parametr „-C“ změní aktuální adresář.*<br>
-[[**/usr/bin/**]**env**] <nic>[**-i**] <nic>[**\-\-unset=**{*PROMÉNNÁ*}]... [{*PROMÉNNÁ*}**=**{*hodnota*}]... [**-C** {*nový/aktuální/adresář*}] {*příkaz*} [{*parametr*}]...
+[[**/usr/bin/**]**env**] <nic>[**-i**] <nic>[**\-\-unset=**{*PROMĚNNÁ*}]... [{*PROMĚNNÁ*}**=**{*hodnota*}]... [**-C** {*nový/aktuální/adresář*}] {*příkaz*} [{*parametr*}]...
 
 ### Předdefinované proměnné
 
