@@ -207,7 +207,7 @@ aptitude search --disable-columns -F %p "?upgradable"
 ### Jádra
 
 *# vypsat seznam nainstalovaných jader*<br>
-?
+**linux-version list**
 
 ### Správá důvěryhodných klíčů
 

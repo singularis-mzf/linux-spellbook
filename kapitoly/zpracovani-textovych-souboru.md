@@ -133,7 +133,7 @@ Tip: Odstranění dosáhnete nahrazením prázdným řetězcem.
 **printf "Žluťoučký kůň\\n" \| sed -E's/(.\*)/\\L\\1/'** ⊨ žluťoučký kůň
 
 *# konvertovat malá písmena na velká a naopak*<br>
-**sed -E 's/(.)/0\\1/g;s/0([[:lower:]])/1\\U\\1/g;s/0([[:upper:]])/1\\L\\1/g;s/[01]<nic>(.)/\\1/g** [{*vstupní-soubor*}]...
+**sed -E 's/(.)/0\\1/g;s/0([[:lower:]])/1\\U\\1/g;s/0([[:upper:]])/1\\L\\1/g;s/[01]<nic>(.)/\\1/g'** [{*vstupní-soubor*}]...
 
 ## Zaklínadla (txt, txtz)
 
@@ -176,8 +176,8 @@ Tip: Odstranění dosáhnete nahrazením prázdným řetězcem.
 **sed** [**-z**] {*první-vynechaný*}**,**{*poslední-vynechaný*}**d** [{*soubor*}]
 
 *# vzít pouze **liché/sudé** záznamy*<br>
-**sed -**[**z**]**n $'p\\nn'** [{*soubor*}]...<br>
-**sed -**[**z**]**n $'n\\np'** [{*soubor*}]...
+**sed -**[**z**]**n 'p;n'** [{*soubor*}]...<br>
+**sed -**[**z**]**n 'n;p'** [{*soubor*}]...
 
 ### Filtrace záznamů podle obsahu
 
@@ -364,13 +364,13 @@ Pro tsvz uveďte část „;RS=ORS="\\0";“.
 ### Řazení záznamů podle obsahu sloupců
 
 *# seřadit podle N-tého sloupce*<br>
-[**LC\_ALL=C**] **sort** [**-z**] **-t $'\\t' -k** {*N*}**,**{*N*}[{*druh-a-příznaky-řazení*}] <nic>[{*soubor*}]...
+[**LC\_ALL=C.UTF-8**] **sort** [**-z**] **-t $'\\t' -k** {*N*}**,**{*N*}[{*druh-a-příznaky-řazení*}] <nic>[{*soubor*}]...
 
 *# seřadit podle sloupců M až N*<br>
-[**LC\_ALL=C**] **sort** [**-z**] **-t $'\\t' -k** {*M*}**,**{*N*}[{*druh-a-příznaky-řazení*}] <nic>[{*soubor*}]...
+[**LC\_ALL=C.UTF-8**] **sort** [**-z**] **-t $'\\t' -k** {*M*}**,**{*N*}[{*druh-a-příznaky-řazení*}] <nic>[{*soubor*}]...
 
 *# seřadit podle více kritérií*<br>
-[**LC\_ALL=C**] **sort** [**-z**] <nic>[**-s**] **-t $'\\t' -k** {*jedno-kritérium*} <nic>[**-k** {*další-kritérium*}]... [{*soubor*}]...
+[**LC\_ALL=C.UTF-8**] **sort** [**-z**] <nic>[**-s**] **-t $'\\t' -k** {*jedno-kritérium*} <nic>[**-k** {*další-kritérium*}]... [{*soubor*}]...
 
 *# příklad: seřadit vzestupně podle číselné hodnoty 7. sloupce a pak sestupně podle 3. sloupce, bez ohledu na velikost písmen*<br>
 **sort** [**-z**] **-t $'\\t' -k 7,7n -k 3,3ri** [{*soubor*}]...

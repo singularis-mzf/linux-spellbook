@@ -23,14 +23,14 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 Tato kapitola se zabývá vyhledáváním adresářových položek (souborů a adresářů).
 Převážně se zabývá příkazem „find“, který strukturu adresářů skutečně prochází
-a prohleďává, ale zahrnuje také vyhledávání programů a na databázi založený
+a prohledává, ale zahrnuje také vyhledávání programů a na databázi založený
 příkaz „locate“.
 
 Tato verze kapitoly nepokrývá vyhledávání podle obsahu souboru.
 
 ## Definice
 
-* **Výchozí bod** je cesta (relativní či absolutní) zadaná příkazu „find“, ze které tento příkaz zahajuje vyhledávání. Může být absolutní i relativní. Nejčastěji se jedná o adresář (např. „.“), ale může jít i o souboru či symbolický odkaz na adresář či soubor. Příkaz find výchozí bod nezkracuje, vždy ho zpracovává tak, jak je zadán.
+* **Výchozí bod** je cesta (relativní či absolutní) zadaná příkazu „find“, ze které tento příkaz zahajuje vyhledávání. Může být absolutní i relativní. Nejčastěji se jedná o adresář (např. „.“), ale může jít i o soubor či symbolický odkaz na adresář či soubor. Příkaz find výchozí bod nezkracuje, vždy ho zpracovává tak, jak je zadán.
 * **Hloubka** je celé číslo, které vyjadřuje počet adresářů od výchozího bodu k právě testované adresářové položce. Hloubku 0 mají pouze výchozí body; hloubku 1 soubory a podadresáře v nich, hloubku 2 ty další atd. Je-li např. „/usr/share“ výchozí bod, pak adresář „/usr/share“ má hloubku 0, soubor „/usr/share/.lock“ by měl hloubku 1, soubor „/usr/share/test/copyright.gz“ hloubku 2 atd.
 * Průchod adresářovou strukturou může být **do šířky** (výchozí stav – každý adresář je nejprve zpracován sám o sobě (provedou se nad ním testy a v případě úspěchu se vykonají akce) a teprve poté do něj find vstoupí a prozkoumá jeho obsah) nebo **do hloubky** (v tom případě find pokaždé nejprve vstoupí do adresáře a zpracuje veškerý jeho obsah a teprve „na odchodu“ zpracuje i samotný adresář). Výchozí je průchod do šířky. Průchod do hloubky se aplikuje pouze tehdy, je-li zadán globální parametr „-depth“ nebo je-li použita akce „-delete“. Při průchodu do hloubky nelze použít akci „-prune“.
 * **Názvem položky** se u příkazu „find“ rozumí samotný název adresářové položky.

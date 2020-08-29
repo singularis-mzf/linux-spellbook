@@ -270,7 +270,7 @@ pro zarovnání mezerami místo nulami tam vložte „\_“, např. „%\_m“ v
 **timedatectl set-ntp on**
 
 *# **ručně** nastavit systémový čas*<br>
-*// Zadejte čas a datum ve formátu „YYYY-MM-DD HH:MM:SS“. Poznámka: Ve VirtualBoxu .*<br>
+*// Zadejte čas a datum ve formátu „YYYY-MM-DD HH:MM:SS“. Poznámka: Jsou-li ve VirtualBoxu nainstalované přídavky pro hosta, tyto přídavky velmi často systémový čas vnitřního systému (hosta) synchronizují se systémovým časem vnějšího systému (hostitele), proto v takovém případě změna systémového času vnitřního systému vydrží jen velmi krátce a je sotva pozorovatelná.*<br>
 **timedatectl set-ntp off**<br>
 **timedatectl set-time "**{*nový lokální čas*}**"**
 

@@ -83,9 +83,9 @@ Pro skupiny platí:
 
 *# **vytvořit** nového (běžného) uživatele*<br>
 *// Pozor! Celé jméno uživatele nesmí obsahovat znaky čárka a rovná se (, a =), nemělo by obsahovat ani znak dvojtečka. Při použití ne-ASCII znaků program vypíše varování, což je ale na dnešních systémech dost absurdní; doporučuji toto varování ignorovat.*<br>
-*// Pokud nezadáte volbu „\-\-disable-login“, příkaz vás hned interaktivně nechá nastavit počáteční heslo nově vzniklého uživatele.*<br>
+*// Pokud nezadáte volbu „\-\-disabled-login“, příkaz vás hned interaktivně nechá nastavit počáteční heslo nově vzniklého uživatele.*<br>
 *// Pokud nezadáte parametr „\-\-ingroup“, s vytvořením nového uživatele se pro něj rovněž vytvoří nová, stejnojmenná výchozí skupina.*<br>
-**sudo adduser \-\-gecos "**{*Celé jméno*}**"** [**\-\-disable-login**] <nic>[**\-\-debug**] <nic>[**\-\-shell** {*shell*}] <nic>[**\-\-ingroup** {*název-výchozí-skupiny*}] <nic>[**\-\-uid** {*konkrétní-UID*}] {*nový-uživatel*}
+**sudo adduser \-\-gecos "**{*Celé jméno*}**"** [**\-\-disabled-login**] <nic>[**\-\-debug**] <nic>[**\-\-shell** {*shell*}] <nic>[**\-\-ingroup** {*název-výchozí-skupiny*}] <nic>[**\-\-uid** {*konkrétní-UID*}] {*nový-uživatel*}
 
 *# **smazat** uživatele*<br>
 **sudo deluser** [**\-\-remove-home**] {*uživatel*}
