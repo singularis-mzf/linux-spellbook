@@ -12,6 +12,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
 <!--
+[ ] dpkg-deb (!)
 [ ] dpkg-reconfigure
 [ ] snap saved
 [ ] snap forget <balíček>
@@ -92,7 +93,7 @@ Offline instalací se rozumí stažení balíčků, jejich přenesení na počí
 
 *# **nainstalovat** nový balíček včetně závislostí (vzdálený balíček/lokální soubor)*<br>
 **sudo apt-get install** [**-y**] <nic>[**\-\-no-install-recommends**] <nic>[**\-\-install-suggests**] <nic>[**-V**] {*balíček*}...<br>
-**sudo gdebi** {*balíček.deb*}
+**sudo apt-get install** [**-y**] <nic>[**\-\-no-install-recommends**] <nic>[**\-\-install-suggests**] <nic>[**-V**] **./**{*balíček.deb*}
 
 *# aktualizovat jen konkrétní balíčky a jejich závislosti*<br>
 **sudo apt-get install \-\-only-upgrade** {*balíček*}...
@@ -207,7 +208,7 @@ aptitude search --disable-columns -F %p "?upgradable"
 ### Jádra
 
 *# vypsat seznam nainstalovaných jader*<br>
-?
+**linux-version list**
 
 ### Správá důvěryhodných klíčů
 
@@ -256,6 +257,11 @@ aptitude search --disable-columns -F %p "?upgradable"
 **sudo dpkg-divert \-\-package** {*balíček*} [**\-\-rename**] **\-\-divert** {*/nové/umístění*} {*/původní/umístění*}
 
 ### Ostatní
+
+*# vybalit z balíčku DEB soubory programu/řídicí soubory*<br>
+*// Pokud zadaný adresář neexistuje, bude vytvořen.*<br>
+**dpkg-deb -x** {*balíček.deb*} {*cílový-adresář*}<br>
+**dpkg-deb -e** {*balíček.deb*} {*cílový-adresář*}
 
 *# přidat do zdrojů nový repozitář/odebrat repozitář*<br>
 **sudo add-apt-repository '**{*řádek sources.list*}**'**<br>
@@ -511,8 +517,8 @@ http://docs.flatpak.org/en/latest/single-file-bundles.html
 
 ## Instalace na Ubuntu
 
-*# Příkazy „aptitude“ a „gdebi“ (doporučuji)*<br>
-**sudo apt-get install aptitude gdebi**
+*# Příkaz „aptitude“ (doporučuji)*<br>
+**sudo apt-get install aptitude**
 
 *# Příkaz „apt-file“*<br>
 **sudo apt-get install apt-file &amp;&amp;sudo apt-file update**
@@ -551,7 +557,7 @@ Instalace, spuštění a odinstalování GIMPu různými způsoby:
 !: Ukončete Gimp.<br>
 **sudo apt-get remove -y gimp**<br>
 **apt-get download gimp**<br>
-**sudo gdebi gimp\*.deb**<br>
+**sudo apt-get install ./gimp\*.deb**<br>
 !: Odpovězte „a“.<br>
 **gimp**<br>
 !: Ukončete Gimp.<br>

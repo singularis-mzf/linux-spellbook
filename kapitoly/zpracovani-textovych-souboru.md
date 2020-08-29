@@ -17,6 +17,7 @@ Poznámky:
 [ ] Chybí ukázka.
 [ ] Nepokrývá formát CSV.
 [ ] Nedobré pokrytí formátu PSV.
+[ ] Promyslet, kdy použít „C“ a kdy „C.UTF-8“.
 
 ⊨
 -->
@@ -29,30 +30,34 @@ Poznámky:
 
 ## Úvod
 
-Tato kapitola se zabývá nástroji pro řazení, filtrování a záplatování textových souborů. Nezabývá se podrobně komplexními nástroji jako GNU awk, sed či Perl,
-přestože jsou v některých zaklínadlech použity.
+Tato kapitola se zabývá nástroji pro řazení, filtrování, analýzu, konverzi a jiné zpracování textových souborů.
+Nezabývá se však komplexními nástroji jako GNU awk, sed či Perl, kterým budou věnovány samostatné
+kapitoly.
 
-Tato verze kapitoly nepokrývá zpracování formátu CSV. Formát PSV (záznamy v odstavcích) je pokryt nedostatečně.
+Textové soubory se vyznačují tím, že jsou tvořeny posloupností řádek (v této kapitole zvaných „záznamy“)
+tvořených řetězci znaků z tzv. znakové sady. V souboru jsou znaky uloženy ve formě jednobajtových
+či vícebajtových sekvencí, jejichž význam určuje použité kódování znaků (v dnešní praxi téměř výhradně
+UTF-8 nebo jeho podmnožina ASCII).
+
+Tato verze kapitoly nepokrývá zpracování formátů CSV a PSV.
 
 Tato kapitola se nezabývá zpracováním textových formátů se složitější strukturou jako např. JSON či XML.
 
 ## Definice
 
-* **Kódování znaků** je určitá reprezentace znakové sady textu pomocí bajtů a jejich sekvencí v souboru či paměti. U textových souborů uvažujeme výhradně kódování UTF-8, případně ASCII (které je podmnožinou UTF-8). Soubory v jiných kódováních sice také můžeme zpracovávat, ale obvykle je výhodnější je nejprve převést na UTF-8.
-* **Znak** (character) je základní jednotka textu, které je kódováním znaků přiřazen nějaký význam a reprezentace. Např. „A“ je v UTF-8 znak, který znamená písmeno A a je reprezentován bajtem o hodnotě 65. „\\n“ je v UTF-8 znak, který znamená konec řádku a je reprezentován bajtem o hodnotě 10.
+* **Kódování znaků** (character encoding) je určitá reprezentace znakové sady textu pomocí bajtů a jejich sekvencí v souboru či paměti. U textových souborů uvažujeme výhradně kódování UTF-8, případně jeho podmnožinu ASCII. Soubory v jiných kódováních sice také můžeme zpracovávat, ale obvykle je výhodnější je nejprve převést na UTF-8.
+* **Znak** (character) je základní jednotka textu, které je kódováním znaků přiřazen nějaký význam a binární reprezentace. Např. „A“ je v UTF-8 znak, který znamená písmeno A a je reprezentován bajtem o hodnotě 65. „\\n“ je v UTF-8 znak, který znamená konec řádku a je reprezentován bajtem o hodnotě 10.
 * **Řetězec** (string) je libovolná posloupnost znaků, i prázdná či tvořená jedním znakem.
 * **Záznam** je zobecnění pojmu „řádka“ v textovém souboru. Textový soubor se dělí na jednotlivé záznamy podle jejich zakončení **ukončovačem záznamu** (record separator), což je typicky znak konce řádky „\\n“ nebo nulový bajt „\\0“. Záznamy se číslují od 1.
-* Záznam může být brán jako celek, nebo může být dál rozdělen na **sloupce** (fields). Existuje několik metod dělení záznamu na sloupce, nejčastější je použití určitého znaku ASCII jako „oddělovače sloupců“ (field separator). Sloupce se v každém záznamu číslují od 1.
-* **Odstavec** je posloupnost záznamů v souboru ukončená více než jedním ukončovačem záznamu (tzn. v praxi typicky jedním či více prázdnými řádky).
+* Záznam může být brán jako celek, nebo může být dál dělen na **sloupce** (fields). Existuje několik metod dělení záznamu na sloupce, nejčastější je použití určitého znaku ASCII jako „oddělovače sloupců“ (field separator). Sloupce se v každém záznamu číslují od 1.
 * **Záplata** je speciální textový soubor, který obsahuje záznam o změnách mezi dvěma verzemi jednoho nebo více textových souborů. Využití záplat je v dnešní době zřídkavé.
 
 V této kapitole rozlišuji následující formáty textových souborů:
 
-* TXT – záznamy ukončeny „\\n“, na sloupce se nedělí.
-* TXTZ – záznamy ukončeny „\\0“, na sloupce se nedělí.
-* TSV – záznamy ukončeny „\\n“, sloupce se dělí tabulátorem („\\t“) nebo jiným znakem ASCII (např. v /etc/passwd se dělí znakem „:“).
-* TSVZ – záznamy ukončeny „\\0“, sloupce se oddělují tabulátorem („\\t“) nebo jiným znakem ASCII.
-* PSV – komplikovaný textový formát s pojmenovanými sloupci; záznamy jsou ukončeny sekvencemi více než jednoho znaku „\\n“; sloupce jsou pojmenovány.
+* **TXT** – záznamy ukončeny „\\n“, na sloupce se nedělí.
+* **TXTZ** – záznamy ukončeny „\\0“, na sloupce se nedělí.
+* **TSV** – záznamy ukončeny „\\n“, sloupce se dělí tabulátorem („\\t“) nebo jiným znakem ASCII (např. v /etc/passwd se dělí znakem „:“).
+* **TSVZ** – záznamy ukončeny „\\0“, sloupce se oddělují tabulátorem („\\t“) nebo jiným znakem ASCII.
 * pevná šířka sloupců – záznamy ukončeny „\\n“, sloupce (kromě posledního) jsou zarovnány na pevný počet znaků pomocí mezer.
 
 !ÚzkýRežim: vyp
@@ -108,22 +113,32 @@ Příkaz „flip“ nefunguje moc dobře:
 **iconv -l \| sed -E 's!/\*$!!'**
 
 *# pokusit se zjistit kódování textu*<br>
+*// Tip: přibližně může pomoci příkaz „file“ nebo autodetekce kódování při otevření textového souboru ve Firefoxu.*<br>
 ?
 
 ### Konverze velikosti písmen
 
-*# **konvertovat** malá písmena na velká (obecně/příklad)*<br>
-**sed -E 's/(.\*)/\\U\\1/'** [{*vstupní-soubor*}]...<br>
-**printf "Žluťoučký kůň\\n" \| sed -E's/(.\*)/\\U\\1/'** ⊨ ŽLUŤOUČKÝ KŮŇ
+*# konvertovat malá písmena **na velká** (obecně/příklad)*<br>
+**sed -E 's/.\*/\\U&amp;/'** [{*vstupní-soubor*}]...<br>
+**printf "Žluťoučký kůň\\n" \| sed -E's/.\*/\\U&amp;/'** ⊨ ŽLUŤOUČKÝ KŮŇ
 
-*# konvertovat velká písmena na malá (obecně/příklad)*<br>
-**sed -E 's/(.\*)/\\L\\1/'** [{*vstupní-soubor*}]...<br>
-**printf "Žluťoučký kůň\\n" \| sed -E's/(.\*)/\\L\\1/'** ⊨ žluťoučký kůň
+*# konvertovat velká písmena **na malá** (obecně/příklad)*<br>
+**sed -E 's/.\*/\\L&amp;/'** [{*vstupní-soubor*}]...<br>
+**printf "Žluťoučký kůň\\n" \| sed -E's/.\*/\\L&amp;/'** ⊨ žluťoučký kůň
 
-*# konvertovat malá písmena na velká a naopak*<br>
+*# konvertovat malá písmena na velká **a naopak***<br>
+**sed -E 's/./0&amp;/g;s/0([[:lower:]])/1\\U\\1/g;s/0[[:upper:]]/\\L&amp;/g;s/[01]<nic>(.)/\\1/g'** [{*vstupní-soubor*}]...<br>
 **sed -E 's/(.)/0\\1/g;s/0([[:lower:]])/1\\U\\1/g;s/0([[:upper:]])/1\\L\\1/g;s/[01]<nic>(.)/\\1/g** [{*vstupní-soubor*}]...
+<!--
+Význam skriptu v sedu:
+s/./0&amp;/g;                   # před každý znak vložit 0
+s/0([[:lower:]])/1\\U\\1/g;     # malá písmena přepnout na velká a současně 0 na 1
+s/0[[:upper:]]/\\L&amp;/g;      # velká písmena, která mají před sebou stále 0, přepsat na malá
+s/[01]<nic>(.)/\\1/g            # odstranit nuly a jedničky před znaky
 
-## Zaklínadla (txt, txtz)
+-->
+
+## Zaklínadla: Práce se záznamy
 
 **Důležitá poznámka pro všechna zaklínadla v této sekci:** Kde je v zaklínadle volitelný parametr „z“ (resp. „-z“), tento parametr funguje jako přepínač mezi formáty txt a txtz. Při použití formátu txt tento přepínač vynechejte, při použití txtz ho naopak vždy zařaďte.
 
@@ -164,8 +179,8 @@ Příkaz „flip“ nefunguje moc dobře:
 **sed** [**-z**] {*první-vynechaný*}**,**{*poslední-vynechaný*}**d** [{*soubor*}]
 
 *# vzít pouze **liché/sudé** záznamy*<br>
-**sed -**[**z**]**n $'p\\nn'** [{*soubor*}]...<br>
-**sed -**[**z**]**n $'n\\np'** [{*soubor*}]...
+**sed -**[**z**]**n 'p;n'** [{*soubor*}]...<br>
+**sed -**[**z**]**n 'n;p'** [{*soubor*}]...
 
 ### Filtrace záznamů podle obsahu
 
@@ -208,17 +223,17 @@ egrep -Lr {*regulární-výraz*} {*soubor-či adresář*}...
 ### Filtrace záznamů podle počtu výskytů
 
 *# vybrat ty, které se vysktují **pouze jednou***<br>
-**LC\_ALL=C sort** [**-z**] <nic>[{*soubor*}]... **\| uniq -**[**z**]**u**
+**LC\_ALL=C sort** [**-z**] <nic>[{*soubor*}]... **\| LC\_ALL=C uniq -**[**z**]**u**
 
 *# vybrat ty, které se vyskytují více než jednou (**duplicity**); vypsat jeden na skupinu/všechny*<br>
-**LC\_ALL=C sort** [**-z**] <nic>[{*soubor*}]... **\| uniq -**[**z**]**d**<br>
-**LC\_ALL=C sort** [**-z**] <nic>[{*soubor*}]... **\| uniq -**[**z**]**D**
+**LC\_ALL=C sort** [**-z**] <nic>[{*soubor*}]... **\| LC\_ALL=C uniq -**[**z**]**d**<br>
+**LC\_ALL=C sort** [**-z**] <nic>[{*soubor*}]... **\| LC\_ALL=C uniq -**[**z**]**D**
 
 *# vybrat ty, které se vyskytují N-krát*<br>
-**LC\_ALL=C sort** [**-z**] <nic>[{*soubor*}]... **\| uniq -**[**z**]**c \| sed -**[**z**]**E 's/^\\s\***{*N*}**\\s//;t;d'**
+**LC\_ALL=C sort** [**-z**] <nic>[{*soubor*}]... **\| LC\_ALL=C uniq -**[**z**]**c \| sed -**[**z**]**E 's/^\\s\***{*N*}**\\s//;t;d'**
 
 *# seřadit a **vypsat počet výskytů** (především pro člověka)*<br>
-**LC\_ALL=C sort** [**-z**] <nic>[{*soubor*}]... **\| uniq -**[**z**]**c \| sort -**[**z**]**n**[**r**]
+**LC\_ALL=C sort** [**-z**] <nic>[{*soubor*}]... **\| LC\_ALL=C uniq -**[**z**]**c \| sort -**[**z**]**n**[**r**]
 
 ### Řazení a přeskládání záznamů
 
@@ -230,15 +245,15 @@ egrep -Lr {*regulární-výraz*} {*soubor-či adresář*}...
 **shuf** [**-z**] <nic>[{*soubor*}]
 
 *# **seřadit***<br>
-[**LC\_ALL=C**] **sort** [**-z**] <nic>[{*parametry*}] <nic>[{*soubor*}]...
+[**LC\_ALL=C**]<nic>[**.UTF-8**] **sort** [**-z**] <nic>[{*parametry*}] <nic>[{*soubor*}]...
 
 *# seřadit a **vyloučit duplicity***<br>
-[**LC\_ALL=C**] **sort -**[**z**]**u** <nic>[{*soubor*}]...
+[**LC\_ALL=C.UTF-8**] **sort -**[**z**]**u** <nic>[{*soubor*}]...
 
 *# seskupit k sobě shodné záznamy a tyto skupiny náhodně přeskládat*<br>
 **sort -**[**z**]**R** [{*soubor*}]...
 
-*# seřadit, s výjimkou prvních N záznamů*<br>
+*# seřadit, s výjimkou prvních N záznamů (ty ponechat, jak jsou)*<br>
 [**cat** {*soubor*}... **\|**] **(sed -**[**z**]**u** {*N*}**q;** [**LC\_ALL=C**] **sort** [**-z**] <nic>[{*parametry*}]**)**
 
 ### Množinové operace (nad seřazenými záznamy)
@@ -287,7 +302,7 @@ egrep -Lr {*regulární-výraz*} {*soubor-či adresář*}...
 
 *# obrátit **pořadí znaků** v každém záznamu (txt/txtz)*<br>
 **rev** [{*soubor*}]...<br>
-?
+**sed -zE 's/[<nic>^\\n]/)&amp;(/g;s/\\n/)xx(/g'** [{*soubor*}]... **\| tr \\\\0 \\\\n \| rev \| tr \\\\n \\\\0 \| sed -zE 's/\\(xx\\)/\\n/g;s/\\((.)\\)/\\1/g'**
 
 *# ke každému záznamu přidat **předponu/příponu***<br>
 *// Příkaz „sed“ vyžaduje v příponě i předponě další úroveň odzvláštnění znaků „\\“ a „\\n“. Proto v uvedeném případě zadávejte zpětné lomítko jako „\\\\\\\\“ a konec řádky jako „\\\\\\n“. Konec řádky se navíc může vyskytnout pouze při použití formátu txtz, u formátu txt pravděpodobně nebude fungovat správně.*<br>
@@ -301,13 +316,13 @@ egrep -Lr {*regulární-výraz*} {*soubor-či adresář*}...
 
 *# přidat **číslo záznamu** pro člověka (txt/txtz)*<br>
 **nl** [{*parametry*}] {*soubor*}...<br>
-?
+**gawk 'BEGIN {RS=ORS="\\0"; OFS="\\t";}{printf("%7d %s\\n", NR, $0)}'** [**\-\-**] <nic>[{*soubor*}]...
 
 *# přeformátovat text do řádek určité šířky*<br>
 *// Běžně se k tomu používá příkaz „fmt“, ale ten nerespektuje vícebajtové znaky, takže pro texty v UTF-8 funguje nekorektně.*<br>
 ?
 
-## Zaklínadla (tsv, tsvz)
+## Zaklínadla: Práce se sloupci (TSV, TSVZ)
 
 **Důležité poznámka pro všechna zaklínadla v této sekci:** Kde je v zaklínadle volitelný parametr „z“ (resp. „-z“), tento parametr funguje jako přepínač mezi formáty tsv a tsvz. Při použití formátu tsv tento přepínač vynechejte, při použití tsvz ho naopak vždy zařaďte.
 
@@ -352,13 +367,13 @@ Pro tsvz uveďte část „;RS=ORS="\\0";“.
 ### Řazení záznamů podle obsahu sloupců
 
 *# seřadit podle N-tého sloupce*<br>
-[**LC\_ALL=C**] **sort** [**-z**] **-t $'\\t' -k** {*N*}**,**{*N*}[{*druh-a-příznaky-řazení*}] <nic>[{*soubor*}]...
+[**LC\_ALL=C.UTF-8**] **sort** [**-z**] **-t $'\\t' -k** {*N*}**,**{*N*}[{*druh-a-příznaky-řazení*}] <nic>[{*soubor*}]...
 
-*# seřadit podle sloupců M až N*<br>
-[**LC\_ALL=C**] **sort** [**-z**] **-t $'\\t' -k** {*M*}**,**{*N*}[{*druh-a-příznaky-řazení*}] <nic>[{*soubor*}]...
+*# seřadit podle sloupců M až N (včetně)*<br>
+[**LC\_ALL=C.UTF-8**] **sort** [**-z**] **-t $'\\t' -k** {*M*}**,**{*N*}[{*druh-a-příznaky-řazení*}] <nic>[{*soubor*}]...
 
 *# seřadit podle více kritérií*<br>
-[**LC\_ALL=C**] **sort** [**-z**] <nic>[**-s**] **-t $'\\t' -k** {*jedno-kritérium*} <nic>[**-k** {*další-kritérium*}]... [{*soubor*}]...
+[**LC\_ALL=C.UTF-8**] **sort** [**-z**] <nic>[**-s**] **-t $'\\t' -k** {*jedno-kritérium*} <nic>[**-k** {*další-kritérium*}]... [{*soubor*}]...
 
 *# příklad: seřadit vzestupně podle číselné hodnoty 7. sloupce a pak sestupně podle 3. sloupce, bez ohledu na velikost písmen*<br>
 **sort** [**-z**] **-t $'\\t' -k 7,7n -k 3,3ri** [{*soubor*}]...
@@ -400,13 +415,25 @@ Pro formát tsvz použijte „RS="\\0";“, pro tsv jej vynechejte.
 **gawk** [**-v 'RS=\\0'**] **'{print gensub(/\\t/, "\\t" NR "\\t",** {*N*}** - 1);}'** [{*soubor*}]...
 
 
-## Zaklínadla (pevná šířka sloupců)
+## Zaklínadla: Práce se znaky a podřetězci
+
+### Náhrada
+
+*# náhrada podřetězce podle regulárního výrazu*<br>
+*// Pro podrobnější popis syntaxe vyhledejte kapitolu Sed!*<br>
+**sed -**[**z**]**E 's/**{*regulární výraz*}**/**{*řetězec náhrady*}**/**[**g**]**'** [{*soubor*}]...
+
+*# **transliterace** (náhrada znaků podle tabulky)(obecně/příklad)*<br>
+*// Počet „původních“ a „náhradních“ znaků musí přesně odpovídat. Znaky „/“ a „\\“ je v obou výčtech nutno odzvláštnit dalším zpětným lomítkem. Na místo znaku můžete použít i sekvenci „\\0“, „\\n“ apod. „Náhradní znaky“ se smí opakovat, „původní“ ne.*<br>
+**sed -**[**z**]**E 'y/**{*znak-původní*}...**/**{*znak-náhradní*}**/'** [{*soubor*}]...<br>
+**sed -E 'y/A\\/B\\\\C/a\|b\|c/' test.txt**
 
 ### Vybrat/spojit sloupce
 
 *# vzít určité sloupce (obecně/příklad)*<br>
-?<br>
-?
+*// Pro složitější případy je v GNU awk funkce „substr()“ nebo zvláštní režim pro zpracování souborů s pevnou šířkou sloupců.*<br>
+**gawk 'BEGIN{FS=OFS=""}{print $**{*číslo-sloupce*}[**,**{*další-číslo-sloupce*}]...**\}'** [{*soubor*}]...<br>
+**gawk 'BEGIN{FS=OFS=""}{print $3, $5, $4, $7}' &lt;&lt;&lt;'AŽČŠVŘů'** ⊨ ČVŠů
 
 *# vynechat určité sloupce*<br>
 **colrm** {*první-vynechaný*} [{*poslední-vynechaný*}] <nic>[**&lt;** {*soubor*}]
@@ -416,8 +443,6 @@ Pro formát tsvz použijte „RS="\\0";“, pro tsv jej vynechejte.
 **sed -E 's/.{,10}$//'**
 
 ### Filtrace podle obsahu sloupců
-
-Pro tsvz uveďte část „BEGIN {RS=ORS="\\0"}“.
 
 *# vzít/vynechat záznamy, jejichž podřetězec na indexech M až N odpovídá **regulárnímu výrazu***<br>
 **gawk '**[**BEGIN {RS=ORS="\\0"}**] **substr($0,** {*M*}**,** {*N*} **-** {*M*} **+ 1) ~ /**{*regulární výraz*}**/'** [{*soubor*}]...<br>
@@ -433,89 +458,9 @@ Pro tsvz uveďte část „BEGIN {RS=ORS="\\0"}“.
 
 ### Řazení
 
-*# řadit podle znaků na indexech M až N*<br>
-[**LC\_ALL=C**] **sort** [{*další parametry*}] **-k 1.**{*M*}**,1.**{*N*}{*parametry-řazení*} [{*soubor*}]...
+*# řadit podle znaků na indexech M až N (včetně)*<br>
+[**LC\_ALL=C.UTF-8**] **sort** [{*další parametry*}] **-k 1.**{*M*}**,1.**{*N*}{*parametry-řazení*} [{*soubor*}]...
 
-## Zaklínadla (psv)
-
-### Filtrace záznamů podle pořadí
-
-*# vzít/vynechat N **prvních***<br>
-**gawk 'BEGIN {RS = ""; ORS = "\\n\\n"; FS = "\\n";} NR &gt;** {*N*} **{exit} {print}'** [{*soubor*}]...<br>
-**gawk 'BEGIN {RS = ""; ORS = "\\n\\n"; FS = "\\n";} NR &gt;** {*N*} **{print}'** [{*soubor*}]...
-
-*# vzít/vynechat N **posledních***<br>
-?<br>
-?
-
-*# vzít/vynechat **konkrétní** záznam*<br>
-**gawk 'BEGIN {RS = ""; ORS = "\\n\\n"; FS = "\\n";} NR ==** {*N*} **{print; exit;}'** [{*soubor*}]...<br>
-**gawk 'BEGIN {RS = ""; ORS = "\\n\\n"; FS = "\\n";} NR !=** {*N*} **{print}'** [{*soubor*}]...
-
-*# vzít/vynechat **rozsah** záznamů*<br>
-**gawk 'BEGIN {RS = ""; ORS = "\\n\\n"; FS = "\\n";} NR &gt;=** {*první-ponechaný*} **{print} NR ==** {*poslední-ponechaný*} **{exit}'** [{*soubor*}]...<br>
-**gawk 'BEGIN {RS = ""; ORS = "\\n\\n"; FS = "\\n";} NR &lt;** {*první-vynechaný*} **\|\| NR &gt;** {*poslední-vynechaný*} **{print}'** [{*soubor*}]...
-
-*# vzít pouze **liché/sudé** záznamy*<br>
-**gawk 'BEGIN {RS = ""; ORS = "\\n\\n"; FS = "\\n";} NR % 2 {print}'** [{*soubor*}]...<br>
-**gawk 'BEGIN {RS = ""; ORS = "\\n\\n"; FS = "\\n";} !(NR % 2) {print}'** [{*soubor*}]...
-
-### Vybrat/sloučit sloupce
-
-*# vzít jen/vynechat určité sloupce*<br>
-?<br>
-?
-
-*# sloučit záznamy ze dvou souborů podle čísla záznamu*<br>
-?
-
-*# sloučit záznamy ze dvou souborů podle společného sloupce*<br>
-?
-
-### Filtrace záznamů podle obsahu sloupců
-
-Vzít/vynechat záznamy,...
-
-*# které **obsahují určitý sloupec***<br>
-?<br>
-?
-
-*# kde určitý sloupec odpovídá **regulárnímu výrazu***<br>
-?<br>
-?
-
-*# kde určitý sloupec obsahuje **podřetězec***<br>
-?<br>
-?
-
-*# kde určitý sloupec je **řetězec***<br>
-?<br>
-?
-
-### Řazení a přeskládání záznamů
-
-*# **obrátit** pořadí*<br>
-**tac -rs $'\\n\\n\\n\*'**
-
-*# **náhodně** přeskládat*<br>
-?
-
-*# seřadit podle určitého sloupce*<br>
-?
-
-*# seřadit podle více kritérií*<br>
-?
-
-### Ostatní
-
-*# **počet záznamů***<br>
-**tr '\\na' ab** [**&lt;** {*soubor*}] **\| fgrep -o aa \| wc -l**
-
-*# **rozdělit** soubory na díly s uvedeným maximálním počtem záznamů*<br>
-?
-
-*# ke každému záznamu přidat sloupec*<br>
-?
 
 ## Zaklínadla (záplatování)
 
@@ -549,7 +494,7 @@ Vzít/vynechat záznamy,...
 ### join
 
 *# *<br>
-[**LC\_ALL=C**] **join** {*parametry*} {*soubor1*} {*soubor2*}
+[**LC\_ALL=C.UTF-8**] **join** {*parametry*} {*soubor1*} {*soubor2*}
 
 !parametry:
 
@@ -588,7 +533,7 @@ Vzít/vynechat záznamy,...
 ### sort
 
 *# *<br>
-[**LC\_ALL=C**] **sort** [{*parametry*}] <nic>[{*soubor*}]...
+[**LC\_ALL=C.UTF-8**] **sort** [{*parametry*}] <nic>[{*soubor*}]...
 
 !parametry:
 
@@ -647,11 +592,11 @@ Nejlepším zdrojem podrobnějších informací o jednotlivých použitých př
 * [Compute Hope o příkazu sort](https://www.computerhope.com/unix/usort.htm) (anglicky)
 * [Linux column Command Tutorial for Beginners](https://www.howtoforge.com/linux-column-command/) (anglicky)
 * [Linux Join Command Tutorial for Beginners](https://www.howtoforge.com/tutorial/linux-join-command/) (anglicky)
-* [man 1 cut](http://manpages.ubuntu.com/manpages/bionic/en/man1/cut.1.html) (anglicky)
-* [man 1 join](http://manpages.ubuntu.com/manpages/bionic/en/man1/join.1.html) (anglicky)
-* [man 1 paste](http://manpages.ubuntu.com/manpages/bionic/en/man1/paste.1.html) (anglicky)
-* [man 1 sort](http://manpages.ubuntu.com/manpages/bionic/en/man1/sort.1.html) (anglicky)
-* [Balíček coreutils](https://packages.ubuntu.com/bionic/coreutils) (anglicky)
+* [man 1 cut](http://manpages.ubuntu.com/manpages/focal/en/man1/cut.1.html) (anglicky)
+* [man 1 join](http://manpages.ubuntu.com/manpages/focal/en/man1/join.1.html) (anglicky)
+* [man 1 paste](http://manpages.ubuntu.com/manpages/focal/en/man1/paste.1.html) (anglicky)
+* [man 1 sort](http://manpages.ubuntu.com/manpages/focal/en/man1/sort.1.html) (anglicky)
+* [Balíček coreutils](https://packages.ubuntu.com/focal/coreutils) (anglicky)
 * [Video: Joining files and together with join](https://www.youtube.com/watch?v=TygQo1m\_sZo) (anglicky)
 * [TL;DR cut](https://github.com/tldr-pages/tldr/blob/master/pages/common/cut.md) (anglicky)
 * [TL;DR join](https://github.com/tldr-pages/tldr/blob/master/pages/common/join.md) (anglicky)

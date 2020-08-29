@@ -19,6 +19,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 [ ] Zpracovat „git remote add“
 [ ] Zpracovat „git stash“
 [ ] Zpracovat „git for-each-ref“
+[ ] Zmínit nepokrytí submodulů.
 
 Ubuntu 22.04:
 git config --global init.defaultBranch {název} // od git 2.28 je možno změnit výchozí název větve

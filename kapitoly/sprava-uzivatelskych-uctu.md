@@ -31,7 +31,8 @@ Nebo udělat samostatnou kapitolu Zavádění a přihlašování?
 ## Úvod
 
 Tato kapitola se zabývá vytvářením, zkoumáním a rušením uživatelských účtů a jejich skupin.
-Dále se zabývá nastavováním účtů a skupin z pozice superuživatele (správce systému).
+Dále se zabývá nastavováním účtů a skupin z pozice superuživatele (správce systému)
+a nastavováním vlastností vlastního účtu (např. hesla) obyčejným uživatelem.
 
 Linuxové operační systémy jsou víceuživatelské, a než je uživateli umožněna práce
 se systémem, musí se přihlásit k některému uživatelskému účtu, což určí, jaká oprávnění
@@ -77,23 +78,27 @@ Pro skupiny platí:
 
 !ÚzkýRežim: vyp
 
-## Zaklínadla (správa uživatelů)
+## Zaklínadla: Správa uživatelů
 
 ### Vytvořit/vypsat/smazat uživatele
 
-*# **vytvořit** nového (běžného) uživatele*<br>
+*# **vytvořit** nový běžný uživatelský účet (jen interaktivně)*<br>
 *// Pozor! Celé jméno uživatele nesmí obsahovat znaky čárka a rovná se (, a =), nemělo by obsahovat ani znak dvojtečka. Při použití ne-ASCII znaků program vypíše varování, což je ale na dnešních systémech dost absurdní; doporučuji toto varování ignorovat.*<br>
-*// Pokud nezadáte volbu „\-\-disable-login“, příkaz vás hned interaktivně nechá nastavit počáteční heslo nově vzniklého uživatele.*<br>
 *// Pokud nezadáte parametr „\-\-ingroup“, s vytvořením nového uživatele se pro něj rovněž vytvoří nová, stejnojmenná výchozí skupina.*<br>
-**sudo adduser \-\-gecos "**{*Celé jméno*}**"** [**\-\-disable-login**] <nic>[**\-\-debug**] <nic>[**\-\-shell** {*shell*}] <nic>[**\-\-ingroup** {*název-výchozí-skupiny*}] <nic>[**\-\-uid** {*konkrétní-UID*}] {*nový-uživatel*}
+**sudo adduser \-\-gecos "**{*Celé jméno*}**"** [**\-\-debug**] <nic>[**\-\-shell** {*shell*}] <nic>[**\-\-ingroup** {*název-výchozí-skupiny*}] <nic>[**\-\-uid** {*konkrétní-UID*}] {*nové-přihlašovací-jméno*}<br>
+!: Zadejte heslo pro nového uživatele. Potvrďte klávesou Enter.<br>
+!: Znovu zadejte totéž heslo a znovu potvrďte.
 
-*# **smazat** uživatele*<br>
-**sudo deluser** [**\-\-remove-home**] {*uživatel*}
+*# **vytvořit** nový zamknutý běžný uživatelský účet (lze i ze skriptu)*<br>
+**sudo adduser \-\-gecos "**{*Celé jméno*}**" \-\-disabled-password** [**\-\-debug**] <nic>[**\-\-shell** {*shell*}] <nic>[**\-\-ingroup** {*název-výchozí-skupiny*}] <nic>[**\-\-uid** {*konkrétní-UID*}] {*nové-přihlašovací-jméno*}
 
-*# **existuje** uživatel? (uspěje, pokud ano)*<br>
+*# **smazat** uživatelský účet*<br>
+**sudo deluser** [**\-\-remove-home**] {*uživatelské-jméno*}
+
+*# **existuje** uživatelský účet? (uspěje, pokud ano)*<br>
 **getent passwd** {*uživatel*} **&gt;/dev/null**
 
-*# **vypsat** všechny uživatele kromě systémových/úplně všechny*<br>
+*# **vypsat** všechny uživatelské účty kromě systémových/úplně všechny*<br>
 **getent passwd \| sed -E '/^([<nic>^:]\*:){2}(0\|[0-9]{4,}):/!d;s/:.\*//'** [**\| LC\_ALL=C.UTF-8 sort**]<br>
 <!--
 gawk -F : '$3 == 0 || $3 &gt;= 1000 {print $1;}'** [**\| LC\_ALL=C.UTF-8 sort**]<br>
@@ -104,8 +109,8 @@ gawk -F : '$3 == 0 || $3 &gt;= 1000 {print $1;}'** [**\| LC\_ALL=C.UTF-8 sort**]
 **who**<br>
 ?
 
-*# vytvořit nového **systémového** uživatele*<br>
-**sudo adduser \-\-system** [**\-\-gid** {*GID-skupiny*}] <nic>[**\-\-uid** {*konkrétní-UID*}] {*nový-uživatel*}
+*# vytvořit nový **systémový** uživatelský účet*<br>
+**sudo adduser \-\-system** [**\-\-gid** {*GID-skupiny*}] <nic>[**\-\-uid** {*konkrétní-UID*}] {*nové-přihlašovací-jméno*}
 
 ### Heslo uživatele
 
@@ -161,7 +166,7 @@ gawk -F : '$3 == 0 || $3 &gt;= 1000 {print $1;}'** [**\| LC\_ALL=C.UTF-8 sort**]
 
 *# získat **avatar***<br>
 *// Avatar čtvercový obrázek je ve formátu PNG. Počet pixelů tvořících stranu čtverce může být různý.*<br>
-[**sudo**] **cp ~**{*uživatel*}**/.face** {*cíl.png*}
+[**sudo**] **cp ~**{*uživatelské jméno*}**/.face** {*cíl.png*}
 
 *# vypsat uživatelovu **výchozí skupinu** (názvem/GID)*<br>
 **id -Gn** {*uživatel*} **\| sed -E 's/\\s.\*//'**<br>
@@ -180,24 +185,24 @@ gawk -F : '$3 == 0 || $3 &gt;= 1000 {print $1;}'** [**\| LC\_ALL=C.UTF-8 sort**]
 **sudo usermod -m -d** {*/nový/adresář*} {*uživatelské-jméno*}
 
 *# **avatar***<br>
-**convert** {*obrázek*} **-gravity center -crop "$(identify -format "%[fx:min(w,h)]x%[fx:min(w,h)]"** {*obrázek*}**)" +repage -delete -1 png24:- \|** [**sudo**] **tee ~**{*uživatel*}**/.face**
+**convert** {*obrázek*} **-gravity center -crop "$(identify -format "%[fx:min(w,h)]x%[fx:min(w,h)]"** {*obrázek*}**)" +repage -delete -1 png24:- \|** [**sudo**] **tee ~**{*uživatelské-jméno*}**/.face**
 
 *# **příkazový interpret** (shell)*<br>
-**sudo chsh** [**-s** {*/cesta/k/novému/shellu*}] {*uživatel*}<br>
+**sudo chsh** [**-s** {*/cesta/k/novému/shellu*}] {*uživatelské-jméno*}<br>
 
 *# změnit UID*<br>
 *// Tento příkaz také rekurzívně projde domovský adresář uživatele a všechny adresářové položky, jejichž je daný uživatel vlastníkem, přepíše na nové UID, aby uživatel jejich vlastníkem zůstal.*<br>
-**sudo usermod -u** {*nové-UID*} {*uživatel*}
+**sudo usermod -u** {*nové-UID*} {*uživatelské-jméno*}
 
 *# změnit výchozí skupinu*<br>
 *// Tento příkaz také rekurzívně projde domovský adresář uživatele a všechny adresářové položky příslušné k původní výchozí skupině přepíše na novou výchozí skupinu.*<br>
-**sudo usermod -g** {*název-nové-vých-skup*} **-G "$(id -Gn** {*uživatel*} **\| tr '&blank;' ,)"** {*uživatel*}
+**sudo usermod -g** {*název-nové-vých-skup*} **-G "$(id -Gn** {*uživatelské-jméno*} **\| tr '&blank;' ,)"** {*uživatelské-jméno*}
 
 *# změnit uživatelské jméno*<br>
 *// Tento příkaz nepřejmenuje domovský adresář uživatele!*<br>
 **sudo usermod -l** {*nové-už-jméno*} {*původní-už-jméno*}
 
-## Zaklínadla (samospráva uživatele)
+## Zaklínadla: Samospráva uživatele
 
 ### Vypsat nastavení
 
@@ -243,12 +248,31 @@ gawk -F : '$3 == 0 || $3 &gt;= 1000 {print $1;}'** [**\| LC\_ALL=C.UTF-8 sort**]
 !: Na výzvu zadejte svoje heslo a potvrďte klávesou Enter.
 
 *# změnit **celé jméno** (musí povolit správce)*<br>
-*// Aby uvedený příkaz fungoval, musí superuživatel v souboru „/etc/login.defs“ do konfigurační volby „CHFN\_RESTRICT“ doplnit písmeno „f“ nebo ji nastavit na „no“. I bez toho ovšem můžete změnit svoje celé jméno GUI programem „mugshot“ (nutno doinstalovat stejnojmenný balíček).*<br>
+*// Ve výchozím nastavení Ubuntu je tento příkaz běžným uživatelům zakázaný. Uživatelé však mohou svoje celé jméno změnit pomocí sběrnice DBUS nebo v GUI programem „mugshot“ ze stejnojmenného balíčku. Změna pomocí „chfn“ se povolí tak, že v souboru „/etc/login.defs“ do konfigurační volby „CHFN\_RESTRICT“ doplníte písmeno „f“ nebo ji nastavíte na hodnotu „no“.*<br>
 ^^**sudo sed -iE '/^CHFN\_RESTRICT/s/\\&lt;rwh\\&gt;/f&amp;/' /etc/login.defs**<br>
 **chfn -f "**{*Nové celé jméno*}**"**<br>
 !: Na výzvu zadejte svoje heslo a potvrďte klávesou Enter.
 
-## Zaklínadla (správa skupin)
+*# změnit **celé jméno** pomocí sběrnice DBUS*<br>
+*// Tato metoda sice také určité oprávnění požaduje, ale ve výchozím nastavení v Ubuntu všichni uživatelé toto oprávnění mají, takže si svoje celé jméno mohou změnit. Navíc nevyžaduje zadání hesla.*<br>
+**ofa=org.freedesktop.Accounts**<br>
+**ofacesta="$(dbus-send \-\-system \-\-dest=$ofa \-\-type=method\_call \-\-print-reply=literal /${ofa//./\\/} ${ofa}.FindUserByName "string:$(whoami)" \| tr -d "&blank;")"**<br>
+**novejmeno="**{*Nové celé jméno*}**"**<br>
+**dbus-send \-\-system \-\-dest=$ofa \-\-type=method\_call \-\-print-reply=literal "$ofacesta" ${ofa}.User.SetRealName "string:${novejmeno//[,=:]/}$(getent passwd "$(whoami)" \| sed -E 's/^([<nic>^:]\*:){4}[<nic>^,:]\*([<nic>^:]\*):.\*$/\\2/')"**
+<!--
+Význam regulárního výrazu:
+
+^
+([<nic>^:]*:){4}        # 4 skupiny znaků končící dvojtečkou (přeskočí první čtyři sloupce /etc/passwd)
+[<nic>^,:]*             # přeskočí původní celé jméno (až před nejbližší „,“ nebo „:“)
+([<nic>^:]*)            # do skupiny načte celý zbytek dodatečných informací (typicky jsou tam jen tři čárky)
+                        # -> tato skupina se vypíše na výstup
+:.*$                    # co je za následující dvojtečkou už nás nezajímá
+
+-->
+
+
+## Zaklínadla: Správa skupin
 
 ### Vytvořit/vypsat/zrušit
 
@@ -335,7 +359,7 @@ Problém: vetšina příkazů nevypisuje výchozí skupiny.
 *# je skupina chráněná heslem?*<br>
 ?
 
-## Zaklínadla (ostatní)
+## Zaklínadla: Ostatní
 
 ### Formáty souborů
 
@@ -373,7 +397,11 @@ Problém: vetšina příkazů nevypisuje výchozí skupiny.
 
 ## Instalace na Ubuntu
 
-Všechny použité nástroje jsou základními součástmi Ubuntu přítomnými i v minimální instalaci.
+Všechny použité nástroje jsou základními součástmi Ubuntu přítomnými i v minimální instalaci,
+s výjimkou příkazů „convert“ a „identify“, které je potřeba doinstalovat:
+
+*# *<br>
+**sudo apt-get install imagemagick**
 
 <!--
 ## Ukázka

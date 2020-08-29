@@ -43,7 +43,7 @@ VSECHNY_KAPITOLY += sed sifrovani soubory-a-adresare sprava-balicku sprava-balic
 # T, U, V, W, X, Y, Z
 VSECHNY_KAPITOLY += unicode uzivatelska-rozhrani vim virtualbox wine x
 # Z
-VSECHNY_KAPITOLY += zpracovani-binarnich-souboru zpracovani-obrazku zpracovani-textovych-souboru zpracovani-videa-a-zvuku
+VSECHNY_KAPITOLY += zpracovani-binarnich-souboru zpracovani-obrazku zpracovani-psv zpracovani-textovych-souboru zpracovani-videa-a-zvuku
 
 VSECHNY_KAPITOLY_A_DODATKY = $(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY)
 VSECHNY_KAPITOLY_A_DODATKY_MD = $(VSECHNY_KAPITOLY:%=kapitoly/%.md) $(VSECHNY_DODATKY:%=dodatky/%.md)

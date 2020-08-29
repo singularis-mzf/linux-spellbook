@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, kapitola Zpracování binárních souborů
-Copyright (c) 2019 Singularis <singularis@volny.cz>
+Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -22,7 +22,7 @@ Poznámky:
 # Zpracování binárních souborů
 
 !Štítky: {tematický okruh}{kontrolní součet}
-
+!FixaceIkon: 1754
 !ÚzkýRežim: zap
 
 ## Úvod
@@ -33,19 +33,19 @@ Poznámky:
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+Tato kapitola uvádí příkazy ke zpracování a editaci souborů bez jakéhokoliv ohledu na formát dat. Tyto soubory se zpracovávají jako celek, po bajtech, nebo po blocích pevné velikosti. Předmětem této kapitoly není archivace a šifrování dat, protože ty mají (nebo mají mít) svoje vlastní kapitoly.
+
 ## Definice
 <!--
 - Uveďte výčet specifických pojmů pro použití v této kapitole a tyto pojmy definujte co nejprecizněji.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+* **Velikost-P** je počet bajtů, který může obsahovat (a často obsahuje) multiplikativní příponu K, M, G, T, P pro mocniny 1024 (kibibajty, mebibajty atd.) nebo kB, MB, GB, TB, PB (kilobajty, megabajty atd.) pro mocniny 1000. Takže máte-li do příkazu zadat {*velikost-P*}, čtyři mebibajty můžete zadat jako „4194304“ nebo jako „4M“ (což je podstatně snazší a přehlednější).
+
 !ÚzkýRežim: vyp
 
-## Zaklínadla
-<!--
-- Rozdělte na podsekce a naplňte „zaklínadly“.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+## Zaklínadla: Soubor jako celek
 
 ### Kontrolní součty a heše
 
@@ -73,40 +73,92 @@ Poznámky:
 *# vypočítat z jednoho souboru heše záznamů ukončených nulovým bajtem*<br>
 ?
 
-### Vytváření souboru
+### Určit formát dat a velikost
 
-*# vytvořit prázdný soubor*<br>
+*# **popsat** typ dat souboru (zejména pro člověka)*<br>
+**file** {*soubor*}...
+
+*# vypsat **MIME typ** souboru (vhodné i pro skript)*<br>
+**file** [**-b**] <nic>[**-L**] **\-\-mime-type** {*soubor*}...
+
+*# určit **velikost** souboru v bajtech (alternativy)*<br>
+**wc -c** [{*soubor*}]...<br>
+**stat -c %s** {*soubor*}<br>
+{*zdroj*} **\| wc -c**
+
+### Vygenerovat data
+
+*# prázdná data*<br>
+**&gt;** {*soubor*} [**&gt;** {*další-soubor*}]...<br>
+**: \|** {*zpracování*}
+
+*# data tvořená **nulovými** bajty*<br>
+**head -c** {*velikost-P*} **/dev/zero \|** {*zpracování*}
+
+*# data tvořená **pseudonáhodnými** bajty (maximálně 2147483647 bajtů/bez omezení)*<br>
+**openssl rand** {*počet-bajtů*} **\|** {*zpracování*}<br>
+**while openssl rand 1073741824; do :; done \| head -c** {*velikost-P*} **\|** {*zpracování*}
+<!--
+openssl je i v minimální instalaci Ubuntu; /dev/urandom je již zbytečné.
+<br>
+**head -c** {*velikost-P*} **/dev/urandom \|** {*zpracování*}
+-->
+
+*# data tvořená bajty konkrétní hodnoty*<br>
+*// Hodnotu bajtu můžete zadat dekadicky (např. „127“), hexadecimálně (např. „0x7f“) nebo osmičkově (např.  „0177“).*<br>
+**head -c** {*velikost-P*} **/dev/zero \| tr \\\\0 $(printf '\\\\%03o'** {*hodnota-bajtu*} **) \|** {*zpracování*}
+
+*# bajty 0 až 255*<br>
+**printf %02x {0..255} \| xxd -r -p \|** {*zpracování*}
+
+*# příklad: vytvořit soubor o velikosti 2 MiB, tvořený bajty s hodnotu 37 (0x25)*<br>
+**head -c 2M /dev/zero \| tr \\\\0 $(printf '\\\\%03o' 0x25) \|** {*zpracování*}
+
+### Vytvořit/prodloužit/zkrátit soubor na disku
+
+*# **zkrátit** či **prodloužit** soubor na uvedenou velikost (obecně/příklady...)*<br>
+*// Prodlužuje se vždy nulovými bajty, zkracuje se zprava (tzn. od konce). Pokud soubor neexistuje, vytvoří se.*<br>
+**truncate -s** {*nová-velikost-P*} {*soubor*}...<br>
+**truncate -s 0 soubory/k-vyprazdneni.dat**<br>
+**truncate -s 4M soubory/na-4-mebibajty.dat soubory/dalsi-na-4-mebibajty.dat**
+
+*# vytvořit prázdný soubor (vyprázdnit, pokud existuje)(alternativy)*<br>
+**truncate -s 0** [**\-\-**] {*soubor*} [{*další-soubor*}]...<br>
 **&gt;** {*soubor*} [**&gt;** {*další-soubor*}]...
 
-*# vytvořit soubor tvořený nulovými/jinými bajty*<br>
-**head -c** {*velikost-P*} **/dev/zero &gt;** {*soubor*}
-**head -c** {*velikost-P*} **/dev/zero \| tr \\\\0 \\\\**{*osmičková-hodnota*} **&gt;** {*soubor*}
-
-*# pseudonáhodná data (libovolné bajty/bajty v určitém rozsahu)*<br>
-**head -c** {*velikost-P*} **/dev/urandom &gt;** {*soubor*}<br>
-**tr -cd '\\**{*osm.-min*}**-\\**{*osm.-max*}**' &lt; /dev/urandom \| head -c** {*velikost-P*} **&gt;** {*soubor*}
-
-*# soubor s bajty 0 až 255*<br>
-**printf %02x {0..255} \| xxd -r -p &gt;~/ram/bytes.dat**
+*# vytvořit soubor tvořený nulovými bajty (alternativy)*<br>
+[**test \\! -e** {*soubor*} **\|\| rm** [**\-\-**] {*soubor*} **&amp;&amp;**] **truncate -s ** {*velikost-P*} [**\-\-**] {*soubor*}
 
 ### Spojování a dělení
 
 *# spojit soubory*<br>
+*// Tip: mezi soubory můžete vložit data ze standardního vstupu zadáním parametru minus („-“) místo jednoho souboru.*<br>
 **cat** {*soubor*}... **&gt;**{*cíl*}
 
-*# rozdělit soubor na díly po určitém počtu bajtů*<br>
-?
+*# rozdělit soubor na díly po určitém blocích určité velikosti*<br>
+*// Pro „-typ-počítadla“ viz popis příkazu „split“ v sekci Parametry příkazů. *<br>
+**split** **-b** {*velikost-P-bloku*} [{*-typ-počítadla*}] <nic>[**-a**{*počet-znaků-počítadla*}] <nic>[**\-\-additional-suffix="**{*přípona-za-počítadlo*}**"**]  {*cesta/k/souboru*} {*předpona/cesty/výsledků*}
 
 *# rozdělit soubor na N přibližně stejně velkých dílů*<br>
-?
+**split** **-n** {*počet-dílů*} [{*-typ-počítadla*}] <nic>[**-a**{*počet-znaků-počítadla*}] <nic>[**\-\-additional-suffix="**{*přípona-za-počítadlo*}**"**] <nic>[**-e**] {*cesta/k/souboru*} {*předpona/cesty/výsledků*}
 
+### Srovnání souborů podle obsahu
 
+*# jsou dva soubory po bajtech **shodné**?*<br>
+**cmp** [**-s**] {*soubor1*} {*soubor2*}
+
+*# jsou po bajtech shodné zadané úseky?*<br>
+**cmp** [**-s**] **-n** {*bajtů-k-porovnání-P*} {*soubor1*} {*soubor2*} {*začátek1-P*} {*začátek2-P*}
+
+*# který ze dvou souborů je **větší**?*<br>
+*// Pokud příkaz uspěje, „soubor1“ je větší; jinak je nutno soubory otestovat ještě v opačném pořadí; pokud obě testování selžou, jsou soubory stejně velké.*<br>
+**test $(stat -c %s "**{*soubor1*}**") -gt $(stat -c %s "**{*soubor2*}**")**
 
 ### Kódování (base64, uuencode, xor)
 
 *# zakódovat do/dekódovat z base64*<br>
 **base64 -w 0** [{*soubor*}]<br>
-**base64 -d** [{*soubor*}] **&gt;** {*cíl*}
+**base64 -d** [{*soubor*}] **\|** {*zpracování*}
 
 *# zakódovat do/dekódovat z uuencode*<br>
 **uuencode /dev/stdout &lt;** {*soubor*} **\| sed -n 'x;3,$p'**<br>
@@ -114,95 +166,6 @@ Poznámky:
 
 *# symetrické kódování operátorem „xor“*<br>
 ?
-
-### Srovnání souborů podle obsahu
-
-*# jsou dva soubory po bajtech **shodné**?*<br>
-**cmp** [**-s**] {*soubor*} {*soubor*}
-
-*# jsou po bajtech shodné zadané úseky?*<br>
-**cmp** [**-s**] **-n** {*bajtů-k-porovnání-P*} {*soubor1*} {*soubor2*} {*začátek1-P*} {*začátek2-P*}
-
-*# který ze dvou souborů je větší?*<br>
-*// Pokud příkaz uspěje, „soubor1“ je větší; jinak je nutno soubory otestovat ještě v opačném pořadí; pokud obě testování selžou, jsou soubory stejně velké.*<br>
-**test $(stat -c %s "**{*soubor1*}**") -gt $(stat -c %s "**{*soubor2*}**")**
-
-### Ostatní
-
-*# zkrátit či prodloužit soubor na uvedenou velikost (obecně/příklady...)*<br>
-*// Prodlužuje se nulovými bajty.*<br>
-**truncate -s** {*velikost*} {*soubor*}...<br>
-?
-
-*# nastavit bajt na určité adrese*<br>
-**printf %08x:%02x** {*adresa*} {*hodnota-bajtu*} **\| xxd -r -** {*soubor*}
-
-*# vzít prvních N bajtů/kibibajtů/mebibajtů/gibibajtů*<br>
-**head -c** {*N*} {*soubor*}<br>
-**head -c** {*N*}**K** {*soubor*}<br>
-**head -c** {*N*}**M** {*soubor*}<br>
-**head -c** {*N*}**G** {*soubor*}
-
-*# vzít prvních N bajtů/kilobajtů/megabajtů/gigabajtů*<br>
-**head -c** {*N*} {*soubor*}<br>
-**head -c** {*N*}**kB** {*soubor*}<br>
-**head -c** {*N*}**MB** {*soubor*}<br>
-**head -c** {*N*}**GB** {*soubor*}
-
-*# vynechat prvních N bajtů/kibibajtů/mebibajtů/gibibajtů*<br>
-**tail -c +**{*N+1*} {*soubor*}<br>
-?<br>
-?<br>
-?
-<!--
-Problém: tail -c +1K přeskočí jen 1023 bajtů!
--->
-
-*# vyjmout úsek bajtů*<br>
-?
-
-*# přepsat úsek bajtů v souboru*<br>
-?
-
-*# určit MIME typ souboru*<br>
-**file** [**-b**] <nic>[**-L**] **\-\-mime-type** {*soubor*}...
-
-*# určit typ souboru (zejména pro člověka*<br>
-**file** {*soubor*}...
-
-*# určit velikost souboru v bajtech (alternativy)*<br>
-**wc -c** [{*soubor*}]...<br>
-**stat -c %s** {*soubor*}
-
-*# určit počet bajtů určité hodnoty v daném souboru*<br>
-**tr -cd \\\\**{*osmičková-hodnota*} **&lt;**{*soubor*} **\| wc -c**
-
-*# vypsat hexadecimálně (pro člověka)*<br>
-**xxd** [**-c** {*bajtů-na-řádek*}] <nic>[**-g** {*bajtů-na-skupinu*}] <nic>[**-s** {*počáteční-adresa*}] <nic>[**-l** {*max-počet-bajtů*}] <nic>[**-u**] {*soubor*}
-
-*# obrátit každou dvojici/čtveřici/osmici bajtů*<br>
-**dd** [**if=**{*vstupní-soubor*}] <nic>[**of=**{*výstupní-soubor*}] **conv=swab**<br>
-**xxd -e -g 4** [{*soubor*}] **\| xxd -r &gt;** {*cíl*}<br>
-**xxd -e -g 8** [{*soubor*}] **\| xxd -r &gt;** {*cíl*}
-
-*# obrátit po bajtech celý soubor*<br>
-?
-
-<!--
-?
-gawk -b 'BEGIN {RS="....";OFS=ORS="";} {print substr(RT, 4, 1), substr(RT, 3, 1), substr(RT, 2, 1), substr(RT, 1, 1), $0}'
--->
-
-*# nahradit bajty jedné hodnoty bajty jiné hodnoty*<br>
-**tr '\\**{*osm.-původní1*}[**\\**{*osm.původníx*}]...**' '\\**{*osm.-nová1*}[**\\**{*osm.-nováx*}]...**' &lt;** {*zdroj*} **&gt;** {*cíl*}
-
-
-
-<!--
-
-Délka je nezáporný počet bajtů, případně s násobící příponou „K“ (2^10), „M“ (2^20), „G“ (2^30), „T“ (2^40) či „P“ (2^50).
-
--->
 
 ### Záplatování
 
@@ -220,12 +183,141 @@ Možnosti:
 **zcat** {*záplata.gz*} **\| rdiff** [**-s**] **\-\- patch** {*původní-soubor*} **- - &gt;**{*cíl-soubor*}
 
 
+## Zaklínadla: Zpracování po bajtech
+
+### Jen čtení
+
+*# **vzít** prvních N bajtů/kibibajtů/mebibajtů/gibibajtů*<br>
+**head -c** {*N*} {*soubor*}<br>
+**head -c** {*N*}**K** {*soubor*}<br>
+**head -c** {*N*}**M** {*soubor*}<br>
+**head -c** {*N*}**G** {*soubor*}
+
+*# vzít prvních N bajtů/kilobajtů/megabajtů/gigabajtů*<br>
+**head -c** {*N*} {*soubor*}<br>
+**head -c** {*N*}**kB** {*soubor*}<br>
+**head -c** {*N*}**MB** {*soubor*}<br>
+**head -c** {*N*}**GB** {*soubor*}
+
+<!--
+Poznámka: tail -c +1K přeskočí jen 1023 bajtů!
+-->
+
+*# **vynechat** prvních N bajtů/kibibajtů/mebibajtů/gibibajtů*<br>
+**tail -c +**{*N*} {*soubor*} **\| tail -c +1**<br>
+**tail -c +**{*N*}**K** {*soubor*} **\| tail -c +1**<br>
+**tail -c +**{*N*}**M** {*soubor*} **\| tail -c +1**<br>
+**tail -c +**{*N*}**G** {*soubor*} **\| tail -c +1**
+
+*# **vynechat** prvních N bajtů/kilobajtů/megabajtů/gigabajtů*<br>
+**tail -c +**{*N*} {*soubor*} **\| tail -c +1**<br>
+**tail -c +**{*N*}**kB** {*soubor*} **\| tail -c +1**<br>
+**tail -c +**{*N*}**MB** {*soubor*} **\| tail -c +1**<br>
+**tail -c +**{*N*}**GB** {*soubor*} **\| tail -c +1**
+
+*# příklad: vyjmout třetí mebibajt*<br>
+**tail -c +2M soubor.dat \| tail -c +1 \| head -c 1M**
+
+*# příklad: vynechat třetí mebibajt souboru*<br>
+?
+
+*# určit počet bajtů určité hodnoty v daném souboru*<br>
+**tr -cd \\\\**{*osmičková-hodnota*} **&lt;**{*soubor*} **\| wc -c**
+
+*# vypsat hexadecimálně (pro člověka)*<br>
+**xxd** [**-c** {*bajtů-na-řádek*}] <nic>[**-g** {*bajtů-na-skupinu*}] <nic>[**-s** {*počáteční-adresa*}] <nic>[**-l** {*max-počet-bajtů*}] <nic>[**-u**] {*soubor*}
+
+
+### I zápis
+
+*# nastavit **bajt** na určité adrese*<br>
+**printf %08x:%02x** {*adresa*} {*hodnota-bajtu*} **\| xxd -r -** {*soubor*}
+
+*# přepsat úsek bajtů v souboru*<br>
+?
+
+*# obrátit po bajtech celý soubor*<br>
+?
+
+<!--
+?
+gawk -b 'BEGIN {RS="....";OFS=ORS="";} {print substr(RT, 4, 1), substr(RT, 3, 1), substr(RT, 2, 1), substr(RT, 1, 1), $0}'
+
+[ ] Zkusit naprogramovat v Perlu.
+-->
+
+*# **nahradit** bajty jedné hodnoty bajty jiné hodnoty*<br>
+{*zdroj*} **\| tr $(printf '\\\\%03o'** {původní-bajt}...**) $(printf '\\\\%03o'** {náhradní-bajt}...**) \|** {*zpracování*}
+
+<!--
+**tr '\\**{*osm.-původní1*}[**\\**{*osm.původníx*}]...**' '\\**{*osm.-nová1*}[**\\**{*osm.-nováx*}]...**' &lt;** {*zdroj*} **&gt;** {*cíl*}
+-->
+
+*# příklad: nahradit v souboru a.bin bajty 0x0a hodnotu 0x0c a zapsat do b.bin*<br>
+**tr $(printf '\\\\%03o' 0x0a) $(printf '\\\\%03o' 0x0c) &lt;a.bin &gt;b.bin**
+
+
+## Zaklínadla: Zpracování po blocích
+
+*# obrátit každou dvojici/čtveřici/osmici bajtů*<br>
+**dd** [**if=**{*vstupní-soubor*}] <nic>[**of=**{*výstupní-soubor*}] **conv=swab**<br>
+**xxd -e -g 4** [{*soubor*}] **\| xxd -r &gt;** {*cíl*}<br>
+**xxd -e -g 8** [{*soubor*}] **\| xxd -r &gt;** {*cíl*}
+
+
+
 ## Parametry příkazů
 <!--
 - Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.
 - Jinak by zde měl být přehled nejužitečnějších parametrů používaných nástrojů.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+**Důležitý tip:** v každém příkazu, kde je „\| {*zpracování*}“, můžete místo něj uvést přesměrování do souboru.
+
+### split
+
+*# *<br>
+**split** {*-typ-dělení*} {*-typ-počítadla*} [{*-další -parametry*}] {*vstupní-soubor*} {*předpona/výstupu*}
+
+Typ dělení může být:
+
+* -b {*velikost-P*} :: dělení na bloky pevné velikosti
+* -C {*velikost-P*} :: dělení po záznamech; do každého dílu zapíše jen tolik záznamů, aby nepřekročil uvedenou velikost // [ ] vyzkoušet!
+* -l {*počet-záznamů*} :: dělení po záznamech; do každého dílu zapíše pevný počet záznamů (poslední díl jich může obsahovat méně) // [ ] vyzkoušet!
+* -n {*počet-výstupních-souborů*} :: pokusí se rozdělit vstup na daný počet přibližně stejně velkých souborů.
+
+Při dělení po záznamech je možno uvést parametr -t, který specifikuje ukončovač záznamů; např.:
+
+* -t \\\\0 :: nulový bajt
+* -t $'\\t' :: tabulátor
+* -t $'\\n' :: konec řádky (výchozí hodnota)
+* -t $'\\xa0' :: bajt o hodnotě 0xa0
+
+<!--
+[ ] Vyzkoušet, zda jde o oddělovač, nebo ukončovač záznamů!
+[ ] Vyzkoušet, zda lze použít \xa0
+-->
+
+Typ počítadla může být:
+
+* (neuvedený) :: použijí se malá písmena anglické abecedy (aa, ab, ac, ...)
+* -d :: použijí se desítkové číslice (00, 01, 02, ...)
+* -x :: použijí se šestnáctkové číslice (00, 01, ..., 09, 0a, 0b, 0c, 0d, 0e, 0f, 10, ...)
+* \-\-numeric-suffixes={*hodnota*} :: použijí se desítkové číslice počínaje uvedenou hodnotou (např. 12, 13, ...)
+
+<!--
+* \-\-hex-suffixes={*hodnota*} :: použijí se šestnáctkové číslice počínaje uvedenou hodnotou
+Nefunguje. Pro "-a 5 --hex-suffixes=a" generuje nesmyslné hodnoty počítadla.
+-->
+
+Další parametry mohou být:
+
+* -a{*číslo*} :: počet „číslic“ počítadla (výchozí hodnota: 2)
+* \-\-additional-suffix={*řetězec*} :: řetězec k připojení za počítadlo (Poznámka: nesmí obsahovat „/“.) Výchozí hodnotou je prázdný řetězec.
+* \-\-verbose :: oznámí vytvoření každého výstupního souboru
+
+Tip: Místo vstupního souboru může být „-“; příkaz pak čte ze standardního vstupu.
 
 ### xxd
 

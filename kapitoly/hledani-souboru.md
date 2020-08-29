@@ -23,22 +23,20 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 Tato kapitola se zabývá vyhledáváním adresářových položek (souborů a adresářů).
 Převážně se zabývá příkazem „find“, který strukturu adresářů skutečně prochází
-a prohleďává, ale zahrnuje také vyhledávání programů a na databázi založený
-příkaz „locate“.
-
-Tato verze kapitoly nepokrývá vyhledávání podle obsahu souboru.
+a prohledává, ale zahrnuje také vyhledávání spustitelných souborů (programů)
+a na databázi založený příkaz „locate“.
 
 ## Definice
 
-* **Výchozí bod** je cesta (relativní či absolutní) zadaná příkazu „find“, ze které tento příkaz zahajuje vyhledávání. Může být absolutní i relativní. Nejčastěji se jedná o adresář (např. „.“), ale může jít i o souboru či symbolický odkaz na adresář či soubor. Příkaz find výchozí bod nezkracuje, vždy ho zpracovává tak, jak je zadán.
+* **Výchozí bod** je cesta (relativní či absolutní) zadaná příkazu „find“, ze které tento příkaz zahajuje vyhledávání. Může být absolutní i relativní. Nejčastěji se jedná o adresář (např. „.“), ale může jít i o soubor či symbolický odkaz na adresář či soubor. Příkaz find výchozí bod nezkracuje, vždy ho zpracovává tak, jak je zadán.
 * **Hloubka** je celé číslo, které vyjadřuje počet adresářů od výchozího bodu k právě testované adresářové položce. Hloubku 0 mají pouze výchozí body; hloubku 1 soubory a podadresáře v nich, hloubku 2 ty další atd. Je-li např. „/usr/share“ výchozí bod, pak adresář „/usr/share“ má hloubku 0, soubor „/usr/share/.lock“ by měl hloubku 1, soubor „/usr/share/test/copyright.gz“ hloubku 2 atd.
 * Průchod adresářovou strukturou může být **do šířky** (výchozí stav – každý adresář je nejprve zpracován sám o sobě (provedou se nad ním testy a v případě úspěchu se vykonají akce) a teprve poté do něj find vstoupí a prozkoumá jeho obsah) nebo **do hloubky** (v tom případě find pokaždé nejprve vstoupí do adresáře a zpracuje veškerý jeho obsah a teprve „na odchodu“ zpracuje i samotný adresář). Výchozí je průchod do šířky. Průchod do hloubky se aplikuje pouze tehdy, je-li zadán globální parametr „-depth“ nebo je-li použita akce „-delete“. Při průchodu do hloubky nelze použít akci „-prune“.
-* **Názvem položky** se u příkazu „find“ rozumí samotný název adresářové položky.
-* **Cestou položky** se u příkazu „find“ rozumí výchozí bod (jak byl zadaný) a za ním adresářová cesta k položce včetně jejího názvu. Je-li např. výchozí bod „.“, je cestou položky např. „./test.sh“.
+* **Názvem položky** se u příkazu „find“ rozumí samotný název adresářové položky (bez cesty).
+* **Cestou položky** se u příkazu „find“ rozumí výchozí bod (tak, jak byl zadaný) a za ním adresářová cesta k položce včetně jejího názvu. Je-li např. výchozí bod „.“, je cestou položky např. „./test.sh“.
 
 !ÚzkýRežim: vyp
 
-## Zaklínadla (find: testy)
+## Zaklínadla: find: testy
 
 ### Typ adresářové položky (soubor, adresář, odkaz...)
 
@@ -68,7 +66,7 @@ Tato verze kapitoly nepokrývá vyhledávání podle obsahu souboru.
 
 ### Název položky a cesta
 
-Písmeno „i“ vypne rozlišování mezi velkými a malými písmeny.
+Poznámka: Písmeno „i“ v následujících parametrech vypne rozlišování mezi velkými a malými písmeny.
 
 *# **název** položky*<br>
 **\-**[**i**]**name "**{*vzorek*}**"**
@@ -250,9 +248,6 @@ xxx , xxx # priorita?
 **\-links +$((**{*N*}**-1))**<br>
 **\-links -$((**{*N*}**+1))**
 
-*# obsah symbolického odkazu odpovídá vzorku*<br>
-**\-lname '**{*vzorek*}**'**
-
 *# test, který vždy uspěje/selže*<br>
 **\-true**<br>
 **\-false**
@@ -268,13 +263,15 @@ xxx , xxx # priorita?
 **\-inum** {*inode*}
 
 *# **hloubka** prohledávání*<br>
+*// K omezení hloubky prohledávání se obvykle používají globální parametry „-mindepth“ a „-maxdepth“. Nejsou sice tak univerzální jako samostatný test, ale pro většinu účelů stačí.*<br>
 ?
 
-## Zaklínadla (find: akce)
+## Zaklínadla: find: akce
 
 ### Vypsat údaje
 
 *# cestu položky na standardní výstup (txt/txtz)*<br>
+*// Znaky takto vypsané cesty nejsou nijak odzvláštněny, což vadí jen v případě, že použijete „-print“ a cesta obsahuje znak konce řádky. Pokud s takovým vzácným případem chcete počítat, použijte místo toho „-print0“.*<br>
 **\-print**<br>
 **\-print0**
 
@@ -283,7 +280,6 @@ xxx , xxx # priorita?
 **\-fprintf** {*soubor*} **'**{*formát*}**'**
 
 *# zapsat cestu položky jako záznam do souboru (txt/txtz)*<br>
-*// Poznámka: Varianta „txt“ není bezpečná v případě, že cesta položky obsahuje znak konce řádku.*<br>
 **\-fprint** {*soubor*}<br>
 **\-fprint0** {*soubor*}
 
@@ -304,27 +300,32 @@ fprintf:
 
 ### Ostatní akce
 
-*# smazat soubor či prázdný adresář (lze použít jen při průchodu do hloubky)*<br>
-*// Akce uspěje, pokud se soubor či adresář podaří smazat.*<br>
-**\-delete**
-
-*# spustit příkaz po dávkách*<br>
-*// Tato varianta je prakticky ekvivalentem volání příkazu xargs. Použije co největší dávky. Vždy uspěje.*<br>
+*# **spustit** příkaz po dávkách (vždy uspěje)*<br>
+*// Tato varianta je prakticky pohodlnějším ekvivalentem volání příkazu xargs. Použije co největší dávky. Vždy uspěje.*<br>
 **\-exec** {*příkaz*} [{*parametry příkazu*}] **'{}' +**
 
-*# spustit příkaz po dávkách po adresářích*<br>
-*// Tato varianta vždy uspěje. Shromáždí položky z jednotlivého adresáře a po velkých dávkách (obvykle najednou) je předá ke zpracování uvedenému příkazu. Příkaz se spouští v adresáři, kde jsou vyhledané položky, a dostává pouze název souboru s cestou „./“.*<br>
+*# spustit příkaz po dávkách po adresářích (vždy uspěje)*<br>
+*// Tato varianta vždy uspěje. Shromáždí položky z jednotlivého adresáře a po velkých dávkách (obvykle najednou) je předá ke zpracování uvedenému příkazu. Příkaz se spouští v adresáři, kde jsou vyhledané položky, a dostává pouze název položky s cestou „./“.*<br>
 **\-execdir** {*příkaz*} [{*parametry příkazu*}] **'{}' +**
 
-*# spustit příkaz pro každou položku (s cestou/bez cesty)*<br>
+*# spustit příkaz pro **každou** položku (s cestou/bez cesty)*<br>
 *// Každý výskyt řetězce „{}“ v parametrech příkazu bude při volání nahrazen: v případě první varianty cestou testované položky od výchozího bodu, v případě varianty bez cesty jen názvem souboru s cestou „./“ (příkaz bude spuštěn ve stejném adresáři, kde se položka nachází). Akce uspěje, pokud uspěje příkaz.*<br>
 **\-exec** {*příkaz*} [{*parametry příkazu*}] **\\;**<br>
 **\-execdir** {*příkaz*} [{*parametry příkazu*}] **\\;**
 
-*# je-li položka adresář, **nevstupovat** do něj a ignorovat jeho obsah (funguje jen při průchodu do šířky)*<br>
+*# **smazat** soubor či prázdný adresář*<br>
+*// Akce uspěje, pokud se soubor či adresář podaří smazat.*<br>
+**\-delete**
+
+*# je-li položka adresář, **nevstupovat** do něj a ignorovat jeho obsah*<br>
+*// Tato akce funguje jen při průchodu do šířky. Proto lze použít jen tehdy, pokud v celém příkazu není použity ani jeden z paramterů „-delete“ a „-depth“.*<br>
 **\-prune**
 
-*# ukončit načítání dalších položek*<br>
+*# smazat soubor či jakýkoliv (i neprázdný) adresář*<br>
+*// Tato akce funguje jen při průchodu do šířky. Proto lze použít jen tehdy, pokud v celém příkazu není použity ani jeden z paramterů „-delete“ a „-depth“.*<br>
+**-exec rm -R**[**v**] <nic>[**\-\-**] **'{}' \\; -prune**
+
+*# **ukončit** načítání dalších položek*<br>
 **\-quit**
 
 ## Zaklínadla (akce -printf a -fprintf)
@@ -420,7 +421,7 @@ fprintf:
 [**sudo**] **find** {*kde*}... **-type d -exec symlinks '{}' + \| egrep '^dangling:&blank;'**
 [**sudo**] **find** {*kde*}... **-type l -xtype l** [**-print0**]
 
-*# najít adresářové položky, jejichž názvy/celá cesta obsahují shodu s regulárním výrazem (pomoc databáze „mlocate“)*<br>
+*# najít adresářové položky, jejichž název/celá cesta obsahují shodu s regulárním výrazem (pomoc databáze „mlocate“)*<br>
 [**sudo**] **locate \-\-regex -b** [**-e**] <nic>[**-i**] **-r '**{*regulární výraz pro název položky*}**'**<br>
 [**sudo**] **locate \-\-regex** [**-e**] <nic>[**-i**] **-r '**{*regulární výraz pro celou cestu*}**'**
 
@@ -473,6 +474,7 @@ Většina uvedených příkazů je základními součástmi Ubuntu. Pouze přík
 - Buďte co nejstručnější; neodbíhejte k popisování čehokoliv vedlejšího, co je dost možné, že už čtenář zná.
 -->
 
+* Naučte se s příkazem „find“ používat parametr „-exec“, zejména jeho hromadnou variantu „po dávkách“. Jeho použití je většinou mnohem pohodlnější než tradiční kombinace s příkazem „xargs“. Jedinou výjimkou je případ, kdy chcete příkazy vykonávat paralelně.
 * Příkaz „find“ cesty na svém výstupu nijak neřadí.
 * Příkaz „locate“ respektuje přístupová práva a najde pouze adresářové položky, ke kterým má uživatel v dané chvíli přístup.
 
@@ -483,16 +485,13 @@ Většina uvedených příkazů je základními součástmi Ubuntu. Pouze přík
 - Pokud je vestavěná dokumentace programů (typicky v adresáři /usr/share/doc) užitečná, zmiňte ji také.
 - Poznámka: Protože se tato sekce tiskne v úzkém režimu, zaklínadla smíte uvádět pouze bez titulku a bez poznámek pod čarou!
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-
-
 
 * [Wikipedie: find](https://cs.wikipedia.org/wiki/Find)
 * [Oficiální dokumentace balíčku „findutils“](https://www.gnu.org/software/findutils/manual/html\_node/find\_html/) (anglicky)
 * [YouTube: Linux Find Command Tutorial](https://www.youtube.com/watch?v=f3KwmOb42j4) (anglicky)
 * [YouTube: Find Files in Linux (find, whereis)](https://www.youtube.com/watch?v=O9lNYhz8amY) (anglicky)
 * man find (anglicky)
-* [Balíček findutils](https://packages.ubuntu.com/bionic/findutils) (anglicky)
+* [Balíček findutils](https://packages.ubuntu.com/focal/findutils) (anglicky)
 * [TL;DR: find](https://github.com/tldr-pages/tldr/blob/master/pages/common/find.md) (anglicky)
 * [TL;DR: locate](https://github.com/tldr-pages/tldr/blob/master/pages/linux/locate.md) (anglicky)
 * [TL;DR: which](https://github.com/tldr-pages/tldr/blob/master/pages/common/which.md) (anglicky)

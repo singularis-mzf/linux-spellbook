@@ -92,8 +92,10 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | ID | Název kapitoly | % | Stav |
 | :--- | :--- | ---: | :--- |
 | [awk](kapitoly/awk.md) | AWK | 100% | rozšířena, schválena k vydání |
+| [datum-cas-kalendar](kapitoly/datum-cas-kalendar.md) | Datum, čas a kalendář | 100% | schválená k vydání |
 | [diskove-oddily](kapitoly/diskove-oddily.md) | Diskové oddíly | 100% | schválena k vydání |
 | [git](kapitoly/git.md) | Git | 100% | schválena k vydání |
+| [hledani-souboru](kapitoly/hledani-souboru.md) | Hledání souborů | 100% | schválena k vydání |
 | [make](kapitoly/make.md) | Make | 100% | schválena k vydání |
 | [markdown](kapitoly/markdown.md) | Markdown | 100% | schválena k vydání |
 | [promenne](kapitoly/promenne.md) | Proměnné prostředí a interpretu | 100% | schválena k vydání |
@@ -101,14 +103,12 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [sed](kapitoly/sed.md) | Sed | 100% | schválena k vydání |
 | [soubory-a-adresare](kapitoly/soubory-a-adresare.md) | Soubory a adresáře | 100% | schválena k vydání |
 | [sprava-procesu](kapitoly/sprava-procesu) | Správa procesů | 100% | schválena k vydání |
+| [sprava-uzivatelskych-uctu](kapitoly/sprava-uzivatelskych-uctu.md) | Správa uživatelských účtů | 100% | schválena k vydání |
+| [stahovani-videi](kapitoly/stahovani-videi.md) | Stahování videí | 100% | schválena k vydání; po vydání vanilkové příchuti 2.0 bude vyřazena z větve 1.x |
 | [vim](kapitoly/vim.md) | Vim | 100% | schválena k vydání |
 | [barvy-a-titulek](kapitoly/barvy-a-titulek.md) | Barvy, titulek a výzva terminálu | 0% | ve frontě |
-| [datum-cas-kalendar](kapitoly/datum-cas-kalendar.md) | Datum, čas a kalendář | 0% | ve frontě |
-| [hledani-souboru](kapitoly/hledani-souboru.md) | Hledání souborů | 0% | ve frontě |
 | [prace-s-archivy](kapitoly/prace-s-archivy.md) | Práce s archivy | 0% | ve frontě |
 | [sprava-balicku](kapitoly/sprava-balicku.md) | Správa balíčků | 0% | ve frontě |
-| [sprava-uzivatelskych-uctu](kapitoly/sprava-uzivatelskych-uctu.md) | Správa uživatelských účtů | 0% | ve frontě |
-| [stahovani-videi](kapitoly/stahovani-videi.md) | Stahování videí | 0% | ve frontě |
 | [system](kapitoly/system.md) | Systém | 0% | ve frontě |
 | [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) | Zpracování textových souborů | 0% | ve frontě |
 | [zpracovani-videa-a-zvuku](kapitoly/zpracovani-videa-a-zvuku.md) | Zpracování videa a zvuku | 0% | ve frontě |
@@ -132,6 +132,7 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [dosbox](kapitoly/dosbox.md) | DosBox | 5% | dítě |
 | [bash](kapitoly/bash.md) | Bash | 2% | dítě |
 | [lkk](kapitoly/lkk.md) | Linux: Kniha kouzel | 2% | dítě |
+| [zpracovani-psv](kapitoly/zpracovani-psv.md) | Zpracování PSV | 2% | dítě |
 | [sprava-balicku-2](kapitoly/sprava-balicku-2) | Správa balíčků 2 | 1% | dítě |
 | [firefox](kapitoly/firefox.md) | Firefox | 1% | dítě |
 | [grub](kapitoly/grub.md) | GRUB a jádro | 1% | dítě |

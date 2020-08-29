@@ -16,11 +16,7 @@ Poznámky:
 
 ⊨
 
-
 libdatetime-event-sunrise-perl
-
-
-
 
 -->
 
@@ -44,11 +40,12 @@ Plánovní úloh na konkrétní čas do této kapitoly nespadá.
 ## Definice
 
 * **Časová známka Unixu** je číselná reprezentace okamžiku v čase daná počtem sekund od 00:00:00 UTC 1. ledna 1970. Čas před tímto milníkem se reprezentuje zápornými čísly, pozdější čas kladnými. Obvykle se uvažují celá čísla, ale některé implementace pracují i s desetinnými. Časová známka Unixu se uvádí téměř výhradně v desítkové soustavě.
-* **Systémový čas** je čas zpřístupněný systémem programům. Při startu systému se nastaví podle hardwarového času a zaniká vypnutím operačního systému. Systémový čas je obvykle v lokální časové zóně. Protikladem je **hardwarový čas**, což je čas poskytovaný zařízením na základní desce počítače. Hardwarový čas je obvykle v UTC, ale přesto se při práci s ním používá čas v lokální časové zóně.
+* **Systémový čas** je čas zpřístupněný systémem programům. Při startu systému se nastaví podle hardwarového času a zaniká vypnutím operačního systému. Systémový čas je obvykle v lokální časové zóně. Protikladem je **hardwarový čas**, což je čas poskytovaný zařízením na základní desce počítače. Hardwarový čas je obvykle v UTC.
+* **UTC** je základní celosvětový čas, od kterého se odvozují hodnoty času v jednotlivých časových zónách.
 
 !ÚzkýRežim: vyp
 
-## Zaklínadla
+## Zaklínadla: Obecná
 
 ### Výstupní formát („date +“ a „strftime“)
 
@@ -185,7 +182,10 @@ pro zarovnání mezerami místo nulami tam vložte „\_“, např. „%\_m“ v
 *// Počet sekund může být i necelé číslo, např. 0.12 počká 120 milisekund. Pro hodnoty pod 100 milisekund ale neočekávejte velkou přesnost.*<br>
 **sleep** {*sekund*}...
 
-### Kalendář
+### Gregoriánský kalendář
+
+*# je **rok přestupný**?*<br>
+**test 61 -eq $(date -d** {*rok*}**-03-01 +%-j)**
 
 *# zobrazit kalendář měsíce a **dvou okolních***<br>
 **ncal -M3**[**b**]<nic>[**w**] <nic>[{*měsíc-1-až-12*} {*rok*}]
@@ -199,7 +199,7 @@ pro zarovnání mezerami místo nulami tam vložte „\_“, např. „%\_m“ v
 *# zobrazit kalendář měsíce a N následujících*<br>
 **ncal -M**[**b**]<nic>[**w**] **-A** {*N*} [{*měsíc-1-až-12*}] {*rok*}
 
-### Aktuální čas a datum
+### Aktuální čas a datum (všechny kalendáře)
 
 *# vypsat aktuální čas (resp. datum): lokální/UTC/v určité časové zóně*<br>
 **date** [**+**{*formát*}]<br>
@@ -208,56 +208,6 @@ pro zarovnání mezerami místo nulami tam vložte „\_“, např. „%\_m“ v
 
 *# zobrazit kalendář aktuálního měsíce a dvou okolních*<br>
 **ncal -M3**[**b**]<nic>[**w**]
-
-### Časové zóny
-*# konverze z UTC na lokální čas/z lokálního času na UTC*<br>
-**date -d "TZ=\\"UTC\\"** {*čas-UTC*}**" "+%F %T"**<br>
-**date -ud "TZ=\\"$(cat /etc/timezone)\\"&blank;**{*lokální čas*}**" "+%F %T"**<br>
-**date -ud "@$(date -d "**{*čas*}**" +%s)" "+%F %T"**
-
-*# konverze z jedné časové zóny do druhé (obecně/příklad)*<br>
-**TZ="**{*cílová/časová/zóna*}**" date -d 'TZ="**{*zdrojová/časová/zóna*}**"&blank;**{*čas*}**' "+%F %T**[**&blank;%z**]**"**<br>
-**TZ="America/New\_York" date -d 'TZ="Asia/Vladivostok" 2019-01-01 12:35:57' "+%F %T %z"**
-
-*# **vypsat** seznam podporovaných časových zón, seřazený podle jejich aktuální odchylky od UTC*<br>
-**timedatectl list-timezones \| sed 's/.\*/TZ="&amp;" date +%z; echo &amp;/' \| bash \| xargs -rd \\\\n -n 2 printf "%s\\\\t%s\\\\n" \| LC\_ALL=C sort \| sort -ns**
-
-*# vypsat seznam podporovaných časových zón*<br>
-**timedatectl list-timezones**
-
-*# vypsat aktuální časovou zónu nastavenou v systému*<br>
-**cat /etc/timezone**
-
-### Aritmetika s datem
-*# konverze data na „číslo dne“/zpět*<br>
-**printf %s\\\\n $(($(date -ud** {*datum*} **+%s) / 86400))**<br>
-**date -ud "@$((**{*číslo-dne*}** \* 86400))" +%F**
-
-*# **přičíst/odečíst** N dní*<br>
-**date -ud @$((**{*N*} **\* 86400 + $(date -ud "**{*datum*}**" +%s))) +%F**<br>
-**date -ud @$((-**{*N*} **\* 86400 + $(date -ud "**{*datum*}**" +%s))) +%F**
-
-*# **rozdíl** ve dnech*<br>
-**printf %s\\\\n $((($(date -ud** {*datum*} **+%s) - $(date -ud** {*odečítané-datum*} **+%s)) / 86400))**
-
-*# je **rok přestupný**?*<br>
-**test 61 -eq $(date -d** {*rok*}**-03-01 +%-j)**
-
-### Artimetika s časem
-*# konverze lokálního/UTC času na časovou známku Unixu*<br>
-**date -d "**{*čas*}**" +%s**<br>
-**date -ud "**{*čas*}**" +%s**
-
-*# konverze časové známky Unixu na lokální čas/UTC*<br>
-**date -d @**{*časová-známka*} **"+%F %T**[**&blank;%z**]**"**<br>
-**date -ud @**{*časová-známka*} **"+%F %T"**
-
-*# **přičíst/odečíst** N sekund (v UTC)*<br>
-**date -ud @$(($(date -ud "**{*datum čas*}**" +%s) +** {*N*} **)) "+%F %T"**<br>
-**date -ud @$(($(date -ud "**{*datum čas*}**" +%s) -** {*N*} **)) "+%F %T"**
-
-*# **rozdíl** UTC časů v sekundách*<br>
-**printf %s\\\\n $(($(date -ud** {*čas*} **+%s) - $(date -ud** {*odečítaný-čas*} **+%s)))**
 
 ### Východ a západ slunce, Velikonoce
 
@@ -281,30 +231,99 @@ Poznámka: podle Wikipedie se má při konverzi na JDN přičítat 2440587.5, al
 
 -->
 
-*# zjistit datum Velikonoční neděle*<br>
+*# zjistit datum **Velikonoční** neděle*<br>
 **date -d "$(LC\_ALL=C ncal -e** [{*rok*}]**)" +%F**
 
+
+## Zaklínadla: Konverze data a času a časová aritmetika
+
+### Konverze časové zóny
+
+*# konverze z UTC na lokální čas/z lokálního času na UTC*<br>
+**date -d "TZ=\\"UTC\\"** {*čas-UTC*}**" "+%F %T"**<br>
+**date -ud "TZ=\\"$(cat /etc/timezone)\\"&blank;**{*lokální čas*}**" "+%F %T"**<br>
+**date -ud "@$(date -d "**{*čas*}**" +%s)" "+%F %T"**
+
+*# konverze z jedné časové zóny do druhé (obecně/příklad)*<br>
+**TZ="**{*cílová/časová/zóna*}**" date -d 'TZ="**{*zdrojová/časová/zóna*}**"&blank;**{*čas*}**' "+%F %T**[**&blank;%z**]**"**<br>
+**TZ="America/New\_York" date -d 'TZ="Asia/Vladivostok" 2019-01-01 12:35:57' "+%F %T %z"**
+
+### Aritmetika s datem
+*# konverze data na „číslo dne“/zpět*<br>
+**printf %s\\\\n $(($(date -ud** {*datum*} **+%s) / 86400))**<br>
+**date -ud "@$((**{*číslo-dne*}** \* 86400))" +%F**
+
+*# **přičíst/odečíst** N dní*<br>
+**date -ud @$((**{*N*} **\* 86400 + $(date -ud "**{*datum*}**" +%s))) +%F**<br>
+**date -ud @$((-**{*N*} **\* 86400 + $(date -ud "**{*datum*}**" +%s))) +%F**
+
+*# **rozdíl** ve dnech*<br>
+**printf %s\\\\n $((($(date -ud** {*datum*} **+%s) - $(date -ud** {*odečítané-datum*} **+%s)) / 86400))**
+
+### Artimetika s časem
+*# konverze lokálního/UTC času na časovou známku Unixu*<br>
+**date -d "**{*čas*}**" +%s**<br>
+**date -ud "**{*čas*}**" +%s**
+
+*# konverze časové známky Unixu na lokální čas/UTC*<br>
+**date -d @**{*časová-známka*} **"+%F %T**[**&blank;%z**]**"**<br>
+**date -ud @**{*časová-známka*} **"+%F %T"**
+
+*# **přičíst/odečíst** N sekund (v UTC)*<br>
+**date -ud @$(($(date -ud "**{*datum čas*}**" +%s) +** {*N*} **)) "+%F %T"**<br>
+**date -ud @$(($(date -ud "**{*datum čas*}**" +%s) -** {*N*} **)) "+%F %T"**
+
+*# **rozdíl** UTC časů v sekundách*<br>
+**printf %s\\\\n $(($(date -ud** {*čas*} **+%s) - $(date -ud** {*odečítaný-čas*} **+%s)))**
+
+### Konverze kalendářů
+
+*# konverze data gregoriánského kalendáře na juliánský/naopak*<br>
+?<br>
+?
+
+*# konverze data gregoriánského kalendáře na hebrejský/naopak*<br>
+?<br>
+?
+
+*# konverze data gregoriánského kalendáře na arabský/naopak*<br>
+?<br>
+?
+
+## Zaklínadla: Nastavení systému
+
+### Časové zóny
+
+*# **vypsat** seznam podporovaných časových zón, seřazený podle jejich aktuální odchylky od UTC*<br>
+**timedatectl list-timezones \| sed 's/.\*/TZ="&amp;" date +%z; echo &amp;/' \| bash \| xargs -rd \\\\n -n 2 printf "%s\\\\t%s\\\\n" \| LC\_ALL=C sort \| sort -ns**
+
+*# vypsat seznam podporovaných časových zón*<br>
+**timedatectl list-timezones**
+
+*# vypsat aktuální časovou zónu nastavenou v systému (alternativy)*<br>
+**cat /etc/timezone**<br>
+**readlink /etc/localtime | sed -E 's!.\*/share/zoneinfo/!!'**
+
+*# nastavit časovou zónu pro celý systém*<br>
+*// Změna časové zóny má okamžitou platnost a vydrží i po restartu.*<br>
+**sudo timedatectl set-timezone** {*časová/zóna*}
+
+*# nastavit časovou zónu pro nový proces*<br>
+**TZ="**{*časová/zóna*}**"** {*příkaz*} [{*parametry*}]...
+
 ### Systémový a hardwarový čas
-
-*# přepnout **časovou zónu** systému (ručně)*<br>
-**sudo dpkg-reconfigure tzdata**<br>
-!: V dialogu zvolte požadovanou oblast a konkrétní časovou zónu.
-
-*# přepnout časovou zónu systému (automaticky)*<br>
-**timedatectl set-timezone "**{*nová/zóna*}**"**<br>
-!: Restartujte počítač, aby všechny programy změnu zaregistrovaly a přijaly.
 
 *# vypnout/zapnout **automatickou synchronizaci** systémového času*<br>
 **timedatectl set-ntp off**<br>
 **timedatectl set-ntp on**
 
 *# **ručně** nastavit systémový čas*<br>
-*// Zadejte čas a datum ve formátu „YYYY-MM-DD HH:MM:SS“. Poznámka: Ve VirtualBoxu .*<br>
+*// Zadejte čas a datum ve formátu „YYYY-MM-DD HH:MM:SS“. Poznámka: Jsou-li ve VirtualBoxu nainstalované přídavky pro hosta, tyto přídavky velmi často systémový čas vnitřního systému (hosta) synchronizují se systémovým časem vnějšího systému (hostitele), proto v takovém případě změna systémového času vnitřního systému vydrží jen velmi krátce a je sotva pozorovatelná.*<br>
 **timedatectl set-ntp off**<br>
 **timedatectl set-time "**{*nový lokální čas*}**"**
 
 *# ručně nastavit hardwarový čas*<br>
-*// Datum a čas by měly být ve formátu „YYYY-MM-DD HH:MM:SS“, dovoleny jsou i jiné formáty. Pozor, je vyžadován lokální čas v časové zóně systému!*<br>
+*// Datum a čas by měly být ve formátu „YYYY-MM-DD HH:MM:SS“, dovoleny jsou i jiné formáty. Pozor, je vyžadován lokální čas v časové zóně systému, a to i v případě, že ve skutečnosti je hardwarový čas uložen v UTC!*<br>
 **sudo hwclock \-\-set \-\-date '**{*lokální datum čas*}**'**
 
 *# nastavit systémový čas z hardwarového/hardwarový ze systémového*<br>
@@ -320,6 +339,7 @@ Poznámka: podle Wikipedie se má při konverzi na JDN přičítat 2440587.5, al
 <!--
 timedatectl set-ntp on && sleep 1 && timedatectl set-ntp off
 -->
+
 
 ## Parametry příkazů
 ### date

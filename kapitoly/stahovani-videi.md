@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, kapitola Stahování videí
-Copyright (c) 2019 Singularis <singularis@volny.cz>
+Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -20,21 +20,18 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 # Stahování videí
 
-!Štítky: {tematický okruh}{internet}{video}
+!Štítky: {program}{internet}{video}
 !FixaceIkon: 1754
 !ÚzkýRežim: zap
 
 ## Úvod
-Tato kapitola se zabývá stahováním videí a zvuku ze služeb jako YouTube,
-Instagram, Facebook, MixCloud, Vimeo apod.
 
-Tyto služby stahování (podle mých informací) oficiálně nepodporují
-(ačkoliv YouTube prý umožňuje stahování prostřednictvím služby YouTube Red),
-ale již mnoho let tolerují existenci nástrojů na ně a jeden
-z nich – „youtube-dl“ už je běžnou součástí linuxových distribucí.
-
-Tato kapitola nepokrývá stahování videí a zvuku přístupných přímo jako soubor
-ke stažení (např. z Ulož.to nebo z různých FTP serverů).
+Tato kapitola se zabývá stahováním videí a zvukových záznamů ze služeb jako YouTube,
+Instagram, Facebook, MixCloud, Vimeo apod. pomocí programu „youtube-dl“.
+Je určena vždy pro jeho nejaktuálnější verzi z oficiálních stránek,
+protože každá změna ve webovém rozhraní online služeb může způsobit nefunkčnost
+existujících verzí programu a pouze nejnovější verze (je-li řádně aktualizována)
+se těmto změnám obvykle poměrně rychle přizpůsobuje.
 
 <!--
 ## Definice
@@ -42,7 +39,7 @@ ke stažení (např. z Ulož.to nebo z různých FTP serverů).
 
 !ÚzkýRežim: vyp
 
-## Zaklínadla (youtube-dl)
+## Zaklínadla
 
 ### Parametry ve formátovacím řetězci (-o)
 *# **identifikátor** videa*<br>
@@ -213,14 +210,10 @@ Zde uvádím trochu složitější postup, který sestává z následujících 
 **rm youtube-dl.sig**<br>
 
 *# instalace pro všechny uživatele*<br>
-**sudo chown root:root youtube-dl**<br>
-**sudo chmod 755 youtube-dl**<br>
-**sudo mv youtube-dl /usr/local/bin/youtube-dl**
+**sudo install -o root -g root -m u=rwx,go=rx youtube-dl /usr/local/bin/youtube-dl &amp;&amp; rm youtube-dl**
 
 *# instalace pouze pro současného uživatele (alternativa k instalaci pro všechny)*<br>
-**mkdir -pv ~/bin**<br>
-**chmod 700 youtube-dl**<br>
-**mv youtube-dl ~/bin/**
+**install -D -m u=rwx,go=- youtube-dl ~/bin/youtube-dl &amp;&amp; rm youtube-dl**
 
 *# vytvoření konfiguračního souboru (volitelné)*<br>
 **mkdir -pv ~/.config/youtube-dl**<br>
@@ -243,7 +236,7 @@ V repozitáři Ubuntu sice je balíček „youtube-dl“, ale zpravidla zastara
 
 ## Další zdroje informací
 *# *<br>
-**youtube-dl \-\-help**
+**youtube-dl \-\-help** [**\| less**]
 
 Pro podrobný popis formátovacího řetězce a mechanismu automatického výběru formátu ke stažení navštivte oficiální dokumentaci. Bohužel, veškerá oficiální nápověda je jen v angličtině.
 
@@ -252,8 +245,8 @@ Pro podrobný popis formátovacího řetězce a mechanismu automatického výb�
 * [Video: Downloading Videos, Music and More with Youtube DL](https://www.youtube.com/watch?v=9A-HLSvtBWc) (anglicky)
 * [Video: Command Line App For Downloading YouTube Videos](https://www.youtube.com/watch?v=fOjP-7-gI4Y) (anglicky)
 * [Oficiální stránka](https://ytdl-org.github.io/youtube-dl/index.html) (anglicky)
-* [Balíček Bionic](https://packages.ubuntu.com/bionic/youtube-dl) (anglicky)
-* [Manuálová stránka](http://manpages.ubuntu.com/manpages/bionic/en/man1/youtube-dl.1.html) (anglicky)
+* [Balíček Ubuntu](https://packages.ubuntu.com/focal/youtube-dl) (anglicky)
+* [Manuálová stránka](http://manpages.ubuntu.com/manpages/focal/en/man1/youtube-dl.1.html) (anglicky)
 * [TL;DR stránka „youtube-dl“](https://github.com/tldr-pages/tldr/blob/master/pages/common/youtube-dl.md) (anglicky)
 * [Návod na vypsání playlistu](https://archive.zhimingwang.org/blog/2014-11-05-list-youtube-playlist-with-youtube-dl.html) (anglicky)
 
