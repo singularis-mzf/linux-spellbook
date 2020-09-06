@@ -30,20 +30,20 @@ CONVERT := convert
 
 # Dodatky a kapitoly
 # ----------------------------------------------------------------------------
-VSECHNY_DODATKY := predmluva koncepce-projektu plan-vyvoje test zakladni-znalosti licence
+VSECHNY_DODATKY := predmluva licence
 
 # _ A, B, C, D, E, F, G
-VSECHNY_KAPITOLY := _ostatni _ukazka apache awk barvy-a-titulek bash css datum-cas-kalendar diskove-oddily docker dosbox firefox git grub
+VSECHNY_KAPITOLY := awk barvy-a-titulek datum-cas-kalendar diskove-oddily docker git
 # H, I, J, K, L, M
-VSECHNY_KAPITOLY += hledani-souboru konverze-formatu latex lkk make markdown moderni-veci mysql
+VSECHNY_KAPITOLY += hledani-souboru make markdown
 # N, O, P, Q, R, S
-VSECHNY_KAPITOLY += odkazy pdf perl planovani-uloh prace-s-archivy promenne regularni-vyrazy
+VSECHNY_KAPITOLY += planovani-uloh prace-s-archivy promenne regularni-vyrazy
 # S
-VSECHNY_KAPITOLY += sed soubory-a-adresare sprava-balicku sprava-balicku-2 sprava-procesu sprava-uzivatelskych-uctu stahovani-videi stahovani-web system
+VSECHNY_KAPITOLY += sed soubory-a-adresare sprava-balicku sprava-procesu sprava-uzivatelskych-uctu system
 # T, U, V, W, X, Y, Z
-VSECHNY_KAPITOLY += unicode uzivatelska-rozhrani vim virtualbox wine x
+VSECHNY_KAPITOLY += vim
 # Z
-VSECHNY_KAPITOLY += zpracovani-binarnich-souboru zpracovani-obrazku zpracovani-textovych-souboru zpracovani-videa-a-zvuku
+VSECHNY_KAPITOLY += zpracovani-textovych-souboru zpracovani-videa-a-zvuku
 
 VSECHNY_KAPITOLY_A_DODATKY = $(VSECHNY_KAPITOLY) $(VSECHNY_DODATKY)
 VSECHNY_KAPITOLY_A_DODATKY_MD = $(VSECHNY_KAPITOLY:%=kapitoly/%.md) $(VSECHNY_DODATKY:%=dodatky/%.md)
@@ -58,7 +58,7 @@ OBRAZKY_IK += make.png markdown.png planovani-uloh.png prace-s-archivy.png prome
 OBRAZKY_IK += sed.png soubory-a-adresare.png sprava-balicku.png sprava-procesu.png sprava-uzivatelskych-uctu.png
 OBRAZKY_IK += stahovani-videi.png system.png vim.png
 OBRAZKY_IK += zpracovani-textovych-souboru.png zpracovani-videa-a-zvuku.png
-OBRAZKY_IK += predmluva.png koncepce-projektu.png
+OBRAZKY_IK += predmluva.png
 
 # CSS motivy (vedle motivu „hlavní“)
 # ----------------------------------------------------------------------------

@@ -11,7 +11,7 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
-# Mechanismus překladu
+# Mechanismus překladu (NEDOPSANÝ)
 
 **STAV TEXTU:** 🚧 rozepsaný
 

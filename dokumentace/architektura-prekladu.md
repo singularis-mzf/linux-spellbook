@@ -11,7 +11,7 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
-# Architekura překladu
+# Architekura překladu (NEDOPSANÁ!)
 
 **STAV TEXTU:** 🚧 rozepsaný
 
@@ -72,6 +72,3 @@ Parametry mají následující význam a formát:
 | jeDodatek | Parametr je pravdivý, právě tehdy když jde o dodatek a ne o kapitolu. | 0 |
 
 ### KonecKapitoly(nazevKapitoly, cislaPoznamek, textyPoznamek)
-
-...
-(ROZEPSÁNO)
