@@ -25,7 +25,7 @@ Podrobné údaje o autorství zdrojových souborů jsou uvedeny v komentáří
 
 ### Použití online (pro začátečníky)
 
-Navštivte [webové stránky](https://singularis-mzf.github.io/) a vyberte si nejnovější verzi pro váš operační systém. Na přehledové stránce si pak zvolíte jednu či více kapitol, které si chcete prohlédnout (zvolíte-li si více kapitol, doporučuji je otevít v samostatných „panelech“ prohlížeče). Ve vybraných kapitolách pak najděte nějaké zaklínadlo, které si chcete vyzkoušet. Obvyklý postup jeho použití je následující:
+Navštivte [webové stránky](https://singularis-mzf.github.io/) a vyberte si nejnovější verzi pro váš operační systém (verzi 2.x pro Ubuntu 20.04 a jeho deriváty; verzi 1.x pro Ubuntu 18.04 a jeho deriváty). Na přehledové stránce si pak zvolíte jednu či více kapitol, které si chcete prohlédnout (zvolíte-li si více kapitol, doporučuji je otevít v samostatných „panelech“ prohlížeče). Ve vybraných kapitolách pak najděte nějaké zaklínadlo, které si chcete vyzkoušet. Obvyklý postup jeho použití je následující:
 
 1. Zamyslete se, jaký kontext zaklínadlo vyžaduje. (Nemá smysl se např. snažit vypsat název větve gitu mimo jeho pracovní adresář. Ne všechna zaklínadla se zapisují přímo na příkazovou řádku.)
 2. Označte zaklínadlo v prohlížeči (má-li zaklínadlo víc alternativních variant, označte jen jednu z nich).
@@ -35,7 +35,7 @@ Navštivte [webové stránky](https://singularis-mzf.github.io/) a vyberte si n
 6. Projděte zaklínadlo a místa, která jsou na webové stránce označena podtržením (k doplnění), doplňte odpovídajícími parametry.
 7. Potvrďte příkaz (Enter).
 
-*Poznámka:* Linux: Kniha kouzel není tutorial. Pokud na první pokus nepochopíte, jak se uvedená zaklínadla používají, zkuste si prohlédnout ukázku (sekce „Ukázka“), pokud ji daná kapitola nabízí. Pokud to nepomůže, musíte nejprve navštívit jiné stránky, kde vám použití daných nástrojů někdo názorně vysvětlí. Odkazy na takové stránky (včetně videí) najdete v sekci „Další zdroje informací“ prakticky v každé kapitole.
+*Poznámka:* Linux: Kniha kouzel není tutorial. Pokud na první pokus nepochopíte, jak se uvedená zaklínadla používají, musíte nejprve získat zkušenosti nebo navštívit jiné stránky, kde vám použití daných nástrojů někdo názorně vysvětlí. Odkazy na takové stránky (včetně videí) najdete v sekci „Další zdroje informací“ prakticky v každé kapitole.
 
 ### Použití online (pro pokročilé)
 
@@ -45,7 +45,7 @@ Navštivte [webové stránky](https://singularis-mzf.github.io/), vyberte požad
 
 Na stránce [releases](https://github.com/singularis-mzf/linux-spellbook/releases) tohoto repozitáře si můžete stáhnout offline HTML variantu libovolné vydané verze projektu. Offline HTML verze funguje opravdu offline; internet budete potřebovat, jedině pokud se budete chtít podívat na některý z odkazovaných webů.
 
-Pro tisk jsou určeny varianty ve formátu PDF, které jsou rovněž ke stažení na stránce [releases](https://github.com/singularis-mzf/linux-spellbook/releases). Tištěná verze je podstatně přehlednější než jakákoliv elektronická. Doporučuji vytištěné listy svázat do kroužkové vazby.
+Pro tisk jsou určeny varianty ve formátu PDF, které jsou rovněž ke stažení na stránce [releases](https://github.com/singularis-mzf/linux-spellbook/releases). Tištěná verze je podstatně přehlednější než jakákoliv elektronická. Doporučuji vytištěné listy svázat do kroužkové vazby a použít lepící záložky k označení nejčastěji používaných zaklínadel.
 
 ## Návod k sestavení
 
@@ -61,7 +61,7 @@ Budete potřebovat:
 * qrencode
 * kvůli řazení české locale „cs\_CZ.UTF-8“ (musí fungovat české řazení příkazem „sort“)
 
-Ověřil/a jsem, že v Ubuntu 18.04 LTS a Linuxu Mint 17.3 můžete tyto nástroje nainstalovat příkazem:
+Ověřil/a jsem, že v Ubuntu 18.04 LTS a  a Linuxu Mint 17.3 můžete tyto nástroje nainstalovat příkazem:
 
 > ``sudo apt-get install git make gawk imagemagick qrencode``
 
@@ -87,43 +87,51 @@ Chcete-li si sám/a vybrat, které kapitoly se sestaví do výstupního adresá�
 Píše se jedno id kapitoly či dodatku na řádek (id je název souboru bez adresářové cesty a bez přípony)
 a kapitoly ani dodatky se nesmějí opakovat.
 
+## Již vydané kapitoly
+
+| ID | Název kapitoly | Vydána od verze |
+| :--- | :--- | :--- |
+| [awk](kapitoly/awk.md) | AWK | 1.2 |
+| [datum-cas-kalendar](kapitoly/datum-cas-kalendar.md) | Datum, čas a kalendář | 1.1 |
+| [diskove-oddily](kapitoly/diskove-oddily.md) | Diskové oddíly | 1.6 |
+| [git](kapitoly/git.md) | Git | 1.0 |
+| [hledani-souboru](kapitoly/hledani-souboru.md) | Hledání souborů | 1.5 |
+| [make](kapitoly/make.md) | Make | 1.0 |
+| [markdown](kapitoly/markdown.md) | Markdown | 1.0 |
+| [promenne](kapitoly/promenne.md) | Proměnné prostředí a interpretu | 1.9 |
+| [regularni-vyrazy](kapitoly/regularni-vyrazy.md) | Regulární výrazy | 1.1 |
+| [sed](kapitoly/sed.md) | Sed | 1.8 |
+| [soubory-a-adresare](kapitoly/soubory-a-adresare.md) | Soubory a adresáře | 1.5 |
+| [sprava-procesu](kapitoly/sprava-procesu) | Správa procesů | 1.4 |
+| [sprava-uzivatelskych-uctu](kapitoly/sprava-uzivatelskych-uctu.md) | Správa uživatelských účtů | 1.11 |
+| [stahovani-videi](kapitoly/stahovani-videi.md) | Stahování videí | 100% | 1.0 |
+| [vim](kapitoly/vim.md) | Vim | 1.8 |
+
 ## Přechod z Ubuntu 18.04
 
 | ID | Název kapitoly | % | Stav |
 | :--- | :--- | ---: | :--- |
-| [awk](kapitoly/awk.md) | AWK | 100% | rozšířena, schválena k vydání |
-| [datum-cas-kalendar](kapitoly/datum-cas-kalendar.md) | Datum, čas a kalendář | 100% | schválená k vydání |
-| [diskove-oddily](kapitoly/diskove-oddily.md) | Diskové oddíly | 100% | schválena k vydání |
-| [git](kapitoly/git.md) | Git | 100% | schválena k vydání |
-| [hledani-souboru](kapitoly/hledani-souboru.md) | Hledání souborů | 100% | schválena k vydání |
-| [make](kapitoly/make.md) | Make | 100% | schválena k vydání |
-| [markdown](kapitoly/markdown.md) | Markdown | 100% | schválena k vydání |
-| [promenne](kapitoly/promenne.md) | Proměnné prostředí a interpretu | 100% | schválena k vydání |
-| [regularni-vyrazy](kapitoly/regularni-vyrazy.md) | Regulární výrazy | 100% | schválena k vydání |
-| [sed](kapitoly/sed.md) | Sed | 100% | schválena k vydání |
-| [soubory-a-adresare](kapitoly/soubory-a-adresare.md) | Soubory a adresáře | 100% | schválena k vydání |
-| [sprava-procesu](kapitoly/sprava-procesu) | Správa procesů | 100% | schválena k vydání |
-| [sprava-uzivatelskych-uctu](kapitoly/sprava-uzivatelskych-uctu.md) | Správa uživatelských účtů | 100% | schválena k vydání |
-| [stahovani-videi](kapitoly/stahovani-videi.md) | Stahování videí | 100% | schválena k vydání; po vydání vanilkové příchuti 2.0 bude vyřazena z větve 1.x |
-| [vim](kapitoly/vim.md) | Vim | 100% | schválena k vydání |
-| [barvy-a-titulek](kapitoly/barvy-a-titulek.md) | Barvy, titulek a výzva terminálu | 0% | ve frontě |
+| [terminal](kapitoly/terminal.md) | Terminál | 1% | rozpracovaná |
 | [prace-s-archivy](kapitoly/prace-s-archivy.md) | Práce s archivy | 0% | ve frontě |
 | [sprava-balicku](kapitoly/sprava-balicku.md) | Správa balíčků | 0% | ve frontě |
 | [system](kapitoly/system.md) | Systém | 0% | ve frontě |
 | [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) | Zpracování textových souborů | 0% | ve frontě |
 | [zpracovani-videa-a-zvuku](kapitoly/zpracovani-videa-a-zvuku.md) | Zpracování videa a zvuku | 0% | ve frontě |
-| [docker](kapitoly/docker.md) | Docker | 0% | bude stažena |
-| [planovani-uloh](kapitoly/planovani-uloh.md) | Plánování úloh | 0% | bude stažena |
 
-## Stav vývoje budoucích kapitol (podle ID)
+## Vyřazené kapitoly
+
+* *Docker* — Nenaplňuje kvalitativní standard a dostala se mimo okruh mých zájmů; bude zachována ve větvi 1.x, ale ve větvi 2.x se jí již nebudu věnovat.
+* *Plánování úloh* — Dospěl/a jsem k názoru, že pro běžného uživatele není dobré ani „klasické“ řešení plánování úloh démonem *cron*, který úlohu spustí kdesi zcela mimo grafické rozhraní, a tedy mimo interakci s uživatelem, ale ani hybridní řešení, které jsem navrhl/a v této kapitole. Správným řešením je instalace zcela samostatného plánovače, který bude pracovat jako uživatelská aplikace. Proto se místo údržby této kapitoly raději po takovém plánovači poohlédnu.
+
+## Kapitoly ve vývoji
 
 | ID | Název kapitoly | Růst | Stav |
 | :--- | :--- | ---: | :--- |
+| [zpracovani-binarnich-souboru](kapitoly/zpracovani-binarnich-souboru.md) | Zpracování binárních souborů | 80% | dítě |
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
 | [zpracovani-obrazku](kapitoly/zpracovani-obrazku.md) | Zpracování obrázků | 40% | dítě |
 | [odkazy](kapitoly/odkazy.md) | Pevné a symbolické odkazy | 20% | dítě |
 | [perl](kapitoly/perl.md) | Základy Perlu | 20% | dítě |
-| [zpracovani-binarnich-souboru](kapitoly/zpracovani-binarnich-souboru.md) | Zpracování binárních souborů | 20% | dítě |
 | [moderni-veci](kapitoly/moderni-veci.md) | Moderní věci | 10% | dítě |
 | [unicode](kapitoly/unicode.md) | Unicode a emotikony | 10% | dítě |
 | [uzivatelska-rozhrani](kapitoly/uzivatelska-rozhrani.md) | Uživatelská rozhraní skriptů | 5% | dítě |
@@ -156,6 +164,12 @@ a kapitoly ani dodatky se nesmějí opakovat.
 * [_ostatni](kapitoly/_ostatni.md) − Slouží k dočasnému shromážďování dosud nezařazených zaklínadel.
 * [_sablona](kapitoly/_sablona.md) − Nepřekládá se. Slouží jako výchozí podoba pro nově založené kapitoly.
 * [_ukazka](kapitoly/_ukazka.md) − Překládá se, ale není součástí vydaných verzí. Slouží k dokumentaci a testování mechanismu překladu. Obsahuje všechny podporované jazykové konstrukce a znaky.
+
+## Větve na GitHubu
+
+* *vyvojova* – Aktivně vyvíjený zdrojový kód. Sem směřují nejčerstvější příspěvky.
+* *stabilni* – Zdrojový kód poslední vydané verze. Pokud vám nepůjde přeložit kód z větve „vyvojova“, použijte kód z větve „stabilni“.
+* *v1* — Větev 1.x; ve stádiu dlouhodobé pasivní údržby do 1. března 2023.
 
 ## Podobné projekty
 
