@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, kapitola Firefox
-Copyright (c) 2019 Singularis <singularis@volny.cz>
+Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -14,11 +14,16 @@ https://creativecommons.org/licenses/by-sa/4.0/
 <!--
 
 http://kb.mozillazine.org/About:config_entries
+https://github.com/pyllyukko/user.js/blob/master/user.js
+
 
 Oficiální reference: https://developer.mozilla.org/en-US/docs/Mozilla/Preferences/Preference_reference (ale značně neúplná)
 about protocol:
 https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/The_about_protocol
 
+Poznámky:
+- Od verze 80 volba privacy.resistFingerprinting blokuje použití rozšířených písem instalovaných v systému. Proto se některé znaky nezobrazují správně.
+- user.js > přímo do adresáře profilu. Profil je obvykle .mozilla/firefox/*.default-release
 
 -->
 
@@ -69,14 +74,14 @@ https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/The_about_protocol
 
 *# povolit přizpůsobení stránek a prohlížeče pomocí stylových předpisů*<br>
 *// Přizpůsobení se provádí pomocí souborů userContent.css (stránky) a userChrome.css (rozhraní prohlížeče). V profilu Firefoxu musíte vytvořit nový adresář „chrome“ a umístit je tam.*<br>
-**toolkit.legacyUserProfileCustomizations.stylesheets = TRUE**
+**user\_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);**
 
 ### Vypínání
 *# vypnout webové fonty (stahované)*<br>
-**gfx.downloadable\_fonts.enabled = FALSE**
+**user\_pref("gfx.downloadable\_fonts.enabled", false);**
 
 *# vypnout JavaScript*<br>
-**javascript.enabled = FALSE**
+**user\_pref("javascript.enabled", false);**
 
 ### Jsou v GUI
 *# nenašeptávat otevřené panely*<br>
@@ -131,6 +136,9 @@ Běžná aktuální verze Firefoxu je ve většině variant Ubuntu předinstalov
 
 <!--
 [ ] Prozkoumat transplantaci Firefoxu ESR z Debianu.
+
+sudo add-apt-repository ppa:mozillateam/ppa && sudo apt-get update && sudo apt-get install firefox-esr firefox-esr-locale-cs
+
 -->
 
 !ÚzkýRežim: zap

@@ -104,8 +104,12 @@ Offline instalací se rozumí stažení balíčků, jejich přenesení na počí
 *# pokusit se napravit poškozené závislosti*<br>
 **sudo apt-get install \-\-fix-broken**
 
+*# přeinstalovat (**opravit**) již nainstalovaný balíček*<br>
+**sudo apt-get reinstall** {*balíček*}...
+
 *# stáhnout balíčky do lokálních souborů .deb (bez závislostí)*<br>
 **apt-get download** {*balíček*}...
+
 
 ### Vypsat balíčky
 

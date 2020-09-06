@@ -114,11 +114,11 @@ Poznámka: správci přihlášení se nepočítají mezi démony, protože mají
 **laptop-detect**
 
 *# kódové jméno verze **distribuce***<br>
-**lsb\_release -sc** ⊨ bionic
+**lsb\_release -sc** ⊨ focal
 
 *# jméno/verze **distribuce***<br>
 **lsb\_release -si** ⊨ Ubuntu<br>
-**lsb\_release -sr** ⊨ 18.04
+**lsb\_release -sr** ⊨ 20.04
 
 *# **jméno počítače***<br>
 **hostname** ⊨ mojepc
@@ -269,8 +269,14 @@ Podrobnější informace: příkaz „uptimes“ z balíčku „uptimed“.
 ### Ostatní
 
 *# nastavit jméno počítače*<br>
-**sudo sed -i -E "s/(\\\\s)$(hostname)\\$/\\\\1**{*novéjméno*}**/" /etc/hosts &amp;&amp; sudo hostname** {*novéjméno*}<br>
+*// Jméno počítače může být dlouhé maximálně 63 znaků a smí obsahovat pouze malá a velká písmena anglické abecedy, číslice. Může také obsahovat pomlčky, ale nesmí pomlčkou začínat ani končit. Např. „0\-\-\-9Az“ je také dovolené jméno počítače.*<br>
+**stare=$(hostname)**<br>
+**nove=**{*nove-jmeno*}<br>
+**sudo sed -i -E 's/(\\s)'${stare}'$/\\1'${nove}'/' /etc/hosts &amp;&amp; sudo sed -i -E 's/^'${stare}'/'${nove}'/' /etc/hostname**<br>
 !: Restartujte počítač.
+
+*# otestovat volnou paměť RAM*<br>
+**sudo memtester** {*velikost-P*} [{*počet-iterací*}]]
 
 *# nastavit proměnnou prostředí krále démonů/smazat ji*<br>
 **sudo systemctl set-environment** {*PROMĚNNÁ*}**="**{*hodnota*}**"** [{*DALŠÍ\_PROMĚNNÁ*}**="**{*její hodnota*}**"**]...<br>
