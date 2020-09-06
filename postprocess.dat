@@ -161,3 +161,9 @@ pdf-b5.*
 sprava-uzivatelskych-uctu
 \radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{\dopln{přihlašovací{-}jméno}:{\moznyzlom}x:\dopln{UID}:{\moznyzlom}\dopln{GID{-}výchozí{-}skupiny}:{\moznyzlom}\dopln{celé jméno}[,\dopln{další údaje}\volitelnykonec{}:\dopln{/domovský/adresář}\volitelnyzacatek{}:\dopln{/výchozí/shell}\volitelnykonec{}}%
 \radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{\dopln{přihlašovací{-}jméno}:{\moznyzlom}x:\dopln{UID}:{\moznyzlom}\dopln{GID{-}výchozí{-}skupiny}:{\moznyzlom}\dopln{celé jméno}[,\dopln{další údaje}\volitelnykonec{}:\dopln{/domovský/adresář}{\moznyzlom}\volitelnyzacatek{}:\dopln{/výchozí/shell}\volitelnykonec{}}%
+
+2010
+pdf-b5.*
+promenne
+\radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{\volitelnyzacatek{}\textquotedbl{}\dopln{...}\volitelnykonec{}\$\{\dopln{název\_asoc\_pole}[\textquotedbl{}\$\dopln{klíč\_proměnná}\textquotedbl{}]\}\volitelnyzacatek{}\dopln{...}\textquotedbl{}\volitelnykonec{}}%
+\radekzaklinadla{\lmmathfamily{}∘\hspace*{0.1em}}{\volitelnyzacatek{}\textquotedbl{}\dopln{...}\volitelnykonec{}\$\{\dopln{název\_asoc\_pole}[\textquotedbl{}\$\dopln{klíč\_proměnná}\textquotedbl{}]\}{\moznyzlom}\volitelnyzacatek{}\dopln{...}\textquotedbl{}\volitelnykonec{}}%

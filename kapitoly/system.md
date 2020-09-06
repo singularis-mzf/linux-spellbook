@@ -269,7 +269,10 @@ Podrobnější informace: příkaz „uptimes“ z balíčku „uptimed“.
 ### Ostatní
 
 *# nastavit jméno počítače*<br>
-**sudo sed -i -E "s/(\\\\s)$(hostname)\\$/\\\\1**{*novéjméno*}**/" /etc/hosts &amp;&amp; sudo hostname** {*novéjméno*}<br>
+*// Jméno počítače může být dlouhé maximálně 63 znaků a smí obsahovat pouze malá a velká písmena anglické abecedy, číslice. Může také obsahovat pomlčky, ale nesmí pomlčkou začínat ani končit. Např. „0\-\-\-9Az“ je také dovolené jméno počítače.*<br>
+**stare=$(hostname)**<br>
+**nove=**{*nove-jmeno*}<br>
+**sudo sed -i -E 's/(\\s)'${stare}'$/\\1'${nove}'/' /etc/hosts &amp;&amp; sudo sed -i -E 's/^'${stare}'/'${nove}'/' /etc/hostname**<br>
 !: Restartujte počítač.
 
 *# nastavit proměnnou prostředí krále démonů/smazat ji*<br>

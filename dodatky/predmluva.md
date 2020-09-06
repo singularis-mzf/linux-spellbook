@@ -170,24 +170,16 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 <neodsadit>Všechen software potřebný k sestavení projektu je svobodný.
 Pokud některá kapitola odkazuje na nesvobodný software, vždy na to výslovně upozorní.
 
-## Aktuální poznámka k verzi „vanilková příchuť 1.11 Gustav Glocový“
+## Aktuální poznámka k verzi „vanilková příchuť 1.12 Hana Hlavní“
 
-Verze 1.11, jménem Gustav Glocový, přináší novou kapitolu Správa uživatelských účtů.
+Verze 1.12 „Hana Hlavní“ je poslední aktivně vyvíjená verze
+vanilkové příchuti určená především pro Ubuntu 18.04 „Bionic Beaver“.
+Přináší pouze opravy řady zjištěných chyb.
 
-Z PDF verzí byl vypuštěn Přehled podle štítků, protože se ukázal jako velmi nepraktický
-a nestál za ten papír.
-
-V repozitáři také proběhla nějaká práce na dokumentaci mechanismu překladu,
-ale tato dokumentace je stále rozepsaná.
-
-Vydání verze 1.12, jménem Hana Hlavní, očekávám v průběhu září 2020.
-
-Od 1. srpna 2020 zahajuji v nové větvi „v2-beta“ vývoj verze vanilková příchuť 2.0, jejíž jméno bude ještě ohlášeno
-a která bude cílena na Ubuntu 20.04 Focal Fossa a jeho deriváty. Vydání této verze očekávám v průběhu října 2020,
-do té doby budu muset vyzkoušet velké množství zaklínadel a tvrzení a ověřit, zda jsou v nové verzi Ubuntu stále
-platná. Po vydání verze 2.0 přejde větev 1.x do stádia dlouhodobé pasivní údržby a již nebude aktivně vyvíjena,
-ale nahlášené chyby budou opravovány a podle potřeby vydávány nové (již bezejmenné) verze. Větev 1.x bude
-tímto způsobem udržována nejpozději do 1. března 2023.
+Vydání verze 2.0 „Chranislav Charbulový“ očekávám 1. října 2020.
+Verze 2.0 bude určena především pro Ubuntu 20.04 „Focal Fossa“.
+Současně vyjde bezejmenná verze 1.13, kterou větev 1.x přejde do stádia dlouhodobé pasivní údržby,
+ve kterém má podle plánu zůstat do 1. března 2023.
 
 &nbsp;
 

@@ -399,8 +399,8 @@ Prázdný klíč způsobí chybu „chybný podskript pole“.
 
 *# dosadit hodnotu z **asociativního pole** (klíč je řetězec/hodnota proměnné)*<br>
 *// Tyto tvary uvádějte vždy ve dvojitých uvozovkách. Klíč se v tomto případě vyhodnocuje, jako by byl sám uvnitř samostatných dvojitých uvozovek, což umožňuje i vícenásobné vnoření této konstrukce, ačkoliv to je špatně čitelné.*<br>
-[**"**{*...*}]**$\{**{*název\_asoc\_pole*}**["**{*klíč*}**"]\}**[{*...*}**"**]<br>
-[**"**{*...*}]**$\{**{*název\_asoc\_pole*}**["$**{*klíč\_proměnná*}**"]\}**[{*...*}**"**]
+**$\{**{*název\_asoc\_pole*}**["**{*klíč*}**"]\}**<br>
+**$\{**{*název\_asoc\_pole*}**["$**{*klíč\_proměnná*}**"]\}**
 
 *# dosadit všechny klíče/všechny hodnoty z asociativního pole*<br>
 **"${!**{*název\_asoc\_pole*}**[@]}"**<br>
