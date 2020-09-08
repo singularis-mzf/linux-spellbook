@@ -169,20 +169,29 @@
 # Motiv „hlavní“
 ##############################################################################
 {{POKUD JE MOTIV hlavni}}
-{{MAKRO html-pozadi-barva           = rgb(210,224,235)}}
-{{MAKRO html-pozadi-obrazek         = url("obrazky/marsh.jpg")}}
-{{MAKRO zb-titul-krizek             = 0,204,0}}
-{{MAKRO zb-text                     = 51,51,51}}
-{{MAKRO zb-tmava                    = 120,120,120}}
-{{MAKRO zb-svetla                   = 204,204,204}}
-{{MAKRO zb-pozadi                   = 212,221,208}}
-{{MAKRO zb-barevny-text             = 22,102,68}}
-{{MAKRO menu-stin-textu-tlacitka-kryti = 1}}
+{{MAKRO html-pozadi-barva   = rgb(18,26,39)}}
+{{MAKRO html-pozadi-obrazek = url("obrazky/udoli.jpg")}}
+{{MAKRO kryti-obrazku-globalni          = 0.75}}
+{{MAKRO zb-titul-pozadi                 = {{zb-pozadi}}}}
+{{MAKRO zb-titul-text                   = {{zb-text}}}}
+{{MAKRO zb-okno-ramecek={{zb-svetla}}}}
+{{MAKRO okno-stin-kryti=0.5}}
+{{MAKRO zb-text                         = 164,164,164}}
+{{MAKRO zb-tmava                        = 120,120,120}}
+{{MAKRO zb-svetla                       = 60,60,60}}
+{{MAKRO zb-pozadi                       = 40,40,40}}
+{{MAKRO zb-odkaz                        = 86,155,200}}
+{{MAKRO zb-navstiveny                   = 183,136,183}}
+{{MAKRO zb-barevny-text                 = 63,162,94}}
+{{MAKRO obrazek-pozadi                  = 255,255,255}}
+{{MAKRO obrazek-pozadi-kryti            = 0.2}}
+{{MAKRO symboly-tab                 = {{sym-raquo-bila}}}}
+{{MAKRO symboly-tritecky            = {{sym-tritecky-svetle}}}}
+{{MAKRO symboly-viditelnamezera     = {{sym-blank-bila}}}}
+{{MAKRO prehledstitku-liche-barva-pozadi=rgba({{zb-svetla}},1)}}
+{{MAKRO prehledstitku-sude-barva-pozadi=rgba({{zb-pozadi}},1)}}
 
-{{MAKRO titulni-lista-obrazek-pozadi    = {{sym-titliststin}}}}
-{{MAKRO titulni-lista-stin-textu-kryti  = 0.5}}
-{{MAKRO parametryprikazu-levy-sloupec-kryti=0.7}}
-{{MAKRO index-podzahlavim-box-shadow=0 0.25rem 1.5rem 0 rgba(50,100,50,0.5)}}
+#{{MAKRO index-podzahlavim-box-shadow=none}}
 {{KONEC POKUD}}
 
 #
@@ -309,66 +318,24 @@
 
 {{KONEC POKUD}}
 #
-# Motiv „tmavý motiv“
+# Motiv světlý motiv“
 ##############################################################################
-{{POKUD JE MOTIV tmavy}}
-# - Pozadí a obrázek značky <html>:
-{{MAKRO html-pozadi-barva   = rgb(18,26,39)}}
-{{MAKRO html-pozadi-obrazek = url("obrazky/udoli.jpg")}}
+{{POKUD JE MOTIV svetly}}
+{{MAKRO html-pozadi-barva           = rgb(210,224,235)}}
+{{MAKRO html-pozadi-obrazek         = url("obrazky/marsh.jpg")}}
+{{MAKRO zb-titul-krizek             = 0,204,0}}
+{{MAKRO zb-text                     = 51,51,51}}
+{{MAKRO zb-tmava                    = 120,120,120}}
+{{MAKRO zb-svetla                   = 204,204,204}}
+{{MAKRO zb-pozadi                   = 212,221,208}}
+{{MAKRO zb-barevny-text             = 22,102,68}}
+{{MAKRO zb-okno-ramecek             = 153,153,153}}
+{{MAKRO menu-stin-textu-tlacitka-kryti = 1}}
 
-# - Krytí všech <img>, které nemají krytí předefinované jinak. Používá se ke snížení jasu v tmavých motivech.
-{{MAKRO kryti-obrazku-globalni          = 0.75}}
-# - Zvláštní krytí pro ikony kapitol:
-#{{MAKRO kryti-obrazku-ikona-kapitoly    = {{kryti-obrazku-globalni}}}}
-
-# - Barva titulní lišty a jejího textu + jeho krytí a krytí jeho stínu:
-{{MAKRO zb-titul-pozadi                 = {{zb-pozadi}}}}
-{{MAKRO zb-titul-text                   = {{zb-text}}}}
-#{{MAKRO titulni-lista-text-kryti        = 1}}
-#{{MAKRO titulni-lista-stin-textu-kryti  = 0}}
-# - Barva ikon na titulní liště vpravo; také použita jako pozadí pro tlačítka „přejít nahoru/dolů“.
-#{{MAKRO zb-titul-krizek                 = {{zb-titul-text}}}}
-# - Barva zvýraznění pro tlačítka „přejít nahoru/dolů“, když jsou stisknutá.
-#{{MAKRO zb-titul-aktivni                = 255,255,0}}
-# - Stín v horní a spodní části titulní lišty (background-image):
-#{{MAKRO titulni-lista-obrazek-pozadi    = none}}
-# - Barva tenkého rámečku okna + krytí stínu okna:
-{{MAKRO zb-okno-ramecek={{zb-svetla}}}}
-{{MAKRO okno-stin-kryti=0.5}}
-
-# - Základní barva textu („inkoust“)
-{{MAKRO zb-text                         = 164,164,164}}
-# - Šedý text (méně kontrastní barva textu) (světlejší/tmavší) − tmavě šedá pro světlé motivy, světle šedá pro tmavé
-#   Musí být jasně odlišitelná od obyčejného textu.
-{{MAKRO zb-tmava                        = 120,120,120}}
-# - Méně kontrastní barva pozadí (světlejší/tmavší) − světle šedá pro světlé motivy, tmavě šedá pro tmavé
-{{MAKRO zb-svetla                       = 60,60,60}}
-# - Základní barva pozadí („papír“)
-{{MAKRO zb-pozadi                       = 40,40,40}}
-
-# - Základní barva hypertextových odkazů (ne jejich adresy)
-{{MAKRO zb-odkaz                        = 86,155,200}}
-# - Odlišná barva pro již navštívené hypertextové odkazy
-{{MAKRO zb-navstiveny                   = 183,136,183}}
-# - Barva zvláštních odkazů v rámečku (použita pro rozcestník kapitoly).
-{{MAKRO zb-barevny-text                 = 63,162,94}}
-
-# - Samostatné nastavení krytí pro metaznaky [ ] a „Enter“ v zaklínadlech.
-#{{MAKRO sede-casti-kryti=0.7}}
-
-# - Pozadí odstavce s vloženým obrázkem + krytí tohoto pozadí:
-{{MAKRO obrazek-pozadi                  = 255,255,255}}
-{{MAKRO obrazek-pozadi-kryti            = 0.2}}
-
-# - Symboly:
-{{MAKRO symboly-tab                 = {{sym-raquo-bila}}}}
-#{{MAKRO symboly-tab-barva-pozadi    = transparent}}
-{{MAKRO symboly-tritecky            = {{sym-tritecky-svetle}}}}
-{{MAKRO symboly-viditelnamezera     = {{sym-blank-bila}}}}
-
-# - Stín boxu na titulní stránce:
-#{{MAKRO index-podzahlavim-box-shadow=none}}
-
+{{MAKRO titulni-lista-obrazek-pozadi    = {{sym-titliststin}}}}
+{{MAKRO titulni-lista-stin-textu-kryti  = 0.5}}
+{{MAKRO parametryprikazu-levy-sloupec-kryti=0.7}}
+{{MAKRO index-podzahlavim-box-shadow=0 0.25rem 1.5rem 0 rgba(50,100,50,0.5)}}
 {{KONEC POKUD}}
 #
 # CSS reset
@@ -384,91 +351,33 @@ top:auto;vertical-align:baseline;visibility:inherit;white-space:inherit;word-spa
 z-index:auto;font:inherit;}
 
 #
-# Blokové prvky
+# Nadpisy
 ##############################################################################
-html {
-    background:{{html-pozadi-barva}} {{html-pozadi-obrazek}} 100% 0%/cover repeat fixed;
-    color:rgb({{zb-text}});
-    font:62.5%/1.2 sans-serif;
-}
 
-body {
-    margin:15rem auto 25rem;
-    border:thin solid rgb({{zb-okno-ramecek}});
-    padding:0;
-    width:90%;min-width:95rem;max-width:120rem;
-    background-color:rgb({{zb-pozadi}});
-    font-size:133%;
-    box-shadow:1rem 1rem 5rem 0 rgba(0,0,0,{{okno-stin-kryti}});
-}
-
-header {
-    border-bottom:thin solid rgb({{zb-okno-ramecek}});
-    padding:0.4em 0.5em;
-    background:rgb({{zb-titul-pozadi}}) {{titulni-lista-obrazek-pozadi}} 0% 0%/1px 100% repeat-x;
-    color:rgba({{zb-titul-text}},{{titulni-lista-text-kryti}});
-    font-weight:bold;
-    text-shadow:0 0 0.25em rgba(0,0,0,{{titulni-lista-stin-textu-kryti}});
-}
-
-nav {
-    position:relative;
-    display:block;
-    line-height:2;
-}
-nav.horni {
-    display:none; /* potlačit zobrazení, dokud se nerozhodnu ji odstranit */
-    margin:1rem 0 0;
-    text-align:left;
-}
-nav.spodni {
-    margin:3em 3rem 2em 0;
-    text-align:center;
-}
-nav.menu {
-    display:block;
-}
-
-article {
-    padding:2rem 3rem 10rem;
-}
-
-footer {
-    border-top:thin solid rgb({{zb-okno-ramecek}});
-    padding:1rem 3rem;
-    font-size:85%;
-    background:rgb({{zb-svetla}});
-}
-
+# nadpis kapitoly (může obsahovat ikonu kapitoly)
 h1 {
     font:bold 175%/1.2 "DejaVu Sans", sans-serif;
     margin:0;
 }
-h1.kapitola img {
+# h1.kapitola img
+h1 img {
     vertical-align:middle;
     border:none;
     width:6.4rem;height:6.4rem;
     opacity:{{kryti-obrazku-ikona-kapitoly}};
 }
 
+# nadpis sekce
 h2 {
     font:150%/1.2 "DejaVu Sans", sans-serif;
     margin:1.5em 0 0.5em;
 }
 
+# nadpis podsekce (má číslo se zvláštním formátováním)
 h3 {
     font:bold 125%/1.2 "DejaVu Sans", sans-serif;
     margin:1.5em 0 0.75em;
     page-break-after:avoid; /* možná není podporována v současných prohlížečích */
-}
-h3 .cislo {
-    display:inline-block;
-    margin:-0.25em 0.5rem;
-    border:thin solid;
-    border-radius:50% 50%;
-    padding-top:0.2em;
-    text-align:center;
-    width:1.5em;height:1.5em;
 }
 h3>span {
     display:block;
@@ -476,22 +385,50 @@ h3>span {
     box-shadow:0.1rem 0.1rem 0.2rem 0 rgba({{zb-tmava}},0.8);
     padding:0.5rem 0.5rem;
 }
-
-h2, h3 {
-    position:relative;
-    top:-{{vyska-horni-listy}};
-    visibility:hidden;
-}
-h2>a, h2>span, h3>span {
-    position:relative;
-    top:{{vyska-horni-listy}};
-    visibility:visible;
-}
 h3 sup {
     vertical-align:super;
     font-size:85%;
     font-weight:normal;
 }
+
+# Pozicování nadpisů h2 a h3 (kvůli kotvám):
+h2, h3
+    {position:relative;top:-{{vyska-horni-listy}};visibility:hidden;}
+h2>a, h2>span, h3>span
+    {position:relative;top:{{vyska-horni-listy}};visibility:visible;}
+
+#
+# Hypertextové odkazy
+##############################################################################
+
+a:link {color:rgb({{zb-odkaz}})}
+a:visited {color:rgb({{zb-navstiveny}});}
+
+a[href^="http://"]::before, a[href^="https://"]::before {
+    content:"[";
+    color:rgba({{zb-adresa}},{{zb-adresa-kryti}});
+}
+a[href^="http://"]::after, a[href^="https://"]::after {
+    content:"]( " attr(href) " )";
+    color:rgba({{zb-adresa}},{{zb-adresa-kryti}});
+}
+a:hover {text-decoration:underline;}
+
+/* Sebeodkazy nadpisů */
+h1>a:link, h1>a:visited, h2>a:link, h2>a:visited, h3>span>a:link, h3>span>a:visited, h4>a:link, h4>a:visited, h5>a:link, h5>a:visited, h6>a:link, h6>a:visited {
+    display:block;
+    color:inherit;
+}
+
+/* Zvláštní formátování v navigaci */
+nav a {margin:0.25em;}
+nav a[rel="prev"]::before {content:"\ab ";margin:0;}
+nav a[rel="next"]::after {content:" \bb";margin:0;}
+nav a[rel="prev"]::after, nav a[rel="next"]::before {content:none;}
+
+#
+# Obecný formát blokových prvků
+##############################################################################
 
 p, ul, blockquote {
     font-family: "DejaVu Sans", sans-serif;
@@ -511,10 +448,6 @@ ul > li + li {
 ul.kompaktni {
     line-height:1.2;
     text-align:left;
-}
-
-img {
-    opacity:{{kryti-obrazku-globalni}};
 }
 figure {
     margin:2rem 0;
@@ -536,15 +469,19 @@ blockquote+blockquote {
     padding-top:0.75em;
 }
 
-/* Inline prvky */
-a:link {color:rgb({{zb-odkaz}})}
-a:visited {color:rgb({{zb-navstiveny}});}
-/* a:visited {color:;} */
-a[href^="http://"]::before, a[href^="https://"]::before {content:"[";color:rgba({{zb-adresa}},{{zb-adresa-kryti}});}
-a[href^="http://"]::after, a[href^="https://"]::after {content:"]( " attr(href) " )";color:rgba({{zb-adresa}},{{zb-adresa-kryti}});}
-a:hover {text-decoration:underline;}
-b {font-weight:bold;}
-i {font-style:italic;}
+#
+# Obecný formát prvků v řádce (+ třídy)
+##############################################################################
+
+b {
+    font-weight:bold;
+}
+i {
+    font-style:italic;
+}
+img {
+    opacity:{{kryti-obrazku-globalni}};
+}
 kbd {
     display:inline-block;
     border-style:solid;
@@ -556,22 +493,256 @@ kbd {
     color:rgb({{zb-text}});
     font-family:"DejaVu Sans", sans-serif;
 }
-
-/* Sebeodkazy nadpisů */
-h1>a:link, h1>a:visited, h2>a:link, h2>a:visited, h3>span>a:link, h3>span>a:visited, h4>a:link, h4>a:visited, h5>a:link, h5>a:visited, h6>a:link, h6>a:visited {
-    display:block;
-    color:inherit;
+.dopln {
+    font: 100%/1.2 "DejaVu Sans Mono", monospace;
+    text-decoration:underline;
+    margin-left:0.25em;
+    margin-right:0.25em;
+}
+.chybny {
+    color:rgb({{chybny-znak-text}}) !important;
+    background:rgb({{chybny-znak-pozadi}}) !important;
+    font-weight:bold;
+    border:1px solid;
+}
+.tab {
+    background:{{symboly-tab-barva-pozadi}} {{symboly-tab}} 0% 100%/1ch no-repeat;
+    display:inline-block;
+    overflow:hidden;
+    width:1ch;height:1.8ch;
+    white-space:pre;
+}
+.tritecky {
+    background:transparent {{symboly-tritecky}} 0% 0%/100% 100% no-repeat;
+    display:inline-block;
+    width:0.75em;height:1ex;
+}
+.viditelnamezera {
+    background:transparent {{symboly-viditelnamezera}} 50% 100%/100% no-repeat;
+    white-space:pre;
 }
 
-/* Formátování odkazů v navigaci */
-nav a {margin:0.25em;}
-# /*nav a::before {content:"\2191";margin-right:0rem;}
-# nav a::after {content:"\2191";margin-left:0rem;}*/
-nav a[rel="prev"]::before {content:"\ab ";margin:0;}
-nav a[rel="next"]::after {content:" \bb";margin:0;}
-nav a[rel="prev"]::after, nav a[rel="next"]::before {content:none;}
+#
+# Celkový design (hlavní prvky)
+##############################################################################
 
-/* Formátování zaklínadel */
+html {
+    background:{{html-pozadi-barva}} {{html-pozadi-obrazek}} 100% 0%/cover repeat fixed;
+    color:rgb({{zb-text}});
+    font:62.5%/1.2 sans-serif;
+}
+
+body {
+    margin:0;border:none;padding:0;
+    font-size:133%;
+}
+
+#nahore {
+    margin:0;border:none;padding:0;
+}
+
+#okno {
+    margin:15rem auto 25rem;
+#    border:0.4em solid rgb({{zb-okno-ramecek}});
+    border:0.3em solid rgb({{zb-okno-ramecek}});
+    padding:0;
+    width:90%;min-width:95rem;max-width:120rem;
+    background-color:rgb({{zb-pozadi}});
+    box-shadow:1rem 1rem 5rem 0 rgba(0,0,0,{{okno-stin-kryti}});
+    /* zakulacené hrany okna: */
+    border-top-left-radius:1.0em;
+    border-top-right-radius:1.0em;
+    overflow:hidden;
+}
+
+# titulek okna (+ ikony vlevo a vpravo)
+header {
+#    border-bottom:thin solid rgb({{zb-okno-ramecek}}); /* není potřeba, dokud je pod titulkem menu */
+    padding:0.4em 0.5em;
+    background:rgb({{zb-titul-pozadi}}) {{titulni-lista-obrazek-pozadi}} 0% 0%/1px 100% repeat-x;
+    color:rgba({{zb-titul-text}},{{titulni-lista-text-kryti}});
+    font-weight:bold;
+    text-shadow:0 0 0.25em rgba(0,0,0,{{titulni-lista-stin-textu-kryti}});
+}
+header .vlevo img {vertical-align:bottom;margin-right:0.25em;}
+header .vpravo {float:right;}
+header .vpravo span {
+    display:inline-block;
+    margin:0 0.25em;
+    color:rgb({{zb-titul-krizek}});
+}
+header .vpravo .ico1 {
+    border-bottom:0.3rem solid;
+    width:1ex;height:1ex;
+}
+header .vpravo .ico2 {
+    border-style:solid;
+    border-width:0.3rem 0.2rem 0.2rem;
+    width:0.8ex;height:0.75ex;
+}
+header .vpravo .ico3 {
+    margin-left:0.1em;
+    width:1ex;height:1ex;text-align:center;
+    font-size:120%;
+    line-height:1;
+}
+header .vpravo .ico3::before {content:"\d7";}
+
+# lišta s nabídkami (formát položek níže)
+nav.menuokna {
+    position:relative;
+    display:block;
+    background:rgb({{zb-svetla}});
+    line-height:1.5;
+    border-bottom:thin solid rgb({{zb-okno-ramecek}});
+    padding:0 0.25em;
+}
+nav.menuokna a {
+    display:inline-block;
+    margin:0.1em 0;
+    padding:0 0.25em;
+    min-width:5em;
+    color:inherit;
+    text-align:center;
+    text-decoration:none;
+    white-space:nowrap;
+    border:0.2rem solid transparent;
+}
+nav.menuokna a:hover {
+    border-color:rgba(128,128,128,0.75);
+}
+nav.menuokna a.menu::before {
+    content:"≡ ";
+    font-weight:bold;
+    text-decoration:none;
+}
+nav.menuokna a.prehled::before {
+    content:"🗐 ";
+    font-weight:bold;
+    text-decoration:none;
+}
+nav.menuokna a.predchozi::before {content:"« "}
+nav.menuokna a.nasledujici::after{content:" »"}
+
+# slogan v kapitolách
+.slogan-veskera-moc {
+    position:relative;
+    top:0.5em;
+    height:0;
+    padding-right:0.5em;
+    overflow:visible;
+    text-align:right;
+    font-size:90%;
+    font-style:italic;
+}
+
+# vnitřek okna
+article {
+    padding:2rem 3rem 5rem;
+}
+
+# navigace kapitoly na konci
+nav.spodni {
+    margin:3em 3rem 2em 0;
+    text-align:center;
+}
+nav.spodni .nazev {font-weight:bold}
+nav.spodni .naslkap {
+    position:relative;
+    display:inline-block;
+    margin-left:3em;
+    background-color:rgb({{zb-svetla}});
+    vertical-align:middle;
+}
+nav.spodni .naslkap a {
+    display:block;
+    padding:0 2em;
+}
+nav.spodni .naslkap a::after {
+    content:"⏵";
+    position:absolute;right:-0.1em;bottom:0;
+    font-size:200%;
+    line-height:2.25;
+}
+nav.spodni>div+div {
+    position:relative;top:1.1em;
+}
+
+# odkazy pod navigací kapitoly
+.odkazydole {
+    margin:3rem 0;
+    text-align:center;
+}
+.odkazydole div {
+    display:inline-block;
+    border-radius:1em;
+    padding:0.25em 2em 0.25em 0;
+}
+.odkazydole a {
+    display:inline-block;
+    margin:0 2em;
+    white-space:nowrap;
+}
+.odkazydole img {
+    margin:0.5rem;
+    vertical-align:middle;
+    opacity:{{kryti-obrazku-ikona-kapitoly}};
+}
+
+# spodní okraj okna (licence apod.)
+footer {
+    border-top:thin solid rgb({{zb-okno-ramecek}});
+    padding:1rem 3rem;
+    font-size:85%;
+    background:rgb({{zb-svetla}});
+}
+footer p {margin:0;padding:0;max-width:none;}
+footer p+p {margin-top:0.75em;}
+footer img {float:left;margin:0 1rem 1rem 0;}
+
+# menu (mimo okno)
+.menu {
+    display:block;
+}
+
+# tlačíka „nahoru“ a „dolů“
+#odkaznahoru, #odkazdolu {
+    position:fixed;
+    right:2%;
+    z-index:256;
+    background:rgba({{zb-titul-pozadi}},{{nahorudolu-neaktivni-kryti}});
+    color:rgba({{zb-titul-krizek}},{{nahorudolu-neaktivni-kryti}});
+    font:20pt/1 sans-serif;
+    border:5pt outset rgba({{zb-titul-krizek}},{{nahorudolu-neaktivni-kryti}});
+    border-radius:50%;
+}
+#odkaznahoru {
+    top:10pt;
+    box-shadow:0 0 0 2pt rgba(0,0,0,{{nahorudolu-cernyramecek-kryti}});
+    padding:0 6pt 3pt;
+}
+#odkazdolu {
+    bottom:10pt;
+    opacity:{{nahorudolu-neaktivni-kryti}};
+    padding:0 4pt;
+}
+#odkaznahoru:hover, #odkazdolu:hover, #odkaznahoru:active, #odkazdolu:active {
+    background:rgba({{zb-titul-pozadi}},{{nahorudolu-aktivni-kryti}});
+    border-color:rgba({{zb-titul-aktivni}},{{nahorudolu-aktivni-kryti}});
+    text-decoration:none;
+    opacity:1;
+}
+#odkaznahoru:hover, #odkazdolu:hover {
+    color:rgba({{zb-titul-krizek}},{{nahorudolu-aktivni-kryti}});
+}
+#odkaznahoru:active, #odkazdolu:active {
+    color:rgba({{zb-titul-aktivni}},{{nahorudolu-aktivni-kryti}});
+}
+
+#
+# Formátování zaklínadel (.zaklinadlo, .radekzaklinadla)
+##############################################################################
+
 .zaklinadlo {
     font-family: "DejaVu Sans Mono", monospace;
     font-size:115%;
@@ -626,7 +797,6 @@ nav a[rel="prev"]::after, nav a[rel="next"]::before {content:none;}
 .zaklinadlo .zahlavi .L, .vzornikikon .L {font-family:"Latin Modern Math", sans-serif;}
 
 .zaklinadlo .radky {
-# /*    box-shadow:0 0 5pt 0 rgb(200,200,200), -5pt 0 5pt 5pt rgb(200,200,200), 5pt 0 5pt 0 rgb(200,200,200);*/    /*box-shadow:0 0 5pt 1pt rgb(200,200,200);*/
     font-size:80%;
     line-height:1.8;
     margin:3pt 5pt 3pt 7rem;
@@ -668,12 +838,6 @@ nav a[rel="prev"]::after, nav a[rel="next"]::before {content:none;}
 .zaklinadlo .akce, .radekzaklinadla.akce {font-family:serif;font-style:italic;}
 .zaklinadlo .akce::before, .zaklinadloakcebefore::before {content:"\2192 ";font-weight:bold;}
 
-.dopln {
-    font: 100%/1.2 "DejaVu Sans Mono", monospace;
-    text-decoration:underline;
-    margin-left:0.25em;
-    margin-right:0.25em;
-}
 .zaklinadlo .dopln:first-child {
     margin-left:0;
 }
@@ -691,7 +855,10 @@ nav a[rel="prev"]::after, nav a[rel="next"]::before {content:none;}
     text-shadow:0 0 0.5em rgba(0,0,0,0.5);
 }
 
-/* Formátování poznámek pod čarou */
+#
+# Poznámky pod čarou (.ppc)
+##############################################################################
+
 .ppc {
     margin-top:10pt;
     border-top:1pt solid;
@@ -746,7 +913,10 @@ nav a[rel="prev"]::after, nav a[rel="next"]::before {content:none;}
     padding-bottom:0;
 }
 
-/* .parametryprikazu */
+#
+# Parametry příkazů (.parametryprikazu)
+##############################################################################
+
 .parametryprikazu td {
     padding-top:0.25em;
 }
@@ -761,185 +931,10 @@ nav a[rel="prev"]::after, nav a[rel="next"]::before {content:none;}
     font-family:"DejaVu Serif", serif;
 }
 
-/* header .right ikony */
-header .right span {
-    display:inline-block;
-    margin:0 0.25em;
-    color:rgb({{zb-titul-krizek}});
-}
+#
+# Štítky v záhlaví kapitoly (.stitky)
+##############################################################################
 
-header .right .ico1 {
-    border-bottom:0.3rem solid;
-    width:1ex;height:1ex;
-}
-
-header .right .ico2 {
-    border-style:solid;
-    border-width:0.3rem 0.2rem 0.2rem;
-    width:0.8ex;height:0.75ex;
-}
-
-header .right .ico3 {
-    margin-left:0.1em;
-    width:1ex;height:1ex;text-align:center;
-    font-size:120%;
-    line-height:1;
-}
-
-header .right .ico3::before {content:"\d7";}
-
-/* zbytek */
-#nahore {
-    display:block;
-    height:0.2rem;
-    margin:0 0 -0.2rem;
-    position:relative;
-    top:-{{vyska-horni-listy}};
-}
-
-header .left img {vertical-align:bottom;margin-right:0.25em;}
-header .right {float:right;}
-footer p {margin:0;padding:0;max-width:none;}
-footer p+p {margin-top:0.75em;}
-footer img {float:left;margin:0 1rem 1rem 0;}
-.tab {
-    background:{{symboly-tab-barva-pozadi}} {{symboly-tab}} 0% 100%/1ch no-repeat;
-    display:inline-block;
-    overflow:hidden;
-    width:1ch;height:1.8ch;
-    white-space:pre;
-}
-.viditelnamezera {
-    background:transparent {{symboly-viditelnamezera}} 50% 100%/100% no-repeat;
-    white-space:pre;
-}
-.tritecky {
-    background:transparent {{symboly-tritecky}} 0% 0%/100% 100% no-repeat;
-    display:inline-block;
-    width:0.75em;height:1ex;
-}
-
-/* .zahlavistranky: */
-.zahlavistranky {
-    display:flex;
-    flex-flow:row nowrap;
-    text-align:center;
-}
-.zahlavistranky .logo {
-    width:20%;height:auto;
-}
-.zahlavistranky .logo img {
-    width:100%;height:auto;
-}
-.zahlavistranky .zbytek {
-    display:flex;
-    flex-flow:column nowrap;
-    padding-left:1.5%;
-}
-.zahlavistranky h1 img {
-# /*    position:absolute;top:0;left:auto;right:0;bottom:auto;z-index:2;*/
-    width:95%;
-    border:0.1rem solid #802020;
-    box-shadow:0.1rem 0.1rem 0.2rem 0 #000000;
-}
-.zahlavistranky .slogan {
-    margin:2ex auto;
-    font-style:italic;
-    line-height:1.5;
-}
-body>.slogan {
-    position:relative;
-    top:0.5em;
-    height:0;
-    padding-right:0.5em;
-    overflow:visible;
-    text-align:right;
-    font-size:90%;
-    font-style:italic;
-}
-# /* .podzahlavim: */
-.podzahlavim {
-    display:flex;
-    flex-flow:row nowrap;
-    margin:1em 0;
-    border-radius:1rem 1rem;
-    padding:1rem 2%;
-    box-shadow:{{index-podzahlavim-box-shadow}};
-}
-.podzahlavim p.ponadpisu {
-    margin:1ex auto;
-    width:65%;
-    text-align:justify;
-}
-.podzahlavim .ikona img {
-    margin:0 0.5em 0 2em;
-    width:auto; height:6.4rem;
-}
-.podzahlavim p.informaceoverzi {
-    margin:0;
-    text-align:left;
-    text-indent:0;
-    width:20em;
-}
-.podzahlavim em {
-    font-style:italic;
-    font-weight:normal;
-    margin-left:1em;
-}
-.podzahlavim p.informaceoverzi a {
-    display:block;
-    margin:0.3rem 0 0;
-    border-top:thin dotted rgb({{zb-tmava}});
-    padding:0.2rem 0 0 1em;;
-}
-.podzahlavim p.informaceoverzi a::before {
-    content:"📚 ";
-    font-size:150%;
-}
-.podzahlavim p.informaceoverzi a::after {
-    content:normal;
-}
-.podzahlavim p.informaceoverzi em {
-    white-space:nowrap;
-}
-
-nav .slogan {
-    position:absolute;top:0.15em;right:2%;
-    font-size:90%;
-    font-style:italic;
-    text-align:right;
-    line-height:1.5;
-}
-
-nav .prev, nav .next {
-    display:inline-block;
-    min-width:13em;
-}
-nav .prev {text-align:right;margin-right:0.25em;}
-nav .next {text-align:left;}
-
-.rozcestnikkapitol {
-    background:rgb({{zb-svetla}});
-    color:rgb({{zb-tmava}});
-    margin:1rem -1em;
-    border:0.1rem solid rgba(0,0,0,0.2);
-    border-radius:1em;
-    padding:0.5em 1em;
-    text-align:left;
-    line-height:1.6;
-}
-.rozcestnikkapitol a {
-    white-space:nowrap;
-    color:rgb({{zb-barevny-text}});
-}
-.rozcestnikkapitol a.sekce {
-    font-weight:bold;
-}
-.rozcestnikkapitol .oddelovac {
-    padding:0 0.2em;
-}
-
-/* .stitky */
 .stitky {
     margin:2em 0;
 }
@@ -958,186 +953,10 @@ nav .next {text-align:left;}
     text-align:center;
     white-space:nowrap;
 }
-.prehledstitku dt {position:relative;top:-3em;}
-.prehledstitku dt>span {position:relative;top:3em;display:block;}
-.prehledstitku .stitky {
-    margin:1em 0 0.5em;
-}
-.prehledstitku div {
-    margin-left:10em;
-    border-radius:3rem;
-}
-.prehledstitku div:nth-child(even) {background:{{prehledstitku-sude-barva-pozadi}}}
-.prehledstitku div:nth-child(odd) {background:{{prehledstitku-liche-barva-pozadi}}}
-.prehledstitku div>a {
-    display:inline-block;
-    width:50%;
-    text-decoration:none;
-}
-.prehledstitku div>a:hover .nazev {
-    text-decoration:underline;
-}
-.prehledstitku .cislo {
-    display:inline-block;
-    width:3em;
-    padding:0 0.5em;
-    text-align:right;
-}
-.prehledstitku img {
-    margin:0.5rem;
-    vertical-align:middle;
-}
-.prehledstitku .nazev {
-    display:inline-block;
-    text-align:left;
-    font-weight:bold;
-}
-.prehledstitku .dalsistitky {
-    display:inline-block;
-    width:50%;
-    vertical-align:middle;
-    line-height:2;
-}
-.prehledstitku .dalsistitky a {
-    margin:0 0.5em;
-    padding:0.5em 0;
-}
 
-/* .odkazydole */
-.odkazydole {
-    margin:3rem 0;
-    text-align:center;
-}
-.odkazydole div {
-    display:inline-block;
-    /*background-color:rgb({{zb-svetla}});*/
-    border-radius:1em;
-    padding:0.25em 2em 0.25em 0;
-}
-.odkazydole a {
-    display:inline-block;
-    margin:0 2em;
-    white-space:nowrap;
-}
-.odkazydole img {
-    margin:0.5rem;
-    vertical-align:middle;
-    opacity:{{kryti-obrazku-ikona-kapitoly}};
-}
-
-/* .prehledy */
-.prehledy {
-    display:flex;
-    flex-flow:row nowrap;
-    justify-content:center;
-    align-items:flex-start;
-    margin:2em 0 2em 1em;
-}
-.prehledy>div {width:33%;}
-.prehledy>div>div {margin-bottom:5rem;}
-.prehledy>div>div>div {width:85%;margin-top:0.5em;}
-/*.prehledy li+li {margin-top:0.5em;}*/
-.prehledy a {
-    display:flex;
-    border-bottom:thin dotted rgba(0,0,0,0.2);
-    flex-direction:row;
-    text-decoration:none;
-}
-.prehledy a>* {display:block;}
-.prehledy strong {display:block;font-weight:bold;}
-.prehledy .cislo, .prehledy .nazev {margin-top:1em;}
-.prehledy .cislo {
-    flex-shrink:0;
-    width:3em;
-    margin-right:0.25em;
-    text-align:right;
-}
-.prehledy .cislo::after {content:"."}
-.prehledy .ikona {
-    flex-shrink:0;
-    display:inline-block;
-    margin-right:0.5em;
-    width:3em;height:3em;
-    /*border:1px dotted blue; /*DEBUG*/
-    opacity:0.7;
-}
-.prehledy .ikona img {
-    width:100%;height:auto;vertical-align:middle;
-}
-.prehledy .nazev {
-    flex-shrink:1;
-}
-.prehledy a:hover .nazev {text-decoration:underline;}
-.prehledy a:hover span.ikona, .prehledy a:active span.ikona {
-    opacity:1;
-    z-index:5;
-}
-
-dl.copyrights {
-}
-dl.copyrights dt {
-    display:list-item;
-    list-style:disc inside;
-}
-dl.copyrights dd {
-    margin:0 0 0.5rem auto;
-    max-width:95%;
-    /* overflow:auto + oprava posunování ve Firefoxu */
-    overflow:auto;padding-top:1px;padding-bottom:1px;
-}
-dl.copyrights pre {
-    font-family:monospace;
-    white-space:pre;
-}
-
-span.chybny {
-    color:rgb({{chybny-znak-text}}) !important;
-    background:rgb({{chybny-znak-pozadi}}) !important;
-    font-weight:bold;
-    border:1px solid;
-}
-
-/* odkazy nahoru a dolů */
-#odkaznahoru, #odkazdolu {
-    position:fixed;
-    right:2%;
-    z-index:256;
-    background:rgba({{zb-titul-pozadi}},{{nahorudolu-neaktivni-kryti}});
-    color:rgba({{zb-titul-krizek}},{{nahorudolu-neaktivni-kryti}});
-    font:20pt/1 sans-serif;
-    border:5pt outset rgba({{zb-titul-krizek}},{{nahorudolu-neaktivni-kryti}});
-    border-radius:50%;
-}
-#odkaznahoru:hover, #odkazdolu:hover, #odkaznahoru:active, #odkazdolu:active {
-    background:rgba({{zb-titul-pozadi}},{{nahorudolu-aktivni-kryti}});
-    border-color:rgba({{zb-titul-aktivni}},{{nahorudolu-aktivni-kryti}});
-    color:rgba({{zb-titul-krizek}},{{nahorudolu-aktivni-kryti}});
-    text-decoration:none;
-    opacity:1;
-}
-#odkaznahoru:active, #odkazdolu:active {
-    color:rgba({{zb-titul-aktivni}},{{nahorudolu-aktivni-kryti}});
-}
-#odkaznahoru {
-    top:10pt;
-    box-shadow:0 0 0 2pt rgba(0,0,0,{{nahorudolu-cernyramecek-kryti}});
-    padding:0 6pt 3pt;
-}
-#odkazdolu {
-    bottom:10pt;
-    opacity:{{nahorudolu-neaktivni-kryti}};
-    padding:0 4pt;
-}
-
-/* vzorník ikon */
-.vzornikikon>span {
-    display:inline-block;
-    width:4em;height:4ex;
-    text-align:right;
-    white-space:nowrap;
-}
-
-/* Menu */
+#
+# Hlavní menu (mimo okno)
+##############################################################################
 
 nav.menu {
     position:fixed;left:5pt;top:5pt;bottom:auto;right:auto; z-index:5;
@@ -1242,89 +1061,220 @@ nav.menu div.polozky .ikona {
 }
 nav.menu div.polozky .ikona img {width:100%; height:auto;}
 
-a.zavritmenu {
+nav.menu a.zavritmenu {
     position:absolute;top:0.3rem;right:2rem;bottom:auto;left:auto;z-index:10;
     white-space:nowrap;
 }
-a.zavritmenu::after {
+nav.menu a.zavritmenu::after {
     content: " ×";
     font-weight:bold;
     font-size:150%;
     vertical-align:-0.07em;
 }
 
-nav.menuokna {
-    background:rgb({{zb-svetla}});
-    line-height:1.5;
-    border-bottom:thin solid rgb({{zb-okno-ramecek}});
-    padding:0 0.25em;
-}
-nav.menuokna a {
-    display:inline-block;
-    margin:0.1em 0;
-    padding:0 0.25em;
-    min-width:5em;
-    color:inherit;
+#
+# Formátování pro úvodní stránku (index.htm)
+##############################################################################
+
+.zahlavistranky {
+    display:flex;
+    flex-flow:row nowrap;
     text-align:center;
-    text-decoration:none;
-    white-space:nowrap;
-    border:0.2rem solid transparent;
 }
-nav.menuokna a:hover {
-    border-color:rgba(128,128,128,0.75);
+.zahlavistranky .logo {
+    width:20%;height:auto;
 }
-
-nav.menuokna a.menu::before {
-    content:"≡ ";
-    font-weight:bold;
-    text-decoration:none;
+.zahlavistranky .logo img {
+    width:100%;height:auto;
 }
-
-nav.menuokna a.prehled::before {
-    content:"🗐 ";
-    font-weight:bold;
-    text-decoration:none;
+.zahlavistranky .zbytek {
+    display:flex;
+    flex-flow:column nowrap;
+    padding-left:1.5%;
 }
-
-nav.menuokna a.predchozi::before {content:"« "}
-nav.menuokna a.nasledujici::after{content:" »"}
-
-/* Spodní navigace: */
-
-nav.spodni .naslkap {
-    position:relative;
-    display:inline-block;
-    margin-left:3em;
-    background-color:rgb({{zb-svetla}});
+.zahlavistranky h1 img {
+    width:95%;height:auto;
+    border:0.1rem solid #802020;
+    box-shadow:0.1rem 0.1rem 0.2rem 0 #000000;
+    opacity:inherit;
     vertical-align:middle;
 }
-
-nav.spodni .naslkap a {
+.zahlavistranky .hlavnislogan {
+    margin:2ex auto;
+    font-style:italic;
+    line-height:1.5;
+}
+.podzahlavim {
+    display:flex;
+    flex-flow:row nowrap;
+    margin:1em 0;
+    border-radius:1rem 1rem;
+    padding:1rem 2%;
+    box-shadow:{{index-podzahlavim-box-shadow}};
+}
+.podzahlavim p.ponadpisu {
+    margin:1ex auto;
+    width:65%;
+    text-align:justify;
+}
+.podzahlavim .ikona img {
+    margin:0 0.5em 0 2em;
+    width:auto; height:6.4rem;
+}
+.podzahlavim p.informaceoverzi {
+    margin:0;
+    text-align:left;
+    text-indent:0;
+    width:20em;
+}
+.podzahlavim em {
+    font-style:italic;
+    font-weight:normal;
+    margin-left:1em;
+}
+.podzahlavim p.informaceoverzi a {
     display:block;
-    padding:0 2em;
+    margin:0.3rem 0 0;
+    border-top:thin dotted rgb({{zb-tmava}});
+    padding:0.2rem 0 0 1em;;
 }
-nav.spodni .naslkap a::after {
-    content:"⏵";
-    position:absolute;right:-0.1em;bottom:0;
-    font-size:200%;
-    line-height:2.25;
+.podzahlavim p.informaceoverzi a::before {
+    content:"📚 ";
+    font-size:150%;
 }
-nav.spodni>div+div {
-    position:relative;top:1.1em;
+.podzahlavim p.informaceoverzi a::after {
+    content:normal;
 }
-nav.spodni .nazev {font-weight:bold}
-
-
-
-
-@media print {
-    html, body, article {
-        padding:0;
-        max-width:none;
-    }
-    .ppc .zrusitzvyrazneni
-    {
-        display:none;
-    }
+.podzahlavim p.informaceoverzi em {
+    white-space:nowrap;
 }
+
+#
+# Rozcestník kapitol (.prehledy - na index.htm)
+##############################################################################
+
+.prehledy {
+    display:flex;
+    flex-flow:row nowrap;
+    justify-content:center;
+    align-items:flex-start;
+    margin:2em 0 2em 1em;
+}
+.prehledy>div {width:33%;}
+.prehledy>div>div {margin-bottom:5rem;}
+.prehledy>div>div>div {width:85%;margin-top:0.5em;}
+.prehledy a {
+    display:flex;
+    border-bottom:thin dotted rgba(0,0,0,0.2);
+    flex-direction:row;
+    text-decoration:none;
+}
+.prehledy a>* {display:block;}
+.prehledy strong {display:block;font-weight:bold;}
+.prehledy .cislo, .prehledy .nazev {margin-top:1em;}
+.prehledy .cislo {
+    flex-shrink:0;
+    width:3em;
+    margin-right:0.25em;
+    text-align:right;
+}
+.prehledy .cislo::after {content:"."}
+.prehledy .ikona {
+    flex-shrink:0;
+    display:inline-block;
+    margin-right:0.5em;
+    width:3em;height:3em;
+    opacity:0.7;
+}
+.prehledy .ikona img {
+    width:100%;height:auto;vertical-align:middle;
+}
+.prehledy .nazev {
+    flex-shrink:1;
+}
+.prehledy a:hover .nazev {text-decoration:underline;}
+.prehledy a:hover span.ikona, .prehledy a:active span.ikona {
+    opacity:1;
+    z-index:5;
+}
+
+#
+# Formátování pro přehled štítků (x-stitky.htm)
+##############################################################################
+.prehledstitku dt {position:relative;top:-3em;}
+.prehledstitku dt>span {position:relative;top:3em;display:block;}
+.prehledstitku .stitky {
+    margin:1em 0 0.5em;
+}
+.prehledstitku div {
+    margin-left:10em;
+    border-radius:3rem;
+}
+.prehledstitku div:nth-child(even) {background:{{prehledstitku-sude-barva-pozadi}}}
+.prehledstitku div:nth-child(odd) {background:{{prehledstitku-liche-barva-pozadi}}}
+.prehledstitku div>a {
+    display:inline-block;
+    width:50%;
+    text-decoration:none;
+}
+.prehledstitku div>a:hover .nazev {
+    text-decoration:underline;
+}
+.prehledstitku .cislo {
+    display:inline-block;
+    width:3em;
+    padding:0 0.5em;
+    text-align:right;
+}
+.prehledstitku img {
+    margin:0.5rem;
+    vertical-align:middle;
+}
+.prehledstitku .nazev {
+    display:inline-block;
+    text-align:left;
+    font-weight:bold;
+}
+.prehledstitku .dalsistitky {
+    display:inline-block;
+    width:50%;
+    vertical-align:middle;
+    line-height:2;
+}
+.prehledstitku .dalsistitky a {
+    margin:0 0.5em;
+    padding:0.5em 0;
+}
+
+#
+# Formátování pro přehled autorů (x-autori.htm)
+##############################################################################
+dl.copyrights {
+}
+dl.copyrights dt {
+    display:list-item;
+    list-style:disc inside;
+}
+dl.copyrights dd {
+    margin:0 0 0.5rem auto;
+    max-width:95%;
+    /* overflow:auto + oprava posunování ve Firefoxu */
+    overflow:auto;padding-top:1px;padding-bottom:1px;
+}
+dl.copyrights pre {
+    font-family:monospace;
+    white-space:pre;
+}
+
+#
+# Vzorník ikon (pro zvláštní kapitolu _ukazka.htm)
+##############################################################################
+
+.vzornikikon>span {
+    display:inline-block;
+    width:4em;height:4ex;
+    text-align:right;
+    white-space:nowrap;
+}
+
 {{KONEC}}

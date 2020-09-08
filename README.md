@@ -61,7 +61,7 @@ Budete potřebovat:
 * qrencode
 * kvůli řazení české locale „cs\_CZ.UTF-8“ (musí fungovat české řazení příkazem „sort“)
 
-Ověřil/a jsem, že v Ubuntu 18.04 LTS a  a Linuxu Mint 17.3 můžete tyto nástroje nainstalovat příkazem:
+Ověřil/a jsem, že v Ubuntu 20.04 LTS, Ubuntu 18.04 LTS, Linuxu Mint 20 a Linuxu Mint 17.3 můžete tyto nástroje nainstalovat příkazem:
 
 > ``sudo apt-get install git make gawk imagemagick qrencode``
 
@@ -98,6 +98,7 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [hledani-souboru](kapitoly/hledani-souboru.md) | Hledání souborů | 1.5 |
 | [make](kapitoly/make.md) | Make | 1.0 |
 | [markdown](kapitoly/markdown.md) | Markdown | 1.0 |
+| [prace-s-archivy](kapitoly/prace-s-archivy.md) | Práce s archivy | 1.1 |
 | [promenne](kapitoly/promenne.md) | Proměnné prostředí a interpretu | 1.9 |
 | [regularni-vyrazy](kapitoly/regularni-vyrazy.md) | Regulární výrazy | 1.1 |
 | [sed](kapitoly/sed.md) | Sed | 1.8 |
@@ -111,8 +112,7 @@ a kapitoly ani dodatky se nesmějí opakovat.
 
 | ID | Název kapitoly | % | Stav |
 | :--- | :--- | ---: | :--- |
-| [terminal](kapitoly/terminal.md) | Terminál | 1% | rozpracovaná |
-| [prace-s-archivy](kapitoly/prace-s-archivy.md) | Práce s archivy | 0% | ve frontě |
+| [terminal](kapitoly/terminal.md) | Terminál | 2% | rozpracovaná |
 | [sprava-balicku](kapitoly/sprava-balicku.md) | Správa balíčků | 0% | ve frontě |
 | [system](kapitoly/system.md) | Systém | 0% | ve frontě |
 | [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) | Zpracování textových souborů | 0% | ve frontě |

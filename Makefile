@@ -33,7 +33,7 @@ CONVERT := convert
 VSECHNY_DODATKY := predmluva koncepce-projektu plan-vyvoje test zakladni-znalosti licence
 
 # _ A, B, C, D, E, F, G
-VSECHNY_KAPITOLY := _ostatni _ukazka apache awk barvy-a-titulek bash css datum-cas-kalendar diskove-oddily docker dosbox firefox git grub
+VSECHNY_KAPITOLY := _ostatni _ukazka apache awk bash css datum-cas-kalendar diskove-oddily docker dosbox firefox git grub
 # H, I, J, K, L, M
 VSECHNY_KAPITOLY += hledani-souboru konverze-formatu latex lkk make markdown moderni-veci
 # N, O, P, Q, R, S
@@ -41,7 +41,7 @@ VSECHNY_KAPITOLY += odkazy pdf perl planovani-uloh prace-s-archivy promenne regu
 # S
 VSECHNY_KAPITOLY += sed sifrovani soubory-a-adresare sprava-balicku sprava-balicku-2 sprava-procesu sprava-uzivatelskych-uctu stahovani-videi stahovani-z-webu system
 # T, U, V, W, X, Y, Z
-VSECHNY_KAPITOLY += unicode uzivatelska-rozhrani vim virtualbox wine x
+VSECHNY_KAPITOLY += terminal unicode uzivatelska-rozhrani vim virtualbox wine x
 # Z
 VSECHNY_KAPITOLY += zpracovani-binarnich-souboru zpracovani-obrazku zpracovani-psv zpracovani-textovych-souboru zpracovani-videa-a-zvuku
 
@@ -53,16 +53,16 @@ VSECHNY_KAPITOLY_A_DODATKY_MD = $(VSECHNY_KAPITOLY:%=kapitoly/%.md) $(VSECHNY_DO
 OBRAZKY := favicon.png by-sa.png logo-knihy-velke.png ve-vystavbe.png marsh.jpg udoli.jpg banner.png
 OBRAZKY += ik-vychozi.png
 SVG_OBRAZKY := kalendar.svg graf-filtru.svg
-OBRAZKY_IK := awk.png barvy-a-titulek.png datum-cas-kalendar.png diskove-oddily.png docker.png git.png hledani-souboru.png
+OBRAZKY_IK := awk.png datum-cas-kalendar.png diskove-oddily.png docker.png git.png hledani-souboru.png
 OBRAZKY_IK += make.png markdown.png planovani-uloh.png prace-s-archivy.png promenne.png regularni-vyrazy.png
 OBRAZKY_IK += sed.png soubory-a-adresare.png sprava-balicku.png sprava-procesu.png sprava-uzivatelskych-uctu.png
-OBRAZKY_IK += stahovani-videi.png system.png vim.png
+OBRAZKY_IK += stahovani-videi.png system.png terminal.png vim.png
 OBRAZKY_IK += zpracovani-textovych-souboru.png zpracovani-videa-a-zvuku.png
 OBRAZKY_IK += predmluva.png koncepce-projektu.png
 
 # CSS motivy (vedle motivu „hlavní“)
 # ----------------------------------------------------------------------------
-CSS_MOTIVY := vk-svetly vk-tmavy tmavy
+CSS_MOTIVY := vk-svetly vk-tmavy svetly
 
 # Datum sestavení (automaticky generované)
 # ----------------------------------------------------------------------------
@@ -187,7 +187,7 @@ $(VSECHNY_KAPITOLY_A_DODATKY:%=$(VYSTUP_PREKLADU)/html/%.htm): \
 	mkdir -pv $(VYSTUP_PREKLADU)/html
 	cut -f 2 $(SOUBORY_PREKLADU)/fragmenty.tsv | fgrep -qx $(basename $(notdir $<)) && exec $(AWK) -f skripty/plneni-sablon/kapitola.awk -v JMENOVERZE='$(JMENO)' -v IDFORMATU=html -v IDKAPITOLY=$(basename $(notdir $@)) -v TELOKAPITOLY=$< -v DATUMSESTAVENI=$(DATUM_SESTAVENI) -v VARIANTA=kapitola formaty/html/sablona.htm > $@ || true
 
-# 3. formaty/html/sablona.css => vystup_prekladu/html/lkk.css
+# 3. formaty/html/sablona.css => vystup_prekladu/html/lkk-*.css
 # ----------------------------------------------------------------------------
 $(VYSTUP_PREKLADU)/html/lkk-$(DATUM_SESTAVENI).css: formaty/html/sablona.css skripty/plneni-sablon/css.awk skripty/plneni-sablon/css2.awk
 	mkdir -pv $(dir $@)

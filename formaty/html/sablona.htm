@@ -1,4 +1,4 @@
-# Linux Kniha kouzel, šablona speciální stránky (HTML)
+# Linux Kniha kouzel, šablona HTML
 # Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -50,14 +50,14 @@ Varianty:
 <link rel="stylesheet" type="text/css" href="lkk-{{DATUMSESTAVENÍ}}.css">
 <link rel="alternate stylesheet" type="text/css" href="lkk-{{DATUMSESTAVENÍ}}-vk-svetly.css" title="Vysoký kontrast: světlá varianta">
 <link rel="alternate stylesheet" type="text/css" href="lkk-{{DATUMSESTAVENÍ}}-vk-tmavy.css" title="Vysoký kontrast: tmavá varianta">
-<link rel="alternate stylesheet" type="text/css" href="lkk-{{DATUMSESTAVENÍ}}-tmavy.css" title="Tmavý motiv">
+<link rel="alternate stylesheet" type="text/css" href="lkk-{{DATUMSESTAVENÍ}}-svetly.css" title="Světlý motiv">
 <link rel="icon" type="image/png" href="obrazky/favicon.png">
 </head>
 <body>
-<div id="nahore"></div>
+<div id="nahore"><div id="okno">
 <header>
-<span class="left"><a href="index.htm"><img src="obrazky/favicon.png" width="16" height="16" alt=""></a> Linux: Kniha kouzel, {{OZNAČENÍ VERZE S INICIÁLAMI}} ({{DATUM SESTAVENÍ}})</span>
-<span class="right"><span class="ico1"></span><span class="ico2"></span><span class="ico3"></span></span>
+<span class="vlevo"><a href="index.htm"><img src="obrazky/favicon.png" width="16" height="16" alt=""></a> Linux: Kniha kouzel, {{OZNAČENÍ VERZE S INICIÁLAMI}} ({{DATUM SESTAVENÍ}})</span>
+<span class="vpravo"><span class="ico1"></span><span class="ico2"></span><span class="ico3"></span></span>
 </header>
 <nav class="menuokna">
 <a href="#menukapitoly" class="menu"><span class="prvnipismeno">K</span>apitoly</a>
@@ -76,7 +76,7 @@ Varianty:
 </nav>
 
 {{VARIANTY autori,kapitola,stitky}}
-<div class="slogan">Veškerá moc příkazové řádky/příkazového řádku přehledně, pro začátečníky i&nbsp;pokročilé</div>
+<div class="slogan-veskera-moc">Veškerá moc příkazové řádky/příkazového řádku přehledně, pro začátečníky i&nbsp;pokročilé</div>
 
 <!--
 <nav class="horni">
@@ -197,7 +197,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 <div class="logo"><img src="obrazky/logo-knihy-velke.png" alt=""></div>
 <div class="zbytek">
 <h1><img src="obrazky/banner.png" alt="Linux: Kniha kouzel"></h1>
-<div class="slogan">Praktická sbírka krátkých řešených příkladů pro začátečníky i&nbsp;pokročilé.<br>
+<div class="hlavnislogan">Praktická sbírka krátkých řešených příkladů pro začátečníky i&nbsp;pokročilé.<br>
 Známá také jako „konverzační slovník linuxštiny“.</div>
 </div></div>
 <div class="podzahlavim">
@@ -297,8 +297,6 @@ uvést víckrát, jsou vyznačeny šedou trojtečkou.</td></tr>
 </div>
 {{KONEC POKUD}}
 <!--<div><a href="index.htm">🗐&nbsp;Přehled&nbsp;kapitol</a></div>-->
-<a href="#nahore" id="odkaznahoru" title="NAHORU − na začátek stránky">▴<!--⤒--></a>
-<a href="#dole" id="odkazdolu" title="DOLŮ − na konec stránky">▾<!--⤓--></a>
 </nav>
 
 {{VARIANTA kapitola}}
@@ -308,6 +306,26 @@ uvést víckrát, jsou vyznačeny šedou trojtečkou.</td></tr>
 {{VARIANTY autori,index,kapitola,stitky}}
 
 </article>
+<!-- *** -->
+<footer id="dole">
+<img src="obrazky/by-sa.png" width="88" height="31" alt="[BY-SA]">
+<p>Veškerý obsah této stránky (text, obrázky, zdrojový kód) je možno upravovat a šířit pod podmínkami licence
+<a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a>.
+Upozorňuji, že uvedená licence vyžaduje uvedení seznamu autorů, licence a zdroje a poskytnutí stejné
+či kompatibilní licence k provedeným změnám, jsou-li nějaké. Příslušné údaje jsou dostupné
+{{VARIANTA autori}}
+na této stránce.
+{{VARIANTY index,kapitola,stitky}}
+na stránce „<a href="x-autori.htm">Přehled autorů</a>“.
+{{VARIANTY autori,index,kapitola,stitky}}
+Šíření obsahu bez těchto údajů nebo šíření upravené verze bez poskytnutí adekvátní
+licence k provedeným úpravám je pravděpodobně porušení licenčních podmínek a může být postihováno.
+Poskytování zdrojového kódu při šíření není touto licencí vyžadováno.</p><p>Pro nové verze, další informace, aktuální zdrojový kód
+a možnost se zapojit do projektu „Linux: Kniha kouzel“ navštivte jeho
+<a href="https://github.com/singularis-mzf/linux-spellbook">repozitář na GitHubu</a>.
+</footer>
+</div>
+
 <nav class="menu">
 <!-- MENU KAPITOLY -->
 <a href="#menukapitoly" id="menukapitoly"><span class="prvnipismeno">K</span>apitoly</a>
@@ -341,26 +359,12 @@ uvést víckrát, jsou vyznačeny šedou trojtečkou.</td></tr>
 </div></div>
 <a href="#zavritmenu" class="zavritmenu">Zavřít&nbsp;menu</a>
 </aside>
-
 </nav>
-<!-- *** -->
-<footer id="dole">
-<img src="obrazky/by-sa.png" width="88" height="31" alt="[BY-SA]">
-<p>Veškerý obsah této stránky (text, obrázky, zdrojový kód) je možno upravovat a šířit pod podmínkami licence
-<a href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International</a>.
-Upozorňuji, že uvedená licence vyžaduje uvedení seznamu autorů, licence a zdroje a poskytnutí stejné
-či kompatibilní licence k provedeným změnám, jsou-li nějaké. Příslušné údaje jsou dostupné
-{{VARIANTA autori}}
-na této stránce.
-{{VARIANTY index,kapitola,stitky}}
-na stránce „<a href="x-autori.htm">Přehled autorů</a>“.
-{{VARIANTY autori,index,kapitola,stitky}}
-Šíření obsahu bez těchto údajů nebo šíření upravené verze bez poskytnutí adekvátní
-licence k provedeným úpravám je pravděpodobně porušení licenčních podmínek a může být postihováno.
-Poskytování zdrojového kódu při šíření není touto licencí vyžadováno.</p><p>Pro nové verze, další informace, aktuální zdrojový kód
-a možnost se zapojit do projektu „Linux: Kniha kouzel“ navštivte jeho
-<a href="https://github.com/singularis-mzf/linux-spellbook">repozitář na GitHubu</a>.
-</footer>
+
+<a href="#nahore" id="odkaznahoru" title="NAHORU − na začátek stránky">▴<!--⤒--></a>
+<a href="#dole" id="odkazdolu" title="DOLŮ − na konec stránky">▾<!--⤓--></a>
+
+</div>
 </body>
 </html>
 {{KONEC}}

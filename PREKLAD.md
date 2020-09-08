@@ -26,10 +26,13 @@ Také budete potřebovat písma:
 * TeX Gyre Schola
 * TeX Gyre Heros
 * TeX Gyre Cursor
+* Free Helvetica
 
-Ověřil/a jsem, že v Ubuntu 18.04 LTS a Linuxu Mint 17.3 můžete všechny potřebné nástroje a písma nainstalovat příkazem:
+Ověřil/a jsem, že v Ubuntu 20.04 LTS, Ubuntu 18.04 LTS a Linuxu Mint 20 můžete všechny potřebné nástroje a písma nainstalovat příkazem:
 
-> ``sudo apt-get install git make gawk imagemagick librsvg2-bin qrencode texlive-xetex texlive-lang-czechslovak fonts-texgyre``
+> ``sudo apt-get install git make gawk imagemagick librsvg2-bin qrencode texlive-xetex texlive-lang-czechslovak fonts-texgyre t1-cyrillic``
+
+V budoucnu pravděpodobně sestavování přejde na Ubuntu 20.04, ale zatím je stále plně podporován i překlad na Ubuntu 18.04.
 
 ## Postup sestavení
 

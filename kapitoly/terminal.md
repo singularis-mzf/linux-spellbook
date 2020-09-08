@@ -1,6 +1,6 @@
 <!--
 
-Linux Kniha kouzel, kapitola Barvy, titulek a výzva terminálu
+Linux Kniha kouzel, kapitola Terminál
 Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -9,6 +9,8 @@ vydané neziskovou organizací Creative Commons. Text licence je přiložený
 k tomuto projektu nebo ho můžete najít na webové adrese:
 
 https://creativecommons.org/licenses/by-sa/4.0/
+
+Původní název kapitoly: Barvy, titulek a výzva terminálu
 
 -->
 <!--
@@ -23,9 +25,9 @@ __git_ps1
 
 -->
 
-# Barvy, titulek a výzva terminálu
+# Terminál
 
-!Štítky: {tematický okruh}{bash}{barvy}
+!Štítky: {tematický okruh}{bash}{barvy}{Unicode}{emotikony}
 !FixaceIkon: 1754
 !ÚzkýRežim: ZAP
 

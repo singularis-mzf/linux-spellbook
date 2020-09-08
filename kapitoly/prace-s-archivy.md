@@ -61,7 +61,7 @@ U softwarových balíčků (např. deb či rpm) to není zcela jednotné, proto
 ### Univerzální nástroje
 
 *# **rozbalit** archiv*<br>
-*// Neuvedete-li parametr „-X“, extrahované soubory se umístí do nového podadresáře se jménem odvozeným od jména archivu, s výjimkou případu, že archiv obsahuje ve svém kořeni pouze jeden soubor či adresář. V tomto případě se daný soubor či adresář vybalí přímo do aktuálního adresáře.*<br>
+*// Nezadáte-li cílový adresář parametrem „-X“, pak záleží cílový adresář na obsahu archivu: 1) Pokud archiv obsahuje pouze jeden soubor, vybalí se do aktuálního adresáře. 2) Jinak se vytvoří nový adresář se jménem odvozeným od jména archivu a vybalené soubory se uloží do něj. 3) Pokud takový adresář existuje, vybalené soubory se uloží do adresáře s názvem ve tvaru „Unpack-XXXX“, kde X jsou náhodné číslice.*<br>
 **aunpack** [**-X** {*cílová/cesta*}] {*archiv.přípona*}
 
 *# **vybalit** soubor či adresář*<br>
@@ -71,7 +71,7 @@ U softwarových balíčků (např. deb či rpm) to není zcela jednotné, proto
 **apack** {*archiv.přípona*} {*cesta*}...
 
 *# **vypsat** soubory a adresáře v archivu (pro člověka)*<br>
-*// Formát výstupu je závislý na typu archivu; proto není úplně vhodný pro zpracování skriptem.*<br>
+*// Formát výstupu je závislý na typu archivu.*<br>
 **als** {*archiv.přípona*}
 
 *# vypsat soubory a adresáře (pro skript)*<br>
@@ -101,8 +101,8 @@ externí programy).
 
 *# **vybalit** soubor či adresář (alternativy)*<br>
 *// Volba -spd vypne intepretaci vzorků v cestách. Při zadávání cest mimo archiv je to žádoucí, protože zde vzorky obecně intepretuje už příkazový interpret a není žádoucí, aby je 7z interpretoval znovu, ale u cest v archivu je nutné je interpretovat na straně 7z, takže pokud nehodláte vybalovat soubory, které ve svých názvech obsahují otazníky, hvězdičky či hranaté závorky, je vhodnější tento parametr vynechat.*<br>
-**7z x** [**-spd**] [**-o**{*cílový/adresář*}] {*archiv.přípona*} {*vzorek/cesty/v/archivu*}...<br>
-**7z x** [**-spd**] [**-o**{*cílový/adresář*}] {*archiv.přípona*} **@**{*soubor-se-seznamem*}
+**7z x** [**-spd**] <nic>[**-o**{*cílový/adresář*}] {*archiv.přípona*} {*vzorek/cesty/v/archivu*}...<br>
+**7z x** [**-spd**] <nic>[**-o**{*cílový/adresář*}] {*archiv.přípona*} **@**{*soubor-se-seznamem*}
 
 *# **vybalit** konkrétní soubor na standardní výstup*<br>
 **7z x -so** [**-spd**] {*archiv.přípona*} {*cesta/v/archivu*}
@@ -123,7 +123,7 @@ externí programy).
 **7z d** [**-spd**] {*archiv.přípona*} [**@**{*soubor-se-seznamem*}]
 
 *# **vytvořit** archiv, uložit do něj soubory či adresáře a ochránit heslem*<br>
-*// Ověřeno na Ubuntu 18.04, že tato ochrana heslem je kompatibilní s programem 7-Zip na Windows 7.*<br>
+*// Tato ochrana heslem by měla být kompatibilní s programy pro práci s formátem 7z v jiných operačních systémech.*<br>
 **7z a -p -spd** [**-mhe=on**] {*archiv.přípona*} {*cesta*}...<br>
 **7z a -p -spd** [**-mhe=on**] {*archiv.přípona*} **@**{*soubor-se-seznamem*}
 
@@ -232,20 +232,10 @@ externí programy).
 **zip -r** {*archiv.zip*} {*cesta*}...
 
 *# **přidat** další soubory či adresáře a ochránit heslem*<br>
-*// Oveřeno na Ubuntu 18.04, že tato ochrana heslem je kompatibilní s Windows 7.*<br>
 **zip -re** {*archiv.zip*} {*cesta*}...
 
 *# **smazat** z archivu soubory a adresáře*<br>
 **zip -d** {*archiv.zip*} {*vzorek/cesty*}...
-
-<!--
-## Parametry příkazů
-<!- -
-- Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.
-- Jinak by zde měl být přehled nejužitečnějších parametrů používaných nástrojů.
-- ->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
--->
 
 ## Instalace na Ubuntu
 Nástroje tar, gzip a zip jsou již součástí minimální instalace Ubuntu. Nástroje apack, aunpack a 7z je nutno nainstalovat:
@@ -293,7 +283,7 @@ Nástroje tar, gzip a zip jsou již součástí minimální instalace Ubuntu. N
 * Heslo v archivu typu ZIP chrání jednotlivé soubory, nikoliv celý archiv. V jednom archivu mohou být jednotlivé soubory chráněny různými hesly, případně některé dostupné bez hesla.
 * TAR je asi jediný formát, který do archivu k souborům uloží opravdu všechna metadata včetně přístupových práv, rozšířených atributů, a dokonce i strukturu symbolických a pevných odkazů.
 * Při práci s velkými archivy typu TAR je třeba mít na paměti, že většina operací si vynutí sekvenční průchod celým archivem.
-* U svobodné implementace vybalování formátu RAR (unrar-free) jsem měl/a problémy s rozbalením některých archivů; pokud selže, doporučuji zkusit nesvobodný balíček.
+* U svobodné implementace vybalování formátu RAR (unrar-free) jsem měl/a problémy s rozbalením některých archivů; pokud selže, může pomoci nesvobodný balíček.
 
 ## Další zdroje informací
 *# *<br>
@@ -302,11 +292,11 @@ Nástroje tar, gzip a zip jsou již součástí minimální instalace Ubuntu. N
 **man zip**<br>
 **man unzip**
 
-* [Manuálová stránka „atool“](http://manpages.ubuntu.com/manpages/bionic/en/man1/atool.1.html) (anglicky)
-* [Manuálová stránka „7z“](http://manpages.ubuntu.com/manpages/bionic/en/man1/7z.1.html) (anglicky)
+* [Manuálová stránka „atool“](http://manpages.ubuntu.com/manpages/focal/en/man1/atool.1.html) (anglicky)
+* [Manuálová stránka „7z“](http://manpages.ubuntu.com/manpages/focal/en/man1/7z.1.html) (anglicky)
 * [TL;DR stránka „7z“](https://github.com/tldr-pages/tldr/blob/master/pages/common/7z.md) (anglicky)
 * [Oficiální stránka 7-Zip](https://www.7-zip.org/) (anglicky)
-* [Balíček „atool“](https://packages.ubuntu.com/bionic/atool) (anglicky)
-* [Balíček „p7zip-full“](https://packages.ubuntu.com/bionic/p7zip-full) (anglicky)
+* [Balíček „atool“](https://packages.ubuntu.com/focal/atool) (anglicky)
+* [Balíček „p7zip-full“](https://packages.ubuntu.com/focal/p7zip-full) (anglicky)
 
 !ÚzkýRežim: vyp
