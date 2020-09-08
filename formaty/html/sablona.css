@@ -538,12 +538,12 @@ body {
 }
 
 #nahore {
-    margin:0;border:none;padding:0;
+    margin:0;border:none;padding:15rem 0 25rem;
 }
 
 #okno {
-    margin:15rem auto 25rem;
-#    border:0.4em solid rgb({{zb-okno-ramecek}});
+    margin:0 auto;
+# /*    border:0.4em solid rgb({{zb-okno-ramecek}});*/
     border:0.3em solid rgb({{zb-okno-ramecek}});
     padding:0;
     width:90%;min-width:95rem;max-width:120rem;

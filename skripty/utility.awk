@@ -238,10 +238,14 @@ function ZjistitOznaceniVerze(textverze, pridatZkratku,   i, s) {
         s = substr(textverze, i + 1);
         gsub(/^\s*|\s*,.*$/, "", textverze);
         if (pridatZkratku) {
-            s = gensub(/(\S)\S*/, "\\1.", "g", s);
-            gsub(/\s+/, " ", s);
-            gsub(/^\s|\s$/, "", s);
-            textverze = textverze ", " toupper(s);
+            if (s !~ /^\s*[Cc][Hh]/) {
+                gsub(/\s+/, " ", s);
+                gsub(/^\s|\s$/, "", s);
+                s = toupper(substr(s, 1, 1)) ".";
+            } else {
+                s = "Ch.";
+            }
+            textverze = textverze ", " s " " s;
         }
     }
     return textverze;
