@@ -397,6 +397,13 @@ h2, h3
 h2>a, h2>span, h3>span
     {position:relative;top:{{vyska-horni-listy}};visibility:visible;}
 
+# Zvláštní formát pro sekce zaklínadel:
+h2.zaklinadla>a
+{
+    margin-top:-0.1em;border-top:0.1em solid;padding-top:0.1em;
+    margin-left:-0.25em;border-left:0.3em solid;padding-left:0.25em;
+}
+
 #
 # Hypertextové odkazy
 ##############################################################################

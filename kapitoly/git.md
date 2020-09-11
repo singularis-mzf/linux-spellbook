@@ -308,7 +308,7 @@ Každá revize je jednoznačně identifikována pomocí své MD5 heše. Kromě t
 
 
 
-## Zaklínadla (.gitignore)
+## Zaklínadla: .gitignore
 
 *# komentář*<br>
 **#** [{*text do konce řádky*}]

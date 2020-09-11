@@ -328,7 +328,7 @@ fprintf:
 *# **ukončit** načítání dalších položek*<br>
 **\-quit**
 
-## Zaklínadla (akce -printf a -fprintf)
+## Zaklínadla: Akce -printf a -fprintf
 
 *# název položky/cesta položky/cesta položky bez výchozího bodu*<br>
 **%f** ⊨ test.txt<br>
@@ -384,7 +384,7 @@ fprintf:
 *# přístupová práva symbolicky*<br>
 **%M** ⊨ -rw-r\-\-r\-\-
 
-## Zaklínadla (celé příkazy)
+## Zaklínadla: Celé příkazy
 
 ### Hledání textových souborů podle obsahu
 

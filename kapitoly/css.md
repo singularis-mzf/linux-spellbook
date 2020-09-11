@@ -42,13 +42,13 @@ Poznámky:
 
 !ÚzkýRežim: vyp
 
-## Zaklínadla (selektory)
+## Zaklínadla: Selektory
 <!--
 - Rozdělte na podsekce a naplňte „zaklínadly“.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-## Zaklínadla (vlastnosti)
+## Zaklínadla: Vlastnosti
 
 ### Písmo
 

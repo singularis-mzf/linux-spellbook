@@ -205,7 +205,8 @@ jako chroot či cgroups.
 **ps h -o egroup:1 -p** {*PID*}  ⊨ root<br>
 **ps h -o egid:1 -p** {*PID*} ⊨ 0
 
-## Zaklínadla (TUI a stromové zobrazení)
+## Zaklínadla: TUI a stromové zobrazení
+
 ### Stromové zobrazení
 
 *# proces a jeho potomci*<br>
@@ -240,7 +241,7 @@ jako chroot či cgroups.
 Viz také: příkaz „tlp“ z balíčku „tlp“.
 -->
 
-## Zaklínadla (spouštění a ovládání procesů)
+## Zaklínadla: Spouštění a ovládání procesů
 
 ### Spouštění procesů
 

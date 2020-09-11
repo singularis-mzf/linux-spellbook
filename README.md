@@ -110,13 +110,8 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [system](kapitoly/system.md) | Systém | 1.2 |
 | [terminal](kapitoly/terminal.md) | Terminál | 1.0\* |
 | [vim](kapitoly/vim.md) | Vim | 1.8 |
-| [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) | Zpracování textových souborů | 1.2 |
-
-## Přechod z Ubuntu 18.04
-
-| ID | Název kapitoly | % | Stav |
-| :--- | :--- | ---: | :--- |
-| [zpracovani-videa-a-zvuku](kapitoly/zpracovani-videa-a-zvuku.md) | Zpracování videa a zvuku | 0% | ve frontě 1.0 |
+| [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) | Zpracování textových souborů | 1.2 | [zpracovani-videa-a-zvuku](kapitoly/zpracovani-videa-a-zvuku.md) | Zpracování videa a zvuku | 1.0 |
+|
 
 ## Vyřazené kapitoly
 

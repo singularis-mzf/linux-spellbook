@@ -134,7 +134,9 @@ function KonecKapitoly(nazevKapitoly, cislaPoznamek, textyPoznamek,   i, vyslede
 }
 
 function ZacatekSekce(kapitola, sekce, cisloKapitoly, cisloSekce) {
-    return "\n<h2 id=\"cast" cisloSekce "\"><a href=\"#cast" cisloSekce "\"><span class=\"cislo\">" cisloSekce ".</span> " sekce "</a></h2>\n";
+    return "\n<h2 id=\"cast" cisloSekce "\"" (sekce ~ /^Zaklínadla/ ? " class=\"zaklinadla\"" : "") \
+        "><a href=\"#cast" cisloSekce "\"><span class=\"cislo\">" cisloSekce ".</span> " \
+        sekce "</a></h2>\n";
 }
 
 function KonecSekce(kapitola, sekce) {

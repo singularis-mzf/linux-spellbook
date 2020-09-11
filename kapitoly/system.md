@@ -314,7 +314,7 @@ ale při testování žádný z nich nefungoval, takže příkaz „find“ se 
 *# vykreslit graf popisující inicializaci jednotek při zavádění*<br>
 **systemd-analyze plot &gt;**{*dočasný-soubor.svg*} **&amp;&amp; sensible-browser** {*dočasný-soubor.svg*}
 
-## Zaklínadla (klávesnice)
+## Zaklínada: Klávesnice
 
 ### Ovládání počítače klávesnicí
 

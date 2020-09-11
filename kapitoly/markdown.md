@@ -38,7 +38,7 @@ Tato verze kapitoly nepokrývá GFM (GitHub Flavoured Markdown), nicméně všec
 
 !ÚzkýRežim: vyp
 
-## Zaklínadla (Markdown)
+## Zaklínadla: Markdown
 
 ### Nadpisy
 
@@ -134,7 +134,7 @@ Tato verze kapitoly nepokrývá GFM (GitHub Flavoured Markdown), nicméně všec
 **&gt; &gt;** {*začátek textu*}<br>
 [**&gt; &gt;** {*pokračování*}]...
 
-## Zaklínadla (Markdown Extra)
+## Zaklínadla: Markdown Extra
 
 *# **tabulka***<br>
 *// Zarovnání je „:\-\-\-“ vlevo, „\-\-\-“ na střed nebo „\-\-\-:“ vpravo. Řádek se záhlavím a řádka se zarovnáními jsou povinné, ostatní řádky tabulky jsou nepovinné. Buňky tabulky mohou obsahovat formátování.*<br>
@@ -177,7 +177,7 @@ Tato verze kapitoly nepokrývá GFM (GitHub Flavoured Markdown), nicméně všec
 *# horizontální čára*<br>
 **\*\*\***
 
-## Zaklínadla (nestandardní)
+## Zaklínadla: Nestandardní
 
 *# **podtržení***<br>
 **&lt;u&gt;**{*text*}**&lt;/u&gt;**

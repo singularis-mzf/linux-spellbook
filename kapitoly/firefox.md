@@ -48,7 +48,7 @@ Poznámky:
 
 !ÚzkýRežim: vyp
 
-## Zaklínadla (about:config)
+## Zaklínadla: about:config
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 *# drastická opatření proti fingerprintingu*<br>

@@ -76,7 +76,7 @@ Offline instalací se rozumí stažení balíčků, jejich přenesení na počí
 
 !ÚzkýRežim: vyp
 
-## Zaklínadla (DPKG a APT)
+## Zaklínadla: DPKG a APT
 
 ### Instalace a odinstalace
 *# aktualizovat informace o dostupných balíčcích (alternativy)*<br>
@@ -370,7 +370,7 @@ Za znakem „=“ následuje příklad hodnoty pro balíček „gimp“.
 *// Pro balíčky instalované jen pro splnění závislosti jiného balíčku vypíše „A“, jinak vypíše prázdný řetězec.*<br>
 **%M =**
 
-## Zaklínadla (Flatpak)
+## Zaklínadla: Flatpak
 <!--
 https://flatpak.org/setup/Ubuntu/
 -->
@@ -465,7 +465,7 @@ http://docs.flatpak.org/en/latest/single-file-bundles.html
 *# instalace (na offline počítači)*<br>
 ?
 
-## Zaklínadla (Snap)
+## Zaklínadla: Snap
 
 ### Instalace, spuštění a odinstalace
 

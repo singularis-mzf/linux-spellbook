@@ -399,7 +399,7 @@ TODO: Otestovat!
 *# přiřadit hodnotu proměnné prostředí*<br>
 **$ENV\{"**{*názevproměnné*}**\} =** {*hodnota*}
 
-## Zaklínadla (pole)
+## Zaklínadla: Pole
 
 <!--
 https://metacpan.org/pod/List::MoreUtils
@@ -535,7 +535,7 @@ https://metacpan.org/pod/List::MoreUtils
 
 
 
-## Zaklínadla (práce se soubory)
+## Zaklínadla: Práce se soubory
 
 ### Otevřít/zavřít
 

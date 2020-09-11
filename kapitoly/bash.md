@@ -182,7 +182,7 @@ Poznámky:
 *# ≠*<br>
 **test** {*číslo1*} **-ne** {*číslo2*}
 
-## Zaklínadla (nastavení)
+## Zaklínadla: Nastavení
 
 ### Vypisování příkazů (např. pro ladění)
 
@@ -357,7 +357,7 @@ Poznámky:
 **set \-\-** [{*parametr*}]...
 -->
 
-## Zaklínadla (interaktivní ovládání)
+## Zaklínadla: Interaktivní ovládání
 
 *# zopakovat poslední příkaz*<br>
 {_↑_}<br>
@@ -405,7 +405,7 @@ Poznámky:
 *// Opakovaným stiskem lze vložit poslední slovo z předposlední řádky, před-předposlední atd.*<br>
 {_Alt_}**+**{_._}
 
-## Zaklínadla (automatické doplňování)
+## Zaklínadla: Automatické doplňování
 
 ### Základní příkazy
 *# nastavit doplňování pro příkaz*<br>
@@ -490,7 +490,7 @@ https://www.gnu.org/software/bash/manual/html_node/Programmable-Completion-Built
 *# celá doplňovaná příkazová řádka*<br>
 **$COMP\_LINE**
 
-## Zaklínadla (ostatní)
+## Zaklínadla: Ostatní
 
 *# běží bash v interaktivním režimu?*<br>
 **[[ $- == \*i\* ]]**

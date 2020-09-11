@@ -38,7 +38,7 @@ Tato verze kapitoly pokrývá pouze základy Dockeru; nezmiňuje se o nástoji 
 
 !ÚzkýRežim: vyp
 
-## Zaklínadla (docker)
+## Zaklínadla: Docker
 
 ### Práce s obrazy
 *# **vytvořit** obraz z Dockerfilu*<br>
@@ -127,7 +127,7 @@ Tato verze kapitoly pokrývá pouze základy Dockeru; nezmiňuje se o nástoji 
 *# přivlastnění si cizího souboru*<br>
 **sudo docker \-\-rm -it -v "$(pwd):/root" ubuntu chown $UID "/root/**{*název souboru*}**"**
 
-## Zaklínadla (Dockerfile)
+## Zaklínadla: Dockerfile
 
 *# komentář*<br>
 **#** {*komentář do konce řádku*}

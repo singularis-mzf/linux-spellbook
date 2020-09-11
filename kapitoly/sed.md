@@ -110,6 +110,7 @@ V řetězci náhrady také mohou být přepínače konverze velikosti písmen: 
 !ÚzkýRežim: vyp
 
 ## Zaklínadla
+
 ### Podmínky (uvádějí se před příkaz)
 
 Kteroukoliv podmínku lze negovat uvedením vykřičníku za podmínku.
@@ -160,7 +161,7 @@ Kteroukoliv podmínku lze negovat uvedením vykřičníku za podmínku.
 *# každý třetí záznam, počínaje sedmnáctým*<br>
 **17~3**
 
-## Zaklínadla (příkazy)
+## Zaklínadla: Příkazy
 
 ### Operace s pracovním prostorem
 
@@ -275,7 +276,7 @@ Volba může být také „p“ (došlo-li k náhradě, provést příkaz „p�
 -->
 
 <!--
-## Zaklínadla (příklady volání)
+## Zaklínadla: Příklady volání
 
 *# všechna písmena uvnitř kulatých závorek převést na velká*<br>
 **sed -E 's/\\((.\*)\\)/\\U&amp;/g'**

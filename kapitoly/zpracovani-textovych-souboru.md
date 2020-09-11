@@ -462,7 +462,7 @@ Pro formát tsvz použijte „RS="\\0";“, pro tsv jej vynechejte.
 [**LC\_ALL=C.UTF-8**] **sort** [{*další parametry*}] **-k 1.**{*M*}**,1.**{*N*}{*parametry-řazení*} [{*soubor*}]...
 
 
-## Zaklínadla (záplatování)
+## Zaklínadla: Záplatování
 
 *# vytvořit záplatu adresáře*<br>
 *// Aby záplata fungovala, označení starého a nového adresáře nesmějí obsahovat žádná lomítka, musejí to být jen holá jména podadresářů aktuálního adresáře.*<br>

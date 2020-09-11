@@ -43,6 +43,7 @@ Poznámky:
 !ÚzkýRežim: zap
 
 ## Úvod
+
 FFmpeg je nástroj pro konverzi, úpravu a streamování videa, zvuku a titulků.
 Hlavní výhodou FFmpegu oproti videoeditorům s grafickým uživatelským rozhraním
 je modularita a opakovatelnost zpracování pro různé vstupní soubory.
@@ -52,6 +53,7 @@ zpracování zvuku není pokrytí příliš dobré) a neobsahuje vysvětlení p
 Rovněž chybí popis vestavěných funkcí používaných ve výrazech v parametrech filtrů.
 
 ## Definice
+
 * **Stopa** (stream) je časovaná složka multimediálního souboru proložená v čase s ostatními stopami
 téhož souboru. Stopy v jednom souboru mohou být různého typu (obrazová, zvuková,
 titulková či datová) a mohou mít různou délku.
@@ -67,9 +69,9 @@ za sekundu se nazývá **fps**. Hodnota fps se obvykle pohybuje v rozmezí 10 a
 * **Vzorek** je základní kvantum zvukové stopy. Obvyklá vzorkovací frekvence zvuku je 44 100
 vzorků za sekundu.
 
-* **Filtr** je objekt v grafu filtrů, který očekává určitý počet vstupů určitého typu v určitém pořadí (toto očekávání se může lišit v závislosti na parametrech). Na tyto vstupy je pak potřeba připojit buď stopy vstupů ffmpegu (typicky vstupních souborů) nebo výstupy jiných filtrů. Filtr mívá také výstupy, které je pak nutno připojit na vstupy jiných filtrů nebo na stopy výstupů ffmpegu.
+* **Filtr** je objekt v grafu filtrů, který očekává určitý počet vstupů určitého typu v určitém pořadí (toto očekávání se může lišit v závislosti na parametrech). Na tyto vstupy je pak potřeba připojit buď stopy vstupů ffmpegu (typicky vstupních souborů) nebo výstupy jiných filtrů. Filtr mívá také výstupy, které je pak nutno připojit na vstupy jiných filtrů nebo na stopy výstupů ffmpegu. Filtr, která má výstupy, ale ne vstupy, se nazývá **generátor**, přestože může načítat data z disku.
 
-* **Graf filtrů** je orientovaný graf definovaný uživatelem, který popisuje tok dat různého typu přes ffmpeg ze vstupů na výstupy. Každý vstup každého filtru v grafu filtrů musí být připojen na výstup jiného, případně na konkrétní stopu některého ze vstupních souborů; analogicky každý výstup každého filtru musí být připojen na vstup jiného nebo namapován na stopu některého z výstupních souborů.
+* **Graf filtrů** je orientovaný graf definovaný uživatelem, který popisuje tok dat různého typu přes ffmpeg ze vstupů na výstupy. V grafu filtrů nejsou dovoleny nepřipojené vstupy či výstupy filtrů.
 
 !ÚzkýRežim: vyp
 
@@ -87,6 +89,9 @@ je pořadové číslo vstupu (počítáno od nuly) a na místě „v“ může 
 obrazovou stopu, „a“ pro výchozí zvukovou stopu, nebo pořadové číslo stopy
 v kontejneru vstupního souboru (lze zjistit z výstupu příkazu „ffprobe“).
 
+<!--
+[ ] Následující odstavec je nesrozumitelný. Bylo by vhodné ho přepsat nebo nahradit obrázkem.
+-->
 Jednoduché propojení mezi filtry se v komplexním i jednoduchém grafu filtrů vytvoří tak,
 že se filtry zapíšou vedle sebe a oddělí čárkou (kde propojení není, píše se místo
 čárky středník). V komplexním grafu filtrů se vytvářejí také pojmenovaná propojení,
@@ -95,7 +100,7 @@ Zatímco u jednoduchého grafu filtrů se konec namapuje na stopu výstupního 
 automaticky, u komplexního grafu filtrů to musíme udělat ručně, samostatným výstupním
 parametrem „-map“.
 
-## Zaklínadla (filtry)
+## Zaklínadla: Filtry
 
 V této sekci používám následující konvence: {*vi*} značí obrazový vstup filtru (opakuje se
 tolikrát, kolik má filtr obrazových vstupů); analogicky {*ai*} zvukový vstup,
@@ -314,7 +319,7 @@ Barvy se zadávají ve formátu AABBGGRR, kde AA=FF je úplná průhlednost a A
 -->
 
 *# aplikovat **zvukovou** zatmívačku/roztmívačku*<br>
-*// Podporované tvary jsou: tri, qsin, hsin, esin, log, ipar, qua, cub, squ, cbr, par, exp, iqsin, ihsin, dese. Poznámka: Veškerý zvuk po konci zatmívačky, resp. začátkem roztmívačky bude tímto filtrem nahrazen tichem.*<br>
+*// Podporované tvary jsou: tri, qsin, hsin, esin, log, ipar, qua, cub, squ, cbr, par, exp, iqsin, ihsin, dese, desi, losi a nofade. Poznámka: Veškerý zvuk po konci zatmívačky, resp. začátkem roztmívačky bude tímto filtrem nahrazen tichem; to platí i pro tvar nofade.*<br>
 **[**{*ai*}**] afade=out:st=**{*čas-začátku*}**:d=**{*trvání-v-s*}**:curve=**{*tvar*} **[**{*ao*}**]**<br>
 **[**{*ai*}**] afade=in:st=**{*čas-začátku*}**:d=**{*trvání-v-s*}**:curve=**{*tvar*} **[**{*ao*}**]**
 
@@ -329,13 +334,14 @@ Barvy se zadávají ve formátu AABBGGRR, kde AA=FF je úplná průhlednost a A
 **[**{*vi*}**] delogo=x=**{*posun-x-zleva*}**:y=**{*posun-y-shora*}**:w=**{*šířka*}**:h=**{*výška*} **[**{*vo*}**]**
 
 *# **zneviditelnit předmět***<br>
-*// Mapa by měla mít stejný rozměr jako video a musí obsahovat bílé pixely na pozicích, kde je na videu předmět k odstranění, a černé pixely na místech, která se nemají změnit. Tento filtr je pro oblasti výpočetně náročný, proto by měla být drtivá většina pixelů mapy zcela černá.*<br>
+*// Mapa by měla mít stejný rozměr jako video a musí obsahovat bílé pixely na pozicích, kde je na videu předmět k odstranění, a černé pixely na místech, která se nemají změnit. Tento filtr je pro velké oblasti výpočetně náročný, proto by měla být drtivá většina pixelů mapy zcela černá.*<br>
 **[**{*vi*}**] removelogo=**{*obrázek-s-mapou.png*} **[**{*vo*}**]**
 
 ### Vykreslování do videa
-*# **obdelník***<br>
-*// Volba invert vykreslí invertující rámeček; volba fill zajistí vyplněný obdelník.*<br>
-**[**{*vi*}**] drawbox=**{*posun-x-zleva*}**:**{*posun-y-shora*}**:**{*šířka*}**:**{*výška*}**:**{*barva-nebo-invert*}[**@**{*krytí-0-až-1*}]<nic>[**:**{*tloušťka-nebo-fill*}] **[**{*vo*}**]**
+*# **obdelník** (jen čáry/vyplněný/invertující)*<br>
+**[**{*vi*}**] drawbox=**{*posun-x-zleva*}**:**{*posun-y-shora*}**:**{*šířka*}**:**{*výška*}**:**{*barva*}[**@**{*krytí-0-až-1*}]<nic>[**:**{*tloušťka*}] **[**{*vo*}**]**<br>
+**[**{*vi*}**] drawbox=**{*posun-x-zleva*}**:**{*posun-y-shora*}**:**{*šířka*}**:**{*výška*}**:**{*barva*}[**@**{*krytí-0-až-1*}]**:fill [**{*vo*}**]**<br>
+**[**{*vi*}**] drawbox=**{*posun-x-zleva*}**:**{*posun-y-shora*}**:**{*šířka*}**:**{*výška*}**:invert**[**@**{*krytí-0-až-1*}]<nic>**:fill [**{*vo*}**]**
 
 *# trojúhelník*<br>
 ?
@@ -352,7 +358,7 @@ Barvy se zadávají ve formátu AABBGGRR, kde AA=FF je úplná průhlednost a A
 **[**{*vi*}**] yadif [**{*vo*}**]**
 
 *# proložit obraz*<br>
-*// Prokláďání obrazu sníží fps na polovinu.*<br>
+*// Prokládání obrazu sníží fps na polovinu.*<br>
 **[**{*vi*}**] interlace [**{*vo*}**]**
 
 *# aplikovat na obraz **Sobelův operátor** detekce hran*<br>
@@ -567,7 +573,7 @@ pozor na PTS!
 **[**{*vi*}**] copy [**{*vo*}**]**<br>
 **[**{*ai*}**] acopy [**{*ao*}**]**
 
-## Zaklínadla (příkaz ffmpeg)
+## Zaklínadla: Příkaz ffmpeg
 
 Příkaz ffmpeg přijímá tři typy parametrů: globální, vstupní a výstupní.
 Globální parametry platí pro danou instanci ffmpegu jako celek.
@@ -673,7 +679,7 @@ a platí pouze pro daný výstup.
 *// Názvy souborů při volání tímto způsobem nesmějí obsahovat apostrof. Při spojování tímto způsobem nedochází k překódování, takže vstupní soubory si musejí velmi přesně odpovídat všemi parametry, jinak hrozí problémy při přehrávání.*<br>
 **ffmpeg -f concat -safe 0 -i &lt;(printf "file '%s'\\\\n"** {*soubor*}...**) -c copy** {*výstup*}
 
-## Zaklínadla (ostatní příkazy)
+## Zaklínadla: Ostatní příkazy
 
 *# analyzovat soubor (ukáže stopy a jejich parametry)*<br>
 **ffprobe** {*vstupní-soubor*}
@@ -688,7 +694,7 @@ a platí pouze pro daný výstup.
 
 ## Parametry příkazů
 
-Parametry příkazů a způsob volání ffmpegu jsou uvedeny v sekci „Zaklínadla (příkaz ffmpeg)“.
+Parametry příkazů a způsob volání ffmpegu jsou uvedeny v sekci „Zaklínadla: Příkaz ffmpeg“.
 
 ## Instalace na Ubuntu
 
@@ -721,8 +727,8 @@ Ukázka vyžaduje, abyste v aktuálním adresáři měl/a video „video.mp4“
 Zdroj: https://superuser.com/questions/1273920/deprecated-pixel-format-used-make-sure-you-did-set-range-correctly
 -->
 * Při zapékání titulků se ujistěte, že soubor s titulky je v kódování UTF-8 (což často nebývá). Titulky, které nepůjde tímto kódováním znaků dekódovat, filtr „subtitles“ bez varování vynechá!
-
-
+* Ačkoliv parametr „-filter\_complex“ jako globální parametr správně patří na začátek příkazu, jeho uvedení tam je nepraktické a dle mých zkušeností ho ffmpeg správně přijme, i když ho uvedete až před parametry „-map“.
+* Kromě datových stop mohou být součástí multimediálního souboru i metadata, která se automaticky zkopírují do výstupního souboru a nepodařilo se mi přijít na způsob, jak se jich snadno zbavit.
 
 <!--
 Podle https://superuser.com/questions/435941/which-codecs-are-most-suitable-for-playback-with-windows-media-player-on-windows
@@ -734,13 +740,13 @@ Podle https://superuser.com/questions/435941/which-codecs-are-most-suitable-for-
 **man ffmpeg**<br>
 **man ffmpeg-filters**
 
-<neodsadit>Dalším dobrým zdrojem je oficiální dokumentace k filtrům, ale ta je podstatně novější než verze ffmpegu v Ubuntu 18.04, takže váš ffmpeg nepodporuje vše, co je v online dokumentaci uvedeno.
+<neodsadit>Dalším velmi dobrým zdrojem je oficiální dokumentace k filtrům, ke které se dostanete tak, že si nainstalujete balíček „ffmpeg-doc“ a v prohlížeči otevřete soubor „/usr/share/doc/ffmpeg/manual/ffmpeg-filters.html“.
 
 * [Ffmprovisr](https://amiaopensource.github.io/ffmprovisr/) (anglicky)
 * [FFmpeg Wiki](https://trac.ffmpeg.org/) (anglicky)
 * [Dokumentace k filtrům](https://ffmpeg.org/ffmpeg-filters.html) (anglicky)
-* [Manuálová stránka ffmpeg](http://manpages.ubuntu.com/manpages/bionic/en/man1/ffmpeg.1.html) (anglicky)
-* [Manuálová stránka ffmpeg-filters](http://manpages.ubuntu.com/manpages/bionic/en/man1/ffmpeg-filters.1.html) (anglicky)
+* [Manuálová stránka ffmpeg](http://manpages.ubuntu.com/manpages/focal/en/man1/ffmpeg.1.html) (anglicky)
+* [Manuálová stránka ffmpeg-filters](http://manpages.ubuntu.com/manpages/focal/en/man1/ffmpeg-filters.1.html) (anglicky)
 * [Playlist videí: FFMPEG &amp; Command Line](https://www.youtube.com/playlist?list=PLJse9iV6Reqiy8wP0rXTgFQkMNutRMN0j) (anglicky)
 * [Oficiální stránky](https://ffmpeg.org/) (anglicky)
 

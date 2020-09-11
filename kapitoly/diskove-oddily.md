@@ -361,7 +361,7 @@ Viz: https://wiki.archlinux.org/index.php/Persistent_block_device_naming
 **sudo dd if=**{*cesta*} **of=/dev/**{*oddíl*} [**status=progress**]<br>
 **gunzip -cd** {*cesta.gz*} **\| sudo dd of=**{*/dev/oddíl*} [**status=progress**]
 
-## Zaklínadla (LVM)
+## Zaklínadla: LVM
 
 ### Fyzické svazky
 

@@ -36,7 +36,8 @@ jemuž se bude věnovat většina této kapitoly.
 
 !ÚzkýRežim: vyp
 
-## Zaklínadla (v souboru Makefile)
+## Zaklínadla: V souboru Makefile
+
 ### Nastavení proměnných
 *# **nastavit** proměnnou (expandovat v místě definice)*<br>
 {*NÁZEV\_PROMĚNNÉ*} **:=** {*hodnota včetně mezer*}<br>
