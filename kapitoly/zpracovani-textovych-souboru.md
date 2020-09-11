@@ -401,8 +401,8 @@ Pro formát tsvz použijte „RS="\\0";“, pro tsv jej vynechejte.
 **gawk 'BEGIN {FS="\\t";** [**RS="\\0";**] **r=0;} NR == 1 \|\| NF &lt; r {r = NF} END {print r}'** [{*soubor*}]...
 
 *# naformátovat záznamy jako tabulku s pevnou šířkou sloupců (tsv/tsvz)*<br>
-**column -nt**[**e**]**s** [{*soubor*}]...<br>
-[**cat** {*soubor*}... **\|**] **tr '\\0\\n' '\\n&blank;' \| column -n**[**e**]**ts \| tr \\\\n \\\\0**
+**column -nt**[**e**] **-s $'\\t'** [{*soubor*}]...<br>
+[**cat** {*soubor*}... **\|**] **tr '\\0\\n' '\\n&blank;' \| column -n**[**e**]**t -s $'\\t' \| tr \\\\n \\\\0**
 
 *# vložit sloupec s **číslem záznamu** před první sloupec*<br>
 *// Poznámka: zadáte-li víc souborů, počítadlo záznamů se nebude restartovat na začátku každého z nich.*<br>

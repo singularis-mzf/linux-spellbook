@@ -30,6 +30,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 !ÚzkýRežim: zap
 
 ## Úvod
+
 Tématem této kapitoly jsou balíčkovací systémy dpkg, apt, PPA, Flatpak a Snap, používáné
 k instalaci a aktualizaci aplikací, knihoven a systémových součástí v distribuci Ubuntu.
 
@@ -56,21 +57,18 @@ z mnoha důvodů, především proto, že serverová část systému (repozitá
 Snapu ani Snap nastavit tak, aby s firmou Canonical nekomunikoval.
 
 Tato kapitola se nezabývá vytvářením balíčků, vytvářením repozitářů ani jejich zrcadel
-(pro zrcadla zkuste např.
-[tuto sérii článků](https://www.howtoforge.com/local\_debian\_ubuntu\_mirror) (anglicky)
-nebo modernější [aptly](https://www.aptly.info/)) (anglicky).
+(pro zrcadla zkuste např. [aptly](https://www.aptly.info/)) (anglicky).
 Rovněž se (pochopitelně) nezabývá sestavováním programů ze zdrojového kódu
 nebo instalací balíčků jiného typu (.rpm, .tar.xz apod.).
 
-Tato verze kapitoly nepokrývá offline instalaci balíčků Flatpaku a chybí zmínka
-o příkazu „dpkg-deb“. Rovněž až na výjimky nepokrývá uživatelské nastavení práv
-aplikací ve Flathubu (výchozí nastavení práv určuje dodavatel aplikace, ale uživatel může
-výchozí práva aplikace zúžit nebo rozšířit).
+Tato verze kapitoly nepokrývá offline instalaci balíčků Flatpaku a až na výjimky
+nepokrývá uživatelské nastavení práv aplikací ve Flathubu (výchozí nastavení práv
+určuje dodavatel aplikace, ale uživatel může práva aplikace zúžit nebo rozšířit).
 
 ## Definice
 
 * **Balíček** je soubor obsahující neměnná data tvořící aplikaci, knihovnu apod. a metadata včetně případných závislostí na ostatních balíčcích.
-* **Repozitář** je ucelený sklad souvisejících balíčků. Může být dostupný buď online, nebo může být umístěný v systému souborů. Repozitář APT má svůj **název** (v Ubuntu typicky „ubuntu“) a dělí se na **archivy** („bionic“, „bionic-updates“, „bionic-security“ atd.) a ty se dělí na **sekce** („main“, „universe“, „restricted“ a „multiverse“). Sekce main obsahuje svobodný software přímo podporovaný jsou součást Ubuntu, sekce „universe“ obsahuje svobodný software udržovaný pouze komunitou, sekce „restricted“ obsahuje nesvobodný software považovaný za podporovanou součást Ubuntu (typicky proprietární ovladače) a sekce „multiverse“ obsahuje nesvobodný software neudržovaný komunitou. Sekce se dále dělí na **podsekce** podle druhu softwaru.
+* **Repozitář** je ucelený sklad souvisejících balíčků. Může být dostupný buď online, nebo může být umístěný v systému souborů. Repozitář APT má svůj **název** (v Ubuntu typicky „ubuntu“) a dělí se na **archivy** („focal“, „focal-updates“, „focal-security“ atd.) a ty se dělí na **sekce** („main“, „universe“, „restricted“ a „multiverse“). Sekce main obsahuje svobodný software přímo podporovaný jsou součást Ubuntu, sekce „universe“ obsahuje svobodný software udržovaný pouze komunitou, sekce „restricted“ obsahuje nesvobodný software považovaný za podporovanou součást Ubuntu (typicky proprietární ovladače) a sekce „multiverse“ obsahuje nesvobodný software neudržovaný komunitou. Sekce se dále dělí na **podsekce** podle druhu softwaru.
 
 <!--
 Offline instalací se rozumí stažení balíčků, jejich přenesení na počítač nepřipojený k síti a instalace tam.
@@ -93,7 +91,7 @@ Offline instalací se rozumí stažení balíčků, jejich přenesení na počí
 
 *# **nainstalovat** nový balíček včetně závislostí (vzdálený balíček/lokální soubor)*<br>
 **sudo apt-get install** [**-y**] <nic>[**\-\-no-install-recommends**] <nic>[**\-\-install-suggests**] <nic>[**-V**] {*balíček*}...<br>
-**sudo apt-get install** [**-y**] <nic>[**\-\-no-install-recommends**] <nic>[**\-\-install-suggests**] <nic>[**-V**] **./**{*balíček.deb*}
+**sudo apt-get install** [**-y**] <nic>[**\-\-no-install-recommends**] <nic>[**\-\-install-suggests**] <nic>[**-V**] **./**{*balíček.deb*}...
 
 *# aktualizovat jen konkrétní balíčky a jejich závislosti*<br>
 **sudo apt-get install \-\-only-upgrade** {*balíček*}...
@@ -161,16 +159,23 @@ aptitude search --disable-columns -F %p "?upgradable"
 
 ### Podrobné informace o balíčku
 
-*# vypsat podrobné informace o balíčku*<br>
-**apt-cache show** {*balíček*}...
+*# vypsat podrobné informace o balíčku (dostupném/staženém)*<br>
+**apt-cache show** {*balíček*}...<br>
+**dpkg-deb \-\-info** {*cesta/balíček.deb*}
+
+*# vybalit z balíčku soubory/řídicí soubory*<br>
+*// Tip: k manipulaci se soubory v balíčku můžete také použít parametr \-\-fsys-tarfile, který na standardní výstup příkazu vypíše soubory balíčku ve formátu „tar“, který můžete předat rourou příkazu „tar“.*<br>
+**dpkg-deb -x** {*cesta/balíček.deb*} {*adresář/k/vytvoření*}<br>
+**dpkg-deb -e** {*cesta/balíček.deb*} {*adresář/k/vytvoření*}
 
 *# kolik místa na disku zabírá balíček? (pro člověka)*<br>
 **aptitude search -F %I '?name(**{*balíček*}**)' \| head -n1**
 
-*# vypsat seznam souborů a adresářů v systému, které kontroluje daný (nainstalovaný/dostupný) balíček*<br>
+*# vypsat seznam souborů a adresářů v systému, které kontroluje daný (nainstalovaný/dostupný/stažený) balíček*<br>
 *// Poznámka: Ve výpisu „dpkg-query -L“ se typicky objevují také společné adresáře jako /etc či /usr; není příliš spolehnutí na to, že jde pouze o soubory příslušné danému balíčku.*<br>
 **dpkg-query -L** {*balíček*}<br>
-**apt-file list** {*balíček*}...
+**apt-file list** {*balíček*}...<br>
+**dpkg-deb -c** {*cesta/balíček.deb*}
 <!--
 [ ] Otestovat, jak dpkg-query reaguje na odklonění.
 -->
@@ -344,22 +349,22 @@ Za znakem „=“ následuje příklad hodnoty pro balíček „gimp“.
 *# **verze** (instalovaná/dostupná)*<br>
 *// Je-li dostupných víc verzí balíčku, parametr %V vybere tu, která by se nejspíš instalovala.*<br>
 *// Není-li instalovaná, resp. dostupná žádná verze, tyto parametry vypíšou „&lt;žádná&gt;“ a ignorují snahu o změnu lokalizace. Pro přenositelnost je proto doporučuji ve skriptech testovat proti regulárnímu výrazu „&lt;.\*&gt;“ místo porovnání s konkrétní hodnotou.*<br>
-**%v = 2.8.22-1**<br>
-**%V = 2.8.22-1**
+**%v = 2.10.18-1**<br>
+**%V = 2.10.18-1**
 
 *# **archiv** balíčku v repozitáři*<br>
-*// Je-li dostupných víc verzí balíčku, tento parametr zohledňuje pouze nejnovější verzi. Je-li dostupná ve více archivech, vypíše parametr %t všechny dané archivy oddělené čárkou, typicky např. „bionic-security,bionic-updates“.*<br>
-**%t = bionic**
+*// Je-li dostupných víc verzí balíčku, tento parametr zohledňuje pouze nejnovější verzi. Je-li dostupná ve více archivech, vypíše parametr %t všechny dané archivy oddělené čárkou, typicky např. „focal-security,focal-updates“.*<br>
+**%t = focal**
 
 *# **sekce a podsekce** balíčku*<br>
 **%s = universe/graphics**
 
 *# velikost balíčku/velikost instalovaných souborů*<br>
-**%D = 3 672 kB**<br>
-**%I = 15,8 MB**
+**%D = 4 286 kB**<br>
+**%I = 20,1 MB**
 
 *# popis původu balíčku*<br>
-**%O = Ubuntu:18.04/bionic [amd64]**
+**%O = Ubuntu:20.04/focal [amd64]**
 
 *# příznak automatické instalace*<br>
 *// Pro balíčky instalované jen pro splnění závislosti jiného balíčku vypíše „A“, jinak vypíše prázdný řetězec.*<br>
@@ -530,9 +535,6 @@ http://docs.flatpak.org/en/latest/single-file-bundles.html
 Poznámka: Neinstalujte balíček apt-file, pokud ho nevyužijete. Výrazně zvyšuje objem dat přednášených při každé aktualizaci (při každém „sudo apt-get update“)!
 
 *# Flatpak*<br>
-*// PPA podle: https://flatpak.org/setup/Ubuntu/*<br>
-**sudo add-apt-repository ppa:alexlarsson/flatpak**<br>
-**sudo aptitude update**<br>
 **sudo apt-get install flatpak** [**gnome-software-plugin-flatpak**]<br>
 **sudo flatpak remote-add \-\-if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo**<br>
 !: Restartujte operační systém.
@@ -603,8 +605,8 @@ Pro APT: „man apt-get“ apod. (ale není příliš přehledná) Pro Flatpak: 
 * [Manuál aptitude: vyhledávací podmínky](https://www.debian.org/doc/manuals/aptitude/ch02s04s05.en.html) (anglicky)
 * [TL;DR „flatpak“](https://github.com/tldr-pages/tldr/blob/master/pages/linux/flatpak.md) (anglicky)
 * [TL;DR „snap“](https://github.com/tldr-pages/tldr/blob/master/pages/linux/snap.md) (anglicky)
-* [Balíček „flatpak“](https://packages.ubuntu.com/bionic/flatpak) (anglicky)
-* [Balíček „snapd“](https://packages.ubuntu.com/bionic/snapd) (anglicky)
+* [Balíček „flatpak“](https://packages.ubuntu.com/focal/flatpak) (anglicky)
+* [Balíček „snapd“](https://packages.ubuntu.com/focal/snapd) (anglicky)
 * [Oficiální stránka „Flatpak“](https://flatpak.org/) (anglicky)
 * [TL;DR „aptitude“](https://github.com/tldr-pages/tldr/blob/master/pages/linux/aptitude.md) (anglicky)
 * [TL;DR „apt“](https://github.com/tldr-pages/tldr/blob/master/pages/linux/apt.md) (anglicky)

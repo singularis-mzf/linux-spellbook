@@ -103,20 +103,20 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [regularni-vyrazy](kapitoly/regularni-vyrazy.md) | Regulární výrazy | 1.1 |
 | [sed](kapitoly/sed.md) | Sed | 1.8 |
 | [soubory-a-adresare](kapitoly/soubory-a-adresare.md) | Soubory a adresáře | 1.5 |
+| [sprava-balicku](kapitoly/sprava-balicku.md) | Správa balíčků | 1.1 |
 | [sprava-procesu](kapitoly/sprava-procesu) | Správa procesů | 1.4 |
 | [sprava-uzivatelskych-uctu](kapitoly/sprava-uzivatelskych-uctu.md) | Správa uživatelských účtů | 1.11 |
 | [stahovani-videi](kapitoly/stahovani-videi.md) | Stahování videí | 100% | 1.0 |
+| [system](kapitoly/system.md) | Systém | 1.2 |
+| [terminal](kapitoly/terminal.md) | Terminál | 1.0\* |
 | [vim](kapitoly/vim.md) | Vim | 1.8 |
+| [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) | Zpracování textových souborů | 1.2 |
 
 ## Přechod z Ubuntu 18.04
 
 | ID | Název kapitoly | % | Stav |
 | :--- | :--- | ---: | :--- |
-| [terminal](kapitoly/terminal.md) | Terminál | 2% | rozpracovaná |
-| [sprava-balicku](kapitoly/sprava-balicku.md) | Správa balíčků | 0% | ve frontě |
-| [system](kapitoly/system.md) | Systém | 0% | ve frontě |
-| [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) | Zpracování textových souborů | 0% | ve frontě |
-| [zpracovani-videa-a-zvuku](kapitoly/zpracovani-videa-a-zvuku.md) | Zpracování videa a zvuku | 0% | ve frontě |
+| [zpracovani-videa-a-zvuku](kapitoly/zpracovani-videa-a-zvuku.md) | Zpracování videa a zvuku | 0% | ve frontě 1.0 |
 
 ## Vyřazené kapitoly
 

@@ -49,14 +49,12 @@ vznikne takzvané „sezení“, které zanikne, až se uživatel odhlásí
 (včetně případů, kdy je odhlášení součástí restartu či vypnutí počítače).
 
 Tato kapitola se nezabývá samotným zaváděním operačního systému a diskovými oddíly.
-Rovněž se nezabývá zjišťováním informací o hardwaru počítače (s výjimkou procesoru).
 
-Tato verze kapitoly nepokrývá nastavení automatického přihlašování do X,
+Tato verze kapitoly pokrývá jen velmi omezeně zjišťování informací o hardware;
+nepokrývá nastavení automatického přihlašování do X,
 nastavování cílů, nastavení synchronizace systémového času s NTP servery
 ani vytváření vlastních služeb a démonů.
 Rovněž nepokrývá ovládání kontejnerů příkazem „machinectl“.
-
-Poznámka: práce s odkládacím prostorem byla přesunuta do kapitoly *Diskové oddíly*.
 
 <!--
 Poznámka: jádro si ponechává možnost spouštět svoje vlastní, nezávislé procesy prostřednictvím
@@ -71,8 +69,8 @@ Poznámka: správci přihlášení se nepočítají mezi démony, protože mají
 
 ## Definice
 
-* **Systemd** čili **král démonů** (také známý jako první proces či proces číslo 1) je ústřední démon systému, který řídí jeho start, restart či vypnutí a spouští a zastavuje ostatní démony (kromě tzv. jaderných). V některých linuxových komunitách má špatnou pověst, protože jeho předchůdce Upstart kdysi nevybíravě převzal „vládu“ od tehdy oblíbeného procesu „init“ (zvaného také „sysvinit“) a systemd pak pod svoji kontrolu sjednotil mnoho do té doby nezávisle řešených funkcí systému. Jako uživatele vás však od něj nečeká žádné nebezpečí, pokud mu nebudete překážet.
-* **Démon** je systémový proces, který čeká (popř. běží) na pozadí bez přímého uživatelského rozhraní a má hodnotu PPID rovnu 0, 1 nebo 2. (Pozor – nespleťte si PPID s PID!)
+* **Král démonů** („systemd“ s PID 1, v Ubuntu se z důvodu kompatibility v některých výpisech ukazuje jako „init“) je ústřední démon systému, který řídí jeho start, restart či vypnutí a spouští a zastavuje další systémové démony. V některých linuxových komunitách má špatnou pověst, protože jeho předchůdce Upstart kdysi nevybíravě převzal „vládu“ od tehdy oblíbeného procesu „init“ (zvaného také „sysvinit“) a systemd pak pod svoji kontrolu sjednotil mnoho do té doby nezávisle řešených funkcí systému. Jako uživatele vás však od něj nečeká žádné nebezpečí, pokud mu nebudete překážet.
+* **Démon** je proces bez vlastního uživatelského rozhraní (obvykle se s ním komunikuje zvláštními příkazy nebo po sběrnici D-BUS). Existují tři druhy démonů: **Systémoví démoni** jsou „systemd“ s PID 1 a jeho přímí potomci, kromě těch, kteří mají uživatelské rozhraní (jako např. lightdm). **Jaderní démoni** jsou „kthreadd“ (PID 2) a jeho zrozenci. Jaderní démoni se zodpovídají pouze jádru, jsou mimo kontrolu uživatele i krále démonů. **Uživatelští démoni** jsou pak procesy spuštěné obyčejným uživatelem na pozadí a bez uživatelského rozhraní; patří k nim zejména uživatelská instance „systemd“ (ta s PID jiným než 1) a její potomci.
 * **Systémová jednotka** (unit) je datová struktura krále démonů. Systemd rozeznává jedenáct druhů systémových jednotek, z nichž nejznámější a nejdůležitější jsou **služby** („service“), reprezentující démony. Další významné jsou **sokety** („socket“, souvisí se službami a umožňují démonům nabízet svoje služby ostatním démonům), **cíle** („target“, seskupení jednotek pro určité situace) a **časovače** („timer“, pravidelně probouzejí a ruší démony).
 * **Sezení** je instance přihlášení uživatele k systému ve víceuživatelském režimu; vzniká přihlášením uživatele a zaniká jeho odhlášením, resp. ukončením všech procesů daného sezení. Sezení může být grafické či textové a může být místní nebo vzdálené.
 
@@ -87,7 +85,7 @@ Poznámka: správci přihlášení se nepočítají mezi démony, protože mají
 **inxi**
 
 *# verze a varianta **jádra***<br>
-**uname -r** ⊨ 5.0.0-37-generic
+**uname -r** ⊨ 5.4.0-47-generic
 
 *# čas od spuštění systému (**uptime**)*<br>
 **uptime \-\-pretty**
@@ -98,7 +96,7 @@ Poznámka: správci přihlášení se nepočítají mezi démony, protože mají
 
 *# počet logických procesorů/fyzických jader*<br>
 **nproc \-\-all**<br>
-?
+**lscpu -p=CORE,SOCKET \| egrep -v '^#' \| sort -u \| wc -l**
 
 *# jméno procesoru*<br>
 **LC\_ALL=C lscpu \| egrep '^Model name:' | sed -E 's/^[<nic>^:]\*:\\s\*//'**
@@ -147,8 +145,11 @@ Poznámka: správci přihlášení se nepočítají mezi démony, protože mají
 **sudo systemctl rescue**<br>
 **sudo systemctl emergency**
 
-*# **uspat** systém*<br>
-**systemctl suspend**
+*# **uspat** systém (trvale/na N sekund/na 48 hodin)*<br>
+*// Podpora dočasného uspání příkazem rtcwake není na různých počítačích jednotná. Na některých dokáže počítač uspat, ale už ho nedokáže probudit; na některých ho nedokáže ani uspat. Vždy nejprve vyzkoušejte uspání na krátkou dobu, abyste zjistili, jak se bude daný počítač chovat. Pokud „rtcwake“ nefunguje s parametrem „-m mem“, může fungovat bez něj a naopak.*<br>
+**systemctl suspend**<br>
+**sudo rtcwake** [**-m mem**] **-s** {*N*}<br>
+**sudo rtcwake** [**-m mem**] **-s 172800**
 
 *# **hibernovat** systém*<br>
 **sudo systemctl hibernate**
@@ -244,8 +245,12 @@ Podrobnější informace: příkaz „uptimes“ z balíčku „uptimed“.
 **journalctl \-\-disk-usage**
 
 *# vyprázdnit log krále démonů/log jádra*<br>
-?<br>
+**sudo find /var/log/journal -type f -name '\*.journal' -delete**<br>
 **sudo dmesg \-\-clear**
+<!--
+Poznámka: k vyprázdnění logu krále démonů má příkaz „journalctl“ několik parametrů,
+ale při testování žádný z nich nefungoval, takže příkaz „find“ se zdá jedinou funkční možností.
+-->
 
 ### Sezení
 
@@ -258,13 +263,12 @@ Podrobnější informace: příkaz „uptimes“ z balíčku „uptimed“.
 **loginctl show-user** {*uživatel*}
 
 *# **přepnout** na uvedené sezení*<br>
-*// Poznámka: tento příkaz dokáže přepnout i mezi X a virtuální konzolí!*<br>
+*// Poznámka: tento příkaz dokáže přepnout i mezi X a textovou konzolí!*<br>
 **loginctl activate** {*ID-sezení*}
 
 *# **násilně ukončit** sezení/všechna sezení uživatele*<br>
 **loginctl terminate-session** {*ID-sezení*}<br>
 **loginctl terminate-user** {*uživatel*}
-
 
 ### Ostatní
 
@@ -320,6 +324,9 @@ Podrobnější informace: příkaz „uptimes“ z balíčku „uptimed“.
 !: Stiskněte a držte stisknuté klávesy {_Alt_} + {_PrtScr_}.<br>
 !: Na klávesnici s krátkými přestávkami vyťukejte: {_R_}, {_E_}, {_I_}, {_S_}, {_U_}, {_B_}.<br>
 !: Uvolněte {_PrtScr_} a {_Alt_}.
+
+*# uspat počítač*<br>
+?
 
 *# drastické **nouzové vypnutí** počítače*<br>
 !: {_Alt_} + {_PrtScr_} + {_O_}.
@@ -382,18 +389,14 @@ sudo systemctl restart keyboard-setup.service
 **setxkbmap ru**
 
 *# vypsat seznam dostupných rozložení klávesnice a jejich variant*<br>
+**sed -nE '/^!\\s+layout/,/^$/s/^\\s\*(\\S+)\\s+(.\*)$/\\1\\t\\2/;/^!\\s+variant/,/^$/s/^\\s\*(\\S+)\\s+([<nic>^:]+):\\s\*(.\*)$/\\2 \\1\\t\\3/;T;p' /usr/share/X11/xkb/rules/xorg.lst \| sort** [**\| column -nt -s $'\\t'** [**\| less**]]
+
+*# vypsat seznam definovaných variant rozložení klávesnice (pro vývojáře)*<br>
 ?
-<!--
-[ ] Vycházet ze souboru:
-/usr/share/X11/xkb/rules/xorg.lst
--->
 <!--
 *# vypsat seznam definic variant rozložení klávesnice*<br>
 *// Poznámka: ačkoliv můžete v příkazu „setxkbmap“ použít kteroukoliv vypsanou kombinaci, mnoho z nich nebylo zamýšleno jako rozložení klávesnice a učiní klávesnici obtížně použitelnou. Seznam skutečně použitelných rozložení hledejte např. v manuálové stránce: „man 7 xkeyboard-config“ v sekci „LAYOUTS“.*<br>
 **cd /usr/share/X11/xkb/symbols; egrep -H '^\\s\*xkb\_symbols\\s+"[<nic>^"]\*"\\s\*\\{.\*$' \* 2&gt;/dev/null \| sed -E 's/^([<nic>^:]\*):[<nic>^"]\*"([<nic>^"]\*)".\*/\\1 \\2/'**
-
-[ ] Vycházet ze souboru:
-/usr/share/X11/xkb/rules/xorg.lst
 -->
 
 
@@ -435,14 +438,13 @@ Většina použitých příkazů je základní součástí Ubuntu, pouze příka
 
 ## Tipy a zkušenosti
 
-* Systemd se ve výpisech procesů představuje jako „/sbin/init“, což je ve skutečnosti symbolický odkaz na „/lib/systemd/systemd“.
 * Volba „enable“/„disable“ je nezávislá na tom, zda démon právě běží. Nastavení na „enable“ ho okamžitě nespustí a nastavení na „disable“ neukončí (ledaže uvedete parametr „\-\-now“).
 
 ## Další zdroje informací
 
 * [Článek na Wikipedii](https://cs.wikipedia.org/wiki/Systemd)
 * [Seriál článků na ABC Linuxu](http://www.abclinuxu.cz/serialy/systemd)
-* [Video: The Magic SysRQ Key on the Keyboard](https://www.youtube.com/watch?v=ZiX327d8Ys0)
+* [Video: The Magic SysRQ Key on the Keyboard](https://www.youtube.com/watch?v=ZiX327d8Ys0) (anglicky)
 * [Systemd cheat sheet](https://www.thegeekdiary.com/centos-rhel-7-systemd-command-line-reference-cheat-sheet/) (anglicky)
 * [Oficiální stránka systemd pro uživatele](https://www.freedesktop.org/wiki/Software/systemd/) (anglicky)
 * [Oficiální stránka systemd pro vývojáře](https://systemd.io/) (anglicky)
@@ -451,7 +453,7 @@ Většina použitých příkazů je základní součástí Ubuntu, pouze příka
 * [Video systemd Basics](https://www.youtube.com/watch?v=AtEqbYTLHfs) (anglicky)
 * *man 1 systemctl* (anglicky)
 * *man 5 systemd.service* (anglicky)
-* [Balíček systemd](https://packages.ubuntu.com/bionic/systemd) (anglicky)
+* [Balíček systemd](https://packages.ubuntu.com/focal/systemd) (anglicky)
 * [TL;DR systemctl](https://github.com/tldr-pages/tldr/blob/master/pages/linux/systemctl.md) (anglicky)
 
 !ÚzkýRežim: vyp

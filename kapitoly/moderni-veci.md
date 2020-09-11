@@ -199,6 +199,14 @@ Nefunguje:
 **urlencode -d "**{*text*}**"**
 -->
 
+### Ostatní
+
+*# změřit rychlost přijímání a odesílání dat do internetu*<br>
+**speedtest**
+<!--
+Vyžaduje balíček speedtest-cli
+-->
+
 ## Parametry příkazů
 <!--
 - Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.

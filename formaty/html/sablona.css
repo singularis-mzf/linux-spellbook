@@ -659,8 +659,8 @@ nav.spodni .naslkap a {
     padding:0 2em;
 }
 nav.spodni .naslkap a::after {
-    content:"⏵";
-    position:absolute;right:-0.1em;bottom:0;
+    content:"»";
+    position:absolute;right:0.1em;bottom:-0.3em;
     font-size:200%;
     line-height:2.25;
 }

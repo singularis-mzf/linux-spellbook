@@ -22,7 +22,7 @@ Náměty k vylepšení:
 
 # Regulární výrazy
 
-!Štítky: {syntaxe}{zpracování textu}
+!Štítky: {syntaxe}{zpracování textu}{bash}
 !FixaceIkon: 1754
 !ÚzkýRežim: zap
 
@@ -51,10 +51,11 @@ varianta pro rozšířený regulární výraz.
 * Jako **atom** označuji nejkratší část (podřetězec) regulárního výrazu, která končí na dané pozici a tvořila by syntakticky správný regulární výraz sama o sobě. Atomem je např. „a“, „[abc]“, „(a|b)?“ či „\\s+“, ale ne „a|b“, protože „b“ je kratší a samo o sobě tvoří syntakticky správný regulární výraz.
 * **Kvantifikátor** je speciální podřetězec, který se zapisuje za atom a určuje dovolený počet opakování.
 * **Kotva** a **hranice** jsou speciální atomy k testování pozice, např. „^“ nebo „\\&lt;“. Z prohledávaného řetězce přijímají fiktivní prázdný podřetězec na jednoznačné pozici (u kotvy) nebo na všech pozicích splňujících určité podmínky (u hranice). Zvláštním případem hranice je **vyhlížení**.
+* **Vzorek bashe** (také **vzorek**) je regulární výraz v interpretu bash zapsaný jeho zvláštní syntaxí; slouží nejčastěji k filtrování názvů souborů. Při testování vzorků se obvykle vyžaduje úplná shoda.
 
 !ÚzkýRežim: vyp
 
-## Zaklínadla
+## Zaklínadla: Regulární výrazy
 
 ### Jednotlivé znaky
 
@@ -241,6 +242,89 @@ varianta pro rozšířený regulární výraz.
 *# ověřit, že aktuální pozici **nepředchází** shoda s daným regulárním podvýrazem*<br>
 **(?&lt;!**{*podvýraz*}**)**
 
+## Zaklínadla: Vzorky bashe
+
+### Základní
+
+*# konkrétní znak*<br>
+*// Znaky, které mají pro bash zvláštní význam, je nutno ve vzorku odzvláštnit, nejčastěji zpětným lomítkem.*<br>
+{*znak*}
+
+*# žádný či více libovolných znaků/jeden libovolný znak*<br>
+*// V bashi tyto znaky nepokrývají tečku jako první znak skrytých souborů a adresářů.*<br>
+**\***<br>
+**?**
+
+*# kterýkoliv z uvedených znaků*<br>
+*// Znaky „!“, „^“ a „-“ mají uvnitř těchto závorek zvláštní význam a při použití jako znaky je nutno je odzvláštnit! V bashi tato konstrukce nepokrývá tečku jako první znak skrytých souborů a adresářů.*<br>
+**[**{*znaky*}**]**
+
+*# kterýkoliv kromě uvedených znaků*<br>
+*// Znaky „!“, „^“ a „-“ mají uvnitř těchto závorek zvláštní význam a při použití jako znaky je nutno je odzvláštnit! V bashi tato konstrukce nepokrývá tečku jako první znak skrytých souborů a adresářů.*<br>
+**[<nic>^**{*znaky*}**]**
+
+*# **bílý znak**/nebílý znak*<br>
+**[[:space:]]**<br>
+**[^[:space:]]**
+
+*# desítková **číslice***<br>
+**[0-9]**
+
+*# jiný znak než desítková číslice*<br>
+**[<nic>^0-9]**
+
+*# závorky „()[]{}“*<br>
+**\\(\\)\\[\\]\\{\\}**
+
+*# libovolný alfanumerický znak, i národní abecedy*<br>
+**[[:alnum:]]**
+
+*# libovolný znak kromě alfanumerických*<br>
+**[<nic>^[:alnum:]]**
+
+*# libovolné písmeno, i národní abecedy*<br>
+**[[:alpha:]]**
+
+*# libovolné malé/velké písmeno, i národní abecedy*<br>
+**[[:lower:]]**<br>
+**[[:upper:]]**
+
+### Rozšířené (s kvantifikací)
+
+Podvzorek v následujících zaklínadlech je jakýkoliv vzorek, .
+
+*# některý z podvzorků*<br>
+**// Vnořený operátor @() lze skombinovat s obklopujícím operátorem, takže např. místo „+(@(A\|B))“ stačí napsat „+(A\|B)“, což má tentýž význam.**<br>
+**@(**{*podvzorek*}[**\|**{*další-podvzorek*}]...**)**
+
+*# podvzorek **jednou nebo vůbec** (≤ 1)*<br>
+**?(**{*podvzorek*}**)**
+
+*# podvzorek **libovolněkrát** (≥ 0)*<br>
+**\*(**{*podvzorek*}**)**
+
+*# podvzorek **jednou nebo víckrát** (≥ 1)*<br>
+**+(**{*podvzorek*}**)**
+
+*# žádný z podvzorků (negovaný test)*<br>
+**!(**{*podvzorek*}[**\|**{*další-podvzorek*}]...**)**
+
+*# všechny znaky po první výskyt některého z uvedených/případně až do konce řetězce*<br>
+**\*([<nic>^**{*znaky*}**])[**{*znaky*}**]**<br>
+**\*([<nic>^**{*znaky*}**])**<br>
+
+*# přesně **N-krát** (= N)*<br>
+?
+
+*# M- až N-krát včetně (M ≤ počet ≤ N)*<br>
+?
+
+*# **minimálně** M-krát (≥ M)*<br>
+?
+
+*# **maximálně** N-krát (≤ N)*<br>
+?
+
 ## Parametry příkazů
 
 ### bash
@@ -262,6 +346,14 @@ Existuje ještě druhý přiměřeně funkční způsob:
 **[[** {*řetězec*} **=~ $(printf %s "**{*regulární výraz*}**") ]]**
 
 Ale v tomto případě nesmí regulární výraz končit znakem nového řádku \\n, protože ten by se při rozvoji ztratil; pokud tímto znakem končit musí, pomůže uzavřít ho do hranatých závorek („[\\n]“).
+
+*# *<br>
+**[[** {*řetězec*} **=** {*vzorek*} **]]**
+
+Příklad:
+
+*# *<br>
+**[[ $prom = A@(0\|1\|2)C ]]**
 
 ### egrep
 
@@ -332,6 +424,11 @@ schopný příkaz „awk“, který je základní součástí Ubuntu.
 
 Regulární výrazy jsou používány i v mnoha dalších programech.
 
+Rozšířené vzorky bashe jsou ve výchozím nastavení zapnuty; v případě, kdy jsou vypnuty, lze je zapnout příkazem:
+
+*# *<br>
+**shopt -s extglob**
+
 <!--
 ## Ukázka
 <!- -
@@ -348,7 +445,9 @@ Regulární výrazy jsou používány i v mnoha dalších programech.
 * V Perlu se k označení desítkové číslice běžně používá podvýraz „\\d“; v jiných syntaxích regulárních výrazů ovšem není podporován, proto doporučuji zvyknout si na podvýraz „[0-9]“, který je čitelnější a je podporovaný opravdu všude.
 * Parametr -o u příkazu „egrep“ lze efektivně využít při počítání ne-ASCII znaků. Počet znaků č, š a ž v textu zjistíte příkazem „egrep -o '[čšž]' \| wc -l“.
 * Regulární výrazy jsou přezdívány „write-only language“, protože bývá výrazně snazší je napsat než přečíst a pochopit. Než začnete rozumět cizím regulárním výrazům, musíte získat značné zkušenosti s psaním svých vlastních.
-* Ve výrazech typu „"[^"]\*"“ často zapomínám kvantifikátor + či \*.
+* Ve výrazech typu „"[<nic>^"]\*"“ často zapomínám kvantifikátor + či \*.
+* Příručka varuje, že testování komplikovaných rozšířených vzorků může být pomalé. Pokud na to narazíte, může váš skript urychlit, když je přepíšete na regulární výrazy a k jejich testování použijete externí příkaz jako např. „egrep“.
+* Vzorky začínající „?“, „\*“ nebo „[znaky]“ ignorují skryté soubory! Pravidlo říká, že obecné znaky jako „?“, „\*“ a „[]“ nepokrývají tečku, která je prvním znakem názvu souboru. Toto chování lze vypnout nastavením „shopt -s dotglob“. Všechny názvy souborů a adresářů včetně „.“ a „..“ pokrývá rozšířený vzorek „?(.)\*“.
 
 !ÚzkýRežim: zap
 
