@@ -21,59 +21,72 @@ Poznámky:
 
 # Zpracování binárních souborů
 
-!Štítky: {tematický okruh}{kontrolní součet}
+!Štítky: {tematický okruh}{hešovací funkce}{kódování}{data}{bajty}
 !FixaceIkon: 1754
 !ÚzkýRežim: zap
 
 ## Úvod
-<!--
-- Vymezte, co je předmětem této kapitoly.
-- Obecně popište základní principy, na kterých fungují používané nástroje.
-- Uveďte, co kapitola nepokrývá, ačkoliv by to čtenář mohl očekávat.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-Tato kapitola uvádí příkazy ke zpracování a editaci souborů bez jakéhokoliv ohledu na formát dat. Tyto soubory se zpracovávají jako celek, po bajtech, nebo po blocích pevné velikosti. Předmětem této kapitoly není archivace a šifrování dat, protože ty mají (nebo mají mít) svoje vlastní kapitoly.
+Tato kapitola uvádí příkazy k analýze, zpracování a úpravě souborů bez jakéhokoliv ohledu
+na formát jejich obsahu. Jde o zpracování souboru jako celek, zpracování po jednotlivých bajtech
+nebo po blocích pevné velikosti.
+
+Předmětem této kapitoly není šifrování dat, elektronické podepisování ani ukládání souborů do archivů či vybalování z nich.
 
 ## Definice
-<!--
-- Uveďte výčet specifických pojmů pro použití v této kapitole a tyto pojmy definujte co nejprecizněji.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 * **Velikost-P** je počet bajtů, který může obsahovat (a často obsahuje) multiplikativní příponu K, M, G, T, P pro mocniny 1024 (kibibajty, mebibajty atd.) nebo kB, MB, GB, TB, PB (kilobajty, megabajty atd.) pro mocniny 1000. Takže máte-li do příkazu zadat {*velikost-P*}, čtyři mebibajty můžete zadat jako „4194304“ nebo jako „4M“ (což je podstatně snazší a přehlednější).
+* **Heš** („hash“, „hash code“, někdy méně přesně „kontrolní součet“) je číslo (obvykle v hexadecimálním tvaru) vypočítané z určitých binárních dat pomocí hešovací funkce.
+<!--
+Používá se pro srovávání a ověřování, protože pravděpodobnost, že hešovací funkce pro dva různé soubory vrátí stejnou heš, je extrémně nízká, zatímco pro stejné soubory vrátí vždy stejnou heš.
+-->
 
 !ÚzkýRežim: vyp
 
 ## Zaklínadla: Soubor jako celek
 
-### Kontrolní součty a heše
+### Vypsat obsah souboru pro člověka
 
-*# vypočítat hexidecimální haše souborů, každou hash na nový řádek (MD5/SHA1/SHA256/SHA512)*<br>
+*# vypsat **hexadecimálně** (pro člověka/pro skript)*<br>
+**xxd** [**-c** {*bajtů-na-řádek*}] <nic>[**-g** {*bajtů-na-skupinu*}] <nic>[**-s** {*počáteční-adresa*}] <nic>[**-l** {*max-počet-bajtů*}] <nic>[**-u**] {*soubor*} [**\| less**]<br>
+**xxd -p -u -c 1** {*soubor*} **\|** {*zpracování*}
+
+*# vypsat **binárně** (pro člověka)*<br>
+**xxd -b** [**-c** {*bajtů-na-řádku*}] <nic>[**-s** {*počáteční-adresa*}] <nic>[**-l** {*max-počet-bajtů*}] {*soubor*} [**\| less**]
+
+*# najít v binárním souboru čitelné textové řetězce a vypsat je*<br>
+**strings** [**-f**] <nic>[**-n** {*minimální-délka-řetězce*}] <nic>[**\-\-**] {*soubor*}...
+
+*# vypsat hodnoty bajtů **desítkově***<br>
+**(printf 'ibase=16\\n'; xxd -p -u -c 1) &lt;**{*vstupní-soubor*} **\| bc** [**\| less**]
+
+### Vypočítat a ověřit heš
+
+*# vypočítat hexidecimální **haše** souborů, každou hash na nový řádek (MD5/SHA1/SHA256/SHA512)*<br>
 **md5sum** [**\-\-**] {*soubor*}... **\| sed -E 's/^\\\\?(\\S+)\\s.\*/\\1/'** ⊨ 8147f2a49ee708d9f7c20164cf48cfcf<br>
 **sha1sum** [**\-\-**] {*soubor*}... **\| sed -E 's/^\\\\?(\\S+)\\s.\*/\\1/'** ⊨ c61d1871cf7d71f29e2cfeda9dd73abe18a8fb42<br>
 **sha256sum** [**\-\-**] {*soubor*}... **\| sed -E 's/^\\\\?(\\S+)\\s.\*/\\1/'** ⊨ ea6c53b8ffae9d15408a14f1806e6813c4c92b32ee1e8fd05c39d76210755bb3<br>
-**sha512sum** [**\-\-**] {*soubor*}... **\| sed -E 's/^\\\\?(\\S+)\\s.\*/\\1/'** ⊨ f7389d5b8264db3f0950a1e512dd00f335b0ec77db9b6d7e7b36905b31864ec3182fe0e70ae7458951396dfdadbe5f3e1a326af00f8212092b7f7530fb6d9b87
+**sha512sum** [**\-\-**] {*soubor*}... **\| sed -E 's/^\\\\?(\\S+)\\s.\*/\\1/'**
 
-*# vypočítat/ověřit kontrolní součty (SHA256)*<br>
+*# vypočítat/ověřit heše (**SHA256**)*<br>
 *// Analogicky můžete také použít příkazy „sha1sum“, „sha224sum“, „sha384sum“ a „sha512sum“. Existuje také obecný „shasum“.*<br>
 **sha256sum** {*soubor*}... **&gt;** {*cílový-soubor.sha256*}<br>
 **sha256sum** [**\-\-ignore-missing**] <nic>[**\-\-status**] **-c** {*soubor.sha256*}
 
-*# vypočítat/ověřit kontrolní součty (MD5)*<br>
+*# vypočítat/ověřit heše (**MD5**)*<br>
 *// Heše souborů a jejich názvy (včetně cesty) se uloží do uvedeného souboru.*<br>
 **md5sum** {*cesta*}... **&gt;** {*cílový-soubor.md5*}<br>
 **md5sum** [**\-\-ignore-missing**] <nic>[**\-\-status**] **-c** {*soubor.md5*}
 
-*# vypočítat heš CRC32 (hexadecimální/desítkovou)*<br>
+*# vypočítat kontrolní součet **CRC32** (v hexadecimální soustavě/v desítkové)*<br>
 *// Poznámka: Příkaz „crc32“ lze použít i s více soubory, ale v takovém případě vypisuje ke kontrolním součtům i názvy souborů bez odzvláštnění, což znamená, že nelze bezpečně zpracovat soubory jejichž cesta obsahuje znak konce řádku.*<br>
 **crc32** {*soubor*}<br>
 **printf %d\\n $(crc32 "**{*soubor*}**")**
 
-*# vypočítat z jednoho souboru heše záznamů ukončených nulovým bajtem*<br>
+*# vypočítat z jednoho souboru heše (MD5) záznamů ukončených nulovým bajtem*<br>
 ?
 
-### Určit formát dat a velikost
+### Určit formát dat a velikost souboru
 
 *# **popsat** typ dat souboru (zejména pro člověka)*<br>
 **file** {*soubor*}...
@@ -88,14 +101,10 @@ Tato kapitola uvádí příkazy ke zpracování a editaci souborů bez jakéhok
 
 ### Vygenerovat data
 
-*# prázdná data*<br>
-**&gt;** {*soubor*} [**&gt;** {*další-soubor*}]...<br>
-**: \|** {*zpracování*}
-
 *# data tvořená **nulovými** bajty*<br>
 **head -c** {*velikost-P*} **/dev/zero \|** {*zpracování*}
 
-*# data tvořená **pseudonáhodnými** bajty (maximálně 2147483647 bajtů/bez omezení)*<br>
+*# data tvořená **pseudonáhodnými** bajty (maximálně 2 147 483 647 bajtů/bez omezení)*<br>
 **openssl rand** {*počet-bajtů*} **\|** {*zpracování*}<br>
 **while openssl rand 1073741824; do :; done \| head -c** {*velikost-P*} **\|** {*zpracování*}
 <!--
@@ -103,6 +112,10 @@ openssl je i v minimální instalaci Ubuntu; /dev/urandom je již zbytečné.
 <br>
 **head -c** {*velikost-P*} **/dev/urandom \|** {*zpracování*}
 -->
+
+*# prázdná data*<br>
+**&gt;** {*soubor*} [**&gt;** {*další-soubor*}]...<br>
+**: \|** {*zpracování*}
 
 *# data tvořená bajty konkrétní hodnoty*<br>
 *// Hodnotu bajtu můžete zadat dekadicky (např. „127“), hexadecimálně (např. „0x7f“) nebo osmičkově (např.  „0177“).*<br>
@@ -127,20 +140,34 @@ openssl je i v minimální instalaci Ubuntu; /dev/urandom je již zbytečné.
 **&gt;** {*soubor*} [**&gt;** {*další-soubor*}]...
 
 *# vytvořit soubor tvořený nulovými bajty (alternativy)*<br>
-[**test \\! -e** {*soubor*} **\|\| rm** [**\-\-**] {*soubor*} **&amp;&amp;**] **truncate -s ** {*velikost-P*} [**\-\-**] {*soubor*}
+**truncate -s 0** [**\-\-**] {*soubor*} **&amp;&amp; truncate -s** {*velikost-P*} [**\-\-**] {*soubor*}<br>
+**head -c** {*velikost-P*} **/dev/zero &gt;**{*soubor*}
 
-### Spojování a dělení
+### Spojování a dělení souborů
 
 *# spojit soubory*<br>
 *// Tip: mezi soubory můžete vložit data ze standardního vstupu zadáním parametru minus („-“) místo jednoho souboru.*<br>
 **cat** {*soubor*}... **&gt;**{*cíl*}
 
-*# rozdělit soubor na díly po určitém blocích určité velikosti*<br>
-*// Pro „-typ-počítadla“ viz popis příkazu „split“ v sekci Parametry příkazů. *<br>
-**split** **-b** {*velikost-P-bloku*} [{*-typ-počítadla*}] <nic>[**-a**{*počet-znaků-počítadla*}] <nic>[**\-\-additional-suffix="**{*přípona-za-počítadlo*}**"**]  {*cesta/k/souboru*} {*předpona/cesty/výsledků*}
+*# rozdělit soubor na díly po blocích určité velikosti (obecně/příklad)*<br>
+*// Pro „-typ-počítadla“ viz popis příkazu „split“ v sekci Parametry příkazů. Pro kontrolu vřele doporučuji použít parametr „\-\-verbose“.*<br>
+**split** [**\-\-verbose**] **-b** {*velikost-bloku-P*} [{*-typ-počítadla*}] <nic>[**-a**{*počet-znaků-počítadla*}] <nic>[**\-\-additional-suffix="**{*přípona-za-počítadlo*}**"**]  {*cesta/k/souboru*} {*předpona/cesty/výsledků*}<br>
+**split \-\-verbose -b 4M -d -a 5 \-\-additional-suffix=".část" "původní soubor.jpg" ""**
 
-*# rozdělit soubor na N přibližně stejně velkých dílů*<br>
-**split** **-n** {*počet-dílů*} [{*-typ-počítadla*}] <nic>[**-a**{*počet-znaků-počítadla*}] <nic>[**\-\-additional-suffix="**{*přípona-za-počítadlo*}**"**] <nic>[**-e**] {*cesta/k/souboru*} {*předpona/cesty/výsledků*}
+*# rozdělit soubor na N přibližně stejně velkých dílů (obecně/příklad)*<br>
+**split** [**\-\-verbose**] **-n** {*počet-dílů*} [{*-typ-počítadla*}] <nic>[**-a**{*počet-znaků-počítadla*}] <nic>[**\-\-additional-suffix="**{*přípona-za-počítadlo*}**"**] <nic>[**-e**] {*cesta/k/souboru*} {*předpona/cesty/výsledků*}<br>
+**split \-\-verbose -n 7 -d -a 3 \-\-additional-suffix=".část" "původní soubor.jpg" "část-"**
+
+### Transformace souboru
+
+*# obrátit po bajtech celý soubor*<br>
+*// Při obracení velkých souborů se ujistěte, že se do paměti RAM a odkládacího souboru vejde dvojnásobek celého souboru! To znamená, že např. pro obrácení souboru o velikosti 4 GiB potřebujete 8 GiB prostoru.*<br>
+**perl -MEnglish -0777 -n -e 'print(scalar(reverse($ARG)))' &lt;**{*vstupní-soubor*} **&gt;**{*výstupní-soubor*}
+
+*# obrátit každou dvojici/čtveřici/osmici bajtů*<br>
+**dd** [**if=**{*vstupní-soubor*}] <nic>[**of=**{*výstupní-soubor*}] **conv=swab**<br>
+**xxd -e -g 4** [{*soubor*}] **\| xxd -r &gt;** {*cíl*}<br>
+**xxd -e -g 8** [{*soubor*}] **\| xxd -r &gt;** {*cíl*}
 
 ### Srovnání souborů podle obsahu
 
@@ -156,11 +183,11 @@ openssl je i v minimální instalaci Ubuntu; /dev/urandom je již zbytečné.
 
 ### Kódování (base64, uuencode, xor)
 
-*# zakódovat do/dekódovat z base64*<br>
+*# zakódovat do/dekódovat z **base64***<br>
 **base64 -w 0** [{*soubor*}]<br>
 **base64 -d** [{*soubor*}] **\|** {*zpracování*}
 
-*# zakódovat do/dekódovat z uuencode*<br>
+*# zakódovat do/dekódovat z **uuencode***<br>
 **uuencode /dev/stdout &lt;** {*soubor*} **\| sed -n 'x;3,$p'**<br>
 **sed $'1i\\\\\\nbegin 644 /dev/stdout\\n$a\\\\\\nend' temp.dat \| uudecode &gt;** {*cíl*}
 
@@ -185,7 +212,7 @@ Možnosti:
 
 ## Zaklínadla: Zpracování po bajtech
 
-### Jen čtení
+### Vyjmout úsek bajtů
 
 *# **vzít** prvních N bajtů/kibibajtů/mebibajtů/gibibajtů*<br>
 **head -c** {*N*} {*soubor*}<br>
@@ -219,51 +246,37 @@ Poznámka: tail -c +1K přeskočí jen 1023 bajtů!
 **tail -c +2M soubor.dat \| tail -c +1 \| head -c 1M**
 
 *# příklad: vynechat třetí mebibajt souboru*<br>
-?
+**(head -c 2M** {*soubor*} **&amp;&amp; tail -c +3M** {*soubor*} **\| tail -c +1) \|** {*zpracování*}
 
-*# určit počet bajtů určité hodnoty v daném souboru*<br>
-**tr -cd \\\\**{*osmičková-hodnota*} **&lt;**{*soubor*} **\| wc -c**
+### Analyzovat po bajtech
 
-*# vypsat hexadecimálně (pro člověka)*<br>
-**xxd** [**-c** {*bajtů-na-řádek*}] <nic>[**-g** {*bajtů-na-skupinu*}] <nic>[**-s** {*počáteční-adresa*}] <nic>[**-l** {*max-počet-bajtů*}] <nic>[**-u**] {*soubor*}
+*# určit počet bajtů určité hodnoty v daném souboru (obecně/určit počet bajtů 0xa9)*<br>
+**tr -cd \\\\$(printf %o** {*hodnota-bajtu*}**) &lt;**{*soubor*} **\| wc -c**
+**tr -cd \\\\$(printf %o 0xa9) &lt;**{*soubor*} **\| wc -c**
 
-
-### I zápis
+### Přepsat/nahradit bajty
 
 *# nastavit **bajt** na určité adrese*<br>
 **printf %08x:%02x** {*adresa*} {*hodnota-bajtu*} **\| xxd -r -** {*soubor*}
 
-*# přepsat úsek bajtů v souboru*<br>
-?
+*# **přepsat** úsek bajtů v souboru*<br>
+*// Hodnota „kam-zapsat“ je obyčejné dekadické číslo v bajtech od nuly, tzn. např. 3 znamená, že první přepsaný má být čtvrtý bajt výstupního souboru. Pokud leží výstupní adresa za koncem souboru, soubor se doplní nulami; pokud má zápis pokračovat za konec existujících dat, soubor bude podle potřeby prodloužen.*<br>
+{*zdroj*} **\| xxd -p \| xxd -p -r** [**\-\-seek** {*kam-zapsat*}] **-** {*soubor-k-zapsání*}
 
-*# obrátit po bajtech celý soubor*<br>
-?
+*# vypustit bajty uvedených hodnot/všechny kromě bajtů uvedených hodnot*<br>
+{*zdroj*} **\| tr $(printf -d '\\\\%03o'** {*bajt*}...**) \|** {*zpracování*}<br>
+{*zdroj*} **\| tr $(printf -cd '\\\\%03o'** {*bajt*}...**) \|** {*zpracování*}
 
-<!--
-?
-gawk -b 'BEGIN {RS="....";OFS=ORS="";} {print substr(RT, 4, 1), substr(RT, 3, 1), substr(RT, 2, 1), substr(RT, 1, 1), $0}'
-
-[ ] Zkusit naprogramovat v Perlu.
--->
-
-*# **nahradit** bajty jedné hodnoty bajty jiné hodnoty*<br>
-{*zdroj*} **\| tr $(printf '\\\\%03o'** {původní-bajt}...**) $(printf '\\\\%03o'** {náhradní-bajt}...**) \|** {*zpracování*}
+*# tabulkový překlad bajtů*<br>
+*// Počet „původních bajtů“ musí přesně odpovídat počtu náhradních bajtů, jinak výsledek nemusí odpovídat očekávání.*<br>
+{*zdroj*} **\| tr $(printf '\\\\%03o'** {*původní-bajt*}...**) $(printf '\\\\%03o'** {*náhradní-bajt*}...**) \|** {*zpracování*}
 
 <!--
 **tr '\\**{*osm.-původní1*}[**\\**{*osm.původníx*}]...**' '\\**{*osm.-nová1*}[**\\**{*osm.-nováx*}]...**' &lt;** {*zdroj*} **&gt;** {*cíl*}
 -->
 
-*# příklad: nahradit v souboru a.bin bajty 0x0a hodnotu 0x0c a zapsat do b.bin*<br>
+*# příklad: nahradit v souboru a.bin bajty 0x0a hodnotou 0x0c a výsledek zapsat do b.bin*<br>
 **tr $(printf '\\\\%03o' 0x0a) $(printf '\\\\%03o' 0x0c) &lt;a.bin &gt;b.bin**
-
-
-## Zaklínadla: Zpracování po blocích
-
-*# obrátit každou dvojici/čtveřici/osmici bajtů*<br>
-**dd** [**if=**{*vstupní-soubor*}] <nic>[**of=**{*výstupní-soubor*}] **conv=swab**<br>
-**xxd -e -g 4** [{*soubor*}] **\| xxd -r &gt;** {*cíl*}<br>
-**xxd -e -g 8** [{*soubor*}] **\| xxd -r &gt;** {*cíl*}
-
 
 
 ## Parametry příkazů
@@ -333,6 +346,15 @@ Tip: Místo vstupního souboru může být „-“; příkaz pak čte ze standar
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
+*# rdiff, xxd*<br>
+**sudo apt-get install rdiff xxd**
+
+*# crc32*<br>
+**sudo apt-get install libarchive-zip-perl**
+
+*# uudecode, uuencode*<br>
+**sudo apt-get install sharutils**
+
 ## Ukázka
 <!--
 - Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
@@ -350,6 +372,8 @@ Tip: Místo vstupního souboru může být „-“; příkaz pak čte ze standar
 - Buďte co nejstručnější; neodbíhejte k popisování čehokoliv vedlejšího, co je dost možné, že už čtenář zná.
 -->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+* Příkaz „cmp“ je nejrychleji čtoucí příkaz, který znám, lze jej použít např. pro výkonostní test SSD disku.
 
 ## Další zdroje informací
 <!--

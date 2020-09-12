@@ -223,8 +223,10 @@ Poznámka: správci přihlášení se nepočítají mezi démony, protože mají
 
 ### Logy
 
-*# **vypsat log** krále démonů*<br>
-**journalctl** [{*parametry*}]<br>
+*# **vypsat log** krále démonů (z tohoto běhu/z předchozího běhu/všechny)*<br>
+**journalctl -b 0** [**-r**]<br>
+**journalctl -b -1** [**-r**]<br>
+**journalctl** [{*parametry*}]
 
 *# **vypsat log** jádra (pro skript/pro člověka)*<br>
 **dmesg** [**\-\-time-format iso**]<br>

@@ -54,10 +54,10 @@ OBRAZKY := favicon.png by-sa.png logo-knihy-velke.png ve-vystavbe.png marsh.jpg 
 OBRAZKY += ik-vychozi.png
 SVG_OBRAZKY := kalendar.svg graf-filtru.svg
 OBRAZKY_IK := awk.png datum-cas-kalendar.png diskove-oddily.png docker.png git.png hledani-souboru.png
-OBRAZKY_IK += make.png markdown.png planovani-uloh.png prace-s-archivy.png promenne.png regularni-vyrazy.png
+OBRAZKY_IK += licence.png make.png markdown.png planovani-uloh.png prace-s-archivy.png promenne.png regularni-vyrazy.png
 OBRAZKY_IK += sed.png soubory-a-adresare.png sprava-balicku.png sprava-procesu.png sprava-uzivatelskych-uctu.png
 OBRAZKY_IK += stahovani-videi.png system.png terminal.png vim.png
-OBRAZKY_IK += zpracovani-textovych-souboru.png zpracovani-videa-a-zvuku.png
+OBRAZKY_IK += zpracovani-binarnich-souboru.png zpracovani-textovych-souboru.png zpracovani-videa-a-zvuku.png
 OBRAZKY_IK += predmluva.png koncepce-projektu.png
 
 # CSS motivy (vedle motivu „hlavní“)

@@ -16,8 +16,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 ## Chystané kapitoly
 
-* „Zpracování binárních souborů“ (md5sum, uuencode, base64, analýzy, konverze a další)
 * „Pevné a symbolické odkazy“
+* „Stahování webu“ (wget, curl, firefox, wkhtmltoimage, robots.txt, ...)
 * „PDF“ (dělení, slučování, operace po stránkách, transformace, konverze apod.)
 * „Unicode a emotikony“ („mapa znaků“, vzorníky a různé symboly)
 * „X (správce oken)“ (práce s okny, se schránkou, oznámení a další)
