@@ -341,8 +341,20 @@ fprintf:
 *# cesta položky bez názvu*<br>
 **%h** ⊨ ./testdir
 
-*# výchozí bod*<br>
-**%H** ⊨ .
+*# přístupová práva symbolicky/číselně*<br>
+**%M** ⊨ -rw-r\-\-r\-\-<br>
+**%#m** ⊨ 0644
+
+*# vlastník (jméno/UID)*<br>
+**%u** ⊨ milada<br>
+**%U** ⊨ 1000
+
+*# skupina (jméno/GID)*<br>
+**%g** ⊨ milada<br>
+**%G** ⊨ 1000
+
+*# velikost souboru v bajtech*<br>
+**%s** ⊨ 3
 
 *# čas „změněno“(normálně/časová známka Unixu)*<br>
 *// V obou případech se bohužel vypíše s desetinnou částí.*<br>
@@ -354,6 +366,12 @@ fprintf:
 **%Ay-%Am-%Ad %AT** ⊨ 2020-03-13 22:03:00.9467889490<br>
 **%A@** ⊨ 1584133380.9467889490
 
+*# počet pevných odkazů*<br>
+**%n** ⊨ 1
+
+*# výchozí bod*<br>
+**%H** ⊨ .
+
 *# hloubka prohledávání*<br>
 **%d** ⊨ 1
 
@@ -364,25 +382,9 @@ fprintf:
 *// Pokud položka není symbolický odkaz, %l vypisuje prázdný řetězec.*<br>
 **%l** ⊨
 
-*# počet pevných odkazů*<br>
-**%n** ⊨ 1
-
-*# velikost souboru v bajtech*<br>
-**%s** ⊨ 3
-
-*# vlastník (jméno/UID)*<br>
-**%u** ⊨ milada<br>
-**%U** ⊨ 1000
-
-*# skupina (jméno/GID)*<br>
-**%g** ⊨ milada<br>
-**%G** ⊨ 1000
-
 *# číslo „inode“*<br>
 **%i** ⊨ 2758499
 
-*# přístupová práva symbolicky*<br>
-**%M** ⊨ -rw-r\-\-r\-\-
 
 ## Zaklínadla: Celé příkazy
 

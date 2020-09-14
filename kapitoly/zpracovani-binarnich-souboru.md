@@ -65,7 +65,10 @@ Používá se pro srovávání a ověřování, protože pravděpodobnost, že 
 *# vypočítat hexidecimální **haše** souborů, každou hash na nový řádek (MD5/SHA1/SHA256/SHA512)*<br>
 **md5sum** [**\-\-**] {*soubor*}... **\| sed -E 's/^\\\\?(\\S+)\\s.\*/\\1/'** ⊨ 8147f2a49ee708d9f7c20164cf48cfcf<br>
 **sha1sum** [**\-\-**] {*soubor*}... **\| sed -E 's/^\\\\?(\\S+)\\s.\*/\\1/'** ⊨ c61d1871cf7d71f29e2cfeda9dd73abe18a8fb42<br>
-**sha256sum** [**\-\-**] {*soubor*}... **\| sed -E 's/^\\\\?(\\S+)\\s.\*/\\1/'** ⊨ ea6c53b8ffae9d15408a14f1806e6813c4c92b32ee1e8fd05c39d76210755bb3<br>
+**sha256sum** [**\-\-**] {*soubor*}... **\| sed -E 's/^\\\\?(\\S+)\\s.\*/\\1/'**<br>
+<!--
+⊨ ea6c53b8ffae9d15408a14f1806e6813c4c92b32ee1e8fd05c39d76210755bb3<br>
+-->
 **sha512sum** [**\-\-**] {*soubor*}... **\| sed -E 's/^\\\\?(\\S+)\\s.\*/\\1/'**
 
 *# vypočítat/ověřit heše (**SHA256**)*<br>
@@ -79,7 +82,7 @@ Používá se pro srovávání a ověřování, protože pravděpodobnost, že 
 **md5sum** [**\-\-ignore-missing**] <nic>[**\-\-status**] **-c** {*soubor.md5*}
 
 *# vypočítat kontrolní součet **CRC32** (v hexadecimální soustavě/v desítkové)*<br>
-*// Poznámka: Příkaz „crc32“ lze použít i s více soubory, ale v takovém případě vypisuje ke kontrolním součtům i názvy souborů bez odzvláštnění, což znamená, že nelze bezpečně zpracovat soubory jejichž cesta obsahuje znak konce řádku.*<br>
+*// Poznámka: Příkaz „crc32“ lze použít i s více soubory, ale v takovém případě vypisuje ke kontrolním součtům i názvy souborů bez odzvláštnění, což znamená, že nelze bezpečně zpracovat soubory jejichž cesta obsahuje znak konce řádky.*<br>
 **crc32** {*soubor*}<br>
 **printf %d\\n $(crc32 "**{*soubor*}**")**
 
@@ -158,17 +161,6 @@ openssl je i v minimální instalaci Ubuntu; /dev/urandom je již zbytečné.
 **split** [**\-\-verbose**] **-n** {*počet-dílů*} [{*-typ-počítadla*}] <nic>[**-a**{*počet-znaků-počítadla*}] <nic>[**\-\-additional-suffix="**{*přípona-za-počítadlo*}**"**] <nic>[**-e**] {*cesta/k/souboru*} {*předpona/cesty/výsledků*}<br>
 **split \-\-verbose -n 7 -d -a 3 \-\-additional-suffix=".část" "původní soubor.jpg" "část-"**
 
-### Transformace souboru
-
-*# obrátit po bajtech celý soubor*<br>
-*// Při obracení velkých souborů se ujistěte, že se do paměti RAM a odkládacího souboru vejde dvojnásobek celého souboru! To znamená, že např. pro obrácení souboru o velikosti 4 GiB potřebujete 8 GiB prostoru.*<br>
-**perl -MEnglish -0777 -n -e 'print(scalar(reverse($ARG)))' &lt;**{*vstupní-soubor*} **&gt;**{*výstupní-soubor*}
-
-*# obrátit každou dvojici/čtveřici/osmici bajtů*<br>
-**dd** [**if=**{*vstupní-soubor*}] <nic>[**of=**{*výstupní-soubor*}] **conv=swab**<br>
-**xxd -e -g 4** [{*soubor*}] **\| xxd -r &gt;** {*cíl*}<br>
-**xxd -e -g 8** [{*soubor*}] **\| xxd -r &gt;** {*cíl*}
-
 ### Srovnání souborů podle obsahu
 
 *# jsou dva soubory po bajtech **shodné**?*<br>
@@ -180,6 +172,26 @@ openssl je i v minimální instalaci Ubuntu; /dev/urandom je již zbytečné.
 *# který ze dvou souborů je **větší**?*<br>
 *// Pokud příkaz uspěje, „soubor1“ je větší; jinak je nutno soubory otestovat ještě v opačném pořadí; pokud obě testování selžou, jsou soubory stejně velké.*<br>
 **test $(stat -c %s "**{*soubor1*}**") -gt $(stat -c %s "**{*soubor2*}**")**
+
+### Hexadecimální editory
+
+*# grafické rozhraní (GUI)*<br>
+*// Když otevřete nové okno příkazem „View“/„Add View“, nové okno nebude mít sloupec s adresami, bez něhož je obtížně použitelné. Vyřešit se to dá tak, že zvolíte „Edit“/„Preferences“ a na kartě „Editing“ odškrtnete a zaškrtnete pole „Show offset columns“; pak se sloupec s adresami zobrazí ve všech oknech editoru.*<br>
+**ghex** {*soubor*}
+
+*# textové rozhraní (TUI)*<br>
+**hexcurse** [**-r** {*bajtů-na-řádku*}] {*soubor*}
+
+### Transformace souboru
+
+*# obrátit po bajtech celý soubor*<br>
+*// Při obracení velkých souborů se ujistěte, že se do paměti RAM a odkládacího souboru vejde dvojnásobek celého souboru! To znamená, že např. pro obrácení souboru o velikosti 4 GiB potřebujete 8 GiB prostoru.*<br>
+**perl -MEnglish -0777 -n -e 'print(scalar(reverse($ARG)))' &lt;**{*vstupní-soubor*} **&gt;**{*výstupní-soubor*}
+
+*# obrátit každou dvojici/čtveřici/osmici bajtů*<br>
+**dd** [**if=**{*vstupní-soubor*}] <nic>[**of=**{*výstupní-soubor*}] **conv=swab**<br>
+**xxd -e -g 4** [{*soubor*}] **\| xxd -r &gt;** {*cíl*}<br>
+**xxd -e -g 8** [{*soubor*}] **\| xxd -r &gt;** {*cíl*}
 
 ### Kódování (base64, uuencode, xor)
 
@@ -231,22 +243,22 @@ Poznámka: tail -c +1K přeskočí jen 1023 bajtů!
 -->
 
 *# **vynechat** prvních N bajtů/kibibajtů/mebibajtů/gibibajtů*<br>
-**tail -c +**{*N*} {*soubor*} **\| tail -c +1**<br>
-**tail -c +**{*N*}**K** {*soubor*} **\| tail -c +1**<br>
-**tail -c +**{*N*}**M** {*soubor*} **\| tail -c +1**<br>
-**tail -c +**{*N*}**G** {*soubor*} **\| tail -c +1**
+**tail -c +**{*N*} {*soubor*} **\| tail -c +2**<br>
+**tail -c +**{*N*}**K** {*soubor*} **\| tail -c +2**<br>
+**tail -c +**{*N*}**M** {*soubor*} **\| tail -c +2**<br>
+**tail -c +**{*N*}**G** {*soubor*} **\| tail -c +2**
 
 *# **vynechat** prvních N bajtů/kilobajtů/megabajtů/gigabajtů*<br>
-**tail -c +**{*N*} {*soubor*} **\| tail -c +1**<br>
-**tail -c +**{*N*}**kB** {*soubor*} **\| tail -c +1**<br>
-**tail -c +**{*N*}**MB** {*soubor*} **\| tail -c +1**<br>
-**tail -c +**{*N*}**GB** {*soubor*} **\| tail -c +1**
+**tail -c +**{*N*} {*soubor*} **\| tail -c +2**<br>
+**tail -c +**{*N*}**kB** {*soubor*} **\| tail -c +2**<br>
+**tail -c +**{*N*}**MB** {*soubor*} **\| tail -c +2**<br>
+**tail -c +**{*N*}**GB** {*soubor*} **\| tail -c +2**
 
-*# příklad: vyjmout třetí mebibajt*<br>
-**tail -c +2M soubor.dat \| tail -c +1 \| head -c 1M**
+*# příklad: vzít třetí mebibajt souboru*<br>
+**tail -c +2M soubor.dat \| tail -c +2 \| head -c 1M**
 
 *# příklad: vynechat třetí mebibajt souboru*<br>
-**(head -c 2M** {*soubor*} **&amp;&amp; tail -c +3M** {*soubor*} **\| tail -c +1) \|** {*zpracování*}
+**(head -c 2M soubor.dat &amp;&amp; tail -c +3M soubor.dat \| tail -c +2) \|** {*zpracování*}
 
 ### Analyzovat po bajtech
 
@@ -254,10 +266,11 @@ Poznámka: tail -c +1K přeskočí jen 1023 bajtů!
 **tr -cd \\\\$(printf %o** {*hodnota-bajtu*}**) &lt;**{*soubor*} **\| wc -c**
 **tr -cd \\\\$(printf %o 0xa9) &lt;**{*soubor*} **\| wc -c**
 
-### Přepsat/nahradit bajty
+### Přepsat/nahradit/vynechat/vložit bajty
 
 *# nastavit **bajt** na určité adrese*<br>
-**printf %08x:%02x** {*adresa*} {*hodnota-bajtu*} **\| xxd -r -** {*soubor*}
+*// Adresy nemusejí být v pořadí, dokonce se mohou opakovat; xxd zapíše jeden bajt po druhém.*<br>
+**printf '%08x:%02x\\n'** {*adresa*} {*hodnota-bajtu*} [{*další-adresa*} {*hodnota-bajtu*}]... **\| xxd -r -c 1 -** {*soubor*}
 
 *# **přepsat** úsek bajtů v souboru*<br>
 *// Hodnota „kam-zapsat“ je obyčejné dekadické číslo v bajtech od nuly, tzn. např. 3 znamená, že první přepsaný má být čtvrtý bajt výstupního souboru. Pokud leží výstupní adresa za koncem souboru, soubor se doplní nulami; pokud má zápis pokračovat za konec existujících dat, soubor bude podle potřeby prodloužen.*<br>
@@ -278,13 +291,21 @@ Poznámka: tail -c +1K přeskočí jen 1023 bajtů!
 *# příklad: nahradit v souboru a.bin bajty 0x0a hodnotou 0x0c a výsledek zapsat do b.bin*<br>
 **tr $(printf '\\\\%03o' 0x0a) $(printf '\\\\%03o' 0x0c) &lt;a.bin &gt;b.bin**
 
+*# vynechat úsek mezi dvěma adresami*<br>
+?
+
+*# nahradit úsek mezi dvěma adresami vstupem*<br>
+?
+
+*# **vložit** nový úsek dat na zadanou adresu (obecně/příklad)*<br>
+{*zdroj-nového-úseku*} **\| cat &lt;(head -c** {*adresa-desítkově*} [**\-\-**] {*soubor*}**) - &lt;(tail -c +$((**{*adresa-desítkově*}**+1))** [**\-\-**] {*soubor*}**) \|** {*zpracování*}<br>
+**cat novy-usek.dat \| cat &lt;(head -c 21734 puvodni.dat) - &lt;(tail -c +$((21734+1)) puvodni.dat) &gt;novy-soubor.dat**
 
 ## Parametry příkazů
 <!--
 - Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.
 - Jinak by zde měl být přehled nejužitečnějších parametrů používaných nástrojů.
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 **Důležitý tip:** v každém příkazu, kde je „\| {*zpracování*}“, můžete místo něj uvést přesměrování do souboru.
 
@@ -335,19 +356,36 @@ Tip: Místo vstupního souboru může být „-“; příkaz pak čte ze standar
 ### xxd
 
 *# *<br>
-**xxd**
+**xxd** [{*parametry*}] {*vstupní-soubor*}<br>
+{*zdroj*} **\| xxd -r** [{*parametry*}] **-** {*soubor-k-přepsání*}
+{*zdroj*} **\| xxd -r** [{*parametry*}] **- \|** {*zpracování*}
 
+!parametry:
 
+* -p :: použije „holý“ hexadecimální formát bez adres (výchozí chování: čitelný formáŧ s adresami)
+* -u :: v hexadecimálních číslech použije velká písmena (výchozí chování: malá písmena)
+* -c {*bajtů*} :: počet bajtů na řádek výstupu
+* -s {*adresa*} :: začne vypisovat od zadané adresy (např. „0x80“)
+* -l {*počet-bajtů*} :: vypíše nejvýše zadaný počet bajtů
+
+*# *<br>
+{*zdroj*} **\| xxd -r** [{*parametry*}] **\|** {*zpracování*}<br>
+{*zdroj*} **\| xxd -r** [{*parametry*}] **-** {*soubor-k-editaci*}
+
+!parametry:
+
+* -c {*bajtů*} :: počet bajtů na řádku vstupu (nemá smysl v kombinaci s parametrem „-p“)
+* -p :: očekává „holý“ hexadecimální formát bez adres; bílé znaky jsou ignorovány
+* -seek {*posun*} :: před každým zápisem k adrese *přičte* uvedený posun (např „0x80“)
 
 ## Instalace na Ubuntu
 <!--
 - Jako zaklínadlo bez titulku uveďte příkazy (popř. i akce) nutné k instalaci a zprovoznění všech nástrojů požadovaných kterýmkoliv zaklínadlem uvedeným v kapitole. Po provedení těchto činností musí být nástroje plně zkonfigurované a připravené k práci.
 - Ve výčtu balíčků k instalaci vycházejte z minimální instalace Ubuntu.
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-*# rdiff, xxd*<br>
-**sudo apt-get install rdiff xxd**
+*# rdiff, xxd, ghex, hexcurse*<br>
+**sudo apt-get install rdiff xxd ghex hexcurse**
 
 *# crc32*<br>
 **sudo apt-get install libarchive-zip-perl**
@@ -355,13 +393,15 @@ Tip: Místo vstupního souboru může být „-“; příkaz pak čte ze standar
 *# uudecode, uuencode*<br>
 **sudo apt-get install sharutils**
 
-## Ukázka
 <!--
+## Ukázka
+<!- -
 - Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
 - Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti – ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
 - Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
--->
+- ->
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
+-->
 
 !ÚzkýRežim: zap
 
@@ -371,7 +411,6 @@ Tip: Místo vstupního souboru může být „-“; příkaz pak čte ze standar
 - Popište typické chyby nových uživatelů a jak se jim vyhnout.
 - Buďte co nejstručnější; neodbíhejte k popisování čehokoliv vedlejšího, co je dost možné, že už čtenář zná.
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 * Příkaz „cmp“ je nejrychleji čtoucí příkaz, který znám, lze jej použít např. pro výkonostní test SSD disku.
 
@@ -382,18 +421,11 @@ Tip: Místo vstupního souboru může být „-“; příkaz pak čte ze standar
 - Pokud je vestavěná dokumentace programů (typicky v adresáři /usr/share/doc) užitečná, zmiňte ji také.
 - Poznámka: Protože se tato sekce tiskne v úzkém režimu, zaklínadla smíte uvádět pouze bez titulku a bez poznámek pod čarou!
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-Co hledat:
-
-* [Článek na Wikipedii](https://cs.wikipedia.org/wiki/Hlavn%C3%AD_strana)
-* Oficiální stránku programu
-* Oficiální dokumentaci
-* [Manuálovou stránku](http://manpages.ubuntu.com/)
-* [Balíček](https://packages.ubuntu.com/)
-* Online referenční příručky
-* Různé další praktické stránky, recenze, videa, tutorialy, blogy, ...
-* Publikované knihy
-* [Stránky TL;DR](https://github.com/tldr-pages/tldr/tree/master/pages/common)
+* [man 1 split](http://manpages.ubuntu.com/manpages/focal/en/man1/split.1.html)
+* [man 1 xxd](http://manpages.ubuntu.com/manpages/focal/en/man1/xxd.1.html)
+* [balíček xxd](https://packages.ubuntu.com/focal/xxd)
+* [TL;DR: split](https://github.com/tldr-pages/tldr/blob/master/pages/common/split.md)
+* [TL;DR: xxd](https://github.com/tldr-pages/tldr/blob/master/pages/common/xxd.md)
 
 !ÚzkýRežim: vyp

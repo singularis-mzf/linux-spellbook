@@ -261,7 +261,7 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C, priznak, stav) {
         switch (C = substr(VSTUP, 1, 1)) {
             case "\\":
                 if (VSTUP ~ /^.[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"%',/;=?@^]/) {
-                    ShoditFatalniVyjimku("Nadbytečné escapování " substr(VSTUP, 1, 2) " je striktně zakázáno.");
+                    ShoditFatalniVyjimku("Nadbytečné odzvláštnění " substr(VSTUP, 1, 2) " je striktně zakázáno.");
                 } else if (VSTUP == "\\") {
                     ShoditFatalniVyjimku("Význam zpětného lomítka na konci řádku zatím není definován, proto není ve zdrojovém kódu povoleno.");
                 }

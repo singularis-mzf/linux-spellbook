@@ -18,14 +18,34 @@ https://creativecommons.org/licenses/by-sa/4.0/
 !ÚzkýRežim: zap
 
 ## Úvod
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+
+V Linuxu existují dva zcela rozdílné mechanismy na odkazování na soubory či adresáře
+v jiné části adresářové struktury. Tato kapitola se zabývá oběma.
+
+Pevný odkaz je název a umístění souboru v adresářové struktuře; většina nelinuxových
+souborových systémů vám umožňuje zřídit souboru pouze jeden pevný odkaz, linuxové souborové
+systémy vám ale dovolují zřídit až tisíce rovnocenných pevných odkazů na každý soubor
+(v rámci toho souborového systému, kde je uložen). Pevné odkazy jsou vázány na soubor
+jako takový a jsou vždy platné; data a metadata souboru se smažou až po smazání
+posledního pevného odkazu na daný soubor. Nelze ručně vytvářet pevné odkazy na adresáře.
+
+Symbolický odkaz je místo toho zvláštní soubor, který systém interpretuje jako cestu
+(k souboru či adresáři) a takový odkaz pak můžeme používat v příkazech místo souboru
+či adresáře, na který odkazuje – odkazuje-li na adresář, můžeme do něj „vstoupit“ příkazem „cd“
+nebo použitím v adresářové cestě; odkazuje-li na soubor, můžeme ze souboru přes odkaz
+číst nebo do něj zapisovat atd.; odkazuje-li na program či spustitelný skript,
+můžeme ho přes symbolický odkaz spustit.
+
+Nevýhodou symbolického odkazu je, že stále vede na stejné místo adresářové struktury,
+a to i v případě, kdy byl jeho cíl přejmenován, smazán či nahrazen; symbolický odkaz tedy
+nemá vazbu se souborem či adresářem jako takovým, ale s jeho pevným odkazem (umístěním
+v adresářové struktuře) a může se stát neplatným, když jeho cíl přestane existovat.
 
 ## Definice
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
-* Každá adresářová položka reprezentující obyčejný soubor je **pevný odkaz**. Na jeden soubor může odkazovat více pevných odkazů, ale vždy jen v rámci toho souborového systému, kde je soubor fyzicky uložen. Součástí pevného odkazu je pouze název, všechny ostatní údaje o souboru (vlastnictví, přístupová práva, velikost, čas poslední změny, umístění na disku atd.) jsou uloženy na příslušném místě mimo adresář (v tzv. i-uzlu). Soubor nemůže být odstraněn ze souborového systému, dokud na něj existuje alespoň jeden pevný odkaz, proto jsou pevné odkazy vždy platné.
+* **Pevný odkaz** je každá adresářová položka reprezentující obyčejný soubor. Součástí pevného odkazu je pouze název a umístění v adresáři, všechny ostatní údaje o souboru jsou vlastnostmi souboru jako takového.
 * **Symbolický odkaz** je adresářová položka, která obsahuje cestu k souboru či adresáři. Symbolické odkazy dělíme na **absolutní** (které obsahují absolutní cestu) a **relativní** (obsahující relativní cestu). Symbolický odkaz, který odkazuje na neexistující cestu, se označuje jako **neplatný**.
-* **Následovat** symbolický odkaz znamená chovat se, jako by se na jeho místě a pod jeho názvem skutečně nacházel odkazovaný soubor či adresář. Většina operací a programů symbolické odkazy následuje – pokusíte-li se spustit symbolický odkaz na program, spustí se program; pokusíte-li se symbolický odkaz otevřít v textovém editoru, otevře se odkazovaný soubor. Pokusíte-li se přejít do symbolického odkazu příkazem „cd“, přejdete do odkazovaného adresáře, atd.
+* **Následovat** symbolický odkaz (follow) znamená chovat se, jako by se na jeho místě a pod jeho názvem skutečně nacházel odkazovaný soubor či adresář. Většina operací a programů symbolické odkazy následuje – pokusíte-li se spustit symbolický odkaz na program, spustí se program; pokusíte-li se symbolický odkaz otevřít v textovém editoru, otevře se odkazovaný soubor. Pokusíte-li se přejít do symbolického odkazu příkazem „cd“, přejdete do odkazovaného adresáře, atd.
 
 !ÚzkýRežim: vyp
 
@@ -34,44 +54,59 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 ### Pevné odkazy
 
-*# vytvořit pevný odkaz na soubor*<br>
-**ln** {*cesta-k-souboru*}... {*cesta-k-odkazu*}<br>
-**ln -t** {*adresář-kde-vytvořit-odkaz*} {*cesta-k-souboru*}...
+*# **vytvořit** pevný odkaz na soubor (alternativy)*<br>
+**ln** [**\-\-**] {*cesta-k-souboru*}... {*cesta-k-odkazu*}<br>
+**ln -t** [**\-\-**] {*adresář-kde-vytvořit-odkaz*} {*cesta-k-souboru*}...
 
-*# smazat pevný odkaz*<br>
-**rm** {*cesta-k-odkazu*}...
+*# **smazat** pevný odkaz*<br>
+**rm** [**\-\-**] {*cesta/k/odkazu*}...
 
-*# vypsat počet referencí pevného odkazu*<br>
-*// bude-li cílem symbolický odkaz, L umožní vypsat jeho vlastní počítadlo; jinak se vypíše počítadlo odkazovaného souboru či adresáře*<br>
-**stat -c %h** [**\-\-**] {*cesta-k-odkazu*}
+*# vypsat **počet referencí** pevného odkazu*<br>
+*// Uvedete-li cestu k symbolickému odkazu, parametr „-L“ způsobí vypsání jeho vlastního počítadla pevných odkazů; jinak se vypíše počítadlo odkazovaného souboru či adresáře.*<br>
+**stat -c %h** [**-L**] <nic>[**\-\-**] {*cesta-k-odkazu*}
 
-<!--
-**ln -ld**[**L**] {*cesta-k-odkazu*}
--->
-
-*# vypsat kanonickou cestu pevného odkazu*<br>
-**readlink -f** {*cesta-k-odkazu*}
+*# vypsat **kanonickou** (absolutní) cestu pevného odkazu*<br>
+**readlink -f** {*cesta-k-odkazu*} ⊨ /etc/passwd
 
 *# vypsat kanonickou cestu adresáře obsahujícího pevný odkaz*<br>
-?
+**readlink -f** {*cesta-k-odkazu*} **\| sed -E 's!((.)/?)[<nic>^/]+$!\\2!'** ⊨ /etc
 
-*# přejmenovat/přesunout pevný odkaz*<br>
-**mv** {*původní-cesta*} {*nová-cesta*}
+*# přejmenovat/**přesunout** pevný odkaz*<br>
+**mv** [**-i**] <nic>[**-f**] {*původní/cesta*} {*nová/cesta*}
 
+<!--
 *# vytvořit dočasný, zdánlivý, nerekurzivní pevný odkaz na adresář*<br>
 **mkdir -p** {*nová-cesta*}<br>
 **mount** [**-o ro**] **\-\-bind** {*původní-cesta*} {*nová-cesta*}
 
+není dobrý nápad
+-->
+
 ### Symbolické odkazy
 
-*# vytvořit symbolický odkaz*<br>
-**ln -s** {*obsah-odkazu*} {*cesta-k-odkazu*}
+*# **vytvořit** relativní/absolutní/obecný symbolický odkaz*<br>
+*// Při vytváření obecného symbolického odkazu neprovádí příkaz „ln“ žádnou kontrolu obsahu odkazu; bez jakékoliv chyby vytvoří i odkaz, jehož obsah nedává žádný smysl!*<br>
+**ln -rs**[**f**]<nic>[**T**] {*cesta/k/cíli*} {*cesta/k/odkazu*}<br>
+**ln -s**[**f**]<nic>[**T**] **"$(readlink -f** {*cesta/k/cíli*}**)"** {*cesta/k/odkazu*}<br>
+**ln -s**[**f**]<nic>[**T**]** "**{*obsah-odkazu*}**"** {*cesta/k/odkazu*}
 
-*# vytvořit symbolický odkaz s absolutní (kanonickou) cestou*<br>
-**ln -s "$(readlink -f** {*cesta-k-souboru-či-adresáři*}**)"** {*cesta-k-odkazu*}
+*# **smazat** symbolický odkaz*<br>
+**rm** [**\-\-**] {*cesta/k/odkazu*}...
 
-*# vytvořit symbolický odkaz s relativní cestou*<br>
+*# odkazuje odkaz na soubor/na adresář/na pojmenovanou rouru?*<br>
+?<br>
+?<br>
 ?
+
+*# je odkaz neplatný?*<br>
+*// Pozor! Pokud nemáte přístup do adresáře, kam symbolický odkaz vede, bude se vám vždy jevit jako neplatný! V případě pochybností raději hledejte neplatné odkazy s použitím „sudo“.*<br>
+?
+
+*# vypsat obsah symbolického odkazu*<br>
+**readlink** [**\-\-**] {*cesta/k/odkazu*}...
+
+*# přejmenovat/**přesunout** symbolický odkaz*<br>
+**mv** [**-i**] <nic>[**-f**] {*původní/cesta*} {*nová/cesta*}
 
 ### Kopírování
 
@@ -120,11 +155,6 @@ Oblíbené rsync parametry:
 ![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 ## Instalace na Ubuntu
-<!--
-- Jako zaklínadlo bez titulku uveďte příkazy (popř. i akce) nutné k instalaci a zprovoznění všech nástrojů požadovaných kterýmkoliv zaklínadlem uvedeným v kapitole. Po provedení těchto činností musí být nástroje plně zkonfigurované a připravené k práci.
-- Ve výčtu balíčků k instalaci vycházejte z minimální instalace Ubuntu.
--->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
 
 Všechny použité nástroje jsou základní součástí Ubuntu přítomnou i v minimální instalaci.
 
@@ -151,6 +181,7 @@ Všechny použité nástroje jsou základní součástí Ubuntu přítomnou i v
 * Pokud uživatel nemá právo vstoupit do adresáře, kam symbolický odkaz odkazuje, bude se mu jevit jako neplatný, přestože ve skutečnosti neplatný nebude.
 * Maximální počet pevných odkazů na jeden soubor je omezený souborovým systémem; v souborových systémech typu ext4 je to 65000.
 * Soubor bude odstraněn z disku v momentě, kdy už na něj neexistují žádné pevné odkazy, není spuštěný jako proces a není otevřený žádným deskriptorem žádného procesu.
+* Symbolický odkaz sám o sobě je „nezapisovatelný“; pokud ho chceme změnit, musíme ho nejprve smazat a pak znovu vytvořit; to také znamená, že pokud se odkaz nachází v adresáři, kam nemáme právo zápisu, nemůžeme ani změnit obsah symbolického odkazu.
 
 ## Další zdroje informací
 <!--
