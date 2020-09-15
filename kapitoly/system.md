@@ -439,7 +439,7 @@ Většina použitých příkazů je základní součástí Ubuntu, pouze příka
 
 * [Článek na Wikipedii](https://cs.wikipedia.org/wiki/Systemd)
 * [Seriál článků na ABC Linuxu](http://www.abclinuxu.cz/serialy/systemd)
-* [Video: The Magic SysRQ Key on the Keyboard](https://www.youtube.com/watch?v=ZiX327d8Ys0)
+* [Video: The Magic SysRQ Key on the Keyboard](https://www.youtube.com/watch?v=ZiX327d8Ys0) (anglicky)
 * [Systemd cheat sheet](https://www.thegeekdiary.com/centos-rhel-7-systemd-command-line-reference-cheat-sheet/) (anglicky)
 * [Oficiální stránka systemd pro uživatele](https://www.freedesktop.org/wiki/Software/systemd/) (anglicky)
 * [Oficiální stránka systemd pro vývojáře](https://systemd.io/) (anglicky)

@@ -352,7 +352,7 @@ Barvy se zadávají ve formátu AABBGGRR, kde AA=FF je úplná průhlednost a A
 **[**{*vi*}**] yadif [**{*vo*}**]**
 
 *# proložit obraz*<br>
-*// Prokláďání obrazu sníží fps na polovinu.*<br>
+*// Prokládání obrazu sníží fps na polovinu.*<br>
 **[**{*vi*}**] interlace [**{*vo*}**]**
 
 *# aplikovat na obraz **Sobelův operátor** detekce hran*<br>
