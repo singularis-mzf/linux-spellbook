@@ -648,6 +648,16 @@ article {
     padding:2rem 3rem 5rem;
 }
 
+# varování (pro budoucí verze)
+div.varovani {
+    margin:0.5em 5%;
+    border:0.5em double red;
+    padding:1em 5%;
+    text-align:center;
+    font-weight:bold;
+    line-height:2;
+}
+
 # navigace kapitoly na konci
 nav.spodni {
     margin:3em 3rem 2em 0;
