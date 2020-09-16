@@ -14,6 +14,17 @@ https://creativecommons.org/licenses/by-sa/4.0/
 <!--
 Poznámky:
 
+- Podle https://www.sallyx.org/sally/linux/prikazy/binary-files:
+    sudo cryptsetup luksFormat {*/soubor-nebo-oddíl*} -c aes-xts-plain64 -s 512
+    sudo cryptsetup luksOpen {*/soubor-nebo-oddíl*} {*id*}
+    sudo mount /dev/mapper/{*id*} {*kam*}
+    ...
+    sudo umount /dev/mapper/{*id*}
+    sudo cryptsetup luksClose /dev/mapper/{*id*}
+
+    [ ] openssl
+    [ ] mcrypt
+
 ⊨
 -->
 

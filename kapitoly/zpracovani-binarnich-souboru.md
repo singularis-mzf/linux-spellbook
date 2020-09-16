@@ -31,7 +31,8 @@ Tato kapitola uvádí příkazy k analýze, zpracování a úpravě souborů b
 na formát jejich obsahu. Jde o zpracování souboru jako celek, zpracování po jednotlivých bajtech
 nebo po blocích pevné velikosti.
 
-Předmětem této kapitoly není šifrování dat, elektronické podepisování ani ukládání souborů do archivů či vybalování z nich.
+Předmětem této kapitoly není šifrování dat, elektronické podepisování, komprese ani ukládání souborů
+do archivů či vybalování z nich.
 
 ## Definice
 
@@ -47,18 +48,20 @@ Používá se pro srovávání a ověřování, protože pravděpodobnost, že 
 
 ### Vypsat obsah souboru pro člověka
 
-*# vypsat **hexadecimálně** (pro člověka/pro skript)*<br>
-**xxd** [**-c** {*bajtů-na-řádek*}] <nic>[**-g** {*bajtů-na-skupinu*}] <nic>[**-s** {*počáteční-adresa*}] <nic>[**-l** {*max-počet-bajtů*}] <nic>[**-u**] {*soubor*} [**\| less**]<br>
-**xxd -p -u -c 1** {*soubor*} **\|** {*zpracování*}
+*# vypsat **hexadecimálně***<br>
+**xxd** [**-c** {*bajtů-na-řádek*}] <nic>[**-g** {*bajtů-na-skupinu*}] <nic>[**-s** {*počáteční-adresa*}] <nic>[**-l** {*max-počet-bajtů*}] <nic>[**-u**] {*soubor*} [**\| less**]
 
-*# vypsat **binárně** (pro člověka)*<br>
+*# vypsat **binárně***<br>
 **xxd -b** [**-c** {*bajtů-na-řádku*}] <nic>[**-s** {*počáteční-adresa*}] <nic>[**-l** {*max-počet-bajtů*}] {*soubor*} [**\| less**]
 
 *# najít v binárním souboru čitelné textové řetězce a vypsat je*<br>
 **strings** [**-f**] <nic>[**-n** {*minimální-délka-řetězce*}] <nic>[**\-\-**] {*soubor*}...
 
+*# vypsat **osmičkově***<br>
+**od -A x -t o1z** [**-w**{*bajtů-na-řádku*}] <nic>[**-j** {*počáteční-adresa*}] <nic>[**-N** {*max-počet-bajtů*}] {*\-\-*} [{*soubor*}] <nic>[**\| less**]
+
 *# vypsat hodnoty bajtů **desítkově***<br>
-**(printf 'ibase=16\\n'; xxd -p -u -c 1) &lt;**{*vstupní-soubor*} **\| bc** [**\| less**]
+**od -A x -t u1z** [**-w**{*bajtů-na-řádku*}] <nic>[**-j** {*počáteční-adresa*}] <nic>[**-N** {*max-počet-bajtů*}] {*\-\-*} [{*soubor*}] <nic>[**\| less**]
 
 ### Vypočítat a ověřit heš
 
@@ -84,7 +87,7 @@ Používá se pro srovávání a ověřování, protože pravděpodobnost, že 
 *# vypočítat kontrolní součet **CRC32** (v hexadecimální soustavě/v desítkové)*<br>
 *// Poznámka: Příkaz „crc32“ lze použít i s více soubory, ale v takovém případě vypisuje ke kontrolním součtům i názvy souborů bez odzvláštnění, což znamená, že nelze bezpečně zpracovat soubory jejichž cesta obsahuje znak konce řádky.*<br>
 **crc32** {*soubor*}<br>
-**printf %d\\n $(crc32 "**{*soubor*}**")**
+**printf %d\\\\n $((0x$(crc32 "**{*soubor*}**")))**
 
 *# vypočítat z jednoho souboru heše (MD5) záznamů ukončených nulovým bajtem*<br>
 ?
@@ -266,6 +269,31 @@ Poznámka: tail -c +1K přeskočí jen 1023 bajtů!
 **tr -cd \\\\$(printf %o** {*hodnota-bajtu*}**) &lt;**{*soubor*} **\| wc -c**
 **tr -cd \\\\$(printf %o 0xa9) &lt;**{*soubor*} **\| wc -c**
 
+### Konverze na/z číselné reprezentace
+
+Poznámka: Následující zaklínadla generují/přijímají jednu číselnou hodnotu na každou řádku.
+
+*# bajty **hexadecimálně** „00“ až „FF“ (na čísla/z čísel)*<br>
+{*zdroj*} **\| xxd -p -u -c 1 \|** {*zpracování*}<br>
+{*zdroj*} **\| xxd -r -p \|** {*zpracování*}
+
+*# bajty **desítkově** „0“ až „255“ (na čísla/z čísel)*<br>
+{*zdroj*} **\| od -A n -t u1 -v -w1 \| tr -d "&blank;" \|** {*zpracování*}<br>
+{*zdroj*} **\| sed $'1i\\\\\\nobase=16' \| bc \| sed -E 's/^.$/0&amp;/' \| xxd -r -p \|** {*zpracování*}
+
+*# bajty **binárně** „00000000“ až „11111111“ (na čísla/z čísel)*<br>
+{*zdroj*} **\| xxd -b -c 1 \| cut -d "&blank;" -f 2 \|** {*zpracování*}<br>
+{*zdroj*} **\| sed $'1i\\\\\\nobase=16\\\\\\nibase=2' | bc | sed -E 's/^.$/0&amp;/' | xxd -r -p \|** {*zpracování*}
+
+*# bajty **osmičkově** „000“ až „377“ (na čísla/z čísel)*<br>
+{*zdroj*} **\| od -A n -t o1 -v -w1 \| tr -d "&blank;" \|** {*zpracování*}<br>
+{*zdroj*} **\| sed $'1i\\\\\\nobase=16\\\\\\nibase=8' | bc | sed -E 's/^.$/0&amp;/' | xxd -r -p \|** {*zpracování*}
+
+<!--
+{*zdroj*} **\| (printf 'ibase=16\\n'; xxd -p -u -c 1) \| bc \|** {*zpracování*}<br>
+{*zdroj*} **\| xxd -r -p \|** {*zpracování*}<br>
+-->
+
 ### Přepsat/nahradit/vynechat/vložit bajty
 
 *# nastavit **bajt** na určité adrese*<br>
@@ -393,6 +421,8 @@ Tip: Místo vstupního souboru může být „-“; příkaz pak čte ze standar
 *# uudecode, uuencode*<br>
 **sudo apt-get install sharutils**
 
+Ostatní použité příkazy jsou přítomny i v minimální instalaci Ubuntu.
+
 <!--
 ## Ukázka
 <!- -
@@ -412,7 +442,7 @@ Tip: Místo vstupního souboru může být „-“; příkaz pak čte ze standar
 - Buďte co nejstručnější; neodbíhejte k popisování čehokoliv vedlejšího, co je dost možné, že už čtenář zná.
 -->
 
-* Příkaz „cmp“ je nejrychleji čtoucí příkaz, který znám, lze jej použít např. pro výkonostní test SSD disku.
+* Příkaz „cmp“ je nejrychleji čtoucí příkaz, který znám, lze jej použít např. pro výkonnostní test SSD disku.
 
 ## Další zdroje informací
 <!--
@@ -424,6 +454,7 @@ Tip: Místo vstupního souboru může být „-“; příkaz pak čte ze standar
 
 * [man 1 split](http://manpages.ubuntu.com/manpages/focal/en/man1/split.1.html)
 * [man 1 xxd](http://manpages.ubuntu.com/manpages/focal/en/man1/xxd.1.html)
+* [man 1 od](http://manpages.ubuntu.com/manpages/focal/en/man1/od.1.html)
 * [balíček xxd](https://packages.ubuntu.com/focal/xxd)
 * [TL;DR: split](https://github.com/tldr-pages/tldr/blob/master/pages/common/split.md)
 * [TL;DR: xxd](https://github.com/tldr-pages/tldr/blob/master/pages/common/xxd.md)

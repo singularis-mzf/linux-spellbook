@@ -20,7 +20,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 <neodsadit>Vážená/ý čtenáři/ko,
 
 v České republice začíná v letech 2020 až 2024 pracovat s Linuxem obrovské
-množství uživatelů a tito lidé svůj nový systém poznávají převážně
+množství uživatelů/ek a tito lidé svůj nový systém poznávají převážně
 třemi nejběžnějšími způsoby:
 
 Většina z nich spoléhá na webové online zdroje v angličtině, a protože
@@ -162,7 +162,7 @@ které lze zavolat jednoduchým příkazem a vykonají za vás automaticky mnoh
 často i velmi složitých příkazů, které danou úlohu vyřeší.
 
 Každá kapitola, která tyto pomocné či funkce skripty vyžaduje, obsahuje jejich
-úplný zdrojový kód, což vám umóžňuje si je vytvořit sám/a pouhým zkopírováním
+úplný zdrojový kód, což vám umožňuje si je vytvořit sám/a pouhým zkopírováním
 či ručním přepsáním (což nedoporučuji kvůli riziku překlepů);
 pro vaše pohodlí je ovšem ke každé vydané verzi knihy online cestou
 distribuován balíček ve formátu „.deb“, který si můžete nainstalovat na svůj systém.
@@ -221,7 +221,7 @@ na „Terminál“ a rozšířena o vybrané emotikony.
 Verze 2.0 také přináší novou zcela kapitolu Zpracování binárních souborů
 a zvláštní kapitolu Základní znalosti. Kapitola Regulární výrazy byla rozšířena o vzorky bashe.
 
-V HTML verzi je nově jako výchozí tmavý motiv a byl vylepšen design rámu „okna“.
+V HTML verzi je nově jako výchozí tmavý motiv, byl vylepšen design rámu „okna“ a všechny kapitoly i dodatky nyní mají ikonu.
 PDF verze naopak nepřináší žádné novinky.
 
 Vydání verze 2.1, jménem Iveta Ivanovická, očekávám v průběhu listopadu 2020.

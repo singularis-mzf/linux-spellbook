@@ -260,6 +260,11 @@ asi PHY-SEC/LOG-SEC u lsblk
 **sudo e2fsck -f** {*/dev/oddíl*}<br>
 **sudo resize2fs** {*/dev/oddíl*} [{*velikost*}]
 
+*# „odformátovat“ oddíl (přepsat: jen značky/celou hlavičku/celý oddíl)*<br>
+**sudo wipefs -a** [**\-\-backup**] {*/dev/oddíl*}<br>
+?<br>
+**sudo dd if=/dev/zero of=**{*/dev/oddíl*} [**status=progress**]
+
 ### Odkládací oddíly a soubory
 
 *# **připojit** odkládací oddíl či soubor (obecně/příklady)*<br>

@@ -108,10 +108,9 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [sprava-uzivatelskych-uctu](kapitoly/sprava-uzivatelskych-uctu.md) | Správa uživatelských účtů | 1.11 |
 | [stahovani-videi](kapitoly/stahovani-videi.md) | Stahování videí | 1.0 |
 | [system](kapitoly/system.md) | Systém | 1.2 |
-| [terminal](kapitoly/terminal.md) | Terminál | 1.0\* |
+| [terminal](kapitoly/terminal.md) | Terminál | (1.0) |
 | [vim](kapitoly/vim.md) | Vim | 1.8 |
 | [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) | Zpracování textových souborů | 1.2 | [zpracovani-videa-a-zvuku](kapitoly/zpracovani-videa-a-zvuku.md) | Zpracování videa a zvuku | 1.0 |
-|
 
 ## Vyřazené kapitoly
 
