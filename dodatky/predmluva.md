@@ -17,7 +17,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 > *„Prostě příkazový řádek v Linuxu je něco úchvatného, a kdo se neumí v tomto prostředí pohybovat, přichází*
 > *o hodně.“*<br>— KAMENÍK, Pavel. *Příkazový řádek v Linuxu: praktická řešení.* Brno: Computer Press, 2011. ISBN 978-80-251-2819-0.
 
-<neodsadit>Vážený/á čtenáři/ko,
+<neodsadit>Vážená/ý čtenáři/ko,
 
 v České republice začíná v letech 2020 až 2024 pracovat s Linuxem obrovské
 množství uživatelů a tito lidé svůj nový systém poznávají převážně
@@ -32,20 +32,20 @@ dozvíte se zpravidla jen to, na co se ho „zeptáte“ (tzn. co si
 necháte vyhledat). Problém je, že ač si to nejspíš neuvědomujete,
 na mnoho podstatného se nezeptáte, protože vás to nenapadne,
 takže i když webové stránky tuto podstatnou informaci obsahuji,
-vy se ji stejně nedozvíte. Druhým typem online zdroje je podrobná
-dokumentace konkrétního programu. Tento druh bývá kvalitní,
-ale trpí jiným nedostatkem – pokud daný program pro vámi
-řešený problém není vhodný nebo je již zastaralý a překonaný,
-jeho dokumentace vám to nepoví a neporadí vám, kde jinde hledat.
-(Nemluvě o tom, že bývá velmi rozsáhlá.)
+vy se ji touto cestou stejně nedozvíte.
+Druhým typem online zdroje je podrobná dokumentace konkrétního programu,
+ta bývá opravdu kvalitní, ale trpí jiným nedostatkem – pokud daný program
+pro vámi řešený problém není vhodný nebo je již zastaralý a překonaný,
+jeho dokumentace, jakkoliv rozsáhlá, vám to nepoví a neporadí vám, kde jinde hledat.
 
 O mnoho lépe na tom nejsou ani ti, kdo se s Linuxem učí zacházet
 z nejnovějších knih na českém knižním trhu. Ty nejnovější, které se věnují
 Linuxu, jsou totiž z let 2008 až 2012, a ačkoliv některé z nich naučí uživatele
 opravdu dobře zacházet s bashem (snad až na asociativní pole), do praxe si
 z nich uživatelé odnesou také mnohé zastaralé a překonané postupy,
-protože se o těch nových a vylepšených, které jsou dostupné teprve
-několik let, prostě nedozvědí, což mě mrzí.
+protože se o těch nových a vylepšených, které jsou díky pokračující obětavé
+práci programátorů svobodného software dostupné teprve několik let,
+prostě nedozvědí, což mě mrzí.
 
 Třetí skupina uživatelů si se svým systémem hraje a experimentuje.
 Tito uživatelé se zpravidla o novějších postupech, příkazech a funkcích
@@ -64,13 +64,14 @@ sbírky řešených příkladů připomínající knihu zaklínadel
 co nejlepšího ve vybraných oblastech vám může nabídnout
 linuxový operační systém, který máte nainstalovaný na svém počítači.
 
-Máte-li na počítači nainstalovaný Linux, máte na disku gigabajty nesmírně mocných
-nástrojů jako bash, Perl či TeX, které v sobě skrývají desítky let práce špičkových
-programátorů, a nemusíte nezbytně pochopit, jak fungují, abyste s nimi dokázal/a
-velké věci. Pokud vás zajímá, co s nimi tedy můžete udělat, a konkrétní postup,
-jak toho dosáhnout, je toto kniha pro vás.
+Máte-li totiž na počítači nainstalovaný Linux, můžete mít na disku gigabajty
+nesmírně mocných nástrojů jako bash, FFmpeg, Perl či TeX, které v sobě
+skrývají desítky let práce špičkových programátorů, a nemusíte nezbytně pochopit,
+jak fungují, abyste s nimi dokázal/a velké věci. Pokud vás zajímá,
+co s nimi tedy můžete udělat, a konkrétní postup, jak toho dosáhnout,
+je toto kniha pro vás.
 
-Linux: Kniha kouzel klade důraz na skutečné použití uvedených postupů,
+*Linux: Kniha kouzel* klade důraz na skutečné použití uvedených postupů,
 funkcí a nástrojů, takže teoretický výklad je omezen na minimum
 a poznámky uvádějí především praktické zkušenosti či technická omezení.
 Smyslem používání této knihy není, abyste se nějaký příkaz *naučil/a* používat,
@@ -80,6 +81,8 @@ naučit ho používat, je to určitě dobře, ale v takovém případě
 budete muset vyhledat i další informační zdroje, např. manuálové stránky
 či webové online zdroje. Samotný Linux: Kniha kouzel vám k tomu stačit nebude.
 
+## Kniha kouzel
+
 Pokud už používáte linuxový terminál delší dobu, napadlo vás někdy,
 že když mu zadáváte příkazy, v mnoha aspektech se to podobá sesílání kouzel
 ve fantasy světech? Tento příměr je o to děsivější, že zatímco fantasy kouzla
@@ -87,13 +90,13 @@ ovlivňují jen životy smyšlených postav, vaše příkazy budou mít reálné
 ve vašem vlastním počítači! Linux: Kniha kouzel je na tomto příměru založena,
 a proto v ní jednotlivé příklady nazývám *„zaklínadla“*. Pokud jste nadán/a
 dostatečnou dávkou fantazie, můžete si při čtení představovat, že jste
-začínající čaroděj ve fantasy světě a v rukou držíte lexikon kouzel
+začínající čaroděj/ka ve fantasy světě a v rukou držíte lexikon kouzel
 pro pokročilé. Při sesílání kouzel přesahujících vaši kvalifikaci se sice můžete
 snadno „spálit“ a to se vám může stát i při zadávání příkazů do terminálu,
 protože ten je velmi náročný na přesnost a i pouhá záměna jediné dvojtečky
 za středník nebo dvojité uvozovky za jednoduchou bude mít zcela jistě
 nečekané následky. Přesto se vám to vyplatí mnohem víc než omezit se
-jen na to málo příkazu, které bezpečně ovládáte. (Pokud znáte příběhy
+jen na to málo příkazů, které bezpečně ovládáte. (Pokud znáte příběhy
 Harryho Pottera od J. K. Rowling, zamyslete se, jak by dopadl on,
 kdyby se omezil jen na kouzla odpovídající jeho školnímu ročníku.
 Moje odpověď – byl by mnohem víc závislý na Hermioně Grangerové.)
@@ -150,7 +153,7 @@ K použití Linuxu: Knihy kouzel sice přímo nemusíte aktivně programovat,
 ale měli byste znát pojmy ze základů programování jako např. „funkce“, „příkaz“
 či „skript“ a určitě vám prospěje, pokud máte na programování talent.
 
-## Pomocné skripty a funkce
+## Balíček pomocných skriptů a funkcí
 
 Některé úkoly, přestože zní jednoduše, jsou pro terminál ve skutečnosti dost složité,
 takže je ve výchozí instalaci není možné vykonat krátkým příkazem. Tradičním a stále
@@ -167,7 +170,7 @@ Tento balíček obsahuje aktuální verze pomocných skriptů a funkcí
 a příkaz „lkk“, kterým můžete spouštět pomocné skripty nebo importovat
 pomocné funkce (příkazem „source &lt;(lkk \-\-funkce)“).
 Podrobnosti a další možnosti zjistíte příkazem „lkk \-\-help“
-(manuálovou stránku spouštěč *lkk* zatím nemá).
+(manuálovou stránku příkaz *lkk* zatím nemá).
 
 ## Licence
 
@@ -208,13 +211,18 @@ Uživatele, který Linux: Knihu kouzel neprostudoval, poznáte např. takto:
 
 ## Aktuální poznámka k verzi „vanilková příchuť 2.0 Chranislav Charbulový“
 
-Verze 2.0, jménem Chranislav Charbulový, je první verze vanilkové příchuti Linuxu: Knihy kouzel
+Verze vanilkové příchuti 2.0, jménem Chranislav Charbulový, je první verze
 určená především pro Ubuntu 20.04 Focal Fossa.
 
-Ve srovnání s předchozí verzí byly z vydání vypuštěny kapitoly „Docker“ a „Plánování úloh“.
-Kapitola „Barvy a titulek terminálu“ byla přejmenována na „Terminál“ a rozšířena o vybrané emotikony.
+Ve srovnání s verzí 1.12 Hana Hlavní byly z vydání vypuštěny kapitoly „Docker“
+a „Plánování úloh“. Kapitola „Barvy a titulek terminálu“ byla přejmenována
+na „Terminál“ a rozšířena o vybrané emotikony.
+
+Verze 2.0 také přináší novou zcela kapitolu Zpracování binárních souborů
+a zvláštní kapitolu Základní znalosti. Kapitola Regulární výrazy byla rozšířena o vzorky bashe.
 
 V HTML verzi je nově jako výchozí tmavý motiv a byl vylepšen design rámu „okna“.
+PDF verze naopak nepřináší žádné novinky.
 
 Vydání verze 2.1, jménem Iveta Ivanovická, očekávám v průběhu listopadu 2020.
 

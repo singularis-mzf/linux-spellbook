@@ -26,7 +26,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 * „Základy Perlu“ (jednoduše, konzistentně)
 * „Přehrávání videa, zvuku a obrázků“ (mplayer, feh, gpicview, ristretto)
 * „Šifrování a kryptografie“ (gpg, šifrování archivů, elektronické podpisy, HTTPS certifikáty)
-* „Firewall“ (asi hlavně iptables)
+* „Firewall“ (asi hlavně iptables a ufw)
 * „Jádro a GRUB“ (konfigurace, dualboot, nastavení grafického pozadí)
 * „Bash“ (syntaxe, exec, přesměrování, roury a další)
 * „LaTeX“ (základní struktura dokumentu, standardní značky, překlad do PDF, důležité balíčky)

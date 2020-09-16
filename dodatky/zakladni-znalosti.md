@@ -37,8 +37,6 @@ Všechny tyto vstupy a výstupy jsou ve výchozím stavu napojeny na terminál,
 *# *<br>
 {*příkaz*} [{*parametr*}]... [**&lt;**{*soubor-pro-std-vstup*}] <nic>[**&gt;**{*soubor-pro-std-výstup*}] <nic>[**2&gt;**{*soubor-pro-std-chyb-výstup*}]
 
-Typickým trikem je přesměrování výstupu do „/dev/null“, čímž se data na něj směřující zahodí. Analogicky přesměrováním vstupu z „/dev/null“ programu poskytneme prázdný vstup.
-
 **Roura** je nástroj, který umožňuje připojit standardní výstup jednoho příkazu na standardní vstup druhého;
 příkazy pak běží současně a předávájí si tímto kanálem data. Roura vypadá takto:
 
@@ -48,7 +46,7 @@ příkazy pak běží současně a předávájí si tímto kanálem data. Roura
 ## Minus místo názvu souboru
 
 Řada příkazů po vás vyžaduje zadat název souboru, ze kterého budou číst nebo kam budou zapisovat.
-Mnoho těchto příkazů vám dovoluje na místo názvu souboru zadat „-“ a program pak přečte obsah
+Mnoho těchto příkazů vám dovoluje na místo názvu souboru zadat „-“ a program pak přečte data
 ze svého standardního vstupu, který může přicházet přes rouru z jiného programu.
 Jako příklad mohu uvést příkaz „cat“:
 
@@ -96,7 +94,8 @@ jen málo z nich je ale přeložených do češtiny.
 v praxi jsem ho potřeboval/a pouze u příkazu „date“.
 
 V krajním případě se můžete vydat prozkoumat adresář „/usr/share/doc/{*příkaz*}“,
-pokud existuje, ale informace tam bývají obvykle vhodné jen pro nejpokročilejší uživatele.
+pokud existuje, ale informace tam bývají obvykle vhodné jen pro nejpokročilejší uživatele
+a často nejsou dostupné, pokud si nenainstalujete příslušný dokumentační balíček.
 
 Teprve pokud uvedené postupy selžou nebo neposkytnou dostatečně podrobné informace,
 hledejte oficiální stránku daného programu nebo jiný dostatečně věrohodný online zdroj.
@@ -108,7 +107,7 @@ jakou verzi potřebujete a jak ji do vašeho systému nainstalovat.
 
 Když v terminálu zadáte příkaz, interpret bash ho přečte znak po znaku od začátku do konce
 a ke každému znaku přiřadí příznak, zda s ním bude zacházat jako s „obyčejným znakem“
-nebo mu přiřadí nějaký zvláštní význam. Jako příklad uvedu příkaz:
+nebo mu přisoudí nějaký zvláštní význam. Jako příklad uvedu příkaz:
 
 *# *<br>
 **cat a.txt**
@@ -116,17 +115,19 @@ nebo mu přiřadí nějaký zvláštní význam. Jako příklad uvedu příkaz:
 V uvedeném příkazu jsou všechny znaky obyčejné, s výjimkou mezery – ta má zvláštní význam:
 odděluje příkaz od jeho parametru. V bashi mají obvykle zvláštní význam tyto znaky:
 
-**Konec řádku, mezera, ! " # $ &amp; ' ( ) \* ; &lt; = &gt; ? [ \\ ] \` { \| } ~**
+**Konec řádku, mezera, " # $ &amp; ' ( ) \* ; &lt; &gt; ? [ \\ ] \` { \| } ~**
 
-Znak **!** má zvláštní význam převážně jen tehdy, když je zapnutá historie,
+Znak **„!“** má zvláštní význam převážně jen tehdy, když je zapnutá historie,
 tedy v interaktivním režimu; ve skriptech je naopak běžné ho používat jako obyčejný znak
 i bez odzvláštnění.
 
-Znak **=** má zvláštní význam převážně jen v místě, kde se očekává název příkazu
+Znak **„=“** má zvláštní význam převážně jen v místě, kde se očekává název příkazu
 (tam se pak interpretuje jako přiřazení do proměnné); v ostatních místech s ním
 lze zacházet jako s obyčejným znakem.
 
-Naopak tyto znaky jsou v bashi vždy obyčejné:
+Naopak tyto znaky jsou v bashi v normálním kontextu vždy obyčejné (existují
+zvláštní kontexty jako např. uvnitř vzorku nebo uvnitř regulárního výrazu,
+kde platí zase jiná pravidla):
 
 **% + , - . / : @ ^ \_**
 
@@ -153,10 +154,13 @@ před zvláštní znak. Tato metoda funguje se všemi zvláštními znaky kromě
 – ten se v takovém případě z příkazu úplně vypustí.
 
 Často používaná je druhá metoda – uzavření do *apostrofů*. Když bash narazí při čtení příkazu
-na apostrof, přepne se do režimu, ve kterém považuje za zvláštní znak jen další apostrof
+na apostrof, přepne se do kontextu, ve kterém považuje za zvláštní znak jen další apostrof
 a všechny ostatní znaky *bez výjimky* (tzn. včetně konce řádku či zpětného lomítka)
 považuje za znaky obyčejné. Pokud do takto odzvláštněného parametru potřebujeme
-vložit apostrof, musíme ho nahradit konstrukcí „'\\''“.
+vložit apostrof, musíme ho nahradit konstrukcí:
+
+*# *<br>
+**'\\''**
 
 Uzavření do *dvojitých uvozovek* je určitý kompromis. Uvnitř nich zůstává zvláštní význam
 pouze znakům „!“, „"“, „$“, „\\“ a „\`“ a tyto znaky (kromě vykřičníku) lze i uvnitř
@@ -169,7 +173,7 @@ navíc umožňuje zadat širokou škálu zvláštních sekvencí, které se pře
 na řídící či jiné znaky; např. „\\n“ se zde přeloží na konec řádky
 a „\\u2251“ zde vygeneruje znak Unicode s hexadecimálním kódem 0x2251.
 
-### Prázdný řetězec
+### Prázdný parametr
 
 Mezery normálně oddělují od sebe parametry příkazu. Pokud použijete víc mezer za sebou,
 utvoří dohromady jen jeden oddělovač. Výjimkou je případ, kdy mezi mezery vložíte
@@ -187,15 +191,14 @@ Příklady:
 
 ## Návratový kód a zřetězení
 
-Většina příkazů, když selže, vypíše uživateli chybové hlášení. Bylo by ale nepraktické
-taková hlášení zpracovávat ve skriptu, proto příkazy také vracejí číselnou hodnotu 0 až 255,
-která signalizuje, zda daný příkaz uspěl nebo selhal. Tuto hodnotu najdete
-ve zvláštním parametru „$?“ a přepisuje se s každým vykonaným příkazem.
+Mnoho příkazů, když selže, vypíše uživateli chybové hlášení. Bylo by ale nepraktické
+taková hlášení zpracovávat ve skriptu, proto příkazy současně s tím
+vracejí číselnou hodnotu 0 až 255, která signalizuje, zda daný příkaz uspěl nebo selhal.
+Tato hodnota se po skončení každého příkazu uloží do zvláštního parametru „$?“.
 Hodnota 0 znamená, že příkaz uspěl; hodnoty 1 až 255, že selhal.
 
-Je-li příkazem několik příkazů spojených rourami, návratovým kódem je kód *posledního* z nich.
-Všechny návratové kódy lze však v takovém případě najít v poli „PIPESTATUS“,
-ale to obvykle není potřeba.
+Je-li příkazem několik příkazů spojených rourami, návratovým kódem je kód *posledního* uvedeného.
+Návratové kódy všech částí roury pak lze získat z pole „PIPESTATUS“, ale to obvykle není potřeba.
 
 Příkazy (popř. sestavy příkazů spojených rourami) lze zřetězit pomocí logických
 operátorů &amp;&amp; a \|\|:

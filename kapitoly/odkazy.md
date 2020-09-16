@@ -108,6 +108,18 @@ není dobrý nápad
 *# přejmenovat/**přesunout** symbolický odkaz*<br>
 **mv** [**-i**] <nic>[**-f**] {*původní/cesta*} {*nová/cesta*}
 
+### Ostatní
+
+*# je adresářová položka symbolický odkaz?*<br>
+**test -L** {*cesta/k/položce*}
+
+*# osamostatnit pevný odkaz od ostatních odkazů*<br>
+**test -f** {*název-souboru*} **-a -r** {*název-souboru*} **&amp;&amp; test "$(stat -c %h** {*název-souboru*}**)" -le 1 \|\| {&blank;cp \-\-preserve=all -iT \-\-** {*název-souboru*} {*název-souboru*}**~ &amp;&amp; mv -f** {*název-souboru*}**~** {*název-souboru*}**;&blank;}**
+<!--
+[ ] Otestovat!
+-->
+
+
 ### Kopírování
 
 *# kopírovat: zachovat symbolické odkazy doslovně*<br>

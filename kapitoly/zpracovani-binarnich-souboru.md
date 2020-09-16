@@ -362,7 +362,7 @@ Tip: Místo vstupního souboru může být „-“; příkaz pak čte ze standar
 
 !parametry:
 
-* -p :: použije „holý“ hexadecimální formát bez adres (výchozí chování: čitelný formáŧ s adresami)
+* -p :: použije „holý“ hexadecimální formát bez adres (výchozí chování: čitelný formát s adresami)
 * -u :: v hexadecimálních číslech použije velká písmena (výchozí chování: malá písmena)
 * -c {*bajtů*} :: počet bajtů na řádek výstupu
 * -s {*adresa*} :: začne vypisovat od zadané adresy (např. „0x80“)
