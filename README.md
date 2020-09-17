@@ -121,8 +121,9 @@ a kapitoly ani dodatky se nesmějí opakovat.
 
 | ID | Název kapitoly | Růst | Stav |
 | :--- | :--- | ---: | :--- |
-| [zpracovani-binarnich-souboru](kapitoly/zpracovani-binarnich-souboru.md) | Zpracování binárních souborů | 80% | dítě |
+| [zpracovani-binarnich-souboru](kapitoly/zpracovani-binarnich-souboru.md) | Zpracování binárních souborů | 100% | připravena k vydání |
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
+| [kalkulace](kapitoly/kalkulace)| Kalkulace | 50% | dítě |
 | [zpracovani-obrazku](kapitoly/zpracovani-obrazku.md) | Zpracování obrázků | 40% | dítě |
 | [odkazy](kapitoly/odkazy.md) | Pevné a symbolické odkazy | 20% | dítě |
 | [perl](kapitoly/perl.md) | Základy Perlu | 20% | dítě |
@@ -148,7 +149,6 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | firewall | Firewall | - | přál/a bych si |
 | sql | SQL | - | přál/a bych si |
 | ascii-art | ASCII art | - | přál/a bych si |
-| matematicke-vypocty | Matematické výpočty | - | přál/a bych si |
 | zaznam-x | Záznam obrazovky | - | přál/a bych si |
 | css | Kaskádové styly CSS | - | přál/a bych si |
 | nabidka-aplikaci | Nabídka aplikací | - | přál/a bych si |
