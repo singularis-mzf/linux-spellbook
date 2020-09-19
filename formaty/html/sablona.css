@@ -1314,7 +1314,14 @@ nav.spodni>div+div {
 }
 nav.spodni .nazev {font-weight:bold}
 
-
+div.varovani {
+    margin:0.5em 5%;
+    border:0.5em double red;
+    padding:1em 5%;
+    text-align:center;
+    font-weight:bold;
+    line-height:2;
+}
 
 
 @media print {

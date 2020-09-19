@@ -174,10 +174,10 @@ ho nijak neomezují a nemají na něj vliv.
 **test -e** {*cesta*}
 
 *# je adresářová položka **soubor**/adresář/symbolický odkaz/pojmenovaná roura?*<br>
-**test -f** {*cesta*}<br>
-**test -d** {*cesta*}<br>
-**test -L** {*cesta*}<br>
-**test -p** {*cesta*}
+**test -f** {*cesta*} **-a \! -L** {*cesta*}<br>
+**test -d** {*cesta*} **-a \! -L** {*cesta*}<br>
+**test -L** {*cesta*} **-a \! -L** {*cesta*}<br>
+**test -p** {*cesta*} **-a \! -L** {*cesta*}
 
 *# je soubor neprázdný/**prázdný**?*<br>
 **test -f** {*cesta*} **-a -s** {*cesta*}<br>
