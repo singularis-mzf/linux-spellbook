@@ -278,7 +278,7 @@ skončí s chybou „Function not defined“.
 **l(**{*x*}**) / l(10)**<br>
 
 *# hodnota **pí***<br>
-*// Toto zaklínadlo vyžaduje spuštění „bc“ s parametrem „-l“. Pokud se budete snažit s jeho pomocí vypočítat pí na velké množství desetinných míst, podle mých zkušeností se s každým zvýšením počtu desetinných míst na dvojnásobek prodlouží doba výpočtu na šestinásobek, takže se pravděpodobně nedostanete dál než na desítky tisíc desetinných míst.*<br>
+*// Toto zaklínadlo vyžaduje spuštění „bc“ s parametrem „-l“ a je vhodné pro výpočet pí na malé množství desetinných míst (řádově do 1000).*<br>
 **4 \* a(1)**
 
 *# **arkustangens** (vrací radiány)*<br>
@@ -354,7 +354,8 @@ j() - Besselova funkce (netuším, k čemu by mohla být)
 ## Zaklínadla: Prvočísla a pí
 
 *# vypočítat pí na N desetinných míst*<br>
-**bc -l &lt;&lt;&lt;'scale = 1 +** {*N*}**; 4 \* a(1)' \| tr -d \\\\\\\\\\\\n**
+*// Tento příkaz je vhodný pouze k výpočtu pí na maximálně cca 32 000 desetinných míst (a i to může trvat podle výkonu počítače půl hodiny až hodinu). Nepoužívá nejefektivnější známé algoritmy a podle mého měření se s každým zdvojnásobením požadovaného počtu desetinných míst výpočetní čas zvýší přibližně na šestinásobek.*<br>
+**bc -l &lt;&lt;&lt;'scale = 1 +** {*N*}**; 4 \* a(1)' \| tr -d \\\\\\\\\\\\n \| sed -E 's/.$/\\n/'**
 
 *# prvočíselný rozklad (obecně/příklad)*<br>
 **factor** [{*kladnéceléčíslo*}]...<br>
@@ -500,5 +501,11 @@ Co hledat:
 * Různé další praktické stránky, recenze, videa, tutorialy, blogy, ...
 * Publikované knihy
 * [Stránky TL;DR](https://github.com/tldr-pages/tldr/tree/master/pages/common)
+
+### Pí
+
+* [10 tisíc desetinných míst](http://www.subidiom.com/pi/pi_10k.txt)
+* [10 milionů desetinných míst](https://introcs.cs.princeton.edu/java/data/pi-10million.txt)
+* [výřezy z 2 miliard desetinných míst](http://www.subidiom.com/pi/) (umí zobrazit až 250 číslic ze zadané pozice)
 
 !ÚzkýRežim: vyp

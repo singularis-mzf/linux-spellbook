@@ -10,6 +10,8 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 
 https://creativecommons.org/licenses/by-sa/4.0/
 
+[ ] + hledání a řešení duplicit (finddup)
+
 ⊨
 -->
 
@@ -231,9 +233,9 @@ xxx , xxx # priorita?
 **\-type d -empty**
 
 *# adresář s alespoň N položkami/právě N položkami/nejvýše N položkami*<br>
-**\-type d -exec sh -c 'test $(ls -1AbU \-\- "{}") -ge** {*N*}**' \\;** [**\-\-print**]<br>
-**\-type d -exec sh -c 'test $(ls -1AbU \-\- "{}") -eq** {*N*}**' \\;** [**\-\-print**]<br>
-**\-type d -exec sh -c 'test $(ls -1AbU \-\- "{}") -le** {*N*}**' \\;** [**\-\-print**]
+**\-type d -exec sh -c 'test $(ls -1AbU \-\- "$1" \| wc -l) -ge** {*N*}**' \-\- '{}' \\;** [**\-\-print**]<br>
+**\-type d -exec sh -c 'test $(ls -1AbU \-\- "$1" \| wc -l) -eq** {*N*}**' \-\- '{}' \\;** [**\-\-print**]<br>
+**\-type d -exec sh -c 'test $(ls -1AbU \-\- "$1" \| wc -l) -le** {*N*}**' \-\- '{}' \\;** [**\-\-print**]
 
 ### Ostatní
 

@@ -57,7 +57,7 @@ Mezi normálními odstavci může být:
 A toto už je obyčejný odstavec.
 
 * Takto vypadají seznamy.
-Položka seznamu může pokračovat na další řádce a obsahovat text **tučně**, *kurzívou*, nebo {*na doplnění*}.
+Položka seznamu může pokračovat na další řádce a obsahovat text **tučně**, *kurzívou*, {*na doplnění*} nebo {_klávesu_}.
 * Další položka seznamu. Může obsahovat také [hypertextový odkaz](http://www.seznam.cz/) a vynucený<br>konec řádky.
 
 ### Zaklínadlo

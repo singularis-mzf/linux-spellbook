@@ -173,11 +173,21 @@ ho nijak neomezují a nemají na něj vliv.
 *# **existuje** adresářová položka?*<br>
 **test -e** {*cesta*}
 
-*# je adresářová položka **soubor**/adresář/symbolický odkaz/pojmenovaná roura?*<br>
+*# je adresářová položka \{**soubor**/adresář/pojmenovaná roura} nebo symbolický odkaz na ni/něj?*<br>
 **test -f** {*cesta*}<br>
 **test -d** {*cesta*}<br>
-**test -L** {*cesta*}<br>
 **test -p** {*cesta*}
+
+*# je adresářová položka **soubor**/adresář/symbolický odkaz/pojmenovaná roura?*<br>
+**test -f** {*cesta*} **-a \! -L** {*cesta*}<br>
+**test -d** {*cesta*} **-a \! -L** {*cesta*}<br>
+**test -L** {*cesta*} **-a \! -L** {*cesta*}<br>
+**test -p** {*cesta*} **-a \! -L** {*cesta*}
+
+*# je adresářová položka symbolický odkaz (jakýkoliv/relativní/absolutní)*<br>
+**test -L** {*cesta*}<br>
+**test -L** {*cesta*} **&amp;&amp; readlink** [**\-\-**] {*cesta*} **\| egrep -qv ^/**<br>
+**test -L** {*cesta*} **&amp;&amp; readlink** [**\-\-**] {*cesta*} **\| egrep -q ^/**
 
 *# je soubor neprázdný/**prázdný**?*<br>
 **test -f** {*cesta*} **-a -s** {*cesta*}<br>
@@ -228,9 +238,13 @@ Poznámka: srovnávané položky nemusejí být v tomtéž adresáři; můžete
 **stat -c %G** {*cesta*}... ⊨ www-data<br>
 **stat -c %g** {*cesta*}... ⊨ 33
 
-*# datum a čas poslední změny (pro člověka či skript/časová známka Unixu)*<br>
+*# datum a čas poslední **změny** (pro člověka či skript/časová známka Unixu)*<br>
 **stat -c %y** {*cesta*}... ⊨ 2020-03-01 05:30:59.280255271 +0100<br>
 **stat -c %Y** {*cesta*}... ⊨ 1583037059
+
+*# **kanonická cesta** adresářové položky (v případě symb. odkazu vzít: odkaz/odkazovanou položku)*<br>
+**realpath -s** [**\-\-**] {*cesta*}<br>
+**realpath** [**\-\-**] {*cesta*}
 
 *# počet pevných odkazů*<br>
 **stat -c %h** {*cesta*}... ⊨ 1

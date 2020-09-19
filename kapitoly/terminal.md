@@ -35,7 +35,8 @@ __git_ps1
 
 Tato kapitola pokrývá způsoby, kterými můžete učinit okno emulátoru terminálu
 praktičtější, barevnější a méně jednotvárné, aniž byste musel/a opustit
-příkazový interpret bash.
+příkazový interpret bash – v Linuxu můžete nastavit barvu písma či pozadí, titulek,
+výzvu intepretu, přidat emotikony či vypsat ozdobné nápisy.
 
 Barva písma a pozadí se ve skutečnosti nastavuje vypsáním takzvaných *escape sekvencí*,
 což jsou zvláštní řídicí sekvence bajtů, kterým daný terminál rozumí
@@ -128,6 +129,32 @@ bude to zmíněno. Dále nepokrývá podporu šestnácti milionů barev.
 *# **podtržení** (zapnout/vypnout)*<br>
 **tput smul**<br>
 **tput rmul**
+
+### Ozdoby (nápisy a matrix)
+
+*# spustit simulaci „Matrixu“ (zelený spořič obrazovky/růžový spoříč obrazovky/interaktivní režim)*<br>
+*// V interaktivním režimu program ukončíte klávesou „q“, další klávesové zkratky na v manuálové stránce. Rychlost je od 0 (nejrychlejší) po 9 (nejpomalejší).*<br>
+**cmatrix -bs -C green** [**-u** {*rychlost*}]<br>
+**cmatrix -b -C magenta** [**-u** {*rychlost*}]<br>
+**cmatrix -b**
+
+*# vypsat **nápis** ozdobným písmem (alternativy)*<br>
+*// Pro český text s háčky a čárky se bohužel dobře hodí jen písma „ascii9“, „smmono9“ a „standard“; čárky zvládají i některá další; písmena anglické abecedy zvládají všechna. Z filtrů mohu doporučit „gay“ a „border“, méně „metal“, „180“ a „flip“.*<br>
+**toilet -t -f** {*písmo-pro-toilet*} [**-F** {*filtr*}[**:**{*další-filtr*}]...] <nic>[**\-\-**]<nic> **"**{*nápis*}**"**<br>
+{*zdroj*} **\| toilet -t -f** {*písmo-pro-toilet*} [**-F** {*filtr*}[**:**{*další-filtr*}]...]
+
+*# vypsat seznam dostupných písem/filtrů/výstupních formátů pro „toilet“*<br>
+**find /usr/share/figlet -maxdepth 1 -type f -printf %f\\\\n \| sed -nE 's/\\.(flf|tlf)$//;T;p' \| sort**<br>
+**toilet -F list**<br>
+**toilet -E list**
+
+*# vypsat vzorník ozdobných nápisů různými písmy*<br>
+**find /usr/share/figlet -maxdepth 1 -type f -printf %f\\\\n \| sed -nE 's/\\.(flf|tlf)$//;T;p' \| sort \| while read -r pismo; do printf %s:\\\\n "$pismo"; toilet -f "$pismo" \-\-gay -t \-\- "Žluťoučký kůň"; done** [**\| less -r**]
+
+*# příklady ozdobných nápisů*<br>
+**toilet -t -f slant -F gay "Formule 1"**<br>
+**toilet -t -f standard -F gay:border "Žďár nad Sázavou"**<br>
+**tput setaf 6; tput setab 4; tput bold; tput el; toilet -t -f standard -F border "Test"; tput sgr0; tput el**
 
 ### Zjistit údaje o terminálu
 
@@ -608,13 +635,20 @@ Testováno na fontu noto...
 
 ## Instalace na Ubuntu
 
-Všechny použité součásti jsou základními nástroji přítomnými v každé instalaci Ubuntu.
-Pokud však chcete použít emotikony, aby v terminálu vypadaly dobře, musíte nainstalovat
+Pokud chcete použít emotikony, aby v terminálu vypadaly dobře, musíte nainstalovat
 jedno z emotikonových písem, jinak se zobrazí nevzhledně a černobíle:
 
 *# (alternativy)*<br>
 **sudo apt-get install fonts-noto-color-emoji**<br>
 **sudo apt-get install fonts-emojione**
+
+Příkaz cmatrix, pokud ho potřebujete, je nutno doinstalovat:
+
+**sudo apt-get install cmatrix**
+
+Pokud potřebujete příkaz „toilet“, vždy ho instalujte v kombinaci s balíčkem „figlet“, který obsahuje potřebná písma:
+
+**sudo apt-get install toilet figlet**
 
 ## Ukázka
 *# *<br>

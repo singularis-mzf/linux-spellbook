@@ -150,6 +150,11 @@ V následujících zaklínadlech platí:
 *# **odpojit** systém souborů*<br>
 [**sudo**] **umount** {*kam-připojit*}
 
+*# přepnout již připojený systém souborů do režimu **jen pro čtení**/do režimu čtení i zápis*<br>
+*// Tato operace selže, pokud je některý soubor z daného systému souborů otevřený pro zápis. Otevření pro čtení nevadí.*<br>
+**sudo mount -o remount,ro**[**,**{*další-volba*}]... {*/přípojný/bod/nebo/zařízení*}<br>
+**sudo mount -o remount,rw**[**,**{*další-volba*}]... {*/přípojný/bod/nebo/zařízení*}
+
 *# připojit **adresář** z již připojeného systému souborů na nový přípojný bod*<br>
 *// Poznámka: Tímto příkazem se vytvoří nové, nezávislé připojení existujícího systému souborů.*<br>
 **sudo mount \-\-bind** {*/cesta/k/adresáři*} {*/nový/přípojný/bod*}

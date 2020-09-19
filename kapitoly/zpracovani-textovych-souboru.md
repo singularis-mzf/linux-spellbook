@@ -18,6 +18,7 @@ Poznámky:
 [ ] Nepokrývá formát CSV.
 [ ] Nedobré pokrytí formátu PSV.
 [ ] Promyslet, kdy použít „C“ a kdy „C.UTF-8“.
+[ ] fmt a egrep -o (zpracování po slovech)
 
 ⊨
 -->

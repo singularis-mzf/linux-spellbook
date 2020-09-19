@@ -13,14 +13,15 @@ https://creativecommons.org/licenses/by-sa/4.0/
 -->
 # Mechanismus překladu
 
-**STAV TEXTU:** 🚧 rozepsaný
+**STAV TEXTU:** aktuální
 
 ## Vstup
 
 Vstupem pro mechanismus překladu jsou zdrojové soubory kapitol (v adresáři
 *kapitoly*) a dodatků (v adresáři *dodatky*). Tyto zdrojové kódy jsou
 v upraveném Markdownu. Referenční přehled všech podporovaných
-konstrukcí se nachází ve speciální kapitole [Ukázka](../kapitoly/_ukazka.md).
+konstrukcí se nachází ve speciální kapitole [Ukázka](../kapitoly/_ukazka.md)
+a uživatelsky přívětivý popis v souboru [syntaxe-kapitol.md](syntaxe-kapitol.md).
 
 ## Výstup
 
@@ -87,11 +88,11 @@ Sloupce *postprocess.dat* mají následující význam:
 | 5 | Opravené znění opravované řádky. | test \\emph\{něčeho\} |
 
 Mechanismus postprocessingu se spouští samostatně nad každou kapitolou, pro každý jednotlivý PDF formát.
-Funguje tak, že vyhledá výskyt řádky podle čtvrtého sloupce záznamu v souboru postprocess.dat a nahradí ho textem pátého sloupce téhož záznamu.
+Funguje tak, že vyhledá výskyt řádky podle čtvrtého sloupce záznamu a nahradí ho textem pátého sloupce téhož záznamu.
 
 ### stitky.tsv
 
-Tabulka ve formátu TSV, která uvádí seznam kapitol k jednotlivým štítkům.
+Tabulka ve formátu TSV, která uvádí seznam vyskytujících se štítků a ke každému seznam příslušných kapitol.
 Vzniká jako vedlejší produkt skriptu [skripty/extrakce/fragmenty.awk](../skripty/extrakce/fragmenty.awk).
 
 Sloupce *stitky.tsv* jsou následující:
@@ -124,7 +125,7 @@ Sloupce *osnova/\*.tsv* jsou následující:
 
 | # | Popis | Příklad |
 | ---: | :--- | :--- |
-| 1 | Typ záznamu (KAPITOLA, SEKCE, nebo PODSEKCE). | PODSEKCE |
+| 1 | Typ záznamu (KAPITOLA, SEKCE, PODSEKCE, nebo ZAKLINADLO). | PODSEKCE |
 | 2 | Identifikátor záznamu, jehož formát se liší podle typu záznamu. | 5x4 |
 | 3 | Číslo řádky ve vstupním zdrojovém kódu (slouží výhradně k ladění). | 374 |
 | 4 | Text (např. název kapitoly). | Ostatní |
@@ -137,6 +138,7 @@ Formáty identifikátoru záznamu jsou následující:
 | KAPITOLA | Prázdný řetězec. | |
 | SEKCE | Pořadové číslo sekce v kapitole. | 3 |
 | PODSEKCE | Číslo sekce, „x“ a pořadové číslo podsekce v sekci. | 3x2 |
+| ZAKLINADLO | Není implementováno. | |
 
 ### symboly/\*
 
@@ -254,7 +256,7 @@ není to sice vyžadováno, ale překlad bez splnění tohoto předpokladu jsem 
 
 ### konfig.ini
 
-Soubor v klasickém formátu „INI-file“. Dělí se na tři sekce:
+Soubor v klasickém formátu „ini“. Dělí se na tři sekce:
 
 *\[Filtry\]*
 
