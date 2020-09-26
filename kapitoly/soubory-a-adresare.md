@@ -35,9 +35,9 @@ Nepokrývá však zacházení s konkrétním obsahem souborů (analýzu, kopír
 Pevnými a symbolickými odkazy se tato kapitola zabývá velmi okrajově, bude jim věnována
 samostatná kapitola.
 
-Tato kapitola se nezabývá připojováním souborových systémů.
+Tato kapitola se nezabývá připojováním souborových systémů ani prací s pododdíly btrfs.
 
-Tato verze kapitoly dostatečně nepokrývá „mód“ (číselné vyjádření základních přístupových práv a zvláštních příznaků).
+Tato verze kapitoly nepokrývá příkazy specifické pro souborový systém typu btrfs.
 
 ## Definice
 
@@ -45,7 +45,7 @@ Tato verze kapitoly dostatečně nepokrývá „mód“ (číselné vyjádření
 * Adresářová položka je **skrytá**, pokud její název začíná znakem „.“.
 * **Přístupová práva** jsou nastavení souboru či adresáře, která určují, kteří uživatelé budou moci s daným souborem či adresářem zacházet. Nastavení přístupových práv se dělí na **základní**, které je přítomno vždy, a **rozšířená** (ACL, access control list), jejichž nastavení lze přidávat či odebírat. (Vedle toho existují ještě „výchozí“ přístupová práva, ale těmi se pro jejich neintuitivnost a zřídkavé využití budu zabývat jen okrajově.)
 * **Zvláštní příznaky** jsou tři příznaky (u+s, g+s, +t), které mohou být nastaveny souborům a adresářům a mají na ně zvláštní účinky. Jim příbuzné jsou **zvláštní restrikce ext4**, které jsou ale dostupné pouze na souborovém systému ext4 (a částečně ext2 a ext3).
-* **Mód** (mode) je číselné vyjádření v osmičkové soustavě, které shrnuje základní nastavení přístupových práv a nastavení zvláštních příznaků.
+* **Mód** (mode) je standardizované číselné vyjádření zvláštních příznaků a základních přístupových práv v osmičkové soustavě.
 * **Uživatelské rozšířené atributy** (URA, user xattrs) umožňují ukládat k souborům a adresářům další obecná data v podobě dvojic klíč–hodnota; jsou však k dispozici pouze na souborovém systému ext4, jsou poměrně skryté, při jakémkoliv kopírování se obvykle ztratí a nejsou příliš využívány. Proto doporučuji se jim raději vyhýbat.
 <!--
 * **Kanonická cesta** je absolutní cesta k adresářové položce od kořenového adresáře, která neobsahuje symbolické odkazy ani žádné zbytečné prvky.
@@ -55,17 +55,17 @@ Tato verze kapitoly dostatečně nepokrývá „mód“ (číselné vyjádření
 
 V linuxovém souborovém systému existují tři přístupová práva, která lze u adresářové položky dovolit či zakázat:
 
-Právo **čtení** (r, read) znamená:
+Právo **čtení** (r, číselná hodnota „4“, read) znamená:
 
 * U souboru právo otevřít soubor pro čtení a přečíst jeho obsah, a to jak sekvenčně, tak na přeskáčku.
 * U adresáře právo přečíst seznam názvů položek v adresáři včetně jejich typu (soubor či adresář), ale už bez dalších údajů.
 
-Právo **zápisu** (w, write) znamená:
+Právo **zápisu** (w, číselná hodnota „2“, write) znamená:
 
 * U souboru právo otevřít daný soubor pro zápis, zkrátit ho (i na nulovou velikost), přepisovat existující bajty souboru a zapisovat nové na jeho konec.
 * U adresáře právo vytvářet nové adresářové položky, měnit názvy stávajících a stávající mazat.
 
-Právo **spouštění** (x, execute) znamená:
+Právo **spouštění** (x, číselná hodnota „1“, execute) znamená:
 
 * U souboru právo daný soubor spustit jako proces. Toto právo stačí, pokud se jedná o program v přímo spustitelném binárním formátu; jde-li ve skutečnosti o interpretovaný skript, je potřeba také právo „r“.
 * U adresáře právo do daného adresáře vstoupit, zjistit podrobnější informace o jeho položkách (např. přístupová práva) a dál k nim přistupovat. Nezahrnuje však možnost přečíst seznam názvů položek, takže pokud máte k adresáři samotné právo „x“, musíte znát názvy jeho položek, abyste s nimi mohli zacházet. (Samotné právo „r“ bez práva „x“ zase umožní programu vypsat seznam položek v adresáři, ale už o nich nebude moci nic zjistit.
@@ -73,9 +73,10 @@ Právo **spouštění** (x, execute) znamená:
 Každá adresářová položka má vlastníka (což je některý uživatel, např. „root“) a příslušnou skupinu.
 Přístupová práva může měnit pouze vlastník položky nebo superuživatel.
 
-Z historických důvodů existují dvě nastavení přístupových práv – základní (mode)
+Z historických důvodů existují dvě nastavení přístupových práv – základní (POSIX)
 a rozšířené (ACL). Základní nastavení je vždy přítomno a dělí se na nastavení
-pro vlastníka („u“), skupinu („g“) a ostatní („o“). Rozšířené nastavení je pak tvořeno
+pro vlastníka („u“), skupinu („g“) a ostatní („o“), vždy v tomto pořadí.
+Rozšířené nastavení je pak tvořeno
 seznamem dalších položek, které mohou stanovovat dodatečná práva konkrétním
 uživatelům a skupinám. Tento seznam však může být (a také obvykle bývá) prázdný.
 
@@ -89,12 +90,12 @@ Nastavení přístupových práv se uplatňují následovně:
 
 Vedle přístupových práv může mít každý soubor či adresář nastaveny ještě tři zvláštní příznaky:
 
-**Příznak zmocnění vlastníka** (u+s, set-uid bit) má význam pouze u souborů
+**Příznak zmocnění vlastníka** (u+s, číselná hodnota „4“, set-uid bit) má význam pouze u souborů
 a pouze v kombinaci s právem „x“. Je-li takový soubor spuštěn, vzniklý proces
 získá EUID (a tedy i práva) vlastníka souboru, a to i v případě, že ho spustil jiný uživatel.
-Nejčastějším použitím je spuštění určitého program u s právy superuživatele.
+Nejčastějším použitím je spuštění určitého programu s právy superuživatele.
 
-**Příznak zmocnění skupiny** (g+s, set-gid bit) funguje u souborů analogicky
+**Příznak zmocnění skupiny** (g+s, číselná hodnota „2“ set-gid bit) funguje u souborů analogicky
 – spustí-li daný soubor kterýkoliv uživatel, vzniklý proces získá EGID (tedy skupinová práva)
 skupiny souboru. Navíc ovšem funguje i u adresářů – všechny nově vytvořené adresářové položky
 v adresáři s příznakem zmocnění pro skupinu budou při vytvoření přiřazeny stejné skupině
@@ -103,7 +104,7 @@ který je vytvořil.) Takto vytvořené podadresáře navíc získají také př
 což znamená, že tento příznak se automaticky rozšíří i do všech nově vytvořených podadresářů,
 pokud u nich nebude výslovně zrušen.
 
-Třetí speciální příznak je **příznak omezení smazání** (+t, sticky-bit).
+Třetí zvláštní příznak je **příznak omezení smazání** (+t, číselná hodnota „1“, sticky-bit).
 Ten má význam pouze u adresářů, kde omezuje výkon práva „w“ – brání ve smazání či přejmenování
 „cizích položek“, tedy přesněji – zabrání ve smazání či přejmenování adresářové položky
 každému uživateli, který není vlastníkem dané položky či vlastníkem samotného adresáře.
@@ -117,6 +118,32 @@ Poznámka: vzniklé podadresáře tento příznak nedědí.
 Na **superuživatele** se z přístupových práv a příznaků vztahuje pouze právo spouštění
 u souborů a příznak zmocnění pro skupinu. Ostatní nastavení přístupových práv ani příznaků
 ho nijak neomezují a nemají na něj vliv.
+
+### Mód
+
+Mód se vyjadřuje čtyřmístným číslem v osmičkové soustavě (0000 až 7777),
+kde jednotlivé číslice zleva doprava znamenají: **Příznaky, práva vlastníka, práva skupiny, práva ostatních.**
+První číslice vyjadřující příznaky je nepovinná, pokud chybí, uvažuje se nula.
+
+Každou číslici vypočteme jako součet číselných hodnot příznaků,
+které *mají* být nastaveny, a práv, která *mají* být přidělena.
+(Číselné hodnoty příznaků a práv jsou uvedeny výše.)
+
+Příklad: chceme-li adresáři nastavit příznak omezení smazání (číselná hodnota 1)
+a nastavit, že vlastník bude mít všechna práva (4 + 2 + 1), skupina jen právo čtení (4)
+a ostatní nebudou mít žádná práva (0), výsledný mód bude: „1740“.
+
+Pro čtení módu si musíme zapamatovat význam jednotlivých číslic v pořadí
+a číselné hodnoty příznaků a práv. Pak můžeme mód snadno přečíst následujícím postupem:
+
+* Pokud je číslice 4, 2 nebo 1, výsledkem je právě jeden příznak/právo této číselné hodnoty.
+* Pokud je číslice 7, výsledkem jsou všechny příznaky/práva.
+* Pokud je číslice 0, výsledkem jsou žádné příznaky/práva.
+* U zbylých číslic (6, 5 nebo 3) budou výsledkem dva příznaky/práva; u nich zkoušíme postupně odečíst 4 a 2; pokud se nám to podaří, aniž bychom se dostali pod nulu, zapíšeme příznak/právo odpovídající číslici, kterou jsme odečetli, a druhý příznak/právo odpovídající číslici, která nám po odečtení zbyla. 6 = 4 + 2, 5 = 4 + 1, 3 = 2 + 1.
+
+Příklad: mějme mód 3571. První číslice: 4 odečíst nejde, takže odečteme 2 a zbude nám jedna; zapíšeme tedy příznak zmocnění skupiny (hodnota 2) a příznak omezení smazání (hodnota 1). Druhá číslice: 4 odečíst jde a zbude nám 1, zapíšeme tedy práva čtení (4) a spouštění (1). Třetí číslice: 7 znamená pro skupinu všechna práva, tedy čtení, zápis i spouštění. Čtvrtá číslice: 1 znamená pro ostatní jen právo spouštění.
+
+V praxi se můžeme setkat i s módy tvořenými třemi číslicemi, u těch je pouze vynechaná úvodní nula (tedy neobsa).
 
 !ÚzkýRežim: vyp
 
@@ -389,7 +416,7 @@ Poznámka: srovnávané položky nemusejí být v tomtéž adresáři; můžete
 [**sudo**] **chmod** [**-R**] **u+s** [**\-\-**] {*cesta*}...<br>
 [**sudo**] **chmod** [**-R**] **u-s** [**\-\-**] {*cesta*}...
 
-*# zapnout/vypnout současně všechny tři speciální příznaky*<br>
+*# zapnout/vypnout současně všechny tři zvláštní příznaky*<br>
 [**sudo**] **chmod** [**-R**] **ug+s,+t** [**\-\-**] {*cesta*}...<br>
 [**sudo**] **chmod** [**-R**] **ug-s,-t** [**\-\-**] {*cesta*}...
 
@@ -542,10 +569,6 @@ které můžete doinstalovat takto:
 * Uživatelé a skupiny jsou v souborovém systému uloženy ve formě čísel UID a GID. Proto když uložíte soubor na USB flash disk a přenesete ho na jiný počítač, kde pracujete jako uživatel s jiným UID, může se stát, že tam k souborům na flash disku nebudete mít dostatečná přístupová práva.
 * V Linuxu existují také „výchozí přístupová práva“, což je nastavení přístupových práv na adresáři, které (je-li nastaveno) ovlivňuje přístupová práva nově vyvářených položek; bohužel nelze říci „stanovuje“, ale platí pouze „ovlivňuje“ – na výsledných právech se podílejí i další faktory, nelze rozlišit práva pro soubory a pro adresáře a celé je to dost komplikované a neintuitivní. Zatím jsem naštěstí nanarazil/a na případ, kdy by tuto vlastnost skutečně nějaký program použil.
 * Symbolické odkazy mají vlastníka a skupinu, ale nemají vlastní přístupová práva. Přístup k odkazované položce se vždy řídí jejími přístupovými právy, čtení symbolického odkazu je bez omezení a zápis do něj není dovolen (je nutno místo toho odkaz smazat a vytvořit nový).
-
-<!--
-### Přístupová práva a speciální příznaky číselně (mód)
--->
 
 ## Další zdroje informací
 

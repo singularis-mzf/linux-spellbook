@@ -263,7 +263,7 @@ Poznámka k pevným odkazům: pevný odkaz v souborovém systému typu btrfs n
 -->
 
 *# vypsat místní zařízení a oddíly (pro člověka/pro skript)*<br>
-*// Poznámka: vypsaný seznam může obsahovat i zařízení nedostupná či k ukládání dat nevhodná. Buďte při jejich zkoumání opatrní.*<br>
+*// Poznámka: vypsaný seznam může obsahovat i zařízení nedostupná či k ukládání dat nevhodná. Buďte při jejich zkoumání opatrný/á.*<br>
 [*sudo*] **lsblk** [**\-\-all**]<br>
 [*sudo*] **lsblk -ln -o NAME \| sed -E 's!\-\-!\\x00!g;s!-!/!g;s!\\x00!-!g;s!^!/dev/!' \| LC\_ALL=C sort**
 

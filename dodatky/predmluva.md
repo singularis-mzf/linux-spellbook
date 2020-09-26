@@ -218,11 +218,16 @@ Ve srovnání s verzí 1.12 Hana Hlavní byly z vydání vypuštěny kapitoly 
 a „Plánování úloh“. Kapitola „Barvy a titulek terminálu“ byla přejmenována
 na „Terminál“ a rozšířena o vybrané emotikony a další ozdoby.
 
-Verze 2.0 také přináší zcela novou kapitolu Zpracování binárních souborů
-a zvláštní kapitolu Základní znalosti. Kapitola Regulární výrazy byla rozšířena o vzorky bashe.
+Verze 2.0 také přináší zcela novou kapitolu „Zpracování binárních souborů“
+a zvláštní kapitolu „Základní znalosti“.
+Kapitola „Regulární výrazy“ byla rozšířena o vzorky bashe,
+kapitola „Diskové oddíly“ o příkazy pro práci se souborovými systémy typu *btrfs*
+a do kapitoly „Soubory a adresáře“ přibylo vysvětlení „módu“.
 
-V HTML verzi je nově jako výchozí tmavý motiv, byl vylepšen design rámu „okna“ a všechny kapitoly i dodatky nyní mají ikonu.
-PDF verze naopak nepřináší žádné novinky.
+V HTML verzi je nově jako výchozí tmavý motiv, byl vylepšen design rámu „okna“
+a všechny vydané kapitoly i dodatky nyní mají ikonu.
+
+V PDF verzi byly ikony zaklínadel nahrazeny jednoduchými odrážkami.
 
 Vydání verze 2.1, jménem Iveta Ivanovická, očekávám v průběhu listopadu 2020.
 

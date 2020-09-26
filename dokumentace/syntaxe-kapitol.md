@@ -67,6 +67,12 @@ Ve všech druzích odstavců a seznamů je povoleno toto formátování:
 * hypertextový odkaz „`[text](adresa)`“ (nesmí se kombinovat)
 * značka `<br>` způsobí vynucený zlom řádky (lze kombinovat)
 
+Pozor! Formátovací značka musí být uzavřena na tomtéž řádku zdrojového kódu,
+kde byla otevřena. Následující příklad je tedy chybný:
+
+``Tento příklad je *chybný,``<br>
+``protože kurzíva* měla být ukončena už na předchozí řádce.``
+
 ### Obrázky
 
 Obrázky je dovoleno vkládat pouze jako samostatné odstavce, např. takto:
