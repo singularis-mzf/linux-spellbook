@@ -20,6 +20,11 @@ https://creativecommons.org/licenses/by-sa/4.0/
 [ ] Zpracovat „git stash“
 [ ] Zpracovat „git for-each-ref“
 [ ] Zmínit nepokrytí submodulů.
+[ ] git rebase -i (interactive rebase)
+
+[ ] HEAD^^ = o dvě úrovně nahoru
+[ ] git push {*vzdálený-repozitář*} {*co-lokálně*}:{*kam-vzdáleně*} // + vynechání co-lokálně
+[ ] git fetch {*vzdálený-repozitář*} {*co-vzdáleně*}:{*kam-lokálně*}
 
 Ubuntu 22.04:
 git config --global init.defaultBranch {název} // od git 2.28 je možno změnit výchozí název větve
@@ -33,10 +38,12 @@ git config --global init.defaultBranch {název} // od git 2.28 je možno změnit
 !ÚzkýRežim: zap
 
 ## Úvod
+
 Git je systém správy verzí. Umožňuje vám zachytit přesný stav souborů v určitém
-adresáři a jeho podadresářích. Každý takto zachycený stav se opatří datem, časem
-a popisem a později se k němu můžete vrátit, nebo ho exportovat do samostatného
-adresáře. Kromě toho umožňuje git synchronizaci a slučování změn v jinak oddělených
+adresáři a jeho podadresářích, jako byste si vytvořili jeho neměnnou kopii.
+Každý takto zachycený stav se opatří datem, časem a popisem a později se k němu
+můžete vrátit, nebo ho exportovat do samostatného adresáře.
+Kromě toho umožňuje git synchronizaci a slučování změn v jinak oddělených
 kopiích daného adresáře a perfektní evidenci změn v textových souborech.
 
 Tato verze kapitoly nepokrývá dostatečně řešení konfliktů při slučování větví
@@ -183,6 +190,9 @@ Každá revize je jednoznačně identifikována pomocí své MD5 heše. Kromě t
 
 *# ručně přiřadit aktuální větvi **určitou revizi** (i nesouvisející)*<br>
 **git reset \-\-soft** {*revize*}
+<!--
+git branch -f {větev} {revize}
+-->
 
 *# vytvořit novou **odpojenou větev** (orphan branch)(z určité revize/zcela prázdnou)*<br>
 **git checkout \-\-orphan** [{*revize*}]
@@ -397,6 +407,7 @@ Přehled podporovaných konfiguračních voleb pro příkaz „git config“ naj
 * [Kniha „Pro Git“](https://www.root.cz/knihy/pro-git/) (ISBN 978-80-904248-1-4, podléhá licenci [Creative Commons Uveďte autora-Nevyužívejte dílo komerčně-Zachovejte licenci 3.0 United States](https://creativecommons.org/licenses/by-nc-sa/3.0/us/))
 * [Video: Git křížem krážem](https://www.youtube.com/watch?v=OZeqGAbtBLQ)
 * [Video: Git - rýchly úvod, prvé príkazy](https://www.youtube.com/watch?v=8o5jutq2TEU) (slovensky)
+* [Learn Git Branching](https://learngitbranching.js.org/) (anglicky) (velmi dobrý kurz, podléhá licenci MIT)
 * [Oficiální online referenční příručka](https://git-scm.com/docs) (anglicky)
 * [Oficiální stránka programu](https://git-scm.com/) (anglicky)
 * [Manuálová stránka](http://manpages.ubuntu.com/manpages/focal/en/man1/git.1.html) (anglicky)

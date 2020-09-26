@@ -194,6 +194,8 @@ Všechny použité nástroje jsou základní součástí Ubuntu přítomnou i v
 * Maximální počet pevných odkazů na jeden soubor je omezený souborovým systémem; v souborových systémech typu ext4 je to 65000.
 * Soubor bude odstraněn z disku v momentě, kdy už na něj neexistují žádné pevné odkazy, není spuštěný jako proces a není otevřený žádným deskriptorem žádného procesu.
 * Symbolický odkaz sám o sobě je „nezapisovatelný“; pokud ho chceme změnit, musíme ho nejprve smazat a pak znovu vytvořit; to také znamená, že pokud se odkaz nachází v adresáři, kam nemáme právo zápisu, nemůžeme ani změnit obsah symbolického odkazu.
+* Symbolický odkaz může odkazovat na jiný symbolický odkaz, ale maximální počet zanoření symbolických odkazů je 40.
+* Maximální délka obsahu symbolického odkazu je 4095 bajtů; některé souborové systémy mohou mít přísnější omezení.
 
 ## Další zdroje informací
 <!--

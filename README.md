@@ -13,11 +13,14 @@ https://creativecommons.org/licenses/by-sa/4.0/
 -->
 ![Linux: Kniha kouzel](obrazky/banner.png)
 
-„Linux: Kniha kouzel“ je open source sbírka velmi krátkých řešených příkladů pro příkazovou řádku/příkazový řádek systému Linux, především distribuce Ubuntu. V současnosti je dostupná ve formátu HTML pro zobrazení na počítači a ve formátu PDF pro tisk na papír.
+„Linux: Kniha kouzel“ je multimediální sbírka krátkých řešených příkladů
+z prostředí svobodného software v operačním systému Linux, především distribucí Ubuntu a Linux Mint.
+Je vydávána v PDF A4 a B5 pro profesionální i domácí tisk a ve formát HTML pro snadné vykopírování
+zaklínadel, můžete ji tedy používat na papíře i v počítači, proto „multimediální“.
 
-Verze *vanilková příchuť 2.0* bude cílena na *Ubuntu 20.04 Focal Fossa* a jeho deriváty.
+Verze *vanilková příchuť 2.0* je cílena na *Ubuntu 20.04 Focal Fossa* a jeho deriváty.
 
-Příručka podléhá licenci [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+Obsah podléhá licenci [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 Podrobné údaje o autorství zdrojových souborů jsou uvedeny v komentářích v jejich záhlaví;
 údaje o autorství obrázkových souborů jsou uvedeny v souboru [COPYRIGHT](COPYRIGHT).
 
@@ -25,27 +28,44 @@ Podrobné údaje o autorství zdrojových souborů jsou uvedeny v komentáří
 
 ### Použití online (pro začátečníky)
 
-Navštivte [webové stránky](https://singularis-mzf.github.io/) a vyberte si nejnovější verzi pro váš operační systém (verzi 2.x pro Ubuntu 20.04 a jeho deriváty; verzi 1.x pro Ubuntu 18.04 a jeho deriváty). Na přehledové stránce si pak zvolíte jednu či více kapitol, které si chcete prohlédnout (zvolíte-li si více kapitol, doporučuji je otevít v samostatných „panelech“ prohlížeče). Ve vybraných kapitolách pak najděte nějaké zaklínadlo, které si chcete vyzkoušet. Obvyklý postup jeho použití je následující:
+Navštivte [webové stránky](https://singularis-mzf.github.io/) a vyberte si nejnovější verzi
+pro váš operační systém (verzi 2.x pro Ubuntu 20.04 a jeho deriváty; verzi 1.x pro Ubuntu 18.04
+a jeho deriváty). Na přehledové stránce si pak zvolíte jednu či více kapitol, které si chcete
+prohlédnout (zvolíte-li si více kapitol, doporučuji je otevít v samostatných „panelech“ prohlížeče).
+Ve vybraných kapitolách pak najděte nějaké zaklínadlo, které si chcete vyzkoušet.
+Obvyklý postup jeho použití je následující:
 
 1. Zamyslete se, jaký kontext zaklínadlo vyžaduje. (Nemá smysl se např. snažit vypsat název větve gitu mimo jeho pracovní adresář. Ne všechna zaklínadla se zapisují přímo na příkazovou řádku.)
 2. Označte zaklínadlo v prohlížeči (má-li zaklínadlo víc alternativních variant, označte jen jednu z nich).
 3. Zkopírujte ho do schránky (Ctrl+C).
 4. Přepněte se do okna terminálu (nebo otevřete nové).
 5. Vložte zaklínadlo (Shift+Ctrl+V).
-6. Projděte zaklínadlo a místa, která jsou na webové stránce označena podtržením (k doplnění), doplňte odpovídajícími parametry.
+6. Projděte zaklínadlo a místa, která jsou na webové stránce označena podtržením (k doplnění), doplňte odpovídajícími parametry. Smažte hranaté závorky obklopující volitelné parametry.
 7. Potvrďte příkaz (Enter).
 
-*Poznámka:* Linux: Kniha kouzel není tutorial. Pokud na první pokus nepochopíte, jak se uvedená zaklínadla používají, musíte nejprve získat zkušenosti nebo navštívit jiné stránky, kde vám použití daných nástrojů někdo názorně vysvětlí. Odkazy na takové stránky (včetně videí) najdete v sekci „Další zdroje informací“ prakticky v každé kapitole.
+*Poznámka:* Linux: Kniha kouzel není tutorial. Pokud na první pokus nepochopíte, jak se
+uvedená zaklínadla používají, musíte nejprve získat zkušenosti nebo navštívit jiné stránky,
+kde vám použití daných nástrojů někdo názorně vysvětlí. Odkazy na takové stránky (včetně videí)
+najdete v sekci „Další zdroje informací“ prakticky v každé kapitole.
 
 ### Použití online (pro pokročilé)
 
-Navštivte [webové stránky](https://singularis-mzf.github.io/), vyberte požadovanou verzi knihy, zvolte kapitoly, které jsou blízké tématu, které vás zajímá, a projděte přehled zaklínadel, který kapitola nabízí. Zaklínadla můžete ze stránky přímo vykopírovat, jen bude potřeba doplnit parametry označené podtržením.
+Navštivte [webové stránky](https://singularis-mzf.github.io/), vyberte požadovanou verzi knihy,
+zvolte kapitoly, které jsou blízké tématu, které vás zajímá, a projděte přehled zaklínadel,
+který kapitola nabízí. Zaklínadla můžete ze stránky přímo vykopírovat, jen bude potřeba
+doplnit parametry označené podtržením a odstranit hranaté závorky vyznačující volitelné parametry.
 
 ### Použití offline
 
-Na stránce [releases](https://github.com/singularis-mzf/linux-spellbook/releases) tohoto repozitáře si můžete stáhnout offline HTML variantu libovolné vydané verze projektu. Offline HTML verze funguje opravdu offline; internet budete potřebovat, jedině pokud se budete chtít podívat na některý z odkazovaných webů.
+Na stránce [releases](https://github.com/singularis-mzf/linux-spellbook/releases) tohoto repozitáře
+si můžete stáhnout offline HTML variantu libovolné vydané verze projektu. Offline HTML verze funguje
+opravdu offline; internet budete potřebovat, jedině pokud se budete chtít podívat na některý
+z odkazovaných webů.
 
-Pro tisk jsou určeny varianty ve formátu PDF, které jsou rovněž ke stažení na stránce [releases](https://github.com/singularis-mzf/linux-spellbook/releases). Tištěná verze je podstatně přehlednější než jakákoliv elektronická. Doporučuji vytištěné listy svázat do kroužkové vazby a použít lepící záložky k označení nejčastěji používaných zaklínadel.
+Pro tisk jsou určeny varianty ve formátu PDF, které jsou rovněž ke stažení na stránce
+[releases](https://github.com/singularis-mzf/linux-spellbook/releases). Tištěná verze
+je podstatně přehlednější než jakákoliv elektronická. Doporučuji vytištěné listy svázat
+do kroužkové vazby a použít lepící záložky k označení nejčastěji používaných zaklínadel.
 
 ## Návod k sestavení
 
@@ -110,6 +130,7 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [system](kapitoly/system.md) | Systém | 1.2 |
 | [terminal](kapitoly/terminal.md) | Terminál | (1.0) |
 | [vim](kapitoly/vim.md) | Vim | 1.8 |
+| [zpracovani-binarnich-souboru](kapitoly/zpracovani-binarnich-souboru.md) | Zpracování binárních souborů | 2.0 |
 | [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) | Zpracování textových souborů | 1.2 | [zpracovani-videa-a-zvuku](kapitoly/zpracovani-videa-a-zvuku.md) | Zpracování videa a zvuku | 1.0 |
 
 ## Vyřazené kapitoly
@@ -121,7 +142,6 @@ a kapitoly ani dodatky se nesmějí opakovat.
 
 | ID | Název kapitoly | Růst | Stav |
 | :--- | :--- | ---: | :--- |
-| [zpracovani-binarnich-souboru](kapitoly/zpracovani-binarnich-souboru.md) | Zpracování binárních souborů | 100% | připravena k vydání |
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
 | [kalkulace](kapitoly/kalkulace)| Kalkulace | 50% | dítě |
 | [zpracovani-obrazku](kapitoly/zpracovani-obrazku.md) | Zpracování obrázků | 40% | dítě |

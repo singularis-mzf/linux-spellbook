@@ -21,14 +21,13 @@ https://creativecommons.org/licenses/by-sa/4.0/
 Tato kapitola uvádí základní znalosti, které každý středně pokročilý uživatel bashe
 (což je nejčastější a v Ubuntu výchozí interpret příkazové řádky) dobře zná a často používá.
 Jejich znalost se vám může velmi vyplatit při přizpůsobování zaklínadel vašim potřebám,
-takže vám doporučuji si tuto krátkou kapitolu projít, ať už je to pro vás opakování,
-nebo zcela nové znalosti.
+takže vám doporučuji si tuto krátkou kapitolu projít.
 
 ## Vstupy, výstupy a přesměrování
 
 Aby se terminálové příkazy v Linuxu daly snáze propojovat, nabízejí jednotné rozhraní svých vstupů
 a výstupů; každý takový příkaz má **standardní vstup** (ze kterého může číst), **standardní výstup**
-(kam může zapisovat) a **standardní chybový výstup** (kam obvykle vypisuje chyby, aby se nemíchaly
+(kam může zapisovat) a **standardní chybový výstup** (kam obvykle vypisuje chybová hlášení, aby se nemíchaly
 s normálními daty).
 
 Všechny tyto vstupy a výstupy jsou ve výchozím stavu napojeny na terminál, ale můžete je

@@ -14,7 +14,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 <!--
 Poznámky:
 
-[ ] BTRFS
+[x] BTRFS
+[ ] Pokrýt ovládání programu fdisk.
 [ ] Šifrování LVM?
 [ ] Připojování obyčejným uživatelem
 [ ] SquashFS.
@@ -38,31 +39,40 @@ uhelper=udisks2
 
 ## Úvod
 
-Tato kapitola se zabývá dělením pevného disku na oddíly, jejich formátováním (zejména souborové systémy ext4, FAT32 a NTFS), údržbou a připojováním (ručním i automatickým). Zabývá se také prací s ramdisky, odkládacím prostorem a LVM.
+Tato kapitola se zabývá dělením pevného disku na oddíly, jejich formátováním
+(zejména souborové systémy ext4, btrfs, FAT32 a NTFS), údržbou a připojováním
+(ručním i automatickým). Zabývá se také prací s ramdisky, odkládacím prostorem a LVM.
 <!-- a squash-fs.-->
 
-Tato verze kapitoly nepokrývá připojovaní souborových systémů obyčejnými uživateli;
-šifrování a nastavování kvót a další typy systému souborů, např. BTRFS a ZFS.
-Rovněž nepokrývá síťové souborové systémy, vypalování DVD ani práci s ISO obrazy CD a DVD.
-Rovněž nepokrývá práci se systémem souborů SquashFS. U LVM nepokrývá „layouty“ a „snapshoty“.
+Tato verze kapitoly pokrývá jen částečně: dělení pevného disku na oddíly,
+práci se systémem btrfs, LVM (nejsou pokryty „layouty“ a „snapshoty“).
+
+Tato verze kapitoly nepokrývá: připojovaní souborových systémů obyčejnými uživateli;
+šifrování a nastavování kvót; další typy systému souborů (např. ZFS);
+síťové souborové systémy; vypalování DVD; práci s ISO obrazy CD a DVD;
+práci se systémem souborů SquashFS.
 
 ## Definice
 
 ### Obecné definice
 
 * **Virtuální souborový systém** (VFS) je způsob, jakým Linux nahlíží na strukturu adresářů. Při startu počítače obsahuje jen prázdný kořenový adresář „/“, na který jádro „připojí“ (viz níže) kořenový adresář kořenového systému souborů.
-* **Systém souborů** je vymezená část adresářové struktury uložená nebo zpřístupněná jednotným způsobem (např. na jednom oddílu pevného disku). Každý systém souborů má svůj **kořenový adresář**, který může být „připojen“ (viz níže) na některý z adresářů VFS. Systémy souborů mohou být fyzické (uložené fyzicky na nějakém paměťovém médiu), virtuální (generované za běhu jádrem operačního systému), vzdálené (připojované přes síť) nebo vnořené (uložené v souboru – to bývá např. SquashFS). Konkrétní způsob fyzické organizace systému souborů na úložném médiu nazývá **typ systému souborů**, to je např. ext4 nebo NTFS.
-* **Připojení** systému souborů znamená, že systém vezme existující adresář ve VFS, na který dosud není žádný systém souborů připojen, a „překryje“ ho kořenovým adresářem připojovaného systému souborů včetně jeho vlastnictví, příznaků a přístupových práv. Překrytý adresář se nazývá **přípojný bod** (anglicky „mount point“). Celá adresářová struktura připojeného systému souborů se pak stane součástí VFS, dostupnou přes daný přípojný bod. Naopak původní překrytý adresář (včetně svého obsahu) tímto z VFS odpadne. Opačným úkonem je **odpojení** systému souborů; při něm dojde k opětovnému zpřístupnění původního adresáře. Zvláštním (ale komplikovaným a méně častým) případem je připojení jiného než kořenového adresáře systému souborů.
+* **Systém souborů** je vymezená část adresářové struktury zpřístupněná jednotným způsobem (např. na jednom oddílu pevného disku). Každý systém souborů má svůj **kořenový adresář**, který může být „připojen“ (viz níže) na některý z existujících adresářů VFS. Systémy souborů mohou být fyzické (uložené fyzicky na nějakém paměťovém médiu), virtuální (generované za běhu jádrem operačního systému), vzdálené (připojované přes síť) nebo vnořené (uložené v souboru – to bývá např. SquashFS). Konkrétní způsob fyzické organizace systému souborů na úložném médiu nazývá **typ systému souborů**, to je např. ext4 nebo NTFS.
+* **Připojení** systému souborů znamená, že jádro vezme existující adresář ve VFS a „překryje“ ho kořenovým adresářem připojovaného systému souborů (včetně jeho vlastnictví, příznaků a přístupových práv). Podstrom původního adresáře tímto z VFS odpadne a místo něj se stane součástí VFS celá adresářová struktura nově připojeného systému souborů. Opačným úkonem je **odpojení**, při němž z VFS odpadne adresářová struktura připojeného systému souborů a dojde k opětovnému zapojení podstromu původního adresáře do VFS. Zvláštním (ale komplikovaným a méně častým) případem je připojení jiného než kořenového adresáře systému souborů.
+* **Přípojný bod** (anglicky „mount point“) je adresář VFS, kam je připojený systém souborů.
 * **Odkládací oddíl** je úložný prostor sloužící k odkládání paměťových stránek, popř. k hibernaci. V Linuxu se s ním zachází podobně jako se souborovým systémem, proto je předmětem této kapitoly.
+<!--
+Jeden systém souborů může být připojen vícenásobně (na více různých míst VFS), na jedno místo VFS ale může být připojen nejvýše jeden systém souborů současně.
+-->
 
 ### Identifkátory souborových systémů
 
-K identifikaci konkrétního systémů souborů se používá několik druhů identifikátorů:
+K identifikaci konkrétního systému souborů se používá několik druhů identifikátorů:
 
-* **UUID** je identifikátor přidělovaný souborovému systému při formátování (tzn. dalším formátováním se změní, ale naopak překopírování po bajtech ho neohrozí); ne všechny souborové systémy mají nějakou formu UUID, ale ext4, FAT32 a NTFS ano.
+* **UUID** je identifikátor přidělovaný souborovému systému při formátování (tzn. dalším formátováním se změní, ale naopak překopírování po bajtech ho neohrozí); ne všechny souborové systémy mají nějakou formu UUID, ale ext4, btrfs, FAT32 a NTFS ano.
 * **PARTUUID** je identifikátor oddílu na disku, je-li dělen metodou GPT (na discích dělených starší metodou MBR se emuluje, u logických oddílů LVM není dostupný vůbec).
 * **Jmenovka** je textový identifikátor souborového systému přidělovaný uživatelem, zpravidla při formátování.
-* Poslední možností je cesta k zařízení v /dev, např. „/dev/sda1“. Tato možnost je preferována u logických oddílů LVM; u oddílů na discích se nedoporučuje, protože označení disku či oddílu na něm se může snadno změnit.
+* Poslední možností je cesta k zařízení v /dev, např. „/dev/sda1“. Tato možnost je preferována u logických oddílů LVM; u oddílů na discích se nedoporučuje, protože cesta k zařízení se může snadno změnit.
 
 ### LVM
 
@@ -83,18 +93,32 @@ V následujících zaklínadlech platí:
 * UUID souborového systému ve tvaru „UUID=61bbd562-0694-4561-a8e2-4ccfd004a660“.
 * PARTUUID ve tvaru „PARTUUID=0337a362-e7b3-4c50-a81d-9a5d45755e75“.
 * Jmenovka ve tvaru LABEL="Jmenovka".
-* Cesta diskového oddílu či zařízení (např. „/dev/sda1“). Tento tvar je vhodný pouze u logických oddílů LVM či při jednorázovém připojování příkazem „mount“. V ostatních případech se nedoporučuje, protože cesta k diskovému oddílu se může změnit po každém restartu v závislosti na počtu oddílů, připojeném hardware apod.
+* Cesta diskového oddílu či zařízení (např. „/dev/sda1“).
 * U některých typů souborových systémů je to jiný řetězec (např. „tmpfs“, „none“ apod.)
 * Existuje ještě tvar pro síťový souborový systém, viz manuálovou stránku „man 5 fstab“.
+<!--
+Tento tvar je vhodný pouze u logických oddílů LVM či při jednorázovém připojování příkazem „mount“. V ostatních případech se nedoporučuje, protože cesta k diskovému oddílu se může změnit po každém restartu v závislosti na počtu oddílů, připojeném hardware apod.
+-->
 
-{*kam-připojit*} může být:
+{*kam-připojit*} je zpravidla cesta nastávajícího přípojného bodu (v /etc/fstab musí být absolutní, v příkazu „mount“ stačí i relativní), výjimka platí pro odkládací prostor, kde se uvádí „none“.
 
-* Absolutní cesta k adresáři, který v dané chvíli ve VFS existuje, ale není ještě přípojným bodem. (V příkazu „mount“ lze zadat i relativní cestu.)
-* „none“ pro odkládací prostor.
-
-{*typ-soub-sys*} je identifikátor typu souborového systému (např. ext4, vfat, ntfs, tmpfs apod.) Lze použít i „auto“; systém se pak typ pokusí detekovat automaticky.
+{*typ-soub-sys*} je identifikátor typu souborového systému (např. ext4, btrfs, vfat, ntfs, tmpfs apod.) Lze použít i „auto“; systém se pak typ pokusí detekovat automaticky.
 
 {*volby-připojení*} je seznam čárkami oddělených voleb nebo klíčové slovo „defaults“, které má význam „rw,suid,dev,exec,auto,nouser,async“.
+
+### Btrfs
+
+* Souborový systém typu btrfs se dělí na takzvané **pododdíly**. Každý pododdíl je reprezentován svým vlastním „kořenovým“ adresářem. Reprezentující adresář představuje jednoznačnou hranici mezi vnějším (obklopujícím) pododdílem a vnitřním (vnořeným) pododdílem. Pododdíly se vždy překrývají pouze tímto hraničním adresářem, jinak jsou oddělené. Operace prováděné s obklopujícím pododdílem (např. klonování) se vnořeného pododdílu netýkají. (V důsledku toho, když naklonujete pododdíl, hraniční adresáře v něm vnořených pododdílů budou v klonu prázdné.) Každý pododdíl má také svoje číselné „id“, ale jeho používání není příliš praktické.
+* **Kořenový pododdíl** je pododdíl reprezentovaný kořenovým adresářem souborového systému. Nemá žádný obklopující pododdíl, má vždy id 5 a není možno ho (samostatně) odstranit ani přesunout.
+* **Klon** (reflink/snapshot) je v btrfs virtuální kopie souboru nebo celého pododdílu, která se navenek chová jako zcela nezávislá kopie, ale ve skutečnosti sdílí část datových či metadatových bloků s původním souborem či pododdílem. Díky tomu je vytváření klonů rychlé, nenáročné a klony zprvu zabírají jen velmi málo místa.
+* Pododdíl může být označený jako „**neměnný**“ (toto označení lze přidat či odebrat i dodatečně); neměnný pododdíl je chráněný proti změnám dat i metadat, bez ohledu na přístupová práva, může však být odstraněn jako celek.
+* **Zrcadlené oddíly** jsou dva oddíly, kde každá změna je zapisována paralelně na oba, takže v případě poškození či ztráty jednoho z nich nedojde ke ztrátě dat.
+
+Poznámka k pevným odkazům: pevný odkaz v souborovém systému typu btrfs nemůže vést přes hranici pododdílu, místo toho však lze přes hranici pododdílů vytvořit klon souboru.
+
+<!--
+[ ] Je-li obklopující pododdíl neměnný, ale vnořený ne, lze adresář vnořeného pododdílu přejmenovat?
+-->
 
 !ÚzkýRežim: vyp
 
@@ -156,7 +180,7 @@ V následujících zaklínadlech platí:
 **sudo mount -o remount,rw**[**,**{*další-volba*}]... {*/přípojný/bod/nebo/zařízení*}
 
 *# připojit **adresář** z již připojeného systému souborů na nový přípojný bod*<br>
-*// Poznámka: Tímto příkazem se vytvoří nové, nezávislé připojení existujícího systému souborů.*<br>
+*// Poznámka: Tímto příkazem se vytvoří nové, nezávislé připojení téhož systému souborů do nového přípojného bodu. Tento příkaz umožňuje připojit i jiný než kořenový adresář připojovaného systému souborů.*<br>
 **sudo mount \-\-bind** {*/cesta/k/adresáři*} {*/nový/přípojný/bod*}
 
 *# **přesunout** systém souborů na jiný přípojný bod (alternativa 1)*<br>
@@ -179,6 +203,15 @@ V následujících zaklínadlech platí:
 *# velikost dostupného (**volného**) místa (pro člověka/pro skript)*<br>
 **df -h** {*/přípojný/bod*}<br>
 **findmnt -bnu -o AVAIL** {*/přípojný/bod*}
+<!--
+[ ] btrfs?
+
+
+
+-->
+
+*# zjistit **volby připojení***<br>
+**findmnt -nu -o OPTIONS** {*/přípojný/bod*}
 
 *# **typ** souborového systému*<br>
 **findmnt -nu -o FSTYPE** {*/přípojný/bod*}
@@ -194,17 +227,23 @@ V následujících zaklínadlech platí:
 *# zjistit **kapacitu** systému souborů (pro člověka/pro skript)*<br>
 **df -h** {*/přípojný/bod*}<br>
 **findmnt -bnu -o SIZE** {*/přípojný/bod*}
+<!--
+[ ] btrfs?
+
+
+-->
 
 *# zjistit **zdrojové** zařízení z přípojného bodu/naopak*<br>
+*// Jedno zdrojové zařízení může být připojeno na víc přípojných bodů (např. při použití příkazu „mount \-\-bind“); v tom případě příkaz „findmnt“ vypíše každý přípojný bod na samostatnou řádku!*<br>
 **findmnt -nu -o SOURCE** {*/přípojný/bod*}<br>
-**findmnt -nu -o TARGET** {*/dev/disknebooddíl*}
-
-*# zjistit **volby připojení***<br>
-**findmnt -nu -o OPTIONS** {*/přípojný/bod*}
+**findmnt -nu -o TARGET** {*/dev/disknebooddíl*} [** \| head -n 1**]
 
 *# zjistit velikost použité části souborového systému (pro člověka/pro skript)*<br>
 **df -h** {*/přípojný/bod*}<br>
 **findmnt -bnu -o USED** {*/přípojný/bod*}
+
+*# zjistit cestu připojeného adresáře uvnitř připojeného systému souborů*<br>
+?
 
 ### Oddíly a zařízení (vypsat/zjistit údaje)
 
@@ -251,6 +290,23 @@ asi PHY-SEC/LOG-SEC u lsblk
 **sudo mke2fs -t ext4** [**-c**[**c**]] <nic>**-v** <nic>[**-E root\_owner=**{*UID*}**:**{*GID*}] <nic>[**-L** {*jmenovka*}] <nic>[**-U** {*UUID*}] <nic>[**-d** {*cesta*}] <nic>[**-F**] {*/dev/zařízení-nebo-oddíl*}<br>
 **sudo mke2fs -t ext4 -c -v -U 977bda6f-ce11-4549-9325-c48c360069ef /dev/sda3**
 
+*# formátovat samostatný oddíl na **btrfs** (obecně/příklad)*<br>
+**sudo mkfs.btrfs** [**-f**] <nic>[**-L "**{*Jmenovka*}**"**] <nic>[**-U** {*UUID*}] {*/dev/zařízení-nebo-oddíl*}<br>
+**sudo mkfs.btrfs -f -L "Můj nový oddíl" /dev/sda3**
+
+*# formátovat zrcadlené oddíly na **btrfs** (obecně/příklad)*<br>
+*// Poznámka: zrcadlené oddíly jsem zatím nezkoušel/a.*<br>
+*// Zrcadlené oddíly by měly být stejně velké a nacházet se na dvou různých fyzických úložištích. Také se doporučuje, aby obě úložiště nabízela přibližně stejnou rychlost čtení i zápisu, jinak mohou nastat problémy s výkonem. Při připojování pak stačí připojit jen jeden z oddílů a systém automaticky najde a připojí i to druhé.*<br>
+**sudo mkfs.btrfs -d raid1 -m raid1** [**-f**] <nic>[**-L "**{*Jmenovka*}**"**] <nic>[**-U** {*UUID*}] {*/dev/zařízení-nebo-oddíl-1*} {*/dev/zařízení-nebo-oddíl-2*}<br>
+**sudo mkfs.btrfs -d raid1 -m raid1 -f -L "Zrcadlo" /dev/sda3 /dev/sdb1**
+<!--
+[ ] Vyzkoušet!
+-->
+
+<!--
+-O raid1c34 :: RAID1 with 3 or 4 copies
+-->
+
 *# formátovat na **FAT32** (obecně/příklad)*<br>
 *// Poznámka: jmenovka systémů FAT může být maximálně 11 znaků dlouhá!*<br>
 *// Pro formátování na FAT16 či FAT12 nahraďte hodnotu 32 u parametru -F. Tyto staré souborové systémy se dnes už ale v praxi nepoužívají.*<br>
@@ -260,15 +316,20 @@ asi PHY-SEC/LOG-SEC u lsblk
 **sudo mkntfs** [**-f**] <nic>[**-v**] <nic>[**-L** {*jmenovka*}] <nic>[**-C**] <nic>[**-U**] {*/dev/zařízení-nebo-oddíl*}<br>
 **sudo mkntfs -f -v -L MůjDisk /dev/sda3**
 
-*# změnit velikost souborového systému ext4*<br>
-*// Velikost se zadává s příponou (např. „2048M“ nebo „4G“). Pokud ji nezadáte, souborový systém se zvětší tak, aby pokud možno zaplnil celý oddíl. Tip: velikost souborového systému lze obvykle změnit i tehdy, když je souborový systém připojený.*<br>
-**sudo e2fsck -f** {*/dev/oddíl*}<br>
-**sudo resize2fs** {*/dev/oddíl*} [{*velikost*}]
+*# změnit velikost souborového systému typu ext4 (na udanou velikost/na celý oddíl)*<br>
+*// Velikost se zadává s příponou (např. „2048M“ nebo „4G“). Tip: velikost ext4 lze obvykle změnit i tehdy, když je souborový systém připojený.*<br>
+**sudo e2fsck -f** {*/dev/oddíl*} **&amp;&amp; sudo resize2fs** {*/dev/oddíl*} {*velikost*}<br>
+**sudo e2fsck -f** {*/dev/oddíl*} **&amp;&amp; sudo resize2fs** {*/dev/oddíl*}
 
 *# „odformátovat“ oddíl (přepsat: jen značky/celou hlavičku/celý oddíl)*<br>
 **sudo wipefs -a** [**\-\-backup**] {*/dev/oddíl*}<br>
 ?<br>
 **sudo dd if=/dev/zero of=**{*/dev/oddíl*} [**status=progress**]
+
+*# změnit velikost souborového systému typu btrfs (na udanou velikost/na celý oddíl)*<br>
+*// Souborový systém musí být připojený, aby bylo možno změnit jeho velikost!*<br>
+**sudo btrfs filesystem resize** {*cílová-velikost-P*} {*/přípojný/bod*}<br>
+**sudo btrfs filesystem resize max** {*/přípojný/bod*}<br>
 
 ### Odkládací oddíly a soubory
 
@@ -287,7 +348,7 @@ asi PHY-SEC/LOG-SEC u lsblk
 [**sudo**] **swapon \-\-show**[**=NAME,USED,SIZE,PRIO,LABEL,UUID**] <nic>[**\-\-noheadings**] <nic>[**\-\-bytes**]
 
 *# **vytvořit** odkládací soubor*<br>
-*// Velikost můžete zadat také v megabajtech (s příponou „M“) či gigabajtech (s příponou „G“).*<br>
+*// Velikost můžete zadat také v megabajtech (s příponou „M“) či gigabajtech (s příponou „G“). Poznámka: odkládací soubor by měl být na souborovém systému ext4 (popř. ext3 nebo ext2). Umístění na btrfs nedoporučuji, ale prý je možné při dodržení zvláštních podmínek.*<br>
 [**sudo**] **fallocate -l** {*velikost-v-bajtech*} {*název-souboru*}<br>
 [**sudo**] **chmod 600** {*název-souboru*}<br>
 [**sudo**] **mkswap** {*název-souboru*}<br>
@@ -312,7 +373,9 @@ asi PHY-SEC/LOG-SEC u lsblk
 
 ### Jmenovka (nastavit)
 
-Poznámka: při nastavování jmenovky musí být souborový systém zpravidla odpojený!
+<!--
+Poznámka: souborové systémy FAT a NTFS by při nastavování jmenovky měly být odpojené. Souborové systémy ext4 a btrfs mohou být i připojené.
+-->
 
 *# nastavit/smazat jmenovku **odkládacího** oddílu*<br>
 **sudo swaplabel -L "**{*novájmenovka*}**"** {*/dev/oddíl*}
@@ -321,6 +384,11 @@ Poznámka: při nastavování jmenovky musí být souborový systém zpravidla o
 *# nastavit/smazat jmenovku **ext4***<br>
 **sudo e2label** {*/dev/oddíl*} **"**{*novájmenovka*}**"**<br>
 **sudo e2label** {*/dev/oddíl*} **""**
+
+*# nastavit/smazat jmenovku **btrfs***<br>
+*// „Specifikace oddílu“ je v případě nepřipojeného oddílu „/dev/oddíl“, v případě připojeného oddílu je nutno uvést jeho přípojný bod. Příkaz selže s chybou, pokud uvedete připojený oddíl označením ve tvaru /dev/oddíl! Jmenovka může mít pravděpodobně maximálně 256 bajtů a nesmí obsahovat znak konce řádky nebo nulový bajt.*<br>
+**sudo btrfs filesystem label** {*specifikace/oddílu*} **"**{*Nová jmenovka*}**"**<br>
+**sudo btrfs filesystem label** {*specifikace/oddílu*} **""**
 
 *# nastavit/smazat jmenovku **FAT32***<br>
 *// Jmenovka souborového systému FAT32 může mít nejvýše 11 znaků. Z důvodu kompatibility by měla být tvořena pouze velkými písmeny anglické abecedy, číslicemi, pomlčkami a podtržítky. Ostatní typy systému souborů mají omezení na jmenovku podstatně volnější.*<br>
@@ -332,17 +400,29 @@ Poznámka: při nastavování jmenovky musí být souborový systém zpravidla o
 **sudo ntfslabel** [**\-\-new-serial**] {*/dev/oddíl*} **""**<br>
 
 *# zjistit jmenovku jakéhokoliv oddílu*<br>
-**lsblk -ln -o LABEL** {*/dev/oddíl*}<br>
+*// Poznámka: pokud byla jmenovka od startu systému (resp. od připojení příslušného zařízení) změněna, tento příkaz může u některých souborových systémů ukazovat původní jmenovku (podle mých zkušeností to tak dělá obyčejným uživatelům u oddílů btrfs; superuživateli však ukáže již aktuální jmenovku).*<br>
 **lsblk -ln -o LABEL** {*/dev/oddíl*}
 <!--
 Viz: https://wiki.archlinux.org/index.php/Persistent_block_device_naming
 -->
 
+*# zjistit jmenovku oddílu btrfs (připojeného/nepřipojeného)*<br>
+**sudo btrfs filesystem label** {*/přípojný/bod*}<br>
+**sudo btrfs filesystem label** {*/dev/oddíl*}
+
 ### Degrafmentace, kontrola, TRIM apod.
 
-*# **zkontrolovat** a opravit souborový systém*<br>
+*# **zkontrolovat** a opravit souborový systém (kromě btrfs/btrfs)*<br>
 *// Příkaz „fsck“ pravděpodobně lze použít i se souborovým systémem v souboru, ale nezkoušel/a jsem to.*<br>
-**sudo fsck** [**-V**] {*/dev/oddíl*}
+**sudo fsck** [**-V**] {*/dev/oddíl*}<br>
+
+
+*# zkontrolovat souborový systém typu btrfs*<br>
+**sudo btrfs check \-\-readonly** [**\-\-progress**] {*/dev/oddíl*}
+<!--
+**sudo btrfs rescue chunk-recover -v** {*/dev/oddíl*}
+?
+-->
 
 *# najít chybné bloky (obecně/příklad)*<br>
 *// Poznámka: Tento příkaz chybné bloky najde, ale neudělá nic proto, aby se je systém souborů nesnažil používat.*<br>
@@ -353,6 +433,9 @@ Viz: https://wiki.archlinux.org/index.php/Persistent_block_device_naming
 **sudo fstrim** [**-v**] {*/přípojný/bod*}<br>
 **sudo fstrim -a** [**-v**]
 
+*# defragmentovat oddíl typu btrfs (pozor!)*<br>
+?
+
 *# zkontrolovat **fragmentaci** oddílu typu ext4*<br>
 **sudo e4defrag -c** {*/dev/oddíl*}
 
@@ -362,6 +445,10 @@ Viz: https://wiki.archlinux.org/index.php/Persistent_block_device_naming
 
 ### Ostatní
 
+*# je adresář **přípojným bodem**?*<br>
+*// Tento příkaz následuje symbolické odkazy. To, že adresář reprezentuje pododdíl btrfs, ho pro účely tohoto příkazu přípojným bodem nečiní.*<br>
+**mountpoint** [**-q**] {*cesta*}
+
 *# **zálohovat** diskový oddíl do souboru (přímo/komprimovaný)*<br>
 **sudo dd if=**{*/dev/oddíl*} **of=**{*cesta*} [**status=progress**]<br>
 **sudo dd if=**{*/dev/oddíl*} [**status=progress**] **\| gzip -n**[**9**] **&gt;**{*cesta.gz*}
@@ -370,6 +457,10 @@ Viz: https://wiki.archlinux.org/index.php/Persistent_block_device_naming
 *// Pozor! Tato operace je nebezpečná! Pokud zadáte chybný cílový oddíl, daný oddíl se nevratně přepíše daty určenými pro ten správný. Pokud velikost zálohy neodpovídá přesně velikosti cílového oddílu, nemusí být oddíl po obnově dobře použitelný. Tento příkaz používejte s velkou opatrností!*<br>
 **sudo dd if=**{*cesta*} **of=/dev/**{*oddíl*} [**status=progress**]<br>
 **gunzip -cd** {*cesta.gz*} **\| sudo dd of=**{*/dev/oddíl*} [**status=progress**]
+
+<!--
+[ ] btrfs send | btrfs receive
+-->
 
 ## Zaklínadla: LVM
 
@@ -418,7 +509,7 @@ Viz: https://wiki.archlinux.org/index.php/Persistent_block_device_naming
 ### Logické oddíly
 
 *# **vytvořit** (velikost zadat: absolutně/v procentech velikosti skupiny/v procentech velikosti volného místa/všechno volné místo)*<br>
-*// Pro přesnější určení rozměru můžete zadat velikost oddílu v mebibajtech místo gibibajtů (místo přípony „G“ uveďte příponu „M“), ale v takovém případě počítejte s možností, že systém zadanou hodnotu mírně zaokrouhlí nahoru.*<br>
+*// Pro přesnější určení rozměru můžete zadat velikost oddílu v mebibajtech místo gibibajtů (místo přípony „G“ uveďte příponu „M“), ale v takovém případě počítejte s možností, že příkaz zadanout hodnotu může zaokrouhlit o několik mebibajtů nahoru.*<br>
 **sudo lvcreate** {*id-skupiny*} **\-\-name** {*id-oddílu*} **\-\-size** {*gibibajtů*}**G** [**-v**[**v**]] <nic>[{*/dev/fyzický-svazek*}]...<br>
 **sudo lvcreate** {*id-skupiny*} **\-\-name** {*id-oddílu*} **\-\-extents** {*procenta*}**%VG** [**-v**[**v**]]<br>
 **sudo lvcreate** {*id-skupiny*} **\-\-name** {*id-oddílu*} **\-\-extents** {*procenta*}**%FREE** [**-v**[**v**]]<br>
@@ -453,11 +544,136 @@ Viz: https://wiki.archlinux.org/index.php/Persistent_block_device_naming
 *# aktualizovat systémový přehled LVM podle připojených zařízení*<br>
 **sudo lvscan \-\-mknodes**
 
-## Parametry příkazů
 
-### Volby připojení
 
-Nejdůležitější volby připojení pro všechny typy systému souborů:
+
+
+
+
+
+
+
+## Zaklínadla: btrfs
+
+### Správa pododdílů
+
+*# **vytvořit** pododdíl (obecně/příklad)*<br>
+*// Příklad vytvoří poddíl reprezentováný novým adresářem „test“ v aktuálním adresáři. (Nově vytvářený adresář nesmí předem existovat!)*<br>
+**btrfs subvolume create** {*cesta/k/novému/adresáři*}<br>
+**btrfs subvolume create test**
+
+*# **smazat** pododdíl*<br>
+*// Pokud souborový systém nebyl připojen s volbou „user\_subvol\_rm\_allowed“, smí pododdíl smazat jen superuživatel. Jinak ho smí smazat i jeho vlastní (tzn. vlastník adresáře reprezentujícího pododdíl); pokud je však oddíl neměnný, musí mu tuto vlastnost nejprve odebrat. Vlastník také může pododdíl smazat jako obyčejný adresář příkazem „rm -R“, ale ten bývá pomalejší, protože nejprve projde a smaže všechny soubory a adresáře v daném pododdílu.*<br>
+[**btrfs property set** {*cesta/k/pododdílu*} **ro false**]<br>
+[**sudo**] **btrfs subvolume delete -c** {*cesta/k/pododdílu*}...
+
+*# vypsat **seznam** pododdílů (s právy superuživatele/bez nich)*<br>
+**(cd ** {*/bod/připojení/btrfs*} ** &amp;&amp; pwd &amp;&amp; sudo btrfs subvolume list . | sed -E 's/^(\\S+\\s+){7}path\\s/'"$(pwd | sed -E 's!/!\\\\/!g')"'\\//')**<br>
+**find** {*/abs/cesta/přípojného/bodu*} **-type d -printf '%i:%p\\0' \| sed -zE 's/^(1?[<nic>^:]{1,2}|2[01234]<nic>[<nic>^:]|25[0123456])://;t;d' \| tr \\\\0 \\\\n**
+<!--
+s/^(1?[<nic>^:]{1,2}|2[01234]<nic>[<nic>^:]|25[0123456])://
+– Testuje, zda číslo i-uzlu je menší nebo rovno 256. Pokud ano, je to pododdíl a bude vypsán.
+-->
+
+*# přejmenovat či **přesunout** pododdíl (kromě neměnného)*<br>
+*// Nové umístění musí být v rámci téhož souborového systému btrfs, ale může to být i v jiném obklopujícím pododdílu. Poznámka: neměnný pododdíl nelze přejmenovat či přesunout.*<br>
+**mv -T** {*cesta/pododdílu*} {*nové/umístění*}
+
+*# přejmenovat či přesunout neměnný pododdíl*<br>
+**btrfs property set** {*původní/cesta*} **ro false**<br>
+**mv** [**-v**] {*původní/cesta*} {*nová/cesta*}<br>
+**(rv=$?; for x in {*původní/cesta*} {*nová/cesta*}; do btrfs property set "$x" ro true 2&gt;/dev/null; done; exit $rv)**
+
+*# nastavení pododdílu jako **neměnného** (vypnout/zapnout)*<br>
+**btrfs property set** {*cesta/k/pododdílu*} **ro false**<br>
+**btrfs property set** {*cesta/k/pododdílu*} **ro true**
+
+*# **je** adresář pododdíl btrfs?*<br>
+*// Pokud víte s jistotou, že testovaný adresář leží na oddílu typu btrfs, můžete první test vynechat.*<br>
+**adr="$(realpath "**{*cesta/k/adresáři*}**")"**<br>
+[**test "$(stat -fc %T "$adr")" = btrfs &amp;&amp;**] **test "$(stat -c %i "$adr")" -le 256**
+<!--
+Test částečně podle: https://stackoverflow.com/questions/25908149/how-to-test-if-location-is-a-btrfs-subvolume
+
+Další možnost:
+**btrfs property get** {*cesta/k/adresáři*} **ro 2&gt;/dev/null**
+-->
+
+*# je pododdíl neměnný?*<br>
+**btrfs property get** {*cesta/k/adresáři*} **ro \| fgrep -qx ro=true**
+
+### Klonování
+
+*# vytvořit **klon podstromu** adresářů*<br>
+*// Cíl („/cesta/pro/klon“) před vykonáním příkazu nesmí existovat. Poznámka: Naklonují se pouze soubory; adresáře se pro ně vytvoří nové, takže pokud je podstrom rozsáhlejší, bude to chvíli trvat.*<br>
+[**rm -Rf** {*/cesta/pro/klon*} **&amp;&amp;**]<br>
+**cp \-\-reflink=always -R** [**\-\-preserve=all**] <nic>[**-t**] <nic>[**-v**] {*/cesta/k/adresáři*} {*/cesta/pro/klon*}
+
+*# vytvořit klon **pododdílu** (normální/neměnný)*<br>
+**btrfs subvolume snapshot** {*cesta/k/pododdílu*} {*cesta/k/novému/pododdílu*}<br>
+**btrfs subvolume snapshot -r** {*cesta/k/pododdílu*} {*cesta/k/novému/pododdílu*}
+
+*# vytvořit klon **souboru***<br>
+**cp \-\-reflink=always** [**\-\-preserve=all**] <nic>[**-t**] <nic>[**-v**] {*/cesta/k/souboru*} {*/cesta/pro/klon*}
+
+*# osamostatnit klon souboru*<br>
+**btrfs filesystem defragment** [**-v**] <nic>[**\-\-**] {*cesta/k/souboru*}...
+
+
+## Práce se zrcadlenými oddíly
+
+*# **vytvořit** dva zrcadlené oddíly z jednoho samostatného*<br>
+?
+
+*# **osamostatnit** oddíl ze zrcadlené dvojice*<br>
+?
+
+## Ostatní
+
+<!--
+btrfs filesystem defrag -v -c{*komprese*} {*soubor*} — umožňuje rekomprimovat soubor
+-->
+
+*# vypsat podrobné údaje o obsazení souborového systému*<br>
+[**sudo**] **btrfs filesystem usage** {*/přípojný/bod/btrfs*}
+
+*# ověřit kontrolní součty všech souborů*<br>
+**sudo btrfs scrub start -B -d -r** {*/přípojný/bod/btrfs*}
+
+*# ověřit kontrolní součty některých souborů*<br>
+?
+
+*# defragmentovat pododdíl*<br>
+**sudo btrfs filesystem defragment -r** {*cesta/pododdílu*}
+
+
+<!--
+Výhody btrfs:
+* umožňuje klonování pododdílů s tím, že kopie se vytvoří až při zápisu
+* automaticky počítá a ukládá kontrolní součty dat; umožňuje jejich kontrolu
+* umožňuje použít při ukládání dat kompresi
+
+Nevýhody btrfs:
+* odkládací soubor může být na btrfs umístěn jen za zvláštních okolností
+* je obtížné správně zjistit a interpretovat velikost volného místa v btrfs
+* s jeho zřízením je víc starostí
+
+https://christitus.com/btrfs-guide/
+http://manpages.ubuntu.com/manpages/focal/en/man8/btrfs-subvolume.8.html
+http://manpages.ubuntu.com/manpages/focal/en/man8/btrfs-scrub.8.html
+https://btrfs.wiki.kernel.org/index.php/Main_Page
+http://manpages.ubuntu.com/manpages/focal/en/man5/btrfs.5.html
+
+
+[ ] http://manpages.ubuntu.com/manpages/focal/en/man8/btrfs-filesystem.8.html
+[ ] http://manpages.ubuntu.com/manpages/focal/en/man8/btrfs-check.8.html
+? http://manpages.ubuntu.com/manpages/focal/en/man8/btrfs-balance.8.html
+-->
+
+
+## Nejdůležitější volby připojení
+
+### Pro všechny typy systému souborů
 
 !Parametry:
 
@@ -473,7 +689,7 @@ Nejdůležitější volby připojení pro všechny typy systému souborů:
 * ☐ noauto :: Nepřipojovat automaticky při startu systému (resp. příkazem „mount -a“).
 * ☐ X-mount.mkdir :: Pokud přípojný bod neexistuje, vytvoří ho s přístupovými právy „u=rwx,go=rx“. (Poznámka: připojený adresář tato práva zpravidla přepíše.) Podle manuálové stránky je tato volba dovolena pouze superuživateli.
 
-Nejdůležitější volby připojení pro **ext4**, **ext3** a **ext2**:
+### Pro ext4, ext3 a ext2
 
 !Parametry:
 
@@ -482,7 +698,7 @@ Nejdůležitější volby připojení pro **ext4**, **ext3** a **ext2**:
 * ◉ acl ○ noacl :: Povolí/zakáže rozšířená přístupová práva. (Zatím jsem nezkoušel/a.)
 * ○ discard ○ nodiscard :: Zapne/vypne automatické označování prázdného prostoru na SSD discích (operace TRIM).
 
-Nejdůležitější volby připojení pro **vfat** (FAT32, FAT16, popř. FAT12):
+### Pro „vfat“ (FAT32, FAT16, FAT12)
 
 <!--
 [ ] Vyzkoušet!
@@ -495,7 +711,7 @@ Nejdůležitější volby připojení pro **vfat** (FAT32, FAT16, popř. FAT12):
 * ☐ quiet :: Pokusy o změnu vlastníka, skupiny či přístupových práv nevyvolají chybu.
 * ○ fat=12 ○ fat=16 ○ fat=32 :: Vynutí konkrétní verzi FAT (obvykle není potřeba, autodetekce pozná typ správně).
 
-Nejdůležitější volby připojení pro **ntfs**:
+### Pro „ntfs“ (NTFS)
 
 !Parametry:
 
@@ -503,7 +719,7 @@ Nejdůležitější volby připojení pro **ntfs**:
 * ☐ gid={*GID*} :: Nastaví skupinu všech položek.
 * ○ umask={*mód*} :: Nastaví přístupová práva všech adresářových položek.
 
-Nejdůležitější volby připojení pro **tmpfs** (ramdisk):
+### Pro „tmpfs“ (ramdisk)
 
 !Parametry:
 
@@ -512,13 +728,29 @@ Nejdůležitější volby připojení pro **tmpfs** (ramdisk):
 * ☐ gid={*GID*} :: Nastaví počáteční skupinu kořenového adresáře.
 * ○ umask={*mód*} :: Nastaví počítační přístupová práva a příznaky kořenového adresáře.
 
+### Pro „btrfs“
+
+!Parametry:
+
+* ☐ user\_subvol\_rm\_allowed :: Umožní smazat pododdíl jeho vlastníkovi (doporučuji).
+* ○ compress-force={*hodnota*} ○ compress={*hodnota*} :: Nastavuje výchozí kompresi pro nově vytvořené soubory. Použijte hodnotu „off“ pro žádnou kompresi, „lzo“ pro nenáročnou kompresi, „zstd:10“ pro důkladnou kompresi nebo „zstd:15“ pro maximální kompresi.
+* ☐ degraded :: Umožní připojit oddíl zrcadleného systému souborů v situaci, kdy některé ze zařízení není dostupné. Doporučuji skombinovat s volbou „ro“.
+* ○ discard ○ nodiscard :: Zapne/vypne automatické označování prázdného prostoru na SSD discích (operace TRIM). Možná není nutné ho zadávat.
+
+Manuálová stránka pro zlepšení výkonu doporučuje použít obecnou volbu „noatime“.
+
 ## Instalace na Ubuntu
 
-Všechny použité nástroje jsou základními součástmi Ubuntu, kromě nástrojů pro práci s LVM a nástroje GParted.
+Všechny použité nástroje jsou základními součástmi Ubuntu, kromě nástrojů pro práci s LVM, btrfs a nástroje GParted.
 Pokud chcete používat LVM, musíte doinstalovat:
 
 *# *<br>
 **sudo apt-get install lvm2**
+
+Pokud chcete používat btrfs, musíte doinstalovat:
+
+*# *<br>
+**sudo apt-get btrfs-progs**
 
 Nástroj GParted najdete v balíčku „gparted“:
 
@@ -540,14 +772,29 @@ Nástroj GParted najdete v balíčku „gparted“:
 ## Tipy a zkušenosti
 
 * Pomocí příkazu „mount \-\-bind“ můžete jeden ramdisk připojit na několik různých míst VFS!
+* Zadáte-li výměnnou jednotku (např. USB flash disk) v /etc/fstab a tato jednotka nebude dostupná při startu systému, zavádění selže a nabídne vám přechod do záchranného režimu. Proti tomu pomohou volby „nofail“ (v případě jakékoliv chyby se připojení systému souborů tiše přeskočí) a „noauto“ (systém se vůbec nepokusí o připojení, ale oddíl či jednotku půjde připojit zkrácenou syntaxí příkazu „mount“).
+* Určitý konkrétní adresář může být použit jako přípojný bod vícenásobně, ale nedoporučuji to (nedává to příliš smysl). Také je možné připojením jiného souborového systému na adresář nadřazený přípojnému bodu překrýt přípojný bod i s jeho obsahem, ale rovněž to nedoporučuji.
+
+### LVM
+
 * V případě změny velikosti oddílu v LVM je třeba samostatně změnit velikost souborového systému a samostatně velikost logického oddílu. Výjimkou je souborový systém „ext4“, u kterého je možné tyto operace sloučit použitím parametru „\-\-resizefs“.
 * LVM poskytuje svůj vlastní interpret příkazové řádky, který nabízí pouze příkazy související s LVM (bez zadávání „sudo“). Spustíte ho příkazem „sudo lvm“.
-* Zadáte-li výměnnou jednotku (např. USB flash disk) v /etc/fstab a tato jednotka nebude dostupná při startu systému, zavádění selže a nabídne vám přechod do záchranného režimu. Proti tomu pomohou volby „nofail“ (v případě jakékoliv chyby se připojení systému souborů tiše přeskočí) a „noauto“ (systém se vůbec nepokusí o připojení, ale oddíl či jednotku půjde připojit zkrácenou syntaxí příkazu „mount“).
+
+### Btrfs
+
+* Umístění odkládacího souboru na souborový systém btrfs je možné, ale nedoporučuji to. Přesný postup a související omezení najdete v manuálové stránce zobrazené příkazem „man 5 btrfs“ (kapitola „SWAPFILE SUPPORT“).
+* Btrfs umožňuje namísto kořenového pododdílu připojit jiný pododdíl. To nedoporučuji, protože můžete narazit na problém, že vícenásobné připojení jednoho systému souborů btrfs se nechová podle očekávání. Pokud chcete pododdíly btrfs rozmístit na různá místa souborového systému, použijte k tomu raději „mount \-\-bind“ než přímé znovupřipojování btrfs.
+* Btrfs se nedokáže dobře zotavit ze selhání a chyb (i v manuálové stránce je varování, že program „btrfs check“ může problémy spíš zhoršit než vyřešit). Také jsem kdesi četl/a, že může mít problémy při zaplnění veškerého místa na disku. Z těchto důvodů ho nedoporučuji jako typ souborového systému pro systémový oddíl, spíš je vhodný pro různé druhy uživatelských dat.
+* Pododdíly se pro některé nástroje jeví jako samostatně připojené souborové systému; např. příkaz „find“ s parametrem „-xdev“ otestuje adresář reprezentující pododdíl, ale nesestoupí do něj. Podobně „df .“ uvnitř pododdílu vypíše cestu pododdílu namísto přípojného bodu celého souborového systému.
 
 ## Další zdroje informací
 
+Pokud hledáte nástroj pro dělení disku ze skriptu, zkuste [sfdisk](http://manpages.ubuntu.com/manpages/focal/en/man8/sfdisk.8.html) (anglicky).
+
+* [Root.cz: Souborový systém Btrfs: vlastnosti a výhody moderního ukládání dat](https://www.root.cz/clanky/souborovy-system-btrfs-vlastnosti-a-vyhody-moderniho-ukladani-dat/)
 * [Seriál Logical Volume Manager](https://www.abclinuxu.cz/serialy/lvm)
 * [Wikipedie: Logical Volume Management](https://cs.wikipedia.org/wiki/Logical_Volume_Management)
+* [Wikipedie: Btrfs](https://cs.wikipedia.org/wiki/Btrfs)
 * [LVM Ubuntu Tutorial](https://linuxhint.com/lvm-ubuntu-tutorial/) (anglicky)
 * man lvm
 * [Arch Wiki: LVM](https://wiki.archlinux.org/index.php/LVM) (anglicky)
@@ -555,5 +802,6 @@ Nástroj GParted najdete v balíčku „gparted“:
 * [YouTube: Lesson 20 Managing LVM](https://www.youtube.com/watch?v=m9SNN6IWyZo) (anglicky)
 * [YouTube: Combining Drives Together](https://www.youtube.com/watch?v=scMkYQxBtJ4) (anglicky)
 * [YouTube: LVM snapshots](https://www.youtube.com/watch?v=N8rUlYL2O_g) (anglicky)
+* [Wikipedie: Mount (computing)](https://en.wikipedia.org/wiki/Mount\_\(computing\)) (anglicky)
 
 !ÚzkýRežim: vyp

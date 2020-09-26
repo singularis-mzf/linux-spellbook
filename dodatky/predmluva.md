@@ -91,7 +91,7 @@ ve vašem vlastním počítači! Linux: Kniha kouzel je na tomto příměru zalo
 a proto v ní jednotlivé příklady nazývám *„zaklínadla“*. Pokud jste nadán/a
 dostatečnou dávkou fantazie, můžete si při čtení představovat, že jste
 začínající čaroděj/ka ve fantasy světě a v rukou držíte lexikon kouzel
-pro pokročilé. Při sesílání kouzel přesahujících vaši kvalifikaci se sice můžete
+pro pokročilé. Při sesílání kouzel přesahujících vaši kvalifikaci se můžete
 snadno „spálit“ a to se vám může stát i při zadávání příkazů do terminálu,
 protože ten je velmi náročný na přesnost a i pouhá záměna jediné dvojtečky
 za středník nebo dvojité uvozovky za jednoduchou bude mít zcela jistě
@@ -163,7 +163,7 @@ které lze zavolat jednoduchým příkazem a vykonají za vás automaticky mnoh
 
 Každá kapitola, která tyto pomocné či funkce skripty vyžaduje, obsahuje jejich
 úplný zdrojový kód, což vám umožňuje si je vytvořit sám/a pouhým zkopírováním
-či ručním přepsáním (což nedoporučuji kvůli riziku překlepů);
+či ručním opsáním (opsání nedoporučuji kvůli riziku překlepů);
 pro vaše pohodlí je ovšem ke každé vydané verzi knihy online cestou
 distribuován balíček ve formátu „.deb“, který si můžete nainstalovat na svůj systém.
 Tento balíček obsahuje aktuální verze pomocných skriptů a funkcí
@@ -216,9 +216,9 @@ určená především pro Ubuntu 20.04 Focal Fossa.
 
 Ve srovnání s verzí 1.12 Hana Hlavní byly z vydání vypuštěny kapitoly „Docker“
 a „Plánování úloh“. Kapitola „Barvy a titulek terminálu“ byla přejmenována
-na „Terminál“ a rozšířena o vybrané emotikony.
+na „Terminál“ a rozšířena o vybrané emotikony a další ozdoby.
 
-Verze 2.0 také přináší novou zcela kapitolu Zpracování binárních souborů
+Verze 2.0 také přináší zcela novou kapitolu Zpracování binárních souborů
 a zvláštní kapitolu Základní znalosti. Kapitola Regulární výrazy byla rozšířena o vzorky bashe.
 
 V HTML verzi je nově jako výchozí tmavý motiv, byl vylepšen design rámu „okna“ a všechny kapitoly i dodatky nyní mají ikonu.
@@ -226,7 +226,7 @@ PDF verze naopak nepřináší žádné novinky.
 
 Vydání verze 2.1, jménem Iveta Ivanovická, očekávám v průběhu listopadu 2020.
 
-Verze řady „vanilková příchuť 1.x“ jsou ve stádiu dlouhodobé pasivní podpory do 1. března 2023.
+Verze řady „vanilková příchuť 1.x“ jsou ve stádiu dlouhodobé pasivní údržby do 1. března 2023.
 
 &nbsp;
 

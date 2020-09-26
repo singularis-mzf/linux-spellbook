@@ -177,7 +177,7 @@ Příklad:
 `<odsadit1>**return 0;**<br>`<br>
 `**<nic>}**`
 
-Pozor! Odsazené řádky se uživateli vykopírují bez odsazení. Pokud má obsah řádku skutečně začínat mezerami či tabulátory, je potřeba to výslovně uvést příslušnými značkami („`&blank;` resp. „`<tab1>`“).
+Pozor! Odsazené řádky se uživateli vykopírují bez odsazení. Pokud má obsah řádku skutečně začínat mezerami či tabulátory, je potřeba to výslovně uvést příslušnými značkami („`&blank;` resp. „`<tab8>`“).
 
 ### Pokyny uživateli
 
