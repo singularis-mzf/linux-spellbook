@@ -156,7 +156,8 @@ externí programy).
 **tar \-\-delete \-\-file** {*archiv.tar*} {*cesta/v/archivu*}...
 
 *# otestovat integritu archivu*<br>
-?
+*// Poznámka: tar implementuje jen velmi slabou kontrolu, takže neodhalí náhodné porušení archivu. Dokáže ale odhalit, že archiv byl zkrácen nebo přepsán zcela nesmyslnými daty. V takovém případě vypíše hlášení na standardní chybový výstup a vrátí návratový kód 2.*<br>
+**tar tf** {*archiv.tar*} **&gt;/dev/null**
 
 ### GZIP
 

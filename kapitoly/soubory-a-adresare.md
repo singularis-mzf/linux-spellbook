@@ -11,14 +11,6 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
-<!--
-Poznámky:
-
-- Kdo má právo nastavovat příslušnou skupinu?
-- [ ] Přidat fallocate, truncate a možná kopírování (ale pro to bude možná samostatná kapitola).
-
-⊨
--->
 
 # Soubory a adresáře
 
@@ -92,7 +84,7 @@ Vedle přístupových práv může mít každý soubor či adresář nastaveny j
 **Příznak zmocnění vlastníka** (u+s, set-uid bit) má význam pouze u souborů
 a pouze v kombinaci s právem „x“. Je-li takový soubor spuštěn, vzniklý proces
 získá EUID (a tedy i práva) vlastníka souboru, a to i v případě, že ho spustil jiný uživatel.
-Nejčastějším použitím je spuštění určitého program u s právy superuživatele.
+Nejčastějším použitím je spuštění určitého programu s právy superuživatele.
 
 **Příznak zmocnění skupiny** (g+s, set-gid bit) funguje u souborů analogicky
 – spustí-li daný soubor kterýkoliv uživatel, vzniklý proces získá EGID (tedy skupinová práva)
@@ -103,7 +95,7 @@ který je vytvořil.) Takto vytvořené podadresáře navíc získají také př
 což znamená, že tento příznak se automaticky rozšíří i do všech nově vytvořených podadresářů,
 pokud u nich nebude výslovně zrušen.
 
-Třetí speciální příznak je **příznak omezení smazání** (+t, sticky-bit).
+Třetí zvláštní příznak je **příznak omezení smazání** (+t, sticky-bit).
 Ten má význam pouze u adresářů, kde omezuje výkon práva „w“ – brání ve smazání či přejmenování
 „cizích položek“, tedy přesněji – zabrání ve smazání či přejmenování adresářové položky
 každému uživateli, který není vlastníkem dané položky či vlastníkem samotného adresáře.
@@ -371,7 +363,7 @@ Poznámka: srovnávané položky nemusejí být v tomtéž adresáři; můžete
 [**sudo**] **chmod** [**-R**] **u+s** [**\-\-**] {*cesta*}...<br>
 [**sudo**] **chmod** [**-R**] **u-s** [**\-\-**] {*cesta*}...
 
-*# zapnout/vypnout současně všechny tři speciální příznaky*<br>
+*# zapnout/vypnout současně všechny tři zvláštní příznaky*<br>
 [**sudo**] **chmod** [**-R**] **ug+s,+t** [**\-\-**] {*cesta*}...<br>
 [**sudo**] **chmod** [**-R**] **ug-s,-t** [**\-\-**] {*cesta*}...
 
@@ -461,20 +453,6 @@ Mód je číselné vyjádření základních práv a zvláštních příznaků 
 * ☐ -R :: Je-li argumentem adresář, provede stejné nastavení i na všech jeho položkách, položkách všech podadresářů a tak dále.
 * ☐ -v :: Vypisovat provedené operace.
 
-<!--
-### mv
-
-*# *<br>
-**mv** [{*parametry*}] {*zdroj*}... {*cíl*}<br>
-**mv** [{*parametry*}] **-t** {*cílový-adresář*} {*zdroj*}...
-
-!Parametry:
-
-* ◉ -f ○ -i ○ -n ○ -b ○ -u :: Existující cílový soubor: přepsat bez ptaní/zeptat se/nepřesouvat/přejmenovat a nahradit/přepsat, pokud je starší.
-* ☐ -v :: Vypisovat provedené operace.
-* ☐ -T :: Cíl musí být soubor; je-li to existující adresář, selže s chybou.
--->
-
 ### mkdir
 
 !Parametry:
@@ -507,16 +485,6 @@ které můžete doinstalovat takto:
 *# *<br>
 **sudo apt-get install tree xattr**
 
-<!--
-## Ukázka
-<!- -
-- Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
-- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti – ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
-- Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
-- ->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
--->
-
 !ÚzkýRežim: zap
 
 ## Tipy a zkušenosti
@@ -524,10 +492,6 @@ které můžete doinstalovat takto:
 * Uživatelé a skupiny jsou v souborovém systému uloženy ve formě čísel UID a GID. Proto když uložíte soubor na USB flash disk a přenesete ho na jiný počítač, kde pracujete jako uživatel s jiným UID, může se stát, že tam k souborům na flash disku nebudete mít dostatečná přístupová práva.
 * V Linuxu existují také „výchozí přístupová práva“, což je nastavení přístupových práv na adresáři, které (je-li nastaveno) ovlivňuje přístupová práva nově vyvářených položek; bohužel nelze říci „stanovuje“, ale platí pouze „ovlivňuje“ – na výsledných právech se podílejí i další faktory, nelze rozlišit práva pro soubory a pro adresáře a celé je to dost komplikované a neintuitivní. Zatím jsem naštěstí nanarazil/a na případ, kdy by tuto vlastnost skutečně nějaký program použil.
 * Symbolické odkazy mají vlastníka a skupinu, ale nemají vlastní přístupová práva. Přístup k odkazované položce se vždy řídí jejími přístupovými právy, čtení symbolického odkazu je bez omezení a zápis do něj není dovolen (je nutno místo toho odkaz smazat a vytvořit nový).
-
-<!--
-### Přístupová práva a speciální příznaky číselně (mód)
--->
 
 ## Další zdroje informací
 

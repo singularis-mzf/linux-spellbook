@@ -170,16 +170,14 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 <neodsadit>Všechen software potřebný k sestavení projektu je svobodný.
 Pokud některá kapitola odkazuje na nesvobodný software, vždy na to výslovně upozorní.
 
-## Aktuální poznámka k verzi „vanilková příchuť 1.12 Hana Hlavní“
+## Aktuální poznámka k verzi „vanilková příchuť 1.13“
 
-Verze 1.12 „Hana Hlavní“ je poslední aktivně vyvíjená verze
-vanilkové příchuti určená především pro Ubuntu 18.04 „Bionic Beaver“.
-Přináší pouze opravy řady zjištěných chyb.
+Verzí 1.13 přechází vývojová řada „1.x“ vanilkové příchuti do stádia *dlouhodobé pasivní údržby*.
+V tomto stádiu bude docházet jen k minimálním změnám nutným k opravě nahlášených nebo jinak
+objevených chyb ve vydaných kapitolách. Vývojová řada „1.x“ zůstane v tomto stádiu do 1. března 2023,
+kdy bude její vývoj zcela ukončen.
 
-Vydání verze 2.0 „Chranislav Charbulový“ očekávám 1. října 2020.
-Verze 2.0 bude určena především pro Ubuntu 20.04 „Focal Fossa“.
-Současně vyjde bezejmenná verze 1.13, kterou větev 1.x přejde do stádia dlouhodobé pasivní údržby,
-ve kterém má podle plánu zůstat do 1. března 2023.
+Aktivně vyvíjená je nyní řada 2.x, která je určena především pro Ubuntu 20.04 „Focal Fossa“.
 
 &nbsp;
 
