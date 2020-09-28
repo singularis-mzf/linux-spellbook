@@ -15,8 +15,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 Poznámky:
 
 - Kdo má právo nastavovat příslušnou skupinu?
-- [ ] Přidat fallocate, truncate a možná kopírování (ale pro to bude možná samostatná kapitola).
-
+- [ ] možná přidat kopírování (ale pro to bude možná samostatná kapitola).
+- [ ] duperemove (pevné odkazy/btrfs klony)
 ⊨
 -->
 

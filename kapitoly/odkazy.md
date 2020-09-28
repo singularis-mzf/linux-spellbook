@@ -125,10 +125,7 @@ není dobrý nápad
 *# kopírovat: zachovat symbolické odkazy doslovně*<br>
 ?
 
-*# kopírovat: opravit symbolické odkazy (zachovat jejich smysl)*<br>
-?
-
-*# kopírovat: následovat symbolické odkazy (chovat se, jako by byly pevné)*<br>
+*# kopírovat: následovat symbolické odkazy*<br>
 ?
 
 *# kopírovat: vynechat symbolické odkazy*<br>
@@ -141,7 +138,11 @@ není dobrý nápad
 ?
 
 *# kopírovat adresářovou strukturu bez souborů*<br>
-?
+**env -C** {*cesta/zdroje*} **find . -type d -print0 \| env -C** {*cesta/cíle*} **xargs -r0**[**t**] **mkdir -p**[**v**]
+<!--
+[ ] Vyzkoušet.
+[ ] Problém: nezachovává atributy.
+-->
 
 *# najít duplicitní soubory v adresářové struktuře a sloučit je pomocí pevných odkazů*<br>
 ?

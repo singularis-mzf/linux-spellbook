@@ -62,37 +62,24 @@ Sdílejte [odkaz](https://singularis-mzf.github.io) na své oblíbené
 sociální síti a napište tip přátelům, kteří by mohli mít o zaklínadla
 z tohoto projektu zájem.
 
-Po zprovoznění permanentních odkazů na zaklínadla budete moci odkazovat
-hypertextovými odkazy přímo na jednotlivá zaklínadla.
+Pomocí permanentních odkazů na online HTML verzi můžete odkazovat přímo
+na jednotlivá zaklínadla, např. [takto](https://singularis-mzf.github.io/v2/promenne.htm#z966242526).
 
 ## Nahlásit chyby
 
 Chyby je třeba hlásit, protože tím pomůžete nejen mě, ale také ostatním uživatelům
 (a případně i sobě, pokud budete Linux: Knihu kouzel nadále používat).
-Hlašte chyby buď formou „issue“ na GitHubu, nebo přímo mně e-mailem.
+Hlašte chyby buď formou „issue“ na GitHubu, nebo přímo mně e-mailem
+na adresu [singularis@volny.cz](mailto:singularis@volny.cz).
+(VAROVÁNÍ: Při hlášení e-mailem mi neposílejte žádný kód k zařazení do projektu,
+takto zaslaný kód nebudu moci přijmout.)
 
 Při hlášení, prosím, použijte následující postup:
 
-1. Pokud používáte jinou distribuci než Ubuntu nebo jinou verzi než tu, která je výslovně podporovaná, pokuste se chybu zopakovat na podporované verzi Ubuntu.
-2. Pokud systém hlásí chybějící příkaz, zkontrolujte sekci kapitoly „Instalace na Ubuntu“, zda nepotřebujete něco doinstalovat či nastavit.
-3. Při hlášení použijte následující vzor:
-
-**Přesný postup, jak navodit chybu na „čistém systému“:**
-
-    sudo apt-get install gawk
-    gawk -version
-
-**Co by měl příkaz podle Linuxu: Knihy kouzel správně udělat:**<br>
-Příkaz by měl vypsat nainstalovanou verzi gawk.
-
-**Co ve vašem případě udělá:**<br>
-Příkaz mi vypíše: „gawk: \`ersion' argument to \`-v' not in \`var=value' form“.
-
-**Přesná verze LKK, název kapitoly a umístění zaklínadla:**<br>
-Vanilková příchuť 1.0, kapitola „AWK“, sekce 6 „Parametry příkazů“.
-
-**Jak by to mělo být správně (nepovinné; jen pokud to víte):**<br>
-Správně by mělo být --version.
+1. Pokud vám systém hlásí chybějící příkaz, zkontrolujte v sekci „Instalace na Ubuntu“ v dané kapitole, zda nepotřebujete něco doinstalovat či nastavit.
+2. Pokud používáte starší verzi vanilkové příchuti *Linuxu: Knihy kouzel*, zkontrolujte nejnovější vydanou verzi příslušné vývojové řady, případně přímo zdrojové kódy na GitHubu, abyste ověřili, zda tam není chyba již opravená.
+3. Pokud používáte jinou distribuci Linuxu než Ubuntu nebo jinou jeho verzi než tu, pro kterou je daná verze Linuxu: Knihy kouzel především určená, pokuste se chybu zopakovat na příslušné verzi Ubuntu. (Pokud by to pro vás bylo příliš obtížné a používáte distribuci odvozenou od odpovídající verze Ubuntu, např. Linux Mint, můžete tento krok vynechat.)
+4. Pokud je to možné, při hlášení se držte [vzoru](https://github.com/singularis-mzf/linux-spellbook/issues/2).
 
 ## Sehnat či nakreslit lepší ikony kapitol
 

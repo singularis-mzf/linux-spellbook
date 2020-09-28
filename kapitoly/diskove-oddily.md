@@ -20,14 +20,26 @@ Poznámky:
 [ ] Připojování obyčejným uživatelem
 [ ] SquashFS.
 
-Článek o btrfs: https://www.root.cz/clanky/souborovy-system-btrfs-vlastnosti-a-vyhody-moderniho-ukladani-dat/
-
 Zpracovat také:
 https://www.root.cz/clanky/pripojeni-obrazu-disku-pod-beznym-uzivatelem-bez-opravneni-roota/
 
 Volby připojení:
 data=ordered
 uhelper=udisks2
+
+Výhody btrfs:
+* umožňuje klonování pododdílů s tím, že kopie se vytvoří až při zápisu
+* automaticky počítá a ukládá kontrolní součty dat; umožňuje jejich kontrolu
+* umožňuje použít při ukládání dat kompresi
+
+Nevýhody btrfs:
+* odkládací soubor může být na btrfs umístěn jen za zvláštních okolností
+* je obtížné správně zjistit a interpretovat velikost volného místa v btrfs
+* s jeho zřízením je víc starostí
+
+[ ] http://manpages.ubuntu.com/manpages/focal/en/man8/btrfs-filesystem.8.html
+[ ] http://manpages.ubuntu.com/manpages/focal/en/man8/btrfs-check.8.html
+? http://manpages.ubuntu.com/manpages/focal/en/man8/btrfs-balance.8.html
 
 -->
 
@@ -110,15 +122,11 @@ Tento tvar je vhodný pouze u logických oddílů LVM či při jednorázovém p
 
 * Souborový systém typu btrfs se dělí na takzvané **pododdíly**. Každý pododdíl je reprezentován svým vlastním „kořenovým“ adresářem. Reprezentující adresář představuje jednoznačnou hranici mezi vnějším (obklopujícím) pododdílem a vnitřním (vnořeným) pododdílem. Pododdíly se vždy překrývají pouze tímto hraničním adresářem, jinak jsou oddělené. Operace prováděné s obklopujícím pododdílem (např. klonování) se vnořeného pododdílu netýkají. (V důsledku toho, když naklonujete pododdíl, hraniční adresáře v něm vnořených pododdílů budou v klonu prázdné.) Každý pododdíl má také svoje číselné „id“, ale jeho používání není příliš praktické.
 * **Kořenový pododdíl** je pododdíl reprezentovaný kořenovým adresářem souborového systému. Nemá žádný obklopující pododdíl, má vždy id 5 a není možno ho (samostatně) odstranit ani přesunout.
-* **Klon** (reflink/snapshot) je v btrfs virtuální kopie souboru nebo celého pododdílu, která se navenek chová jako zcela nezávislá kopie, ale ve skutečnosti sdílí část datových či metadatových bloků s původním souborem či pododdílem. Díky tomu je vytváření klonů rychlé, nenáročné a klony zprvu zabírají jen velmi málo místa.
-* Pododdíl může být označený jako „**neměnný**“ (toto označení lze přidat či odebrat i dodatečně); neměnný pododdíl je chráněný proti změnám dat i metadat, bez ohledu na přístupová práva, může však být odstraněn jako celek.
+* **Klon** (reflink/snapshot) je v btrfs virtuální kopie souboru nebo celého pododdílu, která se navenek chová jako zcela nezávislá kopie, ale vnitřně sdílí část datových či metadatových bloků s původním souborem či pododdílem, dokud se do nich nikdo nepokusí zapisovat (teprve poté se vytvoří skutečné kopie, ale jen bloků, u kterých je to potřeba). Díky tomu je vytváření klonů rychlé, nenáročné a klony zprvu zabírají jen velmi málo místa.
+* Pododdíl může být označený jako „**neměnný**“ (toto označení lze přidat či odebrat i dodatečně); neměnný pododdíl je chráněný proti změnám dat i metadat, bez ohledu na přístupová práva, může však být odstraněn jako celek. Nejčastěji se jako neměnné nastavují klony pododdílů.
 * **Zrcadlené oddíly** jsou dva oddíly, kde každá změna je zapisována paralelně na oba, takže v případě poškození či ztráty jednoho z nich nedojde ke ztrátě dat.
 
 Poznámka k pevným odkazům: pevný odkaz v souborovém systému typu btrfs nemůže vést přes hranici pododdílu, místo toho však lze přes hranici pododdílů vytvořit klon souboru.
-
-<!--
-[ ] Je-li obklopující pododdíl neměnný, ale vnořený ne, lze adresář vnořeného pododdílu přejmenovat?
--->
 
 !ÚzkýRežim: vyp
 
@@ -205,9 +213,6 @@ Poznámka k pevným odkazům: pevný odkaz v souborovém systému typu btrfs n
 **findmnt -bnu -o AVAIL** {*/přípojný/bod*}
 <!--
 [ ] btrfs?
-
-
-
 -->
 
 *# zjistit **volby připojení***<br>
@@ -229,8 +234,6 @@ Poznámka k pevným odkazům: pevný odkaz v souborovém systému typu btrfs n
 **findmnt -bnu -o SIZE** {*/přípojný/bod*}
 <!--
 [ ] btrfs?
-
-
 -->
 
 *# zjistit **zdrojové** zařízení z přípojného bodu/naopak*<br>
@@ -301,9 +304,7 @@ asi PHY-SEC/LOG-SEC u lsblk
 **sudo mkfs.btrfs -d raid1 -m raid1 -f -L "Zrcadlo" /dev/sda3 /dev/sdb1**
 <!--
 [ ] Vyzkoušet!
--->
 
-<!--
 -O raid1c34 :: RAID1 with 3 or 4 copies
 -->
 
@@ -458,10 +459,6 @@ Viz: https://wiki.archlinux.org/index.php/Persistent_block_device_naming
 **sudo dd if=**{*cesta*} **of=/dev/**{*oddíl*} [**status=progress**]<br>
 **gunzip -cd** {*cesta.gz*} **\| sudo dd of=**{*/dev/oddíl*} [**status=progress**]
 
-<!--
-[ ] btrfs send | btrfs receive
--->
-
 ## Zaklínadla: LVM
 
 ### Fyzické svazky
@@ -544,15 +541,6 @@ Viz: https://wiki.archlinux.org/index.php/Persistent_block_device_naming
 *# aktualizovat systémový přehled LVM podle připojených zařízení*<br>
 **sudo lvscan \-\-mknodes**
 
-
-
-
-
-
-
-
-
-
 ## Zaklínadla: btrfs
 
 ### Správa pododdílů
@@ -607,7 +595,7 @@ Další možnost:
 *# vytvořit **klon podstromu** adresářů*<br>
 *// Cíl („/cesta/pro/klon“) před vykonáním příkazu nesmí existovat. Poznámka: Naklonují se pouze soubory; adresáře se pro ně vytvoří nové, takže pokud je podstrom rozsáhlejší, bude to chvíli trvat.*<br>
 [**rm -Rf** {*/cesta/pro/klon*} **&amp;&amp;**]<br>
-**cp \-\-reflink=always -R** [**\-\-preserve=all**] <nic>[**-t**] <nic>[**-v**] {*/cesta/k/adresáři*} {*/cesta/pro/klon*}
+**cp \-\-reflink=always -R** [**\-\-preserve=all**] <nic>[**-v**] {*/cesta/k/adresáři*} {*/cesta/pro/klon*}
 
 *# vytvořit klon **pododdílu** (normální/neměnný)*<br>
 **btrfs subvolume snapshot** {*cesta/k/pododdílu*} {*cesta/k/novému/pododdílu*}<br>
@@ -616,11 +604,10 @@ Další možnost:
 *# vytvořit klon **souboru***<br>
 **cp \-\-reflink=always** [**\-\-preserve=all**] <nic>[**-t**] <nic>[**-v**] {*/cesta/k/souboru*} {*/cesta/pro/klon*}
 
-*# osamostatnit klon souboru*<br>
+*# osamostatnit klon souboru, aby nevyužíval sdílené datové bloky*<br>
 **btrfs filesystem defragment** [**-v**] <nic>[**\-\-**] {*cesta/k/souboru*}...
 
-
-## Práce se zrcadlenými oddíly
+### Práce se zrcadlenými oddíly
 
 *# **vytvořit** dva zrcadlené oddíly z jednoho samostatného*<br>
 ?
@@ -628,7 +615,20 @@ Další možnost:
 *# **osamostatnit** oddíl ze zrcadlené dvojice*<br>
 ?
 
-## Ostatní
+### Přenos neměnných pododdílů přes soubor
+
+*# **uložit** neměnný pododdíl do souboru*<br>
+*// Pokud ukládáte více pododdílů, jejich reprezentující adresáře se musejí lišit jménem, a to i v případě, že leží v různých podadresářích!*<br>
+**sudo btrfs send -e**[**v**] {*/cesta/k/pododdílu*}... **\| gzip &gt;**{*cílový/soubor.gz*}
+
+*# **načíst** neměnné oddíly ze souboru*<br>
+*// Příkaz vytvoří ve výstupním adresáři pododdíly uložené v souboru pod jejich původními názvy a na konci operace je nastaví jako neměnné.*<br>
+**zcat** {*soubor.gz*} **\| sudo btrfs receive -e**[**v**] {*výstupní/adresář*}
+
+*# zkontrolovat v souboru uložené neměnný oddíly*<br>
+**zcat** {*soubor.gz*} **\| btrfs receive \-\-dump**
+
+### Ostatní
 
 <!--
 btrfs filesystem defrag -v -c{*komprese*} {*soubor*} — umožňuje rekomprimovat soubor
@@ -646,30 +646,19 @@ btrfs filesystem defrag -v -c{*komprese*} {*soubor*} — umožňuje rekomprimova
 *# defragmentovat pododdíl*<br>
 **sudo btrfs filesystem defragment -r** {*cesta/pododdílu*}
 
+### Přenos rozdílu klonů
 
-<!--
-Výhody btrfs:
-* umožňuje klonování pododdílů s tím, že kopie se vytvoří až při zápisu
-* automaticky počítá a ukládá kontrolní součty dat; umožňuje jejich kontrolu
-* umožňuje použít při ukládání dat kompresi
+Pozor! Tyto operace slouží k přenosu změn z jednoho oddílu btrfs na jiný (obvykle na jiném počítači)
+a mají poměrně tvrdé požadavky na to, co musejí klony na jednom i druhém počítači splňovat.
+Před jejich použitím si musíte přečíst manuálové stránky vyvolané příkazem
+„man 8 btrfs-send btrfs-receive“. Navíc doporučuji přenosový soubor komprimovat příkazem „gzip“,
+čímž získá menší velikost a odolnost proti chybám při přenosu.
 
-Nevýhody btrfs:
-* odkládací soubor může být na btrfs umístěn jen za zvláštních okolností
-* je obtížné správně zjistit a interpretovat velikost volného místa v btrfs
-* s jeho zřízením je víc starostí
+*# uložit do souboru rozdíl*<br>
+**sudo btrfs send -e**[**v**] **-c** {*/cesta/k/původnímu-klonu*} {*/cesta/k/novému/klonu*} **\| gzip &gt;**{*cílový/soubor.gz*}
 
-https://christitus.com/btrfs-guide/
-http://manpages.ubuntu.com/manpages/focal/en/man8/btrfs-subvolume.8.html
-http://manpages.ubuntu.com/manpages/focal/en/man8/btrfs-scrub.8.html
-https://btrfs.wiki.kernel.org/index.php/Main_Page
-http://manpages.ubuntu.com/manpages/focal/en/man5/btrfs.5.html
-
-
-[ ] http://manpages.ubuntu.com/manpages/focal/en/man8/btrfs-filesystem.8.html
-[ ] http://manpages.ubuntu.com/manpages/focal/en/man8/btrfs-check.8.html
-? http://manpages.ubuntu.com/manpages/focal/en/man8/btrfs-balance.8.html
--->
-
+*# aplikovat rozdíl*<br>
+**zcat** {*soubor.gz*} **\| sudo btrfs receive -e**[**v**] {*výstupní/adresář*}
 
 ## Nejdůležitější volby připojení
 
@@ -736,6 +725,7 @@ http://manpages.ubuntu.com/manpages/focal/en/man5/btrfs.5.html
 * ○ compress-force={*hodnota*} ○ compress={*hodnota*} :: Nastavuje výchozí kompresi pro nově vytvořené soubory. Použijte hodnotu „off“ pro žádnou kompresi, „lzo“ pro nenáročnou kompresi, „zstd:10“ pro důkladnou kompresi nebo „zstd:15“ pro maximální kompresi.
 * ☐ degraded :: Umožní připojit oddíl zrcadleného systému souborů v situaci, kdy některé ze zařízení není dostupné. Doporučuji skombinovat s volbou „ro“.
 * ○ discard ○ nodiscard :: Zapne/vypne automatické označování prázdného prostoru na SSD discích (operace TRIM). Možná není nutné ho zadávat.
+* ○ subvol={*/cesta*} ○ subvolid={*id*} :: Připojí zadaný pododdíl namísto výchozího. Varování: pokud připojujete jeden souborový systém typu btrfs vícenásobně (zejména různé pododdíly na různé přípojné body), musíte u všech připojení použít přesně stejné volby až na subvol či subvolid, jinak může btrfs později uvedené volby ignorovat!
 
 Manuálová stránka pro zlepšení výkonu doporučuje použít obecnou volbu „noatime“.
 
@@ -782,10 +772,13 @@ Nástroj GParted najdete v balíčku „gparted“:
 
 ### Btrfs
 
+* Příznak neměnnosti se při klonování nepřenáší; pokud ho nenastavíte (např. parametrem „-r“), do klonů neměnného oddílu půjde zapisovat, což může být velmi užitečné (můžete např. vytvořit neměnný klon pododdílu a později původní pododdíl smazat a nahradit ho obyčejným klonem z neměnného klonu).
 * Umístění odkládacího souboru na souborový systém btrfs je možné, ale nedoporučuji to. Přesný postup a související omezení najdete v manuálové stránce zobrazené příkazem „man 5 btrfs“ (kapitola „SWAPFILE SUPPORT“).
-* Btrfs umožňuje namísto kořenového pododdílu připojit jiný pododdíl. To nedoporučuji, protože můžete narazit na problém, že vícenásobné připojení jednoho systému souborů btrfs se nechová podle očekávání. Pokud chcete pododdíly btrfs rozmístit na různá místa souborového systému, použijte k tomu raději „mount \-\-bind“ než přímé znovupřipojování btrfs.
-* Btrfs se nedokáže dobře zotavit ze selhání a chyb (i v manuálové stránce je varování, že program „btrfs check“ může problémy spíš zhoršit než vyřešit). Také jsem kdesi četl/a, že může mít problémy při zaplnění veškerého místa na disku. Z těchto důvodů ho nedoporučuji jako typ souborového systému pro systémový oddíl, spíš je vhodný pro různé druhy uživatelských dat.
+* Doporučuji se vyhýbat volbám připojení „subvol“ a „subvolid“; pro připojení pododdílů na různá místa souborového systému raději použijte „mount \-\-bind“, resp. jeho obdobu v /etc/fstab.
+* Btrfs se prý nedokáže dobře zotavit ze selhání a chyb (i v manuálové stránce je varování, že program „btrfs check“ může problémy spíš zhoršit než vyřešit). Také jsem kdesi četl/a, že může mít problémy při zaplnění veškerého místa na disku, ale nepodařilo se mi to ověřit. Z těchto důvodů ho nedoporučuji jako typ souborového systému pro systémový oddíl, spíš je vhodný pro různé druhy uživatelských dat, která pravidelně zálohujete.
 * Pododdíly se pro některé nástroje jeví jako samostatně připojené souborové systému; např. příkaz „find“ s parametrem „-xdev“ otestuje adresář reprezentující pododdíl, ale nesestoupí do něj. Podobně „df .“ uvnitř pododdílu vypíše cestu pododdílu namísto přípojného bodu celého souborového systému.
+* Komprese je užitečná jen tehdy, pokud velké procento kapacity zabírají soubory, které lze snadno komprimovat (zdrojové kódy, nekomprimované obrázky, HTML, XML apod.). Dnes je ale většina běžně používaných formátů již komprimovaná, takže je pravděpodobné, že vám komprese žádné nové místo na disku nepřinese.
+* Klonování pododdílu je velmi rychlé i u rozsáhlých pododdílů; naopak klonování jednotlivých souborů je sice podstatně rychlejší než jejich kopírování, ale pomalejší než vytváření pevných odkazů na ně.
 
 ## Další zdroje informací
 
@@ -795,13 +788,19 @@ Pokud hledáte nástroj pro dělení disku ze skriptu, zkuste [sfdisk](http://ma
 * [Seriál Logical Volume Manager](https://www.abclinuxu.cz/serialy/lvm)
 * [Wikipedie: Logical Volume Management](https://cs.wikipedia.org/wiki/Logical_Volume_Management)
 * [Wikipedie: Btrfs](https://cs.wikipedia.org/wiki/Btrfs)
+* [Chris Titus Tech: Btrfs Guide](https://christitus.com/btrfs-guide/) (anglicky)
 * [LVM Ubuntu Tutorial](https://linuxhint.com/lvm-ubuntu-tutorial/) (anglicky)
-* man lvm
+* [man lvm](http://manpages.ubuntu.com/manpages/focal/en/man8/lvm.8.html) (anglicky)
+* [man 8 btrfs-subvolume](http://manpages.ubuntu.com/manpages/focal/en/man8/btrfs-subvolume.8.html) (anglicky)
+* [man 5 btrfs](http://manpages.ubuntu.com/manpages/focal/en/man5/btrfs.5.html) (anglicky)
 * [Arch Wiki: LVM](https://wiki.archlinux.org/index.php/LVM) (anglicky)
-* [Balíček Bionic](https://packages.ubuntu.com/bionic/lvm2) (anglicky)
+* [Arch Wiki: Btrfs](https://wiki.archlinux.org/index.php/Btrfs) (anglicky)
+* [Kernel Btrfs Wiki](https://btrfs.wiki.kernel.org/index.php/Main\_Page) (anglicky)
+* [Balíček Bionic: lvm2](https://packages.ubuntu.com/bionic/lvm2) (anglicky)
 * [YouTube: Lesson 20 Managing LVM](https://www.youtube.com/watch?v=m9SNN6IWyZo) (anglicky)
 * [YouTube: Combining Drives Together](https://www.youtube.com/watch?v=scMkYQxBtJ4) (anglicky)
 * [YouTube: LVM snapshots](https://www.youtube.com/watch?v=N8rUlYL2O_g) (anglicky)
 * [Wikipedie: Mount (computing)](https://en.wikipedia.org/wiki/Mount\_\(computing\)) (anglicky)
+* [man 8 btrfs-scrub](http://manpages.ubuntu.com/manpages/focal/en/man8/btrfs-scrub.8.html) (anglicky)
 
 !ÚzkýRežim: vyp

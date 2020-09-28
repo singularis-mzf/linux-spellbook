@@ -83,10 +83,13 @@ Offline instalací se rozumí stažení balíčků, jejich přenesení na počí
 **sudo aptitude update**<br>
 **sudo apt-get update**
 
-*# **aktualizovat** všechny aktualizovatelné balíčky (normálně/drasticky/normálně/drasticky)*<br>
+*# **aktualizovat** všechny aktualizovatelné balíčky (alternativy)*<br>
+*// Tyto příkazy při aktualizaci vynechají balíčky, které by svou aktualizací způsobily odstranění jiných balíčků. Pokud chcete aktualizovat i takové balíčky, použijte „drastickou aktualizaci“.*<br>
 **sudo apt-get upgrade** [**-y**] <nic>[**\-\-autoremove** [**\-\-purge**]]<br>
+**sudo aptitude** [**-y**] <nic>[**\-\-no-new-installs**] **safe-upgrade**
+
+*# drasticky **aktualizovat** všechny aktualizovatelné balíčky (alternativy)*<br>
 **sudo apt-get dist-upgrade** [**-y**] <nic>[**\-\-autoremove** [**\-\-purge**]]<br>
-**sudo aptitude** [**-y**] <nic>[**\-\-no-new-installs**] **safe-upgrade** <br>
 **sudo aptitude** [**-y**] **full-upgrade**
 
 *# **nainstalovat** nový balíček včetně závislostí (vzdálený balíček/lokální soubor)*<br>
