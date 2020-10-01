@@ -254,12 +254,18 @@ xxx , xxx # priorita?
 **\-true**<br>
 **\-false**
 
+*# má uživatelské rozšířené atributy*<br>
+?
+
 *# vlastník nebo skupina souboru neexistuje*<br>
 **\\( -nogroup -o -nouser \\)**
 
 *# typ souborového systému*<br>
 *// Např. „ext4“, „tmpfs“, „ntfs“, „vfat“.*<br>
 **\-fstype** {*typ*}
+<!--
+[ ] Znovu otestovat. Mám podezření, že někdy nefunguje.
+-->
 
 *# čislo **inode***<br>
 **\-inum** {*inode*}

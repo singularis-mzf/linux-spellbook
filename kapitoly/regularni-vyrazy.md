@@ -291,7 +291,7 @@ varianta pro rozšířený regulární výraz.
 
 ### Rozšířené (s kvantifikací)
 
-Podvzorek v následujících zaklínadlech je jakýkoliv vzorek, .
+Podvzorek v následujících zaklínadlech je jakýkoliv vzorek, který by byl platný sám o sobě.
 
 *# některý z podvzorků*<br>
 **// Vnořený operátor @() lze skombinovat s obklopujícím operátorem, takže např. místo „+(@(A\|B))“ stačí napsat „+(A\|B)“, což má tentýž význam.**<br>

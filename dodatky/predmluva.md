@@ -150,7 +150,7 @@ v příští již může fungovat jinak.
 ## Musím umět programovat?
 
 K použití Linuxu: Knihy kouzel sice přímo nemusíte aktivně programovat,
-ale měli byste znát pojmy ze základů programování jako např. „funkce“, „příkaz“
+ale měl/a byste znát pojmy ze základů programování jako např. „funkce“, „příkaz“
 či „skript“ a určitě vám prospěje, pokud máte na programování talent.
 
 ## Balíček pomocných skriptů a funkcí
@@ -161,11 +161,12 @@ efektivním linuxovým řešením takových situací je vytvoření skriptů a 
 které lze zavolat jednoduchým příkazem a vykonají za vás automaticky mnoho,
 často i velmi složitých příkazů, které danou úlohu vyřeší.
 
-Každá kapitola, která tyto pomocné či funkce skripty vyžaduje, obsahuje jejich
+Každá kapitola, která tyto pomocné funkce či skripty vyžaduje, obsahuje jejich
 úplný zdrojový kód, což vám umožňuje si je vytvořit sám/a pouhým zkopírováním
 či ručním opsáním (opsání nedoporučuji kvůli riziku překlepů);
-pro vaše pohodlí je ovšem ke každé vydané verzi knihy online cestou
-distribuován balíček ve formátu „.deb“, který si můžete nainstalovat na svůj systém.
+pro vaše pohodlí je ovšem ke každé vydané verzi vanilkové příchuti
+Linuxu: Knihy kouzel online cestou distribuován balíček ve formátu „.deb“,
+který si můžete nainstalovat na svůj systém.
 Tento balíček obsahuje aktuální verze pomocných skriptů a funkcí
 a příkaz „lkk“, kterým můžete spouštět pomocné skripty nebo importovat
 pomocné funkce (příkazem „source &lt;(lkk \-\-funkce)“).

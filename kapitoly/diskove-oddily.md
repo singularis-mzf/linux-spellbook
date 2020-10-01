@@ -35,6 +35,7 @@ Výhody btrfs:
 Nevýhody btrfs:
 * odkládací soubor může být na btrfs umístěn jen za zvláštních okolností
 * je obtížné správně zjistit a interpretovat velikost volného místa v btrfs
+* je asynchronní, takže chyby a selhání se projevují opožděně a není snadné určit jejich příčinu
 * s jeho zřízením je víc starostí
 
 [ ] http://manpages.ubuntu.com/manpages/focal/en/man8/btrfs-filesystem.8.html
@@ -145,7 +146,7 @@ Poznámka k pevným odkazům: pevný odkaz v souborovém systému typu btrfs n
 **/dev/skupina/muj-oddil ext4 defaults 0 2**
 
 *# připojit **ramdisk***<br>
-*// Velikost se udává nejčastěji v mebibajtech (s příponou M – např. „256M“) nebo gibibajtech (s příponou G – např. „10G“).*<br>
+*// Velikost se udává nejčastěji v mebibajtech (s příponou M – např. „256M“) nebo gibibajtech (s příponou G – např. „10G“). Lze ji udat také v procentech dostupné paměti RAM (např. „150%“ pro 1,5-násobek velikosti RAM).*<br>
 **tmpfs** {*kam-připojit*} **tmpfs size=**{*velikost*}[**,nosuid**]<nic>[**,nodev**]<nic>[**,noexec**]<nic>[**,mode=**{*práva-číselně*}]<nic>[**,uid=**{*UID-vlastníka*}]<nic>[**,gid=**{*GID-skupiny*}]<nic>[**,**{*další,volby*}] **0 0**
 
 *# připojit **odkládací** oddíl/odkládací soubor*<br>
@@ -725,7 +726,7 @@ Před jejich použitím si musíte přečíst manuálové stránky vyvolané př
 * ○ compress-force={*hodnota*} ○ compress={*hodnota*} :: Nastavuje výchozí kompresi pro nově vytvořené soubory. Použijte hodnotu „off“ pro žádnou kompresi, „lzo“ pro nenáročnou kompresi, „zstd:10“ pro důkladnou kompresi nebo „zstd:15“ pro maximální kompresi.
 * ☐ degraded :: Umožní připojit oddíl zrcadleného systému souborů v situaci, kdy některé ze zařízení není dostupné. Doporučuji skombinovat s volbou „ro“.
 * ○ discard ○ nodiscard :: Zapne/vypne automatické označování prázdného prostoru na SSD discích (operace TRIM). Možná není nutné ho zadávat.
-* ○ subvol={*/cesta*} ○ subvolid={*id*} :: Připojí zadaný pododdíl namísto výchozího. Varování: pokud připojujete jeden souborový systém typu btrfs vícenásobně (zejména různé pododdíly na různé přípojné body), musíte u všech připojení použít přesně stejné volby až na subvol či subvolid, jinak může btrfs později uvedené volby ignorovat!
+* ○ subvol={*/cesta*} ○ subvolid={*id*} :: Připojí zadaný pododdíl namísto výchozího (což je zpravidla ten kořenový). Varování: jeden souborový systém typu btrfs je dovoleno připojit vícenásobně (na různé přípojné body), ale pokud se chcete vyhnout problémům, použijte u všech připojení přesně stejné volby až na „subvol“ či „subvolid“ (vyzkoušel/a jsem, že další volby, které se mohou bezpečně lišit, jsou \*atime a ro/rw).
 
 Manuálová stránka pro zlepšení výkonu doporučuje použít obecnou volbu „noatime“.
 
@@ -775,10 +776,14 @@ Nástroj GParted najdete v balíčku „gparted“:
 * Příznak neměnnosti se při klonování nepřenáší; pokud ho nenastavíte (např. parametrem „-r“), do klonů neměnného oddílu půjde zapisovat, což může být velmi užitečné (můžete např. vytvořit neměnný klon pododdílu a později původní pododdíl smazat a nahradit ho obyčejným klonem z neměnného klonu).
 * Umístění odkládacího souboru na souborový systém btrfs je možné, ale nedoporučuji to. Přesný postup a související omezení najdete v manuálové stránce zobrazené příkazem „man 5 btrfs“ (kapitola „SWAPFILE SUPPORT“).
 * Doporučuji se vyhýbat volbám připojení „subvol“ a „subvolid“; pro připojení pododdílů na různá místa souborového systému raději použijte „mount \-\-bind“, resp. jeho obdobu v /etc/fstab.
-* Btrfs se prý nedokáže dobře zotavit ze selhání a chyb (i v manuálové stránce je varování, že program „btrfs check“ může problémy spíš zhoršit než vyřešit). Také jsem kdesi četl/a, že může mít problémy při zaplnění veškerého místa na disku, ale nepodařilo se mi to ověřit. Z těchto důvodů ho nedoporučuji jako typ souborového systému pro systémový oddíl, spíš je vhodný pro různé druhy uživatelských dat, která pravidelně zálohujete.
-* Pododdíly se pro některé nástroje jeví jako samostatně připojené souborové systému; např. příkaz „find“ s parametrem „-xdev“ otestuje adresář reprezentující pododdíl, ale nesestoupí do něj. Podobně „df .“ uvnitř pododdílu vypíše cestu pododdílu namísto přípojného bodu celého souborového systému.
-* Komprese je užitečná jen tehdy, pokud velké procento kapacity zabírají soubory, které lze snadno komprimovat (zdrojové kódy, nekomprimované obrázky, HTML, XML apod.). Dnes je ale většina běžně používaných formátů již komprimovaná, takže je pravděpodobné, že vám komprese žádné nové místo na disku nepřinese.
+* Btrfs se prý nedokáže dobře zotavit ze selhání a chyb (i v manuálové stránce je varování, že program „btrfs check“ může problémy spíš zhoršit než vyřešit) a v případě, že dojde vyhrazený prostor pro metadata, se nuceně přepne do režimu „jen pro čtení“ a je obtížné se z takového stavu zotavit – viz [stránku na superuser.com](https://superuser.com/questions/1419067/btrfs-root-no-space-left-on-device-auto-remount-read-only-cant-balance-cant).
+* Pododdíly se prezentují systému jako samostatně připojené souborové systémy; to znamená, že přes hranici pododdílu nemohou vést pevné odkazy, příkaz „find“ s parametrem „-xdev“ otestuje adresář nesestoupí do podadresáře reprezentujícího pododdíl apod.
 * Klonování pododdílu je velmi rychlé i u rozsáhlých pododdílů; naopak klonování jednotlivých souborů je sice podstatně rychlejší než jejich kopírování, ale pomalejší než vytváření pevných odkazů na ně.
+* Velmi špatná vlastnost Btrfs je, že je asynchronní – operace vypadají, že rychle a úspěšně proběhly, ale za několik minut souborový systém může zhavarovat, když „naslibovanou“ operaci nedokáže provést.
+
+<!--
+* Komprese je jen zřídka užitečná. Desítky procent kapacity může ušetřit jen v případě, že velkou část dat lze snadno komprimovat, většina dnes používaných formátů, které zabírají hodně místa, už ale komprimovaná je.
+-->
 
 ## Další zdroje informací
 
@@ -794,8 +799,10 @@ Pokud hledáte nástroj pro dělení disku ze skriptu, zkuste [sfdisk](http://ma
 * [man 8 btrfs-subvolume](http://manpages.ubuntu.com/manpages/focal/en/man8/btrfs-subvolume.8.html) (anglicky)
 * [man 5 btrfs](http://manpages.ubuntu.com/manpages/focal/en/man5/btrfs.5.html) (anglicky)
 * [Arch Wiki: LVM](https://wiki.archlinux.org/index.php/LVM) (anglicky)
+* [Btrfs Sysadmin Guide](https://btrfs.wiki.kernel.org/index.php/SysadminGuide) (anglicky)
+* [Kernel Btrfs Wiki](https://btrfs.wiki.kernel.org/index.php/Main\_Page
+https://btrfs.wiki.kernel.org/index.php/Main\_Page) (anglicky)
 * [Arch Wiki: Btrfs](https://wiki.archlinux.org/index.php/Btrfs) (anglicky)
-* [Kernel Btrfs Wiki](https://btrfs.wiki.kernel.org/index.php/Main\_Page) (anglicky)
 * [Balíček Bionic: lvm2](https://packages.ubuntu.com/bionic/lvm2) (anglicky)
 * [YouTube: Lesson 20 Managing LVM](https://www.youtube.com/watch?v=m9SNN6IWyZo) (anglicky)
 * [YouTube: Combining Drives Together](https://www.youtube.com/watch?v=scMkYQxBtJ4) (anglicky)

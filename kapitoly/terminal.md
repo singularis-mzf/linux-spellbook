@@ -133,7 +133,7 @@ bude to zmíněno. Dále nepokrývá podporu šestnácti milionů barev.
 ### Ozdoby (nápisy a matrix)
 
 *# spustit simulaci „Matrixu“ (zelený spořič obrazovky/růžový spoříč obrazovky/interaktivní režim)*<br>
-*// V interaktivním režimu program ukončíte klávesou „q“, další klávesové zkratky na v manuálové stránce. Rychlost je od 0 (nejrychlejší) po 9 (nejpomalejší).*<br>
+*// V interaktivním režimu program ukončíte klávesou „q“, další klávesové zkratky najdete v manuálové stránce. Rychlost je od 0 (nejrychlejší) po 9 (nejpomalejší).*<br>
 **cmatrix -bs -C green** [**-u** {*rychlost*}]<br>
 **cmatrix -b -C magenta** [**-u** {*rychlost*}]<br>
 **cmatrix -b**

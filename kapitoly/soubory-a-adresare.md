@@ -420,32 +420,47 @@ Poznámka: srovnávané položky nemusejí být v tomtéž adresáři; můžete
 [**sudo**] **chmod** [**-R**] **ug+s,+t** [**\-\-**] {*cesta*}...<br>
 [**sudo**] **chmod** [**-R**] **ug-s,-t** [**\-\-**] {*cesta*}...
 
-### Uživatelské rozšířené atributy ext4 (URA)
+### Uživatelské rozšířené atributy
 
-Poznámka: Tyto příkazy jsou vhodné pro zpracování běžných textových hodnot rozšířených atributů;
-pokud potřebujete zpracovávat atributy obsahující obecná binární data, budete muset prozkoumat
-komplikovanější příkazy „getfattr“ a „setfattr“ z balíčku „attr“ (nutno doinstalovat).
-
-Poznámka 2: Všechny klíče uživatelských rozšířených atributů *musejí* začínat „user.“.
-
-*# vypsat **seznam klíčů***<br>
-[**sudo**] **xattr** [**\-\-**] {*cesta*}...
-
-*# vypsat **hodnotu***<br>
-[**sudo**] **xattr -p**[**z**] {*user.klíč*} [**\-\-**] {*cesta*}...
-
-*# smazat konkrétní URA-dvojici*<br>
-[**sudo**] **xattr -d** {*user.klíč*} [**\-\-**] {*cesta*}...
-
-*# smazat všechny URA-dvojice na daném souboru či adresáři*<br>
-?
 <!--
-[ ] vyzkoušet
-**for \_ in "$(xattr \-\-** {*cesta*} **\| sed -E "s/'/'\\''/g;s/.*/'\\\\1'/")"; do xattr -d "$\_"** {*cesta*}**; done**
+Poznámka:
+- v názvech odzvláštňuje příkaz „getfattr“ znaky: \r \n \ =
+- v hodnotách odzvláštňuje znaky: \0 \r \n \
+  a před znak uvozovka (") umísťuje zpětné lomítko
+
+Tyto příkazy fungují spolehlivě, pokud názvy rozšířených atributů neobsahují znaky „\\0“, „\\n“, „"“, „#“, „=“, „\\“.
+
+Všechny klíče uživatelských rozšířených atributů *musejí* začínat „user.“ a pokračovat alespoň jedním znakem. Žádný klíč nemůže obsahovat nulový bajt „\\0“.
 -->
 
-*# **nastavit** atribut*<br>
-[**sudo**] **xattr -w**[**z**] {*user.klíč*} **"**{*hodnota*}**"** [**\-\-**] {*cesta*}...
+Poznámka: následující příkazy nemusejí fungovat, pokud klíč obsahuje některý ze znaků „\\n“, „\\r“, „\\“ nebo „=“.
+Klíč uživatelského rozšířeného atributu musí začínat „user.“ a pokračovat alespoň jedním znakem,
+platný klíč je tedy např. „user..“ nebo „user.a.b“ nebo „user.Žlutý kůň/xyz“.
+Klíč nemůže obsahovat nulový bajt „\\0“.
+
+*# vypsat **seznam klíčů** pro člověka*<br>
+[**sudo**] **getfattr** [**-m**] <nic>[**\-\-**] {*adr/položka*}...
+
+*# vypsat seznam klíčů pro skript*<br>
+[**sudo**] **getfattr** [**-m**] <nic>[**\-\-**] {*adr/položka*} **\| sed -E '1d;$d'**
+<!--
+[**sudo**] **getfattr** [**\-\-**] {*adr/položka*} **\| tr \\\\n \\\\0 \| sed -zE '1d;$d;s/\\\\012/\\n/g;s/\\\\015/\\r/g;s/\\\\075/=/g;s/\\\\134/\\\\/g'** [**\|** {*zpracování*}]<br>
+-->
+
+*# smazat atribut podle klíče*<br>
+[**sudo**] **setfattr -x** {*klíč*} [**\-\-**] {*adr/položka*}...
+
+*# smazat všechny uživatelské atributy*<br>
+?
+
+*# vypsat hodnotu atributu jako data*<br>
+[**sudo**] **getfattr -n** {*klíč*} **\-\-only-values** [**\-\-**] {*adr/položka*} [**\|** {*zpracování*}]
+
+*# zapsat data jako hodnotu atributu*<br>
+[**sudo**] **setfattr -n** {*klíč*} **-v 0x$(**{*zdroj dat*} **\| xxd -p -u -c 1 \| tr -d \\\\n)** [**\-\-**] {*adr/položka*}...
+
+*# vypsat **hodnotu** hexadecimálně (pro člověka)*<br>
+[**sudo**] **getfattr -n** {*klíč*} **\-\-only-values -e hex** [**\-\-**] {*adr/položka*}
 
 ### Zvláštní restrikce ext4
 
@@ -489,6 +504,143 @@ Pokus o použití na tmpfs vede k chybovému hlášení:
 *# kolik je v adresáři neskrytých souborů/adresářů (včetně symbolických odkazů)?*<br>
 **find -L** {*adresář*} **-mindepth 1 -maxdepth 1 -type f -name '[!.]\*' -printf \\0 \| wc -c**
 **find -L** {*adresář*} **-mindepth 1 -maxdepth 1 -type d -name '[!.]\*' -printf \\0 \| wc -c**
+
+<!--
+## Zaklínadla: Uživatelské rozšířené atributy
+
+Poznámka: Dvojice parametrů „-m -“ znamená zahrnutí i systémových atributů do výpisu.
+
+Poznámka: Znaky „\\r“, „\\n“, „=“ a „\\“ se v klíčích atributů při použití
+následujících zaklínadel nahrazují sekvencemi „\\015“ (\\r), „\\012“ (\\n), „\\075“ (=),
+resp. „\\134“(„\\“), a to jak při zadávání, tak při výpisu. Buď se použití těchto znaků
+vyhněte, nebo jim zajistěte odpovídající konverzi. Nulový bajt „\\0“ se v klíči vyskytovat
+nesmí.
+
+### .
+
+*# **vypsat** klíče i hodnoty pro člověka (řetězcově/hexadecimálně)*<br>
+[**sudo**] **getfattr \-\-dump** [**-m -**] <nic>[**\-\-**] {*adr/položka*}...<br>
+[**sudo**] **getfattr \-\-dump -e hex** [**-m -**] <nic>[**\-\-**] {*adr/položka*}...
+
+*# vypsat **seznam** klíčů (pro člověka)*<br>
+[**sudo**] **getfattr** [**\-\-**] {*adr/položka*}...
+
+*# **seznam** klíčů pro skript (ukončovač „\\n“)*<br>
+[**sudo**] **getfattr** [**-m -**] <nic>[**\-\-**] {*adr/položka*} **\| sed -E '1d;$d'**
+
+*# **smazat** atribut podle klíče*<br>
+[**sudo**] **setfattr -x** {*klíč*} [**\-\-**] {*adr/položka*}...<br>
+
+*# smazat všechny uživatelské atributy*<br>
+[**sudo**] **getfattr** [**\-\-**] {*adr/položka*} **\|
+
+*# **nastavit** atribut podle klíče (hodnota je text/binární data)*<br>
+[**sudo**] **setfattr -n** {*klíč*} **-v** "0x$(printf %s "**{*text*}**" \| xxd -p -c 1 \| tr -d \\\\n)"** [**\-\-**] {*adr/položka*}...<br>
+[**sudo**] **setfattr -n** {*klíč*} **-v** "0x$(**{*zdroj*} **\| xxd -p -c 1 \| tr -d \\\\n)"** [**\-\-**] {*adr/položka*}...
+
+*# načíst klíče a hodnoty do asociativního pole bashe (nulové bajty nahradit za „\\n“)*<br>
+?
+
+*# načíst klíče do pole bashe*<br>
+?
+<!- -
+**eval "$(**[**sudo**] **getfattr** [**\-\-**] {*adr/položka*} **\| tr \\\\n \\\\0 \| LC\_ALL=C sed -zE '1d;$d;s/\\012/\\n/g;s/\\\\015/\\r/g;s/\\\\075/=/g;s/\\\\134/\\\\/g' \| (readarray -d ''** {*název\_pole*}**; declare -p** {*název\_pole*}**))"**
+- ->
+
+*# **získat** hodnotu atributu podle klíče*<br>
+*// Poznámka: hodnotou atributu mohou obecná binárná data. Nepředpokládejte, že obsahuje text v kódování UTF-8 nebo že neobsahuje nulové bajty!*<br>
+[**sudo**] **getfattr \-\-only-values -n** {*klíč*} [**\-\-**] {*adr/položka*}[**; echo**]<br>
+
+<!- -
+*# seznam klíčů a hodnot oddělených tabulátorem, pro skript, ve formátu TXT*<br>
+[**sudo**] **getfattr \-\-dump -e text** [**-m -**] <nic>[**\-\-**] {*adr/položka*} **\| LC\_ALL=C sed -E '1d;$d;s/^([<nic>^=]\*)="/\\1\\t/;s/"$//**
+- ->
+
+*# má adresářová položka rozšířené atributy (uživatelské/nebo systémové)?*<br>
+?<br>
+?
+
+*# počet klíčů (jen číslo/číslo a adresářová cesta)*<br>
+[**sudo**] **getfattr** [**-m -**] <nic>[**\-\-**] {*adr/položka*} **\| wc -l**<br>
+
+*# délka hodnoty v bajtech, podle klíče*<br>
+[**sudo**] **getfattr \-\-only-values -n** {*klíč*} [**\-\-**] {*adr/položka*} **\| wc -c**
+
+<!- -
+### Robustní zpracování skriptem
+
+*# **seznam** klíčů ve formátu TXTZ (uživatelských/i systémových)*<br>
+[**sudo**] **getfattr** [**-m -**] <nic>[**\-\-**] {*adr/položka*} **\| LC\_ALL=C sed -E '1d;$d;s/\\012/\\n/g;s/\\\\015/\\r/g;s/\\\\075/=/g;s/\\\\134/\\\\/g'**
+
+*# seznam klíčů a hodnot oddělených tabulátorem, pro skript,  ve formátu TXT (uživatelské/i systémové)*<br>
+[**sudo**] **getfattr \-\-dump -e text** [**\-\-**] {*adr/položka*} **\| LC\_ALL=C sed -E '1d;$d;s/^([<nic>^=]\*)="/\\1\\t/;s/"$//**<br>
+**sudo getfattr \-\-dump -e text -m -** [**\-\-**] {*adr/položka*} **\| LC\_ALL=C sed -E '1d;$d;s/^([<nic>^=]\*)="/\\1\\t/;s/"$//**
+
+*# **smazat** atribut podle klíče*<br>
+[**sudo**] **setfattr -x** {*klíč*} [**\-\-**] {*adr/položka*}...<br>
+
+*# **nastavit** atribut podle klíče*<br>
+[**sudo**] **setfattr -n** {*klíč*} **-v** {*hodnota*} [**\-\-**] {*adr/položka*}...<br>
+
+*# **vypsat** hodnotu atributu podle klíče*<br>
+*// Poznámka: Bez dodatečného příkazu „echo“ nepřidává na konec hodnoty žádný ukončovač.*<br>
+[**sudo**] **getfattr \-\-only-values -n** {*klíč*} [**\-\-**] {*adr/položka*}[**; echo**]<br>
+
+
+<!- -
+Poznámka:
+- v názvech odzvláštňuje příkaz „getfattr“ znaky: \r \n \ =
+- v hodnotách odzvláštňuje znaky: \0 \r \n \
+  a před znak uvozovka (") umísťuje zpětné lomítko
+
+Tyto příkazy fungují spolehlivě, pokud názvy rozšířených atributů neobsahují znaky „\\0“, „\\n“, „"“, „#“, „=“, „\\“.
+
+Všechny klíče uživatelských rozšířených atributů *musejí* začínat „user.“ a pokračovat alespoň jedním znakem. Žádný klíč nemůže obsahovat nulový bajt „\\0“.
+- ->
+
+*# vypsat **seznam klíčů** pro člověka (uživatelských/i systémových)*<br>
+[**sudo**] **getfattr** [**\-\-**] {*adr/položka*} **\| sed -E ''**
+**sudo getfattr -m - \-\-** [**\-\-**] {*adr/položka*}
+
+*# vypsat seznam klíčů pro skript (formát TSVZ)(uživatelských/i systémových)*<br>
+[**sudo**] **getfattr** [**\-\-**] {*adr/položka*} **\| tr \\\\n \\\\0 \| sed -zE '1d;$d;s/\\\\012/\\n/g;s/\\\\015/\\r/g;s/\\\\075/=/g;s/\\\\134/\\\\/g'** [**\|** {*zpracování*}]<br>
+[**sudo**] **getfattr** [**\-\-**] {*adr/položka*} **\| tr \\\\n \\\\0 \| sed -zE '1d;$d;s/\\\\012/\\n/g;s/\\\\015/\\r/g;s/\\\\075/=/g;s/\\\\134/\\\\/g'** [**\|** {*zpracování*}]
+
+*# smazat atribut podle klíče (klíč znaky „\\r“, „\\n“, „\\“ či „=“ neobsahuje/může obsahovat)*<br>
+[**sudo**] **setfattr -x** {*klíč*} [**\-\-**] {*adr/položka*}...<br>
+[**sudo**] **setfattr -x "$(sed -E 's/\\\\/\\\\134/g;s/=/\\\\075/g;s/\\n/\\\\012/g;s/\\r/\\\\015/g' &lt;&lt;&lt; "**{*klíč*}**")** [**\-\-**] {*adr/položka*}...<br>
+
+
+### Uživatelské rozšířené atributy binárně
+
+
+*# vypsat hodnotu atributu **binárně***<br>
+[**sudo**] **getfattr -n** {*jméno.atributu*} **\-\-only-values** [**\-\-**] {*adr/položka*} [**\|** {*zpracování*}]
+
+*# zapsat hodnotu atributu ze vstupu*<br>
+[**sudo**] **setfattr -n** {*jméno.atributu*} **-v 0x$(**{*zdroj*} **\| xxd -p -u -c 1 \| tr -d \\\\n)** [**\-\-**] {*adr/položka*}...
+
+
+
+[**sudo**] **xattr** [**\-\-**] {*cesta*}...
+
+*# vypsat **hodnotu***<br>
+[**sudo**] **xattr -p**[**z**] {*user.klíč*} [**\-\-**] {*cesta*}...
+
+*# smazat konkrétní URA-dvojici*<br>
+[**sudo**] **xattr -d** {*user.klíč*} [**\-\-**] {*cesta*}...
+
+*# smazat všechny URA-dvojice na daném souboru či adresáři*<br>
+?
+<!- -
+[ ] vyzkoušet
+**for \_ in "$(xattr \-\-** {*cesta*} **\| sed -E "s/'/'\\''/g;s/.*/'\\\\1'/")"; do xattr -d "$\_"** {*cesta*}**; done**
+- ->
+
+*# **nastavit** atribut*<br>
+[**sudo**] **xattr -w**[**z**] {*user.klíč*} **"**{*hodnota*}**"** [**\-\-**] {*cesta*}...
+
+-->
 
 ## Parametry příkazů
 
