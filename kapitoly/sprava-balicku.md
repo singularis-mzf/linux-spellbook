@@ -215,7 +215,7 @@ aptitude search --disable-columns -F %p "?upgradable"
 *# vypsat seznam nainstalovaných jader*<br>
 **linux-version list**
 
-### Správá důvěryhodných klíčů
+### Správa důvěryhodných klíčů
 
 *# **přidat** klíč jako důvěryhodný (ze souboru/ze standardního vstupu)*<br>
 **sudo apt-key add** {*soubor*}<br>
