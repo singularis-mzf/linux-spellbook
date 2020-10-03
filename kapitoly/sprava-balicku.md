@@ -12,7 +12,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
 <!--
-[ ] dpkg-deb (!)
+[x] dpkg-deb (!)
 [ ] dpkg-reconfigure
 [ ] snap saved
 [ ] snap forget <balíček>
@@ -69,6 +69,7 @@ určuje dodavatel aplikace, ale uživatel může práva aplikace zúžit nebo ro
 
 * **Balíček** je soubor obsahující neměnná data tvořící aplikaci, knihovnu apod. a metadata včetně případných závislostí na ostatních balíčcích.
 * **Repozitář** je ucelený sklad souvisejících balíčků. Může být dostupný buď online, nebo může být umístěný v systému souborů. Repozitář APT má svůj **název** (v Ubuntu typicky „ubuntu“) a dělí se na **archivy** („focal“, „focal-updates“, „focal-security“ atd.) a ty se dělí na **sekce** („main“, „universe“, „restricted“ a „multiverse“). Sekce main obsahuje svobodný software přímo podporovaný jsou součást Ubuntu, sekce „universe“ obsahuje svobodný software udržovaný pouze komunitou, sekce „restricted“ obsahuje nesvobodný software považovaný za podporovanou součást Ubuntu (typicky proprietární ovladače) a sekce „multiverse“ obsahuje nesvobodný software neudržovaný komunitou. Sekce se dále dělí na **podsekce** podle druhu softwaru.
+* Balíček je **dostupný**, pokud kterýkoliv v systému nakonfigurovaný repozitář nabízí balíček daného názvu a architektury. Balíček je **známý**, pokud je dostupný nebo v systému nainstalovaný.
 
 <!--
 Offline instalací se rozumí stažení balíčků, jejich přenesení na počítač nepřipojený k síti a instalace tam.
@@ -78,8 +79,9 @@ Offline instalací se rozumí stažení balíčků, jejich přenesení na počí
 
 ## Zaklínadla: DPKG a APT
 
-### Instalace a odinstalace
-*# aktualizovat informace o dostupných balíčcích (alternativy)*<br>
+### Aktualizace
+
+*# aktualizovat informace o **dostupných** balíčcích (alternativy)*<br>
 **sudo aptitude update**<br>
 **sudo apt-get update**
 
@@ -92,36 +94,46 @@ Offline instalací se rozumí stažení balíčků, jejich přenesení na počí
 **sudo apt-get dist-upgrade** [**-y**] <nic>[**\-\-autoremove** [**\-\-purge**]]<br>
 **sudo aptitude** [**-y**] **full-upgrade**
 
-*# **nainstalovat** nový balíček včetně závislostí (vzdálený balíček/lokální soubor)*<br>
-**sudo apt-get install** [**-y**] <nic>[**\-\-no-install-recommends**] <nic>[**\-\-install-suggests**] <nic>[**-V**] {*balíček*}...<br>
-**sudo apt-get install** [**-y**] <nic>[**\-\-no-install-recommends**] <nic>[**\-\-install-suggests**] <nic>[**-V**] **./**{*balíček.deb*}...
-
 *# aktualizovat jen konkrétní balíčky a jejich závislosti*<br>
 **sudo apt-get install \-\-only-upgrade** {*balíček*}...
-
-*# nainstalovat či upgradovat zvolené balíčky a současně upgradovat ostatní*<br>
-**sudo apt-get upgrade** [**-y**] **&amp;&amp; sudo apt-get install** [**-y**] <nic>[**\-\-autoremove** [**\-\-purge**]] {*balíček*}...
 
 *# pokusit se napravit poškozené závislosti*<br>
 **sudo apt-get install \-\-fix-broken**
 
+### Instalace a odinstalace
+
+*# **nainstalovat** nový balíček včetně závislostí (vzdálený balíček/lokální soubor)*<br>
+**sudo apt-get install** [**-y**] <nic>[**\-\-no-install-recommends**] <nic>[**\-\-install-suggests**] <nic>[**-V**] {*balíček*}...<br>
+**sudo apt-get install** [**-y**] <nic>[**\-\-no-install-recommends**] <nic>[**\-\-install-suggests**] <nic>[**-V**] **./**{*balíček.deb*}...
+
+*# **odinstalovat** balíček (celosystémové konfigurační soubory smazat/ponechat)*<br>
+*// Ponechat celosystémové konfigurační soubory má smysl v případě, že chcete zachovat konfiguraci balíčku pro případ, že byste ho v budoucnu znovu nainstaloval/a. Uživatelskou konfiguraci programů (uloženou v domovských adresářích) APT ani DPKG odstranit neumí.*<br>
+**sudo apt-get purge** [**\-\-autoremove**] {*balíček*}...<br>
+**sudo apt-get remove** [**\-\-autoremove**] {*balíček*}...
+
 *# přeinstalovat (**opravit**) již nainstalovaný balíček*<br>
 **sudo apt-get reinstall** {*balíček*}...
 
-*# stáhnout balíčky do lokálních souborů .deb (bez závislostí)*<br>
-**apt-get download** {*balíček*}...
+*# nainstalovat či aktualizovat zvolené balíčky a současně aktualizovat ostatní*<br>
+**sudo apt-get upgrade** [**-y**] **&amp;&amp; sudo apt-get install** [**-y**] <nic>[**\-\-autoremove** [**\-\-purge**]] {*balíček*}...
 
+*# **stáhnout** balíčky do lokálních souborů .deb (bez závislostí/se závislostmi)*<br>
+**apt-get download** {*balíček*}...<br>
+?
 
-### Vypsat balíčky
+### Seznamy balíčků
 
-*# vypsat všechny dostupné nebo nainstalované balíčky (pro člověka)*<br>
+*# vypsat **známé** balíčky (pro člověka)*<br>
 **apt list**
+
+*# vypsat všechny známé balíčky pro všechny architektury*<br>
+**aptitude search '?true'**
 
 *# vypsat známé balíčky, filtrovat na základě kritérií*<br>
 **aptitude** [**-F** {*formát*}] **search '**{*vyhledávací podmínka*}**'** [**'**{*další vyhledávací podmínka*}**'**]...
 
 *# vypsat **všechny dostupné balíčky** (včetně dostupných verzí, pouze pro hlavní architekturu)*<br>
-**aptitude search \-\-disable-columns -F "$(printf "%s\\t%s" %p %V)" '?true' \| egrep -v "$(printf "[^\\t]\*:[<nic>^\\t]|[<nic>^\\t]\*\\t&lt;[<nic>^\\t]\*&gt;(\\t\|\\$)")"**
+**aptitude search \-\-disable-columns -F $'%p\\t%V' '?true' \| egrep -v $'[^\\t]\*:[<nic>^\\t]|[<nic>^\\t]\*\\t&lt;[<nic>^\\t]\*&gt;(\\t\|$)'**
 
 *# vypsat seznam **nainstalovaných balíčků** včetně verzí (pro člověka – alternativy)*<br>
 **apt list \-\-installed**<br>
@@ -135,9 +147,6 @@ Offline instalací se rozumí stažení balíčků, jejich přenesení na počí
 *# vypsat seznam nainstalovaných balíčků podle místa zabraného na disku; od největšího po nejmenší (pro člověka)*<br>
 *// Velikosti jsou uvedeny v kilobajtech.*<br>
 **dpkg-query -Wf '${Installed-Size}\\t${Package}:${Architecture}\\n' | sort -nr | less**
-
-*# vypsat všechny známé (nainstalované nebo dostupné) balíčky (pro všechny architektury)*<br>
-**aptitude search '?true'**
 
 *# vypsat balíčky, pro které je dostupný upgrade (pro člověka/pro skript)*<br>
 *// Poznámka: vypíše i balíčky, jejichž upgrade není možný např. kvůli konfliktu s jiným balíčkem.*<br>
@@ -219,8 +228,11 @@ aptitude search --disable-columns -F %p "?upgradable"
 
 ### Jádra
 
-*# vypsat seznam nainstalovaných jader*<br>
+*# vypsat seznam **nainstalovaných** jader*<br>
 **linux-version list**
+
+*# vypsat seznam dostupných jader*<br>
+?
 
 ### Správá důvěryhodných klíčů
 
@@ -488,9 +500,9 @@ http://docs.flatpak.org/en/latest/single-file-bundles.html
 *# **vypsat** nainstalované balíčky*<br>
 **snap list**
 
-*# vypsat seznam všech dostupných balíčků*<br>
+*# vypsat seznam všech **dostupných** balíčků*<br>
 *// Poznámka: provedení tohoto příkazu může trvat i několik minut a vzhledem k velkému rozsahu vypsaných informací doporučuji výstup přesměrovat do souboru.*<br>
-**(for X in {a..z} {0..9}; do snap find** [**\-\-narrow**] **$X \| sed 1d; done) \| tr -s "&blank;" \| sort -iu \| sed "$(printf "%s/&blank;/\\\\\|/\\\\n" s s s)" \| column -ts \\\|** [**&gt;** {*soubor*}]
+**(for X in {a..z} {0..9}; do snap find** [**\-\-narrow**] **$X \| sed 1d; done) \| tr -s "&blank;" \| sort -iu \| sed "$(printf '%s/&blank;/\\\\\|/\\n' s s s)" \| column -t -s $'\\t'** [**&gt;** {*soubor*}]
 
 *# vypsat podrobnější **informace** o balíčku*<br>
 **snap info** {*balíček*}
@@ -500,6 +512,7 @@ http://docs.flatpak.org/en/latest/single-file-bundles.html
 **snap connections**
 
 ### Ostatní
+
 *# **deaktivovat** balíček/znovu ho **aktivovat***<br>
 **sudo snap disable** {*balíček*}<br>
 **sudo snap enable** {*balíček*}
