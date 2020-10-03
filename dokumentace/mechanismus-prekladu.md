@@ -126,10 +126,11 @@ Sloupce *osnova/\*.tsv* jsou následující:
 | # | Popis | Příklad |
 | ---: | :--- | :--- |
 | 1 | Typ záznamu (KAPITOLA, SEKCE, PODSEKCE, nebo ZAKLINADLO). | PODSEKCE |
-| 2 | Identifikátor záznamu, jehož formát se liší podle typu záznamu. | 5x4 |
+| 2 | Identifikátor záznamu, jehož formát se liší podle typu záznamu. | 5x4 |
 | 3 | Číslo řádky ve vstupním zdrojovém kódu (slouží výhradně k ladění). | 374 |
 | 4 | Text (např. název kapitoly). | Ostatní |
-| 5 | Středník (vyhrazeno pro budoucí použití). | ; |
+| 5 | Text v UTF-16BE (viz poznámku) | \\uFEFF\\u004f\\u0073\\u0074\\u0061\\u0074\\u006E\\u00ED |
+| 6 | Středník (vyhrazeno pro budoucí použití). | ; |
 
 Formáty identifikátoru záznamu jsou následující:
 
@@ -139,6 +140,13 @@ Formáty identifikátoru záznamu jsou následující:
 | SEKCE | Pořadové číslo sekce v kapitole. | 3 |
 | PODSEKCE | Číslo sekce, „x“ a pořadové číslo podsekce v sekci. | 3x2 |
 | ZAKLINADLO | Není implementováno. | |
+
+Sloupec 5 vzniká následovně: před text (ze sloupce 4) se vloží znak „\\uFEFF“ a celek se konvertuje
+do kódování „UTF-16BE“.
+Pokud je výsledek delší než 32 znaků, zkrátí se na 29 znaků a doplní „...“.
+Výsledek se vypíše hexadecimálně ve tvaru „\\u006F“, tzn. předpona „\\u“, čtyři číslice na každý znak,
+velká písmena. Text v současnosti nesmí obsahovat znaky s kódem vyšším než „\\uFFFF“;
+do budoucna počítám s vynecháním nebo výměnou takových znaků.
 
 ### symboly/\*
 

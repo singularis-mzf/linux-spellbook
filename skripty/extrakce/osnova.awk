@@ -1,5 +1,5 @@
 # Linux Kniha kouzel, skript extrakce/osnova.awk
-# Copyright (c) 2019 Singularis <singularis@volny.cz>
+# Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 # podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -72,13 +72,19 @@ function ZpracujZnaky(text,     VSTUP, VYSTUP, ZNAK) {
     return VYSTUP;
 }
 
-# #1=TYP #2=ID #3=ČÍSLO_ŘÁDKU #4=NÁZEV #5=;
+# #1=TYP #2=ID #3=ČÍSLO_ŘÁDKU #4=NÁZEV #5=(předzpracovaný název) #6=;
 
-function VypsatPolozkuOsnovy(typ, id, cislo_radku, nazev, zarazka) {
+function VypsatPolozkuOsnovy(typ, id, cislo_radku, nazev, zarazka,   pnazev) {
     if (zarazka != ZARAZKA) {
         ShoditFatalniVyjimku("Interní chyba: chybné volání VypsatPolozkuOsnovy()!");
     }
-    print typ, id, cislo_radku, nazev, ";";
+
+    if (length(nazev) > length(PNAZEV_SABLONA)) {
+        pnazev = substr(nazev, 1, length(PNAZEV_SABLONA) - 3) "...";
+    } else {
+        pnazev = substr(nazev PNAZEV_SABLONA, 1, length(PNAZEV_SABLONA));
+    }
+    print typ, id, cislo_radku, nazev, pnazev, ";";
     return 1;
 }
 
@@ -107,6 +113,9 @@ BEGIN {
     c_zaklinadla = 0;
     FATALNI_VYJIMKA = 0;
     JE_UVNITR_KOMENTARE = 0;
+    PNAZEV_SABLONA = "\x1a\x1a\x1a\x1a\x1a\x1a\x1a\x1a"; # 8
+    PNAZEV_SABLONA = PNAZEV_SABLONA PNAZEV_SABLONA; # 16
+    PNAZEV_SABLONA = PNAZEV_SABLONA PNAZEV_SABLONA; # 32
 }
 
 # komentář započatý na samostatném řádku kompletně ignorovat

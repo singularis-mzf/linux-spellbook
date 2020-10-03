@@ -70,8 +70,11 @@ DATUM_SESTAVENI := $(shell date +%Y%m%d)
 
 # Další nastavení
 # ----------------------------------------------------------------------------
+PDF_ZALOZKY := 1
 SOUBORY_PREKLADU := soubory_prekladu
 VYSTUP_PREKLADU := vystup_prekladu
+# PDF_ZALOZKY_MAX_DELKA - po změně je nutno ve skriptu „skripty/extrakce/osnova.awk“ změnit odpovídajícím způsobem délku proměnné „PNAZEV_SABLONA“!
+PDF_ZALOZKY_MAX_DELKA := 32
 
 # Jméno sestavení (doporučuji nastavovat z příkazového řádku)
 # ----------------------------------------------------------------------------
@@ -141,11 +144,15 @@ $(SOUBORY_PREKLADU)/stitky.tsv: $(SOUBORY_PREKLADU)/fragmenty.tsv
 # ----------------------------------------------------------------------------
 $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/osnova/%.tsv): $(SOUBORY_PREKLADU)/osnova/%.tsv: kapitoly/%.md $(SOUBORY_PREKLADU)/fragmenty.tsv skripty/extrakce/osnova.awk
 	mkdir -pv $(SOUBORY_PREKLADU)/osnova
-	$(AWK) -f skripty/extrakce/osnova.awk -v IDKAPITOLY=$(<:kapitoly/%.md=%) $< >$@
+	$(AWK) -f skripty/extrakce/osnova.awk -v IDKAPITOLY=$(<:kapitoly/%.md=%) $< >$@.zaklad
+	cut -f 5 $@.zaklad | tr -d \\n | iconv -f UTF-8 -t UTF-16BE | xxd -p -u -c $$((2 * $(PDF_ZALOZKY_MAX_DELKA))) | sed -E 's/(001A)*$$//;s/^/FEFF/;s/..../\\u&/g' | paste <(cut -f 1-4 $@.zaklad) - <(cut -f 6- $@.zaklad) >$@
+	rm $@.zaklad
 
 $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/osnova/%.tsv): $(SOUBORY_PREKLADU)/osnova/%.tsv: dodatky/%.md $(SOUBORY_PREKLADU)/fragmenty.tsv skripty/extrakce/osnova.awk
 	mkdir -pv $(SOUBORY_PREKLADU)/osnova
-	$(AWK) -f skripty/extrakce/osnova.awk -v IDKAPITOLY=$(<:dodatky/%.md=%) $< >$@
+	$(AWK) -f skripty/extrakce/osnova.awk -v IDKAPITOLY=$(<:dodatky/%.md=%) $< >$@.zaklad
+	cut -f 5 $@.zaklad | tr -d \\n | iconv -f UTF-8 -t UTF-16BE | xxd -p -u -c $$((2 * $(PDF_ZALOZKY_MAX_DELKA))) | sed -E 's/(001A)*$$//;s/^/FEFF/;s/..../\\u&/g' | paste <(cut -f 1-4 $@.zaklad) - <(cut -f 6- $@.zaklad) >$@
+	rm $@.zaklad
 
 # 3. soubory_prekladu/postprocess.dat
 # ----------------------------------------------------------------------------
@@ -355,9 +362,9 @@ $(SOUBORY_PREKLADU)/pdf-a4/_all.kap: $(VSECHNY_KAPITOLY_A_DODATKY:%=$(SOUBORY_PR
 $(SOUBORY_PREKLADU)/pdf-a4/kniha.tex: $(SOUBORY_PREKLADU)/pdf-a4/_all.kap formaty/pdf/sablona.tex
 	$(AWK) -f skripty/plneni-sablon/specialni.awk -v IDFORMATU=pdf-a4 -v JMENOVERZE='$(JMENO)' -v TELO=$< formaty/pdf/sablona.tex >$@
 
-# 7. soubory_prekladu/pdf-a4/kniha.tex => vystup_prekladu/pdf-a4.pdf
+# 7. soubory_prekladu/pdf-a4/kniha.tex => soubory_prekladu/pdf-a4/kniha.pdf
 # ----------------------------------------------------------------------------
-$(VYSTUP_PREKLADU)/pdf-a4.pdf: \
+$(SOUBORY_PREKLADU)/pdf-a4/kniha.pdf: \
   $(SOUBORY_PREKLADU)/pdf-a4/kniha.tex \
   $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%) \
   $(OBRAZKY_IK:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/ik/%) \
@@ -366,7 +373,25 @@ $(VYSTUP_PREKLADU)/pdf-a4.pdf: \
 	mkdir -pv $(dir $@)
 	ln -rsTv skripty $(dir $<)skripty 2>/dev/null || true
 	cd $(dir $<); exec $(AWK) -f skripty/latex.awk
-	cat $(<:%.tex=%.pdf) > $@
+
+# 8. soubory_prekladu/pdf-a4/kniha.toc => soubory_prekladu/pdf-a4/pdfmarks
+# ----------------------------------------------------------------------------
+$(SOUBORY_PREKLADU)/pdf-a4/pdfmarks: \
+  $(SOUBORY_PREKLADU)/pdf-a4/kniha.pdf \
+  $(SOUBORY_PREKLADU)/fragmenty.tsv \
+  $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/osnova/%.tsv) \
+  $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/osnova/%.tsv) \
+  skripty/extrakce/pdf-zalozky.awk
+	gawk -v "FRAGMENTY_TSV=$(SOUBORY_PREKLADU)/fragmenty.tsv" -f skripty/extrakce/pdf-zalozky.awk $(SOUBORY_PREKLADU)/pdf-a4/kniha.toc >$@
+
+# 9. soubory_prekladu/pdf-a4/kniha.pdf => vystup_prekladu/pdf-a4.pdf
+# ----------------------------------------------------------------------------
+$(VYSTUP_PREKLADU)/pdf-a4.pdf: \
+  $(SOUBORY_PREKLADU)/pdf-a4/kniha.pdf \
+  $(SOUBORY_PREKLADU)/pdf-a4/pdfmarks
+	mkdir -pv $(dir $@)
+	if test "$(PDF_ZALOZKY)" != "0"; then gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile=$@ $(SOUBORY_PREKLADU)/pdf-a4/kniha.pdf $(SOUBORY_PREKLADU)/pdf-a4/pdfmarks </dev/null; else cat $< > $@; fi
+
 
 # PDF A4 bez ořezových značek:
 # ============================================================================
@@ -391,9 +416,9 @@ $(SOUBORY_PREKLADU)/pdf-a4-bez/_all.kap: $(VSECHNY_KAPITOLY_A_DODATKY:%=$(SOUBOR
 $(SOUBORY_PREKLADU)/pdf-a4-bez/kniha.tex: $(SOUBORY_PREKLADU)/pdf-a4-bez/_all.kap formaty/pdf/sablona.tex
 	$(AWK) -f skripty/plneni-sablon/specialni.awk -v IDFORMATU=pdf-a4-bez -v JMENOVERZE='$(JMENO)' -v TELO=$< formaty/pdf/sablona.tex >$@
 
-# 7. soubory_prekladu/pdf-a4-bez/kniha.tex => vystup_prekladu/pdf-a4-bez.pdf
+# 7. soubory_prekladu/pdf-a4-bez/kniha.tex => soubory_prekladu/pdf-a4-bez/kniha.pdf
 # ----------------------------------------------------------------------------
-$(VYSTUP_PREKLADU)/pdf-a4-bez.pdf: \
+$(SOUBORY_PREKLADU)/pdf-a4-bez/kniha.pdf: \
   $(SOUBORY_PREKLADU)/pdf-a4-bez/kniha.tex \
   $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%) \
   $(OBRAZKY_IK:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/ik/%) \
@@ -402,7 +427,25 @@ $(VYSTUP_PREKLADU)/pdf-a4-bez.pdf: \
 	mkdir -pv $(dir $@)
 	ln -rsTv skripty $(dir $<)skripty 2>/dev/null || true
 	cd $(dir $<); exec $(AWK) -f skripty/latex.awk
-	cat $(<:%.tex=%.pdf) > $@
+
+# 8. soubory_prekladu/pdf-a4-bez/kniha.toc => soubory_prekladu/pdf-a4-bez/pdfmarks
+# ----------------------------------------------------------------------------
+$(SOUBORY_PREKLADU)/pdf-a4-bez/pdfmarks: \
+  $(SOUBORY_PREKLADU)/pdf-a4-bez/kniha.pdf \
+  $(SOUBORY_PREKLADU)/fragmenty.tsv \
+  $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/osnova/%.tsv) \
+  $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/osnova/%.tsv) \
+  skripty/extrakce/pdf-zalozky.awk
+	gawk -v "FRAGMENTY_TSV=$(SOUBORY_PREKLADU)/fragmenty.tsv" -f skripty/extrakce/pdf-zalozky.awk $(SOUBORY_PREKLADU)/pdf-a4-bez/kniha.toc >$@
+
+# 9. soubory_prekladu/pdf-a4-bez/kniha.pdf => vystup_prekladu/pdf-a4-bez.pdf
+# ----------------------------------------------------------------------------
+$(VYSTUP_PREKLADU)/pdf-a4-bez.pdf: \
+  $(SOUBORY_PREKLADU)/pdf-a4-bez/kniha.pdf \
+  $(SOUBORY_PREKLADU)/pdf-a4-bez/pdfmarks
+	mkdir -pv $(dir $@)
+	if test "$(PDF_ZALOZKY)" != "0"; then gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile=$@ $(SOUBORY_PREKLADU)/pdf-a4-bez/kniha.pdf $(SOUBORY_PREKLADU)/pdf-a4-bez/pdfmarks </dev/null; else cat $< > $@; fi
+
 
 # PDF B5:
 # ============================================================================
@@ -427,9 +470,9 @@ $(SOUBORY_PREKLADU)/pdf-b5/_all.kap: $(VSECHNY_KAPITOLY_A_DODATKY:%=$(SOUBORY_PR
 $(SOUBORY_PREKLADU)/pdf-b5/kniha.tex: $(SOUBORY_PREKLADU)/pdf-b5/_all.kap formaty/pdf/sablona.tex
 	$(AWK) -f skripty/plneni-sablon/specialni.awk -v IDFORMATU=pdf-b5 -v JMENOVERZE='$(JMENO)' -v TELO=$< formaty/pdf/sablona.tex >$@
 
-# 7. soubory_prekladu/pdf-b5/kniha.tex => vystup_prekladu/pdf-b5.pdf
+# 7. soubory_prekladu/pdf-b5/kniha.tex => soubory_prekladu/pdf-b5/kniha.pdf
 # ----------------------------------------------------------------------------
-$(VYSTUP_PREKLADU)/pdf-b5.pdf: \
+$(SOUBORY_PREKLADU)/pdf-b5/kniha.pdf: \
   $(SOUBORY_PREKLADU)/pdf-b5/kniha.tex \
   $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%) \
   $(OBRAZKY_IK:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/ik/%) \
@@ -438,7 +481,25 @@ $(VYSTUP_PREKLADU)/pdf-b5.pdf: \
 	mkdir -pv $(dir $@)
 	ln -rsTv skripty $(dir $<)skripty 2>/dev/null || true
 	cd $(dir $<); exec $(AWK) -f skripty/latex.awk
-	cat $(<:%.tex=%.pdf) > $@
+
+# 8. soubory_prekladu/pdf-b5/kniha.toc => soubory_prekladu/pdf-b5/pdfmarks
+# ----------------------------------------------------------------------------
+$(SOUBORY_PREKLADU)/pdf-b5/pdfmarks: \
+  $(SOUBORY_PREKLADU)/pdf-b5/kniha.pdf \
+  $(SOUBORY_PREKLADU)/fragmenty.tsv \
+  $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/osnova/%.tsv) \
+  $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/osnova/%.tsv) \
+  skripty/extrakce/pdf-zalozky.awk
+	gawk -v "FRAGMENTY_TSV=$(SOUBORY_PREKLADU)/fragmenty.tsv" -f skripty/extrakce/pdf-zalozky.awk $(SOUBORY_PREKLADU)/pdf-b5/kniha.toc >$@
+
+# 9. soubory_prekladu/pdf-b5/kniha.pdf => vystup_prekladu/pdf-b5.pdf
+# ----------------------------------------------------------------------------
+$(VYSTUP_PREKLADU)/pdf-b5.pdf: \
+  $(SOUBORY_PREKLADU)/pdf-b5/kniha.pdf \
+  $(SOUBORY_PREKLADU)/pdf-b5/pdfmarks
+	mkdir -pv $(dir $@)
+	if test "$(PDF_ZALOZKY)" != "0"; then gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile=$@ $(SOUBORY_PREKLADU)/pdf-b5/kniha.pdf $(SOUBORY_PREKLADU)/pdf-b5/pdfmarks </dev/null; else cat $< > $@; fi
+
 
 # PDF B5 bez ořezových značek:
 # ============================================================================
@@ -463,9 +524,9 @@ $(SOUBORY_PREKLADU)/pdf-b5-bez/_all.kap: $(VSECHNY_KAPITOLY_A_DODATKY:%=$(SOUBOR
 $(SOUBORY_PREKLADU)/pdf-b5-bez/kniha.tex: $(SOUBORY_PREKLADU)/pdf-b5-bez/_all.kap formaty/pdf/sablona.tex
 	$(AWK) -f skripty/plneni-sablon/specialni.awk -v IDFORMATU=pdf-b5-bez -v JMENOVERZE='$(JMENO)' -v TELO=$< formaty/pdf/sablona.tex >$@
 
-# 7. soubory_prekladu/pdf-b5-bez/kniha.tex => vystup_prekladu/pdf-b5-bez.pdf
+# 7. soubory_prekladu/pdf-b5-bez/kniha.tex => soubory_prekladu/pdf-b5-bez/kniha.pdf
 # ----------------------------------------------------------------------------
-$(VYSTUP_PREKLADU)/pdf-b5-bez.pdf: \
+$(SOUBORY_PREKLADU)/pdf-b5-bez/kniha.pdf: \
   $(SOUBORY_PREKLADU)/pdf-b5-bez/kniha.tex \
   $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%) \
   $(OBRAZKY_IK:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/ik/%) \
@@ -474,7 +535,25 @@ $(VYSTUP_PREKLADU)/pdf-b5-bez.pdf: \
 	mkdir -pv $(dir $@)
 	ln -rsTv skripty $(dir $<)skripty 2>/dev/null || true
 	cd $(dir $<); exec $(AWK) -f skripty/latex.awk
-	cat $(<:%.tex=%.pdf) > $@
+
+# 8. soubory_prekladu/pdf-b5-bez/kniha.toc => soubory_prekladu/pdf-b5-bez/pdfmarks
+# ----------------------------------------------------------------------------
+$(SOUBORY_PREKLADU)/pdf-b5-bez/pdfmarks: \
+  $(SOUBORY_PREKLADU)/pdf-b5-bez/kniha.pdf \
+  $(SOUBORY_PREKLADU)/fragmenty.tsv \
+  $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/osnova/%.tsv) \
+  $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/osnova/%.tsv) \
+  skripty/extrakce/pdf-zalozky.awk
+	gawk -v "FRAGMENTY_TSV=$(SOUBORY_PREKLADU)/fragmenty.tsv" -f skripty/extrakce/pdf-zalozky.awk $(SOUBORY_PREKLADU)/pdf-b5-bez/kniha.toc >$@
+
+# 9. soubory_prekladu/pdf-b5-bez/kniha.pdf => vystup_prekladu/pdf-b5-bez.pdf
+# ----------------------------------------------------------------------------
+$(VYSTUP_PREKLADU)/pdf-b5-bez.pdf: \
+  $(SOUBORY_PREKLADU)/pdf-b5-bez/kniha.pdf \
+  $(SOUBORY_PREKLADU)/pdf-b5-bez/pdfmarks
+	mkdir -pv $(dir $@)
+	if test "$(PDF_ZALOZKY)" != "0"; then gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile=$@ $(SOUBORY_PREKLADU)/pdf-b5-bez/kniha.pdf $(SOUBORY_PREKLADU)/pdf-b5-bez/pdfmarks </dev/null; else cat $< > $@; fi
+
 
 # PDF B5 na A4:
 # ============================================================================
@@ -499,9 +578,9 @@ $(SOUBORY_PREKLADU)/pdf-b5-na-a4/_all.kap: $(VSECHNY_KAPITOLY_A_DODATKY:%=$(SOUB
 $(SOUBORY_PREKLADU)/pdf-b5-na-a4/kniha.tex: $(SOUBORY_PREKLADU)/pdf-b5-na-a4/_all.kap formaty/pdf/sablona.tex
 	$(AWK) -f skripty/plneni-sablon/specialni.awk -v IDFORMATU=pdf-b5-na-a4 -v JMENOVERZE='$(JMENO)' -v TELO=$< formaty/pdf/sablona.tex >$@
 
-# 7. soubory_prekladu/pdf-b5-na-a4/kniha.tex => vystup_prekladu/pdf-b5-na-a4.pdf
+# 7. soubory_prekladu/pdf-b5-na-a4/kniha.tex => soubory_prekladu/pdf-b5-na-a4/kniha.pdf
 # ----------------------------------------------------------------------------
-$(VYSTUP_PREKLADU)/pdf-b5-na-a4.pdf: \
+$(SOUBORY_PREKLADU)/pdf-b5-na-a4/kniha.pdf: \
   $(SOUBORY_PREKLADU)/pdf-b5-na-a4/kniha.tex \
   $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/%) \
   $(OBRAZKY_IK:%=$(SOUBORY_PREKLADU)/pdf-spolecne/_obrazky/ik/%) \
@@ -510,7 +589,25 @@ $(VYSTUP_PREKLADU)/pdf-b5-na-a4.pdf: \
 	mkdir -pv $(dir $@)
 	ln -rsTv skripty $(dir $<)skripty 2>/dev/null || true
 	cd $(dir $<); exec $(AWK) -f skripty/latex.awk
-	cat $(<:%.tex=%.pdf) > $@
+
+# 8. soubory_prekladu/pdf-b5-na-a4/kniha.toc => soubory_prekladu/pdf-b5-na-a4/pdfmarks
+# ----------------------------------------------------------------------------
+$(SOUBORY_PREKLADU)/pdf-b5-na-a4/pdfmarks: \
+  $(SOUBORY_PREKLADU)/pdf-b5-na-a4/kniha.pdf \
+  $(SOUBORY_PREKLADU)/fragmenty.tsv \
+  $(VSECHNY_KAPITOLY:%=$(SOUBORY_PREKLADU)/osnova/%.tsv) \
+  $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/osnova/%.tsv) \
+  skripty/extrakce/pdf-zalozky.awk
+	gawk -v "FRAGMENTY_TSV=$(SOUBORY_PREKLADU)/fragmenty.tsv" -f skripty/extrakce/pdf-zalozky.awk $(SOUBORY_PREKLADU)/pdf-b5-na-a4/kniha.toc >$@
+
+# 9. soubory_prekladu/pdf-b5-na-a4/kniha.pdf => vystup_prekladu/pdf-b5-na-a4.pdf
+# ----------------------------------------------------------------------------
+$(VYSTUP_PREKLADU)/pdf-b5-na-a4.pdf: \
+  $(SOUBORY_PREKLADU)/pdf-b5-na-a4/kniha.pdf \
+  $(SOUBORY_PREKLADU)/pdf-b5-na-a4/pdfmarks
+	mkdir -pv $(dir $@)
+	if test "$(PDF_ZALOZKY)" != "0"; then gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile=$@ $(SOUBORY_PREKLADU)/pdf-b5-na-a4/kniha.pdf $(SOUBORY_PREKLADU)/pdf-b5-na-a4/pdfmarks </dev/null; else cat $< > $@; fi
+
 
 # DEB:
 # ============================================================================

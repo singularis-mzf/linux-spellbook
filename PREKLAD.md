@@ -22,12 +22,15 @@ popsáno v souboru [README.md](README.md), úplné sestavení je popsáno zde.
 K úplnému sestavení *Linuxu: Knihy kouzel* ze zdrojového kódu budete potřebovat:
 
 * Git
-* GNU make
 * GNU awk
+* GNU make
+* GNU sed
 * ImageMagick
+* GhostScript
 * rsvg-convert (kvůli konverzi SVG na PDF)
 * XeLaTeX
 * qrencode
+* xxd
 * české locale „cs\_CZ.UTF-8“ (musí fungovat české řazení příkazem „sort“) − nemusí být aktivní, stačí nainstalované a funkční
 
 Také budete potřebovat písma:
@@ -43,7 +46,7 @@ Také budete potřebovat písma:
 
 Ověřil/a jsem, že v Ubuntu 20.04 LTS, Ubuntu 18.04 LTS a Linuxu Mint 20 můžete všechny potřebné nástroje a písma nainstalovat příkazem:
 
-> ``sudo apt-get install git make gawk imagemagick librsvg2-bin qrencode texlive-xetex texlive-lang-czechslovak fonts-texgyre t1-cyrillic``
+> ``sudo apt-get install git make gawk xxd imagemagick librsvg2-bin qrencode texlive-xetex texlive-lang-czechslovak fonts-texgyre t1-cyrillic``
 
 V budoucnu pravděpodobně sestavování přejde na Ubuntu 20.04, ale zatím je stále plně podporován i překlad na Ubuntu 18.04.
 
@@ -58,7 +61,7 @@ A nakonec stačí spustit make:
 > ``cd linux-spellbook``
 > ``make -j4``
 
-Výstup ve všech podporovaných formátech najdete v adresáři ``vystup_prekladu``.
+Výstup ve všech podporovaných formátech najdete v adresáři ``vystup_prekladu``. Očekávaná doba překladu je cca 5 minut procesorového času (máte-li čtyřjádrový procesor, je to zhruba 1 minuta).
 
 ## Ověření české lokalizace systému
 
