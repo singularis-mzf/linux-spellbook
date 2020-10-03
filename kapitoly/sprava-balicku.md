@@ -80,6 +80,7 @@ Offline instalací se rozumí stažení balíčků, jejich přenesení na počí
 ## Zaklínadla (DPKG a APT)
 
 ### Instalace a odinstalace
+
 *# aktualizovat informace o dostupných balíčcích (alternativy)*<br>
 **sudo aptitude update**<br>
 **sudo apt-get update**
@@ -93,6 +94,11 @@ Offline instalací se rozumí stažení balíčků, jejich přenesení na počí
 *# **nainstalovat** nový balíček včetně závislostí (vzdálený balíček/lokální soubor)*<br>
 **sudo apt-get install** [**-y**] <nic>[**\-\-no-install-recommends**] <nic>[**\-\-install-suggests**] <nic>[**-V**] {*balíček*}...<br>
 **sudo gdebi** {*balíček.deb*}
+
+*# **odinstalovat** balíček (celosystémové konfigurační soubory smazat/ponechat)*<br>
+*// Ponechat celosystémové konfigurační soubory má smysl v případě, že chcete zachovat konfiguraci balíčku pro případ, že byste ho v budoucnu znovu nainstaloval/a. Uživatelskou konfiguraci programů (uloženou v domovských adresářích) APT ani DPKG odstranit neumí.*<br>
+**sudo apt-get purge** [**\-\-autoremove**] {*balíček*}...<br>
+**sudo apt-get remove** [**\-\-autoremove**] {*balíček*}...
 
 *# aktualizovat jen konkrétní balíčky a jejich závislosti*<br>
 **sudo apt-get install \-\-only-upgrade** {*balíček*}...
