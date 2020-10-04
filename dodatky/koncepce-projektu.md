@@ -12,7 +12,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
 
-# Koncepce projektu Linux: Kniha kouzel
+# Koncepce projektu Linux: Kniha kouzel
 
 !ÚzkýRežim: zap
 

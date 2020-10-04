@@ -234,14 +234,20 @@
     \titlespacing*{\chapter}{0pt}{-1ex}{2ex plus2ex minus0.5ex}\relax
 
     \titleformat{\section}[hang]{\normalfont\fontsz{12pt}\bfseries}%
-        {\settowidthwithminimum{\tmpsirkastitku}{\mbox{\thesection}}{20pt}\makebox[\tmpsirkastitku][l]{\thesection}}%
-        {0.33em}{}\relax
+        %{\settowidthwithminimum{\tmpsirkastitku}{\mbox{\thesection}}{20pt}\makebox[\tmpsirkastitku][l]{\thesection}}{0.33em}%
+        {}% ---
+        {0pt}{}\relax
     \titlespacing*{\section}{0pt}{3ex plus1ex minus1ex}{1ex}\relax
 
     \titleformat{\subsection}[hang]{\normalfont\fontsz{11pt}}%
         {}%
         {0pt}{%
-            $^{\mbox{{\small s\arabic{section}/}}}$\arabic{subsection}
+            %$^{\mbox{{\small s\arabic{section}/}}}$
+            {\setlength{\unitlength}{1em}\begin{picture}(0,0)%
+                \put(0,1){\line(0,-1){1.25}}%
+                \put(0,1){\line(1,0){5}}%
+                \end{picture}}
+            \arabic{section}.\arabic{subsection}
         }\relax
     \titlespacing*{\subsection}{0pt}{4ex plus1ex minus0ex}{1ex}\relax
 
@@ -250,12 +256,12 @@
 % {tocloft}:
     \setlength{\cftpartindent}{0pt}
     \setlength{\cftchapindent}{0pt}
-    \setlength{\cftsecindent}{1em}
-    \setlength{\cftsubsecindent}{2em}
+    \setlength{\cftsecindent}{0pt}
+    \setlength{\cftsubsecindent}{1em}
     %\setlength{\cftsubsubsecindent}{3em}
 
     \setlength{\cftchapnumwidth}{1.6em}
-    \setlength{\cftsecnumwidth}{2em}
+    \setlength{\cftsecnumwidth}{0em}
     \setlength{\cftsubsecnumwidth}{2em}
 
     % zarovnat titulky vlevo: (jinak se zarovnají do bloku, což nevypadá hezky)
@@ -464,11 +470,11 @@
 }
 
 \newcommand*{\sekce}[2][]{{%
-    \renewcommand*{\thesection}{[\arabic{section}]}%
+    \renewcommand*{\thesection}{}%
     \section{#2}%
 }}
 \newcommand*{\podsekce}[2][]{{%
-    \renewcommand*{\thesubsection}{(\arabic{subsection})}%
+    \renewcommand*{\thesubsection}{\arabic{section}.\arabic{subsection}}%
     \subsection{#2}%
 }}
 

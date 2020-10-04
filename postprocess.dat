@@ -250,12 +250,6 @@ soubory-a-adresare
 # [koncepce-projektu] 1700..1799
 # =========================================================================================
 
-1701
-pdf-b5.*
-koncepce-projektu
-\kapitola{4}{}{KONCEPCE PROJEKTU LINUX: KNIHA KOUZEL}{../pdf-spolecne/_obrazky/ik/koncepce-projektu.png}%
-\kapitola{4}{}{KONCEPCE PROJEKTU LINUX: KNIHA~KOUZEL}{../pdf-spolecne/_obrazky/ik/koncepce-projektu.png}%
-
 #
 # VYŘAZENÉ KAPITOLY
 # =========================================================================================
