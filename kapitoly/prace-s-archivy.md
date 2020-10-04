@@ -29,7 +29,7 @@ Poznámky:
 
 Tato kapitola uvádí univerzální nástroje pro balení a rozbalování archivů
 v mnoha různých formátech a specificky se věnuje nejrozšířenějším
-formátům .7z, .zip, .tar, .gz a .tar.gz.
+formátům .7z, .zip, .tar, .gz, .tar.gz a .squashfs.
 
 Univerzální nástroje (např. apack a aunpack) nepracují s archivem samy;
 místo toho pouze podle přípony rozpoznají jeho typ a zavolají
@@ -40,8 +40,6 @@ pracují s archivem samy.
 Tato kapitola se nezabývá zálohováním ani správou verzí.
 Nepokrývá práci s obrazy souborových systémů ani různé typy softwarových balíčků
 (např. .deb či .rpm). Nezabývá se konverzí jednoho archivního formátu na jiný.
-
-Tato verze kapitoly nepokrývá formát SquashFS.
 
 Poznámka: Použití „souborů se seznamem“ při psaní této kapitoly nebylo testováno.
 
@@ -238,12 +236,92 @@ externí programy).
 *# **smazat** z archivu soubory a adresáře*<br>
 **zip -d** {*archiv.zip*} {*vzorek/cesty*}...
 
+### SquashFS
+
+Poznámka: Archiv typu SquashFS obsahuje vždy svůj kořenový adresář (zpravidla jménem
+„squashfs-root“). Veškerý obsah archivu je pak v podstromu pod tímto adresářem.
+
+*# **rozbalit** archiv*<br>
+*// Poznámka: cílový adresář nesmí existovat, bude vytvořen a vybalí se do něj obsah kořenového adresáře archivu.*<br>
+**unsquashfs -d** {*cílový/adresář*} [**-no-xattrs**] <nic>[**-info**] {*archiv.squashfs*}
+
+*# **vybalit** soubor či adresář*<br>
+*// Poznámka: cílový adresář nesmí existovat, bude vytvořen. Cesty v archivu se zadávají relativně vůči kořenovému adresáři archivu a příkaz k nim pod cílovým adresářem vytvoří odpovídající adresářovou strukturu.*<br>
+**unsquashfs -d** {*cílový/adresář*} [**-no-xattrs**] <nic>[**-info**] {*archiv.squashfs*} {*cesta/v/archivu*}...
+
+*# **vybalit** soubor na standardní výstup*<br>
+?
+
+*# **vytvořit** nový archiv a uložit do něj soubory a adresáře*<br>
+**mksquashfs** {*cesta*}... {*archiv.squashfs*} **-noappend** [**-info**] <nic>[**-keep-as-directory**] <nic>[{*-další-volby*}]...
+
+<!--
+*# **vytvořit** nový archiv, uložit do něj soubory a adresáře a ochránit heslem*<br>
+*# **přidat** další soubory či adresáře a ochránit heslem*<br>
+// není podporováno
+-->
+
+*# **vypsat** soubory a adresáře v archivu (pro člověka/pro skript)*<br>
+**unsquashfs -lln** {*archiv.squashfs*}
+**unsquashfs -l** {*archiv.squashfs*} **\| sed -E '0,/^$/d;/^squashfs-root$/s!$!/!;s/^squashfs-root//'**
+
+*# **přidat** další soubory či adresáře*<br>
+**mksquashfs** {*cesta*}... {*archiv.squashfs*} [**-info**] <nic>[**-keep-as-directory**] <nic>[{*-další-volby*}]...
+
+*# **smazat** z archivu soubory a adresáře*<br>
+*// Doporučený postup je archiv vybalit, odstranit soubory a adresáře a znovu zabalit.*<br>
+**unsquashfs -d** {*dočasný/adresář*} {*archiv.squashfs*}<br>
+**rm -Rf** [**\-\-**] {*dočasný/adresář*}**/**{*cesta*} [{*dočasný/adresář*}**/**{*další/cesta*}]...<br>
+**mksquashfs** {*dočasný/adresář*} {*archiv.squashfs*} **-noappend**<br>
+**rm -Rf** {*dočasný/adresář*}
+
+*# přidat do archivu při vytváření/doplňování adresář*<br>
+*// V cestě v archivu musejí být odzvláštněny zpětným lomítkem všechny bílé znaky (např. mezera či tabulátor), znaky „\\“ a „"“ a možná ještě některé další. Takto vytvořenému adresáři nelze nastavit časové známky.*<br>
+!: Na konec příkazu mksquashfs doplňte ještě tento parametr (lze použít opakovaně):<br>
+**-p "**{*cesta/v archivu*} **d** {*mód*} {*vlastník*} {*skupina*}**"**
+
+*# přidat do archivu při vytváření/doplňování soubor*<br>
+*// V cestě v archivu musejí být odzvláštněny zpětným lomítkem všechny bílé znaky (např. mezera či tabulátor), znaky „\\“ a „"“ a možná ještě některé další. Generující příkaz je příkaz interpretu „sh“; mksquashfs v něm nevyžaduje žádné dodatečné odzvláštnění.*<br>
+!: Na konec příkazu mksquashfs doplňte ještě tento parametr (lze použít opakovaně):<br>
+**-p "**{*cesta/v archivu*} **f** {*mód*} {*vlastník*} {*skupina*} {*generující příkaz*}**"**
+
+*# přidat do archivu při vytváření/doplňování symbolický odkaz*<br>
+*// V cestě v archivu musejí být odzvláštněny zpětným lomítkem všechny bílé znaky (např. mezera či tabulátor), znaky „\\“ a „"“ a možná ještě některé další. V obsahu odkazu se neodzvláštňují žádné znaky (ani případný konec řádky).*<br>
+!: Na konec příkazu mksquashfs doplňte ještě tento parametr (lze použít opakovaně):<br>
+**-p "**{*cesta/v archivu*} **s 777** {*vlastník*} {*skupina*} {*obsah-odkazu*}**"**
+
+
+## Zaklínadla: Připojení archivů do VFS
+
+## SquashFS
+
+*# **připojit** archiv (jako superuživatel/jako obyčejný uživatel)*<br>
+**sudo mount -t squashfs** [**-o** {*volby,připojení*}] {*archiv.squashfs*} {*prázdný/adresář*}<br>
+**squashfuse** [**-o** {*volby,připojení*}] {*archiv.squashfs*} {*prázdný/adresář*}
+
+*# **odpojit** archiv (jako superuživatel/jako obyčejný uživatel)*<br>
+**sudo umount** {*přípojný/bod*}<br>
+**umount** {*přípojný/bod*}
+
+## ZIP, TAR, TAR + GZIP
+
+*# **připojit** archiv zip/tar/tar.gz*<br>
+*// Poznámka: uživatel musí mít k uvedenému adresáři právo zápisu a adresář nesmí mít nastaven příznak omezení smazání. Kontrola přístupových práv uvnitř připojeného archivu se chová velmi podivně – uživatel připojivší archiv má vždy práva čtení a zápisu a právo spouštění u adresářů; u souboru má právo spouštění, pokud je nastaveno u „u“, „g“ nebo „o“. Všem ostatním uživatelům včetně superuživatele je zakázán jakýkoliv přístup. Důrazně doporučuji zadat přinejmenším volbu „ro“ nebo zakázat zápis do archivu. Do připojeného archivu sice je možné zapisovat, ale není to efektivní.*<br>
+**archivemount** [**-o** [**ro,**]{*volby,připojení*}] {*archiv.přípona*} {*cesta/k/prázdnému/adresáři*}
+
+*# **odpojit** archiv*<br>
+**umount** {*cesta/k/adresáři*}
+
 ## Instalace na Ubuntu
+
 Nástroje tar, gzip a zip jsou již součástí minimální instalace Ubuntu. Nástroje apack, aunpack a 7z je nutno nainstalovat:
 
 *# apack, aunpack apod., 7z*<br>
 **sudo apt-get install atool p7zip-full**<br>
 [**sudo apt-get install arc arj lzip lzop march rpm unace unalz**]
+
+*# pro práci s archivy SquashFS (kromě připojování) jsou třeba balíčky:*<br>
+**sudo apt-get install squashfs-tools squashfuse**
 
 *# pro plnou podporu formátu RAR (vyžaduje nesvobodný balíček!)*<br>
 **sudo apt-get install rar**
@@ -291,7 +369,8 @@ Nástroje tar, gzip a zip jsou již součástí minimální instalace Ubuntu. N
 **man 7z**<br>
 **man atool**<br>
 **man zip**<br>
-**man unzip**
+**man unzip**<br>
+**man mksquashfs**
 
 * [Manuálová stránka „atool“](http://manpages.ubuntu.com/manpages/focal/en/man1/atool.1.html) (anglicky)
 * [Manuálová stránka „7z“](http://manpages.ubuntu.com/manpages/focal/en/man1/7z.1.html) (anglicky)
@@ -299,5 +378,7 @@ Nástroje tar, gzip a zip jsou již součástí minimální instalace Ubuntu. N
 * [Oficiální stránka 7-Zip](https://www.7-zip.org/) (anglicky)
 * [Balíček „atool“](https://packages.ubuntu.com/focal/atool) (anglicky)
 * [Balíček „p7zip-full“](https://packages.ubuntu.com/focal/p7zip-full) (anglicky)
+* [SquashFS HowTo](https://elinux.org/Squash\_FS\_Howto) (anglicky)
+* [Pseudo file example](https://github.com/plougher/squashfs-tools/blob/master/RELEASE-READMEs/pseudo-file.example) (anglicky)
 
 !ÚzkýRežim: vyp

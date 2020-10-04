@@ -41,7 +41,27 @@ se těmto změnám obvykle poměrně rychle přizpůsobuje.
 
 ## Zaklínadla
 
-### Parametry ve formátovacím řetězci (-o)
+### Stahování videí
+
+*# stáhnout **video** či více videí*<br>
+**youtube-dl -f** {*požadovaný/formát*} **-o "**{*formátovací řetězec*}**"** [{*další parametry*}] **'**{*URL/videa*}**'** [**'**{*URL/dalšího/videa*}**'**]...
+
+*# stáhnout všechna videa z **playlistu** či **kanálu***<br>
+**youtube-dl -f** {*požadovaný/formát*} **-o "**{*formátovací řetězec*}**"** [{*další parametry*}] **'**{*URL/playlistu/či/kanálu*}**'**
+
+*# stáhnout **nová** videa z playlistu či kanálu*<br>
+*// Před prvním použitím by měl být záznamový soubor prázdný. Tento příkaz do něj vyplní id*<br>
+**youtube-dl -f** {*požadovaný/formát*} **-o "**{*formátovací řetězec*}**" \-\-download-archive** {*záznamový-soubor*} [{*další parametry*}] **'**{*URL/playlistu/či/kanálu*}**'**
+
+*# vytvořit **prázdný** záznamový soubor*<br>
+**true &gt;**{*nový-soubor*}
+
+*# vytvořit **úplný** záznamový soubor z playlistu či kanálu (jen YouTube)*<br>
+*// Vytvořený záznamový soubor bude obsahovat identifikátory všech videí z daného playlistu či kanálu, takže při jeho příštím použití se stáhnou jen ta, která přibyla od jeho vytvoření.*<br>
+**youtube-dl -o "youtube %(id)s" \-\-get-filename \-\-flat-playlist -i '**{*URL/playlistu/či/kanálu*}**' &gt;**{*nový-soubor*}
+
+### Formátovací řetězec (-o)
+
 *# **identifikátor** videa*<br>
 **%(id)s** ⊨ CvhJWKtBLn4
 
@@ -56,8 +76,8 @@ se těmto změnám obvykle poměrně rychle přizpůsobuje.
 **%(height)d** ⊨ 1080
 
 *# **formát** videa (ve formátu pro parametr -f/podrobný popis)*<br>
-**%(format\_id)s**<br>
-**%(format)s**
+**%(format\_id)s** ⊨ 299<br>
+**%(format)s** ⊨ 299 - 1920x1080 (1080p60)
 
 *# **datum uploadu** videa*<br>
 **%(upload\_date)s** ⊨ 20190618
@@ -75,14 +95,15 @@ se těmto změnám obvykle poměrně rychle přizpůsobuje.
 **%(uploader)s** ⊨ Mikoláš Štrajt
 
 *# délka videa v sekundách*<br>
-**%(duration)d**
+**%(duration)d** ⊨ 1448
 
 *# počet zhlédnutí/liků/disliků*<br>
 **%(view\_count)d** ⊨ 12<br>
 **%(like\_count)d** ⊨ 1<br>
 **%(dislike\_count)d** ⊨ 0
 
-### Výběr formátu (-f)
+### Výběr formátu videa (-f)
+
 *# stáhnout **nejlepší** dostupný formát*<br>
 **\-f "bestvideo+bestaudio/best"**
 
@@ -119,12 +140,12 @@ se těmto změnám obvykle poměrně rychle přizpůsobuje.
 
 ### Zpracování playlistu či kanálu
 
-*# **rychle vypsat playlist***<br>
+*# **rychle** vypsat playlist*<br>
 *// Při použití parametru \-\-flat-playlist budou ve formátovacím řetězci fungovat pouze parametry %(id)s a %(title)s! Žádné jiné pravděpodobně fungovat nebudou!*<br>
 **youtube-dl \-\-flat-playlist \-\-get-filename -o "**{*formátovací řetězec*}**"** {*URL-playlistu-či-kanálu*}...
 
 *# vypsat **každé video z playlistu** ve vlastním formátu (1 video na řádek)*<br>
-**youtube-dl -i \-\-get-filename -o "**{*formátovací řetězec*}**"** [**-f** {*formát-videa*}] {*URL-playlistu*}...
+**youtube-dl -i \-\-get-filename**[**\-\-flat-playlist**] **-o "**{*formátovací řetězec*}**"** [**-f** {*formát-videa*}] {*URL-playlistu*}...
 
 *# pro každé video v playlistu YouTube vypsat jeho úplnou adresu*<br>
 **youtube-dl -i \-\-get-filename -o "https://www.youtube.com/watch?v=%(id)s"** {*URL-playlistu*}...
@@ -143,6 +164,9 @@ se těmto změnám obvykle poměrně rychle přizpůsobuje.
 *# je-li nainstalován jen pro vás*<br>
 **wget https://yt-dl.org/downloads/latest/youtube-dl -O ~/bin/youtube-dl**
 
+*# smazat keš (někdy pomůže, když program přestane fungovat)*<br>
+**youtube-dl \-\-rm-cache**
+
 ### Náhled (thumbnail)
 
 *# stáhnout s videem i náhled*<br>
@@ -155,6 +179,7 @@ se těmto změnám obvykle poměrně rychle přizpůsobuje.
 ?
 
 ### Stahování titulků
+
 *# vypsat dostupné titulky*<br>
 **youtube-dl \-\-list-subs** {*URL-videa*}
 
@@ -189,6 +214,7 @@ Začíná-li zaklínadlo v této kapitole příkazem „youtube-dl“, uvádí 
 * -o "{*formátovací řetězec*}" :: Specifikuje cestu a název cílového souboru; viz zaklínadla v podsekci „Parametry ve formátovacím řetězci (-o)“.
 * -f "{*volba-formátu*}" :: Definuje, který z dostupných formátů videa či zvuku bude zvolen ke stažení.
 * --no-mtime :: Ponechá čas modifikace staženého souboru aktuální. (Jinak se po stažení nastaví na čas uploadu videa.)
+* --download-archive {*soubor*} :: Stáhne jen videa neuvedená v souboru; nově stažená videa do souboru zaznamená.
 * -i :: Při stahování ignoruje chyby.
 * --ignore-config :: Nečte konfigurační soubor. Vhodné, pokud všechna potřebná nastavení uvádíte jako parametry.
 * --no-continue :: Začne stahování od začátku, i když už byla část videa stažena.

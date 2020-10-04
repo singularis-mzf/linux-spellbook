@@ -206,6 +206,15 @@ xxx , xxx # priorita?
 *# vlastník (u), skupina (g) či ostatní (o) mají všechna práva*<br>
 **\-perm -**{*kdo*}**=rwx**
 
+*# kdokoliv má určité právo*<br>
+?
+
+*# nikdo nemá právo „w“*<br>
+?
+<!--
+**\! \-perm /ugo=w**
+-->
+
 <!--
 -perm /{...} = „nebo“ – mezi uvedenými musí existovat právo, které je položkou splněno
 -perm -{...} = „a“ – všechna uvedená práva musejí být položkou splněna

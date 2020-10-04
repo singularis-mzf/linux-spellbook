@@ -234,7 +234,7 @@ aptitude search --disable-columns -F %p "?upgradable"
 *# vypsat seznam dostupných jader*<br>
 ?
 
-### Správá důvěryhodných klíčů
+### Správa důvěryhodných klíčů
 
 *# **přidat** klíč jako důvěryhodný (ze souboru/ze standardního vstupu)*<br>
 **sudo apt-key add** {*soubor*}<br>
@@ -502,7 +502,7 @@ http://docs.flatpak.org/en/latest/single-file-bundles.html
 
 *# vypsat seznam všech **dostupných** balíčků*<br>
 *// Poznámka: provedení tohoto příkazu může trvat i několik minut a vzhledem k velkému rozsahu vypsaných informací doporučuji výstup přesměrovat do souboru.*<br>
-**(for X in {a..z} {0..9}; do snap find** [**\-\-narrow**] **$X \| sed 1d; done) \| tr -s "&blank;" \| sort -iu \| sed "$(printf '%s/&blank;/\\\\\|/\\n' s s s)" \| column -t -s $'\\t'** [**&gt;** {*soubor*}]
+**for x in {a..z} {0..9}; do snap find** [**\-\-narrow**] **$X \| sed 1d; done \| tr -s "&blank;" \| sort -iu \| sed "$(printf '%s/&blank;/\\\\\|/\\n' s s s)" \| column -nt -s $'\\t'** [**&gt;** {*soubor*}]
 
 *# vypsat podrobnější **informace** o balíčku*<br>
 **snap info** {*balíček*}
@@ -549,6 +549,10 @@ http://docs.flatpak.org/en/latest/single-file-bundles.html
 **sudo apt-get install apt-file &amp;&amp;sudo apt-file update**
 
 Poznámka: Neinstalujte balíček apt-file, pokud ho nevyužijete. Výrazně zvyšuje objem dat přednášených při každé aktualizaci (při každém „sudo apt-get update“)!
+
+*# Příkaz „apt-offline“*<br>
+*// *<br>
+**sudo apt-get install apt-offline**
 
 *# Flatpak*<br>
 **sudo apt-get install flatpak** [**gnome-software-plugin-flatpak**]<br>
