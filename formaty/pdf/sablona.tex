@@ -119,7 +119,7 @@
 
 % {fancyhdr}:
     \newcommand*{\kapitolavnadpisu}{{%
-        \ttfamily%
+        \pismomonospace%
         \ifnumcomp{\value{chapter}}{>}{0}{%
             \nazevkapitoly\makebox[1.5em]{\symbol{126}}\thechapter%
         }{%
@@ -132,7 +132,7 @@
         \ifnumodd{\value{page}}{\umistit{1mm}}{\umistit{-15mm}}%
         {-#1cm-\headsep}{\rotatebox{270}{%
         \begin{tcolorbox}[size=minimal,width=1cm,height=14mm,halign=center,valign=bottom,colback=cerna,top=1mm,bottom=1mm,left=0pt,right=0pt]%
-            \ifnumodd{\value{page}}{\color{bila}\sffamily\mbox{#2}}{\mbox{}}%
+            \ifnumodd{\value{page}}{\color{bila}\pismosansserif\mbox{#2}}{\mbox{}}%
         \end{tcolorbox}%
         }}%
 {{KONEC POKUD}}
@@ -143,7 +143,7 @@
         % vnější strana sudých stran
         \fancyhead[LE]{%
             \generovatuchytkapitoly{}%
-            {\ttfamily LINUX: Kniha kouzel}%
+            {\pismomonospace LINUX: Kniha kouzel}%
         }%
         % vnitřní strana sudých stran:
         \fancyhead[RE]{%
@@ -151,7 +151,7 @@
         }%
         % vnitřní strana lichých stran:
         \fancyhead[LO]{%
-            {\ttfamily LINUX: Kniha kouzel}%
+            {\pismomonospace LINUX: Kniha kouzel}%
         }%
         % vnější strana lichých stran:
         \fancyhead[RO]{%
@@ -168,17 +168,46 @@
     }
 
 % {fontspec}:
-    \setmainfont{Free Helvetian}\relax%
-    \setsansfont{TeX Gyre Heros}\relax%
-    \setmonofont{TeX Gyre Cursor}\relax%
+    \setmainfont{Computer Modern}\relax%
+%    \setsansfont{Free Helvetian}\relax%
+    \setsansfont{Computer Modern Sans Serif}\relax%
+    \setmonofont{Latin Modern Mono Light}\relax%
 
     \newfontfamily{\doplnfamily}[Scale=MatchLowercase]{Latin Modern Mono Slanted} % ?
     \newfontfamily{\urlfamily}[Scale=MatchLowercase]{Latin Modern Mono Light Cond}
     \newfontfamily{\zaklinadlofamily}[Scale=MatchLowercase,HyphenChar=92]{Latin Modern Mono Light}
+
     \newcommand*{\zaklinadlosize}{\fontsize{8pt}{8pt}\selectfont}
 
     \newfontfamily{\dejavusansfamily}{DejaVu Sans}
     \newfontfamily{\lmmathfamily}{Latin Modern Math} % matematické symboly
+
+    \newcommand*{\pismoserif}{\rmfamily}
+    \newcommand*{\pismosansserif}{\sffamily}
+    \newcommand*{\pismomonospace}{%
+        \renewcommand*{\mensinez}{{<}}%
+        \renewcommand*{\mensineborovno}{\makebox[0pt][l]{<}\raisebox{0.1em}{\_}}%
+        \renewcommand*{\rovno}{=}%
+        \renewcommand*{\nerovno}{\makebox[0pt][l]{=}/}%
+        \renewcommand*{\vetsineborovno}{\makebox[0pt][l]{>}\raisebox{0.1em}{\_}}%
+        \renewcommand*{\vetsinez}{{>}}%
+        \zaklinadlofamily%
+    }
+    \newcommand*{\pismodopln}{\doplnfamily}
+    \newcommand*{\pismourl}{\urlfamily}
+    \newcommand*{\pismozaklinadlo}{\pismomonospace}
+    \newcommand*{\pismodejavusans}{%
+        \renewcommand*{\mensinez}{{<}}\renewcommand*{\mensineborovno}{≤}%
+        \renewcommand*{\rovno}{=}\renewcommand*{\nerovno}{≠}%
+        \renewcommand*{\vetsineborovno}{≥}\renewcommand*{\vetsinez}{{>}}%
+        \dejavusansfamily%
+    }
+    \newcommand*{\pismolmmath}{%
+        \renewcommand*{\mensinez}{{<}}\renewcommand*{\mensineborovno}{≤}%
+        \renewcommand*{\rovno}{=}\renewcommand*{\nerovno}{≠}%
+        \renewcommand*{\vetsineborovno}{≥}\renewcommand*{\vetsinez}{{>}}%
+        \lmmathfamily%
+    }
 
 % {multicol}:
     \setlength{\columnsep}{16pt}
@@ -191,7 +220,7 @@
     \newcommand*{\vlozitikonukapitoly}{}%
     \titleformat{\chapter}[hang]{%
             % formátování před vlastním nadpisem:
-            \normalfont\fontsz{17pt}\bfseries%
+            \normalfont\fontsz{17pt}\bfseries\raggedright%
         }{%
             % číslovka:
             \vlozitikonukapitoly\hspace{0.5em}\thechapter\hspace{0.4em}\mbox{}%
@@ -352,8 +381,14 @@
 % DEFINICE SYMBOLŮ
 % ============================================================================
 \newcommand*{\degree}{°}
-\newcommand*{\dozahlavi}{{\lmmathfamily\color{seda}▲}}% \u25b2 = 9650
-\newcommand*{\reseninezname}{{\zaklinadlofamily\bfseries\color{seda}?}}
+\newcommand*{\dozahlavi}{{\pismolmmath\color{seda}▲}}% \u25b2 = 9650
+\newcommand*{\reseninezname}{{\pismozaklinadlo\bfseries\color{seda}?}}
+\newcommand*{\mensinez}{{\lmmathfamily <}}
+\newcommand*{\mensineborovno}{{\lmmathfamily ≤}}
+\newcommand*{\rovno}{{\lmmathfamily =}}
+\newcommand*{\nerovno}{{\lmmathfamily ≠}}
+\newcommand*{\vetsineborovno}{{\lmmathfamily ≥}}
+\newcommand*{\vetsinez}{{\lmmathfamily >}}
 
 %
 % Další definice
@@ -443,22 +478,22 @@
         \renewcommand{\nepoprve}[1]{####1}}}
 
 \newcommand*{\dopln}[1]{{%
-    \normalfont\doplnfamily\itshape\underline{{#1}}%
+    \normalfont\pismodopln\itshape\underline{{#1}}%
     }}%
 
 \newcommand*{\klavesa}[1]{%
     \tcbox[size=fbox,on line,leftrule=0.4pt,toprule=0.4pt,rightrule=1.5pt,bottomrule=1.5pt,boxsep=1.5pt,left=1.5pt,right=1.5pt]{%
-        {\sffamily\raisebox{0ex}[1.4ex][0.2ex]{{%
+        {\pismosansserif\raisebox{0ex}[1.4ex][0.2ex]{{%
             #1%
     }}}}}%
 
 \newcommand*{\moznyzlom}{{%
-    \normalfont\zaklinadlofamily\color{seda}%
+    \normalfont\pismozaklinadlo\color{seda}%
     \-%
     }}%
 
 \newcommand*{\tritecky}{{%
-    \normalfont\sffamily%
+    \normalfont\pismosansserif%
     \mbox{...}%
     }}
 
@@ -474,7 +509,7 @@
     }}%
 
 \newcommand*{\priklad}{%
-    \rmfamily\qquad{\lmmathfamily{}⊨}\quad%
+    \pismoserif\qquad{\lmmathfamily{}⊨}\quad%
     }
 
 \newcommand*{\stitek}[1]{{%
@@ -487,9 +522,9 @@
     \mbox{\tcbox[boxrule=0.5pt,size=fbox,arc=1mm,boxsep=2pt,left=1pt,right=1pt]{\makebox[\tmpsirkastitku][l]{\rule[-0.45ex]{0pt}{1em}#1}}}%
 }}
 
-% #1 = nastavení rodiny písma (např. \lmmathfamily) + znak ikony
+% #1 = nastavení rodiny písma (např. \pismolmmath) + znak ikony
 \newcommand*{\ikonazaklinadla}[1]{{%
-    \raisebox{-0.08em}{{\dejavusansfamily{•}}}\rule{0.2em}{0pt}%
+    \raisebox{-0.08em}{{\pismodejavusans{•}}}\rule{0.2em}{0pt}%
 }}
 
 %
@@ -516,7 +551,7 @@
             \hspace*{-\odsazeniparametruprikazu}%
             \makebox[\tmpsirka][l]{##1}~~{##2}%
         }%
-        \newcommand*{\parametrprikazu}[2]{\parametrprikazuvnitrni{\zaklinadlofamily\zaklinadlosize{}##1}{##2}}%
+        \newcommand*{\parametrprikazu}[2]{\parametrprikazuvnitrni{\pismozaklinadlo\zaklinadlosize{}##1}{##2}}%
         \budepoprve\relax%
 }{%
     \end{adjustwidth}%
@@ -541,10 +576,10 @@
             % ikona zaklínadla:
             >{\centering##1}p{\sirkaikony}@{\hspace{2pt}}%
             % titulek zaklínadla + mezera před řádky zaklínadla:
-            >{\raggedright##1\fontsize{10pt}{10pt}\selectfont}p{\sirkatitulkuzaklinadla}%
+            >{\raggedright##1\fontsize{10pt}{10pt}\selectfont\pismosansserif}p{\sirkatitulkuzaklinadla}%
             @{\hspace{10pt}}%
             % řádky zaklínadla:
-            |>{\raggedright\zaklinadlofamily\zaklinadlosize}p{\sirkaradkuzaklinadla}%
+            |>{\raggedright\pismozaklinadlo\zaklinadlosize}p{\sirkaradkuzaklinadla}%
             % číslo zaklínadla:
             >{\raggedleft##1\fontsize{9pt}{0pt}\selectfont}p{\sirkacislazaklinadla}%
         }%
@@ -583,7 +618,7 @@
         }%
     \raggedleft\begin{tabular}{%
         % řádky zaklínadla:
-        |>{\raggedright\zaklinadlofamily\zaklinadlosize}p{\sirkaradkuzaklinadla}%
+        |>{\raggedright\pismozaklinadlo\zaklinadlosize}p{\sirkaradkuzaklinadla}%
     }%
     {\budepoprve{}#2}%
     \tabularnewline%
@@ -591,7 +626,7 @@
     }}
 %\par\vspace{2ex plus0.5ex minus0.25ex}%
 
-\begin{document}%
+\begin{document}\pismoserif%
 %
 % TITULNÍ STRANA
 %
@@ -600,7 +635,7 @@
 %
 %
 \begin{center}%
-    \sffamily\bfseries{\fontsz{40pt}LINUX}\\[0.01\textheight]%
+    \pismoserif\bfseries{\fontsz{40pt}LINUX}\\[0.01\textheight]%
     \fontsz{14pt}Kniha kouzel%
 \end{center}%
 \vspace{-2cm}\vfill%
@@ -644,7 +679,7 @@ Toto dílo \quotedblbase Linux: Kniha kouzel\textquotedblleft{} podléhá licenc
 Creative Commons Attribution-ShareAlike 4.0 International. Úplný text licence
 je přiložen. Pro jeho zobrazení na počítači navštivte:
 \begin{center}%
-    \urlfamily%
+    \pismourl%
     http://creativecommons.org/licenses/by-sa/4.0/%
 \end{center}
 
@@ -683,33 +718,33 @@ je přiložen. Pro jeho zobrazení na počítači navštivte:
     \setlength{\abovetabulinesep}{1ex}%
     \setlength{\belowtabulinesep}{\abovetabulinesep}%
 \begin{tabu}{|X[-1,l]|X[2,l]|}%
-{\zaklinadlofamily sudo apt-get update}&%
+{\pismozaklinadlo sudo apt-get update}&%
     Texty tištěné normálním neproporcionálním písmem máte přepsat
     přesně tak, jak jsou napsány.\\%
-{\doplnfamily\itshape\underline{jméno-souboru}}&%
+{\pismodopln\itshape\underline{jméno-souboru}}&%
     Za skloněné podtržené části zaklínadla máte doplnit konkrétní hodnoty.\\%
-{\zaklinadlofamily{\color{seda}$\big[$}{-}{-}volitelny []\color{seda}$\big]$}&%
+{\pismozaklinadlo{\color{seda}$\big[$}{-}{-}volitelny []\color{seda}$\big]$}&%
     Nepovinné a doplňkové části zaklínadla jsou uzavřeny do vysokých šedých
     hranatých závorek, jasně odlišitelných od obyčejných hranatých závorek.\\%
-{\zaklinadlofamily{\itshape\underline{další-soubor}}\color{seda}...}&%
+{\pismozaklinadlo{\itshape\underline{další-soubor}}\color{seda}...}&%
     Části zaklínadla, které je možno uvést vícekrát, jsou vyznačeny šedou trojtečkou.\\%
-{\zaklinadlofamily{}@\textvisiblespace\textquotedbl}&%
+{\pismozaklinadlo{}@\textvisiblespace\textquotedbl}&%
     Ke zdůraznění místa, kam je nutno zapsat právě jednu obyčejnou mezeru, se v zaklínadlech
-    používá symbol {\zaklinadlofamily\textvisiblespace}.\\%
+    používá symbol {\pismozaklinadlo\textvisiblespace}.\\%
 {příčíst/odečíst N dní\newline(alternativy)}&%
     Lomítko k oddělení variant nebo nápis „(alternativy)“ znamená, že každá řádka
     kódu v zaklínadle představuje jednu variantu.\\%
-{\dejavusansfamily➙}&%
+{\pismodejavusans➙}&%
     Instrukce, kde je potřeba něco vykonat spíš než něco napsat,
     jsou označeny šipkou.\\%
 {\color{seda}\guillemotright}&%
     Tímto šedým symbolem se vyznačuje, že na dané místo musíte zapsat tabulátor
     (mezery nestačí).\\%
-{\zaklinadlofamily ABC=\,\color{seda}\symbol{92}}&%
+{\pismozaklinadlo ABC=\,\color{seda}\symbol{92}}&%
     Ve výjimečných případech, kdy bylo nutno řádek zalomit v místě,
     kam napatří žádné bílé znaky, je tato skutečnost vyznačena nepatrným šedým zpětným lomítkem.
     Takové zalomení zcela ignorujte, nevkládejte ani mezeru.\\%
-{\zaklinadlofamily\reseninezname}&%
+{\reseninezname}&%
     Není-li řešení dané úlohy autorovi při psaní známo, uvede místo řádku zaklínadla
     pouhý otazník. To je podnět k tomu, aby bylo řešení nalezeno a doplněno.
     Hojně se vyskytuje v rozpracovaných kapitolách, ale u náročných úloh na něj

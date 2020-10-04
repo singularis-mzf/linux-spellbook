@@ -1,5 +1,5 @@
 # Linux Kniha kouzel, skript do_latexu.awk
-# Copyright (c) 2019 Singularis <singularis@volny.cz>
+# Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 # podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -83,11 +83,11 @@ function ZpracujZnak(znak) {
         case ";":
             return znak;
         case "<":
-            return "{<}";
+            return "{\\mensinez}";
         case "=":
-            return znak;
+            return "{\\rovno}";
         case ">":
-            return "{>}";
+            return "{\\vetsinez}";
         case "?":
         case "@":
         case "A":
@@ -197,9 +197,12 @@ function ZpracujZnak(znak) {
         case "×":
             return "\\ensuremath{\\times}";
         case "≤":
+            return "{\\mensineborovno}";
         case "≥":
+            return "{\\vetsineborovno}";
         case "≠":
-            return znak;
+            return "{\\nerovno}";
+
 # speciality
         case "○":
         case "◉":
@@ -210,11 +213,11 @@ function ZpracujZnak(znak) {
         case "↑":
         case "→":
         case "↓":
-            return "{\\dejavusansfamily{}" znak "}";
+            return "{\\pismodejavusans{}" znak "}";
         case "⫽":
             return "//";
         case "␣":
-            return "{\\zaklinadlofamily\\textvisiblespace}";
+            return "{\\pismozaklinadlo\\textvisiblespace}";
 
         default:
             ShoditFatalniVyjimku("Nalezen nepodporovaný znak: '" znak "'");
@@ -396,6 +399,14 @@ function ZalomitRadekZaklinadla(text,   c, i, slzav, hrzav, lastzlom) {
                 }
                 continue;
             case "{":
+                if (substr(text, i, 8) == "{\\rovno}") {
+                    i += 7;
+                    if ((slzav == 0 || (slzav == 1 && substr(text, i - 1, 1) == "{" && substr(text, i + 1, 1) == "}")) && hrzav == 0 && i - lastzlom >= 5) {
+                        zlomy[length(zlomy) + 1] = i;
+                        lastzlom = i;
+                    }
+                    continue;
+                }
                 ++slzav;
                 continue;
             case "}":
@@ -427,16 +438,16 @@ function RadekZaklinadla(text, urovenOdsazeni, prikladHodnoty) {
 #    gsub(/=/, "={\\moznyzlom}", text);
 
     if (urovenOdsazeni == 0) {
-        return "%\n\\radekzaklinadla{\\lmmathfamily{}∘\\hspace*{0.1em}}{" ZalomitRadekZaklinadla(text) (prikladHodnoty != "" ? "\\priklad{}" prikladHodnoty : "") "}";
+        return "%\n\\radekzaklinadla{\\pismolmmath{}∘\\hspace*{0.1em}}{" ZalomitRadekZaklinadla(text) (prikladHodnoty != "" ? "\\priklad{}" prikladHodnoty : "") "}";
 
     } else if (0 < urovenOdsazeni && urovenOdsazeni <= 9) {
-        return "%\n\\radekzaklinadla{\\lmmathfamily{}∘\\hspace*{0.1em}}{" Zopakovat("~", 2 * urovenOdsazeni) ZalomitRadekZaklinadla(text) (prikladHodnoty != "" ? "\\priklad{}" prikladHodnoty : "") "}";
+        return "%\n\\radekzaklinadla{\\pismolmmath{}∘\\hspace*{0.1em}}{" Zopakovat("~", 2 * urovenOdsazeni) ZalomitRadekZaklinadla(text) (prikladHodnoty != "" ? "\\priklad{}" prikladHodnoty : "") "}";
 
     } else if (urovenOdsazeni == UROVEN_AKCE) {
-        return "%\n\\radekzaklinadla{\\dejavusansfamily{}➙\\hspace*{-0.15em}}{\\rmfamily{}" ZalomitRadekZaklinadla(text) "}";
+        return "%\n\\radekzaklinadla{\\pismodejavusans{}➙\\hspace*{-0.15em}}{\\pismoserif{}" ZalomitRadekZaklinadla(text) "}";
 
     } else if (urovenOdsazeni == UROVEN_PREAMBULE) {
-        return "%\n\\radekzaklinadla{\\lmmathfamily{}↟\\hspace{0.04em}}{" ZalomitRadekZaklinadla(text) (prikladHodnoty != "" ? "\\priklad{}" prikladHodnoty : "") "}";
+        return "%\n\\radekzaklinadla{\\pismolmmath{}↟\\hspace{0.04em}}{" ZalomitRadekZaklinadla(text) (prikladHodnoty != "" ? "\\priklad{}" prikladHodnoty : "") "}";
 
     } else {
         ShoditFatalniVyjimku("Nepodporovaná úroveň odsazení: " urovenOdsazeni);
@@ -519,11 +530,11 @@ function DoLatexuIkonaZaklinadla(specifikace,   font) {
     switch (gensub(/.*\t/, "", 1, specifikace)) {
         case "d":
         case "D":
-            font = "\\dejavusansfamily";
+            font = "\\pismodejavusans";
             break;
         case "l":
         case "L":
-            font = "\\lmmathfamily";
+            font = "\\pismolmmath";
             break;
         default:
             ShoditFatalniVyjimku("Nerozpoznaný typ ikony: \"" specifikace "\"!");

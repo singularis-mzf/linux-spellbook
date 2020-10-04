@@ -212,21 +212,24 @@ Všechny tisknutelné znaky ASCII jsou podporovány a uvedeny v následující
 (ve zdrojovém kódu je třeba jej zadat jednou ze značek &lt;tab1&gt; až &lt;tab8&gt;) a konec řádku má takový význam jako v HTML.
 (Explicitní konec řádku se zadává značkou &lt;br&gt;.)
 
-* mezera ( ) (ASCII 0x20) a zvýrazněná mezera &amp;blank; (&blank;, lze zadat i přímo znakem:␣; lze zadat i opakovaně:␣␣␣␣)
-* (!), ("), (\#), (\$), (%), (&amp;), ('), ((), ()), (\*), (\+), (,), (\-), (.), (/) (ASCII 0x21 až 0x2f)
-* (0), (1), (2), (3), (4), (5), (6), (7), (8), (9) (ASCII 0x30 až 0x39)
-* (\:), (;), (&lt;), (=), (&gt;), (?), (@) (ASCII 0x3a až 0x40)
-* (A), (B), (C), (D), (E), F), (G), (H), (I), (J), (K), (L), (M), (N), (O), (P), (Q), (R), (S), (T), (U), (V), (W), (X), (Y), (Z) (ASCII 0x41 až 0x5a)
-* ([), (\\), (]), (^), (\_), (\`) (ASCII 0x5b až 0x60)
-* (a), (b), (c), (d), (e), (f), (g), (h), (i), (j), (k), (l), (m), (n), (o), (p), (q), (r), (s), (t), (u), (v), (w), (x), (y), (z) (ASCII 0x61 až 0x7a)
-* ({), (|), (}), (~) (ASCII 0x7b až 0x7e)
-* (á), (č), (ď), (é), (ě), (í), (ň), (ó), (ř), (š), (ť), (ú), (ů), (ý), (ž); příklad: „žluťoučký kůň příšerně úpěl ďábelské ódy“
-* (Á), (Č), (Ď), (É), (Ě), (Í), (Ň), (Ó), (Ř), (Š), (Ť), (Ú), (Ů), (Ý), (Ž); příklad: „ŽLUŤOUČKÝ KŮŇ PŘÍŠERNĚ ÚPĚL ĎÁBELSKÉ ÓDY“
-* „m-dash“ (—), „n-dash“ (–), „times“ (×), „degree“ (°), „menší nebo rovno“ (≤), „větší nebo rovno“ (≥), „nerovno“ (≠)
-* „neaktivní přepínač“ (○), „aktivní přepínač“ (◉), „nezaškrtnuté políčko“ (☐), „zatržené políčko“ (☑), „škrtnuté políčko“ (☒)
-* „šipky“ (←), (↑), (→), (↓)
-* „nezlomitelná mezera“ (&nbsp;)
-* „české uvozovky“ („) a (“)
+* mezera ( ) (ASCII 0x20) a zvýrazněná mezera &amp;blank; (&blank;, lze zadat i přímo znakem:␣; lze zadat i opakovaně:␣␣␣␣) {* &blank;*}
+* (!), ("), (\#), ($), (%), (&amp;), ('), ((), ()), (\*), (\+), (,), (\-), (.), (/) (ASCII 0x21 až 0x2f) {*!"\#$%&amp;'()\*+,-./*}
+* (0), (1), (2), (3), (4), (5), (6), (7), (8), (9) (ASCII 0x30 až 0x39) {*0123456789*}
+* (\:), (;), (&lt;), (=), (&gt;), (?), (@) (ASCII 0x3a až 0x40) {*:;&lt;=&gt;?@*}
+* (A), (B), (C), (D), (E), F), (G), (H), (I), (J), (K), (L), (M), (N), (O), (P), (Q), (R), (S), (T), (U), (V), (W), (X), (Y), (Z) (ASCII 0x41 až 0x5a) {*ABCDEF GHIJKLM NOPQRS TUVWXYZ*}
+* ([), (\\), (]), (^), (\_), (\`) (ASCII 0x5b až 0x60) {*[\\]^\_\`*}
+* (a), (b), (c), (d), (e), (f), (g), (h), (i), (j), (k), (l), (m), (n), (o), (p), (q), (r), (s), (t), (u), (v), (w), (x), (y), (z) (ASCII 0x61 až 0x7a) {*abcdef ghijklm nopqrs tuvwxyz*}
+* ({), (\|), (}), (~) (ASCII 0x7b až 0x7e) {*\{\|\}~*}
+* (á), (č), (ď), (é), (ě), (í), (ň), (ó), (ř), (š), (ť), (ú), (ů), (ý), (ž); příklad: „žluťoučký kůň příšerně úpěl ďábelské ódy“ {*áčďéěíňóřšťúůýž*}
+* (Á), (Č), (Ď), (É), (Ě), (Í), (Ň), (Ó), (Ř), (Š), (Ť), (Ú), (Ů), (Ý), (Ž); příklad: „ŽLUŤOUČKÝ KŮŇ PŘÍŠERNĚ ÚPĚL ĎÁBELSKÉ ÓDY“ {*ÁČĎÉĚÍŇÓŘŠŤÚŮÝŽ*}
+* „m-dash“ (—), „n-dash“ (–), „times“ (×), „degree“ (°), „menší nebo rovno“ (≤), „větší nebo rovno“ (≥), „nerovno“ (≠) {*— – × ° ≤ ≥ ≠*}
+* „neaktivní přepínač“ (○), „aktivní přepínač“ (◉), „nezaškrtnuté políčko“ (☐), „zatržené políčko“ (☑), „škrtnuté políčko“ (☒) {*○ ◉ ☐ ☑ ☒*}
+* „šipky“ (←), (↑), (→), (↓) {*← ↑ → ↓*}
+* „nezlomitelná mezera“ (&nbsp;) {*&nbsp;*}
+* „české uvozovky“ („) a (“) {*„“*}
+
+*# (&lt;) (≤) (=) (≠) (≥) (&gt;)*<br>
+**(&lt;) (≤) (=) (≠) (≥) (&gt;)**
 
 ## Podporované HTML entity
 
