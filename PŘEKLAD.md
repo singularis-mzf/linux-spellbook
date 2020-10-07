@@ -36,18 +36,17 @@ K úplnému sestavení *Linuxu: Knihy kouzel* ze zdrojového kódu budete potř
 
 Také budete potřebovat písma:
 
+* Computer Modern
+* Computer Modern Sans Serif
 * DejaVu Sans
 * Latin Modern Math
 * Latin Modern Mono Slanted
+* Latin Modern Mono Light
 * Latin Modern Mono Light Cond
-* TeX Gyre Schola
-* TeX Gyre Heros
-* TeX Gyre Cursor
-* Free Helvetica
 
 Ověřil/a jsem, že v Ubuntu 20.04 LTS, Ubuntu 18.04 LTS a Linuxu Mint 20 můžete všechny potřebné nástroje a písma nainstalovat příkazem:
 
-> ``sudo apt-get install git make gawk xxd imagemagick librsvg2-bin qrencode texlive-xetex texlive-lang-czechslovak fonts-texgyre t1-cyrillic``
+> ``sudo apt-get install git make gawk xxd imagemagick librsvg2-bin qrencode texlive-xetex texlive-lang-czechslovak t1-cyrillic cm-super-x11``
 
 V budoucnu pravděpodobně sestavování přejde na Ubuntu 20.04, ale zatím je stále plně podporován i překlad na Ubuntu 18.04.
 
@@ -61,7 +60,7 @@ Pak budete potřebovat stáhnout a nastavit si repozitář:
 
 A nakonec spusťte make (pokud nechcete sestavit všechny formáty, můžete některé z nich vynechat):
 
-> ``make -j4 log html pdf-a4 pdf-a4-bez pdf-b5 pdf-b5-bz pdf-b5-na-a4 deb``
+> ``make -j4 log html pdf-a4 pdf-a4-bez pdf-b5 pdf-b5-bez pdf-b5-na-a4 deb``
 
 Výstup ve všech podporovaných formátech najdete v adresáři ``výstup_překladu``. Očekávaná doba překladu je cca 5 minut procesorového času (máte-li čtyřjádrový procesor, je to zhruba 1 minuta).
 
