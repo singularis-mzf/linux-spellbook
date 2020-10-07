@@ -71,15 +71,15 @@ DATUM_SESTAVENI := $(shell date +%Y%m%d)
 
 # Další nastavení
 # ----------------------------------------------------------------------------
-PDF_ZALOZKY := 1
-SOUBORY_PREKLADU := soubory_prekladu
-VYSTUP_PREKLADU := vystup_prekladu
+export PDF_ZALOZKY := 1
+export SOUBORY_PREKLADU := soubory_prekladu
+export VYSTUP_PREKLADU := vystup_prekladu
 # PDF_ZALOZKY_MAX_DELKA - po změně je nutno ve skriptu „skripty/extrakce/osnova.awk“ změnit odpovídajícím způsobem délku proměnné „PNAZEV_SABLONA“!
-PDF_ZALOZKY_MAX_DELKA := 32
+export PDF_ZALOZKY_MAX_DELKA := 32
 
 # Jméno sestavení (doporučuji nastavovat z příkazového řádku)
 # ----------------------------------------------------------------------------
-JMENO := Sid $(DATUM_SESTAVENI)
+export JMENO := Sid $(DATUM_SESTAVENI)
 
 # Verze .deb-balíčku (automaticky generovaná, ale je dovoleno ji nastavit ručně)
 # ----------------------------------------------------------------------------
@@ -90,17 +90,20 @@ DEB_VERZE := $(shell $(AWK) -f skripty/extrakce/debverze.awk -- "$(JMENO)")
 DATUM_SESTAVENI_SOUBOR := $(SOUBORY_PREKLADU)/symboly/datum-sestaveni/$(DATUM_SESTAVENI)
 DEB_VERZE_SOUBOR := $(SOUBORY_PREKLADU)/symboly/deb-verze/$(DEB_VERZE)
 JMENO_SESTAVENI_SOUBOR := $(SOUBORY_PREKLADU)/symboly/jmeno-sestaveni/$(shell printf %s "$(JMENO)" | tr "/ \\n\\t" -)
+PORADI_KAPITOL_SOUBOR := $(SOUBORY_PREKLADU)/symboly/poradi-kapitol/$(shell skripty/poradi-kapitol.sh $(VSECHNY_DODATKY) $(VSECHNY_KAPITOLY) | md5sum -b | cut -d ' ' -f 1)
 
 .PHONY: all clean html log pdf-a4 pdf-a4-bez pdf-b5 pdf-b5-bez pdf-b5-na-a4 info
-.DELETE_ON_ERROR: # Speciální cíl, který nastavuje „make“, aby v případě selhání pravidla byl odstraněn jeho cíl.
+.DELETE_ON_ERROR: # Přítomnost tohoto cíle nastaví „make“, aby v případě kteréhokoliv pravidla byl odstraněn jeho cíl.
 
 all: deb html log pdf-a4 pdf-a4-bez pdf-b5 pdf-b5-bez pdf-b5-na-a4
 
 clean:
 	$(RM) -Rv $(SOUBORY_PREKLADU) $(VYSTUP_PREKLADU)
 
-info: $(DATUM_SESTAVENI_SOUBOR) $(DEB_VERZE_SOUBOR) $(JMENO_SESTAVENI_SOUBOR)
-	@printf %s\\n "Jméno buildu: <$(JMENO)>" "DEB verze: <$(DEB_VERZE)>" "Datum sestavení: <$(DATUM_SESTAVENI)>" "Datum sestavení soubor: <$(DATUM_SESTAVENI_SOUBOR)>" "Deb verze soubor: <$(DEB_VERZE_SOUBOR)>" "Jméno sestavení soubor: <$(JMENO_SESTAVENI_SOUBOR)>" ""
+info: $(DATUM_SESTAVENI_SOUBOR) $(DEB_VERZE_SOUBOR) $(JMENO_SESTAVENI_SOUBOR) $(PORADI_KAPITOL_SOUBOR)
+	@printf '%s\n' "Jméno sestavení: <$(JMENO)>" "DEB verze: <$(DEB_VERZE)>" "Datum sestavení: <$(DATUM_SESTAVENI)>" "Datum sestavení soubor: <$(DATUM_SESTAVENI_SOUBOR)>" "Deb verze soubor: <$(DEB_VERZE_SOUBOR)>" "Jméno sestavení soubor: <$(JMENO_SESTAVENI_SOUBOR)>" "Pořadí kapitol soubor: <$(PORADI_KAPITOL_SOUBOR)>" "Pořadí kapitol (id):"
+	@skripty/poradi-kapitol.sh $(VSECHNY_DODATKY) $(VSECHNY_KAPITOLY) | nl
+	@printf '\n'
 
 # Podporované formáty:
 deb: $(VYSTUP_PREKLADU)/lkk_$(DEB_VERZE)_all.deb
@@ -127,17 +130,22 @@ $(JMENO_SESTAVENI_SOUBOR):
 	$(RM) $(dir $(JMENO_SESTAVENI_SOUBOR))*
 	touch "$(JMENO_SESTAVENI_SOUBOR)"
 
+$(PORADI_KAPITOL_SOUBOR):
+	mkdir -pv $(dir $(PORADI_KAPITOL_SOUBOR))
+	$(RM) $(dir $(PORADI_KAPITOL_SOUBOR))*
+	touch "$(PORADI_KAPITOL_SOUBOR)"
+
 # POMOCNÉ SOUBORY:
 # ============================================================================
 
 # 1. soubory_prekladu/fragmenty.tsv + soubory_prekladu/stitky.tsv
 # ----------------------------------------------------------------------------
-$(SOUBORY_PREKLADU)/fragmenty.tsv: $(wildcard poradi-kapitol.lst poradi-kapitol.vychozi.lst) \
+$(SOUBORY_PREKLADU)/fragmenty.tsv: $(PORADI_KAPITOL_SOUBOR) \
   skripty/extrakce/fragmenty.awk \
   $(VSECHNY_KAPITOLY_A_DODATKY_MD) \
   $(SOUBORY_PREKLADU)/ucs_ikony.dat
 	mkdir -pv $(SOUBORY_PREKLADU)
-	(cat poradi-kapitol.lst 2>/dev/null || cat poradi-kapitol.vychozi.lst 2>/dev/null || printf %s\\n "# Seznam kapitol a dodatků k vygenerování" "predmluva" "" "# Kapitoly" $(strip $(sort $(VSECHNY_KAPITOLY))) "" "# Dodatky" $(strip $(sort $(filter-out predmluva,$(VSECHNY_DODATKY))))) | $(AWK) -f skripty/extrakce/fragmenty.awk 3>$(SOUBORY_PREKLADU)/fragmenty.tsv 4>$(SOUBORY_PREKLADU)/stitky.tsv
+	skripty/poradi-kapitol.sh $(VSECHNY_DODATKY) $(VSECHNY_KAPITOLY) | $(AWK) -f skripty/extrakce/fragmenty.awk 3>$(SOUBORY_PREKLADU)/fragmenty.tsv 4>$(SOUBORY_PREKLADU)/stitky.tsv
 
 $(SOUBORY_PREKLADU)/stitky.tsv: $(SOUBORY_PREKLADU)/fragmenty.tsv
 
