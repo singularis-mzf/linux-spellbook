@@ -42,7 +42,7 @@ do
     if [[ $id =~ ^[^'# '][^'# ']* ]]
     then
         printf %s\\n "$id"
-    elif test -n "$id"
+    elif [[ $id =~ ^[^'#'] ]]
     then
         printf 'Chyba syntaxe: "%s"\n' "$id" >&2
         exit 1

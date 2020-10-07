@@ -70,7 +70,7 @@ do kroužkové vazby a použít lepící záložky k označení nejčastěji p
 ## Návod k sestavení
 
 Následující postup popisuje takzvané „malé sestavení“, kdy vzniknou jen formáty HTML a LOG.
-Úplné sestavení je popsáno v souboru [PREKLAD.md](PREKLAD.md).
+Úplné sestavení je popsáno v souboru [PŘEKLAD.md](PŘEKLAD.md).
 
 Budete potřebovat:
 
