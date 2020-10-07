@@ -243,7 +243,10 @@ TSWLatexianTemp*
 
 # Specifická pravidla pro tento projekt:
 poradi-kapitol.lst
+pořadí-kapitol.lst
 soubory_prekladu/
+soubory_překladu/
 vystup_prekladu/
+výstup_překladu/
 .swp
 
