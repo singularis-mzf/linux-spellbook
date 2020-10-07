@@ -494,8 +494,8 @@ BEGIN {
         ShoditFatalniVyjimku("Chybný počet parametrů (ARGC=" ARGC ")");
     }
 
-    if (FRAGMENTY_TSV == "") {
-        ShoditFatalniVyjimku("Vyžadovaná proměnná FRAGMENTY_TSV není nastavena!");
+    if ((SOUBORY_PREKLADU = ENVIRON["SOUBORY_PREKLADU"]) == "") {
+        ShoditFatalniVyjimku("Vyžadovaná proměnná SOUBORY_PREKLADU není nastavena!");
     }
 
     # Určit ID kapitoly
@@ -503,7 +503,7 @@ BEGIN {
     gsub(/^.*\/|\.md$/, "", IDKAPITOLY);
 
     # Načíst a zpracovat údaje z fragmenty.tsv, jsou-li k dispozici:
-    NacistFragmentyTSV(FRAGMENTY_TSV);
+    NacistFragmentyTSV(SOUBORY_PREKLADU "/fragmenty.tsv");
     if ("id/" IDKAPITOLY in FRAGMENTY) {
         # číslo kapitoly
         C_KAPITOLY = FRAGMENTY["id/" IDKAPITOLY];
@@ -562,11 +562,11 @@ BEGIN {
 
     # Načíst osnovu:
     delete OSNOVA;
-    while (getline < ("soubory_prekladu/osnova/" IDKAPITOLY ".tsv")) {
+    while (getline < (SOUBORY_PREKLADU "/osnova/" IDKAPITOLY ".tsv")) {
 # $1=TYP $2=ID $3=ČÍSLO_ŘÁDKU $4=NÁZEV $5=;
         OSNOVA[1 + length(OSNOVA)] = sprintf("%s\t%s\t%s\t%s\t%s", $1, $2, $3, ZpracujZnaky($4), ";");
     }
-    close("soubory_prekladu/osnova/" IDKAPITOLY ".tsv");
+    close(SOUBORY_PREKLADU "/osnova/" IDKAPITOLY ".tsv");
 }
 
 # komentář započatý na samostatném řádku kompletně ignorovat
@@ -755,10 +755,10 @@ TYP_RADKU == "DIREKTIVA" {
             UCS_IKONY_PISMA = VYCHOZI_UCS_IKONA_PISMO;
             if (HODNOTA_DIREKTIVY ~ /^0+$/) {break} # "!FixaceIkon: 0 vrací výchozí nastavení"
 
-            if ((getline UCS_IKONY < "soubory_prekladu/ucs_ikony.dat") && (getline UCS_IKONY_PISMA <  "soubory_prekladu/ucs_ikony.dat")) {
-                close("soubory_prekladu/ucs_ikony.dat");
+            if ((getline UCS_IKONY < (SOUBORY_PREKLADU "/ucs_ikony.dat")) && (getline UCS_IKONY_PISMA < (SOUBORY_PREKLADU "/ucs_ikony.dat"))) {
+                close(SOUBORY_PREKLADU "/ucs_ikony.dat");
             } else {
-                ShoditFatalniVyjimku("Nemohu správně načíst soubor soubory_prekladu/ucs_ikony.dat!");
+                ShoditFatalniVyjimku("Nemohu správně načíst soubor " SOUBORY_PREKLADU "/ucs_ikony.dat!");
             }
             if (length(UCS_IKONY) < 1 || length(UCS_IKONY_PISMA) < 1) {
                 UCS_IKONY = VYCHOZI_UCS_IKONA;

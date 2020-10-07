@@ -28,8 +28,6 @@
 # V první fázi načte id zpracovávaných kapitol ze souboru fragmenty.tsv.
 # Následně prochází jednu kapitolu za druhou a hledá definice v sekcích nadepsaných
 # „Pomocné funkce a skripty“ nebo podobně.
-# Nakonec zapíše pomocné skripty do adresáře vystup_prekladu/bin a pomocné funkce
-# do souboru vystup_prekladu/bin/pomocne-funkce.sh.
 
 function ZpracujZnaky(text,     VSTUP, VYSTUP, C) {
     VSTUP = text;
@@ -145,7 +143,9 @@ BEGIN {
     jmeno = "";
     telo = "";
 
-    NacistFragmentyTSV("soubory_prekladu/fragmenty.tsv");
+    SOUBORY_PREKLADU = ENVIRON["SOUBORY_PREKLADU"];
+
+    NacistFragmentyTSV(SOUBORY_PREKLADU "/fragmenty.tsv");
     i = 1;
     while (i in FRAGMENTY) {
         if (FRAGMENTY[i "/adr"] == "kapitoly") {
@@ -260,13 +260,13 @@ END {
     }
     if (length(funkce_puvod) + length(skripty_puvod) > 0) {
         for (s in skripty_puvod) {
-            fn = "soubory_prekladu/deb/usr/share/lkk/skripty/" s;
+            fn = SOUBORY_PREKLADU "/deb/usr/share/lkk/skripty/" s;
             printf("%s", skripty_definice[s]) > fn;
             close(fn);
             system("chmod " (skripty_x[s] ? "755" : "644") " " fn);
         }
         asorti(funkce_puvod, jmena_funkci);
-        fn = "soubory_prekladu/deb/usr/share/lkk/skripty/pomocne-funkce";
+        fn = SOUBORY_PREKLADU "/deb/usr/share/lkk/skripty/pomocne-funkce";
         print "# Pomocné funkce pro projekt Linux: Kniha kouzel. Tento soubor byl automaticky vygenerován.\n#" > fn;
         for (i = 1; i <= length(jmena_funkci); ++i) {
             printf("#začátek %s\n%s#konec %s\n", jmena_funkci[i], funkce_definice[jmena_funkci[i]], jmena_funkci[i]) > fn;

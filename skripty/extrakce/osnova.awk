@@ -94,7 +94,7 @@ BEGIN {
     }
     FS = "\t";
     OFS = "\t";
-    prikaz = "egrep '^[^\t]*\t" IDKAPITOLY "\t' soubory_prekladu/fragmenty.tsv";
+    prikaz = "egrep '^[^\t]*\t" IDKAPITOLY "\t' " ENVIRON["SOUBORY_PREKLADU"] "/fragmenty.tsv";
     prikaz | getline;
     close(prikaz);
 

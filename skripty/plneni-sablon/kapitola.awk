@@ -208,8 +208,8 @@ function VypsatPrehledStitku(format,   i, n, s, cislo_kapitoly, stitky_kapitol, 
 
     VyzadujeFragmentyTSV();
 
-    # Načíst štítky ze stitky.tsv:
-    stitky_tsv = gensub(/fragmenty/, "stitky", 1, FRAGMENTY_TSV);
+    # Načíst štítky ze štítky.tsv:
+    stitky_tsv = gensub(/fragmenty/, "štítky", 1, FRAGMENTY_TSV);
     while (getline < stitky_tsv) {
         # obrazky/ik-vychozi.png 64x64
         if (NF < 3) {ShoditFatalniVyjimku("Chyba formátu stitky.tsv: očekávány alespoň tři sloupce!")}

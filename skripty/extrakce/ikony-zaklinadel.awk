@@ -1,5 +1,5 @@
 # Linux Kniha kouzel, skript extrakce/ikony-zaklinadel.awk
-# Copyright (c) 2019 Singularis <singularis@volny.cz>
+# Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 # podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -56,6 +56,6 @@ BEGIN {
         }
     }
 
-    print ikony, "\n", pisma > "soubory_prekladu/ucs_ikony.dat";
+    print ikony, "\n", pisma > ENVIRON["SOUBORY_PREKLADU"] "/ucs_ikony.dat";
     print "Ikony zaklínadel: bylo nastaveno " length(ikony) " ikon (" length(pisma) ")";
 }

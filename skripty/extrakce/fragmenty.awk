@@ -155,7 +155,7 @@ END {
 
     for (c_stitku = 1; c_stitku <= pocet_stitku; ++c_stitku) {
         #
-        # stitky.tsv:
+        # štítky.tsv:
         #   1=Štítek|2=Omezené ID štítku|3..N=ID kapitol
         #
         id_stitku = vsechny_stitky[c_stitku];

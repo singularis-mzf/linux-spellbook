@@ -32,7 +32,7 @@ BEGIN {
 
 function VyzadujeFragmentyTSV() {
     if (POCET_KAPITOL) {return POCET_KAPITOL}
-    FRAGMENTY_TSV = "soubory_prekladu/fragmenty.tsv";
+    FRAGMENTY_TSV = ENVIRON["SOUBORY_PREKLADU"] "/fragmenty.tsv";
     if (!Test("-r " FRAGMENTY_TSV)) {
         ShoditFatalniVyjimku("Nemohu číst ze souboru " FRAGMENTY_TSV "!");
     }
@@ -203,10 +203,10 @@ function RidiciRadekSpolecnaObsluha(text,   i, soubor) {
         case "MENU ŠTÍTKY":
             if (IDFORMATU != "html") {ShoditFatalniVyjimku("{{MENU ŠTÍTKY}} je podporováno jen pro formát HTML!")}
             VyzadujeFragmentyTSV();
-            stitky_tsv = gensub(/fragmenty/, "stitky", 1, FRAGMENTY_TSV);
+            stitky_tsv = gensub(/fragmenty/, "štítky", 1, FRAGMENTY_TSV);
             while (getline < stitky_tsv) {
                 # obrazky/ik-vychozi.png 64x64
-                if (NF < 3) {ShoditFatalniVyjimku("Chyba formátu stitky.tsv: očekávány alespoň tři sloupce!")}
+                if (NF < 3) {ShoditFatalniVyjimku("Chyba formátu štítky.tsv: očekávány alespoň tři sloupce!")}
                 # $1 = štítek $2 = omezené id štítku
                 printf("<a href=\"x-stitky.htm#%s\">%s&nbsp;&nbsp;(%d)</a>\n", $2, $1, NF - 2);
             }

@@ -90,12 +90,12 @@ Sloupce *postprocess.dat* mají následující význam:
 Mechanismus postprocessingu se spouští samostatně nad každou kapitolou, pro každý jednotlivý PDF formát.
 Funguje tak, že vyhledá výskyt řádky podle čtvrtého sloupce záznamu a nahradí ho textem pátého sloupce téhož záznamu.
 
-### stitky.tsv
+### štítky.tsv
 
 Tabulka ve formátu TSV, která uvádí seznam vyskytujících se štítků a ke každému seznam příslušných kapitol.
 Vzniká jako vedlejší produkt skriptu [skripty/extrakce/fragmenty.awk](../skripty/extrakce/fragmenty.awk).
 
-Sloupce *stitky.tsv* jsou následující:
+Sloupce *štítky.tsv* jsou následující:
 
 | # | Popis | Příklad |
 | ---: | :--- | :--- |

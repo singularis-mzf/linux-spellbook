@@ -78,20 +78,21 @@ Budete potřebovat:
 * GNU make
 * GNU awk
 * ImageMagick
-* qrencode
+* qrencode, iconv, xxd
 * kvůli řazení české locale „cs\_CZ.UTF-8“ (musí fungovat české řazení příkazem „sort“)
 
-Ověřil/a jsem, že v Ubuntu 20.04 LTS, Ubuntu 18.04 LTS, Linuxu Mint 20 a Linuxu Mint 17.3 můžete tyto nástroje nainstalovat příkazem:
+V Ubuntu 20.04 LTS, Ubuntu 18.04 LTS, Linuxu Mint 20 a Linuxu Mint 17.3 můžete tyto nástroje nainstalovat příkazem:
 
-> ``sudo apt-get install git make gawk imagemagick qrencode``
+> ``sudo apt-get install git make gawk imagemagick qrencode xxd``
 
-Až budete mít nainstalované potřebné nástroje, stáhněte si repozitář:
+Až budete mít nainstalované potřebné nástroje, stáhněte a nastavte si repozitář:
 
-> ``git clone https://github.com/singularis-mzf/linux-spellbook.git``
+> ``git clone --branch stabilni https://github.com/singularis-mzf/linux-spellbook.git``<br>
+> ``cd linux-spellbook``<br>
+> ``git config --local core.quotePath false``
 
 A nakonec spusťte make:
 
-> ``cd linux-spellbook``<br>
 > ``make -j4 log html``
 
 Předpokládám použití **české lokalizace** daného systému.

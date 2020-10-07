@@ -30,6 +30,7 @@ K úplnému sestavení *Linuxu: Knihy kouzel* ze zdrojového kódu budete potř
 * rsvg-convert (kvůli konverzi SVG na PDF)
 * XeLaTeX
 * qrencode
+* iconv
 * xxd
 * české locale „cs\_CZ.UTF-8“ (musí fungovat české řazení příkazem „sort“) − nemusí být aktivní, stačí nainstalované a funkční
 
@@ -52,16 +53,17 @@ V budoucnu pravděpodobně sestavování přejde na Ubuntu 20.04, ale zatím j
 
 ## Postup sestavení
 
-Pak budete potřebovat stáhnout si repozitář:
+Pak budete potřebovat stáhnout a nastavit si repozitář:
 
-> ``git clone https://github.com/singularis-mzf/linux-spellbook.git``
+> ``git clone --branch stabilni https://github.com/singularis-mzf/linux-spellbook.git``<br>
+> ``cd linux-spellbook``<br>
+> ``git config --local core.quotePath false``
 
-A nakonec stačí spustit make:
+A nakonec spusťte make:
 
-> ``cd linux-spellbook``
-> ``make -j4``
+> ``make -j4 log html``
 
-Výstup ve všech podporovaných formátech najdete v adresáři ``vystup_prekladu``. Očekávaná doba překladu je cca 5 minut procesorového času (máte-li čtyřjádrový procesor, je to zhruba 1 minuta).
+Výstup ve všech podporovaných formátech najdete v adresáři ``výstup_překladu``. Očekávaná doba překladu je cca 5 minut procesorového času (máte-li čtyřjádrový procesor, je to zhruba 1 minuta).
 
 ## Ověření české lokalizace systému
 
