@@ -100,7 +100,7 @@ s tím, že až daná kapitola vyjde, bude daný seznam vypadat úplně jinak.)
 <!--
 ## Doplnit další barevné motivy
 
-Vhodnou úpravou souboru [formaty/html/sablona.css](formaty/html/sablona.css) můžete přidat
+Vhodnou úpravou souboru [formáty/html/šablona.css](formáty/html/šablona.css) můžete přidat
 nové barevné motivy. Aby se motiv vygeneroval, musíte také do proměnné
 CSS\_MOTIVY v [Makefile](Makefile) přidat jeho id.
 

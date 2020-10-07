@@ -1,4 +1,4 @@
-# Linux Kniha kouzel, skript specialni.awk
+# Linux Kniha kouzel, skript plnění-šablon/speciální.awk
 # Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -110,4 +110,4 @@ function Konec() {
 
 
 # ============================================================================
-@include "skripty/plneni-sablon/hlavni.awk"
+@include "skripty/plnění-šablon/hlavní.awk"

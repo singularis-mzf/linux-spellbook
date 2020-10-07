@@ -61,7 +61,7 @@ function PrecistKonfig(sekce, klic, vychoziHodnota,   prikaz, vysledek) {
     if (klic == "") {
         ShoditFatalniVyjimku("Nemohu číst prázdný klíč!");
     }
-    prikaz = "bash skripty/precist_konfig.sh \"" sekce "\" \"" klic "\" \"" vychoziHodnota "\" < konfig.ini";
+    prikaz = "bash skripty/přečíst-konfig.sh \"" sekce "\" \"" klic "\" \"" vychoziHodnota "\" < konfig.ini";
     vysledek = "";
     prikaz | getline vysledek;
     close(prikaz);

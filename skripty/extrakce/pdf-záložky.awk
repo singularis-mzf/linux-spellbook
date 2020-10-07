@@ -1,4 +1,4 @@
-# Linux Kniha kouzel, skript extrakce/pdf-zalozky.awk
+# Linux Kniha kouzel, skript extrakce/pdf-záložky.awk
 # Copyright (c) 2020 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -29,15 +29,17 @@ BEGIN {
     OFS = "";
     RS = ORS = "\n";
 
-    if (FRAGMENTY_TSV == "") {ShoditFatalniVyjimku("Proměnná FRAGMENTY_TSV není nastavena!")}
+    SOUBORY_PREKLADU = ENVIRON["SOUBORY_PREKLADU"];
+    if (SOUBORY_PREKLADU == "") {ShoditFatalniVyjimku("Proměnná SOUBORY_PREKLADU není nastavena!")}
     if (ARGC != 2) {ShoditFatalniVyjimku("Skript vyžaduje právě jeden vstupní soubor!")}
 
+    FRAGMENTY_TSV = SOUBORY_PREKLADU "/fragmenty.tsv";
     KNIHA_TOC = ARGV[1];
     delete id_na_cislo;
     cislo_kapitoly = 0;
     while (getline < FRAGMENTY_TSV) {
         id_na_cislo[$2] = ++cislo_kapitoly;
-        ARGV[cislo_kapitoly] = gensub(/fragmenty\.tsv$/, "osnova/" $2 ".tsv", 1, FRAGMENTY_TSV);
+        ARGV[cislo_kapitoly] = SOUBORY_PREKLADU "/osnova/" $2 ".tsv";
     }
     if (cislo_kapitoly == 0) {ShoditFatalniVyjimku("Ve fragmenty.tsv nenalezena žádná kapitola!")}
     ARGV[cislo_kapitoly + 1] = KNIHA_TOC;

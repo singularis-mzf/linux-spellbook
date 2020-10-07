@@ -1,6 +1,6 @@
-#!/bin/bash -e
-# Linux Kniha kouzel, skript precist_konfig.sh
-# Copyright (c) 2019 Singularis <singularis@volny.cz>
+#!/bin/bash
+# Linux Kniha kouzel, skript přečíst-konfig.sh
+# Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 # podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -24,7 +24,9 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 # Volání:
-# precist_konfig.sh {sekce} {klíč} [výchozí-hodnota] <
+# přečíst-konfig.sh {sekce} {klíč} [výchozí-hodnota] <
+
+set -e
 
 VYCHOZI=""
 if test $# -eq 3
@@ -39,4 +41,4 @@ fi
 export SEKCE="$1"
 export KLIC="$2"
 export VYCHOZI
-exec gawk -f "skripty/precist_konfig.awk"
+exec gawk -f "skripty/přečíst-konfig.awk"

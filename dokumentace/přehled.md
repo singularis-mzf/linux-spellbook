@@ -15,9 +15,9 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 | Název dokumentu | Stav dokumentu |
 | :-- | :-- |
-| [Architektura překladu](architektura-prekladu.md) | rozepsaný |
-| [Mechanismus překladu](mechanismus-prekladu.md) | aktuální |
-| [Návody](navody.md) | různý (dělí se na části) |
+| [Architektura překladu](architektura-překladu.md) | rozepsaný |
+| [Mechanismus překladu](mechanismus-překladu.md) | aktuální |
+| [Návody](návody.md) | různý (dělí se na části) |
 | [Syntaxe kapitol](syntaxe-kapitol.md) | aktuální |
 
 K dokumentaci také patří zvláštní kapitola [_ukazka](../kapitoly/_ukazka.md).

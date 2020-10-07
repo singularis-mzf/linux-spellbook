@@ -129,7 +129,7 @@ BEGIN {
     # akce "F" (vypsat pomocnou funkci)
     if (akce == "F") {
         ARGUMENTY[1] = ARGUMENTY[0];
-        ARGUMENTY[0] = "pomocne-funkce";
+        ARGUMENTY[0] = "pomocné-funkce";
     }
 
     # 4. Vyhledat skript.
@@ -180,7 +180,7 @@ BEGIN {
 
         case "F": # vypsat pomocnou funkci
             if (nova_cesta == "") {
-                ShoditFatalniVyjimku("skript \"pomocne-funkce\" nenalezen!");
+                ShoditFatalniVyjimku("skript \"pomocné-funkce\" nenalezen!");
             }
             FS = "\n";
             if (ARGUMENTY[1] == "") {

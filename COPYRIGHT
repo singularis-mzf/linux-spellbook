@@ -4,7 +4,7 @@ Upstream-Contact: Singularis <singularis@volny.cz>
 Source: https://github.com/singularis-mzf/linux-spellbook
 
 Files: *
-Copyright: 2019, Singularis
+Copyright: 2020, Singularis
 License: CC-BY-SA-4.0
 
 Files: dodatky/licence.md
@@ -13,8 +13,8 @@ License: public-domain
  Public domain according to: https://creativecommons.org/faq/#can-i-change-the-license-terms-or-conditions
  „CC does not assert copyright in the text of its licenses“.
 
-Files: Makefile skripty/*.awk
-Copyright: 2019, Singularis
+Files: Makefile skripty/*.awk skripty/extrakce/*.awk skripty/gender/*.awk skripty/lkk/*.awk skripty/plnění-šablon/*.awk skripty/překlad/*.awk
+Copyright: 2020, Singularis
 License: CC-BY-SA-4.0 or GPL-2+
 
 Files: obrazky/by-sa.png
@@ -95,11 +95,11 @@ Files: skripty/lkk/awkvolby.awk
 Copyright: 2019, Singularis <singularis@volny.cz>
 License: CC-BY-SA-4.0 or Expat
 
-Files: zdroje_obrazku/ik.xcf
+Files: zdroje_obrázků/ik.xcf
 Copyright: 2020, Singularis <singularis@volny.cz>
 License: CC0
 
-Files: zdroje_obrazku/vmezera.png
+Files: zdroje_obrázků/vmezera.png
 License: public-domain
  Public domain, because there is no originality in this file and it's nor photography nor computer program.
 

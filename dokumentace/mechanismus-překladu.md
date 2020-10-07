@@ -29,8 +29,8 @@ Mechanismus překladu dodržuje „čistotu stromu zdrojového kódu“ – zapi
 do dvou zvláštních adresářů, které si v případě potřeby vytvoří
 a které lze vždy znovu vygenerovat:
 
-* „soubory\_prekladu“ – obsahuje dočasné, pomocné a pracovní soubory potřebné při překladu.
-* „vystup\_prekladu“ – obsahuje koncový výsledek překladu – Linux: Knihu kouzel v různých výstupních formátech.
+* „soubory\_překladu“ – obsahuje dočasné, pomocné a pracovní soubory potřebné při překladu.
+* „výstup\_překladu“ – obsahuje koncový výsledek překladu – Linux: Knihu kouzel v různých výstupních formátech.
 
 ## Formáty
 
@@ -40,14 +40,14 @@ a které lze vždy znovu vygenerovat:
 * Formát „log“ je určen k ladění mechanismu překladu. Jeho výstupní soubory obsahují čitelnou textovou reprezentaci proudu volání funkcí při překladu, což umožňuje odhalit případné chyby.
 * Formát „deb“ z kapitol shromáždí pouze pomocné funkce, skripty a výstřižky a sestaví balíček ve formátu „deb“ obsahující spouštěč „lkk“. (Podrobněji viz samostatná sekce.)
 
-## Obsah adresáře „soubory\_prekladu“, společná část
+## Obsah adresáře „soubory\_překladu“, společná část
 
 ### fragmenty.tsv
 
 Soubor „fragmenty.tsv“ je tabulka ve formátu TSV, kterou generuje skript
 [skripty/extrakce/fragmenty.awk](../skripty/extrakce/fragmenty.awk).
 Uvádí dodatky a kapitoly určené k zařazení na výstup (vychází se
-z „poradi-kapitol.lst“). Každý záznam představuje jednu kapitolu či dodatek.
+z „pořadí-kapitol.lst“). Každý záznam představuje jednu kapitolu či dodatek.
 Ostatní kapitoly a dodatky (podle Makefile) se překládají
 (především kvůli kontrole syntaxe), ale na výstup se nedostanou.
 Tento soubor udává pořadí kapitol a dodatků na výstupu.
@@ -66,7 +66,7 @@ Sloupce *fragmenty.tsv* jsou následující:
 
 ### postprocess.dat a postprocessing
 
-Soubor **postprocess.dat** v adresáři „soubory\_prekladu“ vzniká kopií stejnojmenného souboru
+Soubor **postprocess.dat** v adresáři „soubory\_překladu“ vzniká kopií stejnojmenného souboru
 v hlavním adresáři a obsahuje definice pro postprocessing zdrojového kódu pro formáty PDF.
 Postprocessing slouží k doladění sazby pro jednotlivé formáty. Umožňuje např. vložit nucené
 zalomení řádky jen ve formátu A4, které se neuplatní ve formátu B5.
@@ -84,7 +84,7 @@ Sloupce *postprocess.dat* mají následující význam:
 | 1 | Číslo opravy (nezáporné celé číslo jednoznačně identifikující záznam). | 110 |
 | 2 | Regulární výraz určující, na které formáty bude oprava uplatněna. Oprava může být uplatněna i na více formátu, pokud všechny jejich identifikátory odpovídají uvedenému regulárnímu výrazu. | pdf-a4.\* |
 | 3 | ID dodatku či kapitoly, na kterou bude oprava uplatněna. Jedna oprava může být uplatněna pouze na jeden dodatek či kapitolu. | stahovani-web |
-| 4 | Původní znění opravované řádky v souboru „soubory\_prekladu/\{formát\}/\{id\}.kap“. | test \\textbf\{něčeho\} |
+| 4 | Původní znění opravované řádky v souboru „soubory\_překladu/\{formát\}/\{id\}.kap“. | test \\textbf\{něčeho\} |
 | 5 | Opravené znění opravované řádky. | test \\emph\{něčeho\} |
 
 Mechanismus postprocessingu se spouští samostatně nad každou kapitolou, pro každý jednotlivý PDF formát.
@@ -109,7 +109,7 @@ musí být určena na výstup (tzn. musí mít záznam ve *fragmenty.tsv*).
 
 ### ucs\_ikony.dat
 
-Textový soubor v kódování UTF-8, který vzniká skriptem [skripty/extrakce/ikony-zaklinadel.awk](../skripty/extrakce/ikony-zaklinadel.awk) ze souboru [ucs\_ikony/ikony.txt](../ucs\_ikony/ikony.txt) po přefiltrování podle [ucs\_ikony/povolene-ikony.tsv](../ucs\_ikony/povolene-ikony.tsv).
+Textový soubor v kódování UTF-8, který vzniká skriptem [skripty/extrakce/ikony-zaklínadel.awk](../skripty/extrakce/ikony-zaklínadel.awk) ze souboru [ucs\_ikony/ikony.txt](../ucs\_ikony/ikony.txt) po přefiltrování podle [ucs\_ikony/povolene-ikony.tsv](../ucs\_ikony/povolene-ikony.tsv).
 Je tvořen dvěma dlouhými řádky. První řádka obsahuje znaky UTF-8 používané jako ikony zaklínadel, druhá udává jednopísmennými zkratkami na odpovídající pozici, jaké písmo se má použít k jejich vypsání (D znamená „DejaVu Sans“, L znamená „Latin Modern Math“).
 
 ### osnova/\{id\}.tsv
@@ -150,12 +150,12 @@ do budoucna počítám s vynecháním nebo výměnou takových znaků.
 
 ### symboly/\*
 
-Podadresář soubory\_prekladu/symboly slouží k tomu, aby program „make“
+Podadresář soubory\_překladu/symboly slouží k tomu, aby program „make“
 provedl nový překlad v případě, že se změní jedno z podstatných nastavení
 (datum sestavení nebo jeho jméno). Podrobnosti najdete v souboru Makefile;
 obvykle se ale tímto adresářem nemusíte zabývat.
 
-## Obsah adresáře „soubory\_prekladu/deb“ (balíček DEB)
+## Obsah adresáře „soubory\_překladu/deb“ (balíček DEB)
 
 ### DEBIAN/control
 
@@ -187,13 +187,13 @@ Vnitřní pomocný skript, který vykonává hlavní činnost spouštěče lkk. 
 
 ### usr/share/lkk/skripty/\*
 
-Pomocné skripty vyextrahované ze zdrojových kódů kapitol skriptem [skripty/extrakce/pomocne-funkce.awk](../skripty/extrakce/pomocne-funkce.awk). Zvláštním případem je skript „pomocne-funkce“, který jako jediný není přímo spustitelný, ale obsahuje definice pomocných funkcí.
+Pomocné skripty vyextrahované ze zdrojových kódů kapitol skriptem [skripty/extrakce/pomocné-funkce.awk](../skripty/extrakce/pomocné-funkce.awk). Zvláštním případem je skript „pomocné-funkce“, který jako jediný není přímo spustitelný, ale obsahuje definice pomocných funkcí.
 
-## Obsah adresáře „soubory\_prekladu/html“ (formát HTML)
+## Obsah adresáře „soubory\_překladu/html“ (formát HTML)
 
 ### \* (soubory bez přípony)
 
-Tyto mezisoubory vznikají překladem zdrojových kódů jednotlivých kapitol skriptem [skripty/preklad/do_html.awk](../skripty/preklad/do_html.awk) a později se z nich sestavují úplné HTML soubory pomocí skriptu [skripty/plneni-sablon/kapitola.awk](../skripty/plneni-sablon/kapitola.awk) a šablony [formaty/html/sablona.htm](../formaty/html/sablona.htm).
+Tyto mezisoubory vznikají překladem zdrojových kódů jednotlivých kapitol skriptem [skripty/překlad/do_html.awk](../skripty/překlad/do_html.awk) a později se z nich sestavují úplné HTML soubory pomocí skriptu [skripty/plnění-šablon/kapitola.awk](../skripty/plnění-šablon/kapitola.awk) a šablony [formáty/html/šablona.htm](../formáty/html/šablona.htm).
 
 ### kap-copys.htm
 
@@ -203,18 +203,18 @@ Obsahuje licenční hlavičky kapitol, ve formátu HTML. Generuje se skriptem [s
 
 Obsahuje licenční informace k obrázkům, ve formátu HTML. Generuje se skriptem [skripty/extrakce/copykobr.awk](../skripty/extrakce/copykobr.awk) ze souboru [COPYRIGHT](../COPYRIGHT).
 
-## Obsah adresáře „soubory\_prekladu/log“ (formát LOG)
+## Obsah adresáře „soubory\_překladu/log“ (formát LOG)
 
 Tento adresář obsahuje pro každou kapitolu či dodatek dva soubory:
 
-* Soubor bez přípony (např. „awk“) vzniká skriptem [skripty/preklad/do\_logu.awk](../skripty/preklad/do\_logu.awk) ze zdrojového kódu kapitoly či dodatku. Obsahuje čitelný záznam o volání jednotlivých funkcí při překladu, což umožňuje pohodlné ladění mechanismu překladu.
-* Soubor s příponou „kap“ (např. „awk.kap“) vzniká ze souboru bez přípony, jeho obalením pomocí šablony [formaty/log/sablona](../formaty/log/sablona), které provede skript [skripty/plneni-sablon/kapitola.awk](../skripty/plneni-sablon/kapitola.awk).
+* Soubor bez přípony (např. „awk“) vzniká skriptem [skripty/překlad/do\_logu.awk](../skripty/překlad/do\_logu.awk) ze zdrojového kódu kapitoly či dodatku. Obsahuje čitelný záznam o volání jednotlivých funkcí při překladu, což umožňuje pohodlné ladění mechanismu překladu.
+* Soubor s příponou „kap“ (např. „awk.kap“) vzniká ze souboru bez přípony, jeho obalením pomocí šablony [formáty/log/šablona](../formáty/log/šablona), které provede skript [skripty/plnění-šablon/kapitola.awk](../skripty/plnění-šablon/kapitola.awk).
 
-## Obsah adresáře „soubory\_prekladu/pdf-spolecne“ (formáty PDF)
+## Obsah adresáře „soubory\_překladu/pdf-spolecne“ (formáty PDF)
 
 ### \*.kap
 
-Obsahuje jednotlivé kapitoly a dodatky přeložené skriptem [skripty/preklad/do\_pdf.awk](../skripty/preklad/do\_pdf.awk) ze zdrojového kódu kapitoly či dodatku do mezistavu, který projde postprocessingem a bude spojen do kompletního zdrojového kódu knihy ve formátu LaTeX (pro každý formát papíru zvlášť).
+Obsahuje jednotlivé kapitoly a dodatky přeložené skriptem [skripty/překlad/do\_pdf.awk](../skripty/překlad/do\_pdf.awk) ze zdrojového kódu kapitoly či dodatku do mezistavu, který projde postprocessingem a bude spojen do kompletního zdrojového kódu knihy ve formátu LaTeX (pro každý formát papíru zvlášť).
 
 ### qr.eps
 
@@ -226,7 +226,7 @@ Obsahuje soubory obrázků pro použití v knize, předzpracované podle konfig
 V této verzi předzpracování spočívá především v převodu do stupňů šedi a převodu
 vektorových obrázků z SVG do PDF (XeLaTeX vložit SVG přímo neumí).
 
-## Obsah adresáře „soubory\_prekladu/pdf-\*“ (PDF, konkrétní formáty papíru)
+## Obsah adresáře „soubory\_překladu/pdf-\*“ (PDF, konkrétní formáty papíru)
 
 ### \*.kap
 
@@ -238,7 +238,7 @@ Obsahuje soubory \*.kap pospojované za sebe v pořadí podle *fragmenty.tsv*.
 
 ### kniha.tex
 
-Vznikne z \_all.kap pomocí skriptu [skripty/plneni-sablon/specialni.awk](../skripty/plneni-sablon/specialni.awk) a šablony [formaty/pdf/sablona.tex](../formaty/pdf/sablona.tex).
+Vznikne z \_all.kap pomocí skriptu [skripty/plnění-šablon/speciální.awk](../skripty/plnění-šablon/speciální.awk) a šablony [formáty/pdf/šablona.tex](../formáty/pdf/šablona.tex).
 
 Dále tento adresář obsahuje pomocné soubory XeLaTeXu a výstup ve formátu PDF („kniha.pdf“).
 
@@ -248,7 +248,7 @@ Symbolický odkaz na adresář „skripty“. Kvůli spouštění některých sk
 
 ## Konfigurační soubory
 
-### poradi-kapitol.lst a poradi-kapitol.vychozi.lst
+### pořadí-kapitol.lst a pořadí-kapitol.výchozí.lst
 
 Úplný seznam překládaných kapitol a dodatků je uveden v proměnných
 *VSECHNY\_KAPITOLY* a *VSECHNY\_DODATKY* v [Makefile](../Makefile).

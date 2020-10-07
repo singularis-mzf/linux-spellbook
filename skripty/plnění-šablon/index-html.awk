@@ -1,4 +1,4 @@
-# Linux Kniha kouzel, skript plneni-sablon/index-html.awk
+# Linux Kniha kouzel, skript plnění-šablon/index-html.awk
 # Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -126,4 +126,4 @@ function VypsatOdkazNaKapitolu(i, vyclenit) {
 }
 
 # ============================================================================
-@include "skripty/plneni-sablon/hlavni.awk"
+@include "skripty/plnění-šablon/hlavní.awk"

@@ -542,4 +542,4 @@ function DoLatexuIkonaZaklinadla(specifikace,   font) {
     return font "{}" gensub(/\t.*$/, "", 1, specifikace);
 }
 
-@include "skripty/preklad/hlavni.awk"
+@include "skripty/překlad/hlavní.awk"

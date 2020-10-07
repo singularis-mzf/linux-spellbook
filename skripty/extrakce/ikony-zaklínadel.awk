@@ -1,4 +1,4 @@
-# Linux Kniha kouzel, skript extrakce/ikony-zaklinadel.awk
+# Linux Kniha kouzel, skript extrakce/ikony-zaklínadel.awk
 # Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -31,7 +31,7 @@ BEGIN {
     # Načíst povolené ikony
     delete povolene_ikony; # [znak] => zkratka písma
     FS = "\t";
-    while (getline < "ucs_ikony/povolene-ikony.tsv") {
+    while (getline < "ucs_ikony/povolené-ikony.tsv") {
         if (NF >= 3) {
             povolene_ikony[$2] = $3;
         }

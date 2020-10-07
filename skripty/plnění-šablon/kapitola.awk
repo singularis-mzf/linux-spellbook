@@ -1,4 +1,4 @@
-# Linux Kniha kouzel, skript kapitola.awk
+# Linux Kniha kouzel, skript plnění-šablon/kapitola.awk
 # Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -234,4 +234,4 @@ function VypsatPrehledStitku(format,   i, n, s, cislo_kapitoly, stitky_kapitol, 
 }
 
 # ============================================================================
-@include "skripty/plneni-sablon/hlavni.awk"
+@include "skripty/plnění-šablon/hlavní.awk"

@@ -1,4 +1,4 @@
-# Linux Kniha kouzel, skript preklad/hlavni.awk
+# Linux Kniha kouzel, skript překlad/hlavní.awk
 # Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod

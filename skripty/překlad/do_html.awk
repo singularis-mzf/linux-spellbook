@@ -67,7 +67,7 @@ function Tabulator(delka,  i, vysledek) {
 # + OSNOVA, DELKA_OSNOVY
 
 function ZacatekKapitoly(nazevKapitoly, cisloKapitoly, stitky, osnova, ikonaKapitoly, jeDodatek,  vysledek, polozky, jePrvni, melaPodsekce, maPodsekce, poleStitku, i, n) {
-# Generování prvku <h1> obstarává šablona kapitoly (formaty/html/sablona_kapitoly).
+# Generování prvku <h1> obstarává šablona kapitoly.
 #    return "<h1>" nazevKapitoly "</h1>\n";
     vysledek = "";
     delete polozky;
@@ -337,4 +337,4 @@ function VzornikIkon(pocetIkon, ikony,   i, vysledek, pole) {
     return vysledek;
 }
 
-@include "skripty/preklad/hlavni.awk"
+@include "skripty/překlad/hlavní.awk"

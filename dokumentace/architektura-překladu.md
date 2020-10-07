@@ -14,8 +14,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 # Architekura překladu
 
 Samotný překlad ze zdrojového kódu v Markdownu zajišťují skripty v adresáři
-**skripty/preklad**. Jejich společným základem je skript
-[hlavni.awk](../skripty/preklad/hlavni.awk),
+**skripty/překlad**. Jejich společným základem je skript
+[hlavní.awk](../skripty/překlad/hlavní.awk),
 který provádí lexikální analýzu zdrojového kódu kapitoly či dodatku
 a pro jednotlivé prvky volá funkce definované v jednom ze zbylých tří skriptů
 (podle toho, který formát se zrovna překládá). Řetězce vrácené těmito

@@ -1,5 +1,5 @@
 # Linux Kniha kouzel, skript do_logu.awk
-# Copyright (c) 2019 Singularis <singularis@volny.cz>
+# Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 # podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -299,4 +299,4 @@ function VzornikIkon(pocetIkon, ikony,   i, vysledek) {
     return vysledek;
 }
 
-@include "skripty/preklad/hlavni.awk"
+@include "skripty/překlad/hlavní.awk"

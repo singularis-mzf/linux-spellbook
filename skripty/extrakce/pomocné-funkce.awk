@@ -1,4 +1,4 @@
-# Linux Kniha kouzel, skript extrakce/pomocne-funkce.awk
+# Linux Kniha kouzel, skript extrakce/pomocné-funkce.awk
 # Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -266,7 +266,7 @@ END {
             system("chmod " (skripty_x[s] ? "755" : "644") " " fn);
         }
         asorti(funkce_puvod, jmena_funkci);
-        fn = SOUBORY_PREKLADU "/deb/usr/share/lkk/skripty/pomocne-funkce";
+        fn = SOUBORY_PREKLADU "/deb/usr/share/lkk/skripty/pomocné-funkce";
         print "# Pomocné funkce pro projekt Linux: Kniha kouzel. Tento soubor byl automaticky vygenerován.\n#" > fn;
         for (i = 1; i <= length(jmena_funkci); ++i) {
             printf("#začátek %s\n%s#konec %s\n", jmena_funkci[i], funkce_definice[jmena_funkci[i]], jmena_funkci[i]) > fn;
