@@ -210,27 +210,29 @@ Uživatele, který Linux: Knihu kouzel neprostudoval, poznáte např. takto:
 * Myslí si, že příkaz „apt list gimp*“ vypíše seznam balíčků začínajících „gimp“ (v tomto případě se musí hlavně naučit pravidla odzvláštňování).
 -->
 
-## Aktuální poznámka k verzi „vanilková příchuť 2.0 Chranislav Charbulový“
+## Aktuální poznámka k verzi „vanilková příchuť 2.1 Iveta Ivanovická“
 
-Verze vanilkové příchuti 2.0, jménem Chranislav Charbulový, je první verze
-určená především pro Ubuntu 20.04 Focal Fossa.
+Verze vanilkové příchuti 2.1, jménem Iveta Ivanovická, je spíše experimentální verze.
+Přináší řadu novinek, u kterých není jisté, zda se do budoucna osvědčí,
+takže jejich setrvání bude záležet na reakcích uživatelů.
 
-Ve srovnání s verzí 1.12 Hana Hlavní byly z vydání vypuštěny kapitoly „Docker“
-a „Plánování úloh“. Kapitola „Barvy a titulek terminálu“ byla přejmenována
-na „Terminál“ a rozšířena o vybrané emotikony a další ozdoby.
+Významnou novinkou je rozdělení kapitol na „základní“ a „volitelné“.
+Vzhledem k narůstajícímu počtu kapitol již není vhodné tisknout všechny,
+takže vydávané verze nyní budou obsahovat pouze několik vybraných kapitol
+na ukázku. Ostatní kapitoly vanilkové příchuti budou nadále podléhat
+stejným kvalitativním požadavkům, ale uživatalé si z nich budou muset
+vybrat ve vlastních sestaveních pouze ty, které potřebují.
 
-Verze 2.0 také přináší zcela novou kapitolu „Zpracování binárních souborů“
-a zvláštní kapitolu „Základní znalosti“.
-Kapitola „Regulární výrazy“ byla rozšířena o vzorky bashe,
-kapitola „Diskové oddíly“ o příkazy pro práci se souborovými systémy typu *btrfs*
-a do kapitoly „Soubory a adresáře“ přibylo vysvětlení „módu“.
+HTML varianta v této verzi nepřináší žádnou novinku.
 
-V HTML verzi je nově jako výchozí tmavý motiv, byl vylepšen design rámu „okna“
-a všechny vydané kapitoly i dodatky nyní mají ikonu.
+V PDF variantách jsou hlavní novinkou písma Latin Modern Roman a Latin Modern Sans.
 
-V PDF verzi byly ikony zaklínadel nahrazeny jednoduchými odrážkami.
+Výraznou vnitřní novinkou je použití české diakritiky v názvech souborů a adresářů
+v repozitáři a při překladu.
 
+<!--
 Vydání verze 2.1, jménem Iveta Ivanovická, očekávám v průběhu listopadu 2020.
+-->
 
 Verze řady „vanilková příchuť 1.x“ jsou ve stádiu dlouhodobé pasivní údržby do 1. března 2023.
 

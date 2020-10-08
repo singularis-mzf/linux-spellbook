@@ -1,5 +1,5 @@
 # Linux Kniha kouzel, skript postprocess.awk
-# Copyright (c) 2019 Singularis <singularis@volny.cz>
+# Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 # podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -85,7 +85,7 @@ ARGIND == 2 { # {id}.md
         idnahrady = nahrady[$0];
         ++nahrady_vyskyty[idnahrady];
         print nahrady_cil[idnahrady];
-        Log("[" nahrady_vyskyty[idnahrady] "] Na řádku " FNR " použita náhrada id " idnahrady " (" length($0) " >> " length(nahrady_cil[idnahrady]) ").");
+        Log("[" nahrady_vyskyty[idnahrady] "] Na " (rand() < 0.5 ? "řádku" : "řádce") " " FNR " použita náhrada id " idnahrady " (" length($0) " >> " length(nahrady_cil[idnahrady]) ").");
     } else {
         print $0;
     }
@@ -99,7 +99,7 @@ ENDFILE {
             idnahrady = nahrady[nahrada];
             Log("Náhrada id=" idnahrady ": počet použití = " nahrady_vyskyty[idnahrady] (nahrady_vyskyty[idnahrady] == 1 ? "." : "!!!!!!!!"));
         }
-        Log("Končím – postprocessing \"" cas "\" proběhl úspěšně (počet řádků: " posledni_radek ").");
+        Log("Končím – postprocessing \"" cas "\" proběhl úspěšně (počet " (rand() < 0.5 ? "řádků" : "řádek") ": " posledni_radek ").");
     }
 }
 

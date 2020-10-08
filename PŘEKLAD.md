@@ -36,17 +36,17 @@ K úplnému sestavení *Linuxu: Knihy kouzel* ze zdrojového kódu budete potř
 
 Také budete potřebovat písma:
 
-* Computer Modern
-* Computer Modern Sans Serif
 * DejaVu Sans
 * Latin Modern Math
 * Latin Modern Mono Slanted
 * Latin Modern Mono Light
 * Latin Modern Mono Light Cond
+* Latin Modern Roman
+* Latin Modern Sans
 
 Ověřil/a jsem, že v Ubuntu 20.04 LTS, Ubuntu 18.04 LTS a Linuxu Mint 20 můžete všechny potřebné nástroje a písma nainstalovat příkazem:
 
-> ``sudo apt-get install git make gawk xxd imagemagick librsvg2-bin qrencode texlive-xetex texlive-lang-czechslovak t1-cyrillic cm-super-x11``
+> ``sudo apt-get install git make gawk xxd imagemagick librsvg2-bin qrencode texlive-xetex texlive-lang-czechslovak t1-cyrillic lmodern``
 
 V budoucnu pravděpodobně sestavování přejde na Ubuntu 20.04, ale zatím je stále plně podporován i překlad na Ubuntu 18.04.
 
