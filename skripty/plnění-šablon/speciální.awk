@@ -24,7 +24,6 @@
 
 @include "skripty/utility.awk"
 
-
 # POŽADAVKY
 # ============================================================================
 BEGIN {
@@ -93,8 +92,8 @@ function RidiciRadek(text) {
 }
 
 function PrelozitVystup(radek) {
-    gsub(/\{\{OZNAČENÍ VERZE\}\}/, EscapovatKNahrade(ZjistitOznaceniVerze(JMENOVERZE)), radek);
-    gsub(/\{\{JMÉNO VERZE\}\}/, EscapovatKNahrade(ZjistitJmenoVerze(JMENOVERZE)), radek);
+    gsub(/\{\{OZNAČENÍ VERZE\}\}/, OdzvlastnitKNahrade(ZjistitOznaceniVerze(JMENOVERZE)), radek);
+    gsub(/\{\{JMÉNO VERZE\}\}/, OdzvlastnitKNahrade(ZjistitJmenoVerze(JMENOVERZE)), radek);
     return radek;
 }
 

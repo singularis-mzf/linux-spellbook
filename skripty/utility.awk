@@ -104,18 +104,36 @@ function MesicVDruhemPade(cislo) {
     }
 }
 
-function Escapovat(s) {gsub(/[\\|.*+?{}\\/^$]/, "\\\\&", s);return s;}
-function EscapovatKNahrade(s) {gsub(/[\\&]/, "\\\\&", s);return s;}
+function Odzvlastnit(s) {gsub(/[\\|.*+?{}\\/^$]/, "\\\\&", s);return s;}
+function OdzvlastnitKNahrade(s) {gsub(/[\\&]/, "\\\\&", s);return s;}
 
 function GenerovatOmezeneId(prefix, id) {
-    gsub(/č/, "c", id);
-    gsub(/š/, "s", id);
-    gsub(/ť/, "t", id);
-    gsub(/ž/, "z", id);
-    return prefix substr(tolower(gensub(/[^B-Zb-z0-9]/, "", "g", id)), 1, 16);
+    gsub(/[čČ]/, "c", id);
+    gsub(/[šŠ]/, "s", id);
+    gsub(/[ťŤ]/, "t", id);
+    gsub(/[žŽ]/, "z", id);
+    return prefix substr(gensub(/[^bcdefghijklmnopqrstuvwxyz0123456789]/, "", "g", tolower(id)), 1, 16);
 }
 
 function Test(parametry) {return !system("test " parametry);}
+
+function BezDiakritiky(s,   t, c, i, bd) {
+    gsub(/á/, "a", s); gsub(/Á/, "A", s);
+    gsub(/č/, "c", s); gsub(/Č/, "C", s);
+    gsub(/ď/, "d", s); gsub(/Ď/, "D", s);
+    gsub(/[éě]/, "e", s); gsub(/[ÉĚ]/, "E", s);
+    gsub(/í/, "i", s); gsub(/Í/, "I", s);
+    gsub(/ň/, "n", s); gsub(/Ň/, "N", s);
+    gsub(/ó/, "o", s); gsub(/Ó/, "O", s);
+    gsub(/ř/, "r", s); gsub(/Ř/, "R", s);
+    gsub(/š/, "s", s); gsub(/Š/, "S", s);
+    gsub(/ť/, "t", s); gsub(/Ť/, "T", s);
+    gsub(/[úů]/, "u", s); gsub(/[ÚŮ]/, "U", s);
+    gsub(/ý/, "y", s); gsub(/Ý/, "Y", s);
+    gsub(/ž/, "z", s); gsub(/Ž/, "Z", s);
+    gsub(/[^\-\]\\ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 !"#$%&'()*+,./:;<=>?@^_`{}|~[]/, "", s); # "
+    return s;
+}
 
 #
 # PRÁCE SE ZÁSOBNÍKY

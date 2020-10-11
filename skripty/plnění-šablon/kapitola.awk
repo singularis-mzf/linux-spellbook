@@ -22,9 +22,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-
 @include "skripty/utility.awk"
-
 
 # POŽADAVKY
 # ============================================================================
@@ -165,7 +163,7 @@ function RidiciRadek(text,   prikaz, i) {
 #       – Typicky nahrazuje výskyty speciálních značek.
 #
 function PrelozitVystup(radek) {
-#    gsub(/\{\{JMÉNO VERZE\}\}/, EscapovatKNahrade(JMENOVERZE), radek);
+#    gsub(/\{\{JMÉNO VERZE\}\}/, OdzvlastnitKNahrade(JMENOVERZE), radek);
     gsub(/\{\{NÁZEV KAPITOLY\}\}/, nazev_kapitoly, radek);
     gsub(/\{\{PŘEDCHOZÍ ID\}\}/, id_predchozi, radek);
     gsub(/\{\{PŘEDCHOZÍ NÁZEV\}\}/, nazev_predchozi, radek);
@@ -174,10 +172,10 @@ function PrelozitVystup(radek) {
     gsub(/\{\{NÁSLEDUJÍCÍ NÁZEV\}\}/, nazev_nasledujici, radek);
     gsub(/\{\{NÁSLEDUJÍCÍ ČÍSLO\}\}/, id_nasledujici != "" ? cislo_kapitoly + 1 : 0, radek);
     gsub(/\{\{ČÍSLO KAPITOLY\}\}/, cislo_kapitoly, radek);
-    gsub(/\{\{OZNAČENÍ VERZE\}\}/, EscapovatKNahrade(ZjistitOznaceniVerze(JMENOVERZE, 1)), radek);
-    gsub(/\{\{OZNAČENÍ VERZE S INICIÁLAMI\}\}/, EscapovatKNahrade(ZjistitOznaceniVerze(JMENOVERZE, 1)), radek);
-    gsub(/\{\{JMÉNO VERZE\}\}/, EscapovatKNahrade(ZjistitJmenoVerze(JMENOVERZE)), radek);
-    gsub(/\{\{PŘEDEVŚIM PRO\}\}/, EscapovatKNahrade(predevsim_pro), radek);
+    gsub(/\{\{OZNAČENÍ VERZE\}\}/, OdzvlastnitKNahrade(ZjistitOznaceniVerze(JMENOVERZE, 1)), radek);
+    gsub(/\{\{OZNAČENÍ VERZE S INICIÁLAMI\}\}/, OdzvlastnitKNahrade(ZjistitOznaceniVerze(JMENOVERZE, 1)), radek);
+    gsub(/\{\{JMÉNO VERZE\}\}/, OdzvlastnitKNahrade(ZjistitJmenoVerze(JMENOVERZE)), radek);
+    gsub(/\{\{PŘEDEVŚIM PRO\}\}/, OdzvlastnitKNahrade(predevsim_pro), radek);
     gsub(/\{\{DATUMSESTAVENÍ\}\}/, DATUMSESTAVENI, radek);
     gsub(/\{\{DATUM SESTAVENÍ\}\}/, datum, radek);
     gsub(/\{\{IKONA KAPITOLY\}\}/, ikona_kapitoly, radek);

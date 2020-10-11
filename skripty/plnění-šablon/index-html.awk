@@ -96,13 +96,13 @@ function RidiciRadek(text,   i, s) {
 }
 
 function PrelozitVystup(radek) {
-    #gsub(/\{\{JMÉNO VERZE\}\}/, EscapovatKNahrade(JMENOVERZE), radek);
+    #gsub(/\{\{JMÉNO VERZE\}\}/, OdzvlastnitKNahrade(JMENOVERZE), radek);
     gsub(/\{\{DATUM SESTAVENÍ\}\}/, datum, radek);
     gsub(/\{\{DATUMSESTAVENÍ\}\}/, DATUMSESTAVENI, radek);
-    gsub(/\{\{JMÉNO VERZE\}\}/, EscapovatKNahrade(ZjistitJmenoVerze(JMENOVERZE)), radek);
-    gsub(/\{\{OZNAČENÍ VERZE\}\}/, EscapovatKNahrade(ZjistitOznaceniVerze(JMENOVERZE)), radek);
-    gsub(/\{\{OZNAČENÍ VERZE S INICIÁLAMI\}\}/, EscapovatKNahrade(ZjistitOznaceniVerze(JMENOVERZE, 1)), radek);
-    gsub(/\{\{PŘEDEVŠÍM PRO\}\}/, EscapovatKNahrade(predevsim_pro), radek);
+    gsub(/\{\{JMÉNO VERZE\}\}/, OdzvlastnitKNahrade(ZjistitJmenoVerze(JMENOVERZE)), radek);
+    gsub(/\{\{OZNAČENÍ VERZE\}\}/, OdzvlastnitKNahrade(ZjistitOznaceniVerze(JMENOVERZE)), radek);
+    gsub(/\{\{OZNAČENÍ VERZE S INICIÁLAMI\}\}/, OdzvlastnitKNahrade(ZjistitOznaceniVerze(JMENOVERZE, 1)), radek);
+    gsub(/\{\{PŘEDEVŠÍM PRO\}\}/, OdzvlastnitKNahrade(predevsim_pro), radek);
 
     return radek;
 }

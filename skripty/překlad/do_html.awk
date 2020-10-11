@@ -24,7 +24,7 @@
 
 @include "skripty/utility.awk"
 
-# Převede odescapovaný znak vstupního formátu (Markdown) do výstupního formátu.
+# Převede znak vstupního formátu (Markdown) po odstranění odzvláštnění do výstupního formátu.
 # Pro bílé znaky se volá jedině tehdy, jsou-li escapovány.
 function ZpracujZnak(znak) {
     switch (znak) {
@@ -227,7 +227,7 @@ function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, ikona, cislaPoznamek
                 textPoznamky = gensub(/<[^>]>/, "", "g", textyPoznamek[cislaPoznamek[i]]);
                 gsub(/\n/, "", textPoznamky);
                 gsub(/\t/, " ", textPoznamky);
-                gsub(Escapovat(ZpracujZnak("␣")), EscapovatKNahrade("&blank;"), textPoznamky);
+                gsub(Odzvlastnit(ZpracujZnak("␣")), OdzvlastnitKNahrade("&blank;"), textPoznamky);
                 vysledek = vysledek "<a href=\"#kap" ID_KAPITOLY_OMEZENE "ppc" cislaPoznamek[i] "\" id=\"kap" ID_KAPITOLY_OMEZENE "ppcr" cislaPoznamek[i] "\" title=\"" textPoznamky "\">(" cislaPoznamek[i] ")</a>";
             }
             vysledek = vysledek "</sup>";
