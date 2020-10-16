@@ -25,7 +25,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 ## Úvod
 Docker je nástroj pro odlehčenou virtualizaci formou takzvaných kontejnerů. Kontejner obsahuje vlastní podstrom procesů, který je izolovaný od zbytku systému (má vlastní souborový systém, konfiguraci, knihovny, démony, síťové rozhraní a IP adresu), ale sdílí s ním jádro a výpočetní prostředky. To umožňuje bezpečný a snadno přenositelný běh programů určených pro jiné distribuce (můžete např. na nejnovější Fedoře spouštět program ze staré verze Debianu apod.). Nevýhodou Dockeru je, že jeho používání vyžaduje oprávnění superuživatele a nepodporuje přímo spouštění grafických aplikací nebo přímý přístup k hardwaru (i barvy v terminálu je tam podtřeba zprovoznit). Nejčastěji se používá na provozování databází.
 
-Použití Dockeru obecně probíhá tak, že napíšete vlastní Dockerfile, z něj sestavíte obraz a z tohoto obrazku pak vytváříte kontejnery, které spouštíte. Kontejner může běžet buď na popředí (v příkazové řádce), nebo na pozadí.
+Použití Dockeru obecně probíhá tak, že napíšete vlastní Dockerfile, z něj sestavíte obraz a z tohoto obrazu pak vytváříte kontejnery, které spouštíte. Kontejner může běžet buď na popředí (v příkazové řádce), nebo na pozadí.
 
 Tato verze kapitoly pokrývá pouze základy Dockeru; nezmiňuje se o nástoji „docker-compose“ a pokrývá jen malou část dostupných „docker“-příkazů. Neuvádí specializované repozitáře jako např. „mysql“.
 

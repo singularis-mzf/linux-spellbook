@@ -11,7 +11,7 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
-![Linux: Kniha kouzel](obrazky/banner.png)
+![Linux: Kniha kouzel](obrázky/banner.png)
 
 „Linux: Kniha kouzel“ je multimediální sbírka krátkých řešených příkladů
 z prostředí svobodného software v operačním systému Linux, především distribucí Ubuntu a Linux Mint.
@@ -104,7 +104,7 @@ Viz soubor [JAK-SE-ZAPOJIT.md](JAK-SE-ZAPOJIT.md).
 ### Výběr a pořadí kapitol
 
 Chcete-li si sám/a vybrat, které kapitoly se sestaví do výstupního adresáře, zkopírujte soubor
-[poradi-kapitol.vychozi.lst](poradi-kapitol.vychozi.lst) na „poradi-kapitol.lst“ a upravte.
+[pořadí-kapitol.výchozí.lst](pořadí-kapitol.výchozí.lst) na „pořadí-kapitol.lst“ a upravte.
 Píše se jedno id kapitoly či dodatku na řádek (id je název souboru bez adresářové cesty a bez přípony)
 a kapitoly ani dodatky se nesmějí opakovat.
 
@@ -113,31 +113,31 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | ID | Název kapitoly | Vydána od verze |
 | :--- | :--- | :--- |
 | [awk](kapitoly/awk.md) | AWK | 1.2 |
-| [datum-cas-kalendar](kapitoly/datum-cas-kalendar.md) | Datum, čas a kalendář | 1.1 |
-| [diskove-oddily](kapitoly/diskove-oddily.md) | Diskové oddíly | 1.6 |
+| [datum-čas-kalendář](kapitoly/datum-čas-kalendář.md) | Datum, čas a kalendář | 1.1 |
+| [diskové-oddíly](kapitoly/diskové-oddíly.md) | Diskové oddíly | 1.6 |
 | [git](kapitoly/git.md) | Git | 1.0 |
-| [hledani-souboru](kapitoly/hledani-souboru.md) | Hledání souborů | 1.5 |
+| [hledání-souborů](kapitoly/hledání-souborů.md) | Hledání souborů | 1.5 |
 | [make](kapitoly/make.md) | Make | 1.0 |
 | [markdown](kapitoly/markdown.md) | Markdown | 1.0 |
-| [prace-s-archivy](kapitoly/prace-s-archivy.md) | Práce s archivy | 1.1 |
-| [promenne](kapitoly/promenne.md) | Proměnné prostředí a interpretu | 1.9 |
-| [regularni-vyrazy](kapitoly/regularni-vyrazy.md) | Regulární výrazy | 1.1 |
+| [práce-s-archivy](kapitoly/práce-s-archivy.md) | Práce s archivy | 1.1 |
+| [proměnné](kapitoly/proměnné.md) | Proměnné prostředí a interpretu | 1.9 |
+| [regulární-výrazy](kapitoly/regulární-výrazy.md) | Regulární výrazy | 1.1 |
 | [sed](kapitoly/sed.md) | Sed | 1.8 |
-| [soubory-a-adresare](kapitoly/soubory-a-adresare.md) | Soubory a adresáře | 1.5 |
-| [sprava-balicku](kapitoly/sprava-balicku.md) | Správa balíčků | 1.1 |
-| [sprava-procesu](kapitoly/sprava-procesu) | Správa procesů | 1.4 |
-| [sprava-uzivatelskych-uctu](kapitoly/sprava-uzivatelskych-uctu.md) | Správa uživatelských účtů | 1.11 |
-| [stahovani-videi](kapitoly/stahovani-videi.md) | Stahování videí | 1.0 |
-| [system](kapitoly/system.md) | Systém | 1.2 |
-| [terminal](kapitoly/terminal.md) | Terminál | (1.0) |
+| [soubory-a-adresáře](kapitoly/soubory-a-adresáře.md) | Soubory a adresáře | 1.5 |
+| [správa-balíčků](kapitoly/správa-balíčků.md) | Správa balíčků | 1.1 |
+| [správa-procesů](kapitoly/správa-procesů) | Správa procesů | 1.4 |
+| [správa-uživatelských-účtů](kapitoly/správa-uživatelských-účtů.md) | Správa uživatelských účtů | 1.11 |
+| [stahování-videí](kapitoly/stahování-videí.md) | Stahování videí | 1.0 |
+| [systém](kapitoly/systém.md) | Systém | 1.2 |
+| [terminál](kapitoly/terminál.md) | Terminál | (1.0) |
 | [vim](kapitoly/vim.md) | Vim | 1.8 |
-| [zpracovani-binarnich-souboru](kapitoly/zpracovani-binarnich-souboru.md) | Zpracování binárních souborů | 2.0 |
-| [zpracovani-textovych-souboru](kapitoly/zpracovani-textovych-souboru.md) | Zpracování textových souborů | 1.2 | [zpracovani-videa-a-zvuku](kapitoly/zpracovani-videa-a-zvuku.md) | Zpracování videa a zvuku | 1.0 |
+| [zpracování-binárních-souborů](kapitoly/zpracování-binárních-souborů.md) | Zpracování binárních souborů | 2.0 |
+| [zpracování-textových-souborů](kapitoly/zpracování-textových-souborů.md) | Zpracování textových souborů | 1.2 | [zpracování-videa-a-zvuku](kapitoly/zpracování-videa-a-zvuku.md) | Zpracování videa a zvuku | 1.0 |
 
 ## Vyřazené kapitoly
 
-* *Docker* — Nenaplňuje kvalitativní standard a dostala se mimo okruh mých zájmů; bude zachována ve větvi 1.x, ale ve větvi 2.x se jí již nebudu věnovat.
-* *Plánování úloh* — Dospěl/a jsem k názoru, že pro běžného uživatele není dobré ani „klasické“ řešení plánování úloh démonem *cron*, který úlohu spustí kdesi zcela mimo grafické rozhraní, a tedy mimo interakci s uživatelem, ale ani hybridní řešení, které jsem navrhl/a v této kapitole. Správným řešením je instalace zcela samostatného plánovače, který bude pracovat jako uživatelská aplikace. Proto se místo údržby této kapitoly raději po takovém plánovači poohlédnu.
+* [Docker](kapitoly/docker.md) — Nenaplňuje kvalitativní standard a dostala se mimo okruh mých zájmů; bude zachována ve větvi 1.x, ale ve větvi 2.x se jí již nebudu věnovat.
+* [Plánování úloh](kapitoly/plánování-úloh.md) — Dospěl/a jsem k názoru, že pro běžného uživatele není dobré ani „klasické“ řešení plánování úloh démonem *cron*, který úlohu spustí kdesi zcela mimo grafické rozhraní, a tedy mimo interakci s uživatelem, ale ani hybridní řešení, které jsem navrhl/a v této kapitole. Správným řešením je instalace zcela samostatného plánovače, který bude pracovat jako uživatelská aplikace. Proto se místo údržby této kapitoly raději po takovém plánovači poohlédnu.
 
 ## Kapitoly ve vývoji
 
@@ -146,39 +146,39 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
 | [firefox](kapitoly/firefox.md) | Firefox | 60% | dítě |
 | [kalkulace](kapitoly/kalkulace)| Kalkulace | 50% | dítě |
-| [zpracovani-obrazku](kapitoly/zpracovani-obrazku.md) | Zpracování obrázků | 40% | dítě |
+| [zpracování-obrázků](kapitoly/zpracování-obrázků.md) | Zpracování obrázků | 40% | dítě |
 | [odkazy](kapitoly/odkazy.md) | Pevné a symbolické odkazy | 20% | dítě |
 | [perl](kapitoly/perl.md) | Základy Perlu | 20% | dítě |
-| [moderni-veci](kapitoly/moderni-veci.md) | Moderní věci | 10% | dítě |
+| [moderní-věci](kapitoly/moderní-věci.md) | Moderní věci | 10% | dítě |
 | [unicode](kapitoly/unicode.md) | Unicode a emotikony | 10% | dítě |
-| [uzivatelska-rozhrani](kapitoly/uzivatelska-rozhrani.md) | Uživatelská rozhraní skriptů | 5% | dítě |
+| [uživatelská-rozhraní](kapitoly/uživatelská-rozhraní.md) | Uživatelská rozhraní skriptů | 5% | dítě |
 | [apache](kapitoly/apache.md) | Webový server Apache | 5% | dítě |
 | [latex](kapitoly/latex.md) | LaTeX | 5% | dítě |
 | [dosbox](kapitoly/dosbox.md) | DosBox | 5% | dítě |
 | [bash](kapitoly/bash.md) | Bash | 2% | dítě |
 | [lkk](kapitoly/lkk.md) | Linux: Kniha kouzel | 2% | dítě |
-| [zpracovani-psv](kapitoly/zpracovani-psv.md) | Zpracování PSV | 2% | dítě |
-| [sprava-balicku-2](kapitoly/sprava-balicku-2) | Správa balíčků 2 | 1% | dítě |
+| [zpracování-psv](kapitoly/zpracování-psv.md) | Zpracování PSV | 2% | dítě |
+| [správa-balíčků-2](kapitoly/správa-balíčků-2) | Správa balíčků 2 | 1% | dítě |
 | [grub](kapitoly/grub.md) | GRUB a jádro | 1% | dítě |
-| [konverze-formatu](kapitoly/konverze-formatu.md) | Konverze formátů | 0% | embryo |
+| [konverze-formatů](kapitoly/konverze-formatů.md) | Konverze formátů | 0% | embryo |
 | [wine](kapitoly/wine.md) | Wine | 0% | embryo |
 | [pdf](kapitoly/pdf.md) | PDF | 0% | embryo |
 | [virtualbox](kapitoly/virtualbox.md) | VirtualBox | 0% | embryo |
-| [stahovani-z-webu](kapitoly/stahovani-z-webu.md) | Stahování z webu | 0% | embryo |
-| [sifrovani](kapitoly/sifrovani.md) | Šifrování a kryptografie | 0% | embryo |
-| prehravani-videa | Přehrávání videa, zvuku a obrázků | - | přál/a bych si |
+| [stahování-z-webu](kapitoly/stahování-z-webu.md) | Stahování z webu | 0% | embryo |
+| [šifrování](kapitoly/šifrování.md) | Šifrování a kryptografie | 0% | embryo |
+| přehrávání-videa | Přehrávání videa, zvuku a obrázků | - | přál/a bych si |
 | firewall | Firewall | - | přál/a bych si |
 | sql | SQL | - | přál/a bych si |
 | ascii-art | ASCII art | - | přál/a bych si |
-| zaznam-x | Záznam obrazovky | - | přál/a bych si |
+| záznam-x | Záznam obrazovky | - | přál/a bych si |
 | css | Kaskádové styly CSS | - | přál/a bych si |
-| nabidka-aplikaci | Nabídka aplikací | - | přál/a bych si |
+| nabídka-aplikací | Nabídka aplikací | - | přál/a bych si |
 
 ## Zvláštní kapitoly
 
-* [_ostatni](kapitoly/_ostatni.md) − Slouží k dočasnému shromážďování dosud nezařazených zaklínadel.
-* [_sablona](kapitoly/_sablona.md) − Nepřekládá se. Slouží jako výchozí podoba pro nově založené kapitoly.
-* [_ukazka](kapitoly/_ukazka.md) − Překládá se, ale není součástí vydaných verzí. Slouží k dokumentaci a testování mechanismu překladu. Obsahuje všechny podporované jazykové konstrukce a znaky.
+* [_ostatní](kapitoly/_ostatní.md) − Slouží k dočasnému shromážďování dosud nezařazených zaklínadel.
+* [_šablona](kapitoly/_šablona.md) − Nepřekládá se. Slouží jako výchozí podoba pro nově založené kapitoly.
+* [_ukázka](kapitoly/_ukázka.md) − Překládá se, ale není součástí vydaných verzí. Slouží k dokumentaci a testování mechanismu překladu. Obsahuje všechny podporované jazykové konstrukce a znaky.
 
 ## Větve na GitHubu
 

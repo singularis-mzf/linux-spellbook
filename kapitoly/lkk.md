@@ -29,13 +29,13 @@ Poznámky:
 - Obecně popište základní principy, na kterých fungují používané nástroje.
 - Uveďte, co kapitola nepokrývá, ačkoliv by to čtenář mohl očekávat.
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+![ve výstavbě](../obrázky/ve-výstavbě.png)
 
 ## Definice
 <!--
 - Uveďte výčet specifických pojmů pro použití v této kapitole a tyto pojmy definujte co nejprecizněji.
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+![ve výstavbě](../obrázky/ve-výstavbě.png)
 
 * **Kapitola** je textová část projektu vymezená jedním zdrojovým souborem v adresáři „kapitoly“. Název tohoto souboru bez přípony „.md“ je *id kapitoly*, text hlavního nadpisu v daném souboru je **název kapitoly**.
 * **Sekce** je oddíl kapitoly vymezený druhou úrovní nadpisu. Sekce se může dále dělit na **podsekce**.
@@ -48,7 +48,7 @@ Poznámky:
 <!--
 - Rozdělte na podsekce a naplňte „zaklínadly“.
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+![ve výstavbě](../obrázky/ve-výstavbě.png)
 
 ### Zaklínadlo
 
@@ -110,14 +110,14 @@ dovnitř dvojic \*\*{*text*}\*\*. To platí i pro jednoznakové úseky jako \*\
 - Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.
 - Jinak by zde měl být přehled nejužitečnějších parametrů používaných nástrojů.
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+![ve výstavbě](../obrázky/ve-výstavbě.png)
 
 ## Instalace na Ubuntu
 <!--
 - Jako zaklínadlo bez titulku uveďte příkazy (popř. i akce) nutné k instalaci a zprovoznění všech nástrojů požadovaných kterýmkoliv zaklínadlem uvedeným v kapitole. Po provedení těchto činností musí být nástroje plně zkonfigurované a připravené k práci.
 - Ve výčtu balíčků k instalaci vycházejte z minimální instalace Ubuntu.
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+![ve výstavbě](../obrázky/ve-výstavbě.png)
 
 ## Ukázka
 <!--
@@ -125,7 +125,7 @@ dovnitř dvojic \*\*{*text*}\*\*. To platí i pro jednoznakové úseky jako \*\
 - Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti – ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
 - Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+![ve výstavbě](../obrázky/ve-výstavbě.png)
 
 !ÚzkýRežim: zap
 
@@ -135,7 +135,7 @@ dovnitř dvojic \*\*{*text*}\*\*. To platí i pro jednoznakové úseky jako \*\
 - Popište typické chyby nových uživatelů a jak se jim vyhnout.
 - Buďte co nejstručnější; neodbíhejte k popisování čehokoliv vedlejšího, co je dost možné, že už čtenář zná.
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+![ve výstavbě](../obrázky/ve-výstavbě.png)
 
 * Chyba při překladu „Formátovací značka neuzavřena do konce řádku“ je velmi běžná. Při psaní nové kapitoly se mi běžně stává i třikrát na každý překlad. Buďte na ni připraveni a naučte se ji rychle a efektivně opravovat.
 
@@ -146,7 +146,7 @@ dovnitř dvojic \*\*{*text*}\*\*. To platí i pro jednoznakové úseky jako \*\
 - Pokud je vestavěná dokumentace programů (typicky v adresáři /usr/share/doc) užitečná, zmiňte ji také.
 - Poznámka: Protože se tato sekce tiskne v úzkém režimu, zaklínadla smíte uvádět pouze bez titulku a bez poznámek pod čarou!
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+![ve výstavbě](../obrázky/ve-výstavbě.png)
 
 Co hledat:
 

@@ -196,7 +196,7 @@ function RidiciRadekSpolecnaObsluha(text,   i, soubor) {
             if (IDFORMATU != "html") {ShoditFatalniVyjimku("{{MENU KAPITOLY}} je podporováno jen pro formát HTML!")}
             VyzadujeFragmentyTSV();
             for (i = 1; i in FRAGMENTY; ++i) {
-                printf("<a href=\"%s.htm\" class=\"kapitola\"><span class=\"ikona\"><img src=\"obrazky/%s\" alt=\"[]\"></span><span class=\"cislo\">%d</span><span class=\"nazev\">%s</span></a>\n", FRAGMENTY[i "/id"], FRAGMENTY[i "/ikkap"], i, FRAGMENTY[i "/nazev"]);
+                printf("<a href=\"%s.htm\" class=\"kapitola\"><span class=\"ikona\"><img src=\"obrazky/%s\" alt=\"[]\"></span><span class=\"cislo\">%d</span><span class=\"nazev\">%s</span></a>\n", OmezitNazev(FRAGMENTY[i "/id"]), OmezitNazev(FRAGMENTY[i "/ikkap"], 1), i, FRAGMENTY[i "/nazev"]);
             }
             return 0;
 
@@ -205,7 +205,6 @@ function RidiciRadekSpolecnaObsluha(text,   i, soubor) {
             VyzadujeFragmentyTSV();
             stitky_tsv = gensub(/fragmenty/, "štítky", 1, FRAGMENTY_TSV);
             while (getline < stitky_tsv) {
-                # obrazky/ik-vychozi.png 64x64
                 if (NF < 3) {ShoditFatalniVyjimku("Chyba formátu štítky.tsv: očekávány alespoň tři sloupce!")}
                 # $1 = štítek $2 = omezené id štítku
                 printf("<a href=\"x-stitky.htm#%s\">%s&nbsp;&nbsp;(%d)</a>\n", $2, $1, NF - 2);

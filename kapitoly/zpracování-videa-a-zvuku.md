@@ -75,7 +75,7 @@ vzorků za sekundu.
 
 !ÚzkýRežim: vyp
 
-![Obrázek: ukázka grafu filtrů](../obrazky/graf-filtru.svg)
+![Obrázek: ukázka grafu filtrů](../obrázky/graf-filtrů.svg)
 
 ### Syntaxe grafu filtrů
 

@@ -1,6 +1,6 @@
 <!--
 
-Linux Kniha kouzel, kapitola Správa balíčků 2
+Linux Kniha kouzel, kapitola Uživatelská rozhraní skriptů
 Copyright (c) 2019 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -17,9 +17,9 @@ Poznámky:
 ⊨
 -->
 
-# Správa balíčků 2
+# Uživatelská rozhraní skriptů
 
-!Štítky: {tematický okruh}
+!Štítky: {tematický okruh}{programování}{skripty}{bash}{GUI}{TUI}
 
 !ÚzkýRežim: zap
 
@@ -29,13 +29,13 @@ Poznámky:
 - Obecně popište základní principy, na kterých fungují používané nástroje.
 - Uveďte, co kapitola nepokrývá, ačkoliv by to čtenář mohl očekávat.
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+![ve výstavbě](../obrázky/ve-výstavbě.png)
 
 ## Definice
 <!--
 - Uveďte výčet specifických pojmů pro použití v této kapitole a tyto pojmy definujte co nejprecizněji.
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+![ve výstavbě](../obrázky/ve-výstavbě.png)
 
 !ÚzkýRežim: vyp
 
@@ -43,32 +43,54 @@ Poznámky:
 <!--
 - Rozdělte na podsekce a naplňte „zaklínadly“.
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+![ve výstavbě](../obrázky/ve-výstavbě.png)
 
-*# sestavit binární balíček typu .deb*<br>
-*// Architektura bude typicky „all“, „amd64“ nebo „i386“.*<br>
-**mkdir** {*adresář-s-balíčkem*}**/DEBIAN**<br>
-**printf '%s:&blank;%s\\n' Package** {*jméno-balíčku*} **Version** {*verze-balíčku*} **Architecture** {*architektura*} **Maintainer "**{*Vaše Jméno*} **&lt;**{*váš@email.cz*}**&gt;" [**Original-Maintainer "**{*Jméno původního autora*} **&lt;{*email@původního.autora*}**&gt;"**] {*Installed-Size*} **$(cd** {*adresář-s-balíčkem*}**; du -ks \-\-exclude=DEBIAN \| cut -f 1)** [**Depends "**{*závislosti*}] <nic>[**Homepage "**{*http://adresa*}**"**] **&gt;** {*adresář-s-balíčkem*}**/DEBIAN/control**<br>
-**dpkg-deb -b** {*adresář-s-balíčkem*} [{*cílový/adresář*}]
+*# okno se zprávou a tlačítkem OK (TUI/GUI)*<br>
+?<br>
+?
 
+*# zadání **řádky textu** (TUI/GUI)*<br>
+?<br>
+**zenity \-\-entry** [**\-\-title "**{*titulek*}**"**] **\-\-text "**{*Text výzvy*}**"** [**\-\-entry-text "**{*Výchozí text*}**"**] <nic>[**\-\-hide-text**]<nic>[{*obecné parametry zenity*}]
+
+*# vybrat **soubor** ke čtení (TUI/GUI)*<br>
+*// „Filtr“ je zde buď konkrétní jméno souboru, vzorek nebo vzorky oddělené mezerami.*<br>
+?<br>
+**zenity \-\-file-selection** [**\-\-title "**{*titulek*}**"**] <nic>[**\-\-file-filter=**{*filtr*}] <nic>[**\-\-multiple** [**\-\-separator** {*řetězec*}]]
+
+*# vybrat **soubor** k zápisu (TUI/GUI)*<br>
+?<br>
+**zenity \-\-file-selection \-\-save** [**\-\-confirm-overwrite**] <nic>[**\-\-title "**{*titulek*}**"**]
+
+*# vybrat **adresář** (TUI/GUI)*<br>
+?<br>
+**zenity \-\-file-selection \-\-directory** [**\-\-title "**{*titulek*}**"**] <nic>[**\-\-multiple** [**\-\-separator** {*řetězec*}]]
+
+*# vybrat **barvu** (TUI/GUI)*<br>
+?<br>
+**zenity \-\-color-selection \-\-title "**{*Titulek*}**"** [**\-\-show-palette**] <nic>[**\-\-color "**{*výchozí-barva*}**"**]
 <!--
-Další pole:
--
+Barva např. rgb(1,2,3) nebo #aabbcc
 -->
+
+*# zadat heslo (TUI/GUI)*<br>
+?<br>
+**zenity \-\-password** [**\-\-username**]
+
 
 ## Parametry příkazů
 <!--
 - Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.
 - Jinak by zde měl být přehled nejužitečnějších parametrů používaných nástrojů.
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+![ve výstavbě](../obrázky/ve-výstavbě.png)
 
 ## Instalace na Ubuntu
 <!--
 - Jako zaklínadlo bez titulku uveďte příkazy (popř. i akce) nutné k instalaci a zprovoznění všech nástrojů požadovaných kterýmkoliv zaklínadlem uvedeným v kapitole. Po provedení těchto činností musí být nástroje plně zkonfigurované a připravené k práci.
 - Ve výčtu balíčků k instalaci vycházejte z minimální instalace Ubuntu.
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+![ve výstavbě](../obrázky/ve-výstavbě.png)
 
 ## Ukázka
 <!--
@@ -76,27 +98,7 @@ Další pole:
 - Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti – ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
 - Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
-
-<!--
-
-Package: lkk
-Version: vp-1.3
-Architecture: all
-Maintainer: Singularis&lt;singularis@volny.cz&gt;
-Installed-Size: 5
-Depends: gawk (&gt;= 4.1.4)
-Homepage: https://singularis-mzf.github.io/
-Description: ...
- Dlouhý popis...
-
-Další možnosti:
-
-- soubor md5sums
-- skripty „preinst“, „postinst“, „prerm“ a „postrm“
-- soubor „conffiles“ (seznam globálních konfiguračních souborů v /etc; výjimečně i jinde)
-
--->
+![ve výstavbě](../obrázky/ve-výstavbě.png)
 
 !ÚzkýRežim: zap
 
@@ -106,7 +108,23 @@ Další možnosti:
 - Popište typické chyby nových uživatelů a jak se jim vyhnout.
 - Buďte co nejstručnější; neodbíhejte k popisování čehokoliv vedlejšího, co je dost možné, že už čtenář zná.
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+![ve výstavbě](../obrázky/ve-výstavbě.png)
+
+<!--
+Obecné parametry zenity:
+--window-icon={error|info|question|warning|/cesta/k/obrázku}
+--width={px}
+--height={px}
+--timeout={sec}
+
+(+ --title, ale ten je důležitý)
+
+Návratový kód zenity:
+0 – úspěch, uživatel zadal hodnotu, vypsána na standardní výstup.
+1 – storno; uživatel odmítl zadat hodnotu
+5 – čas vypršel (byl-li zadán parametrem --timeout)
+
+-->
 
 ## Další zdroje informací
 <!--
@@ -115,7 +133,7 @@ Další možnosti:
 - Pokud je vestavěná dokumentace programů (typicky v adresáři /usr/share/doc) užitečná, zmiňte ji také.
 - Poznámka: Protože se tato sekce tiskne v úzkém režimu, zaklínadla smíte uvádět pouze bez titulku a bez poznámek pod čarou!
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+![ve výstavbě](../obrázky/ve-výstavbě.png)
 
 Co hledat:
 

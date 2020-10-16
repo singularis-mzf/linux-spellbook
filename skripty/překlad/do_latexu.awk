@@ -243,7 +243,7 @@ function ZacatekKapitoly(nazevKapitoly, cisloKapitoly, stitky, osnova, ikonaKapi
     DO_LATEXU_ODSTAVEC_PRED_ZAKLINADLEM = 0;
     kapitolaVelkymi = toupper(nazevKapitoly);
     zkratkaKapitoly = jeDodatek ? "" : SubstrZleva(gensub(/[^[:alnum:]]/, "", "g", kapitolaVelkymi), 3);
-    nazevKapitoly = "\\kapitola{" ((cisloKapitoly - 1) % 21) "}{" zkratkaKapitoly "}{" kapitolaVelkymi "}{../pdf-spolecne/_obrázky/" ikonaKapitoly "}%\n\\label{kapx" ID_KAPITOLY_OMEZENE "}";
+    nazevKapitoly = "\\kapitola{" ((cisloKapitoly - 1) % 21) "}{" zkratkaKapitoly "}{" kapitolaVelkymi "}{../pdf-společné/_obrázky/" ikonaKapitoly "}%\n\\label{kapx" ID_KAPITOLY_OMEZENE "}";
     if (stitky != "") {
         gsub(/\|/, "} \\stitek{", stitky);
         return nazevKapitoly "\\noindent\\stitek{" stitky "}\n";
@@ -488,7 +488,7 @@ function TriTecky() {
 
 function Obrazek(src, alt, rawSrc, rawAlt,   sirka) {
     src = rawSrc;
-    sub(/^\.\.\/obrazky\//, "../pdf-spolecne/_obrázky/", src);
+    sub(/^\.\.\/obr[aá]zky\//, "../pdf-společné/_obrázky/", src);
     sub(/\.svg$/, ".pdf", src);
     sirka = PrecistKonfig("Obrázky", rawSrc);
     if (sirka != "") {

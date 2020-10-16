@@ -25,7 +25,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 !ÚzkýRežim: zap
 
 ## Úvod
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+![ve výstavbě](../obrázky/ve-výstavbě.png)
 
 ## Definice
 * **Barva** je barevná vlastnost pixelu. ImageMagick pravděpodobně podporuje všechny syntaxe CSS, zejména vyjádření názvem (např. „green“), #RRGGBB, #RRGGBBAA, rgb(r,g,b) a rgba(r,g,b,a). Pro bližší referenci viz dokumentaci kaskádových stylů.
@@ -280,7 +280,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 
 ## Parametry příkazů
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+![ve výstavbě](../obrázky/ve-výstavbě.png)
 
 *# zapsat jeden soubor*<br>
 {*název-souboru*}
@@ -299,7 +299,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 **sudo apt-get install imagemagick**
 
 ## Ukázka
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+![ve výstavbě](../obrázky/ve-výstavbě.png)
 <!--
 Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
 -->

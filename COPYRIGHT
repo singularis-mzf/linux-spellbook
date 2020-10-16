@@ -17,14 +17,14 @@ Files: Makefile skripty/*.awk skripty/extrakce/*.awk skripty/gender/*.awk skript
 Copyright: 2020, Singularis
 License: CC-BY-SA-4.0 or GPL-2+
 
-Files: obrazky/by-sa.png
+Files: obrázky/by-sa.png
 Copyright: Creative Commons
 License: public-domain
  Unsufficient originality.
  Source: https://creativecommons.org/about/downloads/
  Public domain according to: https://commons.wikimedia.org/wiki/File:CC-BY-SA_icon.svg
 
-Files: obrazky/marsh.jpg
+Files: obrázky/močál.jpg
 Copyright: 2013, U.S. Fish and Wildlife Service
 License: public-domain
  Public domain according to https://www.fws.gov/southeast/gulf-restoration/next-steps/focal-area/mississippi-alluvial-valley/
@@ -33,7 +33,7 @@ License: public-domain
  You can use this picture for any use including commercial purposes
  without the prior written permission and without fee or obligation.
 
-Files: obrazky/udoli.jpg
+Files: obrázky/údolí.jpg
 Copyright: 2016, US Bureau of Land Management
  2020, Singularis
 License: CC-BY-SA-4.0
@@ -44,13 +44,13 @@ License: CC-BY-SA-4.0
  as part of that person’s official duties under the terms of Title 17, Chapter 1,
  Section 105 of the US Code. Adapted by Singularis.
 
-Files: obrazky/ve-vystavbe.png
+Files: obrázky/ve-výstavbě.png
 Copyright: 2010, Sarang <https://de.wikipedia.org/wiki/Benutzer:Sarang>
 License: public-domain
  Source: https://commons.wikimedia.org/wiki/File:UnderCon_icon.svg
  Public domain according to the law of Germany.
 
-Files: obrazky/favicon.png obrazky/logo-knihy-velke.png zdroje_obrazku/favicon/*
+Files: obrázky/favicon.png obrázky/logo-knihy-velké.png zdroje_obrázků/favicon/*
 Copyright: Larry Ewing <http://www.isc.tamu.edu/~lewing/>
            Garrett LaSage <https://github.com/garrett/Tux>
            2019, Singularis
@@ -69,25 +69,25 @@ License: CC0
  .
  The copyright holder of this file allows anyone to use it for any purpose, provided that the copyright holder is properly attributed. Redistribution, derivative work, commercial use, and all other use is permitted. (https://commons.wikimedia.org/wiki/File:Tux.svg)
 
-Files: obrazky/banner.png
+Files: obrázky/banner.png
 Copyright: 2019, Singularis <singularis@volny.cz>
 License: CC-BY-SA-4.0
  There is no originality in this file, but it contains a code of a simple computer program.
  In my opinion, only the code is copyrighted in this picture.
 
-Files: obrazky/graf-filtru.svg obrazky/kalendar.svg
+Files: obrázky/graf-filtrů.svg obrázky/kalendář.svg
 Copyright: 2019, Singularis <singularis@volny.cz>
 License: CC-BY-SA-4.0
 
-Files: obrazky/git.svg
+Files: obrázky/git.svg
 Copyright: 2020, Singularis <singularis@volny.cz>
 License: CC-BY-SA-4.0
 
-Files: obrazky/ik-vychozi.png zdroje_obrazku/tab.png
+Files: obrázky/ik-výchozí.png zdroje_obrázků/tab.png
 Copyright: 2019, Singularis <singularis@volny.cz>
 License: CC0
 
-Files: obrazky/ik/awk.png obrazky/ik/datum-cas-kalendar.png obrazky/ik/diskove-oddily.png obrazky/ik/docker.png obrazky/ik/git.png obrazky/ik/hledani-souboru.png obrazky/ik/koncepce-projektu.png obrazky/ik/licence.png obrazky/ik/make.png obrazky/ik/markdown.png obrazky/ik/planovani-uloh.png obrazky/ik/prace-s-archivy.png obrazky/ik/predmluva.png obrazky/ik/promenne.png obrazky/ik/regularni-vyrazy.png obrazky/ik/sed.png obrazky/ik/soubory-a-adresare.png obrazky/ik/sprava-balicku.png obrazky/ik/sprava-procesu.png obrazky/ik/sprava-uzivatelskych-uctu.png obrazky/ik/stahovani-videi.png obrazky/ik/system.png obrazky/ik/terminal.png obrazky/ik/vim.png obrazky/ik/zakladni-znalosti.png obrazky/ik/zpracovani-binarnich-souboru.png obrazky/ik/zpracovani-textovych-souboru.png obrazky/ik/zpracovani-videa-a-zvuku.png obrazky/ik/plan-vyvoje.png
+Files: obrázky/ik/awk.png obrázky/ik/datum-čas-kalendář.png obrázky/ik/diskové-oddíly.png obrázky/ik/docker.png obrázky/ik/git.png obrázky/ik/hledání-souborů.png obrázky/ik/koncepce-projektu.png obrázky/ik/licence.png obrázky/ik/make.png obrázky/ik/markdown.png obrázky/ik/plánování-úloh.png obrázky/ik/práce-s-archivy.png obrázky/ik/předmluva.png obrázky/ik/proměnné.png obrázky/ik/regulární-výrazy.png obrázky/ik/sed.png obrázky/ik/soubory-a-adresáře.png obrázky/ik/správa-balíčků.png obrázky/ik/správa-procesů.png obrázky/ik/správa-uživatelských-účtů.png obrázky/ik/stahování-videí.png obrázky/ik/systém.png obrázky/ik/terminál.png obrázky/ik/vim.png obrázky/ik/základní-znalosti.png obrázky/ik/zpracování-binárních-souborů.png obrázky/ik/zpracování-textových-souborů.png obrázky/ik/zpracování-videa-a-zvuku.png obrázky/ik/plán-vývoje.png
 Copyright: 2020, Singularis <singularis@volny.cz>
 License: CC-BY-SA-4.0
 

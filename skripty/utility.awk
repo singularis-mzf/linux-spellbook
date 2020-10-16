@@ -294,3 +294,20 @@ function NacistFragmentyTSV(soubor,   oldFS, oldRS, oldLN, i, tmp) {
     $0 = oldLN;
     return FRAGMENTY["pocet"] = i;
 }
+
+function OmezitNazev(s, ponechatCestu) {
+# Postup (viz skript „omezit-název.sh“):
+#   1. Převést na malá písmena.
+    s = tolower(s);
+#   2. Obsahuje-li řetězec /, odstranit vše až po poslední výskyt „/“ včetně.
+    if (!ponechatCestu) {sub(/.*\//, "", s)}
+#   3. Odstranit diakritiku.
+    s = BezDiakritiky(s);
+#   4. Sekvence znaků „-“ a „_“ nahradit jednou pomlčkou.
+    gsub(/[-_]+/, "-", s);
+#   5. Případnou pomlčku na začátku nebo na konci řetězce vypustit.
+    gsub(/^-|-$/, "", s);
+    if (ponechatCestu) {gsub(/-\/|\/-/, "/", s)}
+
+    return s;
+}

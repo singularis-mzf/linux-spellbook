@@ -153,7 +153,7 @@ BEGIN {
             if (!Test("-r " f)) {
                 ShoditFatalniVyjimku("Nemohu číst ze souboru " f "!");
             }
-            idkapitol[ARGC] = $2;
+            idkapitol[ARGC] = FRAGMENTY[i "/id"];
             ARGV[ARGC++] = f;
         }
         ++i;
@@ -227,7 +227,7 @@ jmeno != "" && /^(<odsadit[1-8]>)?\*\*.*\*\*(<br>)?$/ {
         if (typ == "FUNKCE") {
             if (jmeno in funkce_puvod) {
                 if (funkce_definice[jmeno] == telo) {
-                    print "VAROVÁNÍ: Opakovaná (ale identická) definice pomocné funkce " jmeno "() v kapitole " idkapitol[ARGIND] ", původně definována v kapitole " funkce_puvod[jmeno] "." > "/dev/stderr";
+                    print "VAROVÁNÍ: Opakovaná (ale identická) definice pomocné funkce " jmeno "() v kapitole [" idkapitol[ARGIND] "], původně definována v kapitole [" funkce_puvod[jmeno] "]." > "/dev/stderr";
                 } else {
                     ShoditFatalniVyjimku("Opakovaná definice pomocné funkce " jmeno "()!");
                 }
@@ -237,7 +237,7 @@ jmeno != "" && /^(<odsadit[1-8]>)?\*\*.*\*\*(<br>)?$/ {
         } else {
             if (jmeno in skripty_puvod) {
                 if (skripty_definice[jmeno] == telo) {
-                    print "VAROVÁNÍ: Opakovaná (ale identická) definice pomocného skriptu " jmeno " v kapitole " idkapitol[ARGIND] ", původně definován v kapitole " skripty_puvod[jmeno] "." > "/dev/stderr";
+                    print "VAROVÁNÍ: Opakovaná (ale identická) definice pomocného skriptu " jmeno " v kapitole [" idkapitol[ARGIND] "], původně definován v kapitole [" skripty_puvod[jmeno] "]." > "/dev/stderr";
                 } else {
                     ShoditFatalniVyjimku("Opakovaná definice pomocného skriptu" jmeno "!");
                 }
@@ -247,7 +247,7 @@ jmeno != "" && /^(<odsadit[1-8]>)?\*\*.*\*\*(<br>)?$/ {
             skripty_x[jmeno] = (typ == "SKRIPT" ? 1 : 0);
         }
         delka = length(gensub(/[^\n]/, "", "g", telo));
-        print "V kapitole " idkapitol[ARGIND] " nalezen" (typ == "FUNKCE" ? "a funkce " jmeno "()" : typ == "SKRIPT" ? " skript " jmeno : " úryvek " jmeno) "; definici tvoří " (delka == 1 ? "1 řádek" : delka " řádk" (1 < delka && delka < 5 ? "y" : "ů")) ".";
+        print "V kapitole [" idkapitol[ARGIND] "] nalezen" (typ == "FUNKCE" ? "a funkce " jmeno "()" : typ == "SKRIPT" ? " skript " jmeno : " úryvek " jmeno) "; definici tvoří " (delka == 1 ? "1 řádek" : delka " řádk" (1 < delka && delka < 5 ? "y" : "ů")) ".";
         jmeno = "";
         popis = "";
         telo = "";
@@ -273,5 +273,5 @@ END {
         }
         close(fn);
     }
-    print "=== Extrakce pomocných funkcí a skriptů dokončena. ===\nPočty nalezených funkcí a skriptů+úryvků: " length(funkce_puvod) " a " length(skripty_puvod) ".";
+    print "=== Extrakce pomocných funkcí a skriptů dokončena. ===\nPočty nalezených funkcí a skriptů+úryvků: " length(funkce_puvod) " a " length(skripty_puvod) " v " length(idkapitol) " kapitolách.";
 }

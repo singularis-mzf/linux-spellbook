@@ -641,7 +641,7 @@ man 8 ld.so
 - Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.
 - Jinak by zde měl být přehled nejužitečnějších parametrů používaných nástrojů.
 - ->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+![ve výstavbě](../obrázky/ve-výstavbě.png)
 
 ### env
 -->
@@ -657,7 +657,7 @@ Všechny použité nástroje jsou základní součástí Ubuntu, přítomné i 
 - Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti – ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
 - Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
 - ->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+![ve výstavbě](../obrázky/ve-výstavbě.png)
 -->
 
 !ÚzkýRežim: zap

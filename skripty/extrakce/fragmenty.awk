@@ -43,13 +43,13 @@ BEGINFILE {
     c_kapitoly = (ARGIND < 2) ? 0 : ARGIND - 1;
 }
 
-# zpracování poradi-kapitol.lst
+# zpracování pořadí-kapitol.lst
 ARGIND < 2 {
     if ($0 == "" || substr($0, 1, 1) == "#") {
         next;
     }
-    if (/[^-_A-Za-z0-9]/) {
-        ShoditFatalniVyjimku("Řádek obsahuje znak, který není povolený v ID kapitoly či dodatku! Povoleny jsou pouze znaky [A-Za-z0-9], - a _.");
+    if (/[^-_aábcčdďeéěfghiíjklmnňoópqrřsštťuúůvwxyýzž0123456789]/) {
+        ShoditFatalniVyjimku("Řádek obsahuje znak, který není povolený v ID kapitoly či dodatku! Povolena jsou pouze malá písmena české abecedy, arabské číslice a znaky - a _.");
     }
     if ($0 in vyskyty) {
         print "VAROVÁNÍ: ID dodatku či kapitoly \"" $0 "\" se v souboru poradi-kapitol.lst opakuje! Bude použit pouze první výskyt." > "/dev/stderr";
@@ -186,10 +186,10 @@ END {
         #   #1=Číslo|#2=ID|#3=Název|#4=Adresář|#5=Omezené ID|#6=ikona kapitoly (ik_vychozi.png, nebo ik/{id}.png)|#7=štítky v {}
         # Prázdná hodnota se nahrazuje „NULL“.
         #
-        if (system("test -e obrazky/ik/" id[i] ".png") == 0) {
+        if (system("test -e obrázky/ik/" id[i] ".png") == 0) {
             ikonakapitoly = "ik/" id[i] ".png";
         } else {
-            ikonakapitoly = "ik-vychozi.png";
+            ikonakapitoly = "ik-výchozí.png";
         }
 
         print i, id[i], nazev[i], adresar[i], omezeneid[i], ikonakapitoly, serazene_stitky[i] == "" ? "NULL" : serazene_stitky[i] > FRAGMENTY_TSV;

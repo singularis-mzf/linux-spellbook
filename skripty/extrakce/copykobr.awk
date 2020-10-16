@@ -177,7 +177,7 @@ END {
         zaznam = zaznamy[zaznamy_k_obrazkum[soubor]];
         #print "LADĚNÍ: i = " i "; podle_abecedy[i] = " podle_abecedy[i] "; zaznamy_k_obrazkum[soubor] = " zaznamy_k_obrazkum[soubor] " zaznamy[zaznamy_k_obrazkum[soubor]] = " zaznamy[zaznamy_k_obrazkum[soubor]] "." > "/dev/stderr";
         #exit;
-        print "<dt><a href=\"", soubor, "\">", soubor, "</a></dt>";
+        print "<dt><a href=\"", OmezitNazev(soubor, 1), "\">", OmezitNazev(soubor, 1), "</a></dt>";
         print "<dd><pre>", zaznam, "</pre></dd>";
     }
 }

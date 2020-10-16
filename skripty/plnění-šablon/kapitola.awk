@@ -64,7 +64,7 @@ function Zacatek() {
     } else if (IDKAPITOLY ~ /^_(autori|stitky)$/) {
         id_predchozi = id_nasledujici = nazev_predchozi = nazev_nasledujici = "";
         cislo_kapitoly = 0;
-        ikona_kapitoly = "ik-vychozi.png";
+        ikona_kapitoly = "ik-výchozí.png";
     } else {
         # kapitola, pro kterou neexistuje záznam, takže pravděpodobně nebude zapsána na výstup:
         existuje_kapitola = Test("-r kapitoly/" IDKAPITOLY ".md");
@@ -76,7 +76,7 @@ function Zacatek() {
         nazev_kapitoly = "(Není na výstup)";
         id_predchozi = id_nasledujici = nazev_predchozi = nazev_nasledujici = "";
         cislo_kapitoly = 0;
-        ikona_kapitoly = "ik-vychozi.png";
+        ikona_kapitoly = "ik-výchozí.png";
     }
 
     predevsim_pro = ZjistitPredevsimPro(JMENOVERZE);
@@ -145,7 +145,7 @@ function RidiciRadek(text,   prikaz, i) {
                 if (FRAGMENTY[$0 "/stitky"] == "NULL") {continue}
                 #
                 if (i == 1) {printf("<div class=\"odkazydole\"><div>")}
-                printf("<a href=\"%s.htm\"><img src=\"obrazky/%s\" alt=\"\" width=\"32\" height=\"32\">%s</a>", FRAGMENTY[$0 "/id"], FRAGMENTY[$0 "/ikkap"], FRAGMENTY[$0 "/nazev"]);
+                printf("<a href=\"%s.htm\"><img src=\"obrazky/%s\" alt=\"\" width=\"32\" height=\"32\">%s</a>", OmezitNazev(FRAGMENTY[$0 "/id"]), OmezitNazev(FRAGMENTY[$0 "/ikkap"], 1), FRAGMENTY[$0 "/nazev"]);
                 ++i;
             }
             if (i != 1) {printf("</div></div>\n")}
@@ -166,9 +166,11 @@ function PrelozitVystup(radek) {
 #    gsub(/\{\{JMÉNO VERZE\}\}/, OdzvlastnitKNahrade(JMENOVERZE), radek);
     gsub(/\{\{NÁZEV KAPITOLY\}\}/, nazev_kapitoly, radek);
     gsub(/\{\{PŘEDCHOZÍ ID\}\}/, id_predchozi, radek);
+    gsub(/\{\{PŘEDCHOZÍ ID BEZ DIAKRITIKY\}\}/, OmezitNazev(id_predchozi), radek);
     gsub(/\{\{PŘEDCHOZÍ NÁZEV\}\}/, nazev_predchozi, radek);
     gsub(/\{\{PŘEDCHOZÍ ČÍSLO\}\}/, id_predchozi != "" ? cislo_kapitoly - 1 : 0, radek);
     gsub(/\{\{NÁSLEDUJÍCÍ ID\}\}/, id_nasledujici, radek);
+    gsub(/\{\{NÁSLEDUJÍCÍ ID BEZ DIAKRITIKY\}\}/, OmezitNazev(id_nasledujici), radek);
     gsub(/\{\{NÁSLEDUJÍCÍ NÁZEV\}\}/, nazev_nasledujici, radek);
     gsub(/\{\{NÁSLEDUJÍCÍ ČÍSLO\}\}/, id_nasledujici != "" ? cislo_kapitoly + 1 : 0, radek);
     gsub(/\{\{ČÍSLO KAPITOLY\}\}/, cislo_kapitoly, radek);
@@ -179,6 +181,7 @@ function PrelozitVystup(radek) {
     gsub(/\{\{DATUMSESTAVENÍ\}\}/, DATUMSESTAVENI, radek);
     gsub(/\{\{DATUM SESTAVENÍ\}\}/, datum, radek);
     gsub(/\{\{IKONA KAPITOLY\}\}/, ikona_kapitoly, radek);
+    gsub(/\{\{IKONA KAPITOLY BEZ DIAKRITIKY\}\}/, OmezitNazev(ikona_kapitoly, 1), radek);
 
     /^{/; # prázdný příkaz kvůli zvýrazňování syntaxe
     if (match(radek, /\{\{[^}]+\}\}/)) {
@@ -209,15 +212,15 @@ function VypsatPrehledStitku(format,   i, n, s, cislo_kapitoly, stitky_kapitol, 
     # Načíst štítky ze štítky.tsv:
     stitky_tsv = gensub(/fragmenty/, "štítky", 1, FRAGMENTY_TSV);
     while (getline < stitky_tsv) {
-        # obrazky/ik-vychozi.png 64x64
         if (NF < 3) {ShoditFatalniVyjimku("Chyba formátu stitky.tsv: očekávány alespoň tři sloupce!")}
         # $1 = štítek $2 = omezené id štítku $3..$NF = id kapitol
         print "<dt id=\"" $2 "\" class=\"stitky\"><span><a href=\"#" $2 "\">" $1 "</a></span></dt><dd>";
         for (i = 3; i <= NF; ++i) {
+            idkap = OmezitNazev($i);
             if (!("id/" $i in FRAGMENTY)) {ShoditFatalniVyjimku("Nečekané id kapitoly: " $i)}
             cislo_kapitoly = FRAGMENTY["id/" $i];
 
-            print "<div><a href=\"" $i ".htm\"><span class=\"cislo\">" cislo_kapitoly ".</span>\n<img src=\"obrazky/" FRAGMENTY[cislo_kapitoly "/ikkap"] "\" width=\"64\" height=\"64\" alt=\"\">\n<span class=\"nazev\">" FRAGMENTY[cislo_kapitoly "/nazev"] "</span></a><span class=\"dalsistitky\">";
+            print "<div><a href=\"" idkap ".htm\"><span class=\"cislo\">" cislo_kapitoly ".</span>\n<img src=\"obrazky/" OmezitNazev(FRAGMENTY[cislo_kapitoly "/ikkap"], 1) "\" width=\"64\" height=\"64\" alt=\"\">\n<span class=\"nazev\">" FRAGMENTY[cislo_kapitoly "/nazev"] "</span></a><span class=\"dalsistitky\">";
             if (FRAGMENTY[cislo_kapitoly "/stitky"] != "NULL") {
                 n = split(gensub(/^\{|\}$/, "", "g", FRAGMENTY[cislo_kapitoly "/stitky"]), stitky_kapitoly, "\\}\\{");
                 for (j = 1; j <= n; ++j) {

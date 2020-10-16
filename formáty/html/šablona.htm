@@ -66,11 +66,11 @@ Varianty:
 <a href="#menunapoveda" class="menu"><span class="prvnipismeno">N</span>ápověda</a>
 {{VARIANTY autori,kapitola,stitky}}
 {{POKUD NENÍ PRVNÍ}}
-<a href="{{PŘEDCHOZÍ ID}}.htm" rel="prev" title="{{PŘEDCHOZÍ ČÍSLO}}. {{PŘEDCHOZÍ NÁZEV}}" accesskey="p" class="predchozi">Předchozí&nbsp;kapitola</a>
+<a href="{{PŘEDCHOZÍ ID BEZ DIAKRITIKY}}.htm" rel="prev" title="{{PŘEDCHOZÍ ČÍSLO}}. {{PŘEDCHOZÍ NÁZEV}}" accesskey="p" class="predchozi">Předchozí&nbsp;kapitola</a>
 {{KONEC POKUD}}
 <a href="index.htm" class="prehled"><span class="prvnipismeno">P</span>řehled kapitol</a>
 {{POKUD NENÍ POSLEDNÍ}}
-<a href="{{NÁSLEDUJÍCÍ ID}}.htm" rel="next" title="{{NÁSLEDUJÍCÍ ČÍSLO}}. {{NÁSLEDUJÍCÍ NÁZEV}}" accesskey="n" class="nasledujici">Následující&nbsp;kapitola</a>
+<a href="{{NÁSLEDUJÍCÍ ID BEZ DIAKRITIKY}}.htm" rel="next" title="{{NÁSLEDUJÍCÍ ČÍSLO}}. {{NÁSLEDUJÍCÍ NÁZEV}}" accesskey="n" class="nasledujici">Následující&nbsp;kapitola</a>
 {{KONEC POKUD}}
 {{VARIANTY autori,index,kapitola,stitky}}
 </nav>
@@ -83,11 +83,11 @@ Varianty:
 <div class="slogan">Veškerá moc příkazové řádky/příkazového řádku přehledně, pro začátečníky i&nbsp;pokročilé</div>
 <span class="prev">
 {{POKUD NENÍ PRVNÍ}}
-<a href="{{PŘEDCHOZÍ ID}}.htm" rel="prev" title="{{PŘEDCHOZÍ ČÍSLO}}. {{PŘEDCHOZÍ NÁZEV}}" accesskey="p">Předchozí&nbsp;kapitola</a>&nbsp;|
+<a href="{{PŘEDCHOZÍ ID BEZ DIAKRITIKY}}.htm" rel="prev" title="{{PŘEDCHOZÍ ČÍSLO}}. {{PŘEDCHOZÍ NÁZEV}}" accesskey="p">Předchozí&nbsp;kapitola</a>&nbsp;|
 {{KONEC POKUD}}
 </span><a href="index.htm" accesskey="i">Přehled</a><span class="next"><!- -
 {{POKUD NENÍ POSLEDNÍ}}
-- ->&nbsp;| <a href="{{NÁSLEDUJÍCÍ ID}}.htm" rel="next" title="{{NÁSLEDUJÍCÍ ČÍSLO}}. {{NÁSLEDUJÍCÍ NÁZEV}}" accesskey="n">Následující&nbsp;kapitola</a>
+- ->&nbsp;| <a href="{{NÁSLEDUJÍCÍ ID BEZ DIAKRITIKY}}.htm" rel="next" title="{{NÁSLEDUJÍCÍ ČÍSLO}}. {{NÁSLEDUJÍCÍ NÁZEV}}" accesskey="n">Následující&nbsp;kapitola</a>
 {{KONEC POKUD}}
 {{POKUD JE POSLEDNÍ}}
 - ->
@@ -234,8 +234,8 @@ Podporované konstrukce:
 <div class="sloupec1">
 <strong>Předmluva</strong>
 <div>
-{{VYČLENIT SEM PODLE ID:predmluva}}
-{{VYČLENIT SEM PODLE ID:zakladni-znalosti}}
+{{VYČLENIT SEM PODLE ID:předmluva}}
+{{VYČLENIT SEM PODLE ID:základní-znalosti}}
 </div>
 <strong>Tematické okruhy</strong>
 <div>
@@ -288,7 +288,7 @@ uvést víckrát, jsou vyznačeny šedou trojtečkou.</td></tr>
 
 {{VARIANTA kapitola}}
 
-<h1 class="kapitola">{{ČÍSLO KAPITOLY}}. <img src="obrazky/{{IKONA KAPITOLY}}" alt="" width="64" height="64"> {{NÁZEV KAPITOLY}}</h1>
+<h1 class="kapitola">{{ČÍSLO KAPITOLY}}. <img src="obrazky/{{IKONA KAPITOLY BEZ DIAKRITIKY}}" alt="" width="64" height="64"> {{NÁZEV KAPITOLY}}</h1>
 {{TĚLO KAPITOLY}}
 
 {{VARIANTA stitky}}
@@ -304,7 +304,7 @@ uvést víckrát, jsou vyznačeny šedou trojtečkou.</td></tr>
 <a href="index.htm" class="naindex">🗐&nbsp;Přehled&nbsp;kapitol</a>
 {{POKUD NENÍ POSLEDNÍ}}
 <div class="naslkap">
-<a href="{{NÁSLEDUJÍCÍ ID}}.htm" rel="next" title="{{NÁSLEDUJÍCÍ ČÍSLO}}. {{NÁSLEDUJÍCÍ NÁZEV}}">Následující&nbsp;kapitola/dodatek:<br><span class="cislo">{{NÁSLEDUJÍCÍ ČÍSLO}}</span>
+<a href="{{NÁSLEDUJÍCÍ ID BEZ DIAKRITIKY}}.htm" rel="next" title="{{NÁSLEDUJÍCÍ ČÍSLO}}. {{NÁSLEDUJÍCÍ NÁZEV}}">Následující&nbsp;kapitola/dodatek:<br><span class="cislo">{{NÁSLEDUJÍCÍ ČÍSLO}}</span>
 <span class="nazev">{{NÁSLEDUJÍCÍ NÁZEV}}</span></a>
 </div>
 {{KONEC POKUD}}

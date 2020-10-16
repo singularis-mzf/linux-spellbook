@@ -118,8 +118,8 @@ function Konec() {
 function VypsatOdkazNaKapitolu(i, vyclenit) {
     if (!(i in FRAGMENTY)) {ShoditFatalniVyjimku("Nemohu vypsat odkaz na kapitolu číslo " i "!")}
 
-    print "<div><a href=\"" FRAGMENTY[i "/id"] ".htm\"><span class=\"cislo\">" i \
-        "</span> <span class=\"ikona\"><img src=\"obrazky/" FRAGMENTY[i "/ikkap"] "\" alt=\"\"></span>" \
+    print "<div><a href=\"" OmezitNazev(FRAGMENTY[i "/id"]) ".htm\"><span class=\"cislo\">" i \
+        "</span> <span class=\"ikona\"><img src=\"obrazky/" OmezitNazev(FRAGMENTY[i "/ikkap"], 1) "\" alt=\"\"></span>" \
         "<span class=\"nazev\">" FRAGMENTY[i "/nazev"] "</span></a></div>";
     if (vyclenit) {vycleneno[i] = 1}
     return 0;

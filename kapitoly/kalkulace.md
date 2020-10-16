@@ -463,7 +463,7 @@ jen pokud ho opravdu potřebujete.
 - Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti – ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
 - Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+![ve výstavbě](../obrázky/ve-výstavbě.png)
 
 !ÚzkýRežim: zap
 
@@ -473,7 +473,7 @@ jen pokud ho opravdu potřebujete.
 - Popište typické chyby nových uživatelů a jak se jim vyhnout.
 - Buďte co nejstručnější; neodbíhejte k popisování čehokoliv vedlejšího, co je dost možné, že už čtenář zná.
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+![ve výstavbě](../obrázky/ve-výstavbě.png)
 
 ### bc
 
@@ -488,7 +488,7 @@ jen pokud ho opravdu potřebujete.
 - Pokud je vestavěná dokumentace programů (typicky v adresáři /usr/share/doc) užitečná, zmiňte ji také.
 - Poznámka: Protože se tato sekce tiskne v úzkém režimu, zaklínadla smíte uvádět pouze bez titulku a bez poznámek pod čarou!
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+![ve výstavbě](../obrázky/ve-výstavbě.png)
 
 Co hledat:
 

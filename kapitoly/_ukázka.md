@@ -125,7 +125,7 @@ Poznámka: ve Firefoxu se nezlomitelné mezery zkopírují do schránky jako oby
 
 Obrázky je dovoleno vkládat pouze jako samostatné odstavce:
 
-![alternativní text](../obrazky/ve-vystavbe.png)
+![alternativní text](../obrázky/ve-výstavbě.png)
 
 ## Parametry příkazů
 
@@ -184,7 +184,7 @@ jako např. **tučný text**, *kurzíva*, {*doplň*}, {_Kláv_}.
 >>>>> páté úrovně
 >>>>>> i šesté úrovně, ale ta už může být problematická.
 
-![alternativní text](../obrazky/ve-vystavbe.png)
+![alternativní text](../obrázky/ve-výstavbě.png)
 
 Dovolený je i [hypertextový odkaz](http://www.seznam.cz/).
 

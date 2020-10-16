@@ -213,10 +213,10 @@ Existuje i modernější a propracovanější editor [Remarkable](https://rema
 <br>
 **Text druhého odstavce. [Odkaz s&amp;nbsp;textem\](http:⫽www.slovnik-synonym.cz/), [s&nbsp;id\][Slovník synonym], [znovu s&nbsp;id\][Slovník synonym] a &lt;http:⫽www.slovnik-synonym.cz/&gt;.**<br>
 <br>
-**Obrázky: ![tento\][ve výstavbě] a ![tento\](../obrazky/ve-vystavbe.png).**<br>
+**Obrázky: ![tento\][ve výstavbě] a ![tento\](../obrázky/ve-výstavbě.png).**<br>
 <br>
 **\[Slovník synonym]: http://www.slovnik-synonym.cz/**<br>
-**\[ve výstavbě]: ../obrazky/ve-vystavbe.png**<br>
+**\[ve výstavbě]: ../obrázky/ve-výstavbě.png**<br>
 **\[^pozn-pod-carou]: S poznámkou pod čarou.**<br>
 <br>
 **&gt; Odstavec odsazený**<br>

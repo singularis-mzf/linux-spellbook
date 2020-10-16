@@ -47,13 +47,13 @@ modules/libpref/init/StaticPrefList.yaml – krátké komentáře k statickým 
 - Obecně popište základní principy, na kterých fungují používané nástroje.
 - Uveďte, co kapitola nepokrývá, ačkoliv by to čtenář mohl očekávat.
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+![ve výstavbě](../obrázky/ve-výstavbě.png)
 
 ## Definice
 <!--
 - Uveďte výčet specifických pojmů pro použití v této kapitole a tyto pojmy definujte co nejprecizněji.
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+![ve výstavbě](../obrázky/ve-výstavbě.png)
 
 !ÚzkýRežim: vyp
 
@@ -435,7 +435,7 @@ na Linuxu zatím ve výchozím stavu vypnuto
 **\* {background-image: none !important;}**
 
 ## Parametry příkazů
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+![ve výstavbě](../obrázky/ve-výstavbě.png)
 
 
 ## Instalace na Ubuntu
@@ -459,7 +459,7 @@ sudo add-apt-repository ppa:mozillateam/ppa && sudo apt-get update && sudo apt-g
 - Popište typické chyby nových uživatelů a jak se jim vyhnout.
 - Buďte co nejstručnější; neodbíhejte k popisování čehokoliv vedlejšího, co je dost možné, že už čtenář zná.
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+![ve výstavbě](../obrázky/ve-výstavbě.png)
 
 * Nepodařilo se mi najít fungující způsob, jak nastavit výchozí barvu obyčejného textu a pozadí na webových stránkách; nastavení v Předvolbách (tlačítko „Barvy...“) nemají žádný efekt; pozadí je stále bílé. Nastavení v userContent.css se zase aplikuje i na SVG obrázky a velké množství ikon v rozhraní Firefoxu, což ho činí prakticky nepoužitelným.
 
@@ -470,7 +470,7 @@ sudo add-apt-repository ppa:mozillateam/ppa && sudo apt-get update && sudo apt-g
 - Pokud je vestavěná dokumentace programů (typicky v adresáři /usr/share/doc) užitečná, zmiňte ji také.
 - Poznámka: Protože se tato sekce tiskne v úzkém režimu, zaklínadla smíte uvádět pouze bez titulku a bez poznámek pod čarou!
 -->
-![ve výstavbě](../obrazky/ve-vystavbe.png)
+![ve výstavbě](../obrázky/ve-výstavbě.png)
 
 Co hledat:
 

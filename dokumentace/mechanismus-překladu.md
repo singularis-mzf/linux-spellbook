@@ -20,7 +20,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 Vstupem pro mechanismus překladu jsou zdrojové soubory kapitol (v adresáři
 *kapitoly*) a dodatků (v adresáři *dodatky*). Tyto zdrojové kódy jsou
 v upraveném Markdownu. Referenční přehled všech podporovaných
-konstrukcí se nachází ve speciální kapitole [Ukázka](../kapitoly/_ukazka.md)
+konstrukcí se nachází ve speciální kapitole [Ukázka](../kapitoly/_ukázka.md)
 a uživatelsky přívětivý popis v souboru [syntaxe-kapitol.md](syntaxe-kapitol.md).
 
 ## Výstup
@@ -61,7 +61,7 @@ Sloupce *fragmenty.tsv* jsou následující:
 | 3 | nazev | Název dodatku či kapitoly (extrahuje se ze zdrojového souboru). | Stahování webových stránek |
 | 4 | adr | Adresář („dodatky“ nebo „kapitoly“). | kapitoly |
 | 5 | omezid | Takzvané omezené ID kapitoly. Používá se především ve formátu PDF. Začíná prefixem „kap“ a obsahuje pouze malá písmena anglické abecedy. | kapxstahovniwebovchstrnek |
-| 6 | ikkap | Ikona kapitoly (obrázek ve formátu „png“; cesta je relativní k adresáři „obrazky“). Pokud kapitola nemá vlastní ikonu, uvede se generická. | ik/ik-kap.png |
+| 6 | ikkap | Ikona kapitoly (obrázek ve formátu „png“; cesta je relativní k adresáři „obrázky“). Pokud kapitola nemá vlastní ikonu, uvede se generická. | ik/ik-kap.png |
 | 7 | stitky | Štítky kapitoly ve složených závorkách bez oddělovačů; nejsou-li, hodnota „NULL“. | \{internet\}\{tematický okruh\} |
 
 ### postprocess.dat a postprocessing
@@ -220,7 +220,7 @@ Obsahuje jednotlivé kapitoly a dodatky přeložené skriptem [skripty/překlad
 
 Obsahuje QR kód pro použití v knize. Generuje se v Makefile příkazem „qrencode“.
 
-### \_obrazky/\*
+### \_obrázky/\*
 
 Obsahuje soubory obrázků pro použití v knize, předzpracované podle konfigurace.
 V této verzi předzpracování spočívá především v převodu do stupňů šedi a převodu
@@ -268,11 +268,11 @@ Soubor v klasickém formátu „ini“. Dělí se na tři sekce:
 
 *\[Filtry\]*
 
-* **../obrazky/***název* – Určuje filtry příkazu „convert“, které se použijí při předzpracování daného bitmapového obrázku pro vložení do PDF. Nelze aplikovat na vektorové obrázky.
+* **../obrázky/***název* – Určuje filtry příkazu „convert“, které se použijí při předzpracování daného bitmapového obrázku pro vložení do PDF. Nelze aplikovat na vektorové obrázky.
 
 *\[Obrázky\]*
 
-* **../obrazky/***název* – Určuje šířku obrázku při vložení do formátu PDF. Šířka se uvádí v takovém formátu, aby ji bylo možno použít v LaTeXu v příkazu \\includegraphics; může obsahovat i délkové registry (např. \\textwidth).
+* **../obrázky/***název* – Určuje šířku obrázku při vložení do formátu PDF. Šířka se uvádí v takovém formátu, aby ji bylo možno použít v LaTeXu v příkazu \\includegraphics; může obsahovat i délkové registry (např. \\textwidth).
 
 *\[Adresy\]*
 

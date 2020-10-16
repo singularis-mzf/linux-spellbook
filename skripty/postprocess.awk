@@ -28,9 +28,6 @@ BEGIN {
     if (ARGC != 3) {
         ShoditFatalniVyjimku("Chybný počet parametrů: " (ARGC - 1));
     }
-    if (ARGV[2] !~ /\/[-_A-Za-z0-9]+\.[a-z]+$/) {
-        ShoditFatalniVyjimku("Druhý parametr má chybný tvar: nedokážu vyextrahovat id z \"" ARGV[2] "\"!");
-    }
     if (IDFORMATU == "") {
         ShoditFatalniVyjimku("Vyžadovaná proměnná IDFORMATU není nastavena pomocí parametru -v!");
     }
