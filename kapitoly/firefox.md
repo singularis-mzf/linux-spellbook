@@ -95,6 +95,9 @@ browser.tabs.allowTabDetach
 **user\_pref("browser.link.open\_newwindow", 3);**<br>
 **user\_pref("browser.link.open\_newwindow", 1);**
 
+*# při zavření posledního panelu místo něj otevřít prázdný*<br>
+**user\_pref("browser.tabs.closeWindowWithLastTab", false);**
+
 ### Adresní řádek
 
 *# vypnout automatické doplňování při psaní*<br>

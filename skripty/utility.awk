@@ -108,11 +108,7 @@ function Odzvlastnit(s) {gsub(/[\\|.*+?{}\\/^$]/, "\\\\&", s);return s;}
 function OdzvlastnitKNahrade(s) {gsub(/[\\&]/, "\\\\&", s);return s;}
 
 function GenerovatOmezeneId(prefix, id) {
-    gsub(/[čČ]/, "c", id);
-    gsub(/[šŠ]/, "s", id);
-    gsub(/[ťŤ]/, "t", id);
-    gsub(/[žŽ]/, "z", id);
-    return prefix substr(gensub(/[^bcdefghijklmnopqrstuvwxyz0123456789]/, "", "g", tolower(id)), 1, 16);
+    return prefix substr(gensub(/[^abcdefghijklmnopqrstuvwxyz0123456789]/, "", "g", tolower(BezDiakritiky(id))), 1, 16);
 }
 
 function Test(parametry) {return !system("test " parametry);}

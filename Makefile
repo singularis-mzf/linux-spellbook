@@ -53,7 +53,7 @@ VSECHNY_KAPITOLY_A_DODATKY_MD = $(VSECHNY_KAPITOLY:%=kapitoly/%.md) $(VSECHNY_DO
 # ----------------------------------------------------------------------------
 OBRAZKY := favicon.png by-sa.png logo-knihy-velke.png ve-vystavbe.png marsh.jpg udoli.jpg banner.png
 OBRAZKY += ik-vychozi.png
-SVG_OBRAZKY := kalendar.svg graf-filtru.svg
+SVG_OBRAZKY := kalendar.svg graf-filtru.svg git.svg
 OBRAZKY_IK := awk.png datum-cas-kalendar.png diskove-oddily.png docker.png git.png hledani-souboru.png
 OBRAZKY_IK += make.png markdown.png planovani-uloh.png prace-s-archivy.png promenne.png regularni-vyrazy.png
 OBRAZKY_IK += sed.png soubory-a-adresare.png sprava-balicku.png sprava-procesu.png sprava-uzivatelskych-uctu.png
@@ -143,9 +143,12 @@ $(PORADI_KAPITOL_SOUBOR):
 $(SOUBORY_PREKLADU)/fragmenty.tsv: $(PORADI_KAPITOL_SOUBOR) \
   skripty/extrakce/fragmenty.awk \
   $(VSECHNY_KAPITOLY_A_DODATKY_MD) \
-  $(SOUBORY_PREKLADU)/ucs_ikony.dat
+  $(SOUBORY_PREKLADU)/ucs_ikony.dat konfig.ini
 	mkdir -pv $(SOUBORY_PREKLADU)
 	skripty/pořadí-kapitol.sh $(VSECHNY_DODATKY) $(VSECHNY_KAPITOLY) | $(AWK) -f skripty/extrakce/fragmenty.awk 3>$(SOUBORY_PREKLADU)/fragmenty.tsv 4>$(SOUBORY_PREKLADU)/štítky.tsv
+
+# Poznámka: na souborech ucs_ikony.dat a konfig.ini ve skutečnosti fragmenty.tsv nezávisí,
+# ale závislost je zde uvedena, aby se při jejich změně zajistilo přegenerování celého projektu.
 
 $(SOUBORY_PREKLADU)/štítky.tsv: $(SOUBORY_PREKLADU)/fragmenty.tsv
 
