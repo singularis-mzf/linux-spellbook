@@ -19,7 +19,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 <neodsadit>Vážená/ý čtenáři/ko,
 
-v České republice začíná v letech 2020 až 2024 pracovat s Linuxem obrovské
+v České republice začíná v letech 2020 až 2024 pracovat s linuxem obrovské
 množství uživatelů/ek a tito lidé svůj nový systém poznávají převážně
 třemi nejběžnějšími způsoby:
 
@@ -38,9 +38,9 @@ ta bývá opravdu kvalitní, ale trpí jiným nedostatkem – pokud daný progra
 pro vámi řešený problém není vhodný nebo je již zastaralý a překonaný,
 jeho dokumentace, jakkoliv rozsáhlá, vám to nepoví a neporadí vám, kde jinde hledat.
 
-O mnoho lépe na tom nejsou ani ti, kdo se s Linuxem učí zacházet
+O mnoho lépe na tom nejsou ani ti, kdo se s linuxem učí zacházet
 z nejnovějších knih na českém knižním trhu. Ty nejnovější, které se věnují
-Linuxu, jsou totiž z let 2008 až 2012, a ačkoliv některé z nich naučí uživatele
+linuxu, jsou totiž z let 2008 až 2012, a ačkoliv některé z nich naučí uživatele
 opravdu dobře zacházet s bashem (snad až na asociativní pole), do praxe si
 z nich uživatelé odnesou také mnohé zastaralé a překonané postupy,
 protože se o těch nových a vylepšených, které jsou díky pokračující obětavé
@@ -52,20 +52,19 @@ Tito uživatelé se zpravidla o novějších postupech, příkazech a funkcíc
 dozvědí jako první, ale stojí je to neúměrné množství času a úsilí
 a ne každého/ou takové experimentování baví.
 
-Já sám/a jsem Linux jako svůj hlavní operační systém začal/a používat
-v roce 2018 a patřím do té druhé skupiny – v začátcích mi nesmírně pomáhaly
+Já sám/a jsem linux jako svůj hlavní operační systém začal/a používat
+koncem roku 2018 a patřím do té druhé skupiny — v začátcích mi nesmírně pomáhaly
 vynikající příručky z let 1999 až 2010. V praxi jsem však opakovaně objevoval/a,
-že některé věci už jsou na dnešním Linuxu jinak, viz třeba ACL, LVM
-nebo asociativní pole v Bashi. Takové věci prostě ve starých příručkách nenajdete.
+že některé věci už jsou na dnešním linuxu jinak, viz třeba ACL, LVM
+nebo asociativní pole v (GNU) Bashi. Takové věci prostě ve starých příručkách nenajdete.
 
 Cílem Linuxu: Knihy kouzel je tuto situaci změnit a formou
 sbírky řešených příkladů připomínající knihu zaklínadel
 či konverzační slovník cizího jazyka kvalitně a detailně představit,
-co nejlepšího ve vybraných oblastech vám může nabídnout
-linuxový operační systém, který máte nainstalovaný na svém počítači.
+co nejlepšího ve vybraných oblastech vám linux může nabídnout.
 
-Máte-li totiž na počítači nainstalovaný Linux, můžete mít na disku gigabajty
-nesmírně mocných nástrojů jako bash, FFmpeg, Perl či TeX, které v sobě
+Máte-li totiž na počítači nainstalovaný linux, můžete mít na disku gigabajty
+nesmírně mocných nástrojů jako (GNU) Bash, FFmpeg, Perl či TeX, které v sobě
 skrývají desítky let práce špičkových programátorů, a nemusíte nezbytně pochopit,
 jak fungují, abyste s nimi dokázal/a velké věci. Pokud vás zajímá,
 co s nimi tedy můžete udělat, a konkrétní postup, jak toho dosáhnout,
@@ -216,22 +215,33 @@ Verze vanilkové příchuti 2.1, jménem Iveta Ivanovická, je spíše experimen
 Přináší řadu novinek, u kterých není jisté, zda se do budoucna osvědčí,
 takže jejich setrvání bude záležet na reakcích uživatelů.
 
-Významnou novinkou je rozdělení kapitol na „základní“ a „volitelné“.
-Vzhledem k narůstajícímu počtu kapitol již není vhodné tisknout všechny,
-takže vydávané verze nyní budou obsahovat pouze několik vybraných kapitol
-na ukázku. Ostatní kapitoly vanilkové příchuti budou nadále podléhat
-stejným kvalitativním požadavkům, ale uživatalé si z nich budou muset
-vybrat ve vlastních sestaveních pouze ty, které potřebují.
+Významnou novinkou je, že vydávaná sestavení ve formátech PDF a HTML obsahují
+nadále pouze výběr nejdůležitějších kapitol. Ostatní vydané kapitoly budou nadále
+vyvíjeny ve stejné minimální kvalitě, ale získají je (za odměnu) jen uživatelé,
+kteří si z nich vyberou, které kapitoly potřebují, a provedou překlad
+ze zdrojového kódu (nebo jim překlad provede někdo jiný).
+
+Tato novinka má dva hlavní účely. Prvním účelem je šetřit papír při tisku.
+Vzhledem k narůstajícímu počtu kapitol již není vhodné tisknout vše, ale je třeba,
+aby si uživatel na základě vlastních zájmů a zkušeností vybral, které kapitoly
+bude potřebovat. Druhým účelem je odměnit uživatele, kteří si budou projekt
+překládat ze zdrojového kódu, což je první krok k tomu, aby se mohli stát přispěvateli.
+
+Další významnou novinkou je, že opouštím označení „GNU/Linux“ a místo něj začínám
+používat slovo „linux“ s malým „l“. Bylo by dobré, kdyby se v českých komunitách
+uchytilo, jako se kdysi uchytil „internet“ s malým „i“.
 
 HTML varianta v této verzi nepřináší žádnou novinku.
 
 V PDF variantách jsou hlavní novinkou písma Latin Modern Roman a Latin Modern Sans.
 
-Výraznou vnitřní novinkou je použití české diakritiky v názvech souborů a adresářů
-v repozitáři a při překladu.
+Výraznou vnitřní novinkou je použití české diakritiky v názvech souborů, adresářů
+a identifikátorech kapitol. Názvy bez diakritiky byly ponechány u HTML výstupu,
+v názvech pomocných skriptů a funkcí a všude, kde implementace přidání diakritiky
+neumožňuje.
 
 <!--
-Vydání verze 2.1, jménem Iveta Ivanovická, očekávám v průběhu listopadu 2020.
+Vydání verze 2.2, jménem XXX, očekávám v první polovině prosince 2020.
 -->
 
 Verze řady „vanilková příchuť 1.x“ jsou ve stádiu dlouhodobé pasivní údržby do 1. března 2023.

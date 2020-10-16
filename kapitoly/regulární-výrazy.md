@@ -27,6 +27,7 @@ Náměty k vylepšení:
 !ÚzkýRežim: zap
 
 ## Úvod
+
 Regulární výrazy představují velmi silný nástroj k vyhledávání, analýze,
 filtrování, kontrole syntaxe, extrakci a transformaci textů a textových dat.
 Slouží k formálnímu popisu (obvykle nekonečné) množiny řetězců a následné
@@ -36,7 +37,7 @@ vyhledávání řetězců z této množiny v textu. S takto vyhledanými řet
 Regulární výrazy se objevují se ve většině programovacích jazyků,
 ale také v textových editorech či manuálním nastavení e-mailových filtrů.
 
-V Linuxu se bohužel vyskytují tři různé syntaxe regulárních výrazů – základní
+V linuxu se bohužel vyskytují tři různé syntaxe regulárních výrazů – základní
 regulární výrazy, rozšířené regulární výrazy a regulární výrazy jazyka Perl.
 Z praktických důvodů považuji za nejdůležitější rozšířené regulární výrazy,
 a proto kdykoliv napíšu „regulární výraz“ bez dalšího upřesnění, mám na mysli

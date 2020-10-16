@@ -719,7 +719,7 @@ které můžete doinstalovat takto:
 ## Tipy a zkušenosti
 
 * Uživatelé a skupiny jsou v souborovém systému uloženy ve formě čísel UID a GID. Proto když uložíte soubor na USB flash disk a přenesete ho na jiný počítač, kde pracujete jako uživatel s jiným UID, může se stát, že tam k souborům na flash disku nebudete mít dostatečná přístupová práva.
-* V Linuxu existují také „výchozí přístupová práva“, což je nastavení přístupových práv na adresáři, které (je-li nastaveno) ovlivňuje přístupová práva nově vyvářených položek; bohužel nelze říci „stanovuje“, ale platí pouze „ovlivňuje“ – na výsledných právech se podílejí i další faktory, nelze rozlišit práva pro soubory a pro adresáře a celé je to dost komplikované a neintuitivní. Zatím jsem naštěstí nanarazil/a na případ, kdy by tuto vlastnost skutečně nějaký program použil.
+* V linuxu existují také „výchozí přístupová práva“, což je nastavení přístupových práv na adresáři, které (je-li nastaveno) ovlivňuje přístupová práva nově vyvářených položek; bohužel nelze říci „stanovuje“, ale platí pouze „ovlivňuje“ – na výsledných právech se podílejí i další faktory, nelze rozlišit práva pro soubory a pro adresáře a celé je to dost komplikované a neintuitivní. Zatím jsem naštěstí nanarazil/a na případ, kdy by tuto vlastnost skutečně nějaký program použil.
 * Symbolické odkazy mají vlastníka a skupinu, ale nemají vlastní přístupová práva. Přístup k odkazované položce se vždy řídí jejími přístupovými právy, čtení symbolického odkazu je bez omezení a zápis do něj není dovolen (je nutno místo toho odkaz smazat a vytvořit nový).
 
 ## Další zdroje informací

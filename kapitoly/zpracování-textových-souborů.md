@@ -80,22 +80,22 @@ Příkaz „flip“ nefunguje moc dobře:
 **flip -ub** {*soubor*}...<br>
 {*...*} **\| flip -u - \|** {*...*}
 
-*# konverze ukončení řádky: Linux na Windows (\\n na \\r\\n)*<br>
+*# konverze ukončení řádky: linux na Windows (\\n na \\r\\n)*<br>
 -->
 
-*# Windows nebo Linux **na Linux** (na místě/rourou)*<br>
+*# Windows nebo linux **na linux** (na místě/rourou)*<br>
 **sed -Ei 's/\\r//g'** {*soubor*}...<br>
 {*...*} **\| tr -d \\\\r \|** {*...*}
 
-*# Windows nebo Linux **na Windows** (na místě/rourou)*<br>
+*# Windows nebo linux **na Windows** (na místě/rourou)*<br>
 **sed -Ei 's/\\r\*$/\\r/'** {*soubor*}...<br>
 {*...*} **\| sed -E 's/\\r\*$/\\r/' \|** {*...*}
 
-*# Mac OS na Linux (na místě/rourou)*<br>
+*# Mac OS na linux (na místě/rourou)*<br>
 **LC\_ALL=C sed -zEi 'y/\\\\r/\\\\n/'** {*soubor*}...<br>
 {*...*} **\| tr \\\\r \\\\n \|** {*...*}
 
-*# Linux na Mac OS (na místě/rourou)*<br>
+*# linux na Mac OS (na místě/rourou)*<br>
 **LC\_ALL=C sed -zEi 'y/\\\\n/\\\\r/'** {*soubor*}...<br>
 {*...*} **\| tr \\\\n \\\\r \|** {*...*}
 

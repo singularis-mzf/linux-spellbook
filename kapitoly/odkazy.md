@@ -19,7 +19,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 ## Úvod
 
-V Linuxu existují dva zcela rozdílné mechanismy na odkazování na soubory či adresáře
+V linuxu existují dva zcela rozdílné mechanismy na odkazování na soubory či adresáře
 v jiné části adresářové struktury. Tato kapitola se zabývá oběma.
 
 Pevný odkaz je název a umístění souboru v adresářové struktuře; většina nelinuxových

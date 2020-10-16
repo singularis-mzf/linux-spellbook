@@ -78,7 +78,7 @@ Při hlášení, prosím, použijte následující postup:
 
 1. Pokud vám systém hlásí chybějící příkaz, zkontrolujte v sekci „Instalace na Ubuntu“ v dané kapitole, zda nepotřebujete něco doinstalovat či nastavit.
 2. Pokud používáte starší verzi vanilkové příchuti *Linuxu: Knihy kouzel*, zkontrolujte nejnovější vydanou verzi příslušné vývojové řady, případně přímo zdrojové kódy na GitHubu, abyste ověřili, zda tam není chyba již opravená.
-3. Pokud používáte jinou distribuci Linuxu než Ubuntu nebo jinou jeho verzi než tu, pro kterou je daná verze Linuxu: Knihy kouzel především určená, pokuste se chybu zopakovat na příslušné verzi Ubuntu. (Pokud by to pro vás bylo příliš obtížné a používáte distribuci odvozenou od odpovídající verze Ubuntu, např. Linux Mint, můžete tento krok vynechat.)
+3. Pokud používáte jiný linux než Ubuntu nebo jinou jeho verzi než tu, pro kterou je daná verze Linuxu: Knihy kouzel především určená, pokuste se chybu zopakovat na příslušné verzi Ubuntu. (Pokud by to pro vás bylo příliš obtížné a používáte distribuci odvozenou od odpovídající verze Ubuntu, např. Linux Mint, můžete tento krok vynechat.)
 4. Pokud je to možné, při hlášení se držte [vzoru](https://github.com/singularis-mzf/linux-spellbook/issues/2).
 
 ## Sehnat či nakreslit lepší ikony kapitol

@@ -375,7 +375,7 @@ Další:
 *# WebVR API, obrázky AVIF*<br>
 **user\_pref("dom.vr.enabled", false);**<br>
 <!- -
-na Linuxu zatím ve výchozím stavu vypnuto
+na linuxu zatím ve výchozím stavu vypnuto
 - ->
 
 *# ?*<br>

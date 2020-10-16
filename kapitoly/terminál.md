@@ -35,7 +35,7 @@ __git_ps1
 
 Tato kapitola pokrývá způsoby, kterými můžete učinit okno emulátoru terminálu
 praktičtější, barevnější a méně jednotvárné, aniž byste musel/a opustit
-příkazový interpret bash – v Linuxu můžete nastavit barvu písma či pozadí, titulek,
+příkazový interpret bash – v linuxu můžete nastavit barvu písma či pozadí, titulek,
 výzvu intepretu, přidat emotikony či vypsat ozdobné nápisy.
 
 Barva písma a pozadí se ve skutečnosti nastavuje vypsáním takzvaných *escape sekvencí*,

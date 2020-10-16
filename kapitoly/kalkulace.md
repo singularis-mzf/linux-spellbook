@@ -33,7 +33,7 @@ Tato kapitola se věnuje matematickým výpočtům s celými čísly, reálným
 prvočísly a maticemi a konverzím nezáporných celých čísel mezi číselnými soustavami.
 
 Ačkoliv k matematickým výpočtům můžeme použít prakticky jakýkoliv programovací jazyk,
-který v Linuxu najdeme, tato kapitola se zaměřuje především na tři nástroje:
+který v linuxu najdeme, tato kapitola se zaměřuje především na tři nástroje:
 
 * Aritmetický kontext interpretu bash (který je vhodný pro celočíselné a bitové výpočty).
 * Interpret „bc“, který je vhodný pro základní aritmetiku s racionálními čísly libovolné (zvolené) přesnosti a pro aritmetiku s mimořádně vysokými celými čísly.

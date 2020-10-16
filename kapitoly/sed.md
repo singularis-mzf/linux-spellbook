@@ -35,7 +35,7 @@ https://www.sallyx.org/sally/linux/prikazy/sed
 Nejčastěji je užíván díky své schopnosti testovat záznamy vůči regulárním výrazům a nahrazovat
 jejich shody. Ve skutečnosti nenabízí o mnoho víc, takže tato kapitola bude spíše stručná.
 Jeho hlavními výhodami oproti konkurečním nástrojům jsou rychlost zpracování,
-přítomnost v prakticky každé instalaci Linuxu, stoprocentní podpora UTF-8 a mimořádně
+přítomnost v prakticky každé instalaci linuxu, stoprocentní podpora UTF-8 a mimořádně
 úsporná syntaxe.
 
 Sed pracuje tak, že v cyklu načítá záznamy ze vstupních souborů a na každý záznam spustí

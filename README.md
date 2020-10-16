@@ -14,9 +14,11 @@ https://creativecommons.org/licenses/by-sa/4.0/
 ![Linux: Kniha kouzel](obrázky/banner.png)
 
 „Linux: Kniha kouzel“ je multimediální sbírka krátkých řešených příkladů
-z prostředí svobodného software v operačním systému Linux, především distribucí Ubuntu a Linux Mint.
-Je vydávána v PDF A4 a B5 pro profesionální i domácí tisk a ve formát HTML pro snadné vykopírování
-zaklínadel, můžete ji tedy používat na papíře i v počítači, proto „multimediální“.
+z prostředí svobodného software v linuxových operačních systémech,
+především distribucích Ubuntu a Linux Mint.
+Je vydávána v PDF A4 a B5 pro profesionální i domácí tisk a ve formát HTML
+pro snadné vykopírování zaklínadel, můžete ji tedy používat na papíře i v počítači,
+proto „multimediální“.
 
 Verze *vanilková příchuť 2.0* je cílena na *Ubuntu 20.04 Focal Fossa* a jeho deriváty.
 
@@ -125,7 +127,7 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [sed](kapitoly/sed.md) | Sed | 1.8 |
 | [soubory-a-adresáře](kapitoly/soubory-a-adresáře.md) | Soubory a adresáře | 1.5 |
 | [správa-balíčků](kapitoly/správa-balíčků.md) | Správa balíčků | 1.1 |
-| [správa-procesů](kapitoly/správa-procesů) | Správa procesů | 1.4 |
+| [správa-procesů](kapitoly/správa-procesů.md) | Správa procesů | 1.4 |
 | [správa-uživatelských-účtů](kapitoly/správa-uživatelských-účtů.md) | Správa uživatelských účtů | 1.11 |
 | [stahování-videí](kapitoly/stahování-videí.md) | Stahování videí | 1.0 |
 | [systém](kapitoly/systém.md) | Systém | 1.2 |
@@ -145,7 +147,7 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | :--- | :--- | ---: | :--- |
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
 | [firefox](kapitoly/firefox.md) | Firefox | 60% | dítě |
-| [kalkulace](kapitoly/kalkulace)| Kalkulace | 50% | dítě |
+| [kalkulace](kapitoly/kalkulace.md)| Kalkulace | 50% | dítě |
 | [zpracování-obrázků](kapitoly/zpracování-obrázků.md) | Zpracování obrázků | 40% | dítě |
 | [odkazy](kapitoly/odkazy.md) | Pevné a symbolické odkazy | 20% | dítě |
 | [perl](kapitoly/perl.md) | Základy Perlu | 20% | dítě |
@@ -158,7 +160,7 @@ a kapitoly ani dodatky se nesmějí opakovat.
 | [bash](kapitoly/bash.md) | Bash | 2% | dítě |
 | [lkk](kapitoly/lkk.md) | Linux: Kniha kouzel | 2% | dítě |
 | [zpracování-psv](kapitoly/zpracování-psv.md) | Zpracování PSV | 2% | dítě |
-| [správa-balíčků-2](kapitoly/správa-balíčků-2) | Správa balíčků 2 | 1% | dítě |
+| [správa-balíčků-2](kapitoly/správa-balíčků-2.md) | Správa balíčků 2 | 1% | dítě |
 | [grub](kapitoly/grub.md) | GRUB a jádro | 1% | dítě |
 | [konverze-formatů](kapitoly/konverze-formatů.md) | Konverze formátů | 0% | embryo |
 | [wine](kapitoly/wine.md) | Wine | 0% | embryo |
@@ -190,7 +192,7 @@ a kapitoly ani dodatky se nesmějí opakovat.
 
 *Poznámka: Uvedené údaje o licencích jsou orientační, a ačkoliv je uvádím v dobré víře, nemusí již být aktuální!*
 
-* [Sallyx.org](https://www.sallyx.org/) (nesvobodná licence CC BY-NC-SA 3.0) jsou vynikající, obsáhlé a dodnes velmi dobře udržované stránky o Linuxu a programování. Na rozdíl od *Linuxu: Knihy kouzel* nejsou open-source (autor je udržuje sám, v podstatě jde o freeware) a nemají knižní ambice, jsou však optimalizovány pro samouky, aby se z nich uváděné nástroje mohli snadno naučit. Dle mého názoru jde o nejlepší konkurenční zdroj v češtině.
+* [Sallyx.org](https://www.sallyx.org/) (nesvobodná licence CC BY-NC-SA 3.0) jsou vynikající, obsáhlé a dodnes velmi dobře udržované stránky o linuxu a programování. Na rozdíl od *Linuxu: Knihy kouzel* nejsou open-source (autor je udržuje sám, v podstatě jde o freeware) a nemají knižní ambice, jsou však optimalizovány pro samouky, aby se z nich uváděné nástroje mohli snadno naučit. Dle mého názoru jde o nejlepší konkurenční zdroj v češtině.
 * [Pure Bash Bible](https://github.com/dylanaraps/pure-bash-bible) (anglicky, licence: MIT) je stejně jako *Linux: Kniha kouzel* knihou řešených příkladů (ačkoliv jde o e-book) a také se snaží nabízet ověřená a co nejlepší řešení, autor dokonce na svoje příkazy píše automatizované testy. Oproti Linuxu: Knize kouzel je ale Pure Bash Bible zaměřená pouze na příkazový interpret „bash“.
 * [Linux Journey](https://linuxjourney.com/) (anglicky, licence pouze textu: CC BY-SA 4.0) je rozsáhlý a kvalitní výukový kurz linuxových příkazů z různých oblastí. Hlavním rozdílem oproti Linuxu: Knize kouzel zde je, že je zaměřený na výuku (dokonce u jednotlivých sekcí nabízí i úkoly k procvičení), není však tak podrobný a vyhýbá se komplikovaným a nejmodernějším technologiím (např. tam nenajdete vysvětlení ACL, LVM apod.).
 * [TL;DR](https://github.com/tldr-pages/tldr) (anglicky − „Too Long; Didn't Read“, licence: MIT) představuje výrazně zjednodušené manuálové stránky s krátkými příklady k jednotlivým nástrojům. Na rozdíl od *Linuxu: Knihy kouzel* je organizován po nástrojích, takže musíte vědět, k čemu chcete nápovědu, a neporadí vám lepší nástroje k provedení dané činnosti. Ke každému nástrojí navíc uvádí jen nejběžnější příklady. Kladem je, že jeden z jeho klientů je dostupný jako balíček [Ubuntu](https://packages.ubuntu.com/bionic/tldr) a [Debianu](https://packages.debian.org/buster/tldr).
@@ -199,8 +201,8 @@ a kapitoly ani dodatky se nesmějí opakovat.
 
 ### Zastaralé podobné projekty
 
-* [The Linux Documentation Project](http://www.tldp.org/) (anglicky, licence: GFDL 1.2, některé části i pod jinými svobodnými licencemi) je monumentální historická sbírka návodů a příruček mapující Linux. Je již ovšem prakticky neudržovaná a většinou velmi zastaralá. K návštěvě ji mohu doporučit jen „počítačovým archeologům“, rozhodně ne současným začátečníkům.
-* [GNU/Linux Desktop Survival Guide](https://togaware.com/linux/survivor/) (anglicky, licence: GPL v2+ nebo CC BY 2.0+) je původně rozsáhlá sbírka jednostránkových článků o konkrétních problémech uživatele GNU/Linuxu. Ačkoliv je dodnes udržovaná, připadá mi, že jedinou formou aktualizace je odstraňování již neaktuálního obsahu, po kterém bohužel zůstávají prázdné články. Na rozdíl od Linuxu: Knihy kouzel již vyšla knižně a PDF verze je placená (HTML verze je dostupná online a zdarma).
+* [The Linux Documentation Project](http://www.tldp.org/) (anglicky, licence: GFDL 1.2, některé části i pod jinými svobodnými licencemi) je monumentální historická sbírka návodů a příruček mapující programy GNU a Linux. Je již ovšem prakticky neudržovaná a většinou velmi zastaralá. K návštěvě ji mohu doporučit jen „počítačovým archeologům“, rozhodně ne současným začátečníkům.
+* [GNU/Linux Desktop Survival Guide](https://togaware.com/linux/survivor/) (anglicky, licence: GPL v2+ nebo CC BY 2.0+) je původně rozsáhlá sbírka jednostránkových článků o konkrétních problémech uživatele Debianu. Ačkoliv je dodnes udržovaná, připadá mi, že jedinou formou aktualizace je odstraňování již neaktuálního obsahu, po kterém bohužel zůstávají prázdné články. Na rozdíl od Linuxu: Knihy kouzel již vyšla knižně a PDF verze je placená (HTML verze je dostupná online a zdarma).
 
 ## Licence
 

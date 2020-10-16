@@ -34,7 +34,7 @@ Tato kapitola se zabývá vytvářením, zkoumáním a rušením uživatelskýc
 Dále se zabývá nastavováním účtů a skupin z pozice superuživatele (správce systému)
 a nastavováním vlastností vlastního účtu (např. hesla) obyčejným uživatelem.
 
-Linuxové operační systémy jsou víceuživatelské, a než je uživateli umožněna práce
+Linuxy jsou víceuživatelské, a než je uživateli umožněna práce
 se systémem, musí se přihlásit k některému uživatelskému účtu, což určí, jaká oprávnění
 budou mít programy, které spustí. V Ubuntu a mnoha dalších linuxových distribucích
 se první uživatelský účet (s UID 1000) vytváří při instalaci, další účty se vytvářejí

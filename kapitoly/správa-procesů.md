@@ -33,12 +33,12 @@ využívají systémové zdroje jako výkon procesoru, paměť RAM či pevný di
 Ne všechny uvedené postupy však fungují pro zacházení s démony;
 hodláte-li zacházet s démony, navštivte kapitolu Systém.
 
-Když v Linuxu spustíte program, vznikne tzv. proces – jakási „schránka“ pro program,
+Když v linuxu spustíte program, vznikne tzv. proces – jakási „schránka“ pro program,
 která mu umožňuje běžet na procesoru a využívat systémové zdroje.
 Většina příkazů, které v terminálu zadáte, vytvoří nový proces.
 Pouze malá část spuštěných procesů si otevře také grafické uživatelské rozhraní.
 
-Procesy jsou v Linuxu identifikovány čísly PID (což neznamená „Pražská integrovaná doprava“)
+Procesy jsou v linuxu identifikovány čísly PID (což neznamená „Pražská integrovaná doprava“)
 a jsou uspořádány do „rodinné“ struktury, kde každý proces s výjimkou
 dvou prvotních démonů má právě jednoho rodiče. PID rodiče je u vlastního procesu uvedeno
 jako vlastnost „PPID“. (Pozor – nepleťte si PID a PPID!)
