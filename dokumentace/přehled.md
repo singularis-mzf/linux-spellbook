@@ -20,6 +20,6 @@ https://creativecommons.org/licenses/by-sa/4.0/
 | [Návody](návody.md) | různý (dělí se na části) |
 | [Syntaxe kapitol](syntaxe-kapitol.md) | aktuální |
 
-K dokumentaci také patří zvláštní kapitola [_ukazka](../kapitoly/_ukazka.md).
+K dokumentaci také patří zvláštní kapitola [_ukázka](../kapitoly/_ukázka.md).
 Do budoucna k ní bude patřit také kapitola [Linux: Kniha kouzel](../kapitoly/lkk.md), ale tak je
 v současnosti teprve v rané fázi vývoje.

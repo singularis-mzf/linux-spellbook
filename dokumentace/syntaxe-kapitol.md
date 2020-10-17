@@ -225,6 +225,6 @@ Nejdůležitější podporované direktivy jsou:
 
 ## Další poznámky
 
-Je podporována pouze daná podmnožina znaků Unicode. Při výskytu znaku, který není podporován, dojde k chybě při překladu do PDF. Podporu nových znaků lze sice snadno přidávat, ale kvůli ochraně před překlepy je toto omezení ponecháváno. Kompletní seznam podporovaných znaků najdete ve zvláštní kapitole [_ukazka](../kapitoly/_ukazka.md).
+Je podporována pouze daná podmnožina znaků Unicode. Při výskytu znaku, který není podporován, dojde k chybě při překladu do PDF. Podporu nových znaků lze sice snadno přidávat, ale kvůli ochraně před překlepy je toto omezení ponecháváno. Kompletní seznam podporovaných znaků najdete ve zvláštní kapitole [_ukázka](../kapitoly/_ukázka.md).
 
-Rovněž pravidla odzvláštňování jsou uvedena v kapitole [_ukazka](../kapitoly/_ukazka.md). (Bohužel jsou poměrně složitá.)
+Rovněž pravidla odzvláštňování jsou uvedena v kapitole [_ukázka](../kapitoly/_ukázka.md). (Bohužel jsou poměrně složitá.)
