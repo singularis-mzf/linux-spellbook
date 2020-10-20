@@ -109,6 +109,11 @@ STAV_PODMINENENO_PREKLADU == 3 {next}
         next;
     }
 
+    if ($0 == "{{POKUD JSOU PRÉMIOVÉ KAPITOLY}}") {
+        STAV_PODMINENENO_PREKLADU = (system("test -s '" ENVIRON["SOUBORY_PREKLADU"] "/prémiové-kapitoly.tsv'") == 0) ? 1 : 2;
+        next;
+    }
+
     STAV_PODMINENENO_PREKLADU = Pokud(substr($0, 9, length($0) - 10)) ? 1 : 2;
     #print "LADĚNÍ: " $0 " => STAV_PODMINENENO_PREKLADU = " STAV_PODMINENENO_PREKLADU " (" IDFORMATU ")" > "/dev/stderr";
     next;

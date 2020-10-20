@@ -86,6 +86,12 @@ function RidiciRadek(text) {
             system("cat '" TELO "'");
             return 0;
 
+        case "VYPSAT PRÉMIOVÉ KAPITOLY":
+            VyzadujeFragmentyTSV();
+            if (IDFORMATU == "html") {ShoditFatalniVyjimku("Značka {{VYPSAT PRÉMIOVÉ KAPITOLY}} je pro formát HTML implementována pouze ve skriptu index-html.awk!")}
+            system("sed -E 's/^[^\t]*\t/\\\\premiovakapitola{/;s/(\t.*)?$/}%/' \"${SOUBORY_PREKLADU}/prémiové-kapitoly.tsv\"");
+            return 0;
+
         default:
             return RidiciRadekSpolecnaObsluha(text);
     }

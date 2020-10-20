@@ -49,8 +49,6 @@ function Pokud(podminka) {
         return predevsim_pro != "";
     } else if (podminka == "MÁ VERZE JMÉNO") {
         return ZjistitJmenoVerze(JMENOVERZE) != "";
-    } else if (podminka == "JSOU PRÉMIOVÉ KAPITOLY") {
-        return system("test -s '" ENVIRON["SOUBORY_PREKLADU"] "/prémiové-kapitoly.tsv'") == 0;
     } else {
         ShoditFatalniVyjimku("Neznámá direktiva {{POKUD " podminka "}}!");
     }
