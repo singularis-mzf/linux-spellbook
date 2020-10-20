@@ -101,7 +101,8 @@ BEGINFILE {
 }
 
 !je_toc && $1 == "PODSEKCE" {
-    nazvy[cislo_kapitoly "/" cislo_sekce "/" ++cislo_podsekce] = NacistNazev($5, cislo_sekce "." cislo_podsekce " ");
+    ++cislo_podsekce;
+    nazvy[cislo_kapitoly "/" cislo_sekce "/" cislo_podsekce] = NacistNazev($5, cislo_sekce "." cislo_podsekce " ");
     pocty[cislo_kapitoly "/" cislo_sekce] += 1;
 }
 
