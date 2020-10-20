@@ -20,11 +20,12 @@ https://creativecommons.org/licenses/by-sa/4.0/
 K sestavení formátů „html“, „log“ a „deb“ *Linuxu: Knihy kouzel* ze zdrojového kódu budete potřebovat:
 
 * Git
-* GNU make
 * GNU awk
+* GNU make
 * ImageMagick
 * qrencode, iconv, xxd
 * české locale „cs\_CZ.UTF-8“ (musí fungovat české řazení příkazem „sort“) − nemusí být aktivní, stačí nainstalované a funkční
+* pro balíček DEB také příkaz dpkg-deb (v Debianu a Ubuntu předinstalovaný)
 
 V Ubuntu 20.04 LTS, Ubuntu 18.04 LTS, Linuxu Mint 20 a Linuxu Mint 17.3 můžete tyto nástroje nainstalovat příkazem:
 
@@ -42,9 +43,11 @@ V druhém kroku si vyberte kapitoly, které mají být součástí sestavení:
 
 > ``cp pořadí-kapitol.výchozí.lst pořadí-kapitol.lst``
 
-Otevřete nově vytvořený soubor „pořadí-kapitol.lst“ a upravte pořadí
-či výběr kapitol. Tento soubor bude určovat, které kapitoly či dodatky
-a v jakém pořadí budou zařazeny do sestavení.
+Otevřete nově vytvořený soubor „pořadí-kapitol.lst“ v obyčejném textovém
+editoru (např. vim, nano, Gedit, Kate, Mousepad, Leafpad apod.,
+ne LibreOffice Writer!) a upravte pořadí či výběr kapitol.
+Tento soubor bude určovat, které kapitoly či dodatky a v jakém pořadí
+budou zařazeny do sestavení.
 
 Prázdné řádky a řádky začínající znakem „#“ jsou ignorovány a lze je použít
 jako komentáře. Ostatní řádky jsou názvy souborů v podadresářích „dodatky“
@@ -61,7 +64,11 @@ Pak můžete spustit make (pokud nechcete sestavovat formáty log a deb, může
 
 Výstup ve všech sestavených formátech najdete v adresáři ``výstup_překladu``. Očekávaná doba malého sestavení je několik sekund.
 
-Vaše sestavení si můžete při překladu dále přizpůsobit pomocí parametrů příkazu make:
+Pro sestavení formátů PDF pro tisk musíte využít [velké sestavení](velké-sestavení.md), které požaduje víc nástrojů.
+
+## Přizpůsobení
+
+Vaše sestavení si můžete přizpůsobit předáním dalších parametrů příkazu make při sestavení:
 
 * Parametrem „JMENO“ můžete nastavit jméno a verzi sestavení. Doporučená syntaxe je ``JMENO='(označení distribuce) (číslo verze), (jméno verze)'``, kde jen číslo verze je povinná část (číslo verze se skládá z neprázdných sekvencí desítkových číslic oddělených tečkami).
 
