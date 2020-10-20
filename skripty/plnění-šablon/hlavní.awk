@@ -223,6 +223,7 @@ function RidiciRadekSpolecnaObsluha(text,   i, soubor) {
             }
             printf("<a href=\"https://singularis-mzf.github.io/\">Ostatní verze knihy</a>\n");
             printf("<a href=\"https://github.com/singularis-mzf/linux-spellbook\">Repozitář na GitHubu</a>\n");
+            printf("<a href=\"https://github.com/singularis-mzf/linux-spellbook/blob/stabilni/dokumentace/odm%C4%9Bna-za-sestaven%C3%AD.md\">Odměna za sestavení (prémiové kapitoly)</a>\n");
             return 0;
 
         default:

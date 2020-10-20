@@ -24,4 +24,4 @@ vyvíjené kapitoly. To má několik důvodů:
 
 Pokud vám stačí formát HTML (a případně balíček DEB), návod najdete v souboru [malé-sestavení.md](malé-sestavení.md). Pokud potřebujete i PDF pro tisk, návod najdete v souboru [velké-sestavení.md](velké-sestavení.md).
 
-Vydávané balíčky pomocných skriptů a funkcí ve formátu DEB obsahují skripty a funkce ke všem vydaným kapitolám, nemusíte je tedy sestavovat sám/a a nahrazovat dodávanou verzi. Pokud ho však budete chtít sestavit, stačí „malé-sestavení.md“.
+Vydávané balíčky pomocných skriptů a funkcí ve formátu DEB obsahují skripty a funkce ke *všem vydaným* kapitolám, nemusíte je tedy sestavovat sám/a a nahrazovat dodávanou verzi balíčku.

@@ -67,9 +67,9 @@ Vaše sestavení si můžete při překladu dále přizpůsobit pomocí parametr
 
 Příklady:
 
-> ``make JMENO='borůvková příchuť 2010.04, Šílený švec' html pdf-a4``<br>
-> ``make JMENO='1.0' html``<br>
-> ``make JMENO='Moje vlastní sestavení 1' pdf-b5 html``
+> ``make JMENO='borůvková příchuť 2010.04, Šílený švec' html``<br>
+> ``make JMENO='1.0' html deb``<br>
+> ``make JMENO='Moje vlastní sestavení 1' html``
 
 Překlad pravděpodobně bude fungovat i při nedodržení doporučené syntaxe, ale v takovém případě mohou nastat nečekané problémy.
 
@@ -77,7 +77,11 @@ Překlad pravděpodobně bude fungovat i při nedodržení doporučené syntaxe
 
 *Příklad:*
 
-``make PREMIOVE\_KAPITOLY=1 -j4 html pdf-4a``
+``make PREMIOVE\_KAPITOLY=1 -j4 html``
+
+* Nastavením proměnné prostředí „PORADI\_KAPITOL“ na zvláštní hodnotu „\_VŠE\_“ můžete vynutit automatické přeložení všech kapitol a dodatků zapsaných v Makefile (tato funkce je používána při sestavování „výplachu repozitáře“):
+
+``PORADI\_KAPITOL='_VŠE_' make -j4 html``
 
 ## Ověření české lokalizace systému
 

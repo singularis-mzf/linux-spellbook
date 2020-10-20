@@ -24,18 +24,18 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 # Volání:
-# poradi-kapitol.sh predmluva {kapitoly}...
+# poradi-kapitol.sh předmluva {kapitoly}...
 
 set -e
 
 {
-    if test -n "${PORADI_KAPITOL:-}"
+    if test "${PORADI_KAPITOL:-}" != '_VŠE_' -a -n "${PORADI_KAPITOL:-}"
     then
         cat "$PORADI_KAPITOL"
-    elif ! (cat pořadí-kapitol.lst || cat pořadí-kapitol.výchozí.lst || cat poradi-kapitol.lst || cat poradi-kapitol.vychozi.lst)
+    elif test "${PORADI_KAPITOL:-}" = '_VŠE_' || ! (cat pořadí-kapitol.lst || cat pořadí-kapitol.výchozí.lst || cat poradi-kapitol.lst || cat poradi-kapitol.vychozi.lst)
     then
-        printf '%s\n' "$@" | fgrep -x predmluva || true
-        printf '%s\n' "$@" | fgrep -vx predmluva | LC_ALL=cs_CZ.UTF-8 sort -f
+        printf '%s\n' "$@" | fgrep -x předmluva || true
+        printf '%s\n' "$@" | fgrep -vx předmluva | LC_ALL=cs_CZ.UTF-8 sort -f
     fi
 } 2>/dev/null | while read -r id
 do
