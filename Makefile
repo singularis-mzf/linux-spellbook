@@ -81,6 +81,7 @@ export SOUBORY_PREKLADU := soubory_překladu
 export VYSTUP_PREKLADU := výstup_překladu
 # PDF_ZALOZKY_MAX_DELKA - po změně je nutno ve skriptu „skripty/extrakce/osnova.awk“ změnit odpovídajícím způsobem délku proměnné „PNAZEV_SABLONA“!
 export PDF_ZALOZKY_MAX_DELKA := 32
+PREMIOVE_KAPITOLY := 0
 
 # Jméno sestavení (doporučuji nastavovat z příkazového řádku)
 # ----------------------------------------------------------------------------
@@ -96,6 +97,7 @@ DATUM_SESTAVENI_SOUBOR := $(SOUBORY_PREKLADU)/symboly/datum-sestavení/$(DATUM_S
 DEB_VERZE_SOUBOR := $(SOUBORY_PREKLADU)/symboly/deb-verze/$(DEB_VERZE)
 JMENO_SESTAVENI_SOUBOR := $(SOUBORY_PREKLADU)/symboly/jméno-sestavení/$(shell printf %s "$(JMENO)" | tr "/ \\n\\t" -)
 PORADI_KAPITOL_SOUBOR := $(SOUBORY_PREKLADU)/symboly/pořadí-kapitol/$(shell skripty/pořadí-kapitol.sh $(VSECHNY_DODATKY) $(VSECHNY_KAPITOLY) | md5sum -b | cut -d ' ' -f 1)
+NASTAVENI_SOUBOR := $(SOUBORY_PREKLADU)/symboly/nastavení/$(PREMIOVE_KAPITOLY)
 
 $(shell mkdir -pv $(SOUBORY_PREKLADU) >/dev/null; true > $(SOUBORY_PREKLADU)/dynamický-Makefile)
 
@@ -108,8 +110,8 @@ clean:
 	$(RM) -Rv $(SOUBORY_PREKLADU) $(VYSTUP_PREKLADU)
 
 info: $(DATUM_SESTAVENI_SOUBOR) $(DEB_VERZE_SOUBOR) $(JMENO_SESTAVENI_SOUBOR) $(PORADI_KAPITOL_SOUBOR)
-	@printf '%s\n' "Jméno sestavení: <$(JMENO)>" "DEB verze: <$(DEB_VERZE)>" "Datum sestavení: <$(DATUM_SESTAVENI)>" "Datum sestavení soubor: <$(DATUM_SESTAVENI_SOUBOR)>" "Deb verze soubor: <$(DEB_VERZE_SOUBOR)>" "Jméno sestavení soubor: <$(JMENO_SESTAVENI_SOUBOR)>" "Pořadí kapitol soubor: <$(PORADI_KAPITOL_SOUBOR)>" "Řádek dynamického Makefile: <$$(wc -l $(SOUBORY_PREKLADU)/dynamický-Makefile)>" "Pořadí kapitol a dodatků:"
-	@skripty/pořadí-kapitol.sh $(VSECHNY_KAPITOLY_A_DODATKY) | bash -c 'while read -r nazev; do if test -f kapitoly/$${nazev}.md; then md5sum kapitoly/$${nazev}.md; elif test -f dodatky/$${nazev}.md; then md5sum dodatky/$${nazev}.md; else echo "?/$${nazev}.md: Neexistuje!"; fi | tr -d \\n; skripty/omezit-název.sh $${nazev} | sed -E "s/.*/\\t> &.htm/"; done' | nl
+	@printf '%s\n' "Jméno sestavení: <$(JMENO)>" "DEB verze: <$(DEB_VERZE)>" "Datum sestavení: <$(DATUM_SESTAVENI)>" "Datum sestavení soubor: <$(DATUM_SESTAVENI_SOUBOR)>" "Deb verze soubor: <$(DEB_VERZE_SOUBOR)>" "Jméno sestavení soubor: <$(JMENO_SESTAVENI_SOUBOR)>" "Pořadí kapitol soubor: <$(PORADI_KAPITOL_SOUBOR)>" "Řádek dynamického Makefile: <$$(wc -l $(SOUBORY_PREKLADU)/dynamický-Makefile)>" "Adresáře překladu: <$${SOUBORY_PREKLADU}> <$${VYSTUP_PREKLADU}>" "" "Pořadí kapitol a dodatků:"
+	@skripty/pořadí-kapitol.sh $(VSECHNY_KAPITOLY_A_DODATKY) | bash -c 'while read -r nazev; do if test -f kapitoly/$${nazev}.md; then md5sum kapitoly/$${nazev}.md; elif test -f dodatky/$${nazev}.md; then md5sum dodatky/$${nazev}.md; else echo "?/$${nazev}.md: Neexistuje!"; fi | tr -d \\n; skripty/omezit-název.sh $${nazev} | sed -E "s/.*/\\t> &.htm/"; done' | nl -s " " -w 3
 	@printf '\n'
 
 # Podporované formáty:
@@ -123,39 +125,45 @@ pdf-b5-bez: $(VYSTUP_PREKLADU)/pdf-b5-bez.pdf
 pdf-b5-na-a4: $(VYSTUP_PREKLADU)/pdf-b5-na-a4.pdf
 
 $(DATUM_SESTAVENI_SOUBOR):
-	mkdir -pv $(dir $(DATUM_SESTAVENI_SOUBOR))
-	$(RM) $(dir $(DATUM_SESTAVENI_SOUBOR))*
-	touch "$(DATUM_SESTAVENI_SOUBOR)"
+	mkdir -pv $(dir $@)
+	$(RM) $(dir $@)*
+	touch "$@"
 
 $(DEB_VERZE_SOUBOR):
-	mkdir -pv $(dir $(DEB_VERZE_SOUBOR))
-	$(RM) $(dir $(DEB_VERZE_SOUBOR))*
-	touch "$(DEB_VERZE_SOUBOR)"
+	mkdir -pv $(dir $@)
+	$(RM) $(dir $@)*
+	touch "$@"
 
 $(JMENO_SESTAVENI_SOUBOR):
-	mkdir -pv $(dir $(JMENO_SESTAVENI_SOUBOR))
-	$(RM) $(dir $(JMENO_SESTAVENI_SOUBOR))*
-	touch "$(JMENO_SESTAVENI_SOUBOR)"
+	mkdir -pv $(dir $@)
+	$(RM) $(dir $@)*
+	touch "$@"
 
 $(PORADI_KAPITOL_SOUBOR):
-	mkdir -pv $(dir $(PORADI_KAPITOL_SOUBOR))
-	$(RM) $(dir $(PORADI_KAPITOL_SOUBOR))*
+	mkdir -pv $(dir $@)
+	$(RM) $(dir $@)*
 	@printf 'Test existence dodatků a kapitol... '
 	@skripty/pořadí-kapitol.sh | while read -r nazev; do if test ! -r "kapitoly/$${nazev}.md" -a ! -r "dodatky/$${nazev}.md"; then printf '\nCHYBA: Kapitola ani dodatek s id %s nenalezen!\n' "$${nazev}" >&2; exit 1; fi; done
 	@printf 'v pořádku.\n'
-	touch "$(PORADI_KAPITOL_SOUBOR)"
+	touch "$@"
+
+$(NASTAVENI_SOUBOR):
+	mkdir -pv $(dir $@)
+	$(RM) $(dir $@)*
+	touch "$@"
 
 # POMOCNÉ SOUBORY:
 # ============================================================================
 
 # 1. soubory_překladu/fragmenty.tsv + soubory_překladu/štítky.tsv
 # ----------------------------------------------------------------------------
-$(SOUBORY_PREKLADU)/fragmenty.tsv: $(PORADI_KAPITOL_SOUBOR) \
+$(SOUBORY_PREKLADU)/fragmenty.tsv: $(PORADI_KAPITOL_SOUBOR) $(NASTAVENI_SOUBOR) \
   skripty/extrakce/fragmenty.awk \
   $(VSECHNY_KAPITOLY_A_DODATKY_MD) \
-  $(SOUBORY_PREKLADU)/ucs_ikony.dat konfig.ini
+  $(SOUBORY_PREKLADU)/ucs_ikony.dat konfig.ini \
+  $(wildcard vydané-kapitoly.lst)
 	mkdir -pv $(SOUBORY_PREKLADU)
-	skripty/pořadí-kapitol.sh $(VSECHNY_DODATKY) $(VSECHNY_KAPITOLY) | $(AWK) -f skripty/extrakce/fragmenty.awk 3>$(SOUBORY_PREKLADU)/fragmenty.tsv 4>$(SOUBORY_PREKLADU)/štítky.tsv
+	skripty/pořadí-kapitol.sh $(VSECHNY_DODATKY) $(VSECHNY_KAPITOLY) | $(AWK) -v "PREMIOVE_KAPITOLY=$(PREMIOVE_KAPITOLY)" -f skripty/extrakce/fragmenty.awk 3>$(SOUBORY_PREKLADU)/fragmenty.tsv 4>$(SOUBORY_PREKLADU)/štítky.tsv
 
 # Poznámka: na souborech ucs_ikony.dat a konfig.ini ve skutečnosti fragmenty.tsv nezávisí,
 # ale závislost je zde uvedena, aby se při jejich změně zajistilo přegenerování celého projektu.

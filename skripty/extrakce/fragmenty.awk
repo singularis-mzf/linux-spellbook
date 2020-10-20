@@ -35,8 +35,23 @@ BEGIN {
     delete stitky;      # [index] -> štítky bez pořadí, nebo ""
     delete serazene_stitky; # [index] -> štítky po seřazení
 
+    # štítky:
     delete poradi_stitku; # [štítek] -> pořadí štítků (do seřazení vždy 1)
     delete vsechny_stitky; # [pořadí] -> štítek
+
+    # vydané kapitoly:
+    delete premiove_kapitoly; # [id] -> 1
+    if (Test("-r vydané-kapitoly.lst")) {
+        while (getline s < "vydané-kapitoly.lst") {
+            if (s ~ /^[^#]/) {
+                if (!Test("-r kapitoly/" s ".md")) {
+                    ShoditFatalniVyjimku("Chyba v souboru vydané-kapitoly.lst: nelze číst kapitoly/" s ".md!");
+                }
+                premiove_kapitoly[s] = 1;
+            }
+        }
+        close("vydané-kapitoly.lst");
+    }
 }
 BEGINFILE {
     # číslo kapitoly
@@ -70,6 +85,7 @@ ARGIND < 2 {
         adresar[c_kapitoly] = "dodatky";
     } else if (!existuje_dodatek && existuje_kapitola) {
         adresar[c_kapitoly] = "kapitoly";
+        delete premiove_kapitoly[$0]; # vyřadit z prémiových kapitol
     } else if (existuje_dodatek) {
         ShoditFatalniVyjimku("ID \"" $0 "\" existuje jako dodatek i jako kapitola!");
     } else {
@@ -153,6 +169,9 @@ END {
     # vsechny_stitky = [1..pocet_stitku] => štítky
     # poradi_stitku = [štítky] => pořadí
 
+    #
+    # štítky.tsv
+    # ----------
     for (c_stitku = 1; c_stitku <= pocet_stitku; ++c_stitku) {
         #
         # štítky.tsv:
@@ -175,6 +194,9 @@ END {
     }
     close(STITKY_TSV);
 
+    #
+    # fragmenty.tsv
+    # -------------
     for (i = 1; i <= pocet_kapitol; ++i) {
         # fragmenty.tsv (PŮVODNĚ):
         #   1=Adresář|2=ID|3=Název|4=Předchozí ID|5=Předchozí název|
@@ -193,5 +215,33 @@ END {
         }
 
         print i, id[i], nazev[i], adresar[i], omezeneid[i], ikonakapitoly, serazene_stitky[i] == "" ? "NULL" : serazene_stitky[i] > FRAGMENTY_TSV;
+    }
+
+    #
+    # prémiové-kapitoly.tsv:
+    # ------------------
+    pocet_premiovych_kapitol = length(premiove_kapitoly);
+    soubor = ENVIRON["SOUBORY_PREKLADU"] "/prémiové-kapitoly.tsv";
+    # Proměnná PREMIOVE_KAPITOLY se nastavuje parametrem -v při spouštění skriptu.
+    if (pocet_premiovych_kapitol > 0 && PREMIOVE_KAPITOLY == 1) {
+        prikaz = "LC_ALL=cs_CZ.UTF-8 sort -d -t '\t' -k 2 >'" soubor "'";
+        for (idkapitoly in premiove_kapitoly) {
+            nazevkapitoly = idkapitoly;
+            soubor = "kapitoly/" idkapitoly ".md";
+            while (getline s < soubor) {
+                if (s ~ /^# ./) {
+                    nazevkapitoly = substr(s, 3);
+                    break;
+                }
+            }
+            close(soubor);
+            if (nazevkapitoly ~ /\t/) {
+                ShoditFatalniVyjimku("Chyba: název kapitoly id <" idkapitoly "> obsahuje tabulátor, což je zakázáno!");
+            }
+            print idkapitoly, nazevkapitoly | prikaz;
+        }
+        close(prikaz);
+    } else {
+        system("true >'" soubor "'");
     }
 }

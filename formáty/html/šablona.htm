@@ -60,8 +60,8 @@ Varianty:
 <span class="vpravo"><span class="ico1"></span><span class="ico2"></span><span class="ico3"></span></span>
 </header>
 <nav class="menuokna">
-<a href="#menukapitoly" class="menu"><span class="prvnipismeno">K</span>apitoly</a>
 <a href="#menuosnova" class="menu"><span class="prvnipismeno">O</span>snova</a>
+<a href="#menukapitoly" class="menu"><span class="prvnipismeno">K</span>apitoly</a>
 <a href="#menustitky" class="menu"><span class="prvnipismeno">Š</span>títky</a>
 <a href="#menunapoveda" class="menu"><span class="prvnipismeno">N</span>ápověda</a>
 {{VARIANTY autori,kapitola,stitky}}
@@ -242,6 +242,7 @@ Podporované konstrukce:
 {{VYČLENIT SEM PODLE ŠTÍTKU:tematický okruh}}
 </div>
 </div>
+
 <div class="sloupec2">
 <strong>Programy</strong>
 <div>
@@ -250,14 +251,27 @@ Podporované konstrukce:
 <strong>Syntaxe</strong>
 <div>
 {{VYČLENIT SEM PODLE ŠTÍTKU:syntaxe}}
-</div></div>
-<div class="sloupec3"><strong>Dodatky</strong><div>
+</div>
+<strong>Dodatky</strong>
+<div>
 {{VYPSAT ZBYTEK DODATKŮ}}
 </div>
+</div>
+
+<div class="sloupec3">
+{{POKUD JSOU PRÉMIOVÉ KAPITOLY}}
+<strong>Prémiové kapitoly</strong>
+<div class="premiove">
+{{VYPSAT PRÉMIOVÉ KAPITOLY}}
+</div>
+<p>Tyto kapitoly můžete získat jako odměnu za překlad ze zdrojového kódu.
+Podrobnější informace <a href="https://github.com/singularis-mzf/linux-spellbook/blob/stabilni/P%C5%98EKLAD.md">na GitHubu</a>.</p>
+{{KONEC POKUD}}
 <strong>Ostatní</strong>
 <div>
 {{VYPSAT ZBYTEK KAPITOL}}
-</div></div>
+</div>
+</div>
 </div>
 
 <h2>Typografické konvence</h2>
@@ -339,14 +353,6 @@ a možnost se zapojit do projektu „Linux: Kniha kouzel“ navštivte jeho
 </div>
 
 <nav class="menu">
-<!-- MENU KAPITOLY -->
-<a href="#menukapitoly" id="menukapitoly"><span class="prvnipismeno">K</span>apitoly</a>
-<aside class="menukapitoly">
-<div><div class="nadpis">Kapitoly</div><div class="polozky">
-{{MENU KAPITOLY}}
-</div></div>
-<a href="#zavritmenu" id="zavritmenu" class="zavritmenu">Zavřít&nbsp;menu</a>
-</aside>
 <!-- MENU OSNOVA -->
 <a href="#menuosnova" id="menuosnova"><span class="prvnipismeno">O</span>snova</a>
 <aside class="menuosnova">
@@ -354,6 +360,14 @@ a možnost se zapojit do projektu „Linux: Kniha kouzel“ navštivte jeho
 {{MENU OSNOVA}}
 </div></div>
 <a href="#zavritmenu" class="zavritmenu">Zavřít&nbsp;menu</a>
+</aside>
+<!-- MENU KAPITOLY -->
+<a href="#menukapitoly" id="menukapitoly"><span class="prvnipismeno">K</span>apitoly</a>
+<aside class="menukapitoly">
+<div><div class="nadpis">Kapitoly</div><div class="polozky">
+{{MENU KAPITOLY}}
+</div></div>
+<a href="#zavritmenu" id="zavritmenu" class="zavritmenu">Zavřít&nbsp;menu</a>
 </aside>
 <!-- MENU ŠTÍTKY -->
 <a href="#menustitky" id="menustitky"><span class="prvnipismeno">Š</span>títky</a>

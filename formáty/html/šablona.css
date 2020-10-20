@@ -1215,6 +1215,22 @@ nav.menu a.zavritmenu::after {
     opacity:1;
     z-index:5;
 }
+.prehledy .premiove {
+    font-style:italic;
+}
+.prehledy .premiove>div::before {
+    content:"🔒";
+    margin:0 0.25em 0 0;
+    font-style:normal;
+}
+.prehledy .premiove+p {
+    margin:-3rem 0 3rem;
+    font-style:italic;
+    font-size:85%;
+}
+.prehledy .premiove+p a {
+    display:inline;
+}
 
 #
 # Formátování pro přehled štítků (x-stitky.htm)

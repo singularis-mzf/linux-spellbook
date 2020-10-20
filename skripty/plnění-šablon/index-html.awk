@@ -49,6 +49,8 @@ function Pokud(podminka) {
         return predevsim_pro != "";
     } else if (podminka == "MÁ VERZE JMÉNO") {
         return ZjistitJmenoVerze(JMENOVERZE) != "";
+    } else if (podminka == "JSOU PRÉMIOVÉ KAPITOLY") {
+        return system("test -s '" ENVIRON["SOUBORY_PREKLADU"] "/prémiové-kapitoly.tsv'") == 0;
     } else {
         ShoditFatalniVyjimku("Neznámá direktiva {{POKUD " podminka "}}!");
     }
@@ -88,6 +90,10 @@ function RidiciRadek(text,   i, s) {
             for (i = 1; i <= pocet; ++i) {
                 if (!vycleneno[i] && FRAGMENTY[i "/adr"] == "dodatky") {VypsatOdkazNaKapitolu(i, 1)}
             }
+            return 0;
+
+        case "VYPSAT PRÉMIOVÉ KAPITOLY":
+            system("sed -E 's/^[^\t]*\t/<div>/;s/(\t.*)?$/<\\/div>/' \"${SOUBORY_PREKLADU}/prémiové-kapitoly.tsv\"");
             return 0;
 
         default:

@@ -4,7 +4,7 @@ základní-znalosti
 #awk
 #datum-čas-kalendář
 diskové-oddíly
-#git
+git
 hledání-souborů
 #make
 #markdown
@@ -22,7 +22,7 @@ systém
 #vim
 #zpracování-binárních-souborů
 zpracování-textových-souborů
-#zpracování-videa-a-zvuku
+zpracování-videa-a-zvuku
 
 koncepce-projektu
 plán-vývoje

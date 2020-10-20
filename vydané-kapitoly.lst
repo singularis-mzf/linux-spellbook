@@ -1,6 +1,4 @@
-předmluva
-základní-znalosti
-
+# Toto je přehled vydaných kapitol; dodatky sem nepatří
 awk
 datum-čas-kalendář
 diskové-oddíly
@@ -23,8 +21,4 @@ vim
 zpracování-binárních-souborů
 zpracování-textových-souborů
 zpracování-videa-a-zvuku
-
-koncepce-projektu
-plán-vývoje
-licence
 
