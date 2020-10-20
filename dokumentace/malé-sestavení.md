@@ -84,11 +84,11 @@ Překlad pravděpodobně bude fungovat i při nedodržení doporučené syntaxe
 
 *Příklad:*
 
-``make PREMIOVE\_KAPITOLY=1 -j4 html``
+``make PREMIOVE_KAPITOLY=1 -j4 html``
 
 * Nastavením proměnné prostředí „PORADI\_KAPITOL“ na zvláštní hodnotu „\_VŠE\_“ můžete vynutit automatické přeložení všech kapitol a dodatků zapsaných v Makefile (tato funkce je používána při sestavování „výplachu repozitáře“):
 
-``PORADI\_KAPITOL='_VŠE_' make -j4 html``
+``PORADI_KAPITOL='_VŠE_' make -j4 html``
 
 ## Ověření české lokalizace systému
 

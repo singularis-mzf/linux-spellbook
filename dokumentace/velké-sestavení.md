@@ -100,13 +100,13 @@ Překlad pravděpodobně bude fungovat i při nedodržení doporučené syntaxe
 
 *Příklad:*
 
-``make PDF\_ZALOZKY=0 -j4 html pdf-a4``
+``make PDF_ZALOZKY=0 -j4 html pdf-a4``
 
 * Parametrem „PREMIOVE\_KAPITOLY=1“ můžete zapnout generování přehledu vydaných, ale nezařazených kapitol.
 
 *Příklad:*
 
-``make PREMIOVE\_KAPITOLY=1 -j4 html pdf-4a``
+``make PREMIOVE_KAPITOLY=1 -j4 html pdf-4a``
 
 ## Ověření české lokalizace systému
 
