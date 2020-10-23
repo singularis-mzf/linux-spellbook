@@ -203,6 +203,19 @@ function RidiciRadekSpolecnaObsluha(text,   i, soubor) {
             for (i = 1; i in FRAGMENTY; ++i) {
                 printf("<a href=\"%s.htm\" class=\"kapitola\"><span class=\"ikona\"><img src=\"obrazky/%s\" alt=\"[]\"></span><span class=\"cislo\">%d</span><span class=\"nazev\">%s</span></a>\n", OmezitNazev(FRAGMENTY[i "/id"]), OmezitNazev(FRAGMENTY[i "/ikkap"], 1), i, FRAGMENTY[i "/nazev"]);
             }
+            jsou_premiove = 0;
+            soubor = ENVIRON["SOUBORY_PREKLADU"] "/prémiové-kapitoly.tsv";
+            while (getline < soubor) {
+                if (!jsou_premiove) {
+                    jsou_premiove = 1;
+                    printf("<div class=\"premiove\"><strong>Prémiové kapitoly:</strong>\n");
+                }
+                printf("<div>%s</div>\n", $2);
+            }
+            close(soubor);
+            if (jsou_premiove) {
+                printf("</div><p>Tyto kapitoly můžete získat jako odměnu za překlad ze zdrojového kódu. Podrobnější informace <a href=\"https://github.com/singularis-mzf/linux-spellbook/blob/stabilni/dokumentace/odm%C4%9Bna-za-sestaven%C3%AD.md\">na GitHubu</a>.</p>\n");
+            }
             return 0;
 
         case "MENU ŠTÍTKY":
