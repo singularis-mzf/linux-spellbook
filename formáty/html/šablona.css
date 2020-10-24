@@ -1183,17 +1183,17 @@ nav.menu a.zavritmenu::after {
 .prehledy>div>div>div {width:85%;margin-top:0.5em;}
 .prehledy a {
     display:flex;
-    border-bottom:thin dotted rgba(0,0,0,0.2);
+/*    border-bottom:thin dotted rgba(0,0,0,0.2);*/
+    align-items:center;
     flex-direction:row;
     text-decoration:none;
 }
 .prehledy a>* {display:block;}
 .prehledy strong {display:block;font-weight:bold;}
-.prehledy .cislo, .prehledy .nazev {margin-top:1em;}
+/*.prehledy .cislo, .prehledy .nazev {margin-top:1em;}*/
 .prehledy .cislo {
     flex-shrink:0;
     width:3em;
-    margin-right:0.25em;
     text-align:right;
 }
 .prehledy .cislo::after {content:"."}
@@ -1252,13 +1252,19 @@ nav.menu a.zavritmenu::after {
     margin:1em 0 0.5em;
 }
 .prehledstitku div {
+    display:flex;
+    flex-direction:row;
+    align-items:center;
     margin-left:10em;
     border-radius:3rem;
 }
 .prehledstitku div:nth-child(even) {background:{{prehledstitku-sude-barva-pozadi}}}
 .prehledstitku div:nth-child(odd) {background:{{prehledstitku-liche-barva-pozadi}}}
 .prehledstitku div>a {
-    display:inline-block;
+    display:flex;
+    align-items:center;
+    flex-direction:row;
+    /*display:inline-block;*/
     width:50%;
     text-decoration:none;
 }
