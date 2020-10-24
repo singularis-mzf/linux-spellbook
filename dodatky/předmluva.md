@@ -41,7 +41,7 @@ jeho dokumentace, jakkoliv rozsáhlá, vám to nepoví a neporadí vám, kde ji
 O mnoho lépe na tom nejsou ani ti, kdo se s linuxem učí zacházet
 z nejnovějších knih na českém knižním trhu. Ty nejnovější, které se věnují
 linuxu, jsou totiž z let 2008 až 2012, a ačkoliv některé z nich naučí uživatele
-opravdu dobře zacházet s bashem (snad až na asociativní pole), do praxe si
+opravdu dobře zacházet s (GNU) Bashem (snad až na asociativní pole), do praxe si
 z nich uživatelé odnesou také mnohé zastaralé a překonané postupy,
 protože se o těch nových a vylepšených, které jsou díky pokračující obětavé
 práci programátorů svobodného software dostupné teprve několik let,
@@ -56,7 +56,7 @@ Já sám/a jsem linux jako svůj hlavní operační systém začal/a používat
 koncem roku 2018 a patřím do té druhé skupiny — v začátcích mi nesmírně pomáhaly
 vynikající příručky z let 1999 až 2010. V praxi jsem však opakovaně objevoval/a,
 že některé věci už jsou na dnešním linuxu jinak, viz třeba ACL, LVM
-nebo asociativní pole v (GNU) Bashi. Takové věci prostě ve starých příručkách nenajdete.
+nebo asociativní pole v Bashi. Takové věci prostě ve starých příručkách nenajdete.
 
 Cílem Linuxu: Knihy kouzel je tuto situaci změnit a formou
 sbírky řešených příkladů připomínající knihu zaklínadel

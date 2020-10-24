@@ -86,6 +86,14 @@
     a4paper
     ]{geometry}
 {{KONEC POKUD}}
+{{POKUD JE FORMÁT pdf-výplach}}
+\usepackage[xetex,
+    layoutsize={21.0cm,100.0cm},inner=1.5cm,outer=1cm,top=2cm,bottom=1.5cm,
+    twoside,showcrop,
+    layouthoffset=8mm,layoutvoffset=8mm,
+    papersize={22.6cm,101.6cm}
+    ]{geometry}
+{{KONEC POKUD}}
 
 % geometry: + showframe pro ladění
 
@@ -334,7 +342,7 @@
 \newenvironment*{uzkyrezim}{}{}
 \newcommand*{\nadpisobsahu}{\mbox{PŘEHLED (OBSAH)}}%
 
-{{POKUD JE FORMÁT pdf-a4|pdf-a4-bez}}
+{{POKUD JE FORMÁT pdf-a4|pdf-a4-bez|pdf-výplach}}
 \setlength{\sirkakodu}{0.9\textwidth} % šířka kódu v řádcích zaklínadel (obvykle odvozena od šířky textu „\textwidth“)
 \setlength{\omezeniodstavce}{4cm}
 

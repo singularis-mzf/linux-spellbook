@@ -62,7 +62,7 @@ ne však ve spojení s označením „vanilková příchuť“.
 * Primárním cílem PDF výstupu je tištěná podoba, proto je formátování PDF optimalizováno výhradně pro ni, ne pro čtení na počítači. Primárním cílem HTML výstupu je zobrazení na počítači a možnost zaklínadla vykopírovat (Ctrl+C/Ctrl+V) a přímo použít. Proto musí být kód zaklínadla vykopírovaný z HTML výstupu po doplnění položek „doplň“ okamžitě a bez dalších úprav použitelný a funkční.
 * U příkazů, které vyžadují oprávnění superuživatele, používáme sudo, kdekoliv je to možné, dokonce i u příkazů určených ke spuštění v jednouživatelském režimu, kde to není nezbytné. Účelem je přehledná dokumentace faktu, že příkaz spuštění superuživatelem vyžaduje. Výjimkou jsou příkazy určené výhradně ke spouštění v kontejneru Dockeru, kde se sudo obvykle nepoužívá a mohlo by být matoucí.
 
-## Slova „linux“ a „Linux“
+## Označení „linux“, „Linux“ a „GNU/Linux“
 
 V projektu Linux: Kniha kouzel jsem se rozhodl/a vlastní jméno „Linux“ používat výhradně
 k označení jádra, v tom se shoduji s komunitou Debianu a postojem Free Software Foundation,
@@ -77,18 +77,10 @@ významech:
 
 > **2.** *konkrétní instalace takového operačního systému* (Příklady: „V tomto počítači jsou dva linuxy, jeden na oddílu sda3 a druhý na oddílu sda4.“ „V roce 2000 jsem měla na počítači linux a Windows, konkrétně Debian 2.1 Slink a Windows NT 4.0 Workstation.“)
 
-Namísto označení GNU/Linux (vhodného dle mého názoru spíše v anglických a ryze odborných textech)
-pak doporučuji v každé kapitole, kde je významně zastoupen nástroj z projektu GNU
-(např. Awk, Bash, Make apod.), jeho příslušnost k tomuto projektu zmínit v úvodu kapitoly.
-Pomůže to projektu GNU víc než jeho povrchní spojování s linuxy.
+Namísto označení GNU/Linux, prosazovaného komunitou Debianu a dle mého názoru
+vhodného spíše v anglických a ryze odborných textech, pak doporučuji v každé kapitole,
+kde je významně zastoupen nástroj z projektu GNU (např. Awk, Bash, Make apod.),
+jeho příslušnost ke GNU zmínit v úvodu kapitoly. Pomůže to projektu GNU víc
+než jeho povrchní spojování s linuxem.
 
-
-<!--
-
-Netušíte-li například jak naplánovat vyskakovací oznámení na dnešních 15.30, jak začít
-psát svoje poznámky v Markdownu a nechat je automaticky zformátovat do HTML,
-jak zmenšit všechny svoje fotografie a odstranit z nich EXIF data,
-nebo jak otočit svoje oblíbené video o 180° a všít do něj titulky, je toto kniha pro vás.
-
--->
 !ÚzkýRežim: vyp

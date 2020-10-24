@@ -41,6 +41,8 @@ a to i v případě, kdy byl jeho cíl přejmenován, smazán či nahrazen; s
 nemá vazbu se souborem či adresářem jako takovým, ale s jeho pevným odkazem (umístěním
 v adresářové struktuře) a může se stát neplatným, když jeho cíl přestane existovat.
 
+Příkazy ln, readlink, stat a některé další jsou vyvíjeny v rámci projektu GNU.
+
 ## Definice
 
 * **Pevný odkaz** je každá adresářová položka reprezentující obyčejný soubor. Součástí pevného odkazu je pouze název a umístění v adresáři, všechny ostatní údaje o souboru jsou vlastnostmi souboru jako takového.

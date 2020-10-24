@@ -19,6 +19,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 !ÚzkýRežim: zap
 
 ## Úvod
+
 V této kapitole se dozvíte, jak spouštět příkazy automaticky v určený čas.
 Linux na tento účel poskytuje dva oddělené mechanismy: prastarý démon „cron“
 slouží k pravidelnému (opakovanému) spouštění příkazů, zatímco méně věhlasný

@@ -35,7 +35,9 @@ pokrývá nastavování systémového a hardwarového času.
 Tato verze kapitoly nepokrývá menstruační kalendář, výpočet času muslimských modliteb
 ani konverze mezi druhy kalendářů (juliánský, gregoriánský, hebrejský, čínský apod.).
 
-Plánovní úloh na konkrétní čas do této kapitoly nespadá.
+Plánování úloh na konkrétní čas do této kapitoly nespadá.
+
+Příkaz „date“ je vyvíjen v rámci projektu GNU.
 
 ## Definice
 

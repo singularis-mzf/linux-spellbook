@@ -28,6 +28,8 @@ Převážně se zabývá příkazem „find“, který strukturu adresářů sku
 a prohledává, ale zahrnuje také vyhledávání spustitelných souborů (programů)
 a na databázi založený příkaz „locate“.
 
+GNU Findutils, jejichž součástí je příkaz „find“, jsou vyvíjeny v rámci projektu GNU.
+
 ## Definice
 
 * **Výchozí bod** je cesta (relativní či absolutní) zadaná příkazu „find“, ze které tento příkaz zahajuje vyhledávání. Může být absolutní i relativní. Nejčastěji se jedná o adresář (např. „.“), ale může jít i o soubor či symbolický odkaz na adresář či soubor. Příkaz find výchozí bod nezkracuje, vždy ho zpracovává tak, jak je zadán.

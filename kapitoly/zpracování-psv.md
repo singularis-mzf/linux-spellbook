@@ -31,6 +31,8 @@ Poznámky:
 -->
 ![ve výstavbě](../obrázky/ve-výstavbě.png)
 
+GNU Awk (gawk) je vyvíjen v rámci projektu GNU.
+
 ## Definice
 <!--
 - Uveďte výčet specifických pojmů pro použití v této kapitole a tyto pojmy definujte co nejprecizněji.

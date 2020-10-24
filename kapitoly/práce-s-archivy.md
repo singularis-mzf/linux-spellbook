@@ -15,7 +15,6 @@ https://creativecommons.org/licenses/by-sa/4.0/
 Poznámky:
 
 [ ] Pokrýt také .xz (?)
-[ ] Přidat SquashFS.
 
 -->
 
@@ -42,6 +41,8 @@ Nepokrývá práci s obrazy souborových systémů ani různé typy softwarový
 (např. .deb či .rpm). Nezabývá se konverzí jednoho archivního formátu na jiný.
 
 Poznámka: Použití „souborů se seznamem“ při psaní této kapitoly nebylo testováno.
+
+GNU Tar je vyvíjen v rámci projektu GNU.
 
 ## Definice
 

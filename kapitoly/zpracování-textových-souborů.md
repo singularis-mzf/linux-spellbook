@@ -44,6 +44,8 @@ Tato verze kapitoly nepokrývá zpracování formátů CSV a PSV.
 
 Tato kapitola se nezabývá zpracováním textových formátů se složitější strukturou jako např. JSON či XML.
 
+Většina nástrojů používaných v této kapitole je vyvíjena v rámci projektu GNU.
+
 ## Definice
 
 * **Kódování znaků** (character encoding) je určitá reprezentace znakové sady textu pomocí bajtů a jejich sekvencí v souboru či paměti. U textových souborů uvažujeme výhradně kódování UTF-8, případně jeho podmnožinu ASCII. Soubory v jiných kódováních sice také můžeme zpracovávat, ale obvykle je výhodnější je nejprve převést na UTF-8.

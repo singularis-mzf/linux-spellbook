@@ -39,6 +39,8 @@ Tato kapitola se nezabývá připojováním souborových systémů ani prací s�
 
 Tato verze kapitoly nepokrývá příkazy specifické pro souborový systém typu btrfs.
 
+Příkazy chmod, find, stat a některé další jsou vyvíjeny v rámci projektu GNU.
+
 ## Definice
 
 * **Adresářová položka** je jednoznačně pojmenovaná položka v adresáři; obvykle je to soubor (přesněji – pevný odkaz na soubor), další adresář či symbolický odkaz, méně často zařízení (např. „/dev/null“), pojmenovaná roura apod. Adresářové položky se v daném adresáři identifikují svým **názvem**, který může obsahovat jakékoliv znaky UTF-8 kromě nulového bajtu a znaku „/“. V každém adresáři se nacházejí dva zvláštní adresářové odkazy „.“ (na sebe) a „..“ (na nadřazený adresář), které se ale nepočítají a většina nástojů je ignoruje (bohužel ne všechny).

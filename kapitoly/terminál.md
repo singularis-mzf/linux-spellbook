@@ -51,6 +51,8 @@ Tato verze kapitoly se omezuje na sekvence široce podporované většinou
 emulátorů terminálu. Kde není dostupná podpora v textovém režimu,
 bude to zmíněno. Dále nepokrývá podporu šestnácti milionů barev.
 
+GNU Bash je vyvíjen v rámci projektu GNU.
+
 ## Definice
 
 * **Výzva terminálu** (zkráceně „výzva“) je řetězec, který interpret příkazové řádky (v našem případě bash) vypisuje před, během nebo po přijetí příkazu od uživatele (tzn. v interaktivním režimu). V interpretu „bash“ se rozeznávají tři druhy výzvy a jejich šablony jsou uloženy v proměnných PS0, PS1 a PS2: **hlavní výzva** (PS1) značí, že bash očekává příkaz, **vedlejší výzva** (PS2) značí, že bash očekává pokračování příkazu na dalším řádku, **potvrzující výzva** (PS0) se vypisuje po přijetí příkazu a před zahájením jeho vykonávání.

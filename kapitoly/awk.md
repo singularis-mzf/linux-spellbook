@@ -30,7 +30,7 @@ Poznámka:
 
 ## Úvod
 
-AWK je skriptovací nástroj pro řádkově orientované zpracování textových souborů.
+GNU AWK je skriptovací nástroj pro řádkově orientované zpracování textových souborů.
 Nabízí podstatně více možností než „sed“, ale ve srovnání s Perlem zůstává velmi omezený
 (např. jeho jedinou datovou strukturou je asociativní pole), což ho činí velmi vhodným
 pro začátečníky, ale nedostačujícím pro komplikovanější projekty.

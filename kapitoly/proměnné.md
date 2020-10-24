@@ -42,12 +42,14 @@ se používají „exportované“ proměnné, které instance bashe vytvoří z
 prostředí v momentě svého spuštění a ze kterých sestaví prostředí každého
 procesu, který spustí.
 
-Tato verze kapitoly nepokrývá zvláštní proměnné interpretu bash,
+Tato verze kapitoly nepokrývá zvláštní proměnné interpretu Bash,
 které řídí jeho funkci, ale nebývají proměnnými prostředí;
 nedostatečně pokrývá lokální proměnné ve funkcích;
 nepokrývá možnosti přednastavení proměnných v souborech jako
 /etc/environment, „.profile“ či „.bashrc“.
 Do této kapitoly nespadají takzvané zvláštní parametry (jako např. $?, $! apod.).
+
+GNU Bash je vyvíjen v rámci projektu GNU.
 
 ## Definice
 

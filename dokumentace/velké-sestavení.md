@@ -78,7 +78,7 @@ dodatek „licence“.
 
 Pak můžete spustit make (pokud nechcete sestavit všechny formáty, můžete některé z nich vynechat):
 
-> ``make -j4 log html pdf-a4 pdf-a4-bez pdf-b5 pdf-b5-bez pdf-b5-na-a4 deb``
+> ``make -j4 log html pdf-a4 pdf-a4-bez pdf-b5 pdf-b5-bez pdf-b5-na-a4 deb pdf-výplach``
 
 Výstup ve všech podporovaných formátech najdete v adresáři ``výstup_překladu``. Očekávaná doba překladu je cca 5 minut procesorového času (máte-li čtyřjádrový procesor, je to zhruba 1 minuta).
 

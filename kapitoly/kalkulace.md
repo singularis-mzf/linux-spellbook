@@ -41,6 +41,8 @@ který v linuxu najdeme, tato kapitola se zaměřuje především na tři nást
 
 Tato kapitola se nezabývá aritmetikou s datem a časem, ta spadá do kapitoly „Datum, čas a kalendář“.
 
+GNU Bash a interpret „bc“ jsou vyvíjeny v rámci projektu GNU.
+
 ## Definice
 
 * **Aritmetický kontext bashe** je zvláštní kontext v bashi, kde lze provádět celočíselné(!) operace a přistupovat k proměnným pouhým uvedením jejich jména (tzn. bez znaku „$“).

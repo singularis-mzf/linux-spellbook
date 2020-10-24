@@ -42,6 +42,8 @@ Poznámky:
 -->
 ![ve výstavbě](../obrázky/ve-výstavbě.png)
 
+GNU Privacy Guard, jehož součástí je příkaz „gpg“, je vyvíjen v projektu GNU.
+
 ## Definice
 <!--
 - Uveďte výčet specifických pojmů pro použití v této kapitole a tyto pojmy definujte co nejprecizněji.

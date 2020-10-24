@@ -104,7 +104,7 @@ $(shell mkdir -pv $(SOUBORY_PREKLADU) >/dev/null; true > $(SOUBORY_PREKLADU)/dyn
 .PHONY: all clean html log pdf-a4 pdf-a4-bez pdf-b5 pdf-b5-bez pdf-b5-na-a4 info
 .DELETE_ON_ERROR: # Přítomnost tohoto cíle nastaví „make“, aby v případě kteréhokoliv pravidla byl odstraněn jeho cíl.
 
-all: deb html log pdf-a4 pdf-a4-bez pdf-b5 pdf-b5-bez pdf-b5-na-a4
+all: deb html log pdf-a4 pdf-a4-bez pdf-b5 pdf-b5-bez pdf-b5-na-a4 pdf-výplach
 
 clean:
 	$(RM) -Rv $(SOUBORY_PREKLADU) $(VYSTUP_PREKLADU)
@@ -123,6 +123,7 @@ pdf-a4-bez: $(VYSTUP_PREKLADU)/pdf-a4-bez.pdf
 pdf-b5: $(VYSTUP_PREKLADU)/pdf-b5.pdf
 pdf-b5-bez: $(VYSTUP_PREKLADU)/pdf-b5-bez.pdf
 pdf-b5-na-a4: $(VYSTUP_PREKLADU)/pdf-b5-na-a4.pdf
+pdf-výplach: $(VYSTUP_PREKLADU)/pdf-výplach.pdf
 
 $(DATUM_SESTAVENI_SOUBOR):
 	mkdir -pv $(dir $@)
@@ -644,6 +645,41 @@ $(VYSTUP_PREKLADU)/pdf-b5-na-a4.pdf: \
 	mkdir -pv $(dir $@)
 	if test "$(PDF_ZALOZKY)" != "0"; then gs -dBATCH -dNOPAUSE -sDEVICE=pdfwrite -sOutputFile=$@ $(SOUBORY_PREKLADU)/pdf-b5-na-a4/kniha.pdf $(SOUBORY_PREKLADU)/pdf-b5-na-a4/pdfmarks </dev/null; else cat $< > $@; fi
 
+# PDF výplach:
+# ============================================================================
+
+# 4. soubory_překladu/pdf-společné/{id}.kap => soubory_překladu/pdf-výplach/{id}.kap
+# ----------------------------------------------------------------------------
+$(VSECHNY_KAPITOLY_A_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-výplach/%.kap): \
+  $(SOUBORY_PREKLADU)/pdf-výplach/%.kap: \
+  $(SOUBORY_PREKLADU)/pdf-společné/%.kap $(SOUBORY_PREKLADU)/postprocess.dat skripty/postprocess.awk skripty/utility.awk
+	mkdir -pv $(dir $@)
+	touch $(SOUBORY_PREKLADU)/postprocess.log
+	$(AWK) -v IDFORMATU=pdf-výplach -f skripty/postprocess.awk $(SOUBORY_PREKLADU)/postprocess.dat $< 2>&1 >$@
+
+# 5. soubory_překladu/pdf-výplach/{id}.kap => soubory_překladu/pdf-výplach/_všechny.kap
+# ----------------------------------------------------------------------------
+$(SOUBORY_PREKLADU)/pdf-výplach/_všechny.kap: $(VSECHNY_KAPITOLY_A_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-výplach/%.kap) $(SOUBORY_PREKLADU)/fragmenty.tsv
+	mkdir -pv $(dir $@)
+	cut -f 2 $(SOUBORY_PREKLADU)/fragmenty.tsv | $(SED) 's/.*/$(SOUBORY_PREKLADU)\/pdf-výplach\/&.kap/' | xargs -r cat >$@
+
+# 6. soubory_překladu/pdf-výplach/_všechny.kap => soubory_překladu/pdf-výplach/kniha.tex
+# ----------------------------------------------------------------------------
+$(SOUBORY_PREKLADU)/pdf-výplach/kniha.tex: $(SOUBORY_PREKLADU)/pdf-výplach/_všechny.kap formáty/pdf/šablona.tex
+	$(AWK) -f skripty/plnění-šablon/speciální.awk -v IDFORMATU=pdf-výplach -v JMENOVERZE='$(JMENO)' -v TELO=$< formáty/pdf/šablona.tex >$@
+
+# 7. soubory_překladu/pdf-výplach/kniha.tex => výstup_překladu/pdf-výplach/kniha.pdf
+# ----------------------------------------------------------------------------
+$(VYSTUP_PREKLADU)/pdf-výplach.pdf: \
+  $(SOUBORY_PREKLADU)/pdf-výplach/kniha.tex \
+  $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-společné/_obrázky/%) \
+  $(OBRAZKY_IK:%=$(SOUBORY_PREKLADU)/pdf-společné/_obrázky/ik/%) \
+  $(SVG_OBRAZKY:%.svg=$(SOUBORY_PREKLADU)/pdf-společné/_obrázky/%.pdf) \
+  $(SOUBORY_PREKLADU)/pdf-společné/qr.eps
+	mkdir -pv $(dir $@)
+	ln -rsTv skripty $(dir $<)skripty 2>/dev/null || true
+	cd $(dir $<); exec $(AWK) -f skripty/latex.awk
+	cp -fv $(SOUBORY_PREKLADU)/pdf-výplach/kniha.pdf $@
 
 # DEB:
 # ============================================================================

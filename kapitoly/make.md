@@ -18,6 +18,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 !ÚzkýRežim: zap
 
 ## Úvod
+
 GNU make je nástroj k automatizaci procesu sestavování určitých cílových souborů ze souborů zdrojových. Vykonává podobnou úlohu jako např. skript napsaný v bashi, ale na rozdíl od něj umí:
 
 * Kompilovat pouze ty části programu, které jsou potřeba (jejichž cílové soubory neexistují nebo se jejich zdrojové soubory změnily).

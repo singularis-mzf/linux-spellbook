@@ -33,6 +33,8 @@ Poznámky:
 -->
 ![ve výstavbě](../obrázky/ve-výstavbě.png)
 
+GNU Bash...
+
 ## Definice
 <!--
 - Uveďte výčet specifických pojmů pro použití v této kapitole a tyto pojmy definujte co nejprecizněji.

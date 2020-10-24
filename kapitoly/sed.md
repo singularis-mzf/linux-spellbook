@@ -41,6 +41,8 @@ přítomnost v prakticky každé instalaci linuxu, stoprocentní podpora UTF-8 
 Sed pracuje tak, že v cyklu načítá záznamy ze vstupních souborů a na každý záznam spustí
 skript (zadaný typicky přímo na příkazové řádce, jen vzácně se ukládá do samostatného souboru).
 
+GNU Sed je vyvíjen v rámci projektu GNU.
+
 ## Definice
 
 * **Prostor** (space) je v Sedu oblast, do které se ukládají textové záznamy nebo jiné hodnoty. Existují pouze pevně definované prostory.

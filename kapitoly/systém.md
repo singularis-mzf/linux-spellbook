@@ -25,8 +25,6 @@ Poznámky:
 Při přechodu na vyšší verzi Ubuntu nutno otestovat zkratky pro přepínání mezi
 virtuálními konzolemi a X.
 
-
-
 -->
 
 # Systém
@@ -66,6 +64,8 @@ zodpovídají se pouze přímo jádru.
 
 Poznámka: správci přihlášení se nepočítají mezi démony, protože mají přímé uživatelské rozhraní.
 -->
+
+GNU GRUB je vyvíjen v rámci projektu GNU.
 
 ## Definice
 

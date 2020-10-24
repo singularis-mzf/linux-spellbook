@@ -34,6 +34,8 @@ nebo po blocích pevné velikosti.
 Předmětem této kapitoly není šifrování dat, elektronické podepisování, komprese ani ukládání souborů
 do archivů či vybalování z nich.
 
+Nástroje od, strings, \*sum, split a některé další jsou vyvíjeny v rámci projektu GNU. Nástroj xxd není vyvíjen v rámci projektu GNU.
+
 ## Definice
 
 * **Velikost-P** je počet bajtů, který může obsahovat (a často obsahuje) multiplikativní příponu K, M, G, T, P pro mocniny 1024 (kibibajty, mebibajty atd.) nebo kB, MB, GB, TB, PB (kilobajty, megabajty atd.) pro mocniny 1000. Takže máte-li do příkazu zadat {*velikost-P*}, čtyři mebibajty můžete zadat jako „4194304“ nebo jako „4M“ (což je podstatně snazší a přehlednější).
