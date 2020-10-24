@@ -21,7 +21,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 [ ] Zpracovat „git clean“
 [ ] Zpracovat „git for-each-ref“
 [x] Zmínit nepokrytí submodulů.
-[ ] git rebase -i (interactive rebase)
+[-] git rebase -i (interactive rebase)
 
 [ ] git push {*vzdálený-repozitář*} {*co-lokálně*}:{*kam-vzdáleně*} // + vynechání co-lokálně
 [ ] git fetch {*vzdálený-repozitář*} {*co-vzdáleně*}:{*kam-lokálně*}
@@ -42,28 +42,29 @@ git config --global init.defaultBranch {název} // od git 2.28 je možno změnit
 Git je široce používaný systém správy verzí.
 Je používán k verzování zdrojových kódů nebo jiných skupin textových souborů.
 Umožňuje snadný přístup do historie verzovaných souborů a slučování změn provedených
-odděleně.
+odděleně, často mnoha různými uživateli.
 
-Příklad architektury Gitu:
+Příklad architektury repozitářů v Gitu:
 
 ![Obrázek: architektura Gitu](../obrázky/git.svg)
 
 Tato verze kapitoly nepokrývá práci s podrepozitáři (submodules).
-Příkaz „git stash“ je pokryt částečně.
+Příkaz „git stash“ je pokryt částečně, příkaz „git rebase -i“ pokryt není.
 
 ## Definice
 
 ### Základní definice
 
 * **Revize** je konkrétní neměnný (historický) stav Gitem verzovaných souborů, označený a doplněný o další údaje (zejména datum, čas, komentář a označení přispěvatele).
-* **Větev** (branch) je v Gitu v podstatě proměnná, která odkazuje na určitou revizi. Když vytvoříte novou revizi, aktivní větev se automaticky nastaví tak, aby odkazovala na tuto novou revizi.
-* Revize jsou uspořádány do grafové struktury, ve které má většina revizí právě jednoho **rodiče**, což je bezprostředně předcházející revize v linii vývoje. Výjimkou jsou takzvané **kořenové revize**, které nemají žádné rodiče, a revize vzniklé slučováním změn, které mají obvykle dva rodiče (vzácně i víc).
+* Revize jsou v repozitáři uspořádány podle posloupnosti vkládání do repozitáře; když do repozitáře vložíte novou revizi, předchozí revize (takzvaná **aktivní revize**) se stane **rodičem** nové revize. Jedna revize může být rodičem mnoha revizí, protože se kdykoliv můžete vrátit, nastavit jako aktivní revizi tu původní, provést v ní jiné změny a vložit je jako další revizi. Tímto způsobem se může vývoj v repozitáři větvit. Většina revizí má jednoho rodiče; výjimkou jsou **kořenové revize**, které nemají žádné rodiče, a revize vzniklé slučováním změn („spojováním vývojových větví“), které mají obvykle dva rodiče (vzácně i víc).
+* **Předkové** revize X jsou její rodiče, rodiče rodičů a tak dále. **Nejbližší společný předek** dvou revizí je: 1) Pokud je jedna z revizí předkem té druhé, pak je nejbližším společným předkem ona. 2) Jinak je nejbližším společným předkem taková revize, která je společným předkem obou revizí, ale není rodičem žádné revize, která by společným předkem obou revizí byla také. 3) Pokud taková revize neexistuje, revize nejbližšího společného předka nemají.
+* **Větev** (branch) je v Gitu proměnný odkaz na (nejnovější) revizi. Když vytvoříte novou revizi, **aktivní větev** se automaticky nastaví tak, aby na tuto novou revizi odkazovala. Můžete mít mnoho různých větví, každou nechat odrážet jiný směr vývoje a přepínat se mezi nimi.
 * **Jméno revize** (tag) je trvalé a neměnné symbolické označení určité revize v repozitáři (něco jako konstanta). Obvykle se používá k označení význačných revizí, např. těch, ze kterých vznikla vydaná verze softwaru.
-* **Pracovní adresář** (**PA**) je adresář příslušný k místnímu repozitáři, který obsahuje především soubory verzované Gitem.
+* **Pracovní adresář** (**PA**) je adresář příslušný k místnímu repozitáři, který obsahuje především soubory verzované Gitem. Verzované i neverzované soubory zde můžete upravovat a jinak s nimi pracovat.
 * **Přípravná oblast** (**PO**, anglicky „staging area“ či „index“) je pro daný PA skrytá oblast, ve které vzniká nová revize. Aby se změny v PA do nové revize promítly, musíte je nejprve odeslat do PO.
 * **Aktivní větev** je pro daný PA větev, která do něj byla naposledy načtena a k níž je připojen – to znamená, že nově vzniklé revize budou do dané větve přiřazovány. Pokud je PA odpojený od větve, má pouze **aktivní revizi** a nové revize sice lze vytvářet, ale nebudou přiřazovány žádné větvi.
 * **HEAD** je v konkrétním pracovním adresáři označení pro aktivní větev resp. aktivní revizi.
-* **Vzdálená větev** se označuje názvem vzdáleného repozitáře a názvem větve, např. „origin/vetev“, a reprezentuje větev ve vzdáleném repozitáři. Ve skutečnosti se pracuje s místní kopií vzdálené větve, aby nebylo nutno se do vzdáleného repozitáře připojovat; tuto kopii aktualizují příkazy „git fetch“ a „git pull“.
+* **Vzdálená větev** se označuje názvem vzdáleného repozitáře a názvem větve, např. „origin/vetev“, a reprezentuje určitou větev v daném vzdáleném repozitáři. Ve skutečnosti ovšem Git pracuje s místní kopií vzdálené větve, aby nebylo nutno se do vzdáleného repozitáře připojovat; tuto kopii aktualizují příkazy „git fetch“ a „git pull“.
 
 ### Druhy repozitářů
 
@@ -71,7 +72,7 @@ Příkaz „git stash“ je pokryt částečně.
 
 * **Místní repozitář** je nejčastější. Může spolupracovat se vzdálenými repozitáři a má k sobě vždy jeden **hlavní PA**; můžete k němu vytvářet také **vedlejší PA**. Místní repozitář může sloužit jako vzdálený repozitář jiného místního repozitáře, ale pouze ke čtení – nelze do něj odesílat.
 * **Holý repozitář** nemá vlastní pracovní adresáře; slouží především v roli vzdáleného repozitáře pro místní repozitáře.
-* Máte-li místní repozitář, jako **vzdálené repozitáře** se označují oddělené repozitáře, ke kterým je místní repozitář připojen a může z nich čerpat revize a větve, případně je do nich i odesílat.
+* Máte-li místní repozitář, jako **vzdálené repozitáře** se označují oddělené repozitáře, ke kterým je místní repozitář připojen a může z nich čerpat revize a větve, případně je do nich i odesílat. Vzdálené repozitáře se mohou nacházet v místním souborovém systému nebo být dostupné přes síť a samy o sobě to mohou být holé nebo (méně často) místní repozitáře.
 
 ### Označení revize
 
@@ -79,7 +80,7 @@ V Gitu se používá několik způsobů, jak můžete v příkazech označovat
 
 * **Úplná MD5 heš** je vhodná pouze ve skriptech, na ruční použití je nepraktická.
 * **Jednoznačná předpona heše** je vhodná pro ruční použití; v malých projektech obvykle stačí první tři znaky, ve velkých pět nebo šest. Pokud předpona není jednoznačná, Git ohlásí chybu.
-* **Symbolické označení** jako název větve, jméno revize nebo „HEAD“.
+* **Symbolické označení**, např. název větve, jméno revize nebo „HEAD“.
 
 Za jakýmkoliv označením revize můžete (i opakovaně a v kombinaci) použít tyto dva operátory:
 
@@ -90,21 +91,41 @@ Za jakýmkoliv označením revize můžete (i opakovaně a v kombinaci) použ
 
 ## Zaklínadla: Revize, větve a změny
 
-### Větve
+### Informace o stavu PO a PA
 
-*# **vytvořit** novou větev a přepnout se na ni*<br>
-*// Pokud nezadáte revizi, použije se HEAD a PO ani PA se tímto příkazem nezmění.*<br>
-**git checkout -b** {*nová-větev*} [{*revize*}]
+*# **běžné informace** pro člověka*<br>
+**git status** [**-bs**]
+<!--
+[{*soubor-či-adresář*}]...
+-->
 
-*# vytvořit novou větev a přiřadit jí určitou revizi (lze použít k duplikaci větve)*<br>
-**git branch** {*nová-větev*} {*revize*}
+*# **změny** v PA oproti HEAD/v PA oproti PO/v PO oproti HEAD*<br>
+**git diff** [**\-\-name-status**] **HEAD** [**\-\-** {*soubor-nebo-adresář*}...]<br>
+**git diff** [**\-\-name-status**] <nic>[**\-\-** {*soubor-nebo-adresář*}...]<br>
+**git diff** [**\-\-name-status**] **\-\-cached** [**\-\-** {*soubor-nebo-adresář*}...]
+
+*# **historie** předků aktuální revize*<br>
+*// Vhodné formáty jsou „medium“, „oneline“ a „reference“; vyzkoušejte, který z nich vám víc vyhovuje. Úplný popis k revizím z nich poskytuje jen „medium“.*<br>
+**git log** [**\-\-pretty=**{*formát*}] <nic>[**-n** {*maximální-počet-revizí*}] <nic>[{*revize*}]
+
+*# historie revizí, ve kterých došlo ke změně v některém z uvedených souborů*<br>
+**git log** [**\-\-pretty=**{*formát*}] <nic>[**-n** {*maximální-počet-revizí*}] <nic>[{*revize*}] **\-\-** {*soubor-nebo-adresář*}...
+
+### Větve (kromě vzdálených)
+
+*# **vytvořit** novou větev a přepnout se na ni/bez přepnutí*<br>
+*// Pokud nezadáte revizi, použije se HEAD.*<br>
+**git checkout -b** {*nová-větev*} [{*revize*}]<br>
+**git branch** {*nová-větev*} [{*revize*}]
 
 *# **smazat** větev (bezpečně/drasticky)*<br>
 *// Při bezpečném mazání Git odmítne smazat větev, pokud by tím přestaly být dostupné některé revize, protože nejsou odkazovány odjinud. Bezpečné mazání je tedy určeno především pro mazání větví, jejichž změny již byly sloučeny do jiných větví.*<br>
 **git branch -d** {*větev*}...<br>
 **git branch -D** {*větev*}...
 
-*# ručně přiřadit aktuální větvi **určitou revizi** (i nesouvisející)*<br>
+*# ručně přiřadit aktuální větvi/libovolné větvi **určitou revizi** (i nesouvisející)*<br>
+*// Po přiřazení nové revize aktivní větvi vám zdánlivě v PO vzniknou nové změny, protože PO zůstane ve stavu odpovídajícím původní revizi. Pokud se chcete veškerých odlišností PO a PA od cílové revize zbavit, místo „\-\-soft“ použijte „\-\-hard“.*<br>
+**git reset \-\-soft** {*revize*}<br>
 **git branch -f** {*větev*} {*revize*}
 
 *# **přejmenovat** větev*<br>
@@ -112,40 +133,55 @@ Za jakýmkoliv označením revize můžete (i opakovaně a v kombinaci) použ
 
 *# vytvořit novou **odpojenou větev** a přejít na ni*<br>
 *// Místo uvedeného tvaru příkazu „git commit“ můžete použít jakýkoliv jiný, podstatné však je, že nová větev nevznikne, dokud v ní nevytvoříte alespoň jednu revizi.*<br>
-**git checkout \-\-orphan &amp;&amp; git rm -rf . &amp;&amp; git commit \-\-allow-empty -m 'kořenová revize'**
+**git checkout \-\-orphan &amp;&amp; git rm -Rf . &amp;&amp; git commit \-\-allow-empty -m 'kořenová revize'**
 
 ### Aktivní větev/revize
 
-*# přepnout aktivní větev a načíst ji*<br>
-**git checkout** {*větev*}
+*# **přepnout** aktivní větev a načíst ji do PA i PO/bez načtení*<br>
+*// Pokud byly v PA a PO již nějaké změny oproti původní aktivní větvi, Git se je při načítání nové větve pokusí zachovat.*<br>
+**git checkout** {*větev*}<br>
+?
 
-*# odpojit se od aktivní větve*<br>
+*# **název** aktivní větve*<br>
+**git branch \-\-show-current**
+
+*# **odpojit** se od aktivní větve*<br>
 **git checkout "HEAD\~0"**
 
-*# heš aktivní revize*<br>
-?
-
-*# název aktivní větve*<br>
-?
+*# **heš** aktivní revize*<br>
+**git rev-parse \-\-verify HEAD**
 
 *# je některá větev aktivní?*<br>
-?
+**git branch \-\-show-current \| egrep -q .**
 
 ### Z PA do PO a z PO do repozitáře
 
 <!--
+PA -> PO -> REPO
+-->
+*# odeslat změny z PA do PO, rovnou z nich vytvořit **novou revizi** a nastavit na ni aktivní větev*<br>
+*// Poznámka: tento příkaz nepřidá do revize žádné dosud neverzované soubory, a pokud jste některý verzovaný soubor přesunuli jinak než příkazem „git mv“, Git už ho nenajde a v revizi skončí jako smazaný.*<br>
+**git commit -a**[**S**] <nic>[**-m '**{*komentář*}**'**]
+
+<!--
 PA -> PO
 -->
-*# odeslat **do PO** změny (všechny/kromě smazání souborů/konkrétních souborů)*<br>
+*# odeslat změny PA **do PO**; neverzované soubory zahrnout jako přidané/ignorovat*<br>
 **git add -A**<br>
-**git add -u**<br>
-**git add** [**\-\-**] {*soubor-nebo-adresář*}... [{*soubor-nebo-adresář*}]...
+**git add -u**
+
+<!--
+PA -> PO
+-->
+*# odeslat do PO konkrétní soubory či adresáře (i dosud neverzované)*<br>
+*// Příkaz „git add“ automaticky ignoruje soubory a adresáře nastavené k ignorování v souboru „.gitignore“.*<br>
+**git add** [**-u**] <nic>[**\-\-**] {*soubor-nebo-adresář*}...
 
 <!--
 PO -> REPO
 -->
 *# vytvořit **novou revizi** z PO (a nastavit na ni aktivní větev)*<br>
-**git commit** [**-m** {*komentář*}] <nic>[**-a**] <nic>[**\-\-allow-empty**] <nic>[**\-\-amend**] <nic>[**-S**] <nic>[**\-\-reset-author**]
+**git commit** [**-m** {*komentář*}] <nic>[**-a**] <nic>[**-S**] <nic>[**\-\-allow-empty**]
 
 <!--
 PO -> REPO
@@ -200,9 +236,12 @@ REPO -> PO -> PA
 **git checkout $(git rev-list -n 1 \-\-first-parent "\-\-until=**{*datum-YYYY-MM-DD HH:mm:ss*}**" HEAD)**<br>
 **git checkout $(git rev-list -n 1 \-\-first-parent "\-\-until=$(date -d "14 days ago" "+%F %T")" HEAD)**
 
+<!--
+REPO -> x
+-->
 *# získat do samostatného nového adresáře konkrétní revizi*<br>
-*// Jako „repozitář“ zadejte cestu k hlavnímu pracovnímu adresáři; jde-li o holý repozitář, zadejte cestu k repozitáři jako takovému.*<br>
-**git clone -s -n "$(realpath** [**\-\-**] {*repozitář*}**)"** {*nový/adresář*} **&amp;&amp; (cd** {*nový/adresář*} **&amp;&amp;git checkout** {*revize*} **&amp;&amp; rm -Rf .git)**
+*// Tip: nový adresář může být i uvnitř pracovního adresáře, před provedením příkazu však nesmí existovat.*<br>
+**revize=$(git rev-parse \-\-verify** {*revize*}**); test -n $revize &amp;&amp; git clone -sn \-\- "$(git rev-parse \-\-show-toplevel)"** {*nový/adresář*} **&amp;&amp; (cd** {*nový/adresář*} **&amp;&amp; git checkout \-\-detach $revize &amp;&amp; rm -Rf .git)**
 
 *# načíst revizi do PO a PA, ale nepřepnout se na ni*<br>
 ?
@@ -228,11 +267,20 @@ aktivní větve a revize uvedené jako parametr příkazu.
 *// Příkaz „git merge“ se pokusí do aktivní větve sloučit všechny změny od NSP po uvedenou revizi. Pokud to bude potřeba, vytvoří pro to novou revizi se dvěma rodiči.*<br>
 **git merge** {*revize*}
 
+*# **odvolat** změny z určitých revizí/z určitého rozsahu revizí*<br>
+*// Příkaz „git revert“ vyžaduje, aby v PO ani PA nebyly žádné změny oproti HEAD. Příkaz vytvoří nové revize s opačným účinkem oproti zadaným revizím.*<br>
+**git revert** [**\-\-no-edit**] <nic>[**-n**] {*revize*}...<br>
+**git revert** [**\-\-no-edit**] <nic>[**-n**] {*starší-revize*}**..**{*novější-revize*}
+
+*# **přehrát** změny z uvedených revizí v aktivní větvi (seznam revizí uvést/načíst)*<br>
+**git cherry-pick** [**-x**] <nic>[**-n**] {*revize*}...<br>
+{*zdroj*} **\| git cherry-pick \-\-stdin** [**-x**] <nic>[**-n**]
+
 *# **přehrát změny** na vrchol aktivní větve*<br>
 ?
 
 *# zakomponovat změny do historie aktivní větve*<br>
-*// Tento příkaz používejte opatrně. Najde nejbližšího společného předka aktivní větve a uvedené revize a od něj vytvoří zcela novou sérii revizí, do které nakopíruje nejprve revize směřující k uvedené revizi a za ně pak revize odpovídající změnám od společného předka k aktivní větvi. Revizi na konci této série pak přiřadí do aktivní větve.*<br>
+*// Tento příkaz používejte opatrně. Vytvoří zcela novou sérii revizí od NSP, do které po jednotlivých revizích nakopíruje nejprve změny směřující k zadané revizi a za ně pak změny od NSP k aktivní větvi. Revizi na konci této nově vzniklé série pak přiřadí do aktivní větve, čimž bude původní série revizí odkazovaná větví ztracena, ledaže na ni vede jiný odkaz (např. větev či jméno revize).*<br>
 **git rebase** {*revize*}
 
 <!--
@@ -243,15 +291,6 @@ aktivní větve a revize uvedené jako parametr příkazu.
 
 *# zrušit slučování (nastal-li konflikt)*<br>
 **git merge \-\-abort**
-
-*# **odvolat** změny z určitých revizí/z určitého rozsahu revizí*<br>
-*// Příkaz „git revert“ vyžaduje, aby v PO ani PA nebyly žádné změny oproti HEAD. Příkaz vytvoří nové revize s opačným účinkem oproti zadaným revizím.*<br>
-**git revert** [**\-\-no-edit**] <nic>[**-n**] {*revize*}...<br>
-**git revert** [**\-\-no-edit**] <nic>[**-n**] {*starší-revize*}**..**{*novější-revize*}
-
-*# **přehrát** změny z uvedených revizí v aktivní větvi (seznam revizí uvést/načíst)*<br>
-**git cherry-pick** [**-x**] <nic>[**-n**] {*revize*}...<br>
-{*zdroj*} **\| git cherry-pick \-\-stdin** [**-x**] <nic>[**-n**]
 
 ### Odkládání změn v PA a PO
 
@@ -275,28 +314,68 @@ aktivní větve a revize uvedené jako parametr příkazu.
 *# vypsat seznam uložených odložení*<br>
 **git stash list**
 
-## Zaklínadla: Místní nebo holý repozitář
+### Vzdálené větve
 
+*# stáhnout všechny novinky a sloučit vzdálené změny do aktivní větve/jen sloučit změny*<br>
+**git pull**<br>
+**git merge FETCH\_HEAD**
+
+*# **odeslat změny** v aktuální větvi (do napojené větve/a nastavit napojení)*<br>
+**git push**<br>
+**git push -u** {*vzdálený-repozitář*} **HEAD:**{*vzdálená-větev*}
+
+*# načíst vzdálenou větev do místní a přepnout se na ni*<br>
+**git checkout** {*vzdálený-repozitář*}**/**{*vzdálená-větev*}
+
+*# **seznam** vzdálených větví (pro člověka/pro skript)*<br>
+**git branch -r**<br>
+**git branch -r \-\-no-column \-\-format '%(refname:lstrip=2)'**
+
+*# kam je napojená aktivní větev?*<br>
+*// Pokud aktivní větev není napojená, příkaz selže s návratovým kódem 128.*<br>
+**git rev-parse \-\-abbrev-ref "HEAD@{upstream}" 2&gt;/dev/null** ⊨ origin/vzdalena-vetev
+
+<!--
+**git for-each-ref \-\-format '%(upstream:short)' "refs/heads/$(git branch \-\-get-current)"**
+Ve starších verzích použít „git symbolic-ref --short HEAD 2&gt;/dev/null“.
+-->
+
+*# **smazat** větev ve vzdáleném repozitáři*<br>
+**git push** {*vzdálený-repozitář*} **:**{*vzdálená-větev*} [**:**{*další-vzdálená-větev*}]...
+
+*# **vytvořit** místní větev napojenou na existující vzdálenou větev (obecně/příklad)*<br>
+**git branch** {*místní-název*} {*vzdálený-repozitář*}**/**{*vzdálená-větev*}
+**git branch moje-stabilni origin/stabilni**
+
+*# odeslat do vzdáleného repozitáře **jména revizí***<br>
+**git push** {*vzdálený-repozitář*} {*jméno-revize*}...
+
+*# nastavit/zrušit napojení místní větve na vzdálenou*<br>
+**git branch -u** {*vzdálený-repozitář*}**/**{*vzdálená-větev*} {*místní-větev*}<br>
+**git branch \-\-unset-upstream** {*místní-větev*}
+
+*# kam je napojená určitá větev?*<br>
+**git rev-parse \-\-abbrev-ref "**{*místní-větev*}**@{upstream}"** [**"**{*místní-větev*}**@{upstream}"**]...
+
+### Vyhledávání revizí
+
+*# všechny revize z určitého dne*<br>
+?
+
+## Zaklínadla: Pracovní adresáře a repozitáře
 
 ### Analýza stavu
 
-*# vypsat „pro člověka“ **běžné informace** (aktuální větev a změněné soubory v indexu a pracovním adresáři)*<br>
-**git status** [{*soubor-či-adresář*}]...
-
-*# vypsat **změny** v pracovním adresáři oproti HEAD/v pracovním adresáři oproti indexu/v indexu oproti HEAD*<br>
-**git diff HEAD** [**\-\-** {*soubor-nebo-adresář*}...]<br>
-**git diff** [**\-\-** {*soubor-nebo-adresář*}...]<br>
-**git diff \-\-cached** [**\-\-** {*soubor-nebo-adresář*}...]
-
 *# vypsat **rozdíly** mezi dvěma revizemi*<br>
-**git diff** {*revize1*} {*revize2*} [**\-\-** {*soubor-nebo-adresář*}...]
+**git diff** [**\-\-name-status**] {*revize1*} {*revize2*} [**\-\-** {*soubor-nebo-adresář*}...]
 
 *# vypsat „pro člověka“ zpětnou historii předků aktuální revize (až po kořen/jen po první revizi dosažitelnou z „omezující-revize“)*<br>
 **git log** [**\-\-pretty=**{*formát*}] <nic>[**-n** {*maximální-počet-revizí*}] <nic>[{*revize*}]<br>
 **git log** [**\-\-pretty=**{*formát*}] <nic>[**-n** {*maximální-počet-revizí*}] {*omezující-revize*}**..**{*revize*}
 
-*# vypsat „pro člověka“ zpětnou historii revizí, u kterých došlo ke změně v některém z uvedených souborů*<br>
-**git log** [**\-\-pretty=**{*formát*}] <nic>[**-n** {*maximální-počet-revizí*}] <nic>[{*revize*}] **\-\-** {*soubor-nebo-adresář*}...
+*# úplná cesta k pracovnímu adresáři (aktuálnímu/hlavnímu)*<br>
+**git rev-parse \-\-show-toplevel**<br>
+**git worktree list \-\-porcelain \| sed -E '2,$d;s/^worktree&blank;//'**
 
 *# vypsat podrobné informace o revizi*<br>
 **git show** {*revize*}
@@ -312,7 +391,7 @@ aktivní větve a revize uvedené jako parametr příkazu.
 [ ]
 -->
 
-### Vytvoření a konverze
+### Vytvoření a konverze repozitáře (místní/holý)
 
 *# **vytvořit** nový repozitář v aktuálním adresáři (místní/holý)*<br>
 **git init** [**&amp;&amp; git checkout -b** {*název\_výchozí\_větve*}]<br>
@@ -334,73 +413,6 @@ aktivní větve a revize uvedené jako parametr příkazu.
 **rm -R** {*repozitář*}<br>
 **mv** {*repozitář*}**-git** {*repozitář*}<br>
 **git -C** {*repozitář*} **config core.bare true**
-
-### Vedlejší pracovní adresáře
-
-*# **vytvořit***<br>
-*// Poznámka: v žádných dvou pracovních adresářích jednoho repozitáře nemůže být současně aktivní tatáž větev; toto opatření platí, aby se zamezilo konfliktům při commitování.*<br>
-**git worktree add** [**\-\-detach**] <nic>[**-b** {*nová-větev*}] {*/nový/adresář*} {*revize*}
-
-*# **vypsat** seznam*<br>
-**git worktree list** [**\-\-porcelain**]
-
-*# **smazat***<br>
-**git worktree remove** {*/sekundární/pracovní/adresář*}
-
-*# smazat všechny nedostupné sekundární pracovní adresáře*<br>
-**git worktree prune**
-
-*# **přesunout***<br>
-**git worktree move** {*/sekundární/pracovní/adresář*} {*/nové/umístění*}
-
-*# zamknout/odemknout (zamknutý adresář se nesmaže příkazem „prune“)*<br>
-**git worktree lock** [**\-\-reason** {*důvod*}] {*/sekundární/pracovní/adresář*}<br>
-**git worktree unlock** {*/sekundární/pracovní/adresář*}
-
-## Zaklínadla: Vzdálené větve a vzdálené repozitáře
-
-### Vzdálené větve
-
-*# kam je napojená aktivní větev?*<br>
-*// Pokud aktivní větev není napojená, příkaz selže s návratovým kódem 128.*<br>
-**git rev-parse \-\-abbrev-ref "HEAD@{upstream}" 2&gt;/dev/null** ⊨ origin/vzdalena-vetev
-
-<!--
-**git for-each-ref \-\-format '%(upstream:short)' "refs/heads/$(git branch \-\-get-current)"**
-Ve starších verzích použít „git symbolic-ref --short HEAD 2&gt;/dev/null“.
--->
-
-*# stáhnout všechny novinky a sloučit vzdálené změny do aktivní větve/jen sloučit změny*<br>
-**git pull**<br>
-**git merge FETCH\_HEAD**
-
-*# **odeslat změny** v aktuální větvi (do napojené větve/a nastavit napojení)*<br>
-**git push**<br>
-**git push -u** {*vzdálený-repozitář*} **HEAD:**{*vzdálená-větev*}
-
-*# načíst vzdálenou větev do místní a přepnout se na ni*<br>
-**git checkout** {*vzdálený-repozitář*}**/**{*vzdálená-větev*}
-
-*# **seznam** vzdálených větví (pro člověka/pro skript)*<br>
-**git branch -r**<br>
-**git branch -r \-\-no-column \-\-format '%(refname:lstrip=2)'**
-
-*# **smazat** větev ve vzdáleném repozitáři*<br>
-**git push** {*vzdálený-repozitář*} **:**{*vzdálená-větev*} [**:**{*další-vzdálená-větev*}]...
-
-*# **vytvořit** místní větev napojenou na existující vzdálenou větev (obecně/příklad)*<br>
-**git branch** {*místní-název*} {*vzdálený-repozitář*}**/**{*vzdálená-větev*}
-**git branch moje-stabilni origin/stabilni**
-
-*# odeslat do vzdáleného repozitáře **jména revizí***<br>
-**git push** {*vzdálený-repozitář*} {*jméno-revize*}...
-
-*# nastavit/zrušit napojení místní větve na vzdálenou*<br>
-**git branch -u** {*vzdálený-repozitář*}**/**{*vzdálená-větev*} {*místní-větev*}<br>
-**git branch \-\-unset-upstream** {*místní-větev*}
-
-*# kam je napojená určitá větev?*<br>
-**git rev-parse \-\-abbrev-ref "**{*místní-větev*}**@{upstream}"** [**"**{*místní-větev*}**@{upstream}"**]...
 
 ### Vzdálený repozitář
 
@@ -429,6 +441,37 @@ Ve starších verzích použít „git symbolic-ref --short HEAD 2&gt;/dev/null�
 git remote set-head {*vzdálený-repozitář*} -d
 :: Pomůže proti „ignoring broken ref refs/remotes/*/HEAD“
 -->
+
+### Vedlejší pracovní adresáře
+
+*# **vytvořit***<br>
+*// Poznámka: v žádných dvou pracovních adresářích jednoho repozitáře nemůže být současně aktivní tatáž větev; toto opatření platí, aby se zamezilo konfliktům při commitování.*<br>
+**git worktree add** [**\-\-detach**] <nic>[**-b** {*nová-větev*}] {*/nový/adresář*} {*revize*}
+
+*# **vypsat** seznam*<br>
+**git worktree list** [**\-\-porcelain**]
+
+*# **smazat***<br>
+**git worktree remove** {*/sekundární/pracovní/adresář*}
+
+*# smazat všechny nedostupné sekundární pracovní adresáře*<br>
+**git worktree prune**
+
+*# **přesunout***<br>
+**git worktree move** {*/sekundární/pracovní/adresář*} {*/nové/umístění*}
+
+*# zamknout/odemknout (zamknutý adresář se nesmaže příkazem „prune“)*<br>
+**git worktree lock** [**\-\-reason** {*důvod*}] {*/sekundární/pracovní/adresář*}<br>
+**git worktree unlock** {*/sekundární/pracovní/adresář*}
+
+### Ostatní
+
+*# smazat neverzované soubory a adresáře (kromě/včetně ignorovaných)*<br>
+*// Poznámka: Tento příkaz smaže pouze soubory v aktuálním adresáři a jeho podadresářích; pokud chcete smazat neverzované soubory v celém PA, musíte příkaz spustit v kořeni pracovního adresáře.*<br>
+**git clean -fd**[**i**]<br>
+**git clean -fdx**[**i**]
+
+
 
 
 ## Zaklínadla: Konfigurace a ostatní
