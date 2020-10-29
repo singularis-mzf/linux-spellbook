@@ -170,9 +170,9 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 <neodsadit>Všechen software potřebný k sestavení projektu je svobodný.
 Pokud některá kapitola odkazuje na nesvobodný software, vždy na to výslovně upozorní.
 
-## Aktuální poznámka k verzi „vanilková příchuť 1.13“
+## Aktuální poznámka k vývojové řadě 1.x
 
-Verzí 1.13 přechází vývojová řada „1.x“ vanilkové příchuti do stádia *dlouhodobé pasivní údržby*.
+Verzí 1.13 přešla vývojová řada „1.x“ vanilkové příchuti do stádia *dlouhodobé pasivní údržby*.
 V tomto stádiu bude docházet jen k minimálním změnám nutným k opravě nahlášených nebo jinak
 objevených chyb ve vydaných kapitolách. Vývojová řada „1.x“ zůstane v tomto stádiu do 1. března 2023,
 kdy bude její vývoj zcela ukončen.
