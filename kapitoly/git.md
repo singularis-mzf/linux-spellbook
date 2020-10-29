@@ -11,18 +11,6 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
-<!--
-ÚKOLY:
-
-[ ] Lépe zpracovat git rev-list.
-[ ] Nějak zpracovat řešení konfliktů při slučování větví.
-[ ] Zpracovat „git remote add“
-[ ] Zpracovat „git stash“
-
-
-[ ] Vypsat větve, které jsou/nejsou připojeny ke vzdálené větvi.
-
--->
 
 # Git
 
@@ -96,7 +84,7 @@ Každá revize je jednoznačně identifikována pomocí své MD5 heše. Kromě t
 **git checkout** {*revize*}<br>
 **git checkout -b** {*nová-větev*} [{*revize*}]
 
-*# přenést do indexu změny v pracovním repozitáři (všech souborů/jen již verzovaných)*<br>
+*# přenést do indexu změny v pracovním adresáři (všech souborů/jen již verzovaných)*<br>
 *// Normálně „git add“ přenese smazání souboru jen tehdy, je-li daný soubor výslovně jmenován na příkazovém řádku. S parametrem „-A“ přenese všechna smazání.*<br>
 **git add** [**-A**] <nic>[**\-\-**] {*soubor-nebo-adresář*}...<br>
 **git add -u** [**-A**] <nic>[**\-\-**] <nic>[{*soubor-nebo-adresář*}]...

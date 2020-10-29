@@ -31,7 +31,7 @@ to znamená výpočty, formátování, konverze časových zón a vizualizace.
 Tato verze kapitoly nepokrývá menstruační kalendář, výpočet časů astronomických jevů včetně východu a západu slunce, výpočet času muslimských modliteb ani méně obvyklé druhy
 kalendářů (čínský apod.).
 
-Plánovní úloh na konkrétní čas do této kapitoly nespadá.
+Plánování úloh na konkrétní čas do této kapitoly nespadá.
 
 ## Definice
 
