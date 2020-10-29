@@ -36,46 +36,46 @@ awk
 
 
 #
-# [datum-cas-kalendar] 200..299
+# [datum-čas-kalendář] 200..299
 # =========================================================================================
 
 200
 pdf-a4.*
-datum-cas-kalendar
+datum-čas-kalendář
 }\begin{parametryprikazu}\parametrprikazu{{\pismodejavusans{}○} {-}d \textquotesingle{}\dopln{datum a čas}\textquotesingle{} {\pismodejavusans{}○} {-}d \textquotesingle{}\textquotedbl{}\dopln{původní čas. zóna}\textquotedbl{} \dopln{datum a čas}\textquotesingle{} {\pismodejavusans{}○} {-}f \dopln{soubor} {\pismodejavusans{}○} {-}f {-}}{Použije zadaný čas (parametr {-}d), popř. načte čas z~řádků daného souboru či ze standardního vstupu (parametr {-}f). Výchozí chování: použije aktuální čas.}%\n
 }\begin{parametryprikazu}\parametrprikazu{{\pismodejavusans{}○} {-}d \textquotesingle{}\dopln{datum a čas}\textquotesingle{} {\pismodejavusans{}○} {-}d \textquotesingle{}\textquotedbl{}\dopln{původní čas. zóna}\textquotedbl{} \dopln{datum a čas}\textquotesingle{} {\pismodejavusans{}○} {-}f \dopln{soubor} {\pismodejavusans{}○} {-}f {-}}\\{Použije zadaný čas (parametr {-}d), popř. načte čas z~řádků daného souboru či ze standardního vstupu (parametr {-}f). Výchozí chování: použije aktuální čas.}%\n
 
 210
 pdf-b5.*
-datum-cas-kalendar
+datum-čas-kalendář
 }\begin{parametryprikazu}\parametrprikazu{{\pismodejavusans{}○} {-}d \textquotesingle{}\dopln{datum a čas}\textquotesingle{} {\pismodejavusans{}○} {-}d \textquotesingle{}\textquotedbl{}\dopln{původní čas. zóna}\textquotedbl{} \dopln{datum a čas}\textquotesingle{} {\pismodejavusans{}○} {-}f \dopln{soubor} {\pismodejavusans{}○} {-}f {-}}{Použije zadaný čas (parametr {-}d), popř. načte čas z~řádků daného souboru či ze standardního vstupu (parametr {-}f). Výchozí chování: použije aktuální čas.}%\n
 }\begin{parametryprikazu}\parametrprikazu{{\pismodejavusans{}○} {-}d \textquotesingle{}\dopln{datum a čas}\textquotesingle{} {\pismodejavusans{}○} {-}d \textquotesingle{}\textquotedbl{}\dopln{původní čas. zóna}\textquotedbl{} \dopln{datum a čas}\textquotesingle{} {\pismodejavusans{}○} {-}f \dopln{soubor} {\pismodejavusans{}○} {-}f {-}}\\{Použije zadaný čas (parametr {-}d), popř. načte čas z~řádků daného souboru či ze standardního vstupu (parametr {-}f). Výchozí chování: použije aktuální čas.}%\n
 
 #
-# [diskove-oddily] 300..399
+# [diskové-oddíly] 300..399
 # =========================================================================================
 
 300
 pdf-a4.*
-diskove-oddily
+diskové-oddíly
 \item{}UUID souborového systému ve tvaru \quotedblbase{}UUID{\rovno}61bbd562{-}0694{-}4561{-}a8e2{-}4ccfd004a660\textquotedblleft{}.
 \item{}UUID souborového systému ve tvaru\\\quotedblbase{}UUID{\rovno}61bbd562{-}0694{-}4561{-}a8e2{-}4ccfd004a660\textquotedblleft{}.
 
 311
 pdf-b5.*
-diskove-oddily
+diskové-oddíly
 \radekzaklinadla{\pismolmmath{}∘\hspace*{0.1em}}{UUID{\rovno}{\moznyzlom}\textquotedbl{}61bbd562{-}0694{-}4561{-}a8e2{-}4ccfd004a660\textquotedbl{}\textcolor{seda}{\guillemotright}{~~~~~~}/\textcolor{seda}{\guillemotright}{~~~~~~}ext4\textcolor{seda}{\guillemotright}{~~~~~~}errors{\rovno}{\moznyzlom}remount{-}ro,{\moznyzlom}discard,{\moznyzlom}nouser\_xattr\textcolor{seda}{\guillemotright}{~~}0\textcolor{seda}{\guillemotright}{~~~~~~}1}%
 \radekzaklinadla{\pismolmmath{}∘\hspace*{0.1em}}{UUID{\rovno}{\moznyzlom}\textquotedbl{}61bbd562{-}0694{-}4561{-}a8e2{-}4ccfd004a660\textquotedbl{}\textcolor{seda}{\guillemotright}{~~~~~~}/\textcolor{seda}{\guillemotright}{~~~~~~}ext4{\moznyzlom}\textcolor{seda}{\guillemotright}{~~~~~~}errors{\rovno}{\moznyzlom}remount{-}ro,{\moznyzlom}discard,{\moznyzlom}nouser\_xattr\textcolor{seda}{\guillemotright}{~~}0\textcolor{seda}{\guillemotright}{~~~~~~}1}%
 
 320
 pdf-a4.*
-diskove-oddily
+diskové-oddíly
 \begin{parametryprikazu}\parametrprikazu{{\pismodejavusans{}○}~errors{\rovno}remount{-}ro {\pismodejavusans{}○}~errors{\rovno}panic {\pismodejavusans{}○}~errors{\rovno}continue}{V~případě kritické chyby: připojí systém jen pro čtení/zhroutí se/pokračuje. (Nezkoušel/a jsem.)}%\n
 \begin{parametryprikazu}\parametrprikazu{{\pismodejavusans{}○}~errors{\rovno}remount{-}ro {\pismodejavusans{}○}~errors{\rovno}panic {\pismodejavusans{}○}~errors{\rovno}continue}{V~případě kritické chyby: připojí systém jen pro\\čte\-ní/zhrou\-tí se/pokračuje. (Nezkoušel/a jsem.)}%\n
 
 # 331
 pdf-b5.*
-diskove-oddily
+diskové-oddíly
 \parametrprikazu{{\pismodejavusans{}○}~umask{\rovno}\dopln{mód} {\pismodejavusans{}○}~dmask{\rovno}\dopln{mód},fmask{\rovno}\dopln{mód}}{Nastaví přístupová práva všech adresářových položek/všech adresářů a~souborů.}%\n
 \parametrprikazu{{\pismodejavusans{}○}~umask{\rovno}\dopln{mód} {\pismodejavusans{}○}~dmask{\rovno}\dopln{mód},fmask{\rovno}\dopln{mód}}{Nastaví přístupová práva všech adresářových položek/\\všech adresářů a~souborů.}%\n
 
@@ -97,18 +97,18 @@ vim
 \begin{odstavce}\quotedblbase{}\itshape{}Programátorské slovo\upshape{}\textquotedblleft{} je sekvence jakýchkoliv nebílých znaků; \quotedblbase{}\itshape{}standardních slovo\upshape{}\textquotedblleft{} je sekvence nebílých znaků, které jsou buď alfanumerické, nebo tvoří interpunkci. To znamená, že např.\\\quotedblbase{}a1a;;;B2B\textquotedblleft{} je jedno programátorské slovo, ale tři standardní! (Podobně \quotedblbase{}Ahoj, světe!\textquotedblleft{} jsou dvě programátoská slova, ale čtyři standardní.)
 
 #
-# [zpracovani-textovych-souboru] 500..599
+# [zpracování-textových-souborů] 500..599
 # =========================================================================================
 
 500
 pdf-a4.*
-zpracovani-textovych-souboru
+zpracování-textových-souborů
 \parametrprikazu{{\pismodejavusans{}☐} {-}o \dopln{formát}}{Definuje pořadí sloupců na výstupu. Jednotlivé specifikace mohou mít tvar \quotedblbase{}0\textquotedblleft{} (společný sloupec), \quotedblbase{}1.\dopln{číslo}\textquotedblleft{} pro sloupec prvního souboru nebo \quotedblbase{}2.\dopln{číslo}\textquotedblleft{} pro sloupec druhého souboru. Specifikace se oddělují čárkami nebo mezerami. Příklad specifikace: \quotedblbase{}0,1.1,1.2,2.1,2.2,0\textquotedblleft{}.}%\n
 \parametrprikazu{{\pismodejavusans{}☐} {-}o \dopln{formát}}{Definuje pořadí sloupců na výstupu. Jednotlivé specifikace mohou mít tvar \quotedblbase{}0\textquotedblleft{} (společný sloupec),\\\quotedblbase{}1.\dopln{číslo}\textquotedblleft{} pro sloupec prvního souboru nebo \quotedblbase{}2.\dopln{číslo}\textquotedblleft{} pro sloupec druhého souboru. Specifikace se oddělují čárkami nebo mezerami. Příklad specifikace: \quotedblbase{}0,1.1,1.2,2.1,2.2,0\textquotedblleft{}.}%\n
 
 510
 pdf-a4.*
-zpracovani-textovych-souboru
+zpracování-textových-souborů
 \item{}\bfseries{}Řetězec\mdseries{} (string) je libovolná posloupnost znaků, i~prázdná či tvořená jedním znakem.
 \item{}\bfseries{}Řetězec\mdseries{} (string) je libovolná posloupnost znaků, i~prá\-zdná či tvořená jedním znakem.
 
@@ -123,38 +123,38 @@ markdown
 \radekzaklinadla{\pismolmmath{}∘\hspace*{0.1em}}{![\dopln{alternativní text}](\dopln{adresa{-}odkazu}\\\volitelnyzacatek{}{\pismozaklinadlo\textvisiblespace}\textquotedbl{}\dopln{titulek}\textquotedbl{}\volitelnykonec{})}%
 
 #
-# [stahovani-videi] 700..799
+# [stahování-videí] 700..799
 # =========================================================================================
 
 701
 pdf-b5.*
-stahovani-videi
+stahování-videí
 \radekzaklinadla{\pismolmmath{}∘\hspace*{0.1em}}{{-}f \textquotedbl{}bestvideo[height{\mensinez}{\rovno}?480]+bestaudio/best[height{\mensinez}{\rovno}?480]/best\textquotedbl{}}%
 \radekzaklinadla{\pismolmmath{}∘\hspace*{0.1em}}{{-}f \textquotedbl{}bestvideo[height{\mensinez}{\rovno}?480]+bestaudio/{\moznyzlom}best[height{\mensinez}{\rovno}?480]/best\textquotedbl{}}%
 
 #
-# [system] 800..899
+# [systém] 800..899
 # =========================================================================================
 
 801
 pdf-b5.*
-system
+systém
 }\begin{parametryprikazu}\parametrprikazu{{\pismodejavusans{}○} {-}{-}output{\rovno}short{-}iso {\pismodejavusans{}○} {-}{-}output{\rovno}json{-}pretty {\pismodejavusans{}◉} {-}{-}output{\rovno}short}{Různé formáty výstupu (podporovány i~další).}%\n
 }\begin{parametryprikazu}\parametrprikazu{{\pismodejavusans{}○} {-}{-}output{\rovno}short{-}iso {\pismodejavusans{}○} {-}{-}output{\rovno}json{-}pretty {\pismodejavusans{}◉} {-}{-}output{\rovno}short}{Různé formáty výstupu\newline(podporovány i~další).}%\n
 
 #
-# [zpracovani-videa-a-zvuku] 900..1099
+# [zpracování-videa-a-zvuku] 900..1099
 # =========================================================================================
 
 901
 pdf-b5.*
-zpracovani-videa-a-zvuku
+zpracování-videa-a-zvuku
 \bfseries{}rozmazat\mdseries{} obraz (normálně/maximálně/minimálně/obecně)}%
 \bfseries{}rozmazat\mdseries{} obraz (normálně/{\moznyzlom}maximálně/{\moznyzlom}minimálně/{\moznyzlom}obecně)}%
 
 911
 pdf-b5.*
-zpracovani-videa-a-zvuku
+zpracování-videa-a-zvuku
 \radekzaklinadla{\pismolmmath{}∘\hspace*{0.1em}}{[\dopln{vi}] tile{\rovno}{\moznyzlom}\dopln{počet{-}sloupců{-}mřížky}x\dopln{počet{-}řádků{-}mřížky}\volitelnyzacatek{}:{\moznyzlom}margin{\rovno}{\moznyzlom}\dopln{šířka{-}okraje}\volitelnykonec{}\volitelnyzacatek{}:{\moznyzlom}padding{\rovno}{\moznyzlom}\dopln{rozestup{-}mřížky}\volitelnykonec{}\volitelnyzacatek{}:{\moznyzlom}color{\rovno}{\moznyzlom}\dopln{barva{-}pozadí}\volitelnykonec{}\volitelnyzacatek{}:{\moznyzlom}nb\_frames{\rovno}{\moznyzlom}\dopln{velikost{-}dávky}\volitelnykonec{} [\dopln{vo}]}%
 \radekzaklinadla{\pismolmmath{}∘\hspace*{0.1em}}{[\dopln{vi}] tile{\rovno}{\moznyzlom}\dopln{počet{-}sloupců{-}mřížky}x\dopln{počet{-}řádků{-}mřížky}\volitelnyzacatek{}:{\moznyzlom}margin{\rovno}{\moznyzlom}\dopln{šířka{-}okraje}\volitelnykonec{}\volitelnyzacatek{}:{\moznyzlom}padding{\rovno}{\moznyzlom}\dopln{rozestup{-}mřížky}\volitelnykonec{}\volitelnyzacatek{}:{\moznyzlom}color{\rovno}{\moznyzlom}\dopln{barva{-}pozadí}\volitelnykonec{}\volitelnyzacatek{}:{\moznyzlom}nb\_frames{\rovno}{\moznyzlom}\dopln{velikost{-}dávky}\volitelnykonec{} [\dopln{vo}]}%%
 
@@ -162,13 +162,13 @@ zpracovani-videa-a-zvuku
 
 921
 pdf-b5.*
-zpracovani-videa-a-zvuku
+zpracování-videa-a-zvuku
 použijte místo \quotedblbase{}chromium{-}codecs{-}ffmpeg{-}extra\textquotedblleft{} jen \quotedblbase{}chromium{-}codecs{-}ffmpeg\textquotedblleft{}.
 použijte místo\\\quotedblbase{}chromium{-}codecs{-}ffmpeg{-}extra\textquotedblleft{} jen \quotedblbase{}chromium{-}codecs{-}ffmpeg\textquotedblleft{}.
 
 931
 pdf-b5.*
-zpracovani-videa-a-zvuku
+zpracování-videa-a-zvuku
 }\begin{odstavce}Dalším velmi dobrým zdrojem je oficiální dokumentace k~filtrům, ke které se dostanete tak, že si nainstalujete balíček \quotedblbase{}ffmpeg{-}doc\textquotedblleft{} a~v~prohlížeči otevřete soubor \quotedblbase{}/usr/share/doc/ffmpeg/manual/ffmpeg{-}filters.html\textquotedblleft{}.
 }\begin{odstavce}Dalším velmi dobrým zdrojem je oficiální dokumentace k~filtrům, ke které se dostanete tak, že si nainstalujete balíček \quotedblbase{}ffmpeg{-}doc\textquotedblleft{} a~v~prohlížeči otevřete soubor\\\quotedblbase{}/usr/share/doc/ffmpeg/manual/ffmpeg{-}filters.html\textquotedblleft{}.
 
@@ -184,65 +184,65 @@ sed
 \item{}Malé textové soubory je často výhodné zpracovat najednou zadáním parametru \quotedblbase{}{-}z\textquotedblleft{}. Když vstup\-ní soubor neobsahuje nulový bajt, sed v~takovém případě načte celý soubor jako jeden záznam.
 
 #
-# [sprava-uzivatelskych-uctu] 1200..1299
+# [správa-uživatelských-účtů] 1200..1299
 # =========================================================================================
 
 1200
 pdf-a4.*
-sprava-uzivatelskych-uctu
+správa-uživatelských-účtů
 \radekzaklinadla{\pismolmmath{}∘\hspace*{0.1em}}{\dopln{přihlašovací{-}jméno}:{\moznyzlom}x:\dopln{UID}:{\moznyzlom}\dopln{GID{-}výchozí{-}skupiny}:{\moznyzlom}\dopln{celé jméno}[,\dopln{další údaje}\volitelnykonec{}:\dopln{/domovský/adresář}\volitelnyzacatek{}:\dopln{/výchozí/shell}\volitelnykonec{}}%
 \radekzaklinadla{\pismolmmath{}∘\hspace*{0.1em}}{\dopln{přihlašovací{-}jméno}:{\moznyzlom}x:\dopln{UID}:{\moznyzlom}\dopln{GID{-}výchozí{-}skupiny}:{\moznyzlom}\dopln{celé jméno}[,\dopln{další údaje}\volitelnykonec{}:\dopln{/domovský/adresář}{\moznyzlom}\volitelnyzacatek{}:\dopln{/výchozí/shell}\volitelnykonec{}}%
 
 1201
 pdf-b5.*
-sprava-uzivatelskych-uctu
+správa-uživatelských-účtů
 \radekzaklinadla{\pismolmmath{}∘\hspace*{0.1em}}{\dopln{přihlašovací{-}jméno}:{\moznyzlom}x:\dopln{UID}:{\moznyzlom}\dopln{GID{-}výchozí{-}skupiny}:{\moznyzlom}\dopln{celé jméno}[,\dopln{další údaje}\volitelnykonec{}:\dopln{/domovský/adresář}\volitelnyzacatek{}:\dopln{/výchozí/shell}\volitelnykonec{}}%
 \radekzaklinadla{\pismolmmath{}∘\hspace*{0.1em}}{\dopln{přihlašovací{-}jméno}:{\moznyzlom}x:\dopln{UID}:{\moznyzlom}\dopln{GID{-}výchozí{-}skupiny}:{\moznyzlom}\dopln{celé jméno}[,\dopln{další údaje}\volitelnykonec{}:\dopln{/domovský/adresář}{\moznyzlom}\volitelnyzacatek{}:\dopln{/výchozí/shell}\volitelnykonec{}}%
 
 #
-# [zakladni-znalosti] 1300..1399
+# [základní-znalosti] 1300..1399
 # =========================================================================================
 
 1301
 pdf-b5.*
-zakladni-znalosti
+základní-znalosti
 Manuálové stránky mají jednotnou strukturu, takže se v~nich uživatel brzy naučí orientovat,
 Manuálové strán\-ky mají jednotnou strukturu, takže se v~nich uživatel brzy naučí orientovat,
 
 #
-# [promenne] 1400..1499
+# [proměnné] 1400..1499
 # =========================================================================================
 
 1401
 pdf-b5.*
-promenne
+proměnné
 {\footnotetext[35]{Nápovědu k~proměnné LD\_DEBUG si můžete zobrazit příkazem \quotedblbase{}env LD\_DEBUG{\rovno}help cat\textquotedblleft{}. Bez proměnné LD\_DEBUG\_OUTPUT se ladicí údaje vypíšou na standardní výstup; s~ní se k~jejímu obsahu připojí tečka a~PID procesu a~výpis se provede do daného souboru.}}{%
 {\footnotetext[35]{\raggedright Nápovědu k~proměnné LD\_DEBUG si můžete zobrazit příkazem \quotedblbase{}env LD\_DEBUG{\rovno}help cat\textquotedblleft{}. Bez proměnné LD\_DEBUG\_OUTPUT se ladicí údaje vypíšou na standardní výstup; s~ní se k~jejímu obsahu připojí tečka a~PID procesu a~výpis se provede do daného souboru.}}{%
 
 #
-# [terminal] 1500..1599
+# [terminál] 1500..1599
 # =========================================================================================
 
 1501
 pdf-b5.*
-terminal
+terminál
 kniha (zelená/modrá/oranžová/nedefinované barvy)}%
 kniha (zelená/modrá/oranžová/ nedefinované barvy)}%
 
 #
-# [soubory-a-adresare] 1600..1699
+# [soubory-a-adresáře] 1600..1699
 # =========================================================================================
 
 1600
 pdf-a4.*
-soubory-a-adresare
+soubory-a-adresáře
 \item{}Pokud je číslice 7, výsledkem jsou všechny příznaky/práva.
 \item{\raggedright Pokud je číslice 7, výsledkem jsou všechny příznaky/práva.
 
 
 1601
 pdf-a4.*
-soubory-a-adresare
+soubory-a-adresáře
 \item{}U~zbylých číslic (6, 5 nebo 3) budou výsledkem dva příznaky/práva; u~nich zkoušíme postupně odečíst 4 a~2; pokud se nám to podaří, aniž bychom se dostali pod nulu, zapíšeme příznak/právo odpovídající číslici, kterou jsme odečetli, a~druhý příznak/právo odpovídající číslici, která nám po odečtení zbyla. 6 {\rovno} 4~+~2, 5 {\rovno} 4~+~1, 3 {\rovno} 2~+~1.
 }\item{}U~zbylých číslic (6, 5 nebo 3) budou výsledkem dva příznaky/práva; u~nich zkoušíme postupně odečíst 4 a~2; pokud se nám to podaří, aniž bychom se dostali pod nulu, zapíšeme příznak/právo odpovídající číslici, kterou jsme odečetli, a~druhý příznak/právo odpovídající číslici, která nám po odečtení zbyla. 6 {\rovno} 4~+~2, 5 {\rovno} 4~+~1, 3 {\rovno} 2~+~1.
 
@@ -262,7 +262,7 @@ docker
 
 #1210 # kapitola Plánování úloh vyřazena z vanilkové příchuti
 pdf-b5.*
-planovani-uloh
+plánování-úloh
 \radekzaklinadla{\pismolmmath{}∘\hspace*{0.1em}}{eval \textquotedbl{}\$(egrep {-}z \textquotesingle{}\char`\^{}(DBUS\_SESSION\_BUS\_ADDRESS\textbar{}DISPLAY\textbar{}XDG\_[A{-}Z\_]+){\rovno}{\moznyzlom}\textquotesingle{} /proc/\$xpid/environ \textbar{} tr \textbackslash{}\textbackslash{}0 \textbackslash{}\textbackslash{}n \textbar{} sed {-}e s/{\rovno}/\textbackslash{}\textbackslash{}n/ {-}e s/\textbackslash{}\textquotesingle{}/\textbackslash{}\textquotesingle{}\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}\textquotesingle{}\textbackslash{}\textquotesingle{}/g \textbar{} xargs {-}rd \textbackslash{}\textbackslash{}n printf \textquotedbl{}export \%s{\rovno}\textquotesingle{}\%s\textquotesingle{}\textbackslash{}\textbackslash{}n\textquotedbl{})\textquotedbl{}}%
 \radekzaklinadla{\pismolmmath{}∘\hspace*{0.1em}}{eval \textquotedbl{}\$(egrep {-}z \textquotesingle{}\char`\^{}(DBUS\_SESSION\_BUS\_ADDRESS\textbar{}DISPLAY\textbar{}{\moznyzlom}XDG\_[A{-}Z\_]+){\rovno}{\moznyzlom}\textquotesingle{} /proc/\$xpid/environ \textbar{} tr \textbackslash{}\textbackslash{}0 \textbackslash{}\textbackslash{}n \textbar{} sed {-}e s/{\rovno}/\textbackslash{}\textbackslash{}n/ {-}e s/\textbackslash{}\textquotesingle{}/\textbackslash{}\textquotesingle{}\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}\textquotesingle{}\textbackslash{}\textquotesingle{}/g \textbar{} xargs {-}rd \textbackslash{}\textbackslash{}n printf \textquotedbl{}export \%s{\rovno}\textquotesingle{}\%s\textquotesingle{}\textbackslash{}\textbackslash{}n\textquotedbl{})\textquotedbl{}}%
 

@@ -800,8 +800,7 @@ Pokud hledáte nástroj pro dělení disku ze skriptu, zkuste [sfdisk](http://ma
 * [man 5 btrfs](http://manpages.ubuntu.com/manpages/focal/en/man5/btrfs.5.html) (anglicky)
 * [Arch Wiki: LVM](https://wiki.archlinux.org/index.php/LVM) (anglicky)
 * [Btrfs Sysadmin Guide](https://btrfs.wiki.kernel.org/index.php/SysadminGuide) (anglicky)
-* [Kernel Btrfs Wiki](https://btrfs.wiki.kernel.org/index.php/Main\_Page
-https://btrfs.wiki.kernel.org/index.php/Main\_Page) (anglicky)
+* [Kernel Btrfs Wiki](https://btrfs.wiki.kernel.org/index.php/Main\_Page) (anglicky)
 * [Arch Wiki: Btrfs](https://wiki.archlinux.org/index.php/Btrfs) (anglicky)
 * [Balíček Bionic: lvm2](https://packages.ubuntu.com/bionic/lvm2) (anglicky)
 * [YouTube: Lesson 20 Managing LVM](https://www.youtube.com/watch?v=m9SNN6IWyZo) (anglicky)
