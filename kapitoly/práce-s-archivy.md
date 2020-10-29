@@ -294,7 +294,7 @@ Poznámka: Archiv typu SquashFS obsahuje vždy svůj kořenový adresář (zprav
 
 ## Zaklínadla: Připojení archivů do VFS
 
-## SquashFS
+### SquashFS
 
 *# **připojit** archiv (jako superuživatel/jako obyčejný uživatel)*<br>
 **sudo mount -t squashfs** [**-o** {*volby,připojení*}] {*archiv.squashfs*} {*prázdný/adresář*}<br>
@@ -304,7 +304,7 @@ Poznámka: Archiv typu SquashFS obsahuje vždy svůj kořenový adresář (zprav
 **sudo umount** {*přípojný/bod*}<br>
 **umount** {*přípojný/bod*}
 
-## ZIP, TAR, TAR + GZIP
+### ZIP, TAR, TAR + GZIP
 
 *# **připojit** archiv zip/tar/tar.gz*<br>
 *// Poznámka: uživatel musí mít k uvedenému adresáři právo zápisu a adresář nesmí mít nastaven příznak omezení smazání. Kontrola přístupových práv uvnitř připojeného archivu se chová velmi podivně – uživatel připojivší archiv má vždy práva čtení a zápisu a právo spouštění u adresářů; u souboru má právo spouštění, pokud je nastaveno u „u“, „g“ nebo „o“. Všem ostatním uživatelům včetně superuživatele je zakázán jakýkoliv přístup. Důrazně doporučuji zadat přinejmenším volbu „ro“ nebo zakázat zápis do archivu. Do připojeného archivu sice je možné zapisovat, ale není to efektivní.*<br>
@@ -315,10 +315,10 @@ Poznámka: Archiv typu SquashFS obsahuje vždy svůj kořenový adresář (zprav
 
 ## Instalace na Ubuntu
 
-Nástroje tar, gzip a zip jsou již součástí minimální instalace Ubuntu. Nástroje apack, aunpack a 7z je nutno nainstalovat:
+Nástroje tar, gzip a zip jsou již součástí minimální instalace Ubuntu. Nástroje apack, aunpack,7z a archivemount je nutno nainstalovat:
 
 *# apack, aunpack apod., 7z*<br>
-**sudo apt-get install atool p7zip-full**<br>
+**sudo apt-get install atool p7zip-full** [**archivemount**]<br>
 [**sudo apt-get install arc arj lzip lzop march rpm unace unalz**]
 
 *# pro práci s archivy SquashFS (kromě připojování) jsou třeba balíčky:*<br>

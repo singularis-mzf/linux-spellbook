@@ -32,7 +32,7 @@ sinus/kosinus/\\tangens/contangens}%
 pdf-b5.*
 awk
 \item{}Soubory s~konci řádek CR{-}LF (typicky z~Windows) lze snadno zpracovat při nastavení \quotedblbase{}RS{\rovno}\textquotedbl{}\textbackslash{}r\textbackslash{}n\textquotedbl{}\textquotedblleft{}; analogicky soubory s~řádky ukončenými LF lze zpracovat s~nastavením \quotedblbase{}RS{\rovno}\textquotedbl{}\textbackslash{}r\textquotedbl{}\textquotedblleft{}.
-\item{}Soubory s~konci řádek CR{-}LF (typicky z~Windows) lze snadno zpracovat při nastavení \quotedblbase{}RS{\rovno}\textquotedbl{}\textbackslash{}r\textbackslash{}n\textquotedbl{}\textquotedblleft{}; analogicky soubory s~řádky ukončenými LF lze zpracovat s~nastavením\\\quotedblbase{}RS{\rovno}\textquotedbl{}\textbackslash{}r\textquotedbl{}\textquotedblleft{}.
+\item{}Soubory s~konci řádek CR{-}LF (typicky z~Windows) lze snadno zpracovat při nastavení\\\quotedblbase{}RS{\rovno}\textquotedbl{}\textbackslash{}r\textbackslash{}n\textquotedbl{}\textquotedblleft{}; analogicky soubory s~řádky ukončenými LF lze zpracovat s~nastavením\\\quotedblbase{}RS{\rovno}\textquotedbl{}\textbackslash{}r\textquotedbl{}\textquotedblleft{}.
 
 
 #
@@ -249,6 +249,17 @@ soubory-a-adresáře
 #
 # [koncepce-projektu] 1700..1799
 # =========================================================================================
+
+#
+# [práce-s-archivy] 1800..1899
+# =========================================================================================
+
+1800
+pdf-b5.*
+práce-s-archivy
+\quotedblbase{}squashfs{-}root\textquotedblleft{}). Veškerý obsah archivu je pak v~podstromu pod tímto adresářem.
+\\\quotedblbase{}squashfs{-}root\textquotedblleft{}). Veškerý obsah archivu je pak v~podstromu pod tímto adresářem.
+
 
 #
 # VYŘAZENÉ KAPITOLY
