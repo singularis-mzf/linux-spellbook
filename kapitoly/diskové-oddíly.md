@@ -78,7 +78,7 @@ práci se systémem souborů SquashFS.
 Jeden systém souborů může být připojen vícenásobně (na více různých míst VFS), na jedno místo VFS ale může být připojen nejvýše jeden systém souborů současně.
 -->
 
-### Identifkátory souborových systémů
+### Identifikátory souborových systémů
 
 K identifikaci konkrétního systému souborů se používá několik druhů identifikátorů:
 
