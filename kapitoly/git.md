@@ -104,6 +104,9 @@ Za jakýmkoliv označením revize můžete (i opakovaně a v kombinaci) použ
 *# historie předků, ve kterých došlo ke změně v některém z uvedených souborů*<br>
 **git log** [**\-\-pretty=**{*formát*}] <nic>[**-n** {*maximální-počet-revizí*}] <nic>[{*revize*}] **\-\-** {*soubor-nebo-adresář*}...
 
+*# historie v určitém rozsahu revizí*<br>
+**git log** [**\-\-pretty=**{*formát*}] **^**{*nejstarší-revize*}**^@** {*nejnovější-revize*}
+
 *# je soubor verzovaný?*<br>
 ?
 

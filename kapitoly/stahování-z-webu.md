@@ -19,7 +19,7 @@ Poznámky:
 
 # Stahování z webu
 
-!Štítky: {tematický okruh}
+!Štítky: {tematický okruh}{internet}
 !FixaceIkon: 1754
 !ÚzkýRežim: zap
 
@@ -46,6 +46,8 @@ GNU Wget je vyvíjen v rámci projektu GNU.
 - Rozdělte na podsekce a naplňte „zaklínadly“.
 -->
 ![ve výstavbě](../obrázky/ve-výstavbě.png)
+
+## Zaklíndla: wget
 
 ## Parametry příkazů
 <!--

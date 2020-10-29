@@ -248,22 +248,35 @@ Poznámka: tail -c +1K přeskočí jen 1023 bajtů!
 -->
 
 *# **vynechat** prvních N bajtů/kibibajtů/mebibajtů/gibibajtů*<br>
+{*zdroj*} **\| dd status=none iflag=skip\_bytes skip=**{*N*} **\|** {*zpracování*}<br>
+{*zdroj*} **\| dd status=none iflag=skip\_bytes skip=**{*N*}**K \|** {*zpracování*}<br>
+{*zdroj*} **\| dd status=none iflag=skip\_bytes skip=**{*N*}**M \|** {*zpracování*}<br>
+{*zdroj*} **\| dd status=none iflag=skip\_bytes skip=**{*N*}**G \|** {*zpracování*}
+<!--
 **tail -c +**{*N*} {*soubor*} **\| tail -c +2**<br>
 **tail -c +**{*N*}**K** {*soubor*} **\| tail -c +2**<br>
 **tail -c +**{*N*}**M** {*soubor*} **\| tail -c +2**<br>
 **tail -c +**{*N*}**G** {*soubor*} **\| tail -c +2**
+-->
 
 *# **vynechat** prvních N bajtů/kilobajtů/megabajtů/gigabajtů*<br>
+{*zdroj*} **\| dd status=none iflag=skip\_bytes skip=**{*N*} **\|** {*zpracování*}<br>
+{*zdroj*} **\| dd status=none iflag=skip\_bytes skip=**{*N*}**kB \|** {*zpracování*}<br>
+{*zdroj*} **\| dd status=none iflag=skip\_bytes skip=**{*N*}**MB \|** {*zpracování*}<br>
+{*zdroj*} **\| dd status=none iflag=skip\_bytes skip=**{*N*}**GB \|** {*zpracování*}
+
+<!--
 **tail -c +**{*N*} {*soubor*} **\| tail -c +2**<br>
 **tail -c +**{*N*}**kB** {*soubor*} **\| tail -c +2**<br>
 **tail -c +**{*N*}**MB** {*soubor*} **\| tail -c +2**<br>
 **tail -c +**{*N*}**GB** {*soubor*} **\| tail -c +2**
+-->
 
 *# příklad: vzít třetí mebibajt souboru*<br>
-**tail -c +2M soubor.dat \| tail -c +2 \| head -c 1M**
+**dd status=none iflag=skip\_bytes,count\_bytes skip=2M count=1M &lt;soubor.dat**
 
 *# příklad: vynechat třetí mebibajt souboru*<br>
-**(head -c 2M soubor.dat &amp;&amp; tail -c +3M soubor.dat \| tail -c +2) \|** {*zpracování*}
+**(dd status=none iflag=count\_bytes count=2M &amp;&amp; dd status=none iflag=count\_bytes count=1M of=/dev/null &amp;&amp; cat) &lt;soubor.dat**
 
 ### Analyzovat po bajtech
 
@@ -303,8 +316,13 @@ Poznámka: Následující zaklínadla generují/přijímají jednu číselnou ho
 **printf '%08x:%02x\\n'** {*adresa*} {*hodnota-bajtu*} [{*další-adresa*} {*hodnota-bajtu*}]... **\| xxd -r -c 1 -** {*soubor*}
 
 *# **přepsat** úsek bajtů v souboru*<br>
+*// Hodnota „kam-zapsat“ je obyčejné desítkový index počátečního bajtu, počítáno od nuly. Zápis může pokračovat za stávající konec souboru, ale pokud bude cílová adresa ležet za koncem souboru, zápis začne bezprostředně za poslední existující bajt.*<br>
+{*zdroj*} **\| dd conv=nocreat,notrunc** [**oflag=seek\_bytes seek=**{*kam-zapsat*}] **of=**{*soubor-k-zápisu*} [**status=progress**]
+
+<!--
 *// Hodnota „kam-zapsat“ je obyčejné dekadické číslo v bajtech od nuly, tzn. např. 3 znamená, že první přepsaný má být čtvrtý bajt výstupního souboru. Pokud leží výstupní adresa za koncem souboru, soubor se doplní nulami; pokud má zápis pokračovat za konec existujících dat, soubor bude podle potřeby prodloužen.*<br>
 {*zdroj*} **\| xxd -p \| xxd -p -r** [**\-\-seek** {*kam-zapsat*}] **-** {*soubor-k-zapsání*}
+-->
 
 *# vypustit bajty uvedených hodnot/všechny kromě bajtů uvedených hodnot*<br>
 {*zdroj*} **\| tr $(printf -d '\\\\%03o'** {*bajt*}...**) \|** {*zpracování*}<br>

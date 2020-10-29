@@ -377,12 +377,12 @@ fprintf:
 
 *# čas „změněno“(normálně/časová známka Unixu)*<br>
 *// V obou případech se bohužel vypíše s desetinnou částí.*<br>
-**%Ty-%Tm-%Td %TT** ⊨ 2020-03-13 22:03:00.9467889490<br>
+**%TY-%Tm-%Td %TT** ⊨ 2020-03-13 22:03:00.9467889490<br>
 **%T@** ⊨ 1584133380.9467889490
 
 *# čas posledního přístupu (normálně/časová známka Unixu)*<br>
 *// V obou případech se bohužel vypíše s desetinnou částí.*<br>
-**%Ay-%Am-%Ad %AT** ⊨ 2020-03-13 22:03:00.9467889490<br>
+**%AY-%Am-%Ad %AT** ⊨ 2020-03-13 22:03:00.9467889490<br>
 **%A@** ⊨ 1584133380.9467889490
 
 *# počet pevných odkazů*<br>
