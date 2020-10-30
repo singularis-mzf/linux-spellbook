@@ -204,7 +204,7 @@ PNZ = první nebílý znak
 
 ### Posuny po slovech
 
-„*Programátorské slovo*“ je sekvence jakýchkoliv nebílých znaků; „*standardních slovo*“ je sekvence nebílých znaků, které jsou buď alfanumerické, nebo tvoří interpunkci. To znamená, že např. „a1a;;;B2B“ je jedno programátorské slovo, ale tři standardní! (Podobně „Ahoj, světe!“ jsou dvě programátoská slova, ale čtyři standardní.)
+„*Programátorské slovo*“ je sekvence jakýchkoliv nebílých znaků; „*standardních slovo*“ je sekvence nebílých znaků, které jsou buď alfanumerické, nebo tvoří interpunkci. To znamená, že např. „a1a;;;B2B“ je jedno programátorské slovo, ale tři standardní! (Podobně „Ahoj, světe!“ jsou dvě programátorská slova, ale čtyři standardní.)
 
 *# o jedno/N „programátorských slov“ vpřed*<br>
 **W**<br>

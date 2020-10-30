@@ -145,8 +145,6 @@ a číselné hodnoty příznaků a práv. Pak můžeme mód snadno přečíst 
 
 Příklad: mějme mód 3571. První číslice: 4 odečíst nejde, takže odečteme 2 a zbude nám jedna; zapíšeme tedy příznak zmocnění skupiny (hodnota 2) a příznak omezení smazání (hodnota 1). Druhá číslice: 4 odečíst jde a zbude nám 1, zapíšeme tedy práva čtení (4) a spouštění (1). Třetí číslice: 7 znamená pro skupinu všechna práva, tedy čtení, zápis i spouštění. Čtvrtá číslice: 1 znamená pro ostatní jen právo spouštění.
 
-V praxi se můžeme setkat i s módy tvořenými třemi číslicemi, u těch je pouze vynechaná úvodní nula (tedy neobsa).
-
 !ÚzkýRežim: vyp
 
 ## Zaklínadla
