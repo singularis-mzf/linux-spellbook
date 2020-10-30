@@ -772,17 +772,14 @@ Nástroj GParted najdete v balíčku „gparted“:
 
 ### Btrfs
 
+* Btrfs se prý nedokáže dobře zotavit ze selhání a chyb (i v manuálové stránce je varování, že program „btrfs check“ může problémy spíš zhoršit než vyřešit). Pokud dojde prostor pro metadata, souborový systém se nuceně přepne do režimu „jen pro čtení“ a je obtížné či skoro nemožné se z takového stavu zotavit – viz [stránku na superuser.com](https://superuser.com/questions/1419067/btrfs-root-no-space-left-on-device-auto-remount-read-only-cant-balance-cant). Navíc, když se mi to stalo, souborový systém stále hlásil cca 500 MiB volných. Proto doporučuji si za všech okolností nechávat jeden až dva gigabajty každého oddílu typu btrfs volné a jednou za čas provést „offline zálohu“ metodou sektor po sektoru, aby bylo v případě havárie možno obnovit původní obsah a funkčnost oddílu.
+* Pododdíly se v některých ohledech chovají jako samostatně připojené souborové systémy – každý pododdíl má vlastní číslování i-uzlů (proto nejsou dovoleny pevné odkazy přes hranice pododdílu) a nástroje, které nepřekračují hranice souborových systémů (např. „find“ s parametrem „-xdev“), nesestoupí do adresáře reprezentujícího pododdíl. Důležitým technickým rozdílem oproti připojenému systému souborů však je, že adresář reprezentující pododdíl se nepovažuje za přípojný bod VFS a pododdíly nejsou viditelné pro příkazy jako „findmnt“.
 * Příznak neměnnosti se při klonování nepřenáší; pokud ho nenastavíte (např. parametrem „-r“), do klonů neměnného oddílu půjde zapisovat, což může být velmi užitečné (můžete např. vytvořit neměnný klon pododdílu a později původní pododdíl smazat a nahradit ho obyčejným klonem z neměnného klonu).
 * Umístění odkládacího souboru na souborový systém btrfs je možné, ale nedoporučuji to. Přesný postup a související omezení najdete v manuálové stránce zobrazené příkazem „man 5 btrfs“ (kapitola „SWAPFILE SUPPORT“).
 * Doporučuji se vyhýbat volbám připojení „subvol“ a „subvolid“; pro připojení pododdílů na různá místa souborového systému raději použijte „mount \-\-bind“, resp. jeho obdobu v /etc/fstab.
-* Btrfs se prý nedokáže dobře zotavit ze selhání a chyb (i v manuálové stránce je varování, že program „btrfs check“ může problémy spíš zhoršit než vyřešit) a v případě, že dojde vyhrazený prostor pro metadata, se nuceně přepne do režimu „jen pro čtení“ a je obtížné se z takového stavu zotavit – viz [stránku na superuser.com](https://superuser.com/questions/1419067/btrfs-root-no-space-left-on-device-auto-remount-read-only-cant-balance-cant).
-* Pododdíly se prezentují systému jako samostatně připojené souborové systémy; to znamená, že přes hranici pododdílu nemohou vést pevné odkazy, příkaz „find“ s parametrem „-xdev“ otestuje adresář nesestoupí do podadresáře reprezentujícího pododdíl apod.
 * Klonování pododdílu je velmi rychlé i u rozsáhlých pododdílů; naopak klonování jednotlivých souborů je sice podstatně rychlejší než jejich kopírování, ale pomalejší než vytváření pevných odkazů na ně.
 * Velmi špatná vlastnost Btrfs je, že je asynchronní – operace vypadají, že rychle a úspěšně proběhly, ale za několik minut souborový systém může zhavarovat, když „naslibovanou“ operaci nedokáže provést.
-
-<!--
-* Komprese je jen zřídka užitečná. Desítky procent kapacity může ušetřit jen v případě, že velkou část dat lze snadno komprimovat, většina dnes používaných formátů, které zabírají hodně místa, už ale komprimovaná je.
--->
+* Transparentní komprese je jen zřídka užitečná. Její účinnost ve srovnání s archivy či SquashFS je mizivá, u dobře komprimovatelných textových souborů ušetří maximálně desítky procent kapacity, zatímco běžný „zip“ u stejných dat dokáže ušetřit třeba 95% jejich velikosti. Navíc většina dnes používaných formátů, které zabírají hodně místa, už komprimovaná je, takže je u nich další komprese zcela neúčinná.
 
 ## Další zdroje informací
 
