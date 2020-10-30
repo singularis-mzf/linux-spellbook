@@ -141,7 +141,7 @@ Poznámka k pevným odkazům: pevný odkaz v souborovém systému typu btrfs n
 **UUID="61bbd562-0694-4561-a8e2-4ccfd004a660"<tab7>/<tab7>ext4<tab7>errors=remount-ro,discard,nouser\_xattr<tab3>0<tab7>1**
 
 *# **připojit** jiný než kořenový systém souborů (obecně/příklad)*<br>
-*// 2 v posledním poli zapne automatickou kontrolu souboru systémů při startu; tato volba je vhodná pro místní souborové systémy. 0 v posledním poli automatickou kontrolu vypne, ta je vhodná především pro výměnná média a síťové systémy souborů. Rovněž je vhodná pro místní systémy souborů připojované výhradně pro čtení.*<br>
+*// 2 v posledním poli zapne automatickou kontrolu systému souborů při startu; tato volba je vhodná pro místní souborové systémy. 0 v posledním poli automatickou kontrolu vypne, ta je vhodná především pro výměnná média a síťové systémy souborů. Rovněž je vhodná pro místní systémy souborů připojované v režimu jen pro čtení (ro).*<br>
 {*co-připojit*} {*kam-připojit*} {*typ-soub-sys*} {*volby-připojení*} **0** {*2-nebo-0*}<br>
 **/dev/skupina/muj-oddil ext4 defaults 0 2**
 
@@ -417,7 +417,7 @@ Viz: https://wiki.archlinux.org/index.php/Persistent_block_device_naming
 *# **zkontrolovat** a opravit souborový systém (kromě btrfs/btrfs)*<br>
 *// Příkaz „fsck“ pravděpodobně lze použít i se souborovým systémem v souboru, ale nezkoušel/a jsem to.*<br>
 **sudo fsck** [**-V**] {*/dev/oddíl*}<br>
-
+?
 
 *# zkontrolovat souborový systém typu btrfs*<br>
 **sudo btrfs check \-\-readonly** [**\-\-progress**] {*/dev/oddíl*}
@@ -458,7 +458,7 @@ Viz: https://wiki.archlinux.org/index.php/Persistent_block_device_naming
 *# **obnovit** diskový oddíl (přímo/komprimovaný)*<br>
 *// Pozor! Tato operace je nebezpečná! Pokud zadáte chybný cílový oddíl, daný oddíl se nevratně přepíše daty určenými pro ten správný. Pokud velikost zálohy neodpovídá přesně velikosti cílového oddílu, nemusí být oddíl po obnově dobře použitelný. Tento příkaz používejte s velkou opatrností!*<br>
 **sudo dd if=**{*cesta*} **of=/dev/**{*oddíl*} [**status=progress**]<br>
-**gunzip -cd** {*cesta.gz*} **\| sudo dd of=**{*/dev/oddíl*} [**status=progress**]
+**zcat** {*cesta.gz*} **\| sudo dd of=**{*/dev/oddíl*} [**status=progress**]
 
 ## Zaklínadla: LVM
 
@@ -552,7 +552,7 @@ Viz: https://wiki.archlinux.org/index.php/Persistent_block_device_naming
 **btrfs subvolume create test**
 
 *# **smazat** pododdíl*<br>
-*// Pokud souborový systém nebyl připojen s volbou „user\_subvol\_rm\_allowed“, smí pododdíl smazat jen superuživatel. Jinak ho smí smazat i jeho vlastní (tzn. vlastník adresáře reprezentujícího pododdíl); pokud je však oddíl neměnný, musí mu tuto vlastnost nejprve odebrat. Vlastník také může pododdíl smazat jako obyčejný adresář příkazem „rm -R“, ale ten bývá pomalejší, protože nejprve projde a smaže všechny soubory a adresáře v daném pododdílu.*<br>
+*// Pokud souborový systém nebyl připojen s volbou „user\_subvol\_rm\_allowed“, smí pododdíl smazat jen superuživatel. Jinak ho smí smazat i jeho vlastník (tzn. vlastník adresáře reprezentujícího pododdíl); pokud je však oddíl neměnný, musí mu tuto vlastnost nejprve odebrat. Vlastník také může pododdíl smazat jako obyčejný adresář příkazem „rm -R“, ale ten bývá pomalejší, protože nejprve projde a smaže všechny soubory a adresáře v daném pododdílu.*<br>
 [**btrfs property set** {*cesta/k/pododdílu*} **ro false**]<br>
 [**sudo**] **btrfs subvolume delete -c** {*cesta/k/pododdílu*}...
 
@@ -652,8 +652,7 @@ btrfs filesystem defrag -v -c{*komprese*} {*soubor*} — umožňuje rekomprimova
 Pozor! Tyto operace slouží k přenosu změn z jednoho oddílu btrfs na jiný (obvykle na jiném počítači)
 a mají poměrně tvrdé požadavky na to, co musejí klony na jednom i druhém počítači splňovat.
 Před jejich použitím si musíte přečíst manuálové stránky vyvolané příkazem
-„man 8 btrfs-send btrfs-receive“. Navíc doporučuji přenosový soubor komprimovat příkazem „gzip“,
-čímž získá menší velikost a odolnost proti chybám při přenosu.
+„man 8 btrfs-send btrfs-receive“.
 
 *# uložit do souboru rozdíl*<br>
 **sudo btrfs send -e**[**v**] **-c** {*/cesta/k/původnímu-klonu*} {*/cesta/k/novému/klonu*} **\| gzip &gt;**{*cílový/soubor.gz*}

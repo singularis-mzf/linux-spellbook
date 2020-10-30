@@ -216,33 +216,37 @@ Přináší řadu novinek, u kterých není jisté, zda se do budoucna osvědč
 takže jejich setrvání bude záležet na reakcích uživatelů.
 
 Významnou novinkou je, že vydávaná sestavení ve formátech PDF a HTML obsahují
-nadále pouze výběr nejdůležitějších kapitol. Ostatní vydané kapitoly budou nadále
-vyvíjeny ve stejné minimální kvalitě, ale získají je (za odměnu) jen uživatelé,
-kteří si z nich vyberou, které kapitoly potřebují, a provedou překlad
-ze zdrojového kódu (nebo jim překlad provede někdo jiný).
+nadále pouze výběr základních kapitol. Ostatní vydané kapitoly
+(tzv. „prémiové kapitoly“) budou nadále vyvíjeny ve stejné minimální kvalitě,
+ale získají je (za odměnu) jen uživatelé, kteří si z nich vyberou,
+které kapitoly potřebují, a provedou překlad ze zdrojového kódu
+(nebo jim překlad provede někdo jiný).
 
 Tato novinka má dva hlavní účely. Prvním účelem je šetřit papír při tisku.
-Vzhledem k narůstajícímu počtu kapitol již není vhodné tisknout vše, ale je třeba,
+(Vzhledem k narůstajícímu počtu kapitol již není vhodné tisknout vše, ale je třeba,
 aby si uživatel na základě vlastních zájmů a zkušeností vybral, které kapitoly
-bude potřebovat. Druhým účelem je odměnit uživatele, kteří si budou projekt
+bude potřebovat.) Druhým účelem je odměnit uživatele, kteří si budou projekt
 překládat ze zdrojového kódu, což je první krok k tomu, aby se mohli stát přispěvateli.
 
 Další významnou novinkou je, že opouštím označení „GNU/Linux“ a místo něj začínám
 používat slovo „linux“ s malým „l“. Bylo by dobré, kdyby se v českých komunitách
 uchytilo, jako se kdysi uchytil „internet“ s malým „i“.
 
-HTML varianta v této verzi nepřináší žádnou novinku.
+HTML varianta v této verzi nepřináší žádnou vlastní novinku.
 
 V PDF variantách jsou hlavní novinkou písma Latin Modern Roman a Latin Modern Sans.
+Tímto děkuji uživateli „Rotující Knuth“ na ABC Linuxu za konstruktivní kritiku,
+díky níž jsem vybral/a lepší písma.
+
+Další novinkou je nový výstupní formát „pdf-výplach“, určený především pro
+„výplach repozitáře“.
 
 Výraznou vnitřní novinkou je použití české diakritiky v názvech souborů, adresářů
 a identifikátorech kapitol. Názvy bez diakritiky byly ponechány u HTML výstupu,
 v názvech pomocných skriptů a funkcí a všude, kde implementace přidání diakritiky
 neumožňuje.
 
-<!--
-Vydání verze 2.2, jménem XXX, očekávám v první polovině prosince 2020.
--->
+Vydání verze 2.2, jménem Jindra Janů, očekávám v první polovině prosince 2020.
 
 Verze řady „vanilková příchuť 1.x“ jsou ve stádiu dlouhodobé pasivní údržby do 1. března 2023.
 
