@@ -22,6 +22,7 @@ K sestavení formátů „html“, „log“ a „deb“ *Linuxu: Knihy kouzel
 * Git
 * GNU awk
 * GNU make
+* GNU sed
 * ImageMagick
 * qrencode, iconv, xxd
 * české locale „cs\_CZ.UTF-8“ (musí fungovat české řazení příkazem „sort“) − nemusí být aktivní, stačí nainstalované a funkční
@@ -58,11 +59,12 @@ sestavení fungovat).
 Pokud budete vaše sestavení šířit ostatním osobám, doporučuji ponechat
 dodatek „licence“.
 
-Pak můžete spustit make (pokud nechcete sestavovat formáty log a deb, můžete je z příkazu vynechat):
+Pak můžete spustit make (pokud některý formát nechcete sestavovat, můžete ho z příkazu vynechat):
 
 > ``make -j4 html log deb``
 
-Výstup ve všech sestavených formátech najdete v adresáři ``výstup_překladu``. Očekávaná doba malého sestavení je několik sekund.
+Výstup ve všech sestavených formátech najdete v adresáři ``výstup_překladu``.
+Očekávaná doba malého sestavení je několik sekund.
 
 Pro sestavení formátů PDF pro tisk musíte využít [velké sestavení](velké-sestavení.md), které požaduje víc nástrojů.
 

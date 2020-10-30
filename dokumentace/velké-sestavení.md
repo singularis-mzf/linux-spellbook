@@ -12,7 +12,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
 
-# Velký překlad
+# Velké (úplné) sestavení a tisk
 
 **STAV TEXTU:** aktuální
 
@@ -49,6 +49,17 @@ Ověřil/a jsem, že v Ubuntu 20.04 LTS, Ubuntu 18.04 LTS a Linuxu Mint 20 m
 
 V budoucnu pravděpodobně sestavování přejde na Ubuntu 20.04, ale zatím je stále plně podporován i překlad na Ubuntu 18.04.
 
+Pokud plánujete nechat si výsledek vytisknout, před samotným sestavením vyhledejte ve vašem městě copy-centrum nebo profesionální tiskárnu a zjistěte o ní následující údaje:
+
+* Nabízí k tisku i kroužkovou nebo knižní vazbu (1 kus)?
+* Nabízí tisk *do kraje* (s ořezovými značkami), nebo při tisku vyžaduje zachování nějakého minimálního odstupu od okraje papíru?
+* Na jaké formáty papíru tiskne? (Možná nabízí i různé druhy papíru – kancelářský, recyklovaný apod.)
+* A samozřejmě – kolik jednotlivé varianty (orientačně) stojí.
+
+U Linuxu: Knihy kouzel máte na výběr mezi formáty B5 a A4. A4 bývá levnější a mně osobně vyhovuje více, ale většina uživatelů dává přednost „knižnějšímu“ formátu B5, který se lépe přenáší a lépe se drží v rukou.
+
+Podle zjištěných údajů se rozhodněte pro jeden z nabízených formátů: **pdf-a4** a **pdf-b5** jsou s ořezovými značkami, zatímco **pdf-a4-bez** a **pdf-b5-bez** dodržují odstup obsahu od okraje. V případě tisku na domácí tiskárně potřebujete téměř jistě formát **pdf-a4-bez**.
+
 ## Postup sestavení
 
 Prvním krokem je stáhnout si a nastavit repozitář:
@@ -76,11 +87,29 @@ sestavení fungovat).
 Pokud budete vaše sestavení šířit ostatním osobám, doporučuji ponechat
 dodatek „licence“.
 
-Pak můžete spustit make (pokud nechcete sestavit všechny formáty, můžete některé z nich vynechat):
+Pak můžete spustit make (místo „pdf-a4-bez“ uveďte označení formátu, který chcete přeložit;
+můžete uvést i více různých formátů oddělených mezerami):
 
-> ``make -j4 log html pdf-a4 pdf-a4-bez pdf-b5 pdf-b5-bez pdf-b5-na-a4 deb pdf-výplach``
+> ``make -j4 pdf-a4-bez``
 
-Výstup ve všech podporovaných formátech najdete v adresáři ``výstup_překladu``. Očekávaná doba překladu je cca 5 minut procesorového času (máte-li čtyřjádrový procesor, je to zhruba 1 minuta).
+Pokud nedojde k chybě, hotové soubory najdete v adresáři ``výstup_překladu``.
+Pokud při překladu narazíte na nečekané problémy, se kterými si nebudete vědět rady,
+zkuste smazat adresáře ``soubory_překladu`` a ``výstup_překladu`` a zkuste překlad
+znovu z větve gitu „stabilni“. Pokud se chyba objeví i tam, můžete mi napsat
+a pokusím se vám poradit. (V takovém případě budu potřebovat vědět, s jakou chybou
+Vám překlad skončil a na jaké verzi jaké distribuce se o překlad pokoušíte.)
+
+Při překladu můžete uvést i více formátů (oddělených mezerami); podporovány jsou následují formáty:
+
+* **deb** *(sestaví balíček pomocných skriptů a funkcí)*
+* **log** *(jen pro účely ladění)*
+* **html**
+* **pdf-a4**
+* **pdf-a4-bez**
+* **pdf-b5**
+* **pdf-b5-bez**
+* **pdf-b5-na-a4**
+* **pdf-výplach** *(zvláštní formát pro „výplach repozitáře“)*
 
 ## Přizpůsobení
 
@@ -106,7 +135,7 @@ Překlad pravděpodobně bude fungovat i při nedodržení doporučené syntaxe
 
 *Příklad:*
 
-``make PREMIOVE_KAPITOLY=1 -j4 html pdf-4a``
+``make PREMIOVE_KAPITOLY=1 -j4 html pdf-a4``
 
 ## Ověření české lokalizace systému
 
@@ -120,7 +149,7 @@ a zkontrolujte, že vypsal řádky v tomto pořadí:
 
 > čádor<br>chalupa<br>tábor<br>žába
 
-Bude-li pořadí odlišné, sestavení sice bude fungovat, ale pořadí kapitol a štítků v přehledech může být chybné.
+Bude-li pořadí odlišné, sestavení sice bude fungovat, ale pořadí štítků může být chybné.
 
 ## Další poznámky
 
