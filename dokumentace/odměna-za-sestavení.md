@@ -26,4 +26,10 @@ ze zdrojového kódu. To má dva hlavní důvody:
 
 Pokud vám stačí formát HTML (a případně balíček DEB), návod najdete v souboru **[malé-sestavení.md](malé-sestavení.md)**. Pokud potřebujete i PDF pro tisk, návod najdete v souboru **[velké-sestavení.md](velké-sestavení.md)**.
 
-Vydávané balíčky pomocných skriptů a funkcí ve formátu DEB obsahují skripty a funkce ke *všem vydaným* kapitolám, nemusíte je tedy sestavovat sám/a a nahrazovat dodávanou verzi balíčku.
+Základní kapitoly se snažím vybírat převážně na základě zájmu uživatelů (takže se výběr může měnit s tím,
+jak se bude vyvíjet moje představa o tom, o co mají uživatelé největší zájem). O výběru základních kapitol
+jsem ochotný/á diskutovat a prémiové kapitoly, o které budu registrovat větší zájem,
+„vyměňovat“ za základní kapitoly, o které takový zájem nebude, případně je po důkladném uvážení přidat mezi
+základní bez výměny.
+
+Vydávané balíčky pomocných skriptů a funkcí ve formátu DEB obsahují skripty a funkce ke *všem vydaným* kapitolám, nemusíte je tedy sestavovat sám/a a nahrazovat dodávanou verzi balíčku. Pokud však chcete nějaké skripty z nevydaných kapitol, budete muset vlastní překlad provést i u balíčku DEB nebo si konkrétní skripty vykopírovat z HTML verze.
