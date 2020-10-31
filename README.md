@@ -19,13 +19,15 @@ Je vydávána v PDF A4 a B5 pro profesionální i domácí tisk a ve formát
 pro snadné vykopírování zaklínadel, můžete ji tedy používat na papíře i v počítači,
 proto „multimediální“.
 
-<sup>**\***</sup> *V tomto projektu rozlišuji „Linux“ (jen jádro) a „linux“ (operační systém včetně programů). Podrobnější informace najdete v [koncepci projektu](dodatky/koncepce-projektu.md).*
-
 Verze *vanilková příchuť 2.1* je cílena na *Ubuntu 20.04 Focal Fossa* a jeho deriváty.
 
 Obsah podléhá licenci [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 Podrobné údaje o autorství zdrojových souborů jsou uvedeny v komentářích v jejich záhlaví;
 údaje o autorství obrázkových souborů jsou uvedeny v souboru [COPYRIGHT](COPYRIGHT).
+
+---
+
+<sup>**\***</sup> *V tomto projektu rozlišuji „Linux“ (jen jádro) a „linux“ (operační systém včetně programů). Podrobnější informace najdete v [koncepci projektu](dodatky/koncepce-projektu.md).*
 
 ## Návod k použití
 
