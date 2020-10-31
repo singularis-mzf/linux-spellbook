@@ -29,7 +29,7 @@ Podrobné údaje o autorství zdrojových souborů jsou uvedeny v komentáří
 
 <sup>**\***</sup> *V tomto projektu rozlišuji „Linux“ (jen jádro) a „linux“ (operační systém včetně programů). Podrobnější informace najdete v [koncepci projektu](dodatky/koncepce-projektu.md).*
 
-## Návod k použití
+## Návody k použití
 
 ### Základní použití online (úroveň 1 — pro začátečníky)
 
@@ -83,7 +83,7 @@ a přispívat do něj. Máte na výběr dvě varianty:
 
 Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybrat v souboru „pořadí-kapitol.lst“:
 
-## Již vydané kapitoly
+## Vydané kapitoly
 
 | ID | Název kapitoly | Vydána od verze | Zařazení |
 | :--- | :--- | :--- | --- |
@@ -109,11 +109,6 @@ Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybra
 | [zpracování-binárních-souborů](kapitoly/zpracování-binárních-souborů.md) | Zpracování binárních souborů | 2.0 | prémiová |
 | [zpracování-textových-souborů](kapitoly/zpracování-textových-souborů.md) | Zpracování textových souborů | 1.2 | základní |
 | [zpracování-videa-a-zvuku](kapitoly/zpracování-videa-a-zvuku.md) | Zpracování videa a zvuku | 1.0 | základní |
-
-## Vyřazené kapitoly
-
-* [Docker](kapitoly/docker.md) — Nenaplňuje kvalitativní standard a dostala se mimo okruh mých zájmů; bude zachována ve větvi 1.x, ale ve větvi 2.x se jí již nebudu věnovat.
-* [Plánování úloh](kapitoly/plánování-úloh.md) — Dospěl/a jsem k názoru, že pro běžného uživatele není dobré ani „klasické“ řešení plánování úloh démonem *cron*, který úlohu spustí kdesi zcela mimo grafické rozhraní, a tedy mimo interakci s uživatelem, ale ani hybridní řešení, které jsem navrhl/a v této kapitole. Správným řešením je instalace zcela samostatného plánovače, který bude pracovat jako uživatelská aplikace. Proto se místo údržby této kapitoly raději po takovém plánovači poohlédnu.
 
 ## Kapitoly ve vývoji
 
@@ -150,11 +145,13 @@ Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybra
 | css | Kaskádové styly CSS | - | přál/a bych si |
 | nabídka-aplikací | Nabídka aplikací | - | přál/a bych si |
 
-## Zvláštní kapitoly
+## Zvláštní a vyřazené kapitoly
 
 * [_ostatní](kapitoly/_ostatní.md) − Slouží k dočasnému shromážďování dosud nezařazených zaklínadel.
 * [_šablona](kapitoly/_šablona.md) − Nepřekládá se. Slouží jako výchozí podoba pro nově založené kapitoly.
 * [_ukázka](kapitoly/_ukázka.md) − Překládá se, ale není součástí vydaných verzí. Slouží k dokumentaci a testování mechanismu překladu. Obsahuje všechny podporované jazykové konstrukce a znaky.
+* [Docker](kapitoly/docker.md)
+* [Plánování úloh](kapitoly/plánování-úloh.md)
 
 ## Návod k zapojení se
 
