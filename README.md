@@ -14,13 +14,14 @@ https://creativecommons.org/licenses/by-sa/4.0/
 ![Linux: Kniha kouzel](obrázky/banner.png)
 
 „Linux: Kniha kouzel“ je multimediální sbírka krátkých řešených příkladů
-z prostředí svobodného software v linuxových operačních systémech,
-především distribucích Ubuntu a Linux Mint.
-Je vydávána v PDF A4 a B5 pro profesionální i domácí tisk a ve formát HTML
+z prostředí svobodného software v linuxu[^linux], především distribucích Ubuntu a Linux Mint.
+Je vydávána v PDF A4 a B5 pro profesionální i domácí tisk a ve formátu HTML
 pro snadné vykopírování zaklínadel, můžete ji tedy používat na papíře i v počítači,
 proto „multimediální“.
 
-Verze *vanilková příchuť 2.0* je cílena na *Ubuntu 20.04 Focal Fossa* a jeho deriváty.
+[^linux]: V tomto projektu rozlišuji „Linux“ (jen jádro) a „linux“ (operační systém včetně programů). Podrobnější informace najdete v [koncepci projektu](dodatky/koncepce-projektu.md).
+
+Verze *vanilková příchuť 2.1* je cílena na *Ubuntu 20.04 Focal Fossa* a jeho deriváty.
 
 Obsah podléhá licenci [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 Podrobné údaje o autorství zdrojových souborů jsou uvedeny v komentářích v jejich záhlaví;
@@ -28,113 +29,84 @@ Podrobné údaje o autorství zdrojových souborů jsou uvedeny v komentáří
 
 ## Návod k použití
 
-### Použití online (pro začátečníky)
+### Základní použití online (úroveň 1 — pro začátečníky)
 
-Navštivte [webové stránky](https://singularis-mzf.github.io/) a vyberte si nejnovější verzi
-pro váš operační systém (verzi 2.x pro Ubuntu 20.04 a jeho deriváty; verzi 1.x pro Ubuntu 18.04
-a jeho deriváty). Na přehledové stránce si pak zvolíte jednu či více kapitol, které si chcete
-prohlédnout (zvolíte-li si více kapitol, doporučuji je otevít v samostatných „panelech“ prohlížeče).
-Ve vybraných kapitolách pak najděte nějaké zaklínadlo, které si chcete vyzkoušet.
-Obvyklý postup jeho použití je následující:
+1. Navštivte [webové stránky](https://singularis-mzf.github.io/).
+2. Vyberte si „TMAVÝ MOTIV“ (výchozí), nebo „SVĚTLÝ MOTIV“ a klikněte na něj.
+3. Zvolte si jednu či více kapitol z přehledu nebo z menu „KAPITOLY“. Zvolíte-li si více kapitol, doporučuji si je otevřít v samostatných „panelech“ prohlížeče.
+4. Ve vybraných kapitolách pak najděte nějaké zaklínadlo, které si chcete vyzkoušet.
+
+Obvyklý postup použití zaklínadla je následující:
 
 1. Zamyslete se, jaký kontext zaklínadlo vyžaduje. (Nemá smysl se např. snažit vypsat název větve gitu mimo jeho pracovní adresář. Ne všechna zaklínadla se zapisují přímo na příkazovou řádku.)
 2. Označte zaklínadlo v prohlížeči (má-li zaklínadlo víc alternativních variant, označte jen jednu z nich).
 3. Zkopírujte ho do schránky (Ctrl+C).
 4. Přepněte se do okna terminálu (nebo otevřete nové).
 5. Vložte zaklínadlo (Shift+Ctrl+V).
-6. Projděte zaklínadlo a místa, která jsou na webové stránce označena podtržením (k doplnění), doplňte odpovídajícími parametry. Smažte hranaté závorky obklopující volitelné parametry.
+6. Projděte zaklínadlo a místa, která jsou na webové stránce označena podtržením (k doplnění), nahraďte odpovídajícími parametry (např. názvem souboru). Smažte hranaté závorky obklopující volitelné parametry.
 7. Potvrďte příkaz (Enter).
 
-*Poznámka:* Linux: Kniha kouzel není tutorial. Pokud na první pokus nepochopíte, jak se
-uvedená zaklínadla používají, musíte nejprve získat zkušenosti nebo navštívit jiné stránky,
+*Poznámka 1:* Na webu najdete jen základní kapitoly. Prémiové kapitoly jsou [za odměnu za sestavení](dokumentace/odměna-za-sestavení.md). Na webu najdete jen tmavý a světlý motiv; ostatní barevné motivy můžete získat v offline HTML verzi přejmenováním souborů s příponou „.css“.
+
+*Poznámka 2:* Linux: Kniha kouzel není tutorial. Pokud ani po přečtení úvodu a definic nepochopíte,
+jak se uvedená zaklínadla používají, musíte nejprve získat zkušenosti nebo navštívit jiné stránky,
 kde vám použití daných nástrojů někdo názorně vysvětlí. Odkazy na takové stránky (včetně videí)
 najdete v sekci „Další zdroje informací“ prakticky v každé kapitole.
 
-### Použití online (pro pokročilé)
+### Základní použití offline (úroveň 2)
 
-Navštivte [webové stránky](https://singularis-mzf.github.io/), vyberte požadovanou verzi knihy,
-zvolte kapitoly, které jsou blízké tématu, které vás zajímá, a projděte přehled zaklínadel,
-který kapitola nabízí. Zaklínadla můžete ze stránky přímo vykopírovat, jen bude potřeba
-doplnit parametry označené podtržením a odstranit hranaté závorky vyznačující volitelné parametry.
+Na stránce [Ke stažení](https://singularis-mzf.github.io/ke-stazeni.htm) si stáhněte „offline HTML“ variantu
+aktuální verze vanilkové příchuti (soubor „html.zip“) a archiv rozbalte do vámi zvoleného adresáře.
+Na téže stránce si můžete stáhnout PDF pro tisk a vytisknout.
 
-### Použití offline
+Pokud chcete přepnout barevný motiv, smažte (nebo přejmenujte) soubor „lkk-*datum*.css“ a soubor
+„lkk-*datum*-*id-motivu*“ přejmenujte na „lkk-*datum*.css“. To je výhoda, kterou má offline HTML
+verze oproti online HTML verzi.
 
-Na stránce [releases](https://github.com/singularis-mzf/linux-spellbook/releases) tohoto repozitáře
-si můžete stáhnout offline HTML variantu libovolné vydané verze projektu. Offline HTML verze funguje
-opravdu offline; internet budete potřebovat, jedině pokud se budete chtít podívat na některý
-z odkazovaných webů.
+Nakonec otevřete soubor „index.htm“ ve vašem oblíbeném prohlížeči (můj oblíbený prohlížeč je Firefox)
+a dále postupujte jako u základního použití online. Pokud budete HTML verzi používat dlouhodobě,
+čas od času si nezapomeňte stáhnout novou verzi, abyste dostal/a ta nejnovější vylepšení a opravy.
 
-Pro tisk jsou určeny varianty ve formátu PDF, které jsou rovněž ke stažení na stránce
-[releases](https://github.com/singularis-mzf/linux-spellbook/releases). Tištěná verze
-je podstatně přehlednější než jakákoliv elektronická. Doporučuji vytištěné listy svázat
-do kroužkové vazby a použít lepící záložky k označení nejčastěji používaných zaklínadel.
+*Poznámka 1:* V offline HTML verzi a PDF pro tisk dostupných ke stažení najdete jen základní kapitoly. Prémiové kapitoly jsou [za odměnu za sestavení](dokumentace/odměna-za-sestavení.md).
 
-## Návod k sestavení
+### Vlastní sestavení a tisk (úroveň 3)
 
-Následující postup popisuje takzvané „malé sestavení“, kdy vzniknou jen formáty HTML a LOG.
-Úplné sestavení je popsáno v souboru [PŘEKLAD.md](PŘEKLAD.md).
+Vlastní sestavení vám dává největší volnost ve výběru kapitol a v možnosti projekt upravovat
+a přispívat do něj. Máte na výběr dvě varianty:
 
-Budete potřebovat:
-
-* Git
-* GNU make
-* GNU awk
-* ImageMagick
-* qrencode, iconv, xxd
-* kvůli řazení české locale „cs\_CZ.UTF-8“ (musí fungovat české řazení příkazem „sort“)
-
-V Ubuntu 20.04 LTS, Ubuntu 18.04 LTS, Linuxu Mint 20 a Linuxu Mint 17.3 můžete tyto nástroje nainstalovat příkazem:
-
-> ``sudo apt-get install git make gawk imagemagick qrencode xxd``
-
-Až budete mít nainstalované potřebné nástroje, stáhněte a nastavte si repozitář:
-
-> ``git clone --branch stabilni https://github.com/singularis-mzf/linux-spellbook.git``<br>
-> ``cd linux-spellbook``<br>
-> ``git config --local core.quotePath false``
-
-A nakonec spusťte make:
-
-> ``make -j4 log html``
-
-Předpokládám použití **české lokalizace** daného systému.
-
-## Návod k zapojení se
-
-Viz soubor [JAK-SE-ZAPOJIT.md](JAK-SE-ZAPOJIT.md).
+1. **[Malé sestavení](dokumentace/malé-sestavení.md)**, při kterém vznikne offline HTML verze a případně balíček pomocných funkcí a skriptů (a případně ladicí varianta „log“). Malé sestavení je celkově nenáročné, nezískáte při něm ale PDF pro tisk.
+2. **[Velké sestavení](dokumentace/velké-sestavení.md)**, při kterém můžete sestavit všechny dostupné výstupní formáty. Velké sestavení vyžaduje téměř kompletní TeXlive (několik gigabajtů nástrojů) a na pomalejším počítači může trvat i mnoho minut. PDF pro tisk pak doporučuji nechat profesionálně vytisknout a svázat do kroužkové vazby. Pak můžete použít lepicí záložky k označení nejčastěji používaných zaklínadel.
 
 ### Výběr a pořadí kapitol
 
-Chcete-li si sám/a vybrat, které kapitoly se sestaví do výstupního adresáře, zkopírujte soubor
-[pořadí-kapitol.výchozí.lst](pořadí-kapitol.výchozí.lst) na „pořadí-kapitol.lst“ a upravte.
-Píše se jedno id kapitoly či dodatku na řádek (id je název souboru bez adresářové cesty a bez přípony)
-a kapitoly ani dodatky se nesmějí opakovat.
+Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybrat v souboru „pořadí-kapitol.lst“:
 
 ## Již vydané kapitoly
 
-| ID | Název kapitoly | Vydána od verze |
-| :--- | :--- | :--- |
-| [awk](kapitoly/awk.md) | AWK | 1.2 |
-| [datum-čas-kalendář](kapitoly/datum-čas-kalendář.md) | Datum, čas a kalendář | 1.1 |
-| [diskové-oddíly](kapitoly/diskové-oddíly.md) | Diskové oddíly | 1.6 |
-| [git](kapitoly/git.md) | Git | 1.0 |
-| [hledání-souborů](kapitoly/hledání-souborů.md) | Hledání souborů | 1.5 |
-| [make](kapitoly/make.md) | Make | 1.0 |
-| [markdown](kapitoly/markdown.md) | Markdown | 1.0 |
-| [práce-s-archivy](kapitoly/práce-s-archivy.md) | Práce s archivy | 1.1 |
-| [proměnné](kapitoly/proměnné.md) | Proměnné prostředí a interpretu | 1.9 |
-| [regulární-výrazy](kapitoly/regulární-výrazy.md) | Regulární výrazy | 1.1 |
-| [sed](kapitoly/sed.md) | Sed | 1.8 |
-| [soubory-a-adresáře](kapitoly/soubory-a-adresáře.md) | Soubory a adresáře | 1.5 |
-| [správa-balíčků](kapitoly/správa-balíčků.md) | Správa balíčků | 1.1 |
-| [správa-procesů](kapitoly/správa-procesů.md) | Správa procesů | 1.4 |
-| [správa-uživatelských-účtů](kapitoly/správa-uživatelských-účtů.md) | Správa uživatelských účtů | 1.11 |
-| [stahování-videí](kapitoly/stahování-videí.md) | Stahování videí | 1.0 |
-| [systém](kapitoly/systém.md) | Systém | 1.2 |
-| [terminál](kapitoly/terminál.md) | Terminál | (1.0) |
-| [vim](kapitoly/vim.md) | Vim | 1.8 |
-| [zpracování-binárních-souborů](kapitoly/zpracování-binárních-souborů.md) | Zpracování binárních souborů | 2.0 |
-| [zpracování-textových-souborů](kapitoly/zpracování-textových-souborů.md) | Zpracování textových souborů | 1.2 | [zpracování-videa-a-zvuku](kapitoly/zpracování-videa-a-zvuku.md) | Zpracování videa a zvuku | 1.0 |
+| ID | Název kapitoly | Vydána od verze | Zařazení |
+| :--- | :--- | :--- | --- |
+| [awk](kapitoly/awk.md) | AWK | 1.2 | prémiová |
+| [datum-čas-kalendář](kapitoly/datum-čas-kalendář.md) | Datum, čas a kalendář | 1.1 | prémiová |
+| [diskové-oddíly](kapitoly/diskové-oddíly.md) | Diskové oddíly | 1.6 | základní |
+| [git](kapitoly/git.md) | Git | 1.0 | základní |
+| [hledání-souborů](kapitoly/hledání-souborů.md) | Hledání souborů | 1.5 | základní |
+| [make](kapitoly/make.md) | Make | 1.0 | prémiová |
+| [markdown](kapitoly/markdown.md) | Markdown | 1.0 | prémiová |
+| [práce-s-archivy](kapitoly/práce-s-archivy.md) | Práce s archivy | 1.1 | základní |
+| [proměnné](kapitoly/proměnné.md) | Proměnné prostředí a interpretu | 1.9 | prémiová |
+| [regulární-výrazy](kapitoly/regulární-výrazy.md) | Regulární výrazy | 1.1 | základní |
+| [sed](kapitoly/sed.md) | Sed | 1.8 | prémiová |
+| [soubory-a-adresáře](kapitoly/soubory-a-adresáře.md) | Soubory a adresáře | 1.5 | prémiová |
+| [správa-balíčků](kapitoly/správa-balíčků.md) | Správa balíčků | 1.1 | základní |
+| [správa-procesů](kapitoly/správa-procesů.md) | Správa procesů | 1.4 | prémiová |
+| [správa-uživatelských-účtů](kapitoly/správa-uživatelských-účtů.md) | Správa uživatelských účtů | 1.11 | základní |
+| [stahování-videí](kapitoly/stahování-videí.md) | Stahování videí | 1.0 | prémiová |
+| [systém](kapitoly/systém.md) | Systém | 1.2 | základní |
+| [terminál](kapitoly/terminál.md) | Terminál | (1.0) | prémiová |
+| [vim](kapitoly/vim.md) | Vim | 1.8 | prémiová |
+| [zpracování-binárních-souborů](kapitoly/zpracování-binárních-souborů.md) | Zpracování binárních souborů | 2.0 | prémiová |
+| [zpracování-textových-souborů](kapitoly/zpracování-textových-souborů.md) | Zpracování textových souborů | 1.2 | základní |
+| [zpracování-videa-a-zvuku](kapitoly/zpracování-videa-a-zvuku.md) | Zpracování videa a zvuku | 1.0 | základní |
 
 ## Vyřazené kapitoly
 
@@ -181,6 +153,10 @@ a kapitoly ani dodatky se nesmějí opakovat.
 * [_ostatní](kapitoly/_ostatní.md) − Slouží k dočasnému shromážďování dosud nezařazených zaklínadel.
 * [_šablona](kapitoly/_šablona.md) − Nepřekládá se. Slouží jako výchozí podoba pro nově založené kapitoly.
 * [_ukázka](kapitoly/_ukázka.md) − Překládá se, ale není součástí vydaných verzí. Slouží k dokumentaci a testování mechanismu překladu. Obsahuje všechny podporované jazykové konstrukce a znaky.
+
+## Návod k zapojení se
+
+Viz soubor [JAK-SE-ZAPOJIT.md](JAK-SE-ZAPOJIT.md).
 
 ## Větve na GitHubu
 
