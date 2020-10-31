@@ -79,6 +79,8 @@ a přispívat do něj. Máte na výběr dvě varianty:
 1. **[Malé sestavení](dokumentace/malé-sestavení.md)**, při kterém vznikne offline HTML verze a případně balíček pomocných funkcí a skriptů (a případně ladicí varianta „log“). Malé sestavení je celkově nenáročné, nezískáte při něm ale PDF pro tisk.
 2. **[Velké sestavení](dokumentace/velké-sestavení.md)**, při kterém můžete sestavit všechny dostupné výstupní formáty. Velké sestavení vyžaduje téměř kompletní TeXlive (několik gigabajtů nástrojů) a na pomalejším počítači může trvat i mnoho minut. PDF pro tisk pak doporučuji nechat profesionálně vytisknout a svázat do kroužkové vazby. Pak můžete použít lepicí záložky k označení nejčastěji používaných zaklínadel.
 
+Pokud budete upravovat zdrojové kódy kapitol, vyplatí se si před tím pročíst dokument [Syntaxe kapitol](dokumentace/syntaxe-kapitol.md) a jako vzor vám může sloužit zvláštní kapitola [Ukázka](kapitoly/_ukazka.md).
+
 ### Výběr a pořadí kapitol
 
 Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybrat v souboru „pořadí-kapitol.lst“:
