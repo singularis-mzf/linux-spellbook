@@ -38,7 +38,7 @@ VSECHNY_KAPITOLY := _ostatní _ukázka apache awk bash css datum-čas-kalendář
 # H, I, J, K, L, M
 VSECHNY_KAPITOLY += hledání-souborů kalkulace konverze-formatů latex lkk make markdown moderní-věci
 # N, O, P, Q, R, S
-VSECHNY_KAPITOLY += odkazy pdf perl plánování-úloh práce-s-archivy proměnné regulární-výrazy
+VSECHNY_KAPITOLY += nabídka-aplikací odkazy pdf perl plánování-úloh práce-s-archivy proměnné regulární-výrazy
 # S
 VSECHNY_KAPITOLY += sed soubory-a-adresáře správa-balíčků správa-balíčků-2 správa-procesů správa-uživatelských-účtů stahování-videí stahování-z-webu systém šifrování
 # T, U, V, W, X, Y, Z

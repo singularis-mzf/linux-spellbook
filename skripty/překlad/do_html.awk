@@ -304,7 +304,7 @@ function ReseniNezname() {
 
 function Obrazek(src, alt, rawSrc, rawAlt) {
     if (src ~ /^\.\.\/obr[aá]zky\//) {
-        src = "obrazky/" substr(src, 12);
+        src = "obrazky/" BezDiakritiky(substr(src, 12));
     }
     return "<figure><img src=\"" src "\" alt=\"" alt "\"></figure>";
 }

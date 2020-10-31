@@ -119,6 +119,7 @@ Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybra
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
 | [firefox](kapitoly/firefox.md) | Firefox | 60% | dítě |
 | [kalkulace](kapitoly/kalkulace.md)| Kalkulace | 50% | dítě |
+| [stahování-z-webu](kapitoly/stahování-z-webu.md) | Stahování z webu | 40% | dítě |
 | [zpracování-obrázků](kapitoly/zpracování-obrázků.md) | Zpracování obrázků | 40% | dítě |
 | [odkazy](kapitoly/odkazy.md) | Pevné a symbolické odkazy | 20% | dítě |
 | [perl](kapitoly/perl.md) | Základy Perlu | 20% | dítě |
@@ -137,7 +138,7 @@ Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybra
 | [wine](kapitoly/wine.md) | Wine | 0% | embryo |
 | [pdf](kapitoly/pdf.md) | PDF | 0% | embryo |
 | [virtualbox](kapitoly/virtualbox.md) | VirtualBox | 0% | embryo |
-| [stahování-z-webu](kapitoly/stahování-z-webu.md) | Stahování z webu | 0% | embryo |
+| [nabídka-aplikací](kapitoly/nabídka-aplikací.md) | Nabídka aplikací | 0% | embryo |
 | [šifrování](kapitoly/šifrování.md) | Šifrování a kryptografie | 0% | embryo |
 | přehrávání-videa | Přehrávání videa, zvuku a obrázků | - | přál/a bych si |
 | firewall | Firewall | - | přál/a bych si |
@@ -145,7 +146,6 @@ Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybra
 | ascii-art | ASCII art | - | přál/a bych si |
 | záznam-x | Záznam obrazovky | - | přál/a bych si |
 | css | Kaskádové styly CSS | - | přál/a bych si |
-| nabídka-aplikací | Nabídka aplikací | - | přál/a bych si |
 
 ## Zvláštní a vyřazené kapitoly
 
