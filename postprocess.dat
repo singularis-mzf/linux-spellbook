@@ -112,6 +112,12 @@ zpracování-textových-souborů
 \item{}\bfseries{}Řetězec\mdseries{} (string) je libovolná posloupnost znaků, i~prázdná či tvořená jedním znakem.
 \item{}\bfseries{}Řetězec\mdseries{} (string) je libovolná posloupnost znaků, i~prá\-zdná či tvořená jedním znakem.
 
+520
+pdf-a4.*
+zpracování-textových-souborů
+{\footnotetext[1]{Užitečná kódování: ISO8859{-}2, WINDOWS{-}1250, UTF{-}16, UTF{-}16BE, UTF{-}16LE, UTF{-}8, CP852 (MS{-}DOS), MAC{-}CENTRALEUROPE.}}{%
+{\footnotetext[1]{\raggedright Užitečná kódování: ISO8859{-}2, WINDOWS{-}1250, UTF{-}16, UTF{-}16BE, UTF{-}16LE, UTF{-}8, CP852 (MS{-}DOS), MAC{-}CENTRALEUROPE.}}{%
+
 #
 # [mardown] 600..699
 # =========================================================================================
@@ -260,6 +266,31 @@ práce-s-archivy
 \quotedblbase{}squashfs{-}root\textquotedblleft{}). Veškerý obsah archivu je pak v~podstromu pod tímto adresářem.
 \\\quotedblbase{}squashfs{-}root\textquotedblleft{}). Veškerý obsah archivu je pak v~podstromu pod tímto adresářem.
 
+#
+# [zpracování-binárních-souborů] 1900..1999
+# =========================================================================================
+
+1900
+pdf-a4.*
+zpracování-binárních-souborů
+\end{odstavce}\begin{uzkyrezim}\sekce{Tipy a~zkušenosti}%
+\end{odstavce}\vspace*{1cm}\begin{uzkyrezim}\sekce{Tipy a~zkušenosti}%
+
+#
+# [hledání-souborů] 2000..2099
+# =========================================================================================
+
+2000
+pdf-b5.*
+hledání-souborů
+\bfseries{}M až N\mdseries{} gigabajtů/megabajtů/kilobajtů/bajtů}%
+\bfseries{}M až N\mdseries{\\\small gigabajtů/megabajtů/kilobajtů/bajtů}}%
+
+2010
+pdf-b5.*
+hledání-souborů
+\bfseries{}přesně\mdseries{} N gigabajtů/megabajtů/kilobajtů/bajtů}%
+\bfseries{}přesně\mdseries{} N{\\\small gigabajtů/megabajtů/kilobajtů/bajtů}}%
 
 #
 # VYŘAZENÉ KAPITOLY

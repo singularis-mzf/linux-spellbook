@@ -298,6 +298,8 @@ Co hledat:
 * Publikované knihy
 * [Stránky TL;DR](https://github.com/tldr-pages/tldr/tree/master/pages/common)
 
+!ÚzkýRežim: vyp
+
 ## Pomocné funkce a skripty
 
 *# lkk vycist-odkazy – vypíše odkazy z HTML vstupu ve zpracovatelném formátu*<br>
@@ -306,5 +308,3 @@ Co hledat:
 <!--
 Vyžaduje balíček: libhtml-linkextractor-perl
 -->
-
-!ÚzkýRežim: vyp
