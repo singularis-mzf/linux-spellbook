@@ -221,30 +221,19 @@ Začíná-li zaklínadlo v této kapitole příkazem „youtube-dl“, uvádí 
 
 ## Instalace na Ubuntu
 
-<!--
-Aktuální instalační postup „youtube-dl“ hledejte na [oficiálních stránkách youtube-dl](https://ytdl-org.github.io/youtube-dl/download.html).
--->
+Aktuální instalační postup „youtube-dl“ hledejte na [oficiálních stránkách youtube-dl](https://yt-dl.org/download.html).
 
-Oficiální stránky youtube-dl jsou od října 2020 z [právních důvodů](https://itsfoss.com/youtube-dl-github-takedown/) mimo provoz.
-Následující instalační postup sice zatím funguje, ale neumožňuje vám ověřit autenticitu staženého souboru.
-Také můžete zvážit možnost instalace z balíčku z verze Ubuntu 20.10 Groovy Gorilla, která by na Ubuntu 20.04 měla bez problému
-fungovat.
-
-<!--
 Zde uvádím trochu složitější postup, který sestává z následujících kroků: nejprve musíte samotný program stáhnout, pak můžete zkontrolovat jeho elektronický podpis (ačkoliv stahování z https je už samo o sobě slušná ochrana před podvržením). A nakonec ho musíte nainstalovat; buď pro všechny uživatele (což je běžná, doporučovaná cesta), nebo jen pro sebe (což nevyžaduje použití „sudo“).
--->
 
 *# stažení (nezbytná část)*<br>
 **sudo apt-get install -y python wget**<br>
 **wget https://yt-dl.org/downloads/latest/youtube-dl -O youtube-dl**<br>
 
-<!--
 *# kontrola elektronického podpisu (volitelná)*<br>
 **wget https://yt-dl.org/downloads/latest/youtube-dl.sig -O youtube-dl.sig**<br>
 **gpg \-\-verify youtube-dl.sig youtube-dl**<br>
 !: Pokud chcete, zkontrolujte, zda vypsaný otisk klíče odpovídá jednomu z otisků uvedených na oficiální stahovací stránce.
 **rm youtube-dl.sig**<br>
--->
 
 *# instalace pro všechny uživatele*<br>
 **sudo install -o root -g root -m u=rwx,go=rx youtube-dl /usr/local/bin/youtube-dl &amp;&amp; rm youtube-dl**
@@ -256,9 +245,7 @@ Zde uvádím trochu složitější postup, který sestává z následujících 
 **mkdir -pv ~/.config/youtube-dl**<br>
 **touch ~/.config/youtube-dl/config**
 
-<!--
 V repozitáři Ubuntu sice je balíček „youtube-dl“, ale zpravidla zastaralý a již nefunkční, protože rozhraní streamovacích služeb se často mění.
--->
 
 ## Ukázka
 
