@@ -232,7 +232,8 @@ Další významnou novinkou je, že opouštím označení „GNU/Linux“ a mí
 používat slovo „linux“ s malým „l“. Bylo by dobré, kdyby se v českých komunitách
 uchytilo, jako se kdysi uchytil „internet“ s malým „i“.
 
-HTML varianta v této verzi nepřináší žádnou vlastní novinku.
+V HTML variantě je nyní menu „Osnova“ jako první a menu „Kapitoly“ jako druhé,
+protože mi to připadlo praktičtější.
 
 V PDF variantách jsou hlavní novinkou písma Latin Modern Roman a Latin Modern Sans.
 Tímto děkuji uživateli „Rotující Knuth“ na ABC Linuxu za konstruktivní kritiku,
