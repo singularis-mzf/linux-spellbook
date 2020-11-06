@@ -81,11 +81,11 @@ a přispívat do něj. Máte na výběr dvě varianty:
 
 Pokud budete upravovat zdrojové kódy kapitol, vyplatí se si před tím pročíst dokument [Syntaxe kapitol](dokumentace/syntaxe-kapitol.md) a jako vzor vám může sloužit zvláštní kapitola [Ukázka](kapitoly/_ukazka.md).
 
-### Výběr a pořadí kapitol
+## Výběr a pořadí kapitol
 
 Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybrat v souboru „pořadí-kapitol.lst“:
 
-## Vydané kapitoly
+### Vydané kapitoly
 
 | ID | Název kapitoly | Vydána od verze | Zařazení |
 | :--- | :--- | :--- | --- |
@@ -112,7 +112,7 @@ Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybra
 | [zpracování-textových-souborů](kapitoly/zpracování-textových-souborů.md) | Zpracování textových souborů | 1.2 | základní |
 | [zpracování-videa-a-zvuku](kapitoly/zpracování-videa-a-zvuku.md) | Zpracování videa a zvuku | 1.0 | základní |
 
-## Kapitoly ve vývoji
+### Kapitoly ve vývoji
 
 | ID | Název kapitoly | Růst | Stav |
 | :--- | :--- | ---: | :--- |
@@ -147,7 +147,7 @@ Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybra
 | záznam-x | Záznam obrazovky | - | přál/a bych si |
 | css | Kaskádové styly CSS | - | přál/a bych si |
 
-## Zvláštní a vyřazené kapitoly
+### Zvláštní a vyřazené kapitoly
 
 * [_ostatní](kapitoly/_ostatní.md) − Slouží k dočasnému shromážďování dosud nezařazených zaklínadel.
 * [_šablona](kapitoly/_šablona.md) − Nepřekládá se. Slouží jako výchozí podoba pro nově založené kapitoly.

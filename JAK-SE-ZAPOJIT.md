@@ -41,6 +41,7 @@ Seznam je řazený od nejsnazšího úkolu po nejobtížnější:
 * *Napsat mi námět, co v některé kapitole chybí* (pokud to tam není zmíněno)
 -->
 * *Zmínit se o projektu Linux: Kniha kouzel přátelům, na sociálních sítích, fórech a v médiích.*
+* *Opravit překlepy*
 * *Nahlásit chyby* (pokud nějaké objevíte)
 * *Sehnat či nakreslit lepší ikony kapitol*
 * *Navrhnout další zaklínadla do kapitol* (zejména do rozpracovaných)
@@ -64,6 +65,18 @@ z tohoto projektu zájem.
 
 Pomocí permanentních odkazů na online HTML verzi můžete odkazovat přímo
 na jednotlivá zaklínadla, např. [takto](https://singularis-mzf.github.io/v2/promenne.htm#z966242526).
+
+## Opravit překlepy
+
+Bohužel po mě při psaní zůstává celkem dost překlepů (zejména chybějících písmen).
+Snažím se je po sobě opravovat, ale stále mi jich dost unikne.
+Když mi takové překlepy pomůžete opravit, nezabere vám to mnoho času
+a učiní to tento projekt o malý kousek lepším.
+
+Jste-li registrovaní uživatelé GitHubu, můžete překlepy rovnou opravit tak,
+že vytvoříte odnož (fork) a v ní pull request. Pokud jde skutečně jen o zjevné překlepy
+v textu, nemusíte nic vypisovat, pochopím to sám/a. Také mi můžete překlepy
+nahlásit e-mailem na adresu [singularis@volny.cz](mailto:singularis@volny.cz).
 
 ## Nahlásit chyby
 

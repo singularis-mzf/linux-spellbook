@@ -243,7 +243,7 @@ $(CSS_MOTIVY:%=$(VYSTUP_PREKLADU)/html/lkk-$(DATUM_SESTAVENI)-%.css): %: formát
 # ----------------------------------------------------------------------------
 $(OBRAZKY:%=$(SOUBORY_PREKLADU)/html/obrázky/%) $(OBRAZKY_IK:%=$(SOUBORY_PREKLADU)/html/obrázky/ik/%): $(SOUBORY_PREKLADU)/html/obrázky/%: obrázky/%
 	mkdir -pv $(dir $@)
-	$(CONVERT) $< $@
+	cp $< $@
 
 $(SVG_OBRAZKY:%=$(SOUBORY_PREKLADU)/html/obrázky/%): $(SOUBORY_PREKLADU)/html/obrázky/%: obrázky/%
 	mkdir -pv $(dir $@)
