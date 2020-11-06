@@ -208,13 +208,14 @@ function RidiciRadekSpolecnaObsluha(text,   i, soubor) {
             while (getline < soubor) {
                 if (!jsou_premiove) {
                     jsou_premiove = 1;
-                    printf("<div class=\"premiove\"><strong>Prémiové kapitoly:</strong>\n");
+                    printf("%s\n", "<div class=\"premiove\"><strong>Prémiové kapitoly:</strong>");
                 }
                 printf("<div>%s</div>\n", $2);
             }
             close(soubor);
             if (jsou_premiove) {
-                printf("</div><p>Tyto kapitoly můžete získat jako odměnu za překlad ze zdrojového kódu. Podrobnější informace <a href=\"https://github.com/singularis-mzf/linux-spellbook/blob/stabilni/dokumentace/odm%C4%9Bna-za-sestaven%C3%AD.md\">na GitHubu</a>.</p>\n");
+                printf("%s %s\n", "</div><p>Tyto kapitoly můžete získat jako odměnu za překlad ze zdrojového kódu. Podrobnější informace",
+                       "<a href=\"https://github.com/singularis-mzf/linux-spellbook/blob/stabilni/dokumentace/odm%C4%9Bna-za-sestaven%C3%AD.md\">na GitHubu</a>.</p>");
             }
             return 0;
 
@@ -234,14 +235,14 @@ function RidiciRadekSpolecnaObsluha(text,   i, soubor) {
             if (IDFORMATU != "html") {ShoditFatalniVyjimku("{{MENU NÁPOVÉDA}} je podporováno jen pro formát HTML!")}
             VyzadujeFragmentyTSV();
             if ("id/predmluva" in FRAGMENTY) {
-                printf("<a href=\"predmluva.htm\">Předmluva</a>\n");
+                printf("%s\n", "<a href=\"predmluva.htm\">Předmluva</a>");
             }
             if ("id/koncepce-projektu" in FRAGMENTY) {
-                printf("<a href=\"koncepce-projektu.htm\">Koncepce projektu</a>\n");
+                printf("%s\n", "<a href=\"koncepce-projektu.htm\">Koncepce projektu</a>");
             }
-            printf("<a href=\"https://singularis-mzf.github.io/\">Ostatní verze knihy</a>\n");
-            printf("<a href=\"https://github.com/singularis-mzf/linux-spellbook\">Repozitář na GitHubu</a>\n");
-            printf("<a href=\"https://github.com/singularis-mzf/linux-spellbook/blob/stabilni/dokumentace/odm%C4%9Bna-za-sestaven%C3%AD.md\">Odměna za sestavení (prémiové kapitoly)</a>\n");
+            printf("%s\n%s\n%s\n", "<a href=\"https://singularis-mzf.github.io/\">Ostatní verze knihy</a>",
+                "<a href=\"https://github.com/singularis-mzf/linux-spellbook\">Repozitář na GitHubu</a>",
+                "<a href=\"https://github.com/singularis-mzf/linux-spellbook/blob/stabilni/dokumentace/odm%C4%9Bna-za-sestaven%C3%AD.md\">Odměna za sestavení (prémiové kapitoly)</a>");
             return 0;
 
         default:
