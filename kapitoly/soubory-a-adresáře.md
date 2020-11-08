@@ -29,15 +29,13 @@ Poznámky:
 ## Úvod
 
 Tato kapitola se zabývá prací s adresáři a jejich položkami (soubory, podadresáři apod.),
-včetně jejich velikosti, vlastnictví, přístupových práv, příznaků a rozšířených atributů.
+včetně jejich velikosti, vlastnictví, přístupových práv, příznaků a datových položek.
 Nepokrývá však zacházení s konkrétním obsahem souborů (analýzu, kopírování, zálohování apod.).
 
-Pevnými a symbolickými odkazy se tato kapitola zabývá velmi okrajově, bude jim věnována
-samostatná kapitola.
+Pevnými a symbolickými odkazy se tato kapitola zabývá velmi okrajově,
+bude jim věnována samostatná kapitola.
 
 Tato kapitola se nezabývá připojováním souborových systémů ani prací s pododdíly btrfs.
-
-Tato verze kapitoly nepokrývá příkazy specifické pro souborový systém typu btrfs.
 
 Příkazy chmod, find, stat a některé další jsou vyvíjeny v rámci projektu GNU.
 
@@ -45,17 +43,17 @@ Příkazy chmod, find, stat a některé další jsou vyvíjeny v rámci projek
 
 * **Adresářová položka** je jednoznačně pojmenovaná položka v adresáři; obvykle je to soubor (přesněji – pevný odkaz na soubor), další adresář či symbolický odkaz, méně často zařízení (např. „/dev/null“), pojmenovaná roura apod. Adresářové položky se v daném adresáři identifikují svým **názvem**, který může obsahovat jakékoliv znaky UTF-8 kromě nulového bajtu a znaku „/“. V každém adresáři se nacházejí dva zvláštní adresářové odkazy „.“ (na sebe) a „..“ (na nadřazený adresář), které se ale nepočítají a většina nástojů je ignoruje (bohužel ne všechny).
 * Adresářová položka je **skrytá**, pokud její název začíná znakem „.“.
-* **Přístupová práva** jsou nastavení souboru či adresáře, která určují, kteří uživatelé budou moci s daným souborem či adresářem zacházet. Nastavení přístupových práv se dělí na **základní**, které je přítomno vždy, a **rozšířená** (ACL, access control list), jejichž nastavení lze přidávat či odebírat. (Vedle toho existují ještě „výchozí“ přístupová práva, ale těmi se pro jejich neintuitivnost a zřídkavé využití budu zabývat jen okrajově.)
-* **Zvláštní příznaky** jsou tři příznaky (u+s, g+s, +t), které mohou být nastaveny souborům a adresářům a mají na ně zvláštní účinky. Jim příbuzné jsou **zvláštní restrikce ext4**, které jsou ale dostupné pouze na souborovém systému ext4 (a částečně ext2 a ext3).
-* **Mód** (mode) je standardizované číselné vyjádření zvláštních příznaků a základních přístupových práv v osmičkové soustavě.
-* **Uživatelské rozšířené atributy** (URA, user xattrs) umožňují ukládat k souborům a adresářům další obecná data v podobě dvojic klíč–hodnota; jsou však k dispozici pouze na souborovém systému ext4, jsou poměrně skryté, při jakémkoliv kopírování se obvykle ztratí a nejsou příliš využívány. Proto doporučuji se jim raději vyhýbat.
+* **Přístupová práva** jsou nastavení souboru či adresáře, která určují, kteří uživatelé budou moci s daným souborem či adresářem zacházet. Nastavení přístupových práv se dělí na tři **základní nastavení**, která jsou přítomna vždy, a **rozšířená nastavení** (ACL, access control list), která lze přidávat či odebírat. (Vedle toho existují ještě „výchozí“ nastavení, ale těmi se pro jejich neintuitivnost a zřídkavé využití budu zabývat jen okrajově.)
+* **Zvláštní příznaky** jsou příznaky, které mohou být nastaveny souborům a adresářům a mají na ně zvláštní účinky; dělí se na tři **základní zvláštní příznaky** (u+s, g+s, +t) a mnoho **rozšířených zvláštních příznaků**. Zatímco ty základní jsou podporované na všech nativně linuxových typech souborových systémů, podpora těch rozšířených se liší.
+* **Mód** (mode) je standardizované číselné vyjádření základních přístupových práv a základních zvláštních příznaků v osmičkové soustavě.
+* **Uživatelské datové položky** (user xattrs, user extended attributes) umožňují k souborům a adresářům ukládat další obecná data v podobě dvojic klíč–hodnota. Nejčastěji se používají k uložení krátkých čísel či textových řetězců, např. URL, ze kterého byl daný soubor stažen. Mají řadu nevýhod – jsou před uživatelem poměrně skryté (příkazy „ls“ ani „find“ s nimi neumí pracovat), při kopírování či zálohování se obvykle ztratí a nejsou příliš využívány. Proto doporučuji se jim raději vyhýbat a dodatečná data ukládat do samostatných, skrytých souborů.
 <!--
 * **Kanonická cesta** je absolutní cesta k adresářové položce od kořenového adresáře, která neobsahuje symbolické odkazy ani žádné zbytečné prvky.
 -->
 
-### Přístupová práva souborů a adresářů
+### Přístupová práva
 
-V linuxovém souborovém systému existují tři přístupová práva, která lze u adresářové položky dovolit či zakázat:
+V linuxu se u souborů a adresářů povolují či zakazují tři přístupová práva:
 
 Právo **čtení** (r, číselná hodnota „4“, read) znamená:
 
@@ -69,18 +67,16 @@ Právo **zápisu** (w, číselná hodnota „2“, write) znamená:
 
 Právo **spouštění** (x, číselná hodnota „1“, execute) znamená:
 
-* U souboru právo daný soubor spustit jako proces. Toto právo stačí, pokud se jedná o program v přímo spustitelném binárním formátu; jde-li ve skutečnosti o interpretovaný skript, je potřeba také právo „r“.
+* U souboru právo daný soubor spustit jako proces. Toto právo stačí, pokud se jedná o program v přímo spustitelném binárním formátu; jde-li ve skutečnosti o interpretovaný skript, je potřeba také právo „r“, aby ho příslušný interpret mohl číst.
 * U adresáře právo do daného adresáře vstoupit, zjistit podrobnější informace o jeho položkách (např. přístupová práva) a dál k nim přistupovat. Nezahrnuje však možnost přečíst seznam názvů položek, takže pokud máte k adresáři samotné právo „x“, musíte znát názvy jeho položek, abyste s nimi mohli zacházet. (Samotné právo „r“ bez práva „x“ zase umožní programu vypsat seznam položek v adresáři, ale už o nich nebude moci nic zjistit.
 
 Každá adresářová položka má vlastníka (což je některý uživatel, např. „root“) a příslušnou skupinu.
 Přístupová práva může měnit pouze vlastník položky nebo superuživatel.
 
-Z historických důvodů existují dvě nastavení přístupových práv – základní (POSIX)
-a rozšířené (ACL). Základní nastavení je vždy přítomno a dělí se na nastavení
-pro vlastníka („u“), skupinu („g“) a ostatní („o“), vždy v tomto pořadí.
-Rozšířené nastavení je pak tvořeno
-seznamem dalších položek, které mohou stanovovat dodatečná práva konkrétním
-uživatelům a skupinám. Tento seznam však může být (a také obvykle bývá) prázdný.
+Existují tři základní nastavení přístupových práv: pro vlastníka („u“), pro skupinu („g“) a pro ostatní („o“),
+vždy v tomto pořadí. Rozšířená nastavení přístupových práv jsou seznam dalších položek,
+které mohou stanovovat dodatečná práva konkrétním uživatelům a skupinám.
+Tento seznam však může být (a také obvykle bývá) prázdný.
 
 Nastavení přístupových práv se uplatňují následovně:
 
@@ -88,38 +84,28 @@ Nastavení přístupových práv se uplatňují následovně:
 * Jinak se vezme základní nastavení pro skupinu („g“) a všechny položky rozšířeného nastavení. Pokud bude mezi nimi nalezena alespoň jedna „odpovídající“ položka, tedy např. skupina, jejíž je uživatel členem, uživatel dostane všechna práva garantovaná alespoň některou odpovídající položkou. (To znamená, že když např. bude adresář „adr“ mít nastavena pro skupinu „askup“ práva „r\-\-“ a pro skupinu „bskup“ práva „\-\-x“, uživatel, který je členem obou skupin, ale není vlastníkem daného adresáře, má k adresáři „adr“ práva „r-x“.)
 * Jedině pokud nebyla v druhém kroku nalezena žádná odpovídající položka, uplatní se nastavení pro ostatní („o“).
 
-### Zvláštní příznaky
+### Základní zvláštní příznaky
 
-Vedle přístupových práv může mít každý soubor či adresář nastaveny ještě tři zvláštní příznaky:
+Vedle přístupových práv může mít každý soubor či adresář nastaveny ještě tři základní zvláštní příznaky:
 
-**Příznak zmocnění vlastníka** (u+s, číselná hodnota „4“, set-uid bit) má význam pouze u souborů
-a pouze v kombinaci s právem „x“. Je-li takový soubor spuštěn, vzniklý proces
-získá EUID (a tedy i práva) vlastníka souboru, a to i v případě, že ho spustil jiný uživatel.
-Nejčastějším použitím je spuštění určitého programu s právy superuživatele.
+**Příznak zmocnění vlastníka** (u+s, číselná hodnota „4“, set-uid bit):
 
-**Příznak zmocnění skupiny** (g+s, číselná hodnota „2“ set-gid bit) funguje u souborů analogicky
-– spustí-li daný soubor kterýkoliv uživatel, vzniklý proces získá EGID (tedy skupinová práva)
-skupiny souboru. Navíc ovšem funguje i u adresářů – všechny nově vytvořené adresářové položky
-v adresáři s příznakem zmocnění pro skupinu budou při vytvoření přiřazeny stejné skupině
-jako adresář, ve kterém byly vytvořeny. (Normálně by získaly skupinu podle procesu,
-který je vytvořil.) Takto vytvořené podadresáře navíc získají také příznak zmocnění pro skupinu,
-což znamená, že tento příznak se automaticky rozšíří i do všech nově vytvořených podadresářů,
-pokud u nich nebude výslovně zrušen.
+* U souboru má význam pouze v kombinaci s právem „x“. Je-li takový soubor spuštěn, vzniklý proces získá EUID (a tedy i práva) vlastníka souboru, a to i v případě, že ho spustil jiný uživatel. Nejčastějším použitím je spuštění určitého programu s právy superuživatele.
+* U adresáře nemá žádný význam.
 
-Třetí zvláštní příznak je **příznak omezení smazání** (+t, číselná hodnota „1“, sticky-bit).
-Ten má význam pouze u adresářů, kde omezuje výkon práva „w“ – brání ve smazání či přejmenování
-„cizích položek“, tedy přesněji – zabrání ve smazání či přejmenování adresářové položky
-každému uživateli, který není vlastníkem dané položky či vlastníkem samotného adresáře.
-Hlavním smyslem této kombinace je, že uživatelé mohou v daném adresáři vytvářet nové
-položky a ty jsou pak chráněny před zásahy jiných uživatelů, kteří mají k témuž adresáři
-také právo zápisu. Tento příznak je typicky nastaven na adresáři „/tmp“.
-Poznámka: vzniklé podadresáře tento příznak nedědí.
+**Příznak zmocnění skupiny** (g+s, číselná hodnota „2“ set-gid bit):
+
+* U souboru funguje analogicky jako příznak zmocnění vlastníka – vzniklý proces získá EGID (tedy skupinová práva) skupiny souboru.
+* U adresáře znamená, že všechny nově vytvořené adresářové položky v adresáři s tímto příznakem budou při vytvoření přiřazeny stejné skupině jako adresář, ve kterém byly vytvořeny. (Normálně by získaly skupinu podle procesu, který je vytvořil.) Takto vytvořené podadresáře navíc získají také příznak zmocnění pro skupinu, což znamená, že tento příznak se automaticky rozšíří i do všech nově vytvořených podadresářů, pokud u nich nebude výslovně zrušen.
+
+**Příznak omezení smazání** (+t, číselná hodnota „1“, sticky-bit):
+
+* U souboru nemá žádný význam.
+* U adresáře omezuje výkon práva „w“ – brání ve smazání či přejmenování „cizích položek“, tedy přesněji – zabrání ve smazání či přejmenování adresářové položky každému uživateli, který není vlastníkem dané položky či vlastníkem samotného adresáře. Hlavním smyslem této kombinace je, že uživatelé mohou v daném adresáři vytvářet nové položky a ty jsou pak chráněny před zásahy jiných uživatelů, kteří mají k témuž adresáři také právo zápisu. Tento příznak je typicky nastaven na adresáři „/tmp“. Poznámka: vzniklé podadresáře tento příznak nedědí.
 
 ### Superuživatel
 
-Na **superuživatele** se z přístupových práv a příznaků vztahuje pouze právo spouštění
-u souborů a příznak zmocnění pro skupinu. Ostatní nastavení přístupových práv ani příznaků
-ho nijak neomezují a nemají na něj vliv.
+Na **superuživatele** se nevztahují žádná přístupová práva a příznaky zmocnění vlastníka a omezení smazání. Ostatní zvláštní příznaky (zejména ty rozšířené) se vztahují i na superuživatele.
 
 ### Mód
 
@@ -145,6 +131,23 @@ a číselné hodnoty příznaků a práv. Pak můžeme mód snadno přečíst 
 
 Příklad: mějme mód 3571. První číslice: 4 odečíst nejde, takže odečteme 2 a zbude nám jedna; zapíšeme tedy příznak zmocnění skupiny (hodnota 2) a příznak omezení smazání (hodnota 1). Druhá číslice: 4 odečíst jde a zbude nám 1, zapíšeme tedy práva čtení (4) a spouštění (1). Třetí číslice: 7 znamená pro skupinu všechna práva, tedy čtení, zápis i spouštění. Čtvrtá číslice: 1 znamená pro ostatní jen právo spouštění.
 
+### Rozšířené zvláštní příznaky
+
+Rozšířené zvláštní příznaky jsou relativně málo významné, málo uživtečné a jejich podpora je omezená typem souborového systému. Mezi užitečné z nich patří:
+
+* Příznak „**a**“ (ext4: ano, btrfs: ano, tmpfs: ne) – Poskytne souboru či adresáři silnou ochranu před zápisem a jinými změnami, ale na rozdíl od příznaku „i“ umožňuje zápis za konec souboru a u adresáře vytvoření nové adresářové položky (její přejmenování či smazání už ne). Nově vytvářené podadresáře tento příznak nedědí.
+* Příznak „**i**“ (ext4: ano, btrfs: ano, tmpfs: ?) – Poskytne souboru či adresáři silnou ochranu před zápisem a jinými změnami. Pozor, na soubor s tímto příznakem nelze ani vytvořit nový pevný odkaz, přejmenovat ho nebo změnit jeho vlastnictví či přístupová práva!
+* Příznak „**S**“ (ext4: ano, btrfs: ano, tmpfs: ?) – Změny se zapisují okamžitě na disk. (Normálně čekají nějakou dobu v paměti.) Nově vytvořené soubory a adresáře tento příznak dědí.
+* Příznak „**C**“ (ext4: ne, btrfs: ano, tmpfs: ?) – Byl-li tento příznak nastaven prázdnému souboru, jeho později alokované datové bloky na disku nebudou sdíleny s jinými soubory (např. klony). Je-li tento příznak nastaven adresáři, nově vytvořené soubory a podadresáře ho zdědí.
+* Příznak „**A**“ (ext4: ano, btrfs: ano, tmpfs: ?) – Čas posledního přístupu („atime“) nebude aktualizován. (Nezkoušel/a jsem.)
+
+<!--
+* Příznak „F“ (ext4: ne, btrfs: ne, tmpfs: ne) – U názvů položek v adresáři se nebudou rozlišovat velká a malá písmena. Tento příznak smí být nastaven nebo zrušen pouze u prázdného adresáře.
+* Příznak „c“ (ext4: ne, btrfs: ?, tmpfs: ?) – Je-li nastaven prázdnému souboru, systém se na něj pokusí aplikovat transparentní kompresi i v případě, že je v daném souborovém systému vypnuta. Je-li nastaven adresáři, všechny nově vytvořené soubory a adresáře v něm tento příznak zdědí.
+<!- -
+Poznámka: příznak „c“ na ext4 lze nastavit, ale nic nedělá, transparentní komprese není podporována.
+-->
+
 !ÚzkýRežim: vyp
 
 ## Zaklínadla
@@ -166,7 +169,7 @@ Příklad: mějme mód 3571. První číslice: 4 odečíst nejde, takže odečte
 **find -L** {*adresář*} **-mindepth 1 -maxdepth 1 -type f -printf %f\\\\n** [**\| sort -f**]
 
 *# adresářů a podadresářů včetně symbolických odkazů na adresáře (kromě/včetně skrytých)*<br>
-**tree -d**[**a**]<nic>[**L** {*úrovní*}]<br>
+**tree -d**[**L** {*úrovní*}]<br>
 **tree -da**[**L** {*úrovní*}]
 
 *# všech včetně „.“ a „..“*<br>
@@ -290,6 +293,11 @@ Poznámka: srovnávané položky nemusejí být v tomtéž adresáři; můžete
 **stat -c '%b\*%B'**  {*cesta*}... **\| bc** ⊨ 16384<br>
 **stat -c '%b\*%B'**  {*cesta*}... **\| bc \| numfmt \-\-to iec** ⊨ 16K
 
+*# nastavené rozšířené zvláštní příznaky (pro člověka/pro skript)*<br>
+*// Poznámka: některé rozšířené zvláštní příznaky jsou pouze informativní a nemohou být přímo změněny žádným příkazem.*<br>
+**lsattr -d** [**\-\-**] {*cesta*}...<br>
+**lsattr -d** [**\-\-**] {*cesta*} **\| sed -zE 's/-//g;s/\\s.\*/\\n/'**
+
 ### Aktuální adresář
 
 *# přejít do daného adresáře/na předchozí aktuální adresář*<br>
@@ -305,6 +313,12 @@ Poznámka: srovnávané položky nemusejí být v tomtéž adresáři; můžete
 *# přejít o úroveň výš*<br>
 **cd ..**
 
+*# přejít do kořenového adresáře*<br>
+**cd /**
+
+*# přejít do předchozího aktuálního adresáře dané instance interpretu*<br>
+**cd -**
+
 ### Vytvořit adresářovou položku
 
 *# vytvořit prázdný **adresář***<br>
@@ -318,6 +332,7 @@ Poznámka: srovnávané položky nemusejí být v tomtéž adresáři; můžete
 **ln -s "**{*obsah/odkazu*}**"** {*název*}
 
 *# vytvořit soubor vyplněný **nulami** (velikost zadat/odvodit)*<br>
+*// Poznámka: Je-li to možné, příkaz „truncate“ vytvoří takzvaný „řídký soubor“, tedy soubor, který ve skutečnosti zprvu nezabírá žádné místo na disku a jeho datové bloky se alokují teprve při zápisu. Tím pádem také umožňuje vytvořit soubor větší než je velikost souborového systému. Pokud chcete pro soubor rovnou vyhradit i prostor na disku, místo „truncate -s“ použijte „fallocate -l“.*<br>
 **rm -f** [**\-\-**] {*cesta/k/souboru*}... **&amp;&amp; truncate -s** {*velikost*} {*cesta/k/souboru*}...<br>
 **rm -f** [**\-\-**] {*cesta/k/souboru*}... **&amp;&amp; truncate -r** {*cesta/ke/vzorovému/souboru*} {*cesta/k/souboru*}...
 
@@ -379,7 +394,7 @@ Poznámka: srovnávané položky nemusejí být v tomtéž adresáři; můžete
 
 ### Změnit čas, vlastnictví a skupinu
 
-*# nastavit čas poslední změny na aktuální čas*<br>
+*# nastavit čas poslední změny („mtime“) na aktuální čas*<br>
 [**sudo**] **touch -c** [**\-\-**] {*cesta*}...
 
 *# změnit **vlastníka** souboru či adresáře (volitelně i skupinu)(obecně/příklad)*<br>
@@ -394,7 +409,6 @@ Poznámka: srovnávané položky nemusejí být v tomtéž adresáři; můžete
 [**sudo**] **touch -cd "**{*datum-čas*}**"** [**\-\-**] {*cesta*}...<br>
 **sudo touch -cd "2019-04-21 23:59:58" \-\- /root/mujsoubor.txt**<br>
 **touch -cd "2019-04-21 23:59:58.123456789" \-\- ~/mujsoubor.txt**<br>
-
 
 ### Přenést přístupová práva
 
@@ -416,77 +430,14 @@ Poznámka: srovnávané položky nemusejí být v tomtéž adresáři; můžete
 [**sudo**] **chmod** [**-R**] **u+s** [**\-\-**] {*cesta*}...<br>
 [**sudo**] **chmod** [**-R**] **u-s** [**\-\-**] {*cesta*}...
 
-*# zapnout/vypnout současně všechny tři zvláštní příznaky*<br>
+*# zapnout/vypnout současně všechny tři základní zvláštní příznaky*<br>
 [**sudo**] **chmod** [**-R**] **ug+s,+t** [**\-\-**] {*cesta*}...<br>
 [**sudo**] **chmod** [**-R**] **ug-s,-t** [**\-\-**] {*cesta*}...
 
-### Uživatelské rozšířené atributy
-
-<!--
-Poznámka:
-- v názvech odzvláštňuje příkaz „getfattr“ znaky: \r \n \ =
-- v hodnotách odzvláštňuje znaky: \0 \r \n \
-  a před znak uvozovka (") umísťuje zpětné lomítko
-
-Tyto příkazy fungují spolehlivě, pokud názvy rozšířených atributů neobsahují znaky „\\0“, „\\n“, „"“, „#“, „=“, „\\“.
-
-Všechny klíče uživatelských rozšířených atributů *musejí* začínat „user.“ a pokračovat alespoň jedním znakem. Žádný klíč nemůže obsahovat nulový bajt „\\0“.
--->
-
-Poznámka: následující příkazy nemusejí fungovat, pokud klíč obsahuje některý ze znaků „\\n“, „\\r“, „\\“ nebo „=“.
-Klíč uživatelského rozšířeného atributu musí začínat „user.“ a pokračovat alespoň jedním znakem,
-platný klíč je tedy např. „user..“ nebo „user.a.b“ nebo „user.Žlutý kůň/xyz“.
-Klíč nemůže obsahovat nulový bajt „\\0“.
-
-*# vypsat **seznam klíčů** pro člověka*<br>
-[**sudo**] **getfattr** [**-m**] <nic>[**\-\-**] {*adr/položka*}...
-
-*# vypsat seznam klíčů pro skript*<br>
-[**sudo**] **getfattr** [**-m**] <nic>[**\-\-**] {*adr/položka*} **\| sed -E '1d;$d'**
-<!--
-[**sudo**] **getfattr** [**\-\-**] {*adr/položka*} **\| tr \\\\n \\\\0 \| sed -zE '1d;$d;s/\\\\012/\\n/g;s/\\\\015/\\r/g;s/\\\\075/=/g;s/\\\\134/\\\\/g'** [**\|** {*zpracování*}]<br>
--->
-
-*# smazat atribut podle klíče*<br>
-[**sudo**] **setfattr -x** {*klíč*} [**\-\-**] {*adr/položka*}...
-
-*# smazat všechny uživatelské atributy*<br>
-?
-
-*# vypsat hodnotu atributu jako data*<br>
-[**sudo**] **getfattr -n** {*klíč*} **\-\-only-values** [**\-\-**] {*adr/položka*} [**\|** {*zpracování*}]
-
-*# zapsat data jako hodnotu atributu*<br>
-[**sudo**] **setfattr -n** {*klíč*} **-v 0x$(**{*zdroj dat*} **\| xxd -p -u -c 1 \| tr -d \\\\n)** [**\-\-**] {*adr/položka*}...
-
-*# vypsat **hodnotu** hexadecimálně (pro člověka)*<br>
-[**sudo**] **getfattr -n** {*klíč*} **\-\-only-values -e hex** [**\-\-**] {*adr/položka*}
-
-### Zvláštní restrikce ext4
-
-<!--
-Následující zvláštní restrikce se podobají přístupovým právům, ale lze je použít
-pouze na souborových systémech ext2 až ext4 (nezkoumal/a jsem ZFS, btrfs apod.,
-ale tmpfs je nepodporuje). Na rozdíl od přístupových práv účinkují i na superuživatele a brání nejen obsah souboru či adresáře, ale také většinu jeho metadat a spolehlivě chrání soubor či adresář před smazáním.
--->
-
-Pozor! Následující zvláštní restrikce jsou dostupné výhradně na souborovém systému ext4
-(a pravděpodobně také na ext3, popř. ext2); mohou být k dispozici i na jiných souborových
-systémech, ale většinou nejsou (dokonce ani na „tmpfs“). Účinkují i na superuživatele,
-ten je však může v případě potřeby zrušit.
-
-*# nastavit/zrušit zvláštní restrikci zakazující změny*<br>
-*// Tato zvláštní restrikce zakazuje změny jak v obsahu souboru či adresáře, tak i v jeho vlastní adresářové položce (není možné ji přejmenovat či smazat). Zakazuje i změnu vlastnictví či přístupových práv.*<br>
-**sudo chattr** [**-R**] **+i** {*cesta*}...<br>
-**sudo chattr** [**-R**] **-i** {*cesta*}...
-
-*# nastavit/zrušit zvláštní restrikci změn dovolující jen připojování na konec souboru*<br>
-**sudo chattr** [**-R**] **+a** {*cesta*}...<br>
-**sudo chattr** [**-R**] **-a** {*cesta*}...
-
-*# vypsat všechny nastavené zvláštní restrikce ext4*<br>
-[**sudo**] **lsattr** {*adresář-popř.-soubor*}...
-
+*# zapnout/vypnout rozšířené zvláštní příznaky*<br>
+*// Pozor! Tímto příkazem nemůžete měnit základní zvláštní příznaky! Obzvlášť nebezpečná záměna hrozí u příznaku „t“, protože existuje základní příznak „+t“ a současně i nesouvisející rozšířený zvláštní příznak „t“.*<br>
+**sudo chattr** [**-R**] **+**{*příznak*}[{*dalšípříznak*}]... [**\-\-**] {*cesta*}...<br>
+**sudo chattr** [**-R**] **-**{*příznak*}[{*dalšípříznak*}]... [**\-\-**] {*cesta*}...
 <!--
 Pokus o použití na tmpfs vede k chybovému hlášení:
 „chattr: Pro toto zařízení nevhodné ioctl při čtení příznaků a“
@@ -505,68 +456,87 @@ Pokus o použití na tmpfs vede k chybovému hlášení:
 **find -L** {*adresář*} **-mindepth 1 -maxdepth 1 -type f -name '[!.]\*' -printf \\0 \| wc -c**
 **find -L** {*adresář*} **-mindepth 1 -maxdepth 1 -type d -name '[!.]\*' -printf \\0 \| wc -c**
 
-<!--
-## Zaklínadla: Uživatelské rozšířené atributy
+## Zaklínadla: Uživatelské datové položky
 
+<!--
 Poznámka: Dvojice parametrů „-m -“ znamená zahrnutí i systémových atributů do výpisu.
+-->
 
 Poznámka: Znaky „\\r“, „\\n“, „=“ a „\\“ se v klíčích atributů při použití
 následujících zaklínadel nahrazují sekvencemi „\\015“ (\\r), „\\012“ (\\n), „\\075“ (=),
-resp. „\\134“(„\\“), a to jak při zadávání, tak při výpisu. Buď se použití těchto znaků
-vyhněte, nebo jim zajistěte odpovídající konverzi. Nulový bajt „\\0“ se v klíči vyskytovat
-nesmí.
+resp. „\\134“(„\\“). Příkaz „getfattr“ je již automaticky nahrazuje ve výpisech a příkaz „setfattr“ očekává klíč s nahrazenými znaky. Buď se použití těchto znaků vyhněte,
+nebo jim zajistěte odpovídající konverzi. Nulový bajt „\\0“ se v klíči vyskytovat
+nemůže.
 
-### .
+Podle manuálové stránky je délka klíče omezena na 256 bajtů a délka hodnoty na 64 kibibajtů.
+
+### Vypsat položky
+
+*# vypsat klíče všech souborů a podadresářů (spíš pro člověka)*<br>
+[**sudo**] **getfattr -PR \-\-absolute-names** [**\-\-**] {*cesta/adresáře*}
 
 *# **vypsat** klíče i hodnoty pro člověka (řetězcově/hexadecimálně)*<br>
-[**sudo**] **getfattr \-\-dump** [**-m -**] <nic>[**\-\-**] {*adr/položka*}...<br>
-[**sudo**] **getfattr \-\-dump -e hex** [**-m -**] <nic>[**\-\-**] {*adr/položka*}...
+[**sudo**] **getfattr \-\-dump** [**-m -**] <nic>[**\-\-**] {*cesta*}...<br>
+[**sudo**] **getfattr \-\-dump -e hex** [**-m -**] <nic>[**\-\-**] {*cesta*}...
 
-*# vypsat **seznam** klíčů (pro člověka)*<br>
-[**sudo**] **getfattr** [**\-\-**] {*adr/položka*}...
+*# vypsat klíče (pro člověka)*<br>
+[**sudo**] **getfattr** [**\-\-**] {*cesta*}...
 
-*# **seznam** klíčů pro skript (ukončovač „\\n“)*<br>
-[**sudo**] **getfattr** [**-m -**] <nic>[**\-\-**] {*adr/položka*} **\| sed -E '1d;$d'**
+*# vypsat klíče (pro skript, ukončovač „\\n“)*<br>
+[**sudo**] **getfattr** [**\-\-**] {*cesta*} **\| sed -E '1d;$d'**
 
-*# **smazat** atribut podle klíče*<br>
-[**sudo**] **setfattr -x** {*klíč*} [**\-\-**] {*adr/položka*}...<br>
+*# má datové položky (uživatelské/uživatelské nebo systémové)?*<br>
+[**sudo**] **getfattr** [**\-\-**] {*cesta*} **\| egrep -zq .**<br>
+[**sudo**] **getfattr -m -** [**\-\-**] {*cesta*} \| **egrep -zq .**
 
-*# smazat všechny uživatelské atributy*<br>
-[**sudo**] **getfattr** [**\-\-**] {*adr/položka*} **\|
+*# počet klíčů (jen číslo/číslo a adresářová cesta)*<br>
+[**sudo**] **getfattr** [**-m -**] <nic>[**\-\-**] {*adr/položka*} **\| sed -E '1d;$d' \| wc -l**<br>
+?
 
-*# **nastavit** atribut podle klíče (hodnota je text/binární data)*<br>
-[**sudo**] **setfattr -n** {*klíč*} **-v** "0x$(printf %s "**{*text*}**" \| xxd -p -c 1 \| tr -d \\\\n)"** [**\-\-**] {*adr/položka*}...<br>
-[**sudo**] **setfattr -n** {*klíč*} **-v** "0x$(**{*zdroj*} **\| xxd -p -c 1 \| tr -d \\\\n)"** [**\-\-**] {*adr/položka*}...
+### Smazat položku
+
+*# smazat všechny*<br>
+*// Poznámka: mám podezření, že tento příkaz nedokáže odstranit některé datové položky, jejichž názvy obsahují sekvence bajtů neplatné v UTF-8. Pro potvrzení nebo vyvrácení tohoto podezření by bylo potřeba další náročné experimentování.*<br>
+**jmeno=$(realpath** [**\-\-**] {*cesta*}**)**<br>
+[*sudo*] **getfattr** [**\-\-**] **"$jmeno" \| sed -E $'1d;$d' \| (export LC\_ALL=C; while read -r klic; do setfattr -x "$klic" \-\- "$jmeno"; done)**
+
+*# **smazat***<br>
+[**sudo**] **setfattr -x** {*klíč*} [**\-\-**] {*adr/položka*}...
+<!--
+*# smazat*<br>
+[**sudo**] **xattr -d** {*user.klíč*} [**\-\-**] {*cesta*}...
+-->
+
+### Přečíst položku
+
+*# **získat** hodnotu datové položky*<br>
+*// Poznámka: hodnotou mohou obecná binárná data. Nepředpokládejte, že obsahuje text v kódování UTF-8 nebo že neobsahuje nulové bajty!*<br>
+[**sudo**] **getfattr \-\-only-values -n** {*klíč*} [**\-\-**] {*adr/položka*} **\|** {*zpracování*}<br>
+<!--
+[**sudo**] **xattr -p**[**z**] {*user.klíč*} [**\-\-**] {*cesta*}...
+-->
 
 *# načíst klíče a hodnoty do asociativního pole bashe (nulové bajty nahradit za „\\n“)*<br>
 ?
 
 *# načíst klíče do pole bashe*<br>
 ?
-<!- -
+<!--
 **eval "$(**[**sudo**] **getfattr** [**\-\-**] {*adr/položka*} **\| tr \\\\n \\\\0 \| LC\_ALL=C sed -zE '1d;$d;s/\\012/\\n/g;s/\\\\015/\\r/g;s/\\\\075/=/g;s/\\\\134/\\\\/g' \| (readarray -d ''** {*název\_pole*}**; declare -p** {*název\_pole*}**))"**
-- ->
+-->
 
-*# **získat** hodnotu atributu podle klíče*<br>
-*// Poznámka: hodnotou atributu mohou obecná binárná data. Nepředpokládejte, že obsahuje text v kódování UTF-8 nebo že neobsahuje nulové bajty!*<br>
-[**sudo**] **getfattr \-\-only-values -n** {*klíč*} [**\-\-**] {*adr/položka*}[**; echo**]<br>
-
-<!- -
-*# seznam klíčů a hodnot oddělených tabulátorem, pro skript, ve formátu TXT*<br>
-[**sudo**] **getfattr \-\-dump -e text** [**-m -**] <nic>[**\-\-**] {*adr/položka*} **\| LC\_ALL=C sed -E '1d;$d;s/^([<nic>^=]\*)="/\\1\\t/;s/"$//**
-- ->
-
-*# má adresářová položka rozšířené atributy (uživatelské/nebo systémové)?*<br>
-?<br>
-?
-
-*# počet klíčů (jen číslo/číslo a adresářová cesta)*<br>
-[**sudo**] **getfattr** [**-m -**] <nic>[**\-\-**] {*adr/položka*} **\| wc -l**<br>
-
-*# délka hodnoty v bajtech, podle klíče*<br>
+*# délka hodnoty v **bajtech***<br>
 [**sudo**] **getfattr \-\-only-values -n** {*klíč*} [**\-\-**] {*adr/položka*} **\| wc -c**
 
-<!- -
+### Vytvořit či přepsat položku
+
+*# **nastavit** datovou položku (hodnota je text/binární data)*<br>
+[**sudo**] **setfattr -n** {*klíč*} **-v "0x$(printf %s "**{*text*}**" \| xxd -p -c 1 \| tr -d \\\\n)"** [**\-\-**] {*adr/položka*}...<br>
+[**sudo**] **setfattr -n** {*klíč*} **-v "0x$(**{*zdroj*} **\| xxd -p -c 1 \| tr -d \\\\n)"** [**\-\-**] {*adr/položka*}...
+<!--
+[**sudo**] **xattr -w**[**z**] {*user.klíč*} **"**{*hodnota*}**"** [**\-\-**] {*cesta*}...
+-->
+<!--
 ### Robustní zpracování skriptem
 
 *# **seznam** klíčů ve formátu TXTZ (uživatelských/i systémových)*<br>
@@ -609,37 +579,6 @@ Všechny klíče uživatelských rozšířených atributů *musejí* začínat �
 *# smazat atribut podle klíče (klíč znaky „\\r“, „\\n“, „\\“ či „=“ neobsahuje/může obsahovat)*<br>
 [**sudo**] **setfattr -x** {*klíč*} [**\-\-**] {*adr/položka*}...<br>
 [**sudo**] **setfattr -x "$(sed -E 's/\\\\/\\\\134/g;s/=/\\\\075/g;s/\\n/\\\\012/g;s/\\r/\\\\015/g' &lt;&lt;&lt; "**{*klíč*}**")** [**\-\-**] {*adr/položka*}...<br>
-
-
-### Uživatelské rozšířené atributy binárně
-
-
-*# vypsat hodnotu atributu **binárně***<br>
-[**sudo**] **getfattr -n** {*jméno.atributu*} **\-\-only-values** [**\-\-**] {*adr/položka*} [**\|** {*zpracování*}]
-
-*# zapsat hodnotu atributu ze vstupu*<br>
-[**sudo**] **setfattr -n** {*jméno.atributu*} **-v 0x$(**{*zdroj*} **\| xxd -p -u -c 1 \| tr -d \\\\n)** [**\-\-**] {*adr/položka*}...
-
-
-
-[**sudo**] **xattr** [**\-\-**] {*cesta*}...
-
-*# vypsat **hodnotu***<br>
-[**sudo**] **xattr -p**[**z**] {*user.klíč*} [**\-\-**] {*cesta*}...
-
-*# smazat konkrétní URA-dvojici*<br>
-[**sudo**] **xattr -d** {*user.klíč*} [**\-\-**] {*cesta*}...
-
-*# smazat všechny URA-dvojice na daném souboru či adresáři*<br>
-?
-<!- -
-[ ] vyzkoušet
-**for \_ in "$(xattr \-\-** {*cesta*} **\| sed -E "s/'/'\\''/g;s/.*/'\\\\1'/")"; do xattr -d "$\_"** {*cesta*}**; done**
-- ->
-
-*# **nastavit** atribut*<br>
-[**sudo**] **xattr -w**[**z**] {*user.klíč*} **"**{*hodnota*}**"** [**\-\-**] {*cesta*}...
-
 -->
 
 ## Parametry příkazů
@@ -698,11 +637,11 @@ Mód je číselné vyjádření základních práv a zvláštních příznaků 
 
 ## Instalace na Ubuntu
 
-Všechny použité nástroje jsou základními součástmi Ubuntu, s výjimkou příkazů „tree“ a „xattr“,
-které můžete doinstalovat takto:
+Všechny použité nástroje jsou základními součástmi Ubuntu, s výjimkou příkazů
+„tree“, „getfattr“ a „setfattr“, které můžete doinstalovat takto:
 
 *# *<br>
-**sudo apt-get install tree xattr**
+**sudo apt-get install tree attr**
 
 <!--
 ## Ukázka
@@ -718,9 +657,10 @@ které můžete doinstalovat takto:
 
 ## Tipy a zkušenosti
 
-* Uživatelé a skupiny jsou v souborovém systému uloženy ve formě čísel UID a GID. Proto když uložíte soubor na USB flash disk a přenesete ho na jiný počítač, kde pracujete jako uživatel s jiným UID, může se stát, že tam k souborům na flash disku nebudete mít dostatečná přístupová práva.
-* V linuxu existují také „výchozí přístupová práva“, což je nastavení přístupových práv na adresáři, které (je-li nastaveno) ovlivňuje přístupová práva nově vyvářených položek; bohužel nelze říci „stanovuje“, ale platí pouze „ovlivňuje“ – na výsledných právech se podílejí i další faktory, nelze rozlišit práva pro soubory a pro adresáře a celé je to dost komplikované a neintuitivní. Zatím jsem naštěstí nanarazil/a na případ, kdy by tuto vlastnost skutečně nějaký program použil.
+* Vlastníci a skupiny jsou v souborovém systému uloženy ve formě čísel UID a GID. Proto když uložíte soubor na USB flash disk a přenesete ho na jiný počítač, kde pracujete jako uživatel s jiným UID, může se stát, že tam k souborům na flash disku nebudete mít dostatečná přístupová práva.
 * Symbolické odkazy mají vlastníka a skupinu, ale nemají vlastní přístupová práva. Přístup k odkazované položce se vždy řídí jejími přístupovými právy, čtení symbolického odkazu je bez omezení a zápis do něj není dovolen (je nutno místo toho odkaz smazat a vytvořit nový).
+* Příznaky zmocnění vlastníka a skupiny jsou u souboru (vždy oba) automaticky odebrány, kdykoliv se změní jeho vlastník či skupina. U adresáře jsou v takové situaci ponechány.
+* V linuxu existují také „výchozí přístupová práva“, což je nastavení přístupových práv na adresáři, které (je-li nastaveno) ovlivňuje přístupová práva nově vyvářených položek; bohužel nelze říci „stanovuje“, ale platí pouze „ovlivňuje“ – na výsledných právech se podílejí i další faktory, nelze rozlišit práva pro soubory a pro adresáře a celé je to dost komplikované a neintuitivní. Zatím jsem naštěstí nanarazil/a na případ, kdy by tuto vlastnost skutečně nějaký program použil.
 
 ## Další zdroje informací
 
