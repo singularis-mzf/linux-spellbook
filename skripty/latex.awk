@@ -93,7 +93,6 @@ BEGIN {
     delete fronta;
     delete hlavickyZprav;
     delete textyZprav;
-#    prikaz = "pdflatex -halt-on-error -no-shell-escape kniha | tr '\\200-\\376\\377' '?'";
     prikaz = "xelatex -halt-on-error -file-line-error -interaction=errorstopmode -no-shell-escape kniha.tex";
     beh = 0;
     puvodni_toc_hash = ZiskejHashTocSouboru();

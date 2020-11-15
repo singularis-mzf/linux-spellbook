@@ -42,8 +42,8 @@ function AlokovatPoznamkuPodCarou() {
     return ++DO_LATEXU_CISLO_POZN_POD_CAROU;
 }
 
-# Převede odescapovaný znak vstupního formátu (Markdown) do výstupního formátu.
-# Pro bílé znaky se volá jedině tehdy, jsou-li escapovány.
+# Převede nezvláštní znak vstupního formátu (Markdown) do výstupního formátu.
+# Pro bílé znaky se volá jedině tehdy, jsou-li odzvláštněny.
 function ZpracujZnak(znak) {
    switch (znak) {
 # ASCII
