@@ -99,6 +99,8 @@ GNU Wget je vyvíjen v rámci projektu GNU.
 *# zkontrolovat existenci souborů odkazovaných z HTML dokumentu*<br>
 **wget -F -i** {*soubor.htm*} [**\-\-base="**{*protokol://původní/adresa*}**"**] **\-\-spider**
 
+## Zaklínadla: wget (volby)
+
 ### Volby ovlivňující chování programu
 
 *# po spuštění se hned přepnout na pozadí*<br>
@@ -275,6 +277,26 @@ Nedostatky příkazu wget:
 [ ] Neumožňuje přepsat existující soubory novým stahováním.
 [ ] Poskytuje malou kontrolu nad přesným umístěním a pojmenováním stažených souborů při rekurzívním stahování. Neumožňuje si např. naprogramovat uživatelskou konverzi jmen.
 [ ] Neumožňuje vypsat seznam stahovaných URI místo jejich stahování.
+
+
+
+curl:
+
+-s: vypne indikátor průběhu
+--progress-bar
+
+vzdát to, pokud nedojde ke spojení do N sekund:
+--connect-timeout N
+
+-b: aktivovat cookies, ale neukládat je
+-c <soubor>: aktivovat cookies a uložit je do souboru
+
+--create-dirs: kombinovat s -o
+
+-F 'název=@"soubor";type="text/html";filename="nové-jméno.xml"': odešle formulář s obsahem
+-F 'název=<'<(printf '<abc'): ...
+
+
 -->
 
 ## Další zdroje informací

@@ -114,14 +114,22 @@ Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybra
 
 ### Kapitoly ve vývoji
 
+<!--
+Priority:
+1. [odkazy]
+2. [nabídka-aplikací]
+3. [wine]
+4. [firefox]
+-->
+
 | ID | Název kapitoly | Růst | Stav |
 | :--- | :--- | ---: | :--- |
+| [odkazy](kapitoly/odkazy.md) | Pevné a symbolické odkazy | 80% | dítě |
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
 | [firefox](kapitoly/firefox.md) | Firefox | 60% | dítě |
 | [kalkulace](kapitoly/kalkulace.md)| Kalkulace | 50% | dítě |
 | [stahování-z-webu](kapitoly/stahování-z-webu.md) | Stahování z webu | 40% | dítě |
 | [zpracování-obrázků](kapitoly/zpracování-obrázků.md) | Zpracování obrázků | 40% | dítě |
-| [odkazy](kapitoly/odkazy.md) | Pevné a symbolické odkazy | 20% | dítě |
 | [perl](kapitoly/perl.md) | Základy Perlu | 20% | dítě |
 | [moderní-věci](kapitoly/moderní-věci.md) | Moderní věci | 10% | dítě |
 | [unicode](kapitoly/unicode.md) | Unicode a emotikony | 10% | dítě |
