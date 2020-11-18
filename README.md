@@ -124,7 +124,7 @@ Priority:
 
 | ID | Název kapitoly | Růst | Stav |
 | :--- | :--- | ---: | :--- |
-| [odkazy](kapitoly/odkazy.md) | Pevné a symbolické odkazy | 80% | dítě |
+| [odkazy](kapitoly/odkazy.md) | Pevné a symbolické odkazy | 100% | připravena k vydání |
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
 | [firefox](kapitoly/firefox.md) | Firefox | 60% | dítě |
 | [kalkulace](kapitoly/kalkulace.md)| Kalkulace | 50% | dítě |

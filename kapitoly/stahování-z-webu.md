@@ -83,7 +83,7 @@ GNU Wget je vyvíjen v rámci projektu GNU.
 *# stáhnout celý webový **server***<br>
 **wget -r -p -l inf -E -x** [**-Q** {*MiB-limit*}**M**] **'**{*http://adresa*}**'**
 
-*# rekurzívně postahovat odkazované stránky do určité maximální hloubky*<br>
+*# rekurzivně postahovat odkazované stránky do určité maximální hloubky*<br>
 **wget -r -p -H -l** {*max-hloubka*} **-E -x** [**-Q** {*MiB-limit*}**M**] **'**{*http://adresa*}**'**
 
 *# stáhnout celý webový server do aktuálního/zvoleného adresáře*<br>
@@ -228,7 +228,7 @@ GNU Wget je vyvíjen v rámci projektu GNU.
 
 -->
 
-*# získat seznam souborů v FTP adresáři (bez vnoření/rekurzívně)*
+*# získat seznam souborů v FTP adresáři (bez vnoření/rekurzivně)*
 ?<br>
 ?
 
@@ -275,7 +275,7 @@ GNU Wget je vyvíjen v rámci projektu GNU.
 Nedostatky příkazu wget:
 
 [ ] Neumožňuje přepsat existující soubory novým stahováním.
-[ ] Poskytuje malou kontrolu nad přesným umístěním a pojmenováním stažených souborů při rekurzívním stahování. Neumožňuje si např. naprogramovat uživatelskou konverzi jmen.
+[ ] Poskytuje malou kontrolu nad přesným umístěním a pojmenováním stažených souborů při rekurzivním stahování. Neumožňuje si např. naprogramovat uživatelskou konverzi jmen.
 [ ] Neumožňuje vypsat seznam stahovaných URI místo jejich stahování.
 
 

@@ -49,7 +49,7 @@ GNU Bash je vyvíjen v rámci projektu GNU.
 
 ## Definice
 * Řetězec se **shoduje** s daným regulárním výrazem, pokud patří do množiny řetězců, kterou regulární výraz definuje, tedy pokud odpovídá požadavkům regulárního výrazu jako celek, od začátku do konce. Např. s regulárním výrazem „a.c“ se shoduje řetězec „abc“, protože „a“ v regulárním výrazu přijímá „a“ z řetězce; tečka z regulárního výrazu přijímá jakýkoliv znak, tedy i „b“ v řetězci a „c“ v regulárním výrazu přijme „c“ z řetězce. S tímtéž regulárním výrazem se už ale neshodují řetězce „Abc“ (pokud nevypnete rozlišování velkých a malých písmen), „abb“, „abbc“ či „abcc“ (protože k poslednímu „c“ už v regulárním výrazu není nic, co by ho přijalo).
-* **Shoda** (match) je nejlevější a nejdelší (u tzv. „nehladového prohledávání“ naopak nejkratší) podřetězec prohledávaného řetězce, který se shoduje s daným regulárním výrazem, a totéž rekurzívně pro zbytek řetězce za koncem shody. Takže shody jsou vlastně podřetězce shodující se s regulárním výrazem, ale jen tak, aby se nepřekrývaly. Shodou může být i celý prohledávaný řetězec (protože každý řetězec je sám svým podřetězcem).
+* **Shoda** (match) je nejlevější a nejdelší (u tzv. „nehladového prohledávání“ naopak nejkratší) podřetězec prohledávaného řetězce, který se shoduje s daným regulárním výrazem, a totéž rekurzivně pro zbytek řetězce za koncem shody. Takže shody jsou vlastně podřetězce shodující se s regulárním výrazem, ale jen tak, aby se nepřekrývaly. Shodou může být i celý prohledávaný řetězec (protože každý řetězec je sám svým podřetězcem).
 * Řetězec **odpovídá** danému regulárnímu výrazu, pokud s ním má nějakou shodu. Takže regulárnímu výrazu „a.c“ odpovídají např. řetězce „*abc*“, „a*abc*“, „x*axc*x“, „x*axc*x*axc*x“ apod., ale ne „xaxbxc“.
 * Jako **atom** označuji nejkratší část (podřetězec) regulárního výrazu, která končí na dané pozici a tvořila by syntakticky správný regulární výraz sama o sobě. Atomem je např. „a“, „[abc]“, „(a|b)?“ či „\\s+“, ale ne „a|b“, protože „b“ je kratší a samo o sobě tvoří syntakticky správný regulární výraz.
 * **Kvantifikátor** je speciální podřetězec, který se zapisuje za atom a určuje dovolený počet opakování.
@@ -427,7 +427,7 @@ schopný příkaz „awk“, který je základní součástí Ubuntu.
 
 Regulární výrazy jsou používány i v mnoha dalších programech.
 
-Rozšířené vzorky bashe jsou ve výchozím nastavení zapnuty; v případě, kdy jsou vypnuty, lze je zapnout příkazem:
+Rozšířené vzorky bashe jsou ve výchozím nastavení zapnuty pouze v interaktivním režimu. Ve skriptech a jiných případech, kdy jsou vypnuty, je potřeba je zapnout příkazem:
 
 *# *<br>
 **shopt -s extglob**

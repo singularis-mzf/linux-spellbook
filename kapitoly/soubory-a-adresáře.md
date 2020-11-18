@@ -136,14 +136,14 @@ Příklad: mějme mód 3571. První číslice: 4 odečíst nejde, takže odečte
 Rozšířené zvláštní příznaky jsou relativně málo významné, málo uživtečné a jejich podpora je omezená typem souborového systému. Mezi užitečné z nich patří:
 
 * Příznak „**a**“ (ext4: ano, btrfs: ano, tmpfs: ne) – Poskytne souboru či adresáři silnou ochranu před zápisem a jinými změnami, ale na rozdíl od příznaku „i“ umožňuje zápis za konec souboru a u adresáře vytvoření nové adresářové položky (její přejmenování či smazání už ne). Nově vytvářené podadresáře tento příznak nedědí.
-* Příznak „**i**“ (ext4: ano, btrfs: ano, tmpfs: ?) – Poskytne souboru či adresáři silnou ochranu před zápisem a jinými změnami. Pozor, na soubor s tímto příznakem nelze ani vytvořit nový pevný odkaz, přejmenovat ho nebo změnit jeho vlastnictví či přístupová práva!
-* Příznak „**S**“ (ext4: ano, btrfs: ano, tmpfs: ?) – Změny se zapisují okamžitě na disk. (Normálně čekají nějakou dobu v paměti.) Nově vytvořené soubory a adresáře tento příznak dědí.
-* Příznak „**C**“ (ext4: ne, btrfs: ano, tmpfs: ?) – Byl-li tento příznak nastaven prázdnému souboru, jeho později alokované datové bloky na disku nebudou sdíleny s jinými soubory (např. klony). Je-li tento příznak nastaven adresáři, nově vytvořené soubory a podadresáře ho zdědí.
-* Příznak „**A**“ (ext4: ano, btrfs: ano, tmpfs: ?) – Čas posledního přístupu („atime“) nebude aktualizován. (Nezkoušel/a jsem.)
+* Příznak „**i**“ (ext4: ano, btrfs: ano, tmpfs: ne) – Poskytne souboru či adresáři silnou ochranu před zápisem a jinými změnami. Pozor, na soubor s tímto příznakem nelze ani vytvořit nový pevný odkaz, přejmenovat ho nebo změnit jeho vlastnictví či přístupová práva!
+* Příznak „**S**“ (ext4: ano, btrfs: ano, tmpfs: ne) – Změny se zapisují okamžitě na disk. (Normálně čekají nějakou dobu v paměti.) Nově vytvořené soubory a adresáře tento příznak dědí.
+* Příznak „**C**“ (ext4: ne, btrfs: ano, tmpfs: ne) – Byl-li tento příznak nastaven prázdnému souboru, jeho později alokované datové bloky na disku nebudou sdíleny s jinými soubory (např. klony). Je-li tento příznak nastaven adresáři, nově vytvořené soubory a podadresáře ho zdědí.
+* Příznak „**A**“ (ext4: ano, btrfs: ano, tmpfs: ne) – Čas posledního přístupu („atime“) nebude aktualizován. (Nezkoušel/a jsem.)
 
 <!--
 * Příznak „F“ (ext4: ne, btrfs: ne, tmpfs: ne) – U názvů položek v adresáři se nebudou rozlišovat velká a malá písmena. Tento příznak smí být nastaven nebo zrušen pouze u prázdného adresáře.
-* Příznak „c“ (ext4: ne, btrfs: ?, tmpfs: ?) – Je-li nastaven prázdnému souboru, systém se na něj pokusí aplikovat transparentní kompresi i v případě, že je v daném souborovém systému vypnuta. Je-li nastaven adresáři, všechny nově vytvořené soubory a adresáře v něm tento příznak zdědí.
+* Příznak „c“ (ext4: ne, btrfs: ?, tmpfs: ne) – Je-li nastaven prázdnému souboru, systém se na něj pokusí aplikovat transparentní kompresi i v případě, že je v daném souborovém systému vypnuta. Je-li nastaven adresáři, všechny nově vytvořené soubory a adresáře v něm tento příznak zdědí.
 <!- -
 Poznámka: příznak „c“ na ext4 lze nastavit, ale nic nedělá, transparentní komprese není podporována.
 -->
@@ -209,10 +209,10 @@ Poznámka: příznak „c“ na ext4 lze nastavit, ale nic nedělá, transparent
 **test -p** {*cesta*}
 
 *# je adresářová položka **soubor**/adresář/symbolický odkaz/pojmenovaná roura?*<br>
-**test -f** {*cesta*} **-a \! -L** {*cesta*}<br>
-**test -d** {*cesta*} **-a \! -L** {*cesta*}<br>
-**test -L** {*cesta*} **-a \! -L** {*cesta*}<br>
-**test -p** {*cesta*} **-a \! -L** {*cesta*}
+**test -f** {*cesta*} **-a ! -L** {*cesta*}<br>
+**test -d** {*cesta*} **-a ! -L** {*cesta*}<br>
+**test -L** {*cesta*} **-a ! -L** {*cesta*}<br>
+**test -p** {*cesta*} **-a ! -L** {*cesta*}
 
 *# je adresářová položka symbolický odkaz (jakýkoliv/relativní/absolutní)*<br>
 **test -L** {*cesta*}<br>
@@ -221,7 +221,7 @@ Poznámka: příznak „c“ na ext4 lze nastavit, ale nic nedělá, transparent
 
 *# je soubor neprázdný/**prázdný**?*<br>
 **test -f** {*cesta*} **-a -s** {*cesta*}<br>
-**test -f** {*cesta*} **-a \\! -s** {*cesta*}
+**test -f** {*cesta*} **-a ! -s** {*cesta*}
 
 *# má položka nastavený zvláštní příznak u+s/u+g/+t?*<br>
 **[[ $(stat -c %04a** [**\-\-**] {*cesta*}**) =~ ^[4567] ]]**<br>
@@ -243,7 +243,7 @@ Poznámka: srovnávané položky nemusejí být v tomtéž adresáři; můžete
 **test** {*položka1*} **-ef** {*položka2*}
 
 *# jsou obě položky stejně staré?*<br>
-**test \\!** {*položka1*} **-nt** {*položka2*} **-a \\!** {*položka1*} **-ot** {*položka2*}
+**test !** {*položka1*} **-nt** {*položka2*} **-a !** {*položka1*} **-ot** {*položka2*}
 
 ### Zjistit údaje
 
@@ -350,7 +350,7 @@ Poznámka: srovnávané položky nemusejí být v tomtéž adresáři; můžete
 *# smazat prázdný adresář*<br>
 **rmdir** [**\-\-**] {*cesta*}<br>
 
-*# smazat rekurzívně veškerý obsah adresáře a nakonec i samotný adresář*<br>
+*# smazat rekurzivně veškerý obsah adresáře a nakonec i samotný adresář*<br>
 *// Tuto variantu můžete použít i na jednotlivé soubory.*<br>
 **rm -r**[**f**]<nic>[**v**] <nic>[**\-\-**] {*cesta*}...
 
