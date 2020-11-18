@@ -63,7 +63,7 @@ while (defined($s = shift(@argumenty)) && $s ne "--")
         $akce = "t";
     } elsif (která($s, "-F", "--funkce")) {
         $akce = "F";
-    } elsif (která($s, "-P", "--seznam-cest"))
+    } elsif (která($s, "-P", "--seznam-cest")) {
         $akce = "P";
     } elsif (která($s, "--bash")) {
         ++$přepínačBash;
@@ -89,14 +89,14 @@ if ($akce =~ /^[hlP]$/) {
     alength(@argumenty) == 0 or die("lkk: Chybné použití: akce -".$akce." nepřijímá název skriptu!");
 } elsif ($akce =~ /^[^F]$/) {
     alength(@argumenty) != 0 && $argumenty[0] ne "" or die("Chybí název skriptu! Pro nápovědu zadejte: lkk --help");
-    $argumenty[0] !~ /\// and die("lkk: Název skriptu nesmí obsahovat lomítko: ".$argumenty[0]);
+    $argumenty[0] !~ /\// or die("lkk: Název skriptu nesmí obsahovat lomítko: ".$argumenty[0]);
 }
 
 # 3. Otevřít proudy
 
 my $stdvýstup = undef;
 
-open($stdvýstup, ">&=9") or die("lkk: Nemohu otevřít standardní výstup!");
+otevřít(\$stdvýstup, ">&=9") or die("lkk: Nemohu otevřít standardní výstup!");
 binmode($stdvýstup, ":utf8");
 
 # 4. Akce "h" (vypsat nápovědu)
@@ -106,15 +106,15 @@ if ($akce eq "h") {
         "\tlkk -f {skript} :: Vypíše úplnou (absolutní) cestu k zadanému skriptu.\n".
         "\tlkk -l          :: Vypíše seznam dostupných skriptů.\n".
         "\tlkk -p {skript} :: Vypíše obsah skriptu na standardní výstup.\n".
-        "\tlkk [-r] [--] {skript} [parametry...] :: Spustí skript se zadanými parametry.\n".
-        "\tlkk -t {skript} :: Jen ověří, že daný skript existuje.".
-        "\tlkk --seznam-cest :: Vypíše seznam cest (i neexistujících), kde hledá skripty.".
-        "\tlkk --funkce [funkce] :: Vypíše pomocnou funkci (všechny, není-li zadána konkrétní).\n".
-        "\nDalší volby:\n".
-        "\t--bash :: Je-li zadáno -e na neexistující skript, vytvoří skript s hlavičkou „#!/bin/bash“.\n".
+        "\tlkk [-r] {skript} [parametry...] :: Spustí skript se zadanými parametry.\n".
+        "\tlkk -t {skript} :: Jen ověří, že daný skript existuje.\n".
+        "\tlkk --seznam-cest :: Vypíše seznam cest (i neexistujících), kde hledá skripty.\n".
+        "\tlkk --funkce [funkce] :: Vypíše pomocnou funkci (všechny, není-li zadána konkrétní). Předponu „lkk_“ lze vynechat.\n".
+        "\nDalší volby (nutno uvést před název skriptu či funkce!):\n".
+        "\t--bash :: Je-li zadáno -e na neexistující skript, vytvoří skript s hlavičkou „#!/bin/bash“. Vhodné kombinovat s „-x“.\n".
         "\t-s :: Skripty hledat jen v /usr/share/lkk/skripty; ignorovat proměnnou LKKPATH a uživatelské úložiště ~/.local/share/lkk/skripty.\n".
         "\t-x :: Ignorovat nespustitelné skripty (tzv. úryvky). Je-li zadáno -e na neexistující skript, nastaví nový skript jako spustitelný.\n".
-        "\nPoznámka: z technických důvodů nelze krátké volby kombinovat do jednoho parametru, musejí být uvedeny zvlášť.");
+        "\nPoznámka: z technických důvodů nelze krátké volby kombinovat do jednoho parametru, musejí být uvedeny zvlášť.\n");
     exit();
 }
 
@@ -143,7 +143,7 @@ if ($akce eq "l") {
 
 # 7. Akce "P" (vypsat seznam prohledávaných cest)
 if ($akce eq "P") {
-    foreach (my $s (@cesty)) {
+    foreach my $s (@cesty) {
         fprintf($stdvýstup, "%s\n", $s);
     }
     exit();
@@ -182,8 +182,8 @@ if ($akce eq "r") { # spustit skript
         } else {
             $skriptSCestou = $proměnnáDataHome."/lkk/skripty/".$argumenty[0];
         }
-        printf("exec %s %s\n", doApostrofů($proměnnáEditor), doApostrofů($skriptSCestou));
     }
+    printf("exec %s %s\n", doApostrofů($proměnnáEditor), doApostrofů($skriptSCestou));
 
 } elsif ($akce eq "f") { # najít skript
     $skriptSCestou ne "" or exit(1);
@@ -197,16 +197,17 @@ if ($akce eq "r") { # spustit skript
     $skriptSCestou ne "" or die("lkk: Skript \"pomocné-funkce\" nenalezen!");
     if (!defined($argumenty[1]) || $argumenty[1] eq "") {
         # vypsat všechny pomocné funkce
-        printf("exec egrep -v '%#' %s\n", doApostrofů($skriptSCestou));
+        printf("exec egrep -v '^#' %s\n", doApostrofů($skriptSCestou));
     } else {
         # vypsat jednu pomocnou funkci
         $argumenty[1] =~ /^lkk_/ or $argumenty[1] = "lkk_".$argumenty[1];
         $i = 1;
         my ($začátek, $konec) = (-1, -1);
         my $f = undef;
-        open($f, $skriptSCestou) or die("lkk: Nemohu otevřít ".$skriptSCestou);
+        otevřít(\$f, $skriptSCestou) or die("lkk: Nemohu otevřít ".$skriptSCestou);
         binmode($f, ":utf8");
         while (defined($s = readline($f))) {
+            chomp($s);
             $začátek == -1 && $s eq ("#začátek ".$argumenty[1]) and $začátek = $i;
             if ($konec == -1 && $s eq ("#konec ".$argumenty[1])) {
                 $konec = $i;
@@ -260,7 +261,7 @@ sub která {
     typy(@ARG) =~ /^s+$/ or die("Chybné parametry: " . typy(@ARG));
     my $vzor = shift(@ARG);
     my $i;
-    for ($i = 0; $i < alength(@ARG; ++$i) {
+    for ($i = 0; $i < alength(@ARG); ++$i) {
         if ($vzor eq $ARG[$i]) {return $i + 1}
     }
     return 0;
@@ -270,8 +271,8 @@ sub která {
 sub načíst {
     typy(@ARG) eq "s" or die("Chybné parametry: " . typy(@ARG));
     local $RS = undef;
-    my $f = undef;
-    open($f, "-|", "sh", "-c", $ARG[0]);
+    my $f;
+    otevřít(\$f, "-|:utf8", "sh", "-c", $ARG[0]) or die("lkk: Chyba při spouštění příkazu \"".$ARG[0]."\"");
     my $výsledek = readline($f);
     $RS = "\n";
     while ($ARG[1] and chomp($výsledek)) {}
@@ -279,10 +280,37 @@ sub načíst {
     return ($CHILD_ERROR >> 8, $výsledek);
 }
 
+# otevřít(\$proměnná, ...) => Zavolá interní funkci „open“ a získaný odkaz na soubor přiřadí do odkazované proměnné.
+sub otevřít {
+    typy(@ARG) =~ /^S(s([sS].*)?)?/ or die("Chybné parametry: " . typy(@ARG));
+    my $uk = shift(@ARG);
+    my $vysledek;
+    if (alength(@ARG) == 0) {
+        $vysledek = open(my $f);
+        $$uk = $f;
+    } else {
+        my $p1 = shift(@ARG);
+        if (alength(@ARG) == 0) {
+            $vysledek = open(my $f, $p1);
+            $$uk = $f;
+        } else {
+            my $p2 = shift(@ARG);
+            if (alength(@ARG) == 0) {
+                $vysledek = open(my $f, $p1, $p2);
+                $$uk = $f;
+            } else {
+                $vysledek = open(my $f, $p1, $p2, @ARG);
+                $$uk = $f;
+            }
+        }
+    }
+    return $vysledek;
+}
+
 # proměnnáProstředí(proměnná, náhradníHodnota?) => načte hodnotu proměnné prostředí; pokud taková neexistuje nebo je prázdná, vrátí náhradní hodnotu
 sub proměnnáProstředí {
     typy(@ARG) =~ /^s[su]?$/ or die("Chybné parametry: " . typy(@ARG));
-    return exists($ENV{$ARG[0]})) && $ENV{$ARG[0]} ne "" ? $ENV{$ARG[0]} : $ARG[1];
+    return exists($ENV{$ARG[0]}) && $ENV{$ARG[0]} ne "" ? $ENV{$ARG[0]} : $ARG[1];
 }
 
 # test(text) => spustí v bashi příkaz „test“ s uvedenými parametry a vrátí invertovanou návratovou hodnotu (tzn. 1, pokud test uspěje)
@@ -294,7 +322,7 @@ sub test {
 # vyhledatSkript(skript, cesty...) => prochází uvedené cesty a snaží se najít vyhovující skript;
 #       pokud ho najde, vrátí jeho absolutní cestu; pokud ne, vrátí prázdný řetězec
 sub vyhledatSkript {
-    typy(@ARG) =! /^s+$/ or die("Chybné parametry: " . typy(@ARG));
+    typy(@ARG) =~ /^s+$/ or die("Chybné parametry: " . typy(@ARG));
     my $skript = shift(@ARG);
     foreach my $cesta (@ARG) {
         my ($kód, $výstup) = načíst(($cesta ne "" ? "cd ".doApostrofů($cesta)." 2>/dev/null && " : "")."realpath -eq ".doApostrofů($skript), 1);

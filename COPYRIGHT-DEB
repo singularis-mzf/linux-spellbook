@@ -11,15 +11,11 @@ Files: usr/bin/lkk
 Copyright: 2020 Singularis <singularis@volny.cz>
 License: CC-BY-SA-4.0 or GPL-2
 
-Files: usr/bin/awkvolby.awk
-Copyright: 2020 Singularis <singularis@volny.cz>
-License: CC-BY-SA-4.0 or Expat
-
 Files: usr/share/bash-completion/completions/lkk
 Copyright: 2020 Singularis <singularis@volny.cz>
 License: CC-BY-SA-4.0 or GPL-2
 
-Files: usr/share/lkk/lkk.awk
+Files: usr/share/lkk/lkk.pl
 Copyright: 2020 Singularis <singularis@volny.cz>
 License: CC-BY-SA-4.0 or GPL-2
 
