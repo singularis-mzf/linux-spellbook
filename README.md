@@ -125,7 +125,7 @@ Priority:
 | ID | Název kapitoly | Růst | Stav |
 | :--- | :--- | ---: | :--- |
 | [odkazy](kapitoly/odkazy.md) | Pevné a symbolické odkazy | 100% | připravena k vydání |
-| [perl](kapitoly/perl.md) | Základy Perlu | 80% | dítě |
+| [perl-základy](kapitoly/perl-základy.md) | Základy Perlu | 80% | dítě |
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
 | [firefox](kapitoly/firefox.md) | Firefox | 60% | dítě |
 | [kalkulace](kapitoly/kalkulace.md)| Kalkulace | 50% | dítě |
@@ -142,6 +142,7 @@ Priority:
 | [zpracování-psv](kapitoly/zpracování-psv.md) | Zpracování PSV | 2% | dítě |
 | [správa-balíčků-2](kapitoly/správa-balíčků-2.md) | Správa balíčků 2 | 1% | dítě |
 | [grub](kapitoly/grub.md) | GRUB a jádro | 1% | dítě |
+| [perl-moduly-objekty-další](kapitoly/perl-moduly-objekty-další.md) | Perl: Moduly, objekty a další | 0% | embryo |
 | [konverze-formatů](kapitoly/konverze-formatů.md) | Konverze formátů | 0% | embryo |
 | [wine](kapitoly/wine.md) | Wine | 0% | embryo |
 | [pdf](kapitoly/pdf.md) | PDF | 0% | embryo |
