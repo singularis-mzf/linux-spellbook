@@ -691,9 +691,15 @@ $(SOUBORY_PREKLADU)/deb/usr/bin/lkk: skripty/lkk/lkk
 	cp --no-preserve=mode,timestamps -f $< $@
 	chmod 755 $@
 
-# 3. skripty/lkk/lkk.pl => soubory_překladu/deb/usr/share/lkk/lkk.pl
+# 2. skripty/lkk/LinuxKnihaKouzel.pl => soubory_překladu/deb/usr/share/lkk/LinuxKnihaKouzel.pl
 # ----------------------------------------------------------------------------
-$(SOUBORY_PREKLADU)/deb/usr/share/lkk/lkk.pl: skripty/lkk/lkk.pl $(JMENO_SESTAVENI_SOUBOR)
+$(SOUBORY_PREKLADU)/deb/usr/share/lkk/LinuxKnihaKouzel.pl: skripty/lkk/LinuxKnihaKouzel.pl $(JMENO_SESTAVENI_SOUBOR)
+	mkdir -pv $(dir $@)
+	$(SED) "s/\{\{JMÉNO VERZE\}\}/$(JMENO)/g" $< >$@
+
+# 3. skripty/lkk/lkk-spouštěč.pl => soubory_překladu/deb/usr/share/lkk/lkk-spoustec.pl
+# ----------------------------------------------------------------------------
+$(SOUBORY_PREKLADU)/deb/usr/share/lkk/lkk-spoustec.pl: skripty/lkk/lkk-spouštěč.pl $(JMENO_SESTAVENI_SOUBOR)
 	mkdir -pv $(dir $@)
 	$(SED) "s/\{\{JMÉNO VERZE\}\}/$(JMENO)/g" $< >$@
 
@@ -726,7 +732,8 @@ $(SOUBORY_PREKLADU)/deb/usr/share/bash-completion/completions/lkk: skripty/lkk/b
 $(SOUBORY_PREKLADU)/deb/DEBIAN/md5sums: \
   $(SOUBORY_PREKLADU)/deb/usr/bin/lkk \
   $(SOUBORY_PREKLADU)/deb/usr/share/doc/lkk/copyright \
-  $(SOUBORY_PREKLADU)/deb/usr/share/lkk/lkk.pl \
+  $(SOUBORY_PREKLADU)/deb/usr/share/lkk/LinuxKnihaKouzel.pl \
+  $(SOUBORY_PREKLADU)/deb/usr/share/lkk/lkk-spoustec.pl \
   $(SOUBORY_PREKLADU)/deb/usr/share/lkk/skripty/pomocné-funkce \
   $(SOUBORY_PREKLADU)/deb/usr/share/bash-completion/completions/lkk
 	mkdir -pv $(dir $@)

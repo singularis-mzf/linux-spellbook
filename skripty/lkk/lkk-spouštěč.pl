@@ -1,4 +1,4 @@
-# Linux Kniha kouzel, skript lkk.pl
+# Linux Kniha kouzel, skript lkk-spouštěč.pl
 # Copyright (c) 2020 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -24,7 +24,7 @@
 #
 # =================================================================================
 # exec 9>&1
-# p=$(perl -CSLA -Mv5.26.0 -Mstrict -Mutf8 -Mwarnings -MEnglish -- lkk.pl [argumenty])
+# p=$(perl -CSLA -Mv5.26.0 -Mstrict -Mutf8 -Mwarnings -MEnglish -- lkk-spoustec.pl [argumenty])
 # exec 9>&-
 # eval "$p"
 #

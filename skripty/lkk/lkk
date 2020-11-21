@@ -26,6 +26,6 @@
 set -e
 exec 9>&1
 unset p
-p=$(perl -CSLA -Mv5.26.0 -Mstrict -Mutf8 -Mwarnings -MEnglish -- /usr/share/lkk/lkk.pl "$@")
+p=$(perl -CSLA -Mv5.26.0 -Mstrict -Mutf8 -Mwarnings -MEnglish -- /usr/share/lkk/lkk-spoustec.pl "$@")
 exec 9>&-
 eval "$p"
