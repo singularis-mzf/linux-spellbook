@@ -216,7 +216,7 @@ nevyzkoušeno
 **\}**
 
 *# cyklus **do-while** (alternativy)*<br>
-**do {** {*příkazy*} **} while (**{*podmínka*}**);**<br>
+**do \{** {*příkazy*} **\} while (**{*podmínka*}**);**<br>
 **do** {*příkaz*}**; while (**{*podmínka*}**);**
 
 ### Řízení toku
@@ -595,7 +595,7 @@ TODO: Test.
 
 *# implementovat načítání řádek rozdělených znakem \\ před znakem konce řádku (tento kód vložit na začátek skriptu)*<br>
 {*proměnná*} **!= "" {$0 =** {*proměnná*}**;** {*proměnná*} **= "";}**<br>
-**/(^|[<nic>^\\\\])(\\\\\\\\)\*\\\\$/ {**{*proměnná*} **= substr($0, 1, length($0) - 1); next;}**
+**/(^|[<nic>^\\\\])(\\\\\\\\)\*\\\\$/ \{**{*proměnná*} **= substr($0, 1, length($0) - 1); next;}**
 
 ## Parametry příkazů
 

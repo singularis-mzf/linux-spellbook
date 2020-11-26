@@ -152,7 +152,7 @@ Pravidla odzvláštňování ve zdrojových kódech tohoto projektu jsou násled
 * (\#), ($), (+), (-), (:), ([), (|), (~)<br>se odzvláštňují před prvním alfanumerickým znakem na řádku nebo jsou-li zdvojeny. Příklad: \\#\\#, \\$\\$, \\+\\+, \\-\\-, \\:\\:, \\[\\[, \\|\\|, \\~\\~.
 * (!)<br>se odzvláštňuje, má-li za ním stát „[“.
 * (])<br>se odzvláštňuje, je-li zdvojena nebo má-li za ní stát „(“ nebo „[“.
-* ({), (})<br>se odzvláštňují, jen utvořily-li by nechtěnou formátovací sekvenci „\{\*“ či „\*\}“. Příklad: \\\{\*text kurzívou\*\\}
+* ({), (})<br>se odzvláštňují, jen utvořily-li by nechtěnou formátovací sekvenci „\{\*“ či „\*\}“. Rovněž kombinace „\{\*\*“ a „\*\*\}“ nejsou dovoleny. Příklad: \\\{\*text kurzívou\*\\}
 * ())<br>se odzvláštňuje jen uvnitř adresy hypertextového odkazu. Příklad: [X\](http:⫽pism.cz/Pismeno\\\_(X\\))
 * (.)<br>se odzvláštňuje za sekvencí desítkových číslic, které na řádce zdrojového kódu nepředchází žádné nebílé znaky, a to jen v případě, že za danou tečkou následuje mezera.
 * (()<br>se neodzvláštňuje nikdy.

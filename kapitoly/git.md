@@ -146,13 +146,13 @@ Za jakýmkoliv označením revize můžete (i opakovaně a v kombinaci) použ
 *# **přepnout** aktivní větev a načíst ji do PA i PO/bez načtení*<br>
 *// Pokud byly v PA a PO již nějaké změny oproti původní aktivní větvi, Git se je při načítání nové větve pokusí zachovat.*<br>
 **git checkout** {*větev*}<br>
-?
+**git checkout \-\-detach &amp;&amp; git reset \-\-soft** {*větev*} **&amp;&amp; git checkout** {*větev*}
 
 *# **název** aktivní větve*<br>
 **git branch \-\-show-current**
 
 *# **odpojit** se od aktivní větve*<br>
-**git checkout "HEAD\~0"**
+**git checkout \-\-detach**
 
 *# **heš** aktivní revize*<br>
 **git rev-parse \-\-verify HEAD**
@@ -242,15 +242,34 @@ REPO -> PO -> PA
 **git checkout $(git rev-list -n 1 \-\-first-parent "\-\-until=**{*datum-YYYY-MM-DD HH:mm:ss*}**" HEAD)**<br>
 **git checkout $(git rev-list -n 1 \-\-first-parent "\-\-until=$(date -d "14 days ago" "+%F %T")" HEAD)**
 
+*# načíst revizi do PO a PA, ale nepřepnout se na ni*<br>
+?
+
+### Přístup k revizím z repozitáře
+
 <!--
 REPO -> x
 -->
-*# získat do samostatného nového adresáře konkrétní revizi*<br>
-*// Tip: nový adresář může být i uvnitř pracovního adresáře, před provedením příkazu však nesmí existovat.*<br>
-**revize=$(git rev-parse \-\-verify** {*revize*}**); test -n $revize &amp;&amp; git clone -sn \-\- "$(git rev-parse \-\-show-toplevel)"** {*nový/adresář*} **&amp;&amp; (cd** {*nový/adresář*} **&amp;&amp; git checkout \-\-detach $revize &amp;&amp; rm -Rf .git)**
+*# získat do samostatného nového adresáře konkrétní **revizi***<br>
+[**rm -Rf** {*cílový/adresář*}]<br>
+**mkdir -p**[**v**] {*cílový/adresář*} **&amp;&amp; git -C "$(git rev-parse \-\-show-toplevel)" archive** {*revize*} **\| tar x -C** {*cílový/adresář*}
 
-*# načíst revizi do PO a PA, ale nepřepnout se na ni*<br>
-?
+<!--
+Poznámka: s parametrem --remote git archive přijímá jako revizi pouze HEAD,
+názvy větví a jména revizí; nepřijímá výrazy s operátory ^ a ~ ani částečné ani úplné
+SHA1 heše.
+-->
+
+<!--
+**revize=$(git rev-parse \-\-verify** {*revize*}**); test -n $revize &amp;&amp; git clone -sn \-\- "$(git rev-parse \-\-show-toplevel)"** {*nový/adresář*} **&amp;&amp; (cd** {*nový/adresář*} **&amp;&amp; git checkout \-\-detach $revize &amp;&amp; rm -Rf .git)**
+-->
+
+*# vypsat na standardní výstup **soubor** z určité revize*<br>
+*// Pozor! Cesta/k/souboru nesmí opustit podstrom aktuálního adresáře. Tzn. např. cesta „../x.c“ je neplatná a skončí chybou, a to i v případě, že odkazovaný soubor je verzovaný v daném repozitáři.*<br>
+**git archive** {*revize*} [**\-\-**] {*cesta/k/souboru*} **\| tar xO**
+
+*# zabalit konkrétní revizi jako **archiv** typu zip*<br>
+**git -C "$(git rev-parse \-\-show-toplevel)" archive \-\-format=zip** [**-9**] {*revize*} **&gt;**{*výstup.zip*}
 
 ### Jména revizí
 
@@ -294,28 +313,6 @@ REPO -> x
 
 *# zrušit slučování (nastal-li konflikt)*<br>
 **git merge \-\-abort**
-
-### Odkládání změn v PA a PO
-
-<!--
-[ ] git clean – odstranění neverzovaných souborů
--->
-
-*# **odložit** změny v PA a PO*<br>
-**git stash push -ku** [**-m "**{*Popis*}**"**]
-
-*# **obnovit** odložené změny do PA a PO*<br>
-*// Poznámka: PA a PO nemusí být při obnovování změn v přesně stejném stavu jako při odkládání, stačí když při obnovování změn nedojde ke konfliktu.*<br>
-**git stash pop \-\-index**
-
-*# **smazat** odložené změny*<br>
-**git stash clear**
-
-*# vypsat odložené změny (jen poslední odložení)*<br>
-**git stash show -p**
-
-*# vypsat seznam uložených odložení*<br>
-**git stash list**
 
 ### Vzdálené větve
 
@@ -469,6 +466,28 @@ git remote set-head {*vzdálený-repozitář*} -d
 *# zamknout/odemknout (zamknutý adresář se nesmaže příkazem „prune“)*<br>
 **git worktree lock** [**\-\-reason** {*důvod*}] {*/sekundární/pracovní/adresář*}<br>
 **git worktree unlock** {*/sekundární/pracovní/adresář*}
+
+### Odkládání a rušení změn v PA a PO
+
+<!--
+[ ] git clean – odstranění neverzovaných souborů
+-->
+
+*# **odložit** změny v PA a PO*<br>
+**git stash push -ku** [**-m "**{*Popis*}**"**]
+
+*# **obnovit** odložené změny do PA a PO*<br>
+*// Poznámka: PA a PO nemusí být při obnovování změn v přesně stejném stavu jako při odkládání, stačí když při obnovování změn nedojde ke konfliktu.*<br>
+**git stash pop \-\-index**
+
+*# **smazat** odložené změny*<br>
+**git stash clear**
+
+*# vypsat odložené změny (jen poslední odložení)*<br>
+**git stash show -p**
+
+*# vypsat seznam uložených odložení*<br>
+**git stash list**
 
 ### Ostatní
 

@@ -45,6 +45,23 @@ Poznámky:
 -->
 ![ve výstavbě](../obrázky/ve-výstavbě.png)
 
+### Moduly
+
+*# načíst modul*<br>
+**use** [{*adresář*}**\:\:**]...{*název\_souboru\_bez\_přípony*}**;**
+
+*# hledat moduly i ve stejném adresáři, kde se nachází daný zdrojový soubor*<br>
+**use lib (((\_\_FILE\_\_ =~ s/^\[<nic>^\\/]\*$/.\\/x/r) =~ s/\\/\[<nic>^\\/]\*$//r));**
+<!--
+TODO: Otestovat!
+-->
+
+*# obecná struktura souboru modulu*<br>
+**package** {*NázevSouboruBezPřípony*}**;**<br>
+{*blok příkazů „use“*}<br>
+{*definice proměnných a funkcí*}<br>
+**1;**
+
 ## Parametry příkazů
 <!--
 - Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.

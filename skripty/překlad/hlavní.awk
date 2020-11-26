@@ -186,6 +186,10 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C, priznak, stav) {
         }
         # 3 znaky
         switch (C = substr(VSTUP, 1, 3)) {
+            case "{**":
+                ShoditFatalniVyjimku("Neodzvláštněná kombinace \"{**\" není ve zdrojovém kódu povolena. Zkontrolujte prosím, co jste chtěl/a napsat.");
+            case "**}":
+                ShoditFatalniVyjimku("Neodzvláštněná kombinace \"**}\" není ve zdrojovém kódu povolena. Zkontrolujte prosím, co jste chtěl/a napsat.");
             case "...":
                 if (TYP_RADKU == "RADEK_ZAKLINADLA" && VelikostZasobniku("format") == 0 && substr(VSTUP, 4, 1) != ".") {
                     VYSTUP = VYSTUP TriTecky();

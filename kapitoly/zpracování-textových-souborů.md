@@ -409,7 +409,7 @@ Pro formát tsvz použijte „RS="\\0";“, pro tsv jej vynechejte.
 
 *# vložit sloupec s **číslem záznamu** před první sloupec*<br>
 *// Poznámka: zadáte-li víc souborů, počítadlo záznamů se nebude restartovat na začátku každého z nich.*<br>
-**gawk 'BEGIN {** [**RS = ORS = "\\0";**] **OFS = "\\t";} {print NR, $0}'** [{*soubor*}]...
+**gawk 'BEGIN \{** [**RS = ORS = "\\0";**] **OFS = "\\t";} {print NR, $0}'** [{*soubor*}]...
 <!--
 **sed** [**-z**] **=** [{*soubor*}]... **\| paste** [**-z**] <nic>[**-d** {*oddělovač*}] **- -**
 -->

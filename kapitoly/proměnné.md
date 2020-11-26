@@ -183,14 +183,14 @@ proměnnou „_“, ačkoliv tu ani jako proměnnou prostředí nastavit nelze.
 
 *# **zkopírovat** (celé pole/výřez)*<br>
 {*cílové\_pole*}**=("$\{**{*zdrojové\_pole*}**[@]}")**<br>
-{*cílové\_pole*}**=("$\{**{*zdrojové\_pole*}**[@]:**{*první-kopírovaný-index*}[**:**{*maximální-počet*}]**}")**
+{*cílové\_pole*}**=("$\{**{*zdrojové\_pole*}**[@]:**{*první-kopírovaný-index*}[**:**{*maximální-počet*}]**\}")**
 
 *# **spojit** dvě pole*<br>
 {*cílové\_pole*}**=("$\{**{*první\_pole*}**[@]}" "$\{**{*druhé\_pole*}**[@]}")**
 
 *# **rozdělit** pole na poloviny*<br>
-{*první\_cíl*}**=("${**{*názevpole*}**[@]:0:$((${#**{*název\_pole*}**[@]}/2+1))}")**<br>
-{*druhý\_cíl*}**=("${**{*názevpole*}**[@]:$((${#**{*název\_pole*}**[@]}/2+1))}")**
+{*první\_cíl*}**=("$\{**{*názevpole*}**[@]:0:$((${#**{*název\_pole*}**[@]}/2+1))}")**<br>
+{*druhý\_cíl*}**=("$\{**{*názevpole*}**[@]:$((${#**{*název\_pole*}**[@]}/2+1))}")**
 
 *# **obrátit** pořadí prvků pole*<br>
 *// V případě potřeby změňte názvy pomocných proměnných „i“, „j“ a „x“.*<br>
@@ -210,7 +210,7 @@ proměnnou „_“, ačkoliv tu ani jako proměnnou prostředí nastavit nelze.
 
 *# **přečíst** prvek na indexu N/**přiřadit** do něj*<br>
 *// Je dovoleno přiřadit do prvku libovolně daleko za koncem pole; Bash v takovém případě pole automaticky prodlouží prázdnými řetězci, aby index byl platný.*<br>
-**${**{*název\_pole*}**[**{*N*}**]**[**-**{*náhradní hodnota*}]**\}**<br>
+**$\{**{*název\_pole*}**[**{*N*}**]**[**-**{*náhradní hodnota*}]**\}**<br>
 {*název\_pole*}**[**{*N*}**]=**{*hodnota*}
 
 *# **iterovat** přes prvky/přes indexy*<br>
@@ -219,7 +219,7 @@ proměnnou „_“, ačkoliv tu ani jako proměnnou prostředí nastavit nelze.
 
 *# dosadit **výřez** pole*<br>
 *// Výřez se dosadí jako samostatné parametry (podobně jako u zvláštního parametru $@).*<br>
-**"$\{**{*zdrojové\_pole*}**[@]:**{*první-kopírovaný-index*}[**:**{*maximální-počet*}]**}"**
+**"$\{**{*zdrojové\_pole*}**[@]:**{*první-kopírovaný-index*}[**:**{*maximální-počet*}]**\}"**
 
 *# **vložit** nový prvek na začátek/konec*<br>
 *// Pozor! Vkládání prvků na začátek je v případě rozsáhlého pole velmi pomalé! Snažte se mu vyhnout a vkládat prvky raději na konec. Pro vložení prvku doprostřed použijte spojování polí (které je ale také pomalé).*<br>
@@ -227,8 +227,8 @@ proměnnou „_“, ačkoliv tu ani jako proměnnou prostředí nastavit nelze.
 {*název\_pole*}**+=("**{*nový prvek*}**")**
 
 *# **odstranit** N prvků na začátku/konci*<br>
-{*název\_pole*}**=("${**{*názevpole*}**[@]:**{*N*}**\}")**
-{*název\_pole*}**=("${**{*názevpole*}**[@]:0:$((${#**{*název\_pole*}**[@]}-**{*N*}**))}")**
+{*název\_pole*}**=("$\{**{*názevpole*}**[@]:**{*N*}**\}")**
+{*název\_pole*}**=("$\{**{*názevpole*}**[@]:0:$((${#**{*název\_pole*}**[@]}-**{*N*}**))}")**
 
 ### Asociativní pole (jako celek)
 
@@ -407,7 +407,7 @@ Prázdný klíč způsobí chybu „chybný podskript pole“.
 *# dosadit prvky **pole** (všechny prvky/jeden prvek/výřez/poslední prvek)*<br>
 **"$\{**{*název\_pole*}**[@]}"**<br>
 **"$\{**{*název\_pole*}**[**{*index*}**]}"**<br>
-**"$\{**{*název\_pole*}**[@]:**{*první-kopírovaný-index*}[**:**{*maximální-počet*}]**}"**<br>
+**"$\{**{*název\_pole*}**[@]:**{*první-kopírovaný-index*}[**:**{*maximální-počet*}]**\}"**<br>
 **"$\{**{*název\_pole*}**[-1]}"**
 
 *# dosadit hodnotu z **asociativního pole** (klíč je řetězec/hodnota proměnné)*<br>

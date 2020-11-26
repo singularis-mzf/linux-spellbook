@@ -82,7 +82,7 @@ jemuž se bude věnovat většina této kapitoly.
 
 *# rozvinout **proměnnou prostředí** či příkazového interpretu (ne proměnnou Makefilu)(alternativy)*<br>
 **\$\$**{*NÁZEV\_PROMĚNNÉ*}<br>
-**\$\${**{*NÁZEV\_PROMĚNNÉ*}**}**
+**\$\$\{**{*NÁZEV\_PROMĚNNÉ*}**\}**
 
 *# rozvinout proměnnou, jejíž název je uložený v jiné proměnné*<br>
 **$($(**{*NÁZEV\_PROMĚNNÉ*}**))**
