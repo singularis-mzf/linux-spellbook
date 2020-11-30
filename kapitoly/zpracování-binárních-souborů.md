@@ -92,7 +92,7 @@ Používá se pro srovávání a ověřování, protože pravděpodobnost, že 
 **printf %d\\\\n $((0x$(crc32 "**{*soubor*}**")))**
 
 *# vypočítat z jednoho souboru heše (MD5) záznamů ukončených nulovým bajtem*<br>
-**perl -MEnglish -MDigest::MD5 -pe 'BEGIN {$RS = "\\0"; $ORS = "\\n";} $ARG = Digest::MD5::md5_hex($ARG);' &gt;**{*soubor*}
+**perl -MEnglish -MDigest::MD5 -pe 'BEGIN {$RS = "\\x{0}"; $ORS = "\\n";} $ARG = Digest::MD5::md5\_hex($ARG);' &gt;**{*soubor*}
 
 ### Určit formát dat a velikost souboru
 

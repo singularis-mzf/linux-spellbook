@@ -297,7 +297,10 @@ Pevné odkazy se také vyplatí pro různé dočasné účely, kdy mohou být je
 * [Wikipedie: Symbolický odkaz](https://cs.wikipedia.org/wiki/Symbolick%C3%BD\_odkaz)
 * [Wikipedie: Pevný odkaz](https://cs.wikipedia.org/wiki/Pevn%C3%BD\_odkaz)
 * [YouTube: MicroNuggets: Hard Links versus Soft Links Explained](https://www.youtube.com/watch?v=lW\_V8oFxQgA) (anglicky)
+<!--
 * [YouTube: Chris Titus Tech: Symbolic Links in Linux](https://www.youtube.com/watch?v=mA08E59-zo8) (anglicky)
+-->
+* [LBRY: Chris Titus Tech: Symbolic Links in Linux](https://lbry.tv/@christitustech:5/symbolic-links-in-linux-use-symlinks-for:f) (anglicky)
 * man readlink (anglicky)
 * man realpath (anglicky)
 * man ln (anglicky)

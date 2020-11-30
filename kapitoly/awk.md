@@ -24,7 +24,7 @@ Poznámka:
 
 # AWK
 
-!Štítky: {program}{syntaxe}{zpracování textu}
+!Štítky: {program}{syntaxe}{zpracování textu}{programování}
 !FixaceIkon: 1754
 !ÚzkýRežim: zap
 

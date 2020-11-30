@@ -62,6 +62,50 @@ TODO: Otestovat!
 {*definice proměnných a funkcí*}<br>
 **1;**
 
+*# přepnout do jiného modulu/do hlavního modulu*<br>
+**package** {*Označení::Modulu*}**;**<br>
+**package main;**
+
+*# úvod modulu (striktně doporučený)*<br>
+**use strict;**<br>
+**use warnings;**<br>
+**use utf8;**<br>
+**use English;**<br>
+**use Exporter("import");**<br>
+[**use parent** [{*předek*}]**;**]<br>
+**our @EXPORT =** {*seznam symbolů k automatickému exportu*}**;**<br>
+**our @EXPORT\_OK =** {*seznam symbolů dovolených k exportu*}**;**
+
+<!--
+Poznámka: příkaz „package“ je přepínač. Přepne do jiného modulu. Do hlavního modulu se lze vrátit příkazem „package main;“
+a moduly lze přepínat i opakovaně v rámci jednoho souboru.
+-->
+
+
+## Zaklínadla: Ostatní
+
+### Práce s časem
+
+*# získat aktuální časovou známku*<br>
+**time()** ⊨ 1605876988
+
+*# získat aktuální čas: lokální/UTC*<br>
+**array(localtime(**{*časznámka*}**))** ⊨ (59, 58, 13, 20, 10, 120, 5, 324, 0)<br>
+**array(gmtime(**{*časznámka*}**))** ⊨ (59, 58, 12, 20, 10, 120, 5, 324, 0)
+
+*# tvar pole vraceného funkcemi localtime() a gmtime()*<br>
+*// Den v týdnu je: 0=neděle, 1=pondělí, ..., 6=sobota. isdst je logická pravda pro letní čas, jinak logická nepravda. Dny v roce se počítají od nuly!*<br>
+**(**{*sekund*}**,** {*minut*}**,** {*hodin*}**,** {*den-v-měsíci*}**,** {*měsíc*}**,** {*rok-1900*}**,** {*den-v-týdnu*}**,** {*den-v-roce*}**,** {*isdst*}**)**
+
+*# časová známka na řetězec formátu "yyyy-MM-dd HH:mm:ss" (lokální/UTC)*<br>
+^^**use POSIX;**<br>
+**POSIX::strftime(**{*$formát*}**, localtime(**{*časznámka*}**))**<br>
+**POSIX::strftime(**{*$formát*}**, gmtime(**{*časznámka*}**))**
+
+<!--
+[ ] zjistit posun lokální časové zóny oproti UTC!
+-->
+
 ## Parametry příkazů
 <!--
 - Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.

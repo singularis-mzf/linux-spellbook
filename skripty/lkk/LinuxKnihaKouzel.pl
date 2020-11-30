@@ -13,8 +13,9 @@
 #
 # https://creativecommons.org/publicdomain/zero/1.0/
 #
-# Osoba poskytující tuto licenci ses rozhodla vzdát ve vztahu k tomuto
-# souboru zdrojového kódu všechna svá práva autorská a práva příbuzná k právu autorskému.
+# Osoba poskytující tuto licenci se rozhodla vzdát ve vztahu k tomuto
+# souboru zdrojového kódu všechna svá práva autorská a práva příbuzná
+# k právu autorskému.
 #
 use v5.26.0;
 use strict;
@@ -26,6 +27,8 @@ sub alength {return scalar(@ARG)}
 sub array {return @ARG}
 sub bool {return pop(@ARG) ? 1 : 0}
 sub div {my ($a, $b) = (abs($ARG[0]), abs($ARG[1])); use integer; return ($a / $b, $a % $b);}
+sub min {my $x = shift(@ARG); while (alength(@ARG) > 0) {if ($ARG[0] < $x) {$x = shift(@ARG)} else {shift(@ARG)}} return $x;}
+sub max {my $x = shift(@ARG); while (alength(@ARG) > 0) {if ($ARG[0] > $x) {$x = shift(@ARG)} else {shift(@ARG)}} return $x;}
 sub fprint {my $soubor = shift(@ARG); return print($soubor @ARG);}
 sub fprintf {my $soubor = shift(@ARG); return printf($soubor @ARG);}
 sub fput {local $OFS = ""; local $ORS = ""; my $soubor = shift(@ARG); return print($soubor @ARG);}
@@ -39,7 +42,10 @@ sub matches { # => ([začátek, délka], [začátek, délka], ...) || ()
     $begin = 0 if (!defined($begin));
     $s = substr($s, 0, $begin + $maxlength) if (defined($maxlength) && $maxlength < length($s));
     pos($s) = $begin;
-    while ($s =~ /$r/gn) {push(@v, [$LAST_MATCH_START[0], $LAST_MATCH_END[0] - $LAST_MATCH_START[0]])}
+    while ($s =~ /$r/gn) {
+        push(@v, [$LAST_MATCH_START[0], $LAST_MATCH_END[0] - $LAST_MATCH_START[0]]);
+        last if($LAST_MATCH_START[0] != $LAST_MATCH_END[0] && pos($s) == length($s));
+    }
     return @v;
 }
 

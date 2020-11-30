@@ -46,7 +46,6 @@ Seznam je řazený od nejsnazšího úkolu po nejobtížnější:
 * *Sehnat či nakreslit lepší ikony kapitol*
 * *Navrhnout další zaklínadla do kapitol* (zejména do rozpracovaných)
 * *Doplnit další barevné motivy* (např. Solarized)
-* *Doplnit do kapitol chybějící ukázky*
 * *Doplnit kapitoly týkající se sítě*
 * *Založit a udržovat odnož pro jinou distribuci*
 
@@ -62,9 +61,6 @@ Seznam je řazený od nejsnazšího úkolu po nejobtížnější:
 Sdílejte [odkaz](https://singularis-mzf.github.io) na své oblíbené
 sociální síti a napište tip přátelům, kteří by mohli mít o zaklínadla
 z tohoto projektu zájem.
-
-Pomocí permanentních odkazů na online HTML verzi můžete odkazovat přímo
-na jednotlivá zaklínadla, např. [takto](https://singularis-mzf.github.io/v2/promenne.htm#z966242526).
 
 ## Opravit překlepy
 

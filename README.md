@@ -1,4 +1,4 @@
-<!--
+<!-- <!-- -->
 
 Linux Kniha kouzel, README
 Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
@@ -53,12 +53,13 @@ Obvyklý postup použití zaklínadla je následující:
 *Poznámka 2:* Linux: Kniha kouzel není tutorial. Pokud ani po přečtení úvodu a definic nepochopíte,
 jak se uvedená zaklínadla používají, musíte nejprve získat zkušenosti nebo navštívit jiné stránky,
 kde vám použití daných nástrojů někdo názorně vysvětlí. Odkazy na takové stránky (včetně videí)
-najdete v sekci „Další zdroje informací“ prakticky v každé kapitole.
+najdete v sekci „Další zdroje informací“ na konci téměř každé kapitoly.
 
 ### Základní použití offline (úroveň 2)
 
-Na stránce [Ke stažení](https://singularis-mzf.github.io/ke-stazeni.htm) si stáhněte „offline HTML“ variantu
-aktuální verze vanilkové příchuti (soubor „html.zip“) a archiv rozbalte do vámi zvoleného adresáře.
+Na stránce [Ke stažení](https://singularis-mzf.github.io/ke-stazeni.htm) si stáhněte
+„offline HTML“ variantu aktuální verze vanilkové příchuti (soubor „html.zip“)
+a archiv rozbalte do vámi zvoleného adresáře.
 Na téže stránce si můžete stáhnout PDF pro tisk a vytisknout.
 
 Pokud chcete přepnout barevný motiv, smažte (nebo přejmenujte) soubor „lkk-*datum*.css“ a soubor
