@@ -16,14 +16,13 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 ## Chystané kapitoly
 
-* „Pevné a symbolické odkazy“
-* „Stahování webu“ (wget, curl, firefox, wkhtmltoimage, robots.txt, ...)
+* „Základy Perlu“ (jednoduše, konzistentně)
 * „PDF“ (dělení, slučování, operace po stránkách, transformace, konverze apod.)
+* „Zpracování obrázků“ (ImageMagick, konverze RAW z fotoaparátů, zatím asi bez animovaných gifů)
+* „Stahování z webu“ (wget, curl, firefox, wkhtmltoimage, robots.txt, ...)
 * „Unicode a emotikony“ („mapa znaků“, vzorníky a různé symboly)
 * „X (správce oken)“ (práce s okny, se schránkou, oznámení a další)
-* „Zpracování obrázků“ (ImageMagick, konverze RAW z fotoaparátů, zatím asi bez animovaných gifů)
 * „Komplexní textové formáty“ (JSON, XML apod.)
-* „Základy Perlu“ (jednoduše, konzistentně)
 * „Přehrávání videa, zvuku a obrázků“ (mplayer, feh, gpicview, ristretto)
 * „Šifrování a kryptografie“ (gpg, šifrování archivů, elektronické podpisy, HTTPS certifikáty)
 * „Firewall“ (asi hlavně iptables a ufw)
@@ -37,7 +36,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 * „VirtualBox“ (ovládání z terminálu)
 * „Záznam obrazovky“ (maim, ffmpeg a další)
 * „Správa balíčků 2“ (apt-src, aptly apod.)
-* „Matematické výpočty“ (bc, dc, expr apod.)
+* „Kalkulace“ (bc, dc, expr apod.)
 * „Firefox“ (zejm. konfigurační volby a volání z terminálu)
 
 <!--
@@ -53,11 +52,9 @@ nebo komentářem na GitHubu. Váš zájem mě určitě potěší a povzbudí.
 
 ## Možný přechod na jazyk Perl
 
-Přechod projektu z AWK na Perl v nejbližší budoucnosti *nenastane*.
-Mechanismus překladu je značně založený na příkazech „switch“,
+Vzhledem k blížícímu se vydání kapitoly Základy Perlu hodlám do Perlu přepsat část
+GNU-awk-skriptů fungujících spíše samostatně. Hlavní části mechanismu překladu ale
+zůstanou v GNU awk, protože jsou z velké části založeny na příkazech „switch“,
 které Perl sám o sobě dobře neumí a náhražky v něm vypadají ošklivě
-nebo dobře nefungují. Proto bude další vývoj mechanismu překladu probíhat
-i nadále v AWK.
-
-Plánuji však převod spouštěče „lkk“ do Perlu, tak aby GNU awk nebylo
-vyžadováno jako závislost balíčku „lkk“.
+nebo dobře nefungují. Pokud se mi ale podaří najít vhodnou a dostatečně výkonnou
+náhražku za konstrukci switch, bude přechod na Perl možný i u této části mechanismu překladu.

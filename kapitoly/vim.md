@@ -733,6 +733,23 @@ numberwidth=4
 *# vypnout **zalamování** řádků*<br>
 **:set nowrap**{_Enter_}
 
+*# zvýrazňovat nezlomitelné mezery (alternativy)*<br>
+*// Při použití v konfiguračním souboru „.vimrc“ nahraďte kombinace klávesy s „u“ a čtyřmi hexadecimálními číslicemi odpovídajícím znakem v kódování UTF-8.*<br>
+**:set list listchars=tab:\\&blank;\\&blank;,nbsp:\_**{_Enter_}<br>
+**:set list listchars=tab:\\&blank;\\&blank;,nbsp:**{_Ctrl+V_}**u23b5**{_Enter_}
+
+*# zvýrazňovat tabulátory a nezlomitelné mezery (alternativy)*<br>
+*// Při použití v konfiguračním souboru „.vimrc“ nahraďte kombinace klávesy s „u“ a čtyřmi hexadecimálními číslicemi odpovídajícím znakem v kódování UTF-8.*<br>
+**:set list listchars=tab:&gt;\\&blank;,nbsp:\_**{_Enter_}<br>
+**:set list listchars=tab:**{_Ctrl+V_}**u27eb\\&blank;,nbsp:**{_Ctrl+V_}**u23b5**{_Enter_}
+
+*# zvýrazňovat všechny bílé znaky*<br>
+**:set list listchars=tab:**{_Ctrl+V_}**u27eb\\&blank;,nbsp:**{_Ctrl+V_}**u23b5,space:**{_Ctrl+V_}**u00b7**{_Enter_}
+
+<!--
+Poznámka: v Ubuntu 18.04 zvýrazňování nezlomitelných mezer za určitých okolností nefungovalo.
+-->
+
 *# **zvýraznit** sloupec s kurzorem*<br>
 **:set cursorcolumn**{_Enter_}
 

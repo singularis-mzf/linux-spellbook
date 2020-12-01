@@ -326,7 +326,7 @@ asi PHY-SEC/LOG-SEC u lsblk
 *# „odformátovat“ oddíl (přepsat: jen značky/celou hlavičku/celý oddíl)*<br>
 **sudo wipefs -a** [**\-\-backup**] {*/dev/oddíl*}<br>
 ?<br>
-**sudo dd if=/dev/zero of=**{*/dev/oddíl*} [**status=progress**]
+**sudo dd iflag=fullblock if=/dev/zero of=**{*/dev/oddíl*} [**status=progress**]
 
 *# změnit velikost souborového systému typu btrfs (na udanou velikost/na celý oddíl)*<br>
 *// Souborový systém musí být připojený, aby bylo možno změnit jeho velikost!*<br>
@@ -393,11 +393,12 @@ Poznámka: souborové systémy FAT a NTFS by při nastavování jmenovky měly 
 **sudo btrfs filesystem label** {*specifikace/oddílu*} **""**
 
 *# nastavit/smazat jmenovku **FAT32***<br>
-*// Jmenovka souborového systému FAT32 může mít nejvýše 11 znaků. Z důvodu kompatibility by měla být tvořena pouze velkými písmeny anglické abecedy, číslicemi, pomlčkami a podtržítky. Ostatní typy systému souborů mají omezení na jmenovku podstatně volnější.*<br>
+*// Jmenovka souborového systému FAT32 může mít nejvýše 11 znaků. Z důvodu kompatibility by měla být tvořena pouze velkými písmeny anglické abecedy, číslicemi, pomlčkami a podtržítky. Ostatní typy systému souborů mají omezení na jmenovku podstatně volnější. Souborový systém typu FAT32 by při nastavování jmenovky měl být odpojený.*<br>
 **sudo fatlabel** {*/dev/oddíl*} **"**{*novájmenovka*}**"**<br>
 **sudo fatlabel** {*/dev/oddíl*} **""**
 
 *# nastavit/smazat jmenovku **NTFS***<br>
+*// Souborový systém typu NTFS by při nastavování jmenovky měl být odpojený.*<br>
 **sudo ntfslabel** [**\-\-new-serial**] {*/dev/oddíl*} **"**{*novájmenovka*}**"**<br>
 **sudo ntfslabel** [**\-\-new-serial**] {*/dev/oddíl*} **""**<br>
 

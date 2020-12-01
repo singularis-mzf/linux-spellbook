@@ -215,7 +215,7 @@ function RidiciRadekSpolecnaObsluha(text,   i, soubor) {
             close(soubor);
             if (jsou_premiove) {
                 printf("%s %s\n", "</div><p>Tyto kapitoly můžete získat jako odměnu za překlad ze zdrojového kódu. Podrobnější informace",
-                       "<a href=\"https://github.com/singularis-mzf/linux-spellbook/blob/stabilni/dokumentace/odm%C4%9Bna-za-sestaven%C3%AD.md\">na GitHubu</a>.</p>");
+                       "<a href=\"https://github.com/singularis-mzf/linux-spellbook/blob/stabiln%C3%AD/dokumentace/odm%C4%9Bna-za-sestaven%C3%AD.md\">na GitHubu</a>.</p>");
             }
             return 0;
 
@@ -242,7 +242,7 @@ function RidiciRadekSpolecnaObsluha(text,   i, soubor) {
             }
             printf("%s\n%s\n%s\n", "<a href=\"https://singularis-mzf.github.io/\">Ostatní verze knihy</a>",
                 "<a href=\"https://github.com/singularis-mzf/linux-spellbook\">Repozitář na GitHubu</a>",
-                "<a href=\"https://github.com/singularis-mzf/linux-spellbook/blob/stabilni/dokumentace/odm%C4%9Bna-za-sestaven%C3%AD.md\">Odměna za sestavení (prémiové kapitoly)</a>");
+                "<a href=\"https://github.com/singularis-mzf/linux-spellbook/blob/stabiln%C3%AD/dokumentace/odm%C4%9Bna-za-sestaven%C3%AD.md\">Odměna za sestavení (prémiové kapitoly)</a>");
             return 0;
 
         default:

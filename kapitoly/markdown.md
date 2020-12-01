@@ -162,7 +162,7 @@ Tato verze kapitoly nepokrývá GFM (GitHub Flavoured Markdown), nicméně všec
 **\~\~\~**
 
 *# nadpis s kotvou/odkaz na takový nadpis*<br>
-{*nadpis*} [{*bílé znaky*}]**\{\#**{*id*}**}**<br>
+{*nadpis*} [{*bílé znaky*}]**\{\#**{*id*}**\}**<br>
 **\[**{*text odkazu*}**\](#**{*id*}[**&blank;"**{*titulek*}**"**]**)**
 
 *# zkratky (&lt;abbr&gt;)(definice/použití)*<br>

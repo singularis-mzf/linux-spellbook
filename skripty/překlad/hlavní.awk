@@ -186,6 +186,10 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C, priznak, stav) {
         }
         # 3 znaky
         switch (C = substr(VSTUP, 1, 3)) {
+            case "{**":
+                ShoditFatalniVyjimku("Neodzvláštněná kombinace \"{**\" není ve zdrojovém kódu povolena. Zkontrolujte prosím, co jste chtěl/a napsat.");
+            case "**}":
+                ShoditFatalniVyjimku("Neodzvláštněná kombinace \"**}\" není ve zdrojovém kódu povolena. Zkontrolujte prosím, co jste chtěl/a napsat.");
             case "...":
                 if (TYP_RADKU == "RADEK_ZAKLINADLA" && VelikostZasobniku("format") == 0 && substr(VSTUP, 4, 1) != ".") {
                     VYSTUP = VYSTUP TriTecky();
@@ -249,9 +253,9 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C, priznak, stav) {
                 priznak = substr(VSTUP, 1, 2) == "{_";
                 continue;
             case "$$":
-                ShoditFatalniVyjimku("Funkce $$ není v této verzi podporována. Při opakování znaku $ musí být tyto znaky escapovány zpětným lomítkem.");
+                ShoditFatalniVyjimku("Funkce $$ není v této verzi podporována. Při opakování znaku $ musí být každý z těcho znaků odzvláštněn zpětným lomítkem.");
             case "--":
-                ShoditFatalniVyjimku("Kombinace " C " musí být ve zdrojovém kódu povinné escapovaná.");
+                ShoditFatalniVyjimku("Kombinace " C " musí být ve zdrojovém kódu povinné odzvláštněna.");
             case "\\0":
                 ShoditFatalniVyjimku("Sekvence \\0 v tomto zdrojovém kódu není platná. Nemyslel/a jste \\\\0?");
             default:
@@ -336,7 +340,7 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C, priznak, stav) {
                 }
             case "`":
             case "_":
-                ShoditFatalniVyjimku("Neescapovaný znak " C "! Všechny výskyty tohoto znaku musejí být escapovány zpětným lomítkem.");
+                ShoditFatalniVyjimku("Neodzvláštněný znak " C "! Všechny výskyty tohoto znaku musejí být odzvláštněny zpětným lomítkem.");
                 continue;
             default:
                 # Zpracování bílých znaků

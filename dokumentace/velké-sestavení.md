@@ -64,7 +64,7 @@ Podle zjištěných údajů se rozhodněte pro jeden z nabízených formátů: 
 
 Prvním krokem je stáhnout si a nastavit repozitář:
 
-> ``git clone --branch stabilni https://github.com/singularis-mzf/linux-spellbook.git``<br>
+> ``git clone --branch stabilní https://github.com/singularis-mzf/linux-spellbook.git``<br>
 > ``cd linux-spellbook``<br>
 > ``git config --local core.quotePath false``
 
@@ -95,7 +95,7 @@ můžete uvést i více různých formátů oddělených mezerami):
 Pokud nedojde k chybě, hotové soubory najdete v adresáři ``výstup_překladu``.
 Pokud při překladu narazíte na nečekané problémy, se kterými si nebudete vědět rady,
 zkuste smazat adresáře ``soubory_překladu`` a ``výstup_překladu`` a zkuste překlad
-znovu z větve gitu „stabilni“. Pokud se chyba objeví i tam, můžete mi napsat
+znovu z větve gitu „stabilní“. Pokud se chyba objeví i tam, můžete mi napsat
 a pokusím se vám poradit. (V takovém případě budu potřebovat vědět, s jakou chybou
 Vám překlad skončil a na jaké verzi jaké distribuce se o překlad pokoušíte.)
 
@@ -155,4 +155,4 @@ Bude-li pořadí odlišné, sestavení sice bude fungovat, ale pořadí štítk�
 
 * Varování „*fontspec warning: "only-xetex-feature"*“ ignorujte; jde o chybu v balíčku „fontspec“, které již [byla nahlášena](https://github.com/wspr/fontspec/issues/382).
 * Na Debianu 10 funguje podobný postup jako v Ubuntu, ale narazil/a jsem na problém s aktivací řazení podle českého locale, pokud nebylo zvoleno již při instalaci systému. Proto překlad na Debianu přímo nepodporuji.
-* Formát „log“ slouží k ladění mechanismu překladu. Jeho výstupní soubory obsahují přeložený zdrojový kód v podobě, která přesně odpovídá sekvenci volání ve skriptu „[skripty/překlad/hlavní.awk](skripty/překlad/hlavní.awk)“.
+* Formát „log“ slouží k ladění mechanismu překladu. Jeho výstupní soubory obsahují přeložený zdrojový kód v podobě, která přesně odpovídá sekvenci volání ve skriptu „[skripty/překlad/hlavní.awk](../skripty/překlad/hlavní.awk)“.

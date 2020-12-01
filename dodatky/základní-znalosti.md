@@ -116,19 +116,21 @@ odděluje příkaz od jeho parametru. V bashi mají obvykle zvláštní význam
 
 **Konec řádku, mezera, " # $ &amp; ' ( ) \* ; &lt; &gt; ? [ \\ ] \` { \| } ~**
 
-Znak **„!“** má zvláštní význam převážně jen tehdy, když je zapnutá historie,
-tedy v interaktivním režimu; ve skriptech je naopak běžné ho používat jako obyčejný znak
+Znak **„!“** má zvláštní význam jen v interaktivní režimu, s výjimkou případů,
+kdy po něm následuje mezera, konec řádku nebo ukončující dvojitá uvozovka.
+Ve skriptech nebo v uvedených kontextech se považuje za obyčejný znak
 i bez odzvláštnění.
 
-Znak **„=“** má zvláštní význam převážně jen v místě, kde se očekává název příkazu
-(tam se pak interpretuje jako přiřazení do proměnné); v ostatních místech s ním
-lze zacházet jako s obyčejným znakem.
+Znaky **„^“** a **„=“** mají zvláštní význam převážně jen v místě,
+kde se očekává název příkazu (tam se pak interpretují jako přiřazení do proměnné
+nebo rozvoj z historie); v ostatních místech s nimi lze zacházet jako
+s obyčejnými znaky.
 
 Naopak tyto znaky jsou v bashi v normálním kontextu vždy obyčejné (existují
 zvláštní kontexty jako např. uvnitř vzorku nebo uvnitř regulárního výrazu,
 kde platí zase jiná pravidla):
 
-**% + , - . / : @ ^ \_**
+**% + , - . / : @ \_**
 
 Někdy ale potřebujete, aby se znak, kterému bash připisuje zvláštní význam,
 zpracoval stejně jako obyčejné znaky, a právě k tomu slouží „odzvláštňování“.

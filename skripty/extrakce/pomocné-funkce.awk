@@ -114,7 +114,7 @@ function ZpracujZnaky(text,     VSTUP, VYSTUP, C) {
                 continue;
             case "`":
             case "_":
-                ShoditFatalniVyjimku("Neescapovaný znak " C "! Všechny výskyty tohoto znaku musejí být escapovány zpětným lomítkem.");
+                ShoditFatalniVyjimku("Neodzvláštněný znak " C "! Všechny výskyty tohoto znaku musejí být odzvláštněny zpětným lomítkem.");
                 continue;
             default:
                 # Zpracování bílých znaků

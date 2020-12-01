@@ -191,11 +191,11 @@ gawk -F : '$3 == 0 || $3 &gt;= 1000 {print $1;}'** [**\| LC\_ALL=C.UTF-8 sort**]
 **sudo chsh** [**-s** {*/cesta/k/novému/shellu*}] {*uživatelské-jméno*}<br>
 
 *# změnit UID*<br>
-*// Tento příkaz také rekurzívně projde domovský adresář uživatele a všechny adresářové položky, jejichž je daný uživatel vlastníkem, přepíše na nové UID, aby uživatel jejich vlastníkem zůstal.*<br>
+*// Tento příkaz také rekurzivně projde domovský adresář uživatele a všechny adresářové položky, jejichž je daný uživatel vlastníkem, přepíše na nové UID, aby uživatel jejich vlastníkem zůstal.*<br>
 **sudo usermod -u** {*nové-UID*} {*uživatelské-jméno*}
 
 *# změnit výchozí skupinu*<br>
-*// Tento příkaz také rekurzívně projde domovský adresář uživatele a všechny adresářové položky příslušné k původní výchozí skupině přepíše na novou výchozí skupinu.*<br>
+*// Tento příkaz také rekurzivně projde domovský adresář uživatele a všechny adresářové položky příslušné k původní výchozí skupině přepíše na novou výchozí skupinu.*<br>
 **sudo usermod -g** {*název-nové-vých-skup*} **-G "$(id -Gn** {*uživatelské-jméno*} **\| tr '&blank;' ,)"** {*uživatelské-jméno*}
 
 *# změnit uživatelské jméno*<br>

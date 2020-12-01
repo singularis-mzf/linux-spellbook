@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/bash
 # Linux Kniha kouzel, skript lkk
 # Copyright (c) 2020 Singularis <singularis@volny.cz>
 #
@@ -23,7 +23,9 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
+set -e
 exec 9>&1
-prikazy="$(gawk -f /usr/share/lkk/lkk.awk -- "$@")"
+unset p
+p=$(perl -CSLA -Mv5.26.0 -Mstrict -Mutf8 -Mwarnings -MEnglish -- /usr/share/lkk/lkk-spoustec.pl "$@")
 exec 9>&-
-eval "$prikazy"
+eval "$p"

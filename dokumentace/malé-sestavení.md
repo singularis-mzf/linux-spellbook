@@ -36,7 +36,7 @@ V Ubuntu 20.04 LTS, Ubuntu 18.04 LTS, Linuxu Mint 20 a Linuxu Mint 17.3 mů�
 
 Prvním krokem je stáhnout si a nastavit repozitář:
 
-> ``git clone --branch stabilni https://github.com/singularis-mzf/linux-spellbook.git``<br>
+> ``git clone --branch stabilní https://github.com/singularis-mzf/linux-spellbook.git``<br>
 > ``cd linux-spellbook``<br>
 > ``git config --local core.quotePath false``
 
@@ -108,4 +108,4 @@ Bude-li pořadí odlišné, sestavení sice bude fungovat, ale pořadí kapitol 
 
 ## Další poznámky
 
-* Formát „log“ slouží k ladění mechanismu překladu. Jeho výstupní soubory obsahují přeložený zdrojový kód v podobě, která přesně odpovídá sekvenci volání ve skriptu „[skripty/překlad/hlavní.awk](skripty/překlad/hlavní.awk)“.
+* Formát „log“ slouží k ladění mechanismu překladu. Jeho výstupní soubory obsahují přeložený zdrojový kód v podobě, která přesně odpovídá sekvenci volání ve skriptu „[skripty/překlad/hlavní.awk](../skripty/překlad/hlavní.awk)“.

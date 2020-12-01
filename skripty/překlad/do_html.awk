@@ -24,8 +24,8 @@
 
 @include "skripty/utility.awk"
 
-# Převede znak vstupního formátu (Markdown) po odstranění odzvláštnění do výstupního formátu.
-# Pro bílé znaky se volá jedině tehdy, jsou-li escapovány.
+# Převede nezvláštní znak vstupního formátu (Markdown) do výstupního formátu.
+# Pro bílé znaky se volá jedině tehdy, jsou-li odzvláštněny.
 function ZpracujZnak(znak) {
     switch (znak) {
         case "<":

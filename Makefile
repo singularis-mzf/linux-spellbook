@@ -38,7 +38,7 @@ VSECHNY_KAPITOLY := _ostatní _ukázka apache awk bash css datum-čas-kalendář
 # H, I, J, K, L, M
 VSECHNY_KAPITOLY += hledání-souborů kalkulace konverze-formatů latex lkk make markdown moderní-věci
 # N, O, P, Q, R, S
-VSECHNY_KAPITOLY += nabídka-aplikací odkazy pdf perl plánování-úloh práce-s-archivy proměnné regulární-výrazy
+VSECHNY_KAPITOLY += nabídka-aplikací odkazy pdf perl-moduly-objekty-další perl-základy plánování-úloh práce-s-archivy proměnné regulární-výrazy
 # S
 VSECHNY_KAPITOLY += sed soubory-a-adresáře správa-balíčků správa-balíčků-2 správa-procesů správa-uživatelských-účtů stahování-videí stahování-z-webu systém šifrování
 # T, U, V, W, X, Y, Z
@@ -56,7 +56,7 @@ OBRAZKY := favicon.png by-sa.png logo-knihy-velké.png ve-výstavbě.png močál
 OBRAZKY += ik-výchozí.png
 SVG_OBRAZKY := kalendář.svg graf-filtrů.svg git.svg
 OBRAZKY_IK := awk.png datum-čas-kalendář.png diskové-oddíly.png docker.png git.png hledání-souborů.png
-OBRAZKY_IK += make.png markdown.png plánování-úloh.png práce-s-archivy.png proměnné.png regulární-výrazy.png
+OBRAZKY_IK += make.png markdown.png odkazy.png plánování-úloh.png práce-s-archivy.png proměnné.png regulární-výrazy.png
 OBRAZKY_IK += sed.png soubory-a-adresáře.png správa-balíčků.png správa-procesů.png správa-uživatelských-účtů.png
 OBRAZKY_IK += stahování-videí.png systém.png terminál.png vim.png
 OBRAZKY_IK += základní-znalosti.png zpracování-binárních-souborů.png zpracování-textových-souborů.png zpracování-videa-a-zvuku.png
@@ -243,7 +243,7 @@ $(CSS_MOTIVY:%=$(VYSTUP_PREKLADU)/html/lkk-$(DATUM_SESTAVENI)-%.css): %: formát
 # ----------------------------------------------------------------------------
 $(OBRAZKY:%=$(SOUBORY_PREKLADU)/html/obrázky/%) $(OBRAZKY_IK:%=$(SOUBORY_PREKLADU)/html/obrázky/ik/%): $(SOUBORY_PREKLADU)/html/obrázky/%: obrázky/%
 	mkdir -pv $(dir $@)
-	$(CONVERT) $< $@
+	cp $< $@
 
 $(SVG_OBRAZKY:%=$(SOUBORY_PREKLADU)/html/obrázky/%): $(SOUBORY_PREKLADU)/html/obrázky/%: obrázky/%
 	mkdir -pv $(dir $@)
@@ -691,15 +691,15 @@ $(SOUBORY_PREKLADU)/deb/usr/bin/lkk: skripty/lkk/lkk
 	cp --no-preserve=mode,timestamps -f $< $@
 	chmod 755 $@
 
-# 2. skripty/lkk/awkvolby.awk => soubory_překladu/deb/usr/share/awkvolby.awk
+# 2. skripty/lkk/LinuxKnihaKouzel.pl => soubory_překladu/deb/usr/share/lkk/LinuxKnihaKouzel.pl
 # ----------------------------------------------------------------------------
-$(SOUBORY_PREKLADU)/deb/usr/share/lkk/awkvolby.awk: skripty/lkk/awkvolby.awk
+$(SOUBORY_PREKLADU)/deb/usr/share/lkk/LinuxKnihaKouzel.pl: skripty/lkk/LinuxKnihaKouzel.pl $(JMENO_SESTAVENI_SOUBOR)
 	mkdir -pv $(dir $@)
-	cat $< >$@
+	$(SED) "s/\{\{JMÉNO VERZE\}\}/$(JMENO)/g" $< >$@
 
-# 3. skripty/lkk/lkk.awk => soubory_překladu/deb/usr/share/lkk/lkk.awk
+# 3. skripty/lkk/lkk-spouštěč.pl => soubory_překladu/deb/usr/share/lkk/lkk-spoustec.pl
 # ----------------------------------------------------------------------------
-$(SOUBORY_PREKLADU)/deb/usr/share/lkk/lkk.awk: skripty/lkk/lkk.awk $(JMENO_SESTAVENI_SOUBOR)
+$(SOUBORY_PREKLADU)/deb/usr/share/lkk/lkk-spoustec.pl: skripty/lkk/lkk-spouštěč.pl $(JMENO_SESTAVENI_SOUBOR)
 	mkdir -pv $(dir $@)
 	$(SED) "s/\{\{JMÉNO VERZE\}\}/$(JMENO)/g" $< >$@
 
@@ -732,8 +732,8 @@ $(SOUBORY_PREKLADU)/deb/usr/share/bash-completion/completions/lkk: skripty/lkk/b
 $(SOUBORY_PREKLADU)/deb/DEBIAN/md5sums: \
   $(SOUBORY_PREKLADU)/deb/usr/bin/lkk \
   $(SOUBORY_PREKLADU)/deb/usr/share/doc/lkk/copyright \
-  $(SOUBORY_PREKLADU)/deb/usr/share/lkk/awkvolby.awk \
-  $(SOUBORY_PREKLADU)/deb/usr/share/lkk/lkk.awk \
+  $(SOUBORY_PREKLADU)/deb/usr/share/lkk/LinuxKnihaKouzel.pl \
+  $(SOUBORY_PREKLADU)/deb/usr/share/lkk/lkk-spoustec.pl \
   $(SOUBORY_PREKLADU)/deb/usr/share/lkk/skripty/pomocné-funkce \
   $(SOUBORY_PREKLADU)/deb/usr/share/bash-completion/completions/lkk
 	mkdir -pv $(dir $@)

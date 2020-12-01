@@ -92,7 +92,7 @@ Používá se pro srovávání a ověřování, protože pravděpodobnost, že 
 **printf %d\\\\n $((0x$(crc32 "**{*soubor*}**")))**
 
 *# vypočítat z jednoho souboru heše (MD5) záznamů ukončených nulovým bajtem*<br>
-?
+**perl -MEnglish -MDigest::MD5 -pe 'BEGIN {$RS = "\\x{0}"; $ORS = "\\n";} $ARG = Digest::MD5::md5\_hex($ARG);' &gt;**{*soubor*}
 
 ### Určit formát dat a velikost souboru
 
@@ -194,7 +194,7 @@ openssl je i v minimální instalaci Ubuntu; /dev/urandom je již zbytečné.
 **perl -MEnglish -0777 -n -e 'print(scalar(reverse($ARG)))' &lt;**{*vstupní-soubor*} **&gt;**{*výstupní-soubor*}
 
 *# obrátit každou dvojici/čtveřici/osmici bajtů*<br>
-**dd** [**if=**{*vstupní-soubor*}] <nic>[**of=**{*výstupní-soubor*}] **conv=swab**<br>
+**dd iflag=fullblock,skip\_bytes,count\_bytes status=none conv=swab** [**if=**{*vstupní-soubor*}] <nic>[**of=**{*výstupní-soubor*}]<br>
 **xxd -e -g 4** [{*soubor*}] **\| xxd -r &gt;** {*cíl*}<br>
 **xxd -e -g 8** [{*soubor*}] **\| xxd -r &gt;** {*cíl*}
 
@@ -248,10 +248,10 @@ Poznámka: tail -c +1K přeskočí jen 1023 bajtů!
 -->
 
 *# **vynechat** prvních N bajtů/kibibajtů/mebibajtů/gibibajtů*<br>
-{*zdroj*} **\| dd status=none iflag=skip\_bytes skip=**{*N*} **\|** {*zpracování*}<br>
-{*zdroj*} **\| dd status=none iflag=skip\_bytes skip=**{*N*}**K \|** {*zpracování*}<br>
-{*zdroj*} **\| dd status=none iflag=skip\_bytes skip=**{*N*}**M \|** {*zpracování*}<br>
-{*zdroj*} **\| dd status=none iflag=skip\_bytes skip=**{*N*}**G \|** {*zpracování*}
+{*zdroj*} **\| dd iflag=fullblock,skip\_bytes,count\_bytes status=none skip=**{*N*} **\|** {*zpracování*}<br>
+{*zdroj*} **\| dd iflag=fullblock,skip\_bytes,count\_bytes status=none skip=**{*N*}**K \|** {*zpracování*}<br>
+{*zdroj*} **\| dd iflag=fullblock,skip\_bytes,count\_bytes status=none skip=**{*N*}**M \|** {*zpracování*}<br>
+{*zdroj*} **\| dd iflag=fullblock,skip\_bytes,count\_bytes status=none skip=**{*N*}**G \|** {*zpracování*}
 <!--
 **tail -c +**{*N*} {*soubor*} **\| tail -c +2**<br>
 **tail -c +**{*N*}**K** {*soubor*} **\| tail -c +2**<br>
@@ -260,10 +260,10 @@ Poznámka: tail -c +1K přeskočí jen 1023 bajtů!
 -->
 
 *# **vynechat** prvních N bajtů/kilobajtů/megabajtů/gigabajtů*<br>
-{*zdroj*} **\| dd status=none iflag=skip\_bytes skip=**{*N*} **\|** {*zpracování*}<br>
-{*zdroj*} **\| dd status=none iflag=skip\_bytes skip=**{*N*}**kB \|** {*zpracování*}<br>
-{*zdroj*} **\| dd status=none iflag=skip\_bytes skip=**{*N*}**MB \|** {*zpracování*}<br>
-{*zdroj*} **\| dd status=none iflag=skip\_bytes skip=**{*N*}**GB \|** {*zpracování*}
+{*zdroj*} **\| dd iflag=fullblock,skip\_bytes,count\_bytes status=none skip=**{*N*} **\|** {*zpracování*}<br>
+{*zdroj*} **\| dd iflag=fullblock,skip\_bytes,count\_bytes status=none skip=**{*N*}**kB \|** {*zpracování*}<br>
+{*zdroj*} **\| dd iflag=fullblock,skip\_bytes,count\_bytes status=none skip=**{*N*}**MB \|** {*zpracování*}<br>
+{*zdroj*} **\| dd iflag=fullblock,skip\_bytes,count\_bytes status=none skip=**{*N*}**GB \|** {*zpracování*}
 
 <!--
 **tail -c +**{*N*} {*soubor*} **\| tail -c +2**<br>
@@ -273,10 +273,10 @@ Poznámka: tail -c +1K přeskočí jen 1023 bajtů!
 -->
 
 *# příklad: vzít třetí mebibajt souboru*<br>
-**dd status=none iflag=skip\_bytes,count\_bytes skip=2M count=1M &lt;soubor.dat**
+**dd iflag=fullblock,skip\_bytes,count\_bytes status=none skip=2M count=1M &lt;soubor.dat**
 
 *# příklad: vynechat třetí mebibajt souboru*<br>
-**(dd status=none iflag=count\_bytes count=2M &amp;&amp; dd status=none iflag=count\_bytes count=1M of=/dev/null &amp;&amp; cat) &lt;soubor.dat**
+**(dd iflag=fullblock,skip\_bytes,count\_bytes status=none count=2M &amp;&amp; dd iflag=fullblock,skip\_bytes,count\_bytes status=none count=1M of=/dev/null &amp;&amp; cat) &lt;soubor.dat**
 
 ### Analyzovat po bajtech
 
@@ -317,7 +317,7 @@ Poznámka: Následující zaklínadla generují/přijímají jednu číselnou ho
 
 *# **přepsat** úsek bajtů v souboru*<br>
 *// Hodnota „kam-zapsat“ je obyčejné desítkový index počátečního bajtu, počítáno od nuly. Zápis může pokračovat za stávající konec souboru, ale pokud bude cílová adresa ležet za koncem souboru, zápis začne bezprostředně za poslední existující bajt.*<br>
-{*zdroj*} **\| dd conv=nocreat,notrunc** [**oflag=seek\_bytes seek=**{*kam-zapsat*}] **of=**{*soubor-k-zápisu*} [**status=progress**]
+{*zdroj*} **\| dd iflag=fullblock,skip\_bytes,count\_bytes** [**status=progress**] **conv=nocreat,notrunc** [**oflag=seek\_bytes seek=**{*kam-zapsat*}] **of=**{*soubor-k-zápisu*}
 
 <!--
 *// Hodnota „kam-zapsat“ je obyčejné dekadické číslo v bajtech od nuly, tzn. např. 3 znamená, že první přepsaný má být čtvrtý bajt výstupního souboru. Pokud leží výstupní adresa za koncem souboru, soubor se doplní nulami; pokud má zápis pokračovat za konec existujících dat, soubor bude podle potřeby prodloužen.*<br>

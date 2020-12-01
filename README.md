@@ -13,13 +13,13 @@ https://creativecommons.org/licenses/by-sa/4.0/
 -->
 ![Linux: Kniha kouzel](obrázky/banner.png)
 
-„Linux: Kniha kouzel“ je multimediální sbírka krátkých řešených příkladů
+„Linux: Kniha kouzel“ je česká multimediální sbírka krátkých řešených příkladů
 z prostředí svobodného software v linuxu<sup>**\***</sup>, především distribucích Ubuntu a Linux Mint.
-Je vydávána v PDF A4 a B5 pro profesionální i domácí tisk a ve formátu HTML
-pro snadné vykopírování zaklínadel, můžete ji tedy používat na papíře i v počítači,
-proto „multimediální“.
+Má formu připomínající konverzační slovník cizího jazyka a je vydávána v PDF A4 a B5
+pro profesionální i domácí tisk a ve formátu HTML pro snadné vykopírování zaklínadel,
+můžete ji tedy používat na papíře i v počítači, proto „multimediální“.
 
-Verze *vanilková příchuť 2.1* je cílena na *Ubuntu 20.04 Focal Fossa* a jeho deriváty.
+Verze *vanilková příchuť 2.2* je cílena na *Ubuntu 20.04 Focal Fossa* a jeho deriváty.
 
 Obsah podléhá licenci [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 Podrobné údaje o autorství zdrojových souborů jsou uvedeny v komentářích v jejich záhlaví;
@@ -53,12 +53,13 @@ Obvyklý postup použití zaklínadla je následující:
 *Poznámka 2:* Linux: Kniha kouzel není tutorial. Pokud ani po přečtení úvodu a definic nepochopíte,
 jak se uvedená zaklínadla používají, musíte nejprve získat zkušenosti nebo navštívit jiné stránky,
 kde vám použití daných nástrojů někdo názorně vysvětlí. Odkazy na takové stránky (včetně videí)
-najdete v sekci „Další zdroje informací“ prakticky v každé kapitole.
+najdete v sekci „Další zdroje informací“ na konci téměř každé kapitoly.
 
 ### Základní použití offline (úroveň 2)
 
-Na stránce [Ke stažení](https://singularis-mzf.github.io/ke-stazeni.htm) si stáhněte „offline HTML“ variantu
-aktuální verze vanilkové příchuti (soubor „html.zip“) a archiv rozbalte do vámi zvoleného adresáře.
+Na stránce [Ke stažení](https://singularis-mzf.github.io/ke-stazeni.htm) si stáhněte
+„offline HTML“ variantu aktuální verze vanilkové příchuti (soubor „html.zip“)
+a archiv rozbalte do vámi zvoleného adresáře.
 Na téže stránce si můžete stáhnout PDF pro tisk a vytisknout.
 
 Pokud chcete přepnout barevný motiv, smažte (nebo přejmenujte) soubor „lkk-*datum*.css“ a soubor
@@ -81,11 +82,11 @@ a přispívat do něj. Máte na výběr dvě varianty:
 
 Pokud budete upravovat zdrojové kódy kapitol, vyplatí se si před tím pročíst dokument [Syntaxe kapitol](dokumentace/syntaxe-kapitol.md) a jako vzor vám může sloužit zvláštní kapitola [Ukázka](kapitoly/_ukazka.md).
 
-### Výběr a pořadí kapitol
+## Výběr a pořadí kapitol
 
 Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybrat v souboru „pořadí-kapitol.lst“:
 
-## Vydané kapitoly
+### Vydané kapitoly
 
 | ID | Název kapitoly | Vydána od verze | Zařazení |
 | :--- | :--- | :--- | --- |
@@ -96,6 +97,7 @@ Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybra
 | [hledání-souborů](kapitoly/hledání-souborů.md) | Hledání souborů | 1.5 | základní |
 | [make](kapitoly/make.md) | Make | 1.0 | prémiová |
 | [markdown](kapitoly/markdown.md) | Markdown | 1.0 | prémiová |
+| [odkazy](kapitoly/odkazy.md) | Pevné a symbolické odkazy | 2.2 | základní |
 | [práce-s-archivy](kapitoly/práce-s-archivy.md) | Práce s archivy | 1.1 | základní |
 | [proměnné](kapitoly/proměnné.md) | Proměnné prostředí a interpretu | 1.9 | prémiová |
 | [regulární-výrazy](kapitoly/regulární-výrazy.md) | Regulární výrazy | 1.1 | základní |
@@ -112,17 +114,25 @@ Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybra
 | [zpracování-textových-souborů](kapitoly/zpracování-textových-souborů.md) | Zpracování textových souborů | 1.2 | základní |
 | [zpracování-videa-a-zvuku](kapitoly/zpracování-videa-a-zvuku.md) | Zpracování videa a zvuku | 1.0 | základní |
 
-## Kapitoly ve vývoji
+### Kapitoly ve vývoji
+
+<!--
+Priority:
+1. perl-*
+2. [nabídka-aplikací]
+3. [wine]
+4. [firefox]
+-->
 
 | ID | Název kapitoly | Růst | Stav |
 | :--- | :--- | ---: | :--- |
+| [perl-základy](kapitoly/perl-základy.md) | Perl: základy | 85% | dítě |
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
 | [firefox](kapitoly/firefox.md) | Firefox | 60% | dítě |
 | [kalkulace](kapitoly/kalkulace.md)| Kalkulace | 50% | dítě |
 | [stahování-z-webu](kapitoly/stahování-z-webu.md) | Stahování z webu | 40% | dítě |
 | [zpracování-obrázků](kapitoly/zpracování-obrázků.md) | Zpracování obrázků | 40% | dítě |
-| [odkazy](kapitoly/odkazy.md) | Pevné a symbolické odkazy | 20% | dítě |
-| [perl](kapitoly/perl.md) | Základy Perlu | 20% | dítě |
+| [perl-moduly-objekty-další](kapitoly/perl-moduly-objekty-další.md) | Perl: moduly, objekty a další | 20% | dítě |
 | [moderní-věci](kapitoly/moderní-věci.md) | Moderní věci | 10% | dítě |
 | [unicode](kapitoly/unicode.md) | Unicode a emotikony | 10% | dítě |
 | [uživatelská-rozhraní](kapitoly/uživatelská-rozhraní.md) | Uživatelská rozhraní skriptů | 5% | dítě |
@@ -134,6 +144,7 @@ Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybra
 | [zpracování-psv](kapitoly/zpracování-psv.md) | Zpracování PSV | 2% | dítě |
 | [správa-balíčků-2](kapitoly/správa-balíčků-2.md) | Správa balíčků 2 | 1% | dítě |
 | [grub](kapitoly/grub.md) | GRUB a jádro | 1% | dítě |
+| [perl-moduly-objekty-další](kapitoly/perl-moduly-objekty-další.md) | Perl: Moduly, objekty a další | 0% | embryo |
 | [konverze-formatů](kapitoly/konverze-formatů.md) | Konverze formátů | 0% | embryo |
 | [wine](kapitoly/wine.md) | Wine | 0% | embryo |
 | [pdf](kapitoly/pdf.md) | PDF | 0% | embryo |
@@ -147,7 +158,7 @@ Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybra
 | záznam-x | Záznam obrazovky | - | přál/a bych si |
 | css | Kaskádové styly CSS | - | přál/a bych si |
 
-## Zvláštní a vyřazené kapitoly
+### Zvláštní a vyřazené kapitoly
 
 * [_ostatní](kapitoly/_ostatní.md) − Slouží k dočasnému shromážďování dosud nezařazených zaklínadel.
 * [_šablona](kapitoly/_šablona.md) − Nepřekládá se. Slouží jako výchozí podoba pro nově založené kapitoly.
@@ -161,8 +172,8 @@ Viz soubor [JAK-SE-ZAPOJIT.md](JAK-SE-ZAPOJIT.md).
 
 ## Větve na GitHubu
 
-* *vyvojova* – Aktivně vyvíjený zdrojový kód. Sem směřují nejčerstvější příspěvky.
-* *stabilni* – Zdrojový kód poslední vydané verze. Pokud vám nepůjde přeložit kód z větve „vyvojova“, použijte kód z větve „stabilni“.
+* *vývojová* (dříve „vyvojova“) – Aktivně vyvíjený zdrojový kód. Sem směřují nejčerstvější příspěvky.
+* *stabilní* (dříve „stabilni“) – Zdrojový kód poslední vydané verze. Pokud vám nepůjde přeložit kód z větve „vývojová“, použijte kód z větve „stabilní“.
 * *v1* — Větev 1.x; ve stádiu dlouhodobé pasivní údržby do 1. března 2023.
 
 ## Podobné projekty
