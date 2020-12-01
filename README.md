@@ -97,6 +97,7 @@ Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybra
 | [hledání-souborů](kapitoly/hledání-souborů.md) | Hledání souborů | 1.5 | základní |
 | [make](kapitoly/make.md) | Make | 1.0 | prémiová |
 | [markdown](kapitoly/markdown.md) | Markdown | 1.0 | prémiová |
+| [odkazy](kapitoly/odkazy.md) | Pevné a symbolické odkazy | 2.2 | základní |
 | [práce-s-archivy](kapitoly/práce-s-archivy.md) | Práce s archivy | 1.1 | základní |
 | [proměnné](kapitoly/proměnné.md) | Proměnné prostředí a interpretu | 1.9 | prémiová |
 | [regulární-výrazy](kapitoly/regulární-výrazy.md) | Regulární výrazy | 1.1 | základní |
@@ -125,13 +126,13 @@ Priority:
 
 | ID | Název kapitoly | Růst | Stav |
 | :--- | :--- | ---: | :--- |
-| [odkazy](kapitoly/odkazy.md) | Pevné a symbolické odkazy | 100% | připravena k vydání |
-| [perl-základy](kapitoly/perl-základy.md) | Základy Perlu | 80% | dítě |
+| [perl-základy](kapitoly/perl-základy.md) | Perl: základy | 85% | dítě |
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
 | [firefox](kapitoly/firefox.md) | Firefox | 60% | dítě |
 | [kalkulace](kapitoly/kalkulace.md)| Kalkulace | 50% | dítě |
 | [stahování-z-webu](kapitoly/stahování-z-webu.md) | Stahování z webu | 40% | dítě |
 | [zpracování-obrázků](kapitoly/zpracování-obrázků.md) | Zpracování obrázků | 40% | dítě |
+| [perl-moduly-objekty-další](kapitoly/perl-moduly-objekty-další.md) | Perl: moduly, objekty a další | 20% | dítě |
 | [moderní-věci](kapitoly/moderní-věci.md) | Moderní věci | 10% | dítě |
 | [unicode](kapitoly/unicode.md) | Unicode a emotikony | 10% | dítě |
 | [uživatelská-rozhraní](kapitoly/uživatelská-rozhraní.md) | Uživatelská rozhraní skriptů | 5% | dítě |
