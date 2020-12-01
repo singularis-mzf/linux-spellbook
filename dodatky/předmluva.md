@@ -214,6 +214,11 @@ Uživatele, který Linux: Knihu kouzel neprostudoval, poznáte např. takto:
 Verze vanilkové příchuti 2.2, jménem Jindra Janů, přináší novou
 základní kapitolu Pevné a symbolické odkazy.
 
+Důležitá informace: s vydáním této verze došlo k přejmenování větví
+na GitHubu. Větev „stabilni“ byla přejmenována na „stabilní“
+a větev „vyvojova“ na „vývojová“. Původní větve zůstanou v repozitáři
+do konce prosince a začátkem roku 2021 budou odstraněny.
+
 V kapitole Soubory a adresáře se user\_xattrs nově označují jako „uživatelské
 datové položky“ namísto předchozího označení „uživatelské rozšířené atributy“.
 Rovněž přibyla nová část kapitoly věnující se „rozšířeným zvláštním příznakům“.

@@ -1,4 +1,4 @@
-<!-- <!-- -->
+<!--
 
 Linux Kniha kouzel, README
 Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
@@ -19,7 +19,7 @@ Má formu připomínající konverzační slovník cizího jazyka a je vydává
 pro profesionální i domácí tisk a ve formátu HTML pro snadné vykopírování zaklínadel,
 můžete ji tedy používat na papíře i v počítači, proto „multimediální“.
 
-Verze *vanilková příchuť 2.1* je cílena na *Ubuntu 20.04 Focal Fossa* a jeho deriváty.
+Verze *vanilková příchuť 2.2* je cílena na *Ubuntu 20.04 Focal Fossa* a jeho deriváty.
 
 Obsah podléhá licenci [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 Podrobné údaje o autorství zdrojových souborů jsou uvedeny v komentářích v jejich záhlaví;
@@ -171,8 +171,8 @@ Viz soubor [JAK-SE-ZAPOJIT.md](JAK-SE-ZAPOJIT.md).
 
 ## Větve na GitHubu
 
-* *vyvojova* – Aktivně vyvíjený zdrojový kód. Sem směřují nejčerstvější příspěvky.
-* *stabilni* – Zdrojový kód poslední vydané verze. Pokud vám nepůjde přeložit kód z větve „vyvojova“, použijte kód z větve „stabilni“.
+* *vývojová* (dříve „vyvojova“) – Aktivně vyvíjený zdrojový kód. Sem směřují nejčerstvější příspěvky.
+* *stabilní* (dříve „stabilni“) – Zdrojový kód poslední vydané verze. Pokud vám nepůjde přeložit kód z větve „vývojová“, použijte kód z větve „stabilní“.
 * *v1* — Větev 1.x; ve stádiu dlouhodobé pasivní údržby do 1. března 2023.
 
 ## Podobné projekty
