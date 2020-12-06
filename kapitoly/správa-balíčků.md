@@ -68,12 +68,26 @@ určuje dodavatel aplikace, ale uživatel může práva aplikace zúžit nebo ro
 ## Definice
 
 * **Balíček** je soubor obsahující neměnná data tvořící aplikaci, knihovnu apod. a metadata včetně případných závislostí na ostatních balíčcích.
-* **Repozitář** je ucelený sklad souvisejících balíčků. Může být dostupný buď online, nebo může být umístěný v systému souborů. Repozitář APT má svůj **název** (v Ubuntu typicky „ubuntu“) a dělí se na **archivy** („focal“, „focal-updates“, „focal-security“ atd.) a ty se dělí na **sekce** („main“, „universe“, „restricted“ a „multiverse“). Sekce main obsahuje svobodný software přímo podporovaný jsou součást Ubuntu, sekce „universe“ obsahuje svobodný software udržovaný pouze komunitou, sekce „restricted“ obsahuje nesvobodný software považovaný za podporovanou součást Ubuntu (typicky proprietární ovladače) a sekce „multiverse“ obsahuje nesvobodný software neudržovaný komunitou. Sekce se dále dělí na **podsekce** podle druhu softwaru.
+* **Repozitář** je ucelený sklad souvisejících balíčků. Může být dostupný buď online, nebo může být umístěný v systému souborů.
+* Repozitář APT se dělí na **archivy** („focal“, „focal-updates“, „focal-security“ atd.), ty se dělí na **komponenty** („main“, „universe“, „restricted“ a „multiverse“) a ty se dál dělí na **sekce** podle druhu softwaru. Komponenta main obsahuje svobodný software přímo podporovaný jsou součást Ubuntu, komponenta „universe“ obsahuje svobodný software udržovaný pouze komunitou, komponenta „restricted“ obsahuje nesvobodný software považovaný za podporovanou součást Ubuntu (typicky proprietární ovladače) a komponenta „multiverse“ obsahuje nesvobodný software neudržovaný komunitou.
 * Balíček je **dostupný**, pokud kterýkoliv v systému nakonfigurovaný repozitář nabízí balíček daného názvu a architektury. Balíček je **známý**, pokud je dostupný nebo v systému nainstalovaný.
 
 <!--
 Offline instalací se rozumí stažení balíčků, jejich přenesení na počítač nepřipojený k síti a instalace tam.
 -->
+
+### Priority APT
+
+**Priorita** je celočíselná hodnota přiřazovaná jednotlivým verzím balíčků systémem APT.
+Uživatel může její konfigurací ovlivnit, které verze balíčků a ze kterého repozitáře vybere APT k instalaci.
+Lze ji nastavit pro každou verzi každého balíčku zvlášť, ale obvykle se nastavuje pro větší celky,
+např. celé komponenty repozitářů.
+
+* Záporná čísla (např. -1) znamenají zákaz automatického výběru k instalaci. Verze balíčku bude ignorována.
+* Priorita 0 je zakázána; žádná verze ji nesmí mít.
+* 100 je priorita již nainstalovaných verzí.
+* 500 je výchozí priorita verzí z repozitářů kromě archivů „\*-backports“ (ty mají 100).
+* 1000 (a víc) znamená, že daná verze přeinstaluje i novější verzi téhož balíčku.
 
 !ÚzkýRežim: vyp
 
@@ -280,6 +294,58 @@ aptitude search --disable-columns -F %p "?upgradable"
 *# odklonit soubor pro všechny balíčky kromě zadaného*<br>
 **sudo dpkg-divert \-\-package** {*balíček*} [**\-\-rename**] **\-\-divert** {*/nové/umístění*} {*/původní/umístění*}
 
+### Priority (/etc/apt/preferences.d)
+
+**Poznámka:** v každé položce pole „Package“ a každé podmínce v poli „Pin“ včetně podmínky „origin“ lze místo konkrétního názvu použít vzorek (se zvláštními znaky „?“, „\*“ a „[]“).
+V poli Package lze navíc použít také regulární výraz v lomíkách, např. „/^gimp/“; vybere balíčky, jejichž názvy výrazu odpovídají.
+
+**Použití:** Vytvořte soubor v adresáři /etc/apt/preferences.d a zadejte do něj níže uvedené záznamy. Za každým záznamem musí být jedna či více prázdných řádek.
+
+*# vypsat priority repozitářů a balíčků (pro člověka; příkaz – zadejte do bashe)*<br>
+**apt-cache policy**
+
+*# obecné nastavení priority balíčkům z určité **domény***<br>
+**Package: \***<br>
+**Pin: origin "**{*doména*}**"**<br>
+**Pin-Priority:** {*celé-číslo*}
+
+*# obecné nastavení priority podle dalších **kritérií***<br>
+*// Na řádce „Pin“ musí být uvedena alespoň jedna podmínka. Podmínky se oddělují čárkou. Nastavení se uplatní u komponent archivů, které splní všechny uvedené podmínky.*<br>
+**Package: \***<br>
+**Pin: release** [**a=**{*archiv*}**,**]<nic>[**c=**{*komponenta*}**,**]<nic>[**b=**{*architektura*}**,**]<nic>[**v=**{*verze.Ubuntu*}]<br>
+**Pin-Priority:** {*celé-číslo*}
+
+*# **konkrétní** nastavení priority*<br>
+**Package:** {*vzorek-názvu-balíčku*} [{*další-vzorek*}]...<br>
+**Pin: release** [**a=**{*vzorek-archiv*}**,**]<nic>[**c=**{*vzorek-komponenta*}**,**]<nic>[**b=**{*vzorek-architektura*}**,**]<nic>[**v=**{*vzorek.verze.Ubuntu*}]<br>
+**Pin-Priority:** {*celé-číslo*}
+
+*# pro konkrétní **balíček** kdekoliv*<br>
+**Package:** {*název-balíčku*}<br>
+**Pin: release a=\***<br>
+**Pin-Priority:** {*celé-číslo*}
+
+*# pro konkrétní **verzi** konkrétního balíčku*<br>
+*// Pozor, verze balíčku je zde verze, jak ji registruje DPKG, tedy např. „2.10.18-1build2“, není to pouhé číslo verze, jak ho intuitivně chápou uživatelé. Pravděpodobně budete chtít použít vzorek namísto zcela konkrétního řetězce.*<br>
+**Package:** {*název-balíčku*}<br>
+**Pin: version** {*verze-balíčku*}<br>
+**Pin-Priority:** {*celé-číslo*}
+
+*# příklad obecného nastavení priority podle dalších kritérií*<br>
+**Package: \***<br>
+**Pin: release a=focal-\*,c=universe**<br>
+**Pin-Priority: 50**
+
+*# příklad: nastavit prioritu 99 balíčkům z archivů začínajících „xenial“ (např. xenial, xenial-updates atd.)*<br>
+**Package: \***<br>
+**Pin: release a=xenial\***<br>
+**Pin-Priority: 99**
+
+*# příklad: nastavit prioritu -1 balíčkům ze všech poddomén (něco).ubuntu.com*<br>
+**Package: \***<br>
+**Pin: origin "\*.ubuntu.com"**<br>
+**Pin-Priority: -1**
+
 ### Ostatní
 
 *# vybalit z balíčku DEB soubory programu/řídicí soubory*<br>
@@ -314,7 +380,7 @@ aptitude search --disable-columns -F %p "?upgradable"
 *# hledání podle archivu balíčku v repozitáři*<br>
 **?archive("**{*regulární-výraz*}**")**
 
-*# hledání podle sekce a podsekce v repozitáři*<br>
+*# hledání podle komponenty a sekce v repozitáři*<br>
 **?section("**{*regulární-výraz*}**")**
 
 *# jen balíčky instalované ručně/automaticky*<br>
@@ -371,7 +437,7 @@ Za znakem „=“ následuje příklad hodnoty pro balíček „gimp“.
 *// Je-li dostupných víc verzí balíčku, tento parametr zohledňuje pouze nejnovější verzi. Je-li dostupná ve více archivech, vypíše parametr %t všechny dané archivy oddělené čárkou, typicky např. „focal-security,focal-updates“.*<br>
 **%t = focal**
 
-*# **sekce a podsekce** balíčku*<br>
+*# **komponenta a sekce** balíčku*<br>
 **%s = universe/graphics**
 
 *# velikost balíčku/velikost instalovaných souborů*<br>
@@ -611,12 +677,28 @@ Instalace, spuštění a odinstalování GIMPu různými způsoby:
 jen v případě ověření.
 -->
 
+### Priority APT
+
+Při výběru balíčku podle priorit postupuje APT následovně:
+
+* Pokud je již nějaká verze balíčku nainstalovaná, APT vyřadí kandidáty, kteří mají prioritu nižší než 1000 a jsou starší verze než nainstalovaná.
+* APT vyřadí balíčky se zápornou prioritou.
+* APT vybere balíček s nejvyšší prioritou.
+* Pokud je takových víc, vybere ten s nejvyšší verzí.
+* Pokud je takových víc, vybere ten ze zdroje, který je v sources.list uvedený nejdříve.
+
+Při určování priorit z konfigurace v adresáři /etc/apt/preferences.d postupuje APT následovně:
+
+* Konkrétní pravidla mají přednost před obecnými (těmi, jejichž pole Package má hodnotu „\*“).
+* Jinak má dříve uvedené pravidlo přednost před později uvedeným (a to i v případě, že později uvedené pravidlo je konkrétnější).
+
 ## Další zdroje informací
 
 Pro APT: „man apt-get“ apod. (ale není příliš přehledná) Pro Flatpak: „man flatpak“ a všechny odtud odkazované manuálové stránky, např. „man flatpak-install“. Pro Snap: „snap \-\-help“ a „snap help {*podpříkaz*}“.
 
 * [Wikipedie: APT](https://cs.wikipedia.org/wiki/Advanced_Packaging_Tool)
 * [Příspěvek na fóru od „Sešívaného“](https://forum.ubuntu.cz/index.php/topic,83160.msg560223.html#msg560223)
+* [Video: Pokročilá správa balíčků v Debianu](https://www.youtube.com/watch?v=AzIxTU9PYp4)
 * [Wikipedie: aptitude](https://cs.wikipedia.org/wiki/Aptitude)
 * [Wikipedie: dpkg](https://cs.wikipedia.org/wiki/Dpkg)
 * [Video „How to Use Flatpak“ (Chris Titus Tech)](https://youtu.be/bvybMVRaND0?t=75) (anglicky)
