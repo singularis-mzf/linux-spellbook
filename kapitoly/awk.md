@@ -342,7 +342,7 @@ Poznámka: Dělení záznamů na sloupce určují proměnné FS, FPAT a FIELDWI
 
 ### Uzavření vstupu/výstupu
 
-*# uzavřít soubor otevřený ke čtení či zápisu*<br>
+*# uzavřít **soubor** otevřený ke čtení či zápisu*<br>
 *// Tato varianta funkce „close()“ vrací 0 v případě úspěchu, jiná hodnota značí chybu.*<br>
 **close(**{*"řetězec/reprezentující/soubor"*}**)**
 
@@ -352,9 +352,13 @@ Poznámka: Dělení záznamů na sloupce určují proměnné FS, FPAT a FIELDWI
 *# uzavřít zápis na vstup příkazu*<br>
 **close(**{*"řetězec reprezentující příkaz"*}**)**
 
+*# vyprázdnit **vyrovnávací paměť** zápisu (soubor/standardní výstup)*<br>
+**fflush(**{*"řetězec/reprezentující/soubor"*}**)**<br>
+**fflush("/dev/stdout")**
+
 ### Bash
 
-*# vykonat příkaz interpretem „/bin/sh“ a vrátit jeho návratovou hodnotu*<br>
+*# vykonat **příkaz** interpretem „/bin/sh“ a vrátit jeho návratovou hodnotu*<br>
 **system(**{*řetězec*}**)**
 
 ### Přesměrování výstupu

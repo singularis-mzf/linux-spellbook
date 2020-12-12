@@ -580,6 +580,14 @@ BEGIN {
     next;
 }
 
+# jednořádkový komentář (nesmí obsahovat --)
+/^<!--.*-->$/ {
+    if ($0 ~ /^<!--.*--.*-->$/) {
+        ShoditFatalniVyjimku("Jednořádkový komentář nesmí obsahovat kombinaci „--“!: " $0);
+    }
+    next;
+}
+
 {
     if (TYP_RADKU != "PRAZDNY") {
         PREDCHOZI_NEPRAZDNY_TYP_RADKU = TYP_RADKU;

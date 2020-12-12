@@ -427,6 +427,18 @@ Viz: https://wiki.archlinux.org/index.php/Persistent_block_device_naming
 ?
 -->
 
+*# vynulovat volné bloky (ext4/btrfs/FAT32/NTFS)*<br>
+*// Příkaz „zerofree“ lze použít jen s odpojeným souborovým systémem!*<br>
+**sudo zerofree** [**-v**] {*/dev/oddíl*}<br>
+?<br>
+?<br>
+?
+<!--
+btrfs: sudo sfill -fllvz {*/přípojný/bod*}
+; balíček: secure-delete
+[ ] vyzkoušet, zda opravdu nuluje
+-->
+
 *# najít chybné bloky (obecně/příklad)*<br>
 *// Poznámka: Tento příkaz chybné bloky najde, ale neudělá nic proto, aby se je systém souborů nesnažil používat.*<br>
 **sudo badblocks** [**-v**[**v**]] <nic>[**-w**] {*/dev/zařízení-nebo-oddíl*}<br>
@@ -732,7 +744,7 @@ Manuálová stránka pro zlepšení výkonu doporučuje použít obecnou volbu �
 
 ## Instalace na Ubuntu
 
-Všechny použité nástroje jsou základními součástmi Ubuntu, kromě nástrojů pro práci s LVM, btrfs a nástroje GParted.
+Všechny použité nástroje jsou základními součástmi Ubuntu, kromě nástrojů pro práci s LVM, btrfs, příkazu zerofree a nástroje GParted.
 Pokud chcete používat LVM, musíte doinstalovat:
 
 *# *<br>
@@ -743,10 +755,10 @@ Pokud chcete používat btrfs, musíte doinstalovat:
 *# *<br>
 **sudo apt-get btrfs-progs**
 
-Nástroj GParted najdete v balíčku „gparted“:
+Nástroj GParted najdete v balíčku „gparted“; příkaz zerofree v balíčku „zerofree“:
 
 *# *<br>
-**sudo apt-get install gparted**
+**sudo apt-get install gparted zerofree**
 
 <!--
 ## Ukázka

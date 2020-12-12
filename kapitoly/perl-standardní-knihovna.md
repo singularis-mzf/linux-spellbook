@@ -1,6 +1,6 @@
 <!--
 
-Linux Kniha kouzel, kapitola Perl: Moduly, objekty a další
+Linux Kniha kouzel, kapitola Perl: Standardní knihovna
 Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -17,70 +17,26 @@ Poznámky:
 ⊨
 -->
 
-# Perl: Moduly, objekty a další
+# Perl: Standardní knihovna
 
 !Štítky: {program}{Perl}{programování}
 !FixaceIkon: 1754
 !ÚzkýRežim: zap
 
 ## Úvod
+
+Tato kapitola z programovacího jazyka Perl pokrývá funkce dostupné
+v modulech distribuovaných běžně spolu se samotným interpretem.
+
 <!--
-- Vymezte, co je předmětem této kapitoly.
-- Obecně popište základní principy, na kterých fungují používané nástroje.
 - Uveďte, co kapitola nepokrývá, ačkoliv by to čtenář mohl očekávat.
 -->
-![ve výstavbě](../obrázky/ve-výstavbě.png)
 
 ## Definice
-<!--
-- Uveďte výčet specifických pojmů pro použití v této kapitole a tyto pojmy definujte co nejprecizněji.
--->
-![ve výstavbě](../obrázky/ve-výstavbě.png)
+
+...
 
 !ÚzkýRežim: vyp
-
-## Zaklínadla
-<!--
-- Rozdělte na podsekce a naplňte „zaklínadly“.
--->
-![ve výstavbě](../obrázky/ve-výstavbě.png)
-
-### Moduly
-
-*# načíst modul*<br>
-**use** [{*adresář*}**\:\:**]...{*název\_souboru\_bez\_přípony*}**;**
-
-*# hledat moduly i ve stejném adresáři, kde se nachází daný zdrojový soubor*<br>
-**use lib (((\_\_FILE\_\_ =~ s/^\[<nic>^\\/]\*$/.\\/x/r) =~ s/\\/\[<nic>^\\/]\*$//r));**
-<!--
-TODO: Otestovat!
--->
-
-*# obecná struktura souboru modulu*<br>
-**package** {*NázevSouboruBezPřípony*}**;**<br>
-{*blok příkazů „use“*}<br>
-{*definice proměnných a funkcí*}<br>
-**1;**
-
-*# přepnout do jiného modulu/do hlavního modulu*<br>
-**package** {*Označení::Modulu*}**;**<br>
-**package main;**
-
-*# úvod modulu (striktně doporučený)*<br>
-**use strict;**<br>
-**use warnings;**<br>
-**use utf8;**<br>
-**use English;**<br>
-**use Exporter("import");**<br>
-[**use parent** [{*předek*}]**;**]<br>
-**our @EXPORT =** {*seznam symbolů k automatickému exportu*}**;**<br>
-**our @EXPORT\_OK =** {*seznam symbolů dovolených k exportu*}**;**
-
-<!--
-Poznámka: příkaz „package“ je přepínač. Přepne do jiného modulu. Do hlavního modulu se lze vrátit příkazem „package main;“
-a moduly lze přepínat i opakovaně v rámci jednoho souboru.
--->
-
 
 ## Zaklínadla: Ostatní
 
@@ -105,6 +61,7 @@ a moduly lze přepínat i opakovaně v rámci jednoho souboru.
 <!--
 [ ] zjistit posun lokální časové zóny oproti UTC!
 -->
+
 
 ## Parametry příkazů
 <!--
@@ -137,6 +94,12 @@ a moduly lze přepínat i opakovaně v rámci jednoho souboru.
 - Buďte co nejstručnější; neodbíhejte k popisování čehokoliv vedlejšího, co je dost možné, že už čtenář zná.
 -->
 ![ve výstavbě](../obrázky/ve-výstavbě.png)
+
+* Abyste se vyhnuli problémům s názvy modulů, nazývejte svoje moduly (a jejich adresáře) tak, aby název začínal velkým písmenem a obsahoval alespoň jedno malé písmeno.
+* Proměnné deklarované na úrovni modulu klíčovým slovem „my“ jsou zamýšleny tak, že jsou omezeny jen na daný zdrojový soubor. Ve skutečnosti takto deklarovanou proměnnou můžete použít ve více zdrojových souborech, ale v takovém případě pro každý z nich vznikne samostatná proměnná!
+
+Příkaz „require“ způsobí
+
 
 ## Další zdroje informací
 <!--

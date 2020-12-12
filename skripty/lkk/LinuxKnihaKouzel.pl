@@ -17,23 +17,31 @@
 # souboru zdrojového kódu všechna svá práva autorská a práva příbuzná
 # k právu autorskému.
 #
+package LinuxKnihaKouzel;
 use v5.26.0;
 use strict;
 use utf8;
 use warnings;
 use English;
+use Exporter("import");
+use List::Util("min", "max");
+our @EXPORT = qw{
+	alength array bool div fprint fprintf fput put typy
+	matches next_match next_match_captures next_match_begin next_match_length
+	next_match_end next_match_text
+	min max
+};
+our @EXPORT_OK = ();
 
 sub alength {return scalar(@ARG)}
 sub array {return @ARG}
 sub bool {return pop(@ARG) ? 1 : 0}
 sub div {my ($a, $b) = (abs($ARG[0]), abs($ARG[1])); use integer; return ($a / $b, $a % $b);}
-sub min {my $x = shift(@ARG); while (alength(@ARG) > 0) {if ($ARG[0] < $x) {$x = shift(@ARG)} else {shift(@ARG)}} return $x;}
-sub max {my $x = shift(@ARG); while (alength(@ARG) > 0) {if ($ARG[0] > $x) {$x = shift(@ARG)} else {shift(@ARG)}} return $x;}
 sub fprint {my $soubor = shift(@ARG); return print($soubor @ARG);}
 sub fprintf {my $soubor = shift(@ARG); return printf($soubor @ARG);}
 sub fput {local $OFS = ""; local $ORS = ""; my $soubor = shift(@ARG); return print($soubor @ARG);}
 sub put {local $OFS = ""; local $ORS = ""; return print(@ARG);}
-sub typy {return join("", map {my $r;!defined($ARG) ? "u" : !($r = ref($ARG)) ? "s" : $r =~ /^(SCALAR|ARRAY|HASH|CODE|Regexp)$/ ? substr($r, 0, 1) : $r eq "GLOB" ? "F" : ":${r}:";} @ARG)}
+sub typy {return join("", map {my $r;!defined($ARG) ? "u" : !($r = ref($ARG)) ? "s" : $r =~ /^(SCALAR|ARRAY|HASH|CODE|Regexp)$/ ? substr($r, 0, 1) : $r eq "GLOB" ? "F" : "<${r}>";} @ARG)}
 
 sub matches { # => ([začátek, délka], [začátek, délka], ...) || ()
     typy(@ARG) =~ /\AsRs{0,2}\z/ or die("matches: Chybné parametry: ".typy(@ARG));
@@ -81,5 +89,8 @@ sub next_match_captures { # => ([začátek, délka], [začátek, délka], ...) |
     }
     return @v;
 }
+
+#package main;
+#BEGIN {LinuxKnihaKouzel->import()}
 
 1;

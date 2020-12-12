@@ -81,6 +81,10 @@ Poznámka: Písmeno „i“ v následujících parametrech vypne rozlišování
 *# cesta položky se shoduje s **regulárním výrazem***<br>
 [**\-regextype posix-extended**] **-**[**i**]**regex '**{*regulární výraz*}**'**
 
+*# **vyloučit** z prohledávání podadresáře, jejichž cesta položky se shoduje s regulárním výrazem/odpovídá mu*<br>
+**\\(** [**-regextype posix-extended**] **! -**[**i**]**regex '**{*regulární výraz*}**' -o -prune -false \\)** {*zbytek testů*}<br>
+**\\( -regextype posix-extended ! -**[**i**]**regex '.\*(**{*regulární výraz*}**).\*' -o -prune -false \\)** {*zbytek testů*}
+
 *# hodnota symbolického odkazu*<br>
 **\-**[**i**]**lname "**{*vzorek*}**"**
 
@@ -139,22 +143,31 @@ Poznámka: Písmeno „i“ v následujících parametrech vypne rozlišování
 
 ### Čas („změněno“, „čteno“)
 
+*# změněno/čteno během **posledních N minut***<br>
+**-mmin -**{*N*}<br>
+**-amin -**{*N*}
+
+*# změněno/čteno během posledních N **dnů** (počítaje i dnešek; N≥1)*<br>
+**-newermt "$(date -d "**{*N*}** days ago" +%F) 23:59:59.999999999"**<br>
+**-newerat "$(date -d "**{*N*}** days ago" +%F) 23:59:59.999999999"**
+
+*# změněno/čteno **od určitého času***<br>
+*// Počítadlo nanosekund je v čase volitelné. Podmínkám vyhovují položky, jejichž čas modifikace či čtení je větší než hodnota uvedená v parametru!*<br>
+**-newermt "**{*čas*}**"**<br>
+**-newerat "**{*čas*}**"**
+
+*# **změněno od** 1. ledna 2020 (příklad)*<br>
+**-newermt "2019-12-31 23:59:59.999999999"**
+
 *# změněno/čteno v rozsahu dnů*<br>
 *// Dny zadejte ve formátu %F (YYYY-MM-DD).*<br>
-**-newermt "**{*první-den-intervalu*} **00:00:00" \\! -newermt "**{*poslední-den-intervalu*} **23:59:59"**<br>
-**-newerat "**{*první-den-intervalu*} **00:00:00" \\! -newerat "**{*poslední-den-intervalu*} **23:59:59"**
-<!--
-[ ] VYZKOUŠET!
--->
+**-newermt "**{*první-den-intervalu*} **00:00:00" \\! -newermt "**{*poslední-den-intervalu*} **23:59:59.999999999"**<br>
+**-newerat "**{*první-den-intervalu*} **00:00:00" \\! -newerat "**{*poslední-den-intervalu*} **23:59:59.999999999"**
 
 *# čteno od poslední změny*<br>
 ?
 
 <!--
--amin {} :: poslední přístup
--mmin {} :: změněno
--newer[am]t '{čas}'
-
 Operátory:
 ( xxx )
 xxx xxx
@@ -265,7 +278,7 @@ xxx , xxx # priorita?
 **\-true**<br>
 **\-false**
 
-*# má uživatelské rozšířené atributy*<br>
+*# má uživatelské datové položky*<br>
 ?
 
 *# vlastník nebo skupina souboru neexistuje*<br>
@@ -281,9 +294,10 @@ xxx , xxx # priorita?
 *# čislo **inode***<br>
 **\-inum** {*inode*}
 
-*# **hloubka** prohledávání*<br>
-*// K omezení hloubky prohledávání se obvykle používají globální parametry „-mindepth“ a „-maxdepth“. Nejsou sice tak univerzální jako samostatný test, ale pro většinu účelů stačí.*<br>
-?
+*# **hloubka** prohledávání (řešení 1/řešení 2; viz poznámku)*<br>
+*// Řešení 1 využívá globálních parametrů, které omezují celé prohledávání a nemohou být složitěji kombinovány s ostatními testy (např. parametr „-mindepth“ způsobí, že na položky s nižší hloubkou testy vůbec nebudou zavolány, což znamená, že se u nich např. neuplatní „-prune“). Řešení 2 pak není použitelné, pokud find prohledává více cílů, které ve své definici obsahují různý počet lomítek.*<br>
+**\-mindepth** {*N*} **-maxdepth** {*N*}<br>
+**\-regextype posix-extended -regex "[<nic>^/]\*(/[<nic>^/]\*){$((**{*N*}**+**{*počet-lomítek-v-cíli*}**))}"** [**-prune**]
 
 ## Zaklínadla: find: akce
 
@@ -323,10 +337,6 @@ fprintf:
 *// Tato varianta je prakticky pohodlnějším ekvivalentem volání příkazu xargs. Použije co největší dávky. Vždy uspěje.*<br>
 **\-exec** {*příkaz*} [{*parametry příkazu*}] **'{}' +**
 
-*# spustit příkaz po dávkách po adresářích (vždy uspěje)*<br>
-*// Tato varianta vždy uspěje. Shromáždí položky z jednotlivého adresáře a po velkých dávkách (obvykle najednou) je předá ke zpracování uvedenému příkazu. Příkaz se spouští v adresáři, kde jsou vyhledané položky, a dostává pouze název položky s cestou „./“.*<br>
-**\-execdir** {*příkaz*} [{*parametry příkazu*}] **'{}' +**
-
 *# spustit příkaz pro **každou** položku (s cestou/bez cesty)*<br>
 *// Každý výskyt řetězce „{}“ v parametrech příkazu bude při volání nahrazen: v případě první varianty cestou testované položky od výchozího bodu, v případě varianty bez cesty jen názvem souboru s cestou „./“ (příkaz bude spuštěn ve stejném adresáři, kde se položka nachází). Akce uspěje, pokud uspěje příkaz.*<br>
 **\-exec** {*příkaz*} [{*parametry příkazu*}] **\\;**<br>
@@ -346,6 +356,12 @@ fprintf:
 
 *# **ukončit** načítání dalších položek*<br>
 **\-quit**
+
+*# spustit příkaz po dávkách po adresářích (vždy uspěje; nedoporučuji)*<br>
+*// Tato varianta vždy uspěje. Shromáždí položky z jednotlivého adresáře a po velkých dávkách (obvykle najednou) je předá ke zpracování uvedenému příkazu. Příkaz se spouští v adresáři, kde jsou vyhledané položky, a dostává pouze název položky s cestou „./“.*<br>
+*// Pozor! „-execdir“ skončí kritickou chybou, pokud proměnná prostředí PATH obsahuje aktuální adresář, relativní cestu nebo závěrečnou dvojtečku. Důvodem je, že by se v takovém případě mohl příkaz k vykonání vyhledat v různých adresářích různě.*<br>
+**\-execdir** {*příkaz*} [{*parametry příkazu*}] **'{}' +**
+
 
 ## Zaklínadla: Akce -printf a -fprintf
 
@@ -466,7 +482,6 @@ Chování k symbolickým odkazům: **-P**: nikdy nenásledovat (interpretovat k
 * ☐ -maxdepth {*číslo*} :: Sestoupí maximálně do uvedené hloubky. 0 znamená testovat jen cesty uvedené na příkazové řádce; 1 znamená testovat i položky v adresářích uvedených na příkazovém řádku; 2 znamená testovat i položky v podadresářích těchto adresářů atd.
 * ☐ -mindepth {*číslo*} :: Na položky v hloubce nižší než „číslo“ se nebudou aplikovat žádné testy ani akce a nebudou vypsány. Pozor, to znamená, že na ně nebude účinkovat akce -prune! Příkaz find se pokusí vstoupit do každého adresáře s hloubkou menší než „mindepth“.
 
-
 <neodsadit>Testy a akce jsou uvedeny jako zaklínadla v předchozí části kapitoly.
 
 ## Instalace na Ubuntu
@@ -495,9 +510,10 @@ Většina uvedených příkazů je základními součástmi Ubuntu. Pouze přík
 - Buďte co nejstručnější; neodbíhejte k popisování čehokoliv vedlejšího, co je dost možné, že už čtenář zná.
 -->
 
-* Naučte se s příkazem „find“ používat parametr „-exec“, zejména jeho hromadnou variantu „po dávkách“. Jeho použití je většinou mnohem pohodlnější než tradiční kombinace s příkazem „xargs“. Jedinou výjimkou je případ, kdy chcete příkazy vykonávat paralelně.
+* Naučte se s příkazem „find“ používat akci „-exec“, zejména její hromadnou variantu „po dávkách“. Její použití je většinou mnohem pohodlnější než tradiční kombinace s příkazem „xargs“. Jedinou výjimkou je případ, kdy chcete příkazy vykonávat paralelně.
 * Příkaz „find“ cesty na svém výstupu nijak neřadí.
 * Příkaz „locate“ respektuje přístupová práva a najde pouze adresářové položky, ke kterým má uživatel v dané chvíli přístup.
+* Nepoužívejte akci „-execdir“. Je pomalá při spouštění akce v mnoha adresářích a odmítne pracovat, pokud bude v proměnné prostředí PATH relativní cesta nebo závěrečná dvojtečka.
 
 ## Další zdroje informací
 <!--

@@ -27,6 +27,8 @@ Poznámky:
 - Od verze 80 volba privacy.resistFingerprinting blokuje použití rozšířených písem instalovaných v systému. Proto se některé znaky nezobrazují správně.
 - user.js > přímo do adresáře profilu. Profil je obvykle .mozilla/firefox/*.default-release
 
+browser.urlbar.richSuggestions.tail = false
+
 Ve zdrojovém kódu:
 
 modules/libpref/init/StaticPrefList.yaml – krátké komentáře k statickým volbám
@@ -103,8 +105,13 @@ browser.tabs.allowTabDetach
 *# vypnout automatické doplňování při psaní*<br>
 **user\_pref("browser.urlbar.autoFill", false);**
 
+<!--
 *# neotevírat ihned po kliknutí do adresního řádku nabídku (FF ≥ 75 nebo 76)*<br>
 **user\_pref("browser.urlbar.openViewOnFocus", false);**
+-->
+
+*# neotevírat nabídku při psaní do adresního řádku (FF ≥ 83)*<br>
+**user\_pref("browser.urlbar.maxRichResults", 0);**
 
 *# nenašeptávat: záložky/navštívené stránky/otevřené panely/vyhledávání/top stránky*<br>
 **user\_pref("browser.urlbar.suggest.bookmark", false);**<br>

@@ -111,7 +111,7 @@ Na **superuživatele** se nevztahují žádná přístupová práva a příznak
 
 Mód se vyjadřuje čtyřmístným číslem v osmičkové soustavě (0000 až 7777),
 kde jednotlivé číslice zleva doprava znamenají: **Příznaky, práva vlastníka, práva skupiny, práva ostatních.**
-První číslice vyjadřující příznaky je nepovinná, pokud chybí, uvažuje se nula.
+První číslice vyjadřující příznaky je nepovinná, mód tedy lze zadat i trojmístným číslem; místo chybějící úvodní číslice se pak uvažuje nula.
 
 Každou číslici vypočteme jako součet číselných hodnot příznaků,
 které *mají* být nastaveny, a práv, která *mají* být přidělena.
@@ -321,9 +321,11 @@ Poznámka: srovnávané položky nemusejí být v tomtéž adresáři; můžete
 
 ### Vytvořit adresářovou položku
 
-*# vytvořit prázdný **adresář***<br>
+*# vytvořit prázdný **adresář** (alternativy)*<br>
 *// Parametr „-p“: vytvořit adresář, jen pokud ještě neexistuje; a v případě potřeby nejdřív vytvořit adresáře jemu nadřazené.*<br>
-**mkdir** [**-v**] <nic>[**-m** {*práva*}] <nic>[**-p**] {*název*}
+*// Znak „=“ u módu má význam pouze v případě, že chcete zabránit, aby vytvořený adresář zdědil od nadřazeného adresáře příznak zmocnění skupiny. Bez = se totiž v takovém případě tento příznak zdědí i v případě, že ho uvedený mód nemá nastavený. Pokud „=“ uvedete, dědění se tím zabrání a příznak se nastaví výhradně podle uvedeného módu.*<br>
+**mkdir** [**-v**] <nic>[**-m** {*práva*}] <nic>[**-p**] {*název*}<br>
+**mkdir** [**-v**] **-m** [**=**]{*mód*} [**-p**] {*název*}
 
 *# vytvořit prázdný **soubor***<br>
 **touch** {*název*}
@@ -374,6 +376,10 @@ Poznámka: srovnávané položky nemusejí být v tomtéž adresáři; můžete
 *# přidat/odebrat všem práva „r“ a „x“*<br>
 [**sudo**] **chmod** [**-R**] **a+rx** [**\-\-**] {*cesta*}...<br>
 [**sudo**] **chmod** [**-R**] **a-rx** [**\-\-**] {*cesta*}...
+
+*# nastavit mód (základní přístupová práva a základní zvláštní příznaky)*<br>
+*// Mód můžete zadat i bez znaku „=“, ale v takovém případě by tento příkaz neodstranil ze souborů a adresářů příznaky zmocnění vlastníka a skupiny; příznak omezení smazání by se odstranil i v takovém případě.*<br>
+[**sudo**] **chmod** [**-R**] **=**{*mód*} [**\-\-**] {*cesta*}...
 
 *# nastavit práva „rwx“ pro vlastníka a „rx“ pro ostatní, práva pro skupinu neměnit (alternativy)*<br>
 [**sudo**] **chmod** [**-R**] **u=rwx,o=rx** [**\-\-**] {*cesta*}...<br>
@@ -586,7 +592,7 @@ Všechny klíče uživatelských rozšířených atributů *musejí* začínat �
 ### chmod
 
 *# *<br>
-**chmod** [{*parametry*}] {*mód*} [**\-\-**] {*cesta*}...<br>
+**chmod** [{*parametry*}] <nic>[**=**]{*mód*} [**\-\-**] {*cesta*}...<br>
 **chmod** [{*parametry*}] {*nastavení,práv,a,příznaků*} [**\-\-**] {*cesta*}...
 
 Příklady, jak může vypadat nastavení práv a příznaků najdete v zaklínadlech.

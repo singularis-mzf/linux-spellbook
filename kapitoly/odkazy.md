@@ -46,7 +46,7 @@ Příkazy ln, readlink, stat a některé další jsou vyvíjeny v rámci proje
 ## Definice
 
 * **Pevný odkaz** je, obecně vzato každá položka v adresáři; pro účely této kapitoly se však omezíme na definici, že pevným odkazem je pouze adresářová položka reprezentující obyčejný soubor. Součástí pevného odkazu je pouze název a umístění v adresáři, *všechny* ostatní údaje o souboru jsou vlastnostmi souboru jako takového.
-* **Symbolický odkaz** je malý zvláštní soubor, který obsahuje relativní či absolutní cestu k cílovému souboru či adresáři. Symbolické odkazy se dělí na **absolutní** (obsahující absolutní cestu) a **relativní** (obsahující relativní cestu). Symbolický odkaz odkazující na na neexistující cestu se označuje jako **neplatný**.
+* **Symbolický odkaz** je malý zvláštní soubor, který obsahuje relativní či absolutní cestu k cílovému souboru či adresáři. Symbolické odkazy se dělí na **absolutní** (obsahující absolutní cestu) a **relativní** (obsahující relativní cestu). Symbolický odkaz odkazující na neexistující cestu se označuje jako **neplatný**.
 * **Následovat** symbolický odkaz (follow) znamená chovat se, jako by se na jeho místě a pod jeho názvem skutečně nacházel odkazovaný soubor či adresář. Oproti tomu **nenásledovat** symbolický odkaz znamená chovat se k němu jen jako k adresářové položce. V linuxu je obvyklé, že při práci s jednotlivým souborem či adresářem se symbolické odkazy následují (např. pokusíte-li se spustit symbolický odkaz na program, spustí se program), zatímco při rekurzivním průchodu adresářovou strukturou (např. příkazy „find“, „cp -R“, „chmod -R“ apod.) se nenásledují. Ve většině případů však toto chování můžete změnit určitým parametrem příkazu.
 
 !ÚzkýRežim: vyp
@@ -73,7 +73,7 @@ Příkazy ln, readlink, stat a některé další jsou vyvíjeny v rámci proje
 **stat -c %h** [**-L**] <nic>[**\-\-**] {*cesta-k-odkazu*}
 
 *# vypsat **kanonickou** (absolutní) cestu (bez/s následováním)*<br>
-**sh -c 'r=$(realpath -e "$(dirname "$1")"); b=$(basename "$1"); echo "${r%/}/${b%/}"' \-\-** {*cesta*}<br>
+**realpath -se** {*cesta-k-odkazu*} ⊨ /home/petr/odkaz-na-passwd<br>
 **realpath -e** {*cesta-k-odkazu*} ⊨ /etc/passwd
 
 *# odkazují dva odkazy na **tentýž** soubor? (s následováním/bez něj)*<br>
@@ -269,7 +269,7 @@ Výjimkou je jen příkaz „gawk“, který je nutno doinstalovat:
 * Častou začátečnickou chybou je příkaz typu „ln -s soubory/a odkazy/na-a“. Uvedený příkaz totiž vytvoří symbolický odkaz s obsahem „soubory/a“ a relativní symbolické odkazy se vždy vyhodnocují relativně vůči adresáři, ve kterém se nacházejí, takže faktickým cílem vytvořeného odkazu bude ve skutečnosti „odkazy/soubory/a“, který nejspíš neexistuje. Proto při vytváření relativních symbolických odkazů vždy používejte parametr „-r“, který cesty automaticky opraví. (Toto se nijak netýká absolutních ani pevných odkazů.)
 * Méně častou začátečnickou chybou je příkaz typu „ln -sf /etc/passwd odkaz-na-passwd“. Pokud by se totiž stalo, že „odkaz-na-passwd“ je existující symbolický odkaz na adresář, příkaz „ln“ uváží, že chcete vytvořit odkaz uvnitř odkazovaného adresáře, ne že chcete přepsat existující symbolický odkaz. Proto v kombinaci s parametrem „-f“ vždy používejte také parametr „-T“, nebo „-t“. (Tyto parametry se může vyplatit používat i v ostatních případech.)
 * Pokud symbolický odkaz odkazuje někam dovnitř adresáře, kam uživatel nemá právo vstoupit, bude se odkaz jevit uživateli jako neplatný, i když to ve skutečnosti nebude pravda.
-* Symbolický odkaz má vlastnictví a skupinu, ale nemá vlastní přístupová práva. Přístup k odkazovanému souboru či adresáři se vždy řídí jeho přístupovými právy odkazovaného souboru či adresáře.
+* Symbolický odkaz má vlastnictví a skupinu, ale nemá vlastní přístupová práva. Přístup k odkazovanému souboru či adresáři se vždy řídí přístupovými právy odkazovaného souboru či adresáře.
 * Maximální počet pevných odkazů na jeden soubor je omezený souborovým systémem; v souborových systémech typu ext4 je to 65000, u btrfs 65535 a u tmpfs podstatně víc (podařilo se mi jich vytvořit i víc než milion, aniž by to spotřebovalo příliš mnoho paměti).
 * Symbolický odkaz sám o sobě je „nezapisovatelný“; pokud ho chceme změnit, musíme ho nejprve smazat a pak znovu vytvořit. To také znamená, že ke změně obsahu symbolického odkazu potřebuje uživatel právo zápisu do adresáře, kde se odkaz nachází.
 * Symbolický odkaz může odkazovat na jiný symbolický odkaz, ale maximální počet zanoření symbolických odkazů je 40 (pravděpodobně jde změnit).

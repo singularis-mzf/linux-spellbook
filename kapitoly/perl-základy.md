@@ -35,44 +35,43 @@ Perl je skriptovací jazyk určený především pro zpracování textu.
 Mezi programátory je velmi oblíbený a rozšířený, má však špatnou pověst,
 protože je multisyntaktický a pro neodborníka velmi špatně čitelný.
 Přesto je velmi užitečný a při využití jen malé podmnožiny jeho vlastností
-je snadné v něm začít programovat. Perl je ale také zákeřný programovací
+je snadné v něm začít programovat.
+
+Perl je ale také zákeřný programovací
 jazyk, v němž se proměnné nejčastěji deklarují klíčovým slovem „my“,
 podmínka „if (false)“ je splněna (ačkoliv generuje varování),
-modul Perlu musí končit příkazem „1;“ a příkaz náhrady „s/.$/@/“
-provedený nad řetězcem "X\\n\\n\\n" nikdy neskončí výsledkem
-"X\\n\\n@" jako v GNU Sedu, ale výsledkem "X\\n\\n\\n", popř. pokud
-přidáte ještě modifikátor „s“, výsledkem "X\\n@@"; ke stejnému chování
-jako v sedu ho však nedonutíte.
-
+připojovaný zdrojový soubor musí končit příkazem „1;“
+a příkaz náhrady „s/.$/@/“ provedený nad řetězcem "X\\n\\n\\n"
+nikdy neskončí výsledkem "X\\n\\n@" jako v GNU Sedu, ale výsledkem "X\\n\\n\\n",
+popř. pokud přidáte ještě modifikátor „s“, výsledkem "X\\n@@";
+ke stejnému chování jako v Sedu ho však nedonutíte.
 Úspěšné použití takového jazyka vyžaduje buď hlubokou znalost,
 nebo se omezit na bezpečnou podmnožinu jeho funkcionality.
-Tato kapitola druhou uvedenou cestu a než se naučíte znát
-pokročilé vlastnosti Perlu, tato kapitola vám pomůže vyhýbat
-se jeho zákeřným pastem, a přesto z jeho moci vytěžit co nejvíc.
+Tato kapitola volí druhou uvedenou cestu, a než se naučíte znát
+pokročilé vlastnosti Perlu, pomůže vám vyhýbat se jeho zákeřným pastem,
+a přesto z jeho moci vytěžit co nejvíc.
 
-Tato kapitola nepokrývá moduly, objekty a část užitečných
-knihovních funkcí, ty budou v budoucnu předmětem samostatné kapitoly.
+Tato kapitola nepokrývá jmenné prostory, objektově orientované programování
+a velkou část užitečných knihovních funkcí, ty budou v budoucnu
+předmětem samostatné kapitoly.
 
 *Poznámka:* Všechna zaklínadla v této kapitole předpokládají,
-že máte nainstalovaný balíček DEB Linuxu: Knihy kouzel,
-svoje skripty budete spouštět příkazem „lkk perl“ (viz sekci „Parametry příkazů“)
-a na jejich začátek uvedete následující řádku:
-
-*# *<br>
-**require "/usr/share/lkk/LinuxKnihaKouzel.pl";**<br>
+že máte nainstalovaný balíček DEB Linuxu: Knihy kouzel
+a skripty budete spouštět příkazem „lkk perl“.
 
 ## Definice
 
-* **Skalár** je dynamicky typovaná hodnota, která může být řetězec, číslo, ukazatel na nějaký objekt nebo zvláštní **nehodnota undef**. Výchozí hodnotou skalárních proměnných je undef a přístup ke skaláru se značí znakem „$“.
-* **Pole** (array, list) je uspořádaný kontejner skalárů indexovaný celými čísly 0, 1, 2 atd. Přístup k poli jako celku se značí znakem „@“, pro přístup k jeho prvku se použije znak „$“ (protože jeho prvek je skalár) a index v hranatých závorkách „[]“. Výchozí hodnotou je prázdné pole.
-* **Asociativní pole** (hash) je neuspořádaný kontejner skalárů (**hodnot**) indexovaný libovolnými řetězci (**klíči**). Přístup k asociativnímu poli jako celku se značí znakem „%“, pro přístup k jeho prvku se použije znak „$“ a klíč (skalár) ve složených závorkách „{}“. Asociativní pole se inicializují poli či seznamy se sudým počtem prvků, kde se první prvek každé dvojice interpretuje jako klíč a druhý jako odpovídající hodnota. Výchozí hodnotou je prázdné asociativní pole.
+* **Skalár** je dynamicky typovaná hodnota, která může být řetězec, číslo, ukazatel na nějaký objekt nebo zvláštní **nehodnota undef**. Výchozí hodnotou skalárů je undef. Jednotlivé skaláry se symbolizují znakem „$“.
+* **Pole** (array, list) je uspořádaný kontejner skalárů indexovaný celými čísly 0, 1, 2 atd. Pole se symbolizují znakem „@“ a pro přístup k jejich prvkům se používá index (či seznam indexů) v hranatých závorkách „[]“. (Na rozdíl od GNU awk, v Perlu se prvky polí číslují vždy od nuly.) Výchozí hodnotou je prázdné pole.
+* **Asociativní pole** (hash) je neuspořádaný kontejner skalárů (**hodnot**) indexovaný libovolnými řetězci (**klíči**). Symbolizuje se znakem „%“. Přístup k prvkům pole se vyznačuje použitím klíče (či seznamu klíčů) ve složených závorkách „{}“. Asociativní pole se inicializují poli či seznamy se sudým počtem prvků, kde se první prvek každé dvojice interpretuje jako klíč a druhý jako odpovídající hodnota. V seznamech se pak asociativní pole na takový seznam rozloží. Výchozí hodnotou je prázdné asociativní pole.
 
-<neodsadit>Proměnné každého z těchto typů mají svůj vlastní jmenný prostor, takže je v pořádku mít vedle sebe proměnné „$x“, „@x“ a „%x“ a funkci „x()“, jsou to čtyři nezávislé věci.
+<neodsadit>Je v pořádku mít vedle sebe proměnné „$x“, „@x“ a „%x“ a funkci „x()“, jsou to čtyři nezávislé věci. Konstanty však sdílejí „jmenný prostor“ s funkcemi.
 
-* **Ukazatel** (reference, v češtině obvykle nazývaný „odkaz“) je skalár, který odkazuje na nějaký objekt v paměti (skalár, pole, funkci, regulární výraz atd.). **Dereferencí** ukazatele získáváme přímý přístup k odkazovanému objektu, bez ní se operace vždy týkají ukazatele jako takového.
-* **Seznam** je dočasný objekt příbuzný poli; zadává se výčtem prvků v kulatých závorkách, např. „(1, $b, 3)“. Kulaté závorky se nepoužijí, pokud je seznam bezprostředně obalen dalšími kulatými nebo hranatými závorkami.
+* **Ukazatel** (reference, v češtině obvykle nazývaný „odkaz“) je skalár, který odkazuje na nějaký objekt v paměti (skalár, pole, funkci, regulární výraz atd.). Přístup k odkazovanému objektu se získává **dereferencí** ukazatele. Operace, při kterých ukazatel není výslovně dereferencován, se týkají ukazatele jako takového.
+* **Seznam** je dočasný objekt příbuzný poli; zadává se výčtem prvků v kulatých závorkách, např. „(1, $b, 3)“. Kulaté závorky se nepoužijí, pokud je seznam bezprostředně obalen dalšími kulatými nebo hranatými závorkami. V téměř všech kontextech je seznam zaměnitelný s polem — kde se očekává pole, můžete uvést seznam, a naopak kde se očekává seznam, můžete uvést pole.
 * Důležitou vlastností seznamů je **zplošťování** — když v seznamu uvedete vnořený seznam, pole nebo asociativní pole, to se obvykle rozvine na všechny svoje prvky v odpovídajícím pořadí, jako byste je uvedl/a přímo. Nespoléhejte se však na zplošťování při volání systémových a knihovních funkcí (může být ovlivněno tzv. prototypem funkce) a v seznamech stojících na levé straně operátoru přiřazení (tam funguje trochu jinak).
 * **Proud** je objekt reprezentující soubor na disku nebo rouru vedoucí do jiného procesu. Umožňuje číst či zapisovat data, a to v textovém nebo binárním režimu.
+* **Řetězec bajtů** je každý řetězec, který obsahuje jen znaky s kódovou hodnotou 0 až 255. Takový řetězec může být bez konverze zapsán do souboru v binárním režimu. Všechny řetězce načtené v binárním režimu jsou řetězce bajtů.
 
 !ÚzkýRežim: vyp
 
@@ -81,9 +80,9 @@ a na jejich začátek uvedete následující řádku:
 -->
 ## Zaklínadla: Základní
 
-### Proměnné
+### Proměnné a konstanty
 
-*# **deklarovat** proměnnou typu skalár/pole/asociativní pole viditelnou v bloku*<br>
+*# **deklarovat** proměnnou typu skalár/pole/asociativní pole viditelnou v bloku, kde je deklarována*<br>
 **my $**{*identifikátor*} [**=** {*inicializace*}]**;**<br>
 **my @**{*identifikátor*} [**=** {*inicializace*}]**;**<br>
 **my %**{*identifikátor*} [**=** {*inicializace*}]**;**
@@ -91,13 +90,18 @@ a na jejich začátek uvedete následující řádku:
 *# deklarovat proměnnou viditelnou i v jiných modulech*<br>
 **our** {*symbol*}{*identifikátor*} [**=** {*inicializace*}]**;**
 
-*# do konce bloku překrýt globální proměnnou*<br>
-*// Příkaz „local“ způsobí, že uvedená globální proměnná se „odloží“ a místo ní se vytvoří nová pod tímtéž názvem. Po opuštění bloku překryvná proměnná zanikne a původní proměnná se vrátí. Tato konstrukce se běžně používá pro překrytí speciálních proměnných jako např. „$ORS“, jimž umožňuje nastavit místní hodnotu platnou jen do konce bloku, ale platnou i ve volaných funkcích.*<br>
+*# deklarovat **konstantu** typu skalár/seznam*<br>
+*// Poznámka: kvůli omezením Perlu je každá konstanta globální v rámci jmenného prostoru a viditelná i z ostatních zdrojových souborů. V její inicializaci může být obecný výraz, ale bude vyhodnocován v době překladu, takže je omezeno, co může obsahovat. Může však obsahovat již dříve definované konstanty.*<br>
+**use constant** {*identifikátor*} **=&gt;** {*inicializace*}**;**<br>
+**use constant** {*identifikátor*} **=&gt; (**{*inicializace*}**);**
+
+*# do konce bloku **překrýt** globální proměnnou*<br>
+*// Příkaz „local“ způsobí, že uvedená globální proměnná se „odloží“ a místo ní se vytvoří nová pod tímtéž názvem. Nová proměnná zanikne teprve po opuštění bloku, v němž byla příkazem „local“ překryta; do té doby ji nová proměnná zastupuje ve všech ohledech (i uvnitř volaných knihovních funkcí). Tato konstrukce se obvykle používá pro dočasné nastavení hodnot speciálních proměnných (např. „$ORS“).*<br>
 **local** {*symbol*}{*identifikátor*} [**=** {*nová-hodnota*}]**;**
 
 ### Skaláry a undef
 
-*# má skalár hodnotu? (tzn. není undef)*<br>
+*# má skalár hodnotu? (tzn. **není undef**)*<br>
 **defined(**{*$skalár*}**)**
 
 *# přečíst skalární proměnnou/**přiřadit** do ní/přiřadit do ní **undef***<br>
@@ -105,7 +109,13 @@ a na jejich začátek uvedete následující řádku:
 **$**{*identifikátor*} **=** {*hodnota*}<br>
 **$**{*identifikátor*} **= undef**
 
-*# zjistit typ skaláru*<br>
+*# přečíst skalární **konstantu** (obecně/příklady)*<br>
+**(**{*identifikátor*}**)**<br>
+**printf("Hodnota konstanty je: %d\\n", (konstanta));**<br>
+**print(konstanta);**<br>
+**printf("V asoc. poli je %s\\n", $asocPole{(konstanta)});**
+
+*# zjistit **typ** skaláru*<br>
 *// Vracené typy jsou: u = undef, s = číslo či řetězec, S = ukazatel na skalár, A = ukazatel na pole, H = ukazatel na asociativní pole, C = ukazatel na funkci („kód“), R = ukazatel na regulární výraz, F = ukazatel na strukturu reprezentující vstup/výstup a ":text:" pro ukazatele na ostatní typy (např. různé třídy), kde za text se dosadí název daného typu podle Perlu.*<br>
 **typy(**{*$skalár*}**)** ⊨ "s"
 
@@ -120,8 +130,8 @@ a na jejich začátek uvedete následující řádku:
 **funkce()**<br>
 **funkce(1, $b, undef, 3)**
 
-*# zavolat funkci přijímající blok příkazů*<br>
-*// Ačkoliv Perl dovoluje zapsat volání s blokem příkazů na jednu řádku, pro přehlednost této už tak dost odpudivé syntaxe vždy oddělujte příkazy bloku od volání funkce a používejte náležité odsazení, i když bude příkaz jen jeden a velmi jednoduchý, jako třeba „$ARG &gt;= 0“. Návratovou hodnotou předaného bloku bude hodnota posledního provedeného příkazu, nepoužívejte v bloku příkaz „return“!*<br>
+*# zavolat funkci přijímající blok příkazů (obecně)*<br>
+*// Pozor! Předávaný blok příkazů se chová jako samostatná funkce (dostává parametry v poli @ARG a vrací hodnotu), až na příkaz „return“. Ten v tomto bloku NIKDY nepoužívejte! Návratovou hodnotou bloku bude hodnota posledního provedeného příkazu. Pokud blok obsahuje jen jeden krátký příkaz, můžete volání zapsat na jednu řádku.*<br>
 **(**{*identifikátor\_funkce*} **\{**<br>
 <odsadit1>{*příkaz bloku;*}...<br>
 **\}** [{*seznam,parametrů*}]...**)**
@@ -135,6 +145,7 @@ a na jejich začátek uvedete následující řádku:
 *// Funkce nemusí být definovaná před prvním použitím, ale pokud má prototyp, musí být před prvním použitím buď definována, nebo alespoň deklarována s prototypem, ale bez těla. Pokud funkci s prototypem použijete před prvním uvedením jejího prototypu, nebude prototyp na dané volání fungovat.*<br>
 **sub** {*identifikátor\_funkce*} [{*prototyp*}]<br>
 **\{**<br>
+<odsadit1>[**typy(@ARG) =~ /\\A**{*regulární-výraz*}**\\z/ or die(**{*"chybové hlášení"*}**);**]<br>
 <odsadit1>[{*příkazy*}]...<br>
 **\}**
 
@@ -142,28 +153,31 @@ a na jejich začátek uvedete následující řádku:
 *// Funkce definovaná s modifikátorem „lvalue“ musí vrátit přiřaditelný skalár (proměnnou, prvek pole či hodnotu v asociativním poli). Nemůže vracet pole, undef apod.*<br>
 **sub** {*identifikátor\_funkce*} [{*prototyp*}] **: lvalue**<br>
 **\{**<br>
+<odsadit1>[**typy(@ARG) =~ /\\A**{*regulární-výraz*}**\\z/ or die(**{*"chybové hlášení"*}**);**]<br>
 <odsadit1>[{*příkazy*}]...<br>
 **\}**
 
-*# pole parametrů uvnitř funkce*<br>
-*// Na rozdíl od normálních polí, prvky tohoto speciálního pole se do funkce předávají odkazem. To znamená, že přiřazením do prvků tohoto pole můžete změnit proměnné (popř. prvky pole či hodnoty asociativního pole), které byly při volání funkce zadány. Pokud bylo daným parametrem funkce něco nepřiřaditelného, takové přiřazení se bude tiše ignorovat.*<br>
+*# pole **parametrů** uvnitř definice funkce*<br>
+*// Na rozdíl od normálních polí, prvky tohoto speciálního pole se do funkce předávají odkazem. To znamená, že přímým přiřazením do prvků tohoto pole můžete změnit proměnné (popř. prvky pole či hodnoty asociativního pole), které byly při volání funkce zadány. Pokud bylo daným parametrem funkce něco nepřiřaditelného, takové přiřazení se bude tiše ignorovat.*<br>
 **@ARG**
 
 *# získat ukazatel na **anonymní funkci***<br>
+*// Na rozdíl od bloku příkazů předávanému funkci zvláštním prvním parametrem, v těle anonymní funkce můžete používat příkaz „return“.*<br>
 **sub \{**[{*příkazy*}]...**\}**
 
 *# definovat funkci přijímající blok příkazů*<br>
-*// Předaný blok zavoláte jako funkci příkazem „$id-&gt;()“, kde id je zvolený identifikátor proměnné.*<br>
+*// Předaný blok zavoláte jako funkci příkazem „$id-&gt;(parametry)“, kde id je zvolený identifikátor proměnné. Parametry (volitelné) předané volání bloku jsou v definici předaného bloku přístupné v poli @ARG.*<br>
 ^^**sub** {*identifikátor\_funkce*} **(&amp;@);**<br>
 **sub** {*identifikátor\_funkce*} **(&amp;@)**<br>
 **\{**<br>
+<odsadit1>[**typy(@ARG) =~ /\\AC**{*regulární-výraz*}**\\z/ or die(**{*"chybové hlášení"*}**);**]<br>
 <odsadit1>**my $**{*id*} **= shift(@ARG);**<br>
 <odsadit1>[{*příkazy*}]...<br>
 **\}**
 
 ### Komentáře
 
-*# komentář do konce řádku*<br>
+*# **komentář** do konce řádku*<br>
 **#** {*obsah komentáře*}
 
 *# víceřádkový komentář*<br>
@@ -176,23 +190,24 @@ a na jejich začátek uvedete následující řádku:
 ### Cykly
 
 *# cyklus **for** (s definicí vlastní proměnné/obecný)*<br>
-[{*návěští*}**:**] **for (my $**{*identifikátor*} **=** {*výraz*}**;** [{*podmínka*}]**;** [{*výraz-iterace*}]**)** {*blok příkazů*}
-[{*návěští*}**:**] **for (**[{*výraz-inicializace*}]**;** [{*podmínka*}]**;** [{*výraz-iterace*}]**)** {*blok příkazů*}
+[{*návěští*}**:**] **for (my $**{*identifikátor*} **=** {*výraz*}**;** [{*podmínka*}]**;** [{*výraz-iterace*}]**) \{** [{*příkazy*}] **\}**<br>
+[{*návěští*}**:**] **for (**[{*výraz-inicializace*}]**;** [{*podmínka*}]**;** [{*výraz-iterace*}]**) \{** [{*příkazy*}] **\}**
 
-*# cyklus **foreach***<br>
-*// „Prvky“ zde mohou být jak jednotlivé skaláry, tak i pole a asociativní pole, která se rozloží, stejně jako při volání funkcí.*<br>
-[{*návěští*}**:**] **foreach** [**my**] **$**{*identifikátor*} **(**{*prvky*}**)** {*blok příkazů*} [**continue** {*další blok příkazů*}]
+*# cyklus **foreach** (obecně/příklady)*<br>
+[{*návěští*}**:**] **foreach** [**my**] **$**{*identifikátor*} **(**{*seznam*}**) \{** [{*příkazy*}] **\}** [**continue \{** [{*další příkazy*}] **\}**]<br>
+**foreach my $x (1, 2, 3) { printf("Číslo %d.\\n", $x); }**<br>
+**foreach my $x (@ARG) { printf("%s\\n", $x); }**
 
 *# cyklus typu **while** (s pozitivní podmínkou/negovanou podmínkou)*<br>
-[{*návěští*}**:**] **while (**{*podmínka*}**)** {*blok příkazů*} [**continue** {*další blok příkazů*}]<br>
-[{*návěští*}**:**] **until (**{*podmínka*}**)** {*blok příkazů*} [**continue** {*další blok příkazů*}]
+[{*návěští*}**:**] **while (**{*podmínka*}**) \{** [{*příkazy*}] **\}** [**continue \{** [{*další příkazy*}] **\}**]<br>
+[{*návěští*}**:**] **until (**{*podmínka*}**) \{** [{*příkazy*}] **\}** [**continue \{** [{*další příkazy*}] **\}**]
 
 *# cyklus typu **do...while** (s pozitivní podmínkou/negovanou podmínkou)*<br>
-**do** {*blok příkazů*} **while (**{*podmínka*}**);**<br>
-**do** {*blok příkazů*} **while (!(**{*podmínka*}**));**
+**do \{** [{*příkazy*}] **\} while (**{*podmínka*}**);**<br>
+**do \{** [{*příkazy*}] **\} while (!(**{*podmínka*}**));**
 
 *# nekonečný cyklus*<br>
-[{*návěští*}**:**] **for (;;)** {*blok příkazů*}
+[{*návěští*}**:**] **for (;;) \{** [{*příkazy*}] **\}**
 
 ### Řízení toku (skoky)
 
@@ -200,36 +215,36 @@ a na jejich začátek uvedete následující řádku:
 *// Příkaz „return“ v Perlu není povinný. Při jeho nepoužití vrátí Perl hodnotu posledního provedeného příkazu ve funkci.*<br>
 **return** {*návratová hodnota*}**;**
 
-*# vyskočit za konec cyklu*<br>
+*# vyskočit za **konec cyklu***<br>
 **last** [{*návěští*}]**;**
 
-*# skočit těsně před uzavírací závorku cyklu*<br>
-**next** [{*návěští*}]**;**
-
-*# skočit přímo za otevírací závorku cyklu*<br>
-**redo** [{*návěští*}]**;**
-
-*# skočit na návěští*<br>
-**goto** {*návěští*}**;**
-
-*# ukončit program*<br>
+*# **ukončit** program*<br>
 **exit(**[{*návratový-kód*}]**);**
-
-*# pozdržet program o daný počet sekund*<br>
-**my $**{*pomocnáProměnná*} **=** {*N*}**;**<br>
-**while (($**{*pomocnáProměnná*} **-= sleep($**{*pomocnáProměnná*}**)) &gt; 0) {}**
 
 *# ukončit program s hlášením kritické chyby (obecně/příklad)*<br>
 **die("**{*text*}**"**[**,** {*pokračování textu*}]**);**<br>
 **die("Nastala chyba číslo&blank;", $čísloChyby, "!");**
 
+*# skočit těsně před uzavírací závorku cyklu*<br>
+**next** [{*návěští*}]**;**
+
+*# **pozdržet** program o daný počet sekund*<br>
+**my $**{*pomocnáProměnná*} **=** {*N*}**;**<br>
+**while (($**{*pomocnáProměnná*} **-= sleep($**{*pomocnáProměnná*}**)) &gt; 0) {}**
+
+*# skočit přímo za otevírací závorku cyklu*<br>
+**redo** [{*návěští*}]**;**
+
+*# skočit na **návěští***<br>
+**goto** {*návěští*}**;**
+
 ### Podmínky
 
-*# provést blok příkazů, je-li podmínka pravdivá/nepravdivá*<br>
+*# provést blok příkazů, je-li **podmínka** pravdivá/nepravdivá*<br>
 **if (**{*podmínka*}**) \{** [{*příkazy*}] **\}** [**elsif (**{*další podmínka*}**) \{** [{*příkazy*}] **\}**]... [**else \{** [{*příkazy*}] **\}**]<br>
 **unless (**{*podmínka*}**) \{** [{*příkazy*}] **\}** [**elsif (**{*další podmínka*}**) \{** [{*příkazy*}] **\}**]... [**else \{** [{*příkazy*}] **\}**]
 
-*# provést příkaz, je-li podmínka pravdivá (alterantivy)*<br>
+*# provést **příkaz**, je-li podmínka pravdivá (alterantivy)*<br>
 {*podmínka*} **and** {*příkaz*}**;**<br>
 {*příkaz*} **if (**{*podmínka*}**);**
 
@@ -237,21 +252,31 @@ a na jejich začátek uvedete následující řádku:
 {*podmínka*} **or** {*příkaz*}**;**<br>
 {*příkaz*} **unless (**{*podmínka*}**);**
 
-*# přepínač „**switch**“ bez větve „default“*<br>
-*// V případě zanoření změňte ve vnořeném kódu identifkátory „hodnota“ a „příznak“. Poznámka: příkaz „next“ používejte uvnitř této konstrukce pouze s návěštím.*<br>
-[{*návěští*}**:**] **foreach my $hodnota (** {*skalární-výraz*}**) \{**<br>
-**my $příznak = 0;**<br>
-[**if ($příznak || ($příznak = $hodnota eq** {*hodnota*}**))** {*blok příkazů*}]...<br>
+*# přepínač „**switch**“*<br>
+*// V případě zanoření změňte ve vnořeném kódu identifkátory „$hodnota“ a „$příznak“. Větev „default“ můžete realizovat podmínkou „unless ($příznak)“ na konci bloku, v případě potřeby využijte příkaz „goto“. Poznámka: příkaz „next“ používejte uvnitř této konstrukce pouze s návěštím.*<br>
+[{*návěští*}**:**] **\{**<br>
+**my ($příznak, $hodnota) = (0, scalar(**{*testovaný výraz*}**));**<br>
+[**$příznak = $příznak \|\| $hodnota eq** {*hodnota*}**;**]...<br>
+[**if ($příznak) \{** [{*příkazy*}] <nic>[**last;**] **\}**]...<br>
 **\}**
 
-*# přepínač „**switch**“ s větví „default“*<br>
-*// Použijete-li tuto konstrukci v programu víckrát, při každém použití změňte identifkátor „default“! V případě zanoření změňte ve vnořeném kódu také identifkátory „hodnota“ a „příznak“.*<br>
-[{*návěští*}**:**] **foreach my $hodnota (** {*skalární-výraz*}**) \{**<br>
-**my $příznak = 0;**<br>
-[**if ($příznak || ($příznak = $hodnota eq** {*hodnota*}**))** {*blok příkazů*}]...<br>
-!: Někam do těla konstrukce umístěte před některý příkaz návěští „default:“.<br>
-**unless ($příznak) {$příznak = 1; goto default;}**
+<!--
+*# přepínač **switch** (příklad)*<br>
+**můjswitch: \{**<br>
+<odsadit1>**my ($příznak, $hodnota) = (0, scalar($s));**<br>
+<odsadit1>**$příznak = $příznak \|\| $hodnota eq "ABC";**<br>
+<odsadit1>**$příznak = $příznak \|\| $hodnota eq "abc";**<br>
+<odsadit1>**if·($příznak)·\{**<br>
+<odsadit2>**printf("Bylo to ABC.\\n");**<br>
+<odsadit2>**last;**<br>
+<odsadit1>**\}**<br>
+<odsadit1>**$příznak = $příznak || $hodnota eq "xyz";**<br>
+<odsadit1>**if ($příznak) \{**<br>
+<odsadit2>**printf("Bylo to XYZ.\\n");**<br>
+<odsadit2>**last;**<br>
+<odsadit1>**\}**<br>
 **\}**
+-->
 
 ### Operace s čísly
 
@@ -306,7 +331,7 @@ a na jejich začátek uvedete následující řádku:
 **$ORS** ⊨ undef
 
 *# vstupní **ukončovač** záznamu*<br>
-*// Jako ukončovač lze nastavit libovolný řetězec. Existují dva zvláštní případy: nastavení na prázdný řetězec způsobí, že jako ukončovač bude rozpoznána jakákoliv posloupnost dvou nebo více znaků \\n; nehodnota undef způsobí, že vstup nebude dělený na záznamy a rovnou načte celý zbytek vstupního souboru.*<br>
+*// Jako ukončovač lze nastavit libovolný řetězec. Existují dva zvláštní případy: nastavení na prázdný řetězec způsobí, že jako ukončovač bude rozpoznána jakákoliv posloupnost dvou nebo více znaků \\n; nehodnota undef způsobí, že vstup nebude dělený na záznamy a rovnou se načte celý zbytek vstupního souboru.*<br>
 **$RS** ⊨ "\\n"
 
 *# **verze** Perlu (jen čtení)*<br>
@@ -349,13 +374,9 @@ a na jejich začátek uvedete následující řádku:
 [ ] Přesunout na správné místo.
 -->
 
+*# formátovat funkcí sprintf()*<br>
+**sprintf(**{*formát*}**,** {*seznam, parametrů*}**)**
 
-*# změnit aktuální adresář*<br>
-**chdir(**{*cesta*}**)** [**or die(**{*...*}**)**]**;**
-
-*# zjistit aktuální adresář*<br>
-^^**use Cwd;**<br>
-**getcwd()** ⊨ "/home/alena/linux-spellbook"
 
 
 <!--
@@ -387,10 +408,10 @@ a na jejich začátek uvedete následující řádku:
 
 *# **kódové** číslo Unicode prvního/N-tého znaku řetězce*<br>
 **ord(**{*řetězec*}**)** ⊨ 382<br>
-**ord(substr(**{*řetězec*}**,** {*N*} **- 1, 1))**
+**ord(substr(**{*řetězec*}**,** {*N-1*}**, 1))**
 
 *# **zopakovat** řetězec (obecně/příklad)*<br>
-{*$řetězec*} **x** {*$počet*}<br>
+{*řetězec*} **x** {*počet*}<br>
 **"abc" x 3** ⊨ "abcabcabc"
 
 *# řetězec na malá/velká písmena*<br>
@@ -406,26 +427,28 @@ a na jejich začátek uvedete následující řádku:
 
 ### Dělení na podřetězce
 
-*# získat **podřetězec***<br>
-*// Poznámka: kladný počáteční index musí ležet uvnitř řetězce; k zápornému se přičte délka řetězce a uvnitř řetězce ležet nemusí, takže např. „substr($s, -1)“ vrátí poslední znak řetězce, ale pro prázdný řetězec vrátí jen prázdný řetězec.*<br>
-**substr(**{*řetězec*}**,** {*počáteční-index*}[**,** {*maximální-délka*}]**)**
+*# získat **podřetězec** (obecně/max. délka zleva/max. délka zprava)*<br>
+*// Počáteční index může být i záporný; v takovém případě se k němu před použitím přičte délka řetězce. Výsledný interval daný počátečním indexem a maximální délkou se musí s pozicemi existujícími v řetězci alespoň dotýkat, pokud bude zcela mimo řetězec, funkce vypíše varování a vrátí undef. Maximální délka se vždy počítá od zadané pozice, ne od skutečného začátku řetězce, proto např. „substr("AB", -3, 2)“ vrátí pouze "A".*<br>
+**substr(**{*řetězec*}**,** {*počáteční-index*}[**,** {*maximální-délka*}]**)**<br>
+**substr(**{*řetězec*}**, 0,** {*maximální-délka*}**)**<br>
+{*maximální-délka*} **&gt; 0 ? substr(**{*řetězec*}**, -**{*maximální-délka*}**) : ""**
 
 *# odebrat z proměnné ukončovač záznamu*<br>
 *// Odebere z konce řetězce v proměnné ukončovač podle nastavení speciální proměnné $RS. Velmi často se používá po načtení řádky. Pokud řetězec ukončovačem nekončí, proměnná zůstane nezměněná.*<br>
 **chomp(**{*$proměnná*}**);**
 
-*# rozdělit řetězec na pole (obecně/příklady)*<br>
+*# **rozdělit** řetězec na pole (obecně/příklady)*<br>
 *// Oddělovač může být buď skalár (např. řetězec), nebo literál regulárního výrazu v lomítkách. Pozor na pasti! Past č. 1: Řetězec "&blank;" se zde interpretuje jako regulární výraz „\\s+“. Pokud chcete jako oddělovač uvést mezeru, použijte místo řetězce regulární výraz „&blank;“ zadaný jako „/&blank;/“. Past č. 2: pokud regulární výraz obsahuje záchyty, příkaz „split“ pro každý záchyt vloží na dané místo výstupního pole navíc řetězec s textem záchytu; pokud daný záchyt nebyl použit, vloží se tam undef. Podrobnější vysvětlení v dokumentaci funkce „split“.*<br>
 [{*@pole*} **=**] **split(**{*oddělovač*}**,** {*dělený-řetězec*}[**,** {*maximální-počet-dílů*}]**)**<br>
 **@pole = split(":", $s);**<br>
 **@pole = split(/[:;]/, $s);**
 
-*# vyjmout z řetězce v proměnné poslední znak (obecně/příklad)*<br>
-*// Pro prázdný řetězec vrací funkce chop() prázdný řetězec a proměnnou nezmění.*<br>
+*# vyjmout z řetězce v proměnné **poslední znak** (obecně/příklad)*<br>
+*// Pro prázdný řetězec vrací funkce chop() prázdný řetězec a proměnnou nezmění. Podle dokumentace funkce „chop()“ nevyžaduje okopírování celého řetězce, takže může být použita v cyklu pro zpracování řetězce znak po znaku.*<br>
 **chop(**{*$proměnná*}**)**<br>
 **my $x = "abe"; printf("1: %s ", chop($x)); printf("2: %s\\n", chop($x));** ⊨ 1: e 2: b
 
-*# rozdělit řetězec na poloviny*<br>
+*# rozdělit řetězec na **poloviny***<br>
 **(substr(**{*$skalár*}**, 0, length(**{*$skalár*}**) / 2), substr(**{*$skalár*}**, length(**{*$skalár*}**) / 2))**
 
 *# rozdělit řetězec na pole **jednotlivých** znaků*<br>
@@ -434,16 +457,16 @@ a na jejich začátek uvedete následující řádku:
 ### Literály řetězců
 
 *# řetězcový **literál** (alternativy)*<br>
-*// V apostrofech je zvláštním znakem pouze apostrof a odzvláštnění není možné. Ve dvojitých uvozovkách jsou zvláštní znaky „\\“, „$“ a „@“, všechny lze odzvláštnit zpětným lomítkem. Navíc se tam intepretují některé sekvence začínající zpětným lomítkem a písmenem (např. „\\n“). Konec řádky může být obsažen v obou druzích literálů bez odzvláštnění.*<br>
+*// Ve dvojitých uvozovkách jsou zvláštními znaky „\\“, „$“ a „@“, všechny lze odzvláštnit zpětným lomítkem. Navíc se tam intepretují některé sekvence začínající zpětným lomítkem a písmenem (např. „\\n“).  V apostrofech je zvláštním znakem pouze apostrof a odzvláštnění není možné. Konec řádky může být obsažen v obou druzích literálů bez odzvláštnění.*<br>
 **"**{*text*}**"**<br>
 **'**{*text*}**'**
 
-*# dvojitá uvozovka, tabulátor a \\n*<br>
-**"\\"\\t\\n"**
+*# řetězec: dvojitá uvozovka, tabulátor a \\n*<br>
+**"**{*...*}**\\"\\t\\n**{*...*}**"**
 
 *# nulový bajt*<br>
-*// Můžete sice použít i „\\0“, ale s tím můžete narazit na problémy, pokud by za nulovým bajtem měla následovat číslice. „\\01“ totiž vygeneruje bajt s hodnotou 1, ne nulový bajt a číslici 1.*<br>
-**"\\x{0}"**
+*// Můžete sice použít i „\\0“, ale ne, pokud by za ním měla následovat číslice. „\\01“ totiž vygeneruje bajt s hodnotou 1, ne nulový bajt a číslici 1.*<br>
+**"**{*...*}**\\x{0}**{*...*}**"**
 
 *# znak Unicode podle kódového čísla (obecně/příklady)*<br>
 **"**{*...*}**\\x\{**{*hexčíslo*}**\}**{*...*}**"**<br>
@@ -453,6 +476,10 @@ a na jejich začátek uvedete následující řádku:
 *# prázdný řetězec*<br>
 **""**
 
+*# získat ukazatel na skalární objekt (obecně/příklad)*<br>
+**\\(**{*řetězec*}**)**<br>
+**my $ukazatel = \\("Hello, world.\\n");**
+
 *# interpolovat skalární proměnnou*<br>
 **"**{*...*}**$\{**{*identifikátor*}**\}**{*...*}**"**
 
@@ -461,19 +488,26 @@ a na jejich začátek uvedete následující řádku:
 [[**local**] **$LIST\_SEPARATOR = "**{*oddělovač*}**";**]<br>
 **"**{*...*}**@\{**{*identifikátor*}**\}**{*...*}**"**
 
+### Literály regulárních výrazů
+
+*# získat ukazatel na regulární výraz*<br>
+**qr/**{*regulární výraz*}**/**[{*příznaky*}]
+
+*# regulární výraz přímo (jen v určitých kontextech)*<br>
+**/**{*regulární výraz*}**/**
+
+*# interpolovat do regulárního výrazu: dynamický regulární výraz/doslovný řetězec/reg. výraz z ukazatele*<br>
+**qr/**{*...*}**$\{**{*identifikátor\_skalární\_proměnné*}**\}**{*...*}**/**<br>
+**qr/**{*...*}**\\Q$\{**{*identifikátor\_skalární\_proměnné*}**\}\\E**{*...*}**/**<br>
+**qr/**{*...*}**$\{**{*identifikátor\_skalární\_proměnné*}**\}**{*...*}**/**
 
 ### Najít (regulární výrazy a podřetězce)
 
-Poznámka: funkce next\_match\_\*() hledají shodu s regulárním výrazem v podřetězci vymezeném parametry „počáteční-index“ a „délka-hledání“ (jsou-li zadány); všechny indexy vracené těmito funkcemi jsou ale platné v původním prohledávaném řetězci.
+Poznámka: funkce next\_match\_\*() hledají shodu s regulárním výrazem v podřetězci vymezeném parametry „počáteční-index“ a „délka-hledání“ (jsou-li zadány); všechny indexy vracené těmito funkcemi jsou ale platné v původním prohledávaném řetězci. Pokud další shodu nenajdou, vrátí místo každého indexu či délky nehodnotu undef.
 
 *# **má/nemá** shodu s regulárním výrazem?*<br>
-{*řetězec*} **=~ /**{*regulární výraz*}**/**[**i**]<nic>[**m**]<br>
-{*řetězec*} **!~ /**{*regulární výraz*}**/**[**i**]<nic>[**m**]
-
-*# **odzvláštnit** řetězec pro použití v dynamickém regulárním výrazu*<br>
-{*$proměnná*} **=** {*řetězec*}**;**
-{*$proměnná*} **=~ s/[.^\\$\*+?(){\\\\\|[]/\\\\$&amp;/g;**<br>
-!: Použít $proměnnou...
+{*řetězec*} **=~** {*/regulární výraz/*}[**i**]<nic>[**m**]<br>
+{*řetězec*} **!~** {*/regulární výraz/*}[**i**]<nic>[**m**]
 
 *# index začátku prvního/posledního výskytu **podřetězce***<br>
 *// Nebyl-li podřetězec nalezen, funkce vrací -1. Limit u funkce „rindex()“ znamená, že budou ignorovány výskyty podřetězce, které začínají na vyšším indexu, než je uvedený limit.*<br>
@@ -508,14 +542,24 @@ Poznámka: funkce next\_match\_\*() hledají shodu s regulárním výrazem v p
 <odsadit1>**$i = $x[0] + max(1, $x[1]);**<br>
 **\}**
 
+*# **odzvláštnit** řetězec pro použití v dynamickém regulárním výrazu*<br>
+*// Poznámka: tuto funkci obvykle nepotřebujete, protože do regulárního výrazu můžete interpolovat řetězec bez interpretace pomocí dvojice „\\Q“ a „\\E“.*<br>
+**quotemeta(**{*řetězec*}**)**
+<!--
+{*$proměnná*} **=** {*řetězec*}**;**
+{*$proměnná*} **=~ s/[.^\\$\*+?(){\\\\\|[]/\\\\$&amp;/g;**<br>
+!: Použít $proměnnou...
+-->
+
 ### Najít a nahradit v řetězcové proměnné
 
-*# provést náhradu pomocí regulárního výrazu (výsledek: přiřadit zpět/vrátit jako hodnotu)*<br>
+*# provést **náhradu** pomocí regulárního výrazu (výsledek: přiřadit zpět/vrátit jako hodnotu)*<br>
 *// Podrobnější informace o syntaxi najdete v sekci „Regulární výraz a řetězec náhrady“.*<br>
 {*$proměnná*} **=~ s/**{*regulární výraz*}**/**{*řetězec náhrady*}**/**[**g**]<nic>[**i**]<nic>[**m**]<nic>[**s**]**;**<br>
 {*$řetězec*} **=~ s/**{*regulární výraz*}**/**{*řetězec náhrady*}**/r**[**g**]<nic>[**i**]<nic>[**m**]<nic>[**s**]
 
-*# nahradit všechny výskyty podřetězce v textu proměnné*<br>
+*# nahradit **všechny** výskyty podřetězce v textu proměnné*<br>
+*// Pro nahrazení jen prvního výskytu vypusťte „g“ na konci druhé řádky zaklínadla.*<br>
 [{*$proměnná\_podřetězec*} **=** {*podřetězec*}**;**]<br>
 {*$proměnná*} **=~ s/\\Q$\{**{*proměnná\_podřetězec*}**\}\\E/**{*řetězec náhrady*}**/g;**
 
@@ -559,40 +603,51 @@ use feature 'state';
 {*řetězec*} **+ 0** ⊨ 1015<br>
 **oct(**{*řetězec*}**)** ⊨ 1015
 
-*# číslo na hexadecimální řetězec s malými/velkými písmeny*<br>
+*# celé číslo na hexadecimální řetězec s malými/velkými písmeny*<br>
 **sprintf("%x",** {*číslo*}**)** ⊨ "3f7"<br>
 **sprintf("%X",** {*číslo*}**)** ⊨ "3F7"
 
-*# číslo na oktalový řetězec*<br>
+*# celé číslo na oktalový řetězec*<br>
 **sprintf("%o",** {*číslo*}**)** ⊨ "1767"
 
-<!--
-*# formátovat funkcí sprintf()*<br>
-**sprintf(**{*formát*}**,** {*seznam, parametrů*}**)**
--->
+### Heše
 
-### Řazení
+<!-- Ukázkový řetězec: "Hello, world!" -->
 
-*# seřadit pole řetězců podle lokalizace (s ohledem/bez ohledu na velikost písmen)*<br>
-?<br>
-?
-
-*# seřadit pole řetězců podle číselné hodnoty znaků*<br>
-?
-
-*# seřadit pole řetězců jednotně (s ohledem/bez ohledu na velikost písmen)*<br>
-?<br>
-?
-
-*# seřadit pole čísel podle číselné hodnoty (vzestupně/sestupně)*<br>
-?
-
-### MD5 heš
-
-*# získat číselnou/hexadecimální **heš** řetězce*<br>
+*# získat číselnou heš řetězce*<br>
 ^^**use Digest::MD5;**<br>
-**unpack("L", substr(Digest::MD5::md5(**{*řetězec*}**), 0, 4))** ⊨ 610147960<br>
-**Digest::MD5::md5\_hex(**{*řetězec*}**)** ⊨ 781e5e245d69b566979b86e28d23f2c7
+^^**use Encode;**<br>
+**unpack("L", substr(Digest::MD5::md5(Encode::encode("UTF-8", **{*řetězec*}**)), 0, 4))** ⊨ 1834341228
+
+*# **MD5** heš řetězce bajtů*<br>
+^^**use Digest::MD5;**<br>
+**Digest::MD5::md5\_hex(**{*řetězec-bajtů*}**)** ⊨ 6cd3556deb0da54bca060b4c39479839
+
+*# **SHA256** heš řetězce bajtů*<br>
+^^**use Digest::SHA;**<br>
+**Digest::SHA::sha256\_hex(**{*řetězec-bajtů*}**)** ⊨ 315f5bdb76d078c43b8ac0064e4a0164612b1f (...)
+<!--ce77c869345bfc94c75894edd3-->
+
+*# **SHA1** heš řetězce bajtů*<br>
+^^**use Digest::SHA;**<br>
+**Digest::SHA::sha1\_hex(**{*řetězec-bajtů*}**)** ⊨ 943a702d06f34599aee1f8da8ef9f7296031d699
+
+*# **SHA512** heš řetězce bajtů*<br>
+^^**use Digest::SHA;**<br>
+**Digest::SHA::sha512\_hex(**{*řetězec-bajtů*}**)** ⊨ c1527cd893c124773d811911970c8fe6e857d6 (...)
+<!--df5dc9226bd8a160614c0cd963a4ddea2b94bb7d36021ef9d865d5cea294a82dd49a0bb269f51f6e7a57f79421-->
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <!--
@@ -629,6 +684,13 @@ https://metacpan.org/pod/List::MoreUtils
 *# **zopakovat** seznam (obecně/příklad použití)*<br>
 {*(seznam)*} **x** {*počet*}<br>
 **my @dvanáct\_undefů = (undef) x 12;**
+
+*# přečíst **konstantu** typu seznam (obecně)*<br>
+**(**{*identifikátor*}**)**
+
+*# přečíst konstantu typu seznam (příklad)*<br>
+**use constant můjseznam =&gt; (1, 2, 3, 4);**<br>
+**my @mojepole = (-1, 0, (můjseznam), 5, 6);**
 
 *# seznam znaků UCS v daném kódovém rozsahu (alternativy)*<br>
 **(map {chr($ARG)}** {*první-kód*}**..**{*poslední-kód*}**)**<br>
@@ -788,6 +850,31 @@ https://metacpan.org/pod/List::MoreUtils
 
 ### Řazení a přeskládání prvků v poli
 
+<!--
+[ ] https://perldoc.perl.org/Unicode::Collate
+[ ] https://perldoc.perl.org/Unicode::Collate::Locale
+
+Poznámka: takto zapsané řadicí funkce nemůžete použít v kontextu, kde máte deklarovanou proměnnou
+$a nebo $b. Proto se v kontextu, kde funkci „sort()“ používáte, deklaracím proměnných
+těchto názvů vyhněte!
+
+*# seřadit pole řetězců podle číselné hodnoty znaků*<br>
+?
+<!- -
+no locale;
+sort { $a cmp $b }
+[ ] vyzkoušet!
+
+*# seřadit pole řetězců jednotně (s ohledem/bez ohledu na velikost písmen)*<br>
+?<br>
+?
+
+*# stabilní řazení*<br>
+**use sort("stable");**<br>
+[ ] vyzkoušet!
+
+-->
+
 *# obrátit pořadí*<br>
 **array(reverse(**{*seznam*}**))**
 
@@ -795,19 +882,44 @@ https://metacpan.org/pod/List::MoreUtils
 ^^**use List::Util;**<br>
 [{*@pole*} **=**] **List::Util::shuffle(**{*@pole*}**)**
 
-*# seřadit podle číselné hodnoty*<br>
-?
+*# seřadit čísla (vzestupně/sestupně)*<br>
+[{*@pole*} **=**] **array(sort {$a &lt;=&gt; $b}** {*seznam*}**)**<br>
+[{*@pole*} **=**] **array(sort {$b &lt;=&gt; $a}** {*seznam*}**)**
+<!--
+Pozor na ne-čísla!
+[ ] vyzkoušet!
+-->
 
-*# seřadit podle kódové hodnoty znaků v řetězcích*<br>
+*# seřadit řetězce podle kódové hodnoty znaků*<br>
 ?
+<!--
+[{*@pole*} **=**] **do { no locale; array(sort {$a cmp $b}** {*seznam*}**); }**
+[ ] vyzkoušet!
+-->
 
-*# seřadit podle pravidel lokalizace (velikost písmen nerozlišovat/rozlišovat)*<br>
+*# seřadit řetězce podle aktuální lokalizace (velikost písmen nerozlišovat/rozlišovat)*<br>
 ?<br>
 ?
+<!--
+*// Znaky, které mají v lokálních pravidlech řazení stejnou váhu, se při tomto způsobu řazení rozliší podle kódové hodnoty znaků, což může způsobit problémy při řazení některých řetězců.*<br>
+[{*@pole*} **=**] **do { use locale; array(sort {fc($a) cmp fc($b)}** {*seznam*}**); }**<br>
+[{*@pole*} **=**] **do { use locale; array(sort {$a cmp $b}** {*seznam*}**); }**
+[ ] vyzkoušet!
+-->
 
-*# seřadit podle jednotných pravidel (velikost písmen nerozlišovat/rozlišovat)*<br>
+*# seřadit řetězce podle jednotných pravidel Unicode (velikost písmen nerozlišovat/rozlišovat)*<br>
 ?<br>
 ?
+<!--
+[ ] https://perldoc.perl.org/Unicode::Collate
+[ ] https://perldoc.perl.org/Unicode::Collate::Locale
+-->
+
+*# seřadit podle uživatelské porovnávací funkce*<br>
+*// Řadicí blok dostane odkazy na porovnávané skaláry ve speciálních proměnných $a a $b a musí vrátit číslo větší než 0, pokud $a &gt; $b; číslo menší než 0, pokud $a &lt; $b a nulu jinak. Pozor: Toto nefunguje, pokud jsou v bloku, kde funkci sort() voláte, viditelné jiné proměnné $a či $b!*<br>
+[{*@pole*} **=**] **array(sort \{**<br>
+<odsadit1>{*příkaz*}...<br>
+**\}** {*seznam*}**)**
 
 ### Číselné operace
 
@@ -827,6 +939,8 @@ https://metacpan.org/pod/List::MoreUtils
 ^^**use List\:\:Util;**<br>
 **List::Util::min(**{*seznam*}**)**<br>
 **List::Util::max(**{*seznam*}**)**
+
+
 
 
 
@@ -860,6 +974,10 @@ https://metacpan.org/pod/List::MoreUtils
 
 *# **transpozice** (klíče na hodnoty a hodnoty na klíče)*<br>
 ?
+<!--
+^^**use List::Util;**<br>
+[{*%pole*} **=**]
+-->
 
 ### Prvky
 
@@ -875,13 +993,35 @@ https://metacpan.org/pod/List::MoreUtils
 {*%pole*} **= ();**
 
 *# **obsahuje** prvek?*<br>
-**exists($**{*id\_pole*}**\{**{*klíč*}**\})**
+**exists($**{*identifikátor*}**\{**{*klíč*}**\})**
 
 *# **přidat** či přepsat prvek*<br>
-**$**{*id\_pole*}**\{**{*klíč*}**\} =** {*hodnota*}
+**$**{*identifikátor*}**\{**{*klíč*}**\} =** {*hodnota*}
+
+*# přiřadit hodnoty více prvkům najednou (obecně/příklady)*<br>
+**@**{*identifikátor*}**\{**{*seznam, klíčů*}**\} =** {*(seznam, hodnot)*}**;**<br>
+**@apole{"a", "b"} = ("A", "B");**<br>
+**@apole{@klíče} = @hodnoty;**<br>
+**@apole{@klíče} = ("xyz") x alength(@klíče);**
 
 *# smazat prvky splňující podmínku*<br>
 ?
+<!--
+**delete @**{*identifikátor*}**\{**array(grep \{**<br>
+<odsadit1>{*příkaz*}...<br>
+**\} keys(%**{*identifikátor*}**))};**
+-->
+
+*# vytvořit pole výběrem prvků (přímo/přes ukazatel)*<br>
+[{*@pole*} **=**] **@**{*identifikátor*}**\{**{*seznam, klíčů*}**\}**<br>
+?
+
+*# smazat více prvků najednou (přímo/přes ukazatel)*<br>
+**delete @**{*identifikátor*}**\{**{*seznam, klíčů*}**\};**<br>
+?
+<!--
+**delete @**{*ukazatel*}**-&gt;\{**{*seznam, klíčů*}**\};** // nefunguje
+-->
 
 *# smazat prvek přes ukazatel na asociativní pole*<br>
 **delete** {*$ukazatel*}**-&gt;\{**{*klíč*}**\};**
@@ -910,13 +1050,13 @@ https://metacpan.org/pod/List::MoreUtils
 
 ### Získat ukazatel
 
-*# získat ukazatel na skalár/pole/asociativní pole*<br>
+*# získat ukazatel na proměnnou: skalár/pole/asociativní pole*<br>
 **\\$**{*identifkátor\_skalární\_proměnné*}<br>
 **\\@**{*identifkátor\_pole*}<br>
 **\\%**{*identifkátor\_asociativního\_pole*}
 
 *# získat ukazatel na pojmenovanou funkci/**anonymní funkci***<br>
-*// Analogicky můžete ukazatel na anonymní funkci předat jako parametr jiné funkci.*<br>
+*// Analogicky můžete ukazatel na anonymní funkci předat jako parametr jiné funkci. Poznámka: raději se nesnažte získávat ukazatele na vestavěné funkce Perlu; pravděpodobně to nebude fungovat.*<br>
 **\\&amp;**{*identifkátor\_funkce*}<br>
 {*$proměnná*} **= sub \{**[{*příkazy*}]...**\};**
 
@@ -928,6 +1068,11 @@ https://metacpan.org/pod/List::MoreUtils
 *// Poznámka: klíče v asociativním poli jsou nepřiřaditelné, proto ukazatel na ně nelze získat.*<br>
 **\\$**{*identifkátor\_pole*}**[**{*index*}**]**<br>
 **\\$**{*identifkátor\_asociativního\_pole*}**\{**{*klíč*}**\}**<br>
+
+*# získat ukazatel na anonymní objekt: skalár/pole/asociativní pole*<br>
+**\\(**{*hodnota*}**)**<br>
+**[**{*seznam*}**]**<br>
+**\{**{*seznam,dvojic*}**\}**
 
 *# získat ukazatel na hodnotu v asociativním poli dostupném přes ukazatel*<br>
 **\\$**{*ukazatel-na-asoc-pole*}**-&gt;\{**{*klíč*}**\}**
@@ -977,13 +1122,12 @@ https://metacpan.org/pod/List::MoreUtils
 **open(my **{*$proud*}**, "**{*režim*}**:raw",** {*"cesta/k/souboru"*}**)** [**or die(**{*"chybová zpráva"*}**)**]**;**
 
 *# otevřít rouru pro zápis/pro čtení*<br>
-**open(my **{*$proud*}**, "\|-", "**{*název-příkazu*}**"**[**,** {*parametr-příkazu*}]...**)** [**or die(**{*zpráva*}**)**]**;**<br>
-**open(my **{*$proud*}**, "-\|", "**{*název-příkazu*}**"**[**,** {*parametr-příkazu*}]...**)** [**or die(**{*zpráva*}**)**]**;**
+**open(my **{*$proud*}**, "\|-", "**{*název-příkazu*}**"**[**,** {*parametr-příkazu*}]...**)** [**or die(**{*zpráva*}**)**]**;** [**binmode(**{*$proud*}**, ":raw");**]<br>
+**open(my **{*$proud*}**, "-\|", "**{*název-příkazu*}**"**[**,** {*parametr-příkazu*}]...**)** [**or die(**{*zpráva*}**)**]**;** [**binmode(**{*$proud*}**, ":raw");**]
 
 *# otevřít číslovaný vstup či výstup*<br>
 *// Deskriptory jsou číslované proudy, které typicky otevírá bash před spuštěním každého procesu. Deskriptory číslo 0, 1 a 2 se nazývají „standardní vstup“, „standardní výstup“ a „standardní chybový výstup. Režim je v tomto případě buď „&lt;“ pro čtení z deskriptoru, nebo „&gt;“ pro zápis do deskriptoru.“*<br>
-**open(my **{*$proud*}**, "**{*režim*}**&amp;=**{*číslo*}**")** [**or die(**{*"chybová zpráva"*}**)**]**;**<br>
-[**binmode(**{*$proud*}**, ":raw");**]
+**open(my **{*$proud*}**, "**{*režim*}**&amp;=**{*číslo*}**")** [**or die(**{*"chybová zpráva"*}**)**]**;** [**binmode(**{*$proud*}**, ":raw");**]
 
 *# **přepnout režim** proudu na binární/textový*<br>
 *// Tento příkaz nesmí být použit poté, co už bylo s proudem od otevření manipulováno (např. čtením, zápisem, přesouváním apod.) Proto ho doporučuji používat jen okamžitě po otevření proudu.*<br>
@@ -1012,7 +1156,7 @@ https://metacpan.org/pod/List::MoreUtils
 {*$cíl*} **= scalar(readline(**{*$proud*}**));**<br>
 **chomp(**{*$cíl*}**) if (defined(**{*$cíl*}**));**
 
-*# načíst všechny zbývající řádky bez ukončovače*<br>
+*# načíst všechny zbývající řádky bez ukončovačů do pole*<br>
 {*@cíl*} **= array(readline(**{*$f*}**));**<br>
 **chomp(**{*@cíl*}**);**
 
@@ -1044,13 +1188,13 @@ https://metacpan.org/pod/List::MoreUtils
 
 ### Čtení (vstup) v binárním režimu
 
-*# načíst pevný maximální počet bajtů*<br>
+*# načíst pevný **maximální počet bajtů***<br>
 **read(**{*$proud*}**,** {*$proměnná-cíl*}**,** {*max-bajtů*}[**,** {*počáteční-index-do-cíle*}]**)**
 
-*# načíst jeden bajt*<br>
+*# načíst jeden **bajt***<br>
 {*$cíl*} **= getc(**{*$proud*}**);**
 
-*# načíst celý zbytek souboru do řetězce bajtů*<br>
+*# načíst celý **zbytek souboru** do řetězce bajtů*<br>
 {*$cíl*} **= do {local $RS = undef; scalar(readline(**{*$proud*}**));}**
 
 *# konvertovat bajty z řetězce na pole číselných hodnot*<br>
@@ -1087,37 +1231,47 @@ https://metacpan.org/pod/List::MoreUtils
 [ ] Chybí obsluha chyb.
 -->
 
-*# nastavit mód (přístupová práva)(obecně/příklad)*<br>
-*// Pozor! Mód je zde interpretován v oktalové soustavě; pokud ho zadáte v desítkové (např. „777“), nebude fungovat.*<br>
+*# nastavit **mód** (přístupová práva)(obecně/příklad)*<br>
+*// Pozor! Mód je zde interpretován v oktalové soustavě, proto ho tak zpravidla musíte zadat. Pokud ho zadáte v desítkové soustavě (např. „777“), nebude fungovat.*<br>
 **chmod(**{*číslo*}**,** {*cesta*}...**);**<br>
 **chmod(04777, "../a.txt", "b.txt");**
 
-*# přejmenovat soubor či adresář*<br>
+*# **přejmenovat** soubor*<br>
 **rename(**{*"původní název"*}**,** {*"nový název"*}**)** [**or die(**{*"chybové hlášení"*}**)**]**;**
 
-*# vytvořit pevný odkaz na soubor*<br>
+*# vytvořit **pevný odkaz** na soubor*<br>
 **link(**{*"$původní/cesta"*}**,** {*"nová/cesta"*}**)** [**or die(**{*"chybové hlášení"*}**)**]**;**
 
-*# vytvořit symbolický odkaz (obecně/příklad)*<br>
+*# vytvořit **symbolický odkaz** (obecně/příklad)*<br>
 **symlink(**{*"obsah odkazu"*}**,** {*"cesta/k/odkazu"*}**)** [**or die(**{*"chybové hlášení"*}**)**]**;**
 
-*# odstranit soubor či symbolický odkaz*<br>
+*# **odstranit** soubor či symbolický odkaz*<br>
 **unlink(**{*cesta*}**)** [**or** {*zpracovat chybu*}]
 
 ### Operace s adresáři
 
-*# získat pole názvů položek v adresáři*<br>
-*// Pozor, získané pole bude obsahovat i zvláštní položky „.“ a „..“ a všechny skryté soubory a adresáře.*<br>
+*# získat pole **názvů položek** v adresáři*<br>
+*// Pozor, získané pole bude obsahovat i zvláštní položky „.“ a „..“ a všechny skryté soubory a adresáře. Možná budete vrácené pole chtít přefiltrovat funkcí grep() a seřadit.*<br>
 **if (opendir(my $**{*identifikátor*}**,** {*$cesta*}**)) \{**<br>
 <odsadit1>{*@pole*} **= array(readdir($**{*identifikátor*}**));**<br>
 <odsadit1>**closedir($**{*identifikátor*}**);**<br>
 **\}**
 
-*# vytvořit adresář*<br>
+*# změnit aktuální adresář*<br>
+**chdir(**{*cesta*}**)** [**or die(**{*...*}**)**]**;**
+
+*# **zjistit** aktuální adresář*<br>
+^^**use Cwd;**<br>
+**getcwd()** ⊨ "/home/alena/linux-spellbook"
+
+*# **vytvořit** adresář*<br>
 **mkdir(**{*$cesta*}**)** [**or** {*zpracovat chybu*}]
 
-*# odstranit prázdný adresář*<br>
+*# **odstranit** prázdný adresář*<br>
 **rmdir(**{*$cesta*}**)** [**or** {*zpracovat chybu*}]
+
+*# **přejmenovat** adresář*<br>
+**rename(**{*"původní název"*}**,** {*"nový název"*}**)** [**or die(**{*"chybové hlášení"*}**)**]**;**
 
 <!--
 
@@ -1125,6 +1279,40 @@ https://www.tutorialspoint.com/perl/perl_special_variables.htm
 -> používat „use English;“!
 -->
 
+### Zjistit informace o adresářové položce*<br>
+
+Poznámka: v případě, že funkce stat() selže, vrátí prázné pole; proto čtení jeho kteréhokoliv prvku vrátí undef. Mód a typ adresářové položky budou v takovém případě 0.
+
+*# **typ** adresářové položky (s následováním symb. odkazů/bez následování)*<br>
+*// Typ je: 1 pro pojmenovanou rouru; 2 pro znakové zařízení; 4 pro adresář; 6 pro blokové zařízení; 8 pro soubor; 10 pro symbolický odkaz (jen u funkce „lstat“!) a 12 pro soket.*<br>
+**(stat(**{*"cesta"*}**))[2] // 0 &gt;&gt; 12** ⊨ 8<br>
+**(lstat(**{*"cesta"*}**))[2] // 0 &gt;&gt; 12** ⊨ 10
+
+*# **velikost** v bajtech*<br>
+**(stat(**{*"cesta"*}**))[7]** ⊨ 15543
+
+*# **čas** změněno/čteno*<br>
+*// Čas se vrací jako celočíselná časová známka Unixu.*<br>
+**(stat(**{*"cesta"*}**))[9]** ⊨ 1607766627<br>
+**(stat(**{*"cesta"*}**))[8]** ⊨ 1607766627
+<!--
+[ ] Jak získat přesnější čas?
+-->
+
+*# **mód***<br>
+*// Mód se vrací jako číslo. Pravděpodobně ho budete chtít vypsat v čitelné podobě funkcí „printf()“ s formátem "%04o".*<br>
+**(stat(**{*"cesta"*}**))[2] // 0 &amp; 07777** ⊨ 436
+
+*# vlastník/skupina (obojí číselně)*<br>
+**(stat(**{*"cesta"*}**))[4]** ⊨ 1000<br>
+**(stat(**{*"cesta"*}**))[5]** ⊨ 1000
+
+*# počet pevných odkazů*<br>
+**(stat(**{*"cesta"*}**))[3]** ⊨ 1
+
+*# číslo zařízení/i-uzlu*<br>
+**(stat(**{*"cesta"*}**))[0]** ⊨ 47<br>
+**(stat(**{*"cesta"*}**))[1]** ⊨ 4
 
 ## Parametry příkazů
 <!--
@@ -1133,9 +1321,21 @@ https://www.tutorialspoint.com/perl/perl_special_variables.htm
 -->
 ![ve výstavbě](../obrázky/ve-výstavbě.png)
 
-*# doporučený způsob volání Perlu*<br>
-**perl**
+*# *<br>
+**lkk perl** [{*parametry Perlu*}] {*soubor-skriptu.pl*} [{*parametry skriptu*}]
 
+*Varování:* Nikdy do svých skriptů Perlu neuvádějte direktivu interpretu „#!“
+(např. „#!/usr/bin/perl“)! Není snadné to udělat správně a neopatrné použití
+této direktivy může způsobit, že skript nepůjde spustit vůbec nebo se místo
+něj spustí něco úplně jiného.
+
+<!--
+### Jak vytvářet a spouštět skripty
+
+
+Skript pak spustíte příkazem „lkk perl“:
+
+-->
 
 ## Instalace na Ubuntu
 <!--
@@ -1219,4 +1419,4 @@ https://perldoc.perl.org/5.30.3/perlvar
 
 *# lkk perl – spouštěč, který spustí skript Perlu s doporučenými parametry*<br>
 **#!/bin/bash**<br>
-**exec perl -CSDAL -Mv5.26.0 -Mstrict -Mwarnings -Mutf8 -MEnglish "$@"**
+**exec perl -CSDAL -I/usr/share/lkk/perl -Mv5.26.0 -Mstrict -Mwarnings -Mutf8 -MEnglish -MLinuxKnihaKouzel "$@"**

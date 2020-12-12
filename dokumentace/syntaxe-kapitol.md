@@ -21,7 +21,15 @@ Zdrojový kód jednotlivých kapitol je v jazyce, který je silně založený n
 
 ### Komentáře
 
-Mechanismus překladu podporuje pouze komentáře, které začínají samostatným řádkem „`<!--`“ a pokračují až po samostatný řádek „`-->`“; takové poslopnosti řádků jsou při překladu tiše vypuštěny. Jiné druhy komentářů nejsou mechanismem překladu podporovány.
+Mechanismus překladu podporuje pouze dva druhy komentářů: jednořádkový a víceřádkový.
+
+*Jednořádkový komentář* musí tvořit celý řádek. Tento řádek musí (bez odsazení) začínat „`<!--`“ a končit „`-->`“ a mezi nimi nesmí obsahovat dvě pomlčky za sebou „--“.
+
+Příklad:
+
+``<!-- Správný komentář.-->``
+
+*Víceřádkový komentář* musí začínat samostatným řádkem „`<!--`“ a pokračovat až po samostatný řádek „`-->`“.
 
 Příklad:
 
@@ -30,6 +38,14 @@ Příklad:
 Chybný (nepodporovaný) příklad:
 
 ``Nějaký text. <!-- ??? --> Další text.``
+
+Chybný (nepodporovaný) příklad:
+
+``xyz <!-- Chybný komentář.-->``
+
+Chybný (nepodporovaný) příklad:
+
+``<!-- Chybný -- komentář.-->``
 
 ### Odstavce
 
