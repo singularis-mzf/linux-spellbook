@@ -14,11 +14,11 @@ https://creativecommons.org/licenses/by-sa/4.0/
 <!--
 Poznámky:
 
+[.] Zpracovat řazení čísel, řetězců a obecných objektů (funkce sort).
 [ ] Zpracovat tutorial začínající na: https://www.perltutorial.org/perl-syntax/
-[ ] Zpracovat referenční příručku funkcí:
-- Referenční příručka: https://perldoc.perl.org/5.30.0/index-functions-by-cat.html
-[ ] Zpracovat řazení čísel, řetězců a obecných objektů (funkce sort).
 [ ] pack/unpack
+[x] Zpracovat referenční příručku funkcí:
+- Referenční příručka: https://perldoc.perl.org/5.30.0/index-functions-by-cat.html
 
 -->
 
@@ -41,8 +41,9 @@ splněna, funkce length() aplikovaná na osmnáctiprvkové pole vrací
 hodnotu 2, připojovaný zdrojový soubor musí končit příkazem „1;“,
 proměnné se nejčastěji deklarují klíčovým slovem „my“
 a příkaz náhrady „s/.$/@/“ provedený nad řetězcem "X\\n\\n\\n"
-nikdy neskončí výsledkem "X\\n\\n@" jako v GNU Sedu, ale výsledkem "X\\n\\n\\n",
-popř. pokud přidáte ještě modifikátor „s“, výsledkem "X\\n@@";
+nikdy neskončí výsledkem "X\\n\\n@" jako v GNU Sedu,
+ale jedním z výsledků "X\\n\\n\\n" (bez modifikátoru),
+"X\\n@\\n" (s modifikátorem „s“) nebo „X\\n@@“ (s modifikátory „gs“);
 ke stejnému chování jako v Sedu ho však nedonutíte.
 
 Kapitoly vanilkové příchuti Linuxu: Knihy kouzel zaměřené na Perl
@@ -52,8 +53,8 @@ přitom většině zákeřných pastí. (Pronikat do „hlubin Perlu“ můžete
 Nejdřív naprogramujte, co potřebujete.)
 
 Tato kapitola nepokrývá jmenné prostory, objektově orientované programování
-a velkou část užitečných knihovních funkcí, ty budou v budoucnu
-předmětem samostatné kapitoly.
+a velkou část užitečných knihovních funkcí (např. práci s databázemi),
+ty budou v budoucnu předmětem samostatných kapitol.
 
 *Poznámka:* Všechna zaklínadla v této kapitole předpokládají,
 že máte nainstalovaný balíček DEB Linuxu: Knihy kouzel
