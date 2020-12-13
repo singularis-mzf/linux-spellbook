@@ -227,6 +227,7 @@ Všechny tisknutelné znaky ASCII jsou podporovány a uvedeny v následující
 * „šipky“ (←), (↑), (→), (↓) {*← ↑ → ↓*}
 * „nezlomitelná mezera“ (&nbsp;) {*&nbsp;*}
 * „české uvozovky“ („) a (“) {*„“*}
+* „pí“ (π)
 
 *# (&lt;) (≤) (=) (≠) (≥) (&gt;)*<br>
 **(&lt;) (≤) (=) (≠) (≥) (&gt;)**

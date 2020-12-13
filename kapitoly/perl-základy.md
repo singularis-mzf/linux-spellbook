@@ -18,7 +18,6 @@ Poznámky:
 [ ] Zpracovat referenční příručku funkcí:
 - Referenční příručka: https://perldoc.perl.org/5.30.0/index-functions-by-cat.html
 [ ] Zpracovat řazení čísel, řetězců a obecných objektů (funkce sort).
-[ ] stat, lstat
 [ ] pack/unpack
 
 -->
@@ -37,19 +36,20 @@ protože je multisyntaktický a pro neodborníka velmi špatně čitelný.
 Přesto je velmi užitečný a při využití jen malé podmnožiny jeho vlastností
 je snadné v něm začít programovat.
 
-Perl je ale také zákeřný programovací
-jazyk, v němž se proměnné nejčastěji deklarují klíčovým slovem „my“,
-podmínka „if (false)“ je splněna (ačkoliv generuje varování),
-připojovaný zdrojový soubor musí končit příkazem „1;“
+Perl je ale také zákeřný programovací jazyk, v němž je podmínka „if (false)“
+splněna, funkce length() aplikovaná na osmnáctiprvkové pole vrací
+hodnotu 2, připojovaný zdrojový soubor musí končit příkazem „1;“,
+proměnné se nejčastěji deklarují klíčovým slovem „my“
 a příkaz náhrady „s/.$/@/“ provedený nad řetězcem "X\\n\\n\\n"
 nikdy neskončí výsledkem "X\\n\\n@" jako v GNU Sedu, ale výsledkem "X\\n\\n\\n",
 popř. pokud přidáte ještě modifikátor „s“, výsledkem "X\\n@@";
 ke stejnému chování jako v Sedu ho však nedonutíte.
-Úspěšné použití takového jazyka vyžaduje buď hlubokou znalost,
-nebo se omezit na bezpečnou podmnožinu jeho funkcionality.
-Tato kapitola volí druhou uvedenou cestu, a než se naučíte znát
-pokročilé vlastnosti Perlu, pomůže vám vyhýbat se jeho zákeřným pastem,
-a přesto z jeho moci vytěžit co nejvíc.
+
+Kapitoly vanilkové příchuti Linuxu: Knihy kouzel zaměřené na Perl
+se omezují na bezpečnou podmnožinu jeho funkcionality, čímž vám umožní začít
+z jeho moci těžit velmi rychle a s minimem nutných znalostí a vyhýbat se
+přitom většině zákeřných pastí. (Pronikat do „hlubin Perlu“ můžete později.
+Nejdřív naprogramujte, co potřebujete.)
 
 Tato kapitola nepokrývá jmenné prostory, objektově orientované programování
 a velkou část užitečných knihovních funkcí, ty budou v budoucnu
@@ -57,7 +57,9 @@ předmětem samostatné kapitoly.
 
 *Poznámka:* Všechna zaklínadla v této kapitole předpokládají,
 že máte nainstalovaný balíček DEB Linuxu: Knihy kouzel
-a skripty budete spouštět příkazem „lkk perl“.
+a skripty budete spouštět výhradně příkazem „lkk perl“.
+Informace, jak takové skripty zprovoznit bez něj, najdete v repozitáři
+Linuxu: Knihy kouzel na GitHubu.
 
 ## Definice
 
@@ -178,7 +180,7 @@ a skripty budete spouštět příkazem „lkk perl“.
 ### Komentáře
 
 *# **komentář** do konce řádku*<br>
-**#** {*obsah komentáře*}
+[{*normální obsah řádky*}] **#** {*obsah komentáře*}
 
 *# víceřádkový komentář*<br>
 *// Pozor, před znakem „=“ na uvedených speciálních řádcích nesmí být žádný jiný znak, ani odsazení!*<br>
@@ -1315,42 +1317,55 @@ Poznámka: v případě, že funkce stat() selže, vrátí prázné pole; proto
 **(stat(**{*"cesta"*}**))[1]** ⊨ 4
 
 ## Parametry příkazů
-<!--
-- Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.
-- Jinak by zde měl být přehled nejužitečnějších parametrů používaných nástrojů.
--->
-![ve výstavbě](../obrázky/ve-výstavbě.png)
 
 *# *<br>
-**lkk perl** [{*parametry Perlu*}] {*soubor-skriptu.pl*} [{*parametry skriptu*}]
+**lkk perl** [{*parametry Perlu*}] {*soubor-skriptu.pl*} [{*parametry skriptu*}]<br>
+**lkk perl -ne** {*'skript'*}
+
+!parametry:
+
+* '-M{*kód*}' :: Na začátek hlavního skriptu před čtením vloží příkaz „use {*kód*};“ Toho je možné využít k připojení modulů, importu identifikátorů z nich, nastavení direktiv apod. Lze použít opakovaně.
+* ○ -0 ○ -0777 ◉ -0x0A ○ -0x017D :: Nastavit $RS na: "\\0"/undef (celý soubor jako jeden záznam)/"\\n"/"Ž" (uvádí se kód hexadecimálně).
+* ☐ -C0 :: Vypne implicitní podporu Unicode. (Zatím jsem nezkoušel/a.)
+* ○ -n ○ -p :: Režim připomínající GNU awk. Parametry skriptu jsou interpretovány jako cesty k souborům, které mají být čteny. Celý program se pak obalí do implictní smyčky, která z těchto souborů načítá záznamy ukončené $RS do proměnné $ARG. (Na rozdíl od GNU awk ukončovač záznamu není odebrán, k tomu je potřeba použít „chomp($ARG);“.) Hodnota $ARG se na konci každého cyklu: zahodí/vypíše. Tyto volby se obvykle používají v kombinaci s volbou -e, u delšího skriptu je totiž výhodnější čtecí cyklus napsat ručně.
+* ☐ -e {*'skript'*} :: Uvede skript na příkazové řádce namísto jeho čtení ze souboru.
+* -I {*cesta*} :: Vloží uvedenou cestu na začátek seznamu adresářů pro vyhledávání modulů (ekvivalent příkazu „use lib“ nebo parametru „'-Mlib("{*cesta*}")'“). Lze použít opakovaně. Seznam se prohledává od začátku, takže nově vložená cesta bude mít přednost před všemi předchozími.
 
 *Varování:* Nikdy do svých skriptů Perlu neuvádějte direktivu interpretu „#!“
 (např. „#!/usr/bin/perl“)! Není snadné to udělat správně a neopatrné použití
 této direktivy může způsobit, že skript nepůjde spustit vůbec nebo se místo
 něj spustí něco úplně jiného.
 
-<!--
-### Jak vytvářet a spouštět skripty
-
-
-Skript pak spustíte příkazem „lkk perl“:
-
--->
-
 ## Instalace na Ubuntu
-<!--
-- Jako zaklínadlo bez titulku uveďte příkazy (popř. i akce) nutné k instalaci a zprovoznění všech nástrojů požadovaných kterýmkoliv zaklínadlem uvedeným v kapitole. Po provedení těchto činností musí být nástroje plně zkonfigurované a připravené k práci.
-- Ve výčtu balíčků k instalaci vycházejte z minimální instalace Ubuntu.
--->
-![ve výstavbě](../obrázky/ve-výstavbě.png)
+
+Všechny použité nástroje jsou základními součástmi Ubuntu přítomnými i v minimální instalaci
+(jen balíček Linuxu: Knihy kouzel si musíte nainstalovat, aby vám fungoval spouštěč „lkk“
+a aby byl dostupný modul LinuxKnihaKouzel.pm).
 
 ## Ukázka
-<!--
-- Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
-- Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti – ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
-- Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
--->
-![ve výstavbě](../obrázky/ve-výstavbě.png)
+
+*# Ukázka 1: Zpracování binárního souboru *<br>
+**use Digest::MD5;**<br>
+**use constant konec\_řádku =&gt; "\\n";**<br>
+**my $vstup = \\\*STDIN; # standardní vstup**<br>
+**binmode($vstup, ":raw"); # binární režim**<br>
+**$RS = "\\0"; $ORS = (konec\_řádku); # speciální proměnné**<br>
+**my $s;**<br>
+**while (defined($s = scalar(readline($vstup)))) \{**<br>
+<odsadit1>**chomp($s); # zahodit ukončovač \\0**<br>
+<odsadit1>**print(Digest::MD5::md5\_hex($s));**<br>
+**\}**
+
+*# Ukázka 2: Zpracování textového souboru*<br>
+**my $vstup = \\\*STDIN;**<br>
+**my @řádky = array(readline($vstup)); # všechny řádky najednou**<br>
+**chomp(@řádky);**<br>
+**printf("Na vstupu je %d řádků.\\n", alength(@řádky));**<br>
+**my ($původní, $nový) = ('.\*\*$x@y%z', '&amp;z$y.\*@x');**<br>
+**for my $i (0..(alength(@řádky) - 1)) \{**<br>
+<odsadit1>**$řádky[$i] =~ s/\\Q${původní}\\E/($&amp;)=&gt; ${nový}/g;**<br>
+**\}**<br>
+**print("&lt;", join("&gt;\\n&lt;", @řádky), "&gt;\\n");**
 
 !ÚzkýRežim: zap
 
@@ -1360,12 +1375,11 @@ Skript pak spustíte příkazem „lkk perl“:
 - Popište typické chyby nových uživatelů a jak se jim vyhnout.
 - Buďte co nejstručnější; neodbíhejte k popisování čehokoliv vedlejšího, co je dost možné, že už čtenář zná.
 -->
-![ve výstavbě](../obrázky/ve-výstavbě.png)
 
-* *Předávání parametrů do funkcí:* Parametry se do funkce předají pomocí pole „@\_“, které má tu speciální vlastnost, že ty jeho prvky, které byly v místě předání *přiřaditelnými* hodnotami (včetně např. prvků jiných polí) se do něj předají odkazem. To znamená, že skalární proměnné se do všech funkcí předávají odkazem, nikdy hodnotou. Pole (včetně seznamů) se při předávání do funkce rozloží na všechny svoje prvky v náležitém pořadí a ty se předají odkazem. Asociativní pole se rozloží na posloupnost dvojic „klíč,hodnota“, příčemž klíče se předají hodnotou (jsou nepřiřaditelné), zatímco hodnoty se předají odkazem. Perl neprovádí žádnou automatickou kontrolu počtu, typu či hodnoty předaných parametrů; ta je výhradně zodpovědností volané funkce.
-* Seznam (na rozdíl od pole) obsahuje svoje prvky odkazem (pozor, neplést s ukazatelem) a přiřazuje se do něj po prvcích; to znamená, že např. výrazem **($a, $b) = (1, 2)** přiřadíte do proměnné **$a** hodnotu 1 a do proměnné **$b** hodnotu 2; podobně výrazem „($a, $b) = @x“ načtete do proměnných $a a $b první dva prvky pole @x. Uvedete-li do seznamu pole nebo vnořený seznam, ten se „rozbalí“ na svoje prvky, proto např. výrazem „(@x) = (1, 2)“ přiřadíte hodnoty do prvních dvou prvků pole, aniž byste ho zkrátili; oproti tomu příkazem „@x = (1, 2)“ přiřadíte do proměnné „@x“ nové, dvouprvkové pole.
-* Dokumentace Perlu radí upřednostňovat funkci „print“ před „printf“, protože je rychlejší a snáze se píše. To první je nejspíš pravda, ale pokud ji chcete použít korektně, musíte před každým voláním nastavit proměnné $OFS a $ORS, protože funkce „print“ je vypisuje, a budou-li nastaveny na nečekané hodnoty z jiné části programu, bude výstup vaší funkce nekorektní, pokud jejich hodnoty nebudete mít pod kontrolou. Napsat "%s" do printf je mnohem jednodušší než neustále přiřazovat $OFS a $ORS.
-* Blok kódu předávaný funkci jako zvláštní první parametr (což se týká především vestavěných funkcí „map“ a „grep“) *nesmí* obsahovat příkaz „return“, jinak tento příkaz ukončí obalující funkci a vrátí návratovou hodnotu z ní! To neplatí v případě, kdy se blok předává ukazatelem na anonymní funkci (s klíčovým slovem „sub“), tam je naopak příkaz „return“ vhodný.
+* *Autovivifikace:* Operátory pro přístup k prvkům pole či asociativního pole přes ukazatel („-&gt;[]“ a „-&gt;{}“) lze bezpečně použít i v případech, kdy na jejich levé straně stojí neexistující prvek asociativního pole či pole nebo neinicializovaná proměnná. Perl totiž tuto hodnotu na levé straně tohoto operátoru před vyhodnocením zkontroluje, a pokud je undef, automaticky tam přiřadí ukazatel na nové, prázdné pole (resp. asociativní pole). Tato funkce se nazývá *autovivifikace* a výrazně usnadňuje práci s vnořenými asociativními poli. Dejte si ale pozor na skutečnost, že k ní dojde při každé dereferenci, nejen při takové, do které pak přiřazujete! To znamená, že i příkaz „delete $p-&gt;{"x"}“ způsobí, že se do $p (pokud je undef) přiřadí ukazatel na prázdné asociativní pole.
+* *Předávání parametrů do funkcí:* Přiřaditelné skaláry se do funkcí předávají vždy odkazem; přiřazením do prvků zvláštního pole „@ARG“ lze přiřadit do skalárních proměnných, které byly předány funkci jako parametry. Pole se při předávání do funkce (pokud tomu nebrání její prototyp) rozloží na všechny svoje prvky v náležitém pořadí a ty se předají odkazem. Asociativní pole se rozloží na posloupnost dvojic „klíč,hodnota“, příčemž klíče se předají hodnotou (jsou nepřiřaditelné), zatímco hodnoty se předají odkazem. Perl neprovádí žádnou automatickou kontrolu počtu, typu či hodnoty předaných parametrů; ta je výhradně zodpovědností volané funkce. Je výhodné při ní použít funkci „typy()“ a regulární výraz.
+* *print() a printf():* Dokumentace Perlu radí upřednostňovat funkci „print“ před „printf“, protože je rychlejší a snáze se píše. To první je nejspíš pravda, ale pokud ji chcete použít korektně, musíte mít kontrolu nad hodnotami globálních proměnných $OFS a $ORS, protože funkce „print“ je vypisuje, a budou-li nastaveny na nečekané hodnoty z jiné části programu, bude výstup vaší funkce nekorektní. Napsat "%s" do printf je mnohem jednodušší než neustále přiřazovat $OFS a $ORS.
+* *Blok kódu:* Blok kódu předávaný funkci jako zvláštní první parametr (což se týká především vestavěných funkcí grep(), map() a sort() *nesmí* obsahovat příkaz „return“, jinak tento příkaz ukončí obalující funkci a vrátí návratovou hodnotu z ní! To neplatí v případě, kdy se blok předává ukazatelem na anonymní funkci (s klíčovým slovem „sub“), tam je naopak příkaz „return“ vhodný.
 
 <!--
 (Poznámka: v Perlu mohou existovat i skaláry, které mají nesouvisející číselnou a řetězcovou hodnotu, např. mají řetězcovou hodnotu "Hello" a číselnou hodnotu 13. Doufejte však, že na takové zrůdnosti při svém programování nenarazíte.)
@@ -1378,40 +1392,48 @@ Uvnitř regulárních výrazů v Perlu můžete použít interpolaci skalární
 *# *<br>
 **if ("abc" =~ /a${proměnná}c/) \{**{*...*}**\}**
 
-Proměnná může obsahovat buď ukazatel na regulární výraz (ten se pak zakomponuje do nového regulárního výrazu), nebo řetězec – ten se za běhu interpretuje jako regulární výraz a také se zakomponuje.
+Proměnná může obsahovat buď ukazatel na regulární výraz (ten se pak zakomponuje
+do nového regulárního výrazu), nebo textový řetězec – ten se za běhu
+interpretuje jako regulární výraz a také se zakomponuje.
 
-Pokud proměnná obsahuje text a chcete ho vložit bez intepretace zvláštních znaků, použijte tento zvláštní druh interpolace do regulárního výrazu:
+Pokud proměnná obsahuje text a chcete ho vložit bez intepretace zvláštních znaků,
+použijte tento zvláštní druh interpolace do regulárního výrazu:
 
 *# *<br>
 **if ("abc" =~ /a\\Q${proměnná}\\Ec/) \{**{*...*}**\}**
 
-Uvnitř řetězců náhrady platí stejná pravidla odzvláštňování jako v řetězcových literálech obklopených dvojitými uvozovkami, až na to, že „"“ je obyčejný znak a „/“ je na místo toho zvláštní. Uvnitř řetězce náhrady můžete použít speciální proměnné $&amp; (nahradí se za text shody) a $1, $2, ..., $9, ${10}, ... (nahradí se za text odpovídajícího záchytu). Také tam můžete použít interpolaci obyčejné proměnné, její text se použije doslova, bez interpretace zvláštních znaků.
+Uvnitř řetězců náhrady platí stejná pravidla odzvláštňování jako v řetězcových literálech
+obklopených dvojitými uvozovkami, až na to, že „"“ je obyčejný znak a „/“ je na místo toho
+zvláštní. Uvnitř řetězce náhrady můžete použít speciální proměnné $&amp;
+(nahradí se za text shody) a $1, $2, ..., $9, ${10}, ... (nahradí se za text odpovídajícího
+záchytu). Také tam můžete použít interpolaci obyčejné proměnné, její text se použije doslova,
+bez interpretace zvláštních znaků.
 
 ## Další zdroje informací
-<!--
-- Uveďte, které informační zdroje jsou pro začátečníka nejlepší k získání rychlé a obsáhlé nápovědy. Typicky jsou to manuálové stránky, vestavěná nápověda programu nebo webové zdroje. Můžete uvést i přímé odkazy.
-- V seznamu uveďte další webové zdroje, knihy apod.
-- Pokud je vestavěná dokumentace programů (typicky v adresáři /usr/share/doc) užitečná, zmiňte ji také.
-- Poznámka: Protože se tato sekce tiskne v úzkém režimu, zaklínadla smíte uvádět pouze bez titulku a bez poznámek pod čarou!
--->
-![ve výstavbě](../obrázky/ve-výstavbě.png)
 
-Co hledat:
+Poznámka č. 1: Pro spuštění příkazu „perldoc“ si musíte doinstalovat balíček „perl-doc“:
 
-* [Článek na Wikipedii](https://cs.wikipedia.org/wiki/Hlavn%C3%AD_strana)
-* Oficiální stránku programu
-* Oficiální dokumentaci
-* [Manuálovou stránku](http://manpages.ubuntu.com/)
-* [Balíček](https://packages.ubuntu.com/)
-* Online referenční příručky
-* Různé další praktické stránky, recenze, videa, tutorialy, blogy, ...
-* Publikované knihy
-* [Stránky TL;DR](https://github.com/tldr-pages/tldr/tree/master/pages/common)
+*# *<br>
+**sudo apt-get install perl-doc**
 
-<!--
-https://perldoc.perl.org/5.30.3/functions
-https://perldoc.perl.org/5.30.3/perlvar
--->
+Poznámka č. 2: Webové tutorialy a oficiální dokumentace obsahují značné množství dalších konstrukcí,
+které v Linuxu: Knize kouzel nejsou zmíněny (např. operátor „&lt;&gt;“ nebo příkaz „given“).
+U řady z nich má jejich vynechání dobrý důvod a jejich použití může vést k nezamýšlenému
+chování programu, kterému budete moci porozumět jen po nastudování obrovského množství
+dokumentace v angličtině. Pokud se tomu chcete vyhnout, používejte jen jazykové konstrukce
+z kapitol Linuxu: Knihy kouzel.
+
+* [Wikipedie: Perl](https://cs.wikipedia.org/wiki/Perl)
+* SATRAPA, Pavel. *Perl pro zelenáče.* 3. aktualizované a rozšířené vydání. Praha: CZ.NIC, z.s.p.o., 2018. CZ.NIC. ISBN 978-80-88168-35-5.
+* [Kompletní oficiální dokumentace](https://perldoc.perl.org/5.30.3/perl) (anglicky — velmi dobrý zdroj)
+* perldoc perlrun; perldoc perlvar; perldoc perlfunc; perldoc perlop (vše anglicky)
+* [YouTube: Perl Tutorial](https://www.youtube.com/watch?v=WEghIXs8F6c) (anglicky)
+* [YouTube: Perl Online Training](https://www.youtube.com/playlist?list=PLWPirh4EWFpE0UEJPQ2PUeXUfvJDhPqSD) (anglicky)
+* [Oficiální stránka jazyka](https://www.perl.org/) (anglicky)
+* [Balíček](https://packages.ubuntu.com/focal/perl) (anglicky)
+* [perltutorial.org](https://www.perltutorial.org/) (anglicky)
+* [Perl Tutorial for Beginners: Learn in 1 Day](https://www.guru99.com/perl-tutorials.html) (anglicky)
+* [TL;DR: perl](https://github.com/tldr-pages/tldr/blob/master/pages/common/perl.md) (anglicky)
 
 !ÚzkýRežim: vyp
 

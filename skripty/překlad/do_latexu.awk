@@ -202,6 +202,8 @@ function ZpracujZnak(znak) {
             return "{\\vetsineborovno}";
         case "≠":
             return "{\\nerovno}";
+        case "π":
+            return "{\\lmmathfamily{π}}";
 
 # speciality
         case "○":
