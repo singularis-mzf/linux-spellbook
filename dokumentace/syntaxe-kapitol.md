@@ -33,9 +33,7 @@ Příklad:
 
 Příklad:
 
-``<!--
-Správný komentář.
--->``
+``<!--``<br>``Správný komentář.``<br>``-->``
 
 Chybný (nepodporovaný) příklad:
 
