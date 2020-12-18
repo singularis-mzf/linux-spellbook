@@ -29,7 +29,7 @@ Pokud se chcete víc zapojit, uvítám zejména když:
 * ... doplníte do [šablony.css](form%C3%A1ty/html/%C5%A1ablona.css) další barevné motivy (např. Solarized).
 * ... [seženete či nakreslíte lepší ikony kapitol](#sehnat-či-nakreslit-lepší-ikony-kapitol).
 * ... pokusíte se do kapitol doplnit chybějící ukázky (ale to je dost náročné, hlavně když musí být tisknutelné).
-* ... vezmete si na starost kapitoly týkající se sítě (budete se vám hodit [dokumentace/popis-syntaxe.md](popis syntaxe)).
+* ... vezmete si na starost kapitoly týkající se sítě (bude se vám hodit [popis syntaxe](dokumentace/popis-syntaxe.md)\).
 * ... [založíte a budete udržovat odnož pro jinou distribuci](#založit-audržovat-odnož-pro-jinou-distribuci) (např. Fedora, Arch Linux, Manjaro apod.).
 
 Naopak nevítám, pokud budete...
