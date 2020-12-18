@@ -21,7 +21,7 @@ Vítám jakoukoliv projektu prospěšnou aktivitu. Pomoci projektu můžete nap�
 * ... se zmíníte o projektu svým technicky zdatným přátelům, a pokud budou mít zájem, pošlete jim [odkaz](https://singularis-mzf.github.io).
 * ... [opravíte drobné překlepy](#opravit-překlepy), které po mě zůstaly. (Snažím se je průběžně opravovat, ale nikdo není dokonalý.)
 * ... [budete hlásit chyby](#nahlásit-chyby), na které narazíte, abych je mohl/a opravit.
-* ... napíšete mi na [nové diskusní fórum](https://github.com/singularis-mzf/linux-spellbook/discussions) náměty, o jaká nová témata máte zájem, nebo alespoň co se vám na projektů líbí a co se vám nelíbí. Můžete tím ovlivnit jeho budoucí směřování.
+* ... napíšete mi na [nové diskusní fórum](https://github.com/singularis-mzf/linux-spellbook/discussions) náměty, o jaká nová témata máte zájem, nebo alespoň co se vám na projektu líbí a co se vám nelíbí. Můžete tím ovlivnit jeho budoucí směřování.
 * ... navrhnete drobná vylepšení ve stávajících kapitolách (např. nová zaklínadla či jejich přehlednější organizaci).
 
 Pokud se chcete víc zapojit, uvítám zejména když:
