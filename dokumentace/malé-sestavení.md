@@ -88,6 +88,12 @@ Překlad pravděpodobně bude fungovat i při nedodržení doporučené syntaxe
 
 ``make PREMIOVE_KAPITOLY=1 -j4 html``
 
+* Parametrem „REKLAMNI\_PATY=1“ můžete zapnout generování „reklamních“ pat kapitol ve formátu HTML. Texty pat se nastavují v souboru „konfig.ini“ v sekci [Reklamní-Paty].
+
+*Příklad:*
+
+``make REKLAMNI_PATY=1 -j4 html``
+
 * Nastavením proměnné prostředí „PORADI\_KAPITOL“ na zvláštní hodnotu „\_VŠE\_“ můžete vynutit automatické přeložení všech kapitol a dodatků zapsaných v Makefile (tato funkce je používána při sestavování „výplachu repozitáře“):
 
 ``PORADI_KAPITOL='_VŠE_' make -j4 html``

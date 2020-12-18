@@ -41,4 +41,6 @@ fi
 export SEKCE="$1"
 export KLIC="$2"
 export VYCHOZI
-exec gawk -f "skripty/přečíst-konfig.awk"
+VYSLEDEK=$(gawk -f "skripty/přečíst-konfig.awk"; printf x)
+printf 'přečíst_konfig:[%s][%s][%s] = "%s"\n' "$SEKCE" "$KLIC" "$VYCHOZI" "$VYSLEDEK" >>"$SOUBORY_PREKLADU/přečíst_konfig.log"
+printf %s\\n "${VYSLEDEK%x}"

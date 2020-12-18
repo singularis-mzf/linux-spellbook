@@ -1328,4 +1328,21 @@ dl.copyrights pre {
     white-space:nowrap;
 }
 
+#
+# Reklamní paty kapitol
+##############################################################################
+
+.reklamnipata {
+    margin:0 auto;
+    border:thin solid rgba({{zb-barevny-stitek}}, 1.0);
+    border-radius:1em;
+    padding:1.5em;
+    max-width:50em;
+    text-align:center;
+    line-height:1.75;
+    font-style:oblique;
+}
+
+.reklamnipata a::before, .reklamnipata a::after {font-size:80%}
+
 {{KONEC}}

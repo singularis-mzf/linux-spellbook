@@ -182,10 +182,17 @@ function PrelozitVystup(radek) {
     gsub(/\{\{DATUM SESTAVENÍ\}\}/, datum, radek);
     gsub(/\{\{IKONA KAPITOLY\}\}/, ikona_kapitoly, radek);
     gsub(/\{\{IKONA KAPITOLY BEZ DIAKRITIKY\}\}/, OmezitNazev(ikona_kapitoly, 1), radek);
+    if (radek ~ /\{\{REKLAMNÍ PATA\}\}/) {
+        print "XYZ" > "/dev/stderr";
+        VyzadujeFragmentyTSV();
+        VyzadujePromennou("IDFORMATU", "{{REKLAMNÍ PATA}} je podporována jen ve formátech HTML a LOG!");
+        if (IDFORMATU != "html") {ShoditFatalniVyjimku("{{REKLAMNÍ PATA}} je podporována jen ve formátech HTML a LOG!")}
+        gsub(/\{\{REKLAMNÍ PATA\}\}/, REKLAMNI_PATA, radek);
+    }
 
     /^{/; # prázdný příkaz kvůli zvýrazňování syntaxe
     if (match(radek, /\{\{[^}]+\}\}/)) {
-        ShoditFatalniVyjimku("Neznámé makro: " substr(radek, RSTART, RLENGTH));
+        ShoditFatalniVyjimku("Neznámé makro: " substr(radek, RSTART, RLENGTH) "\n<" radek ">");
     }
 
     return radek;

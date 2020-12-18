@@ -81,6 +81,7 @@ export SOUBORY_PREKLADU := soubory_překladu
 export VYSTUP_PREKLADU := výstup_překladu
 # PDF_ZALOZKY_MAX_DELKA - po změně je nutno ve skriptu „skripty/extrakce/osnova.awk“ změnit odpovídajícím způsobem délku proměnné „PNAZEV_SABLONA“!
 export PDF_ZALOZKY_MAX_DELKA := 32
+export REKLAMNI_PATY := 0
 PREMIOVE_KAPITOLY := 0
 
 # Jméno sestavení (doporučuji nastavovat z příkazového řádku)

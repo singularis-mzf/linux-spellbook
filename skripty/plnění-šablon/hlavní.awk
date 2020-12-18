@@ -36,13 +36,15 @@ function VyzadujeFragmentyTSV() {
     if (!Test("-r " FRAGMENTY_TSV)) {
         ShoditFatalniVyjimku("Nemohu číst ze souboru " FRAGMENTY_TSV "!");
     }
+    if (IDKAPITOLY != "" && PrvekPole(ENVIRON, "REKLAMNI_PATY", "0"))
+    {
+        REKLAMNI_PATA = PrecistKonfig("Reklamní-Paty", IDKAPITOLY, "");
+        if (REKLAMNI_PATA == "") {REKLAMNI_PATA = PrecistKonfig("Reklamní-Paty", "výchozí", "")}
+        if (REKLAMNI_PATA == "-") {REKLAMNI_PATA = ""}
+    } else {
+        REKLAMNI_PATA = "";
+    }
     return POCET_KAPITOL = NacistFragmentyTSV(FRAGMENTY_TSV);
-#    while (getline < FRAGMENTY_TSV) {
-#        FRAGMENTY_TSV_RADKY[++POCET_KAPITOL] = $0;
-#        FRAGMENTY_TSV_RADKY[$2] = $0; # $2 = id
-#    }
-#    close(FRAGMENTY_TSV);
-#    return POCET_KAPITOL;
 }
 
 function VyzadujePromennou(nazev, popisChyby) {
@@ -109,14 +111,18 @@ STAV_PODMINENENO_PREKLADU == 3 {next}
         next;
     }
 
-    if ($0 == "{{POKUD JSOU PRÉMIOVÉ KAPITOLY}}") {
-        STAV_PODMINENENO_PREKLADU = (system("test -s '" ENVIRON["SOUBORY_PREKLADU"] "/prémiové-kapitoly.tsv'") == 0) ? 1 : 2;
-        next;
+    switch ($0)
+    {
+        case "{{POKUD JSOU PRÉMIOVÉ KAPITOLY}}":
+            STAV_PODMINENENO_PREKLADU = (system("test -s '" ENVIRON["SOUBORY_PREKLADU"] "/prémiové-kapitoly.tsv'") == 0) ? 1 : 2;
+            next;
+        case "{{POKUD MÁ REKLAMNÍ PATU}}":
+            STAV_PODMINENENO_PREKLADU = REKLAMNI_PATA != "" ? 1 : 2;
+            next;
+        default:
+            STAV_PODMINENENO_PREKLADU = Pokud(substr($0, 9, length($0) - 10)) ? 1 : 2;
+            next;
     }
-
-    STAV_PODMINENENO_PREKLADU = Pokud(substr($0, 9, length($0) - 10)) ? 1 : 2;
-    #print "LADĚNÍ: " $0 " => STAV_PODMINENENO_PREKLADU = " STAV_PODMINENENO_PREKLADU " (" IDFORMATU ")" > "/dev/stderr";
-    next;
 }
 
 /^\{\{KONEC POKUD\}\}$/ {

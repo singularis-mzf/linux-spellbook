@@ -137,6 +137,12 @@ Překlad pravděpodobně bude fungovat i při nedodržení doporučené syntaxe
 
 ``make PREMIOVE_KAPITOLY=1 -j4 html pdf-a4``
 
+* Parametrem „REKLAMNI\_PATY=1“ můžete zapnout generování „reklamních“ pat kapitol ve formátu HTML. Texty pat se nastavují v souboru „konfig.ini“ v sekci [Reklamní-Paty].
+
+*Příklad:*
+
+``make REKLAMNI_PATY=1 -j4 html``
+
 ## Ověření české lokalizace systému
 
 Pokud používáte jinou než českou lokalizaci Vašeho systému (i slovenskou),
