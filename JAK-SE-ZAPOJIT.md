@@ -41,7 +41,7 @@ Seznam je řazený od nejsnazšího úkolu po nejobtížnější:
 * *Napsat mi námět, co v některé kapitole chybí* (pokud to tam není zmíněno)
 -->
 * *Zmínit se o projektu Linux: Kniha kouzel přátelům, na sociálních sítích, fórech a v médiích.*
-* *Opravit překlepy*
+* *[Opravit překlepy](#opravit-překlepy)*
 * *Nahlásit chyby* (pokud nějaké objevíte)
 * *Sehnat či nakreslit lepší ikony kapitol*
 * *Navrhnout další zaklínadla do kapitol* (zejména do rozpracovaných)
