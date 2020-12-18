@@ -1,6 +1,6 @@
 <!--
 
-Linux Kniha kouzel, kapitola Perl: Objekty a jmenné prostory
+Linux Kniha kouzel, kapitola Perl: objekty a jmenné prostory
 Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -17,7 +17,7 @@ Poznámky:
 ⊨
 -->
 
-# Perl: Objekty a jmenné prostory
+# Perl: objekty a jmenné prostory
 
 !Štítky: {program}{Perl}{programování}
 !FixaceIkon: 1754
@@ -32,35 +32,34 @@ Aby Perl usnadnil vytváření rozsáhlejších programů, umožňuje funkce a 
 rozdělit do více souborů a organizovat je do relativně samostatných kontextů
 zvaných nejčastěji *moduly* (ale také balíčky, třídy či jmenné prostory).
 Abyste mohl/a použít funkce z určitého modulu ve svém skriptu,
-musíte nejprve *načíst* soubor, ve kterém jsou tyto funkce definovány,
-a pak (volitelně) daný modul *připojit*. Obvykle se obě tyto operace
-vykonávají dohromady příkazem „use“, ale můžete je vykonat i odděleně.
+musíte nejprve *načíst* soubor, ve kterém jsou tyto funkce definovány.
+Obvykle současně *importujete* některé funkce do svého jmenného prostoru.
+Obě tyto operace bývají prováděné dohromady příkazem „use“.
 
-Pomocí modulů Perl také umožňuje objektově orientované programování,
-ve kterém modul odpovídá pojmu „třída“ — modul definuje sadu metod
-a následně se tento modul jednorázově *přiřazuje* přes ukazatel
-každému objektu dané třídy. Když pak pomocí objektově orientovaného operátoru
-„-&gt;“ zavoláte přes daný ukazatel metodu, Perl ji vyhledá v modulu,
-který je k odkazovanému objektu přiřazen. Použitý ukazatel se metodě
-předá jako dodatečný parametr, vsunutý před vámi zadané parametry
-(jako použitím funkce „unshift“) a je na volané metodě, aby toho využila.
+Objektově orientované programování se v Perlu realizuje tak,
+že obyčejnému objektu (poli, asociativnímu poli či skaláru) je přes ukazatel
+přiřazen jmenný prostor (třída), který obsahuje metody pro práci s ním.
+Když pak metodu zavoláte pomocí objektově orientovaného operátoru
+„-&gt;“, Perl ji automaticky najde ve jmenném prostoru, který je k objektu
+přiřazen, a při volání ji vsune použitý ukazatel jako dodatečný parametr
+na začátku pole @ARG.
 
 Zvláštním případem je volání některých metod (zejména takzvaných konstruktorů)
-ta, že se namísto ukazatele na objekt uvádí přímo cesta modulu.
-V takovém případě dostane metoda v dodatečném parametru místo ukazatele
-řetězec s cestou modulu.
+tak, že namísto ukazatele na objekt uvedete na levou stranu operátoru
+„-&gt;“ přímo název jmenného prostoru. V takovém případě dostane metoda
+v dodatečném parametru místo ukazatele řetězec s tímto názvem.
 
-<!--
-- Uveďte, co kapitola nepokrývá, ačkoliv by to čtenář mohl očekávat.
--->
+Tato verze kapitoly nepokrývá přetěžování operátorů, protože jsou s ním
+komplikované problémy. Zájemce proto odkazuji na zdlouhavé studium
+oficiální dokumentace.
 
 ## Definice
 
 * **Jmenný prostor** (namespace) je pojmenovaný kontext pro umísťování funkcí a proměnných. Začátek každého zdrojového souboru (včetně hlavního skriptu) je v kontextu výchozího jmenného prostoru „main“, do jiných jmenných prostorů se přepíná příkazem „package“.
 * **Název jmenného prostoru** je jednoznačné označení jmenného prostoru, které se skládá z posloupnosti jednoho či více identifikátorů oddělených dvojí dvojtečkou („::“), např. „Digest::MD5“ nebo „English“. Na rozdíl od jiných jazyků se v Perlu nezkracuje (vždy se uvádí celý) a mezi jmennými prostory není žádná automatická hierarchie.
-* **Modul** (module), někdy také **balíček** (package) je takový jmenný prostor, který je definovan obvyklým způsobem v samostatném stejnojmenném souboru s příponou „.pm“, a díky tomu je možno ho snadno připojit ke skriptu příkazem „use“.
-* **Symbol** je především identifikátor funkce nebo konstanty, ale také identifkátor nelokální proměnné včetně rozlišovacího symbolu „$“, „@“ nebo „%“, pokud je taková proměnná deklarována klíčovým slovem „our“ mimo jakýkoliv uzavírající blok.
-* **Importovat symbol** znamená zpřístupnit symbol z jiného jmenného prostoru tak, jako by byl definován i v tomto jmenném prostoru. To umožňuje k danému symbolu (funkci, konstantě či proměnné) přistupovat bez kvalifikace názvem jmenného prostoru, případně ho dál exportovat. Importovat lze z každého jmenného prostoru pouze ty symboly, které výslovně exportuje; pomocí plně kvalifikovaného jména však lze přistoupit ke všem symbolům v každém jmenném prostoru.
+* **Modul** (module), někdy také **balíček** (package) je soubor s příponou „.pm“ („Perl module“), který obsahuje úplnou definici stejnojmenného jmenného prostoru, což ho umožňuje příkazem „use“ snadno zpřístupnit a naimportovat z něj symboly, aniž byste se musel/a starat o to, ve kterých souborech je daný jmenný prostor definovan.
+* **Symbol** je nejčastěji identifikátor funkce nebo konstanty, méně často identifkátor nelokální proměnné včetně rozlišovacího symbolu „$“, „@“ nebo „%“.
+* **Importovat symbol** znamená zpřístupnit symbol z jiného jmenného prostoru tak, jako by byl definován i v tomto jmenném prostoru. To umožňuje k danému symbolu (funkci, konstantě či proměnné) přistupovat bez kvalifikace názvem jmenného prostoru, případně ho dál exportovat. Importovat lze z každého jmenného prostoru pouze ty symboly, které výslovně exportuje; pomocí plně kvalifikovaného jména však lze přistoupit ke všem symbolům v každém jmenném prostoru (kromě těch, jejichž viditelnost je omezena na obklopující blok).
 * **Exportovat symbol** znamená umožnit ho ostatním modulům z tohoto modulu importovat. Exportován může být pouze symbol, který je v daném modulu definován nebo který do něj byl předtím importován.
 
 ### Objektově orientované programování
@@ -71,33 +70,32 @@ V takovém případě dostane metoda v dodatečném parametru místo ukazatele
 
 !ÚzkýRežim: vyp
 
-## Zaklínadla: Jmenné prostory a moduly
+## Zaklínadla: Jmenné prostory
 
-### Jmenné prostory
 
-*# úplnou kvalifikací zavolat **funkci***<br>
-{*Název::JmProstoru*}**::**{*názevfunkce*}**(**{*parametry*}**)**
-
-*# úplnou kvalifikací přistoupit k skaláru/poli/asociativnímu poli*<br>
-**$**{*Název::JmProstoru*}**::**{*identifikátor*}<br>
-**@**{*Název::JmProstoru*}**::**{*identifikátor*}<br>
-**%**{*Název::JmProstoru*}**::**{*identifikátor*}
+*# **obvyklá** struktura jmenného prostoru*<br>
+**package** {*Název::JmProstoru*}**;**<br>
+**use strict;**<br>
+**use warnings;**<br>
+**use utf8;**<br>
+**use English;**<br>
+**use Exporter("import");**<br>
+**use LinuxKnihaKouzel;**<br>
+[{*definice konstant*}]<br>
+[**use parent("**{*Rodič*}**"**[**,** {*DalšíRodič*}]...**);**]<br>
+[**use fields(**{*"seznam", "datových", "složek"*}**);**]<br>
+[{*další příkazy use*}]<br>
+**our @EXPORT =** {*(seznam symb. exportovaných ve výchozí nastavení)*}**;**<br>
+**our @EXPORT\_OK =** {*(seznam ostatních exportovaných symb.)*}**;**<br>
+{*definice proměnných a funkcí*}...
 
 *# **přepnout** do kontextu jiného jmenného prostoru*<br>
-*// Poznámka: příkaz „package“ je přepínač fungující v době překladu. Jeho účinek trvá do dalšího příkazu „package“, nejdéle však do konce zdrojového souboru.*<br>
-**package** {*Název::JmProstoru*}**;**<br>
+*// Poznámka: příkaz „package“ je přepínač fungující v době překladu. Jeho účinek trvá do dalšího příkazu „package“, do konce bloku (jmenný prostor lze uzavřít do složených závorek) nebo do konce zdrojového souboru.*<br>
+**package** {*Název::JmProstoru*}**;**
+
+*# přepnout do kontextu hlavního jmenného prostoru*<br>
+*// Tento příkaz obvykle nepotřebujete, protože je praktičtější ne-hlavní jmenné prostory uzavřít do složených závorek.*<br>
 **package main;**
-
-*# přepnout do kontextu hlavního modulu*<br>
-**package main;**
-
-### Moduly
-
-*# **připojit** modul a importovat z něj výchozí symboly/konkrétní symboly/neimportovat žádné symboly*<br>
-*// Perl prohledá standardní adresáře a adresáře zadané příkazem „use lib“. Z každého takového adresáře hledá cestu sestavenou z komponent názvu jmenného prostoru, kde poslední komponentu doplní o příponu „.pm“. Např. příkaz „use Digest::MD5“ bude hledat soubor „Digest/MD5.pm“. Nalezený soubor se načte a z uvedeného jmenného prostoru se importují požadované symboly. Toto je obvyklý způsob používání modulů v Perlu.*<br>
-**use** {*Název::JmProstoru*}**;**<br>
-**use** {*Název::JmProstoru*}{*("seznam", "symbolů", "k", "importu")*}**;**<br>
-**use** {*Název::JmProstoru*}**();**
 
 *# hledat moduly i v zadaném adresáři*<br>
 *// Cesta může být absolutní nebo relativní. Relativní cesta se však vyhodnocuje relativně vůči aktuálnímu adresáři, což nemusí být adresář, ve kterém se nachází běžící skript. Nově přidané cesty se prohledávají před dříve přidanými.*<br>
@@ -109,98 +107,194 @@ V takovém případě dostane metoda v dodatečném parametru místo ukazatele
 TODO: Otestovat!
 -->
 
-*# obvyklá **obecná struktura** souboru s modulem (\*.pm)*<br>
-**package** {*Název::JmProstoru*}**;**<br>
-**use strict;**<br>
-**use warnings;**<br>
-**use utf8;**<br>
-**use English;**<br>
-**use LinuxKnihaKouzel;**<br>
-**use Exporter("import");**<br>
-[**use parent("**{*Rodič*}**"**[**,** {*DalšíRodič*}]...**);**]<br>
-[{*další příkazy use*}]<br>
-**our @EXPORT =** {*(seznam symb. exportovaných ve výchozí nastavení)*}**;**<br>
-**our @EXPORT\_OK =** {*(seznam ostatních exportovaných symb.)*}**;**<br>
-[{*definice konstant*}]<br>
-{*definice proměnných a funkcí*}<br>
-**1;**
+*# **připojit** modul a z jeho jmenného prostoru importovat výchozí symboly/konkrétní symboly/neimportovat žádné symboly*<br>
+*// Perl prohledá standardní adresáře a adresáře zadané příkazem „use lib“. Z každého takového adresáře hledá cestu sestavenou z komponent názvu jmenného prostoru, kde poslední komponentu doplní o příponu „.pm“. Např. příkaz „use Digest::MD5“ bude hledat soubor „Digest/MD5.pm“. Nalezený soubor se načte a z uvedeného jmenného prostoru se importují požadované symboly. Toto je obvyklý způsob používání modulů v Perlu.*<br>
+**use** {*Název::JmProstoru*}**;**<br>
+**use** {*Název::JmProstoru*}{*("seznam", "symbolů", "k", "importu")*}**;**<br>
+**use** {*Název::JmProstoru*}**();**
 
+*# deklarovat jiné jmenné prostory jako „rodiče“ tohoto*<br>
+**use parent("**{*Rodič*}**"**[**,** {*DalšíRodič*}]...**);**
+<!--
+[ ] Doplnit přesný význam.
+-->
 
+*# načíst zdrojový soubor (cestu k souboru určit automaticky)*<br>
+**require** {*Název::JmProstoru*}**;**
 
-### Zdrojové soubory
-
-
-*# načíst soubor (pomocí cesty modulu)*<br>
-**require** [{*Adresář*}**\:\:**]...{*NázevModulu*}**;**
-
-*# načíst funkce a proměnné ze souboru (pomocí adresářové cesty/pomocí ekvivalentního názvu modulu)*<br>
-*// Název odkazovaného souboru u příkazu „require“ nemusí končit příponou „.pm“, ale jeho kód musí končit příkazem „1;“. Je v pořádku načítat tentýž soubor vícekrát – načte se jen jednou. Cesta může být relativní či absolutní, ale relativní cesta se vyhledává relativně vůči aktuálnímu adresáři.*<br>
-**BEGIN {require("**{*cesta/k/souboru*}**")}**<br>
-?
+*# načíst zdrojový soubor*<br>
+**BEGIN {require("**{*cesta/k/souboru*}**")}**
 <!--
 <br>
 **BEGIN {require** {*Název::JmProstoru*}**}** // [ ] vyzkoušet
 -->
 
+### Třídy a metody
 
+*# obvyklá definice **metody***<br>
+**sub** {*název\_metody*} [**: lvalue**]<br>
+**\{**<br>
+<odsadit1>**my** [{*Název::JmProstoru*}] **$self = shift(@ARG);**<br>
+<odsadit1>{*tělo metody*}<br>
+**\}**
 
-## Zaklínadla: Třídy a objekty
-
-### Použití metod
-
-*# zavolat metodu přes objekt*<br>
+*# **zavolat metodu** přes ukazatel na objekt*<br>
 *// Při tomto způsobu volání dostane metoda jako dodatečný první parametr zadaný ukazatel.*<br>
 {*ukazatel*}**-&gt;**{*název\_metody*}**(**{*seznam, parametrů*}**)**
 
-*# zavolat metodu přes modul (třídu)*<br>
-*// Při tomto způsobu volání dostane metoda jako dodatečný první parametr řetězec obsahující cestu modulu.*<br>
-{*Cesta::Modulu*}**-&gt;**{*název\_metody*}**(**{*seznam, parametrů*}**)**
+*# zavolat metodu přes třídu (typické pro volání konstruktorů)*<br>
+*// Při tomto způsobu volání dostane metoda jako dodatečný první parametr řetězec obsahující název jmenného prostoru.*<br>
+{*Název::JmProstoru*}**-&gt;**{*název\_metody*}**(**{*seznam, parametrů*}**)**
 
-*# zavolat metodu cizího modulu přes objekt*<br>
+*# zavolat metodu **cizího** jmenného prostoru přes objekt (alternativy)*<br>
 *// Při tomto způsobu volání dostane metoda jako dodatečný první parametr zadaný ukazatel.*<br>
-{*ukazatel*}**-&gt;**{*Cesta::Modulu*}**::**{*název\_metody*}**(**{*seznam, parametrů*}**)**
+{*ukazatel*}**-&gt;**{*Název::JmProstoru*}**::**{*název\_metody*}**(**{*seznam, parametrů*}**)**<br>
+{*Název::JmProstoru*}**::**{*název\_metody*}**(**{*ukazatel*}[**,** {*seznam, parametrů*}]**)**
 
-*# zavolat funkci modulu neobjektově*<br>
-*// Při tomto způsobu volání dostane funkce jen předané parametry, dodatečný parametr nebude před parametry vsunut.*<br>
-{*Cesta::Modulu*}**::**{*název\_metody*}**(**{*seznam, parametrů*}**)**
+*# zavolat funkci ve jmenném prostoru neobjektově*<br>
+*// Při tomto způsobu volání dostane funkce jen předané parametry, dodatečný první parametr nebude před vsunut.*<br>
+{*Název::JmProstoru*}**::**{*název\_metody*}**(**{*seznam, parametrů*}**)**
 
-### Vytváření objektů
+*# obvyklý tvar **konstruktoru***<br>
+**sub new**<br>
+**\{**<br>
+<odsadit1>**my** [{*Název::JmProstoru*}] **$self = bless({}, $ARG[0]);**<br>
+<odsadit1>{*tělo konstruktoru*}<br>
+<odsadit1>**return $self;**<br>
+**\}**
+
+*# obvyklá struktura **destruktoru***<br>
+**sub DESTROY**<br>
+**\{**<br>
+<odsadit1>[**local ($NR, $ERRNO, $EVAL\_ERROR, $CHILD\_ERROR, $EXTENDED\_OS\_ERROR);**<br>
+<odsadit1>**my** [{*Název::JmProstoru*}] **$self = shift(@ARG);**<br>
+<odsadit1>{*příkazy*}...]<br>
+**\}**
+
+### Proměnné
+
+*# deklarovat **specializovanou** proměnnou*<br>
+*// Specializace nepředstavuje pro proměnnou žádné zásadní omezení, stále může obsahovat jakýkoliv skalár. Pokud je ovšem specializovaná na třídu s pevnou strukturou, použití neplatného konstantního klíče způsobí chybu již před spuštěním programu, což se vyplatí (je to jedna z mála „statický“ kontrol v Perlu).*<br>
+{*my\|state\|our*} {*Název::JmProstoru*} **$**{*identifikátor*} [**=** {*inicializace*}]**;**
+
+*# přístup k proměnným/funkcím v jiném jmenném prostoru*<br>
+{*$@%*}{*Název::JmProstoru*}**::**{*identifikátor*}<br>
+{*Název::JmProstoru*}**::**{*identifikátor*}[**(**{*parametry*}**)**]
+
+### Třída s pevnou strukturou (deklarace a zkoumání)
+
+*# omezit seznam dovolených klíčů*<br>
+!: V záhlaví jmenného prostoru uvést:<br>
+**use fields(**{*"seznam", "dovolených", "klíčů"*}**);**
+
+*# obvyklý tvar **konstruktoru** (liší se od obecné třídy)*<br>
+**sub new**<br>
+**\{**<br>
+<odsadit1>**my** {*Název::JmProstoru*} **$self = fields::new($ARG[0]);**<br>
+<odsadit1>{*tělo konstruktoru*}<br>
+<odsadit1>**return $self;**<br>
+**\}**
+
+*# **ukazuje** ukazatel na třídu s pevnou strukturou?*<br>
+^^**use Hash::Util;**<br>
+**Hash::Util::hashref\_locked(**{*ukazatel*}**)**
+
+*# získat pole **dovolených klíčů** třídy s pevnou strukturou (z ukazatele/z třídy)*<br>
+^^**require fields;**
+^^**use Hash::Util;**<br>
+**Hash::Util::legal\_ref\_keys(**{*ukazatel*}**)**<br>
+**Hash::Util::legal\_ref\_keys(fields::new("**{*Název::JmProstoru*}**"))**
+<!--
+[ ] Vyzkoušet.
+-->
+
+*# získat asociativní pole dovolených klíčů*<br>
+^^**use Hash::Util;**<br>
+[{*%asocPole*} **=**] **(map {($ARG, exists** {*ukazatel*}**-&gt;{$ARG} ? 1 : 0)} Hash::Util::legal\_ref\_keys(**{*ukazatel*}**))**
+
+*# je klíč dovolený?*<br>
+^^**use Hash::Util;**<br>
+**alength(grep {$ARG eq** {*"klíč"*}**\} Hash::Util::legal\_ref\_keys(**{*ukazatel*}**))**
+
+*# vytvořit asociativní pole s pevnou strukturou*<br>
+^^**use Hash::Util;**<br>
+[{*$ukazatel*} **=**] **Hash::Util::lock\_ref\_keys({},** {*seznam, dovolených, klíčů*}**);**
+
+*# vytvořit typovaný objekt s pevnou strukturou dynamicky*<br>
+^^**use Hash::Util;**<br>
+[{*$ukazatel*} **=**] **Hash::Util::lock\_ref\_keys(bless({},** {*"Název::JmProstoru"*}**),** {*seznam, dovolených, klíčů*}**);**
+
+
+### Zkoumání jmenných prostorů a objektů
+
+*# je cíli ukazatele přiřazen jmenný prostor?*<br>
+*// Poznámka: některým vestavěným typům Perlu je také přiřazen jmenný prostor s metodami; např. regulární výrazy (vzniklé operátorem „qr//“) mají přiřazen jmenný prostor „Regexp“.*<br>
+^^**use Scalar::Util;**<br>
+**defined(Scalar::Util::blessed(**{*ukazatel*}**))**
+
+*# která třída je přiřazena cíli ukazatele?*<br>
+*// Pokud předaný skalár není ukazatel na objekt s přiřazeným jmenným prostorem, tato funkce vrátí undef.*<br>
+**blessed(**{*ukazatel*}**)**
+
+*# je možno nad daným objektem zavolat metodu určitého názvu?*<br>
+{*ukazatel*}**-&gt;can("**{*název\_metody*}**")**
+
+*# obsahuje jmenný prostor určitou funkci nebo konstantu?*<br>
+{*Název::JmProstoru*}**-&gt;can("**{*identifikátor*}**")**
+
+*# je ukazateli přiřazen určitý jmenný prostor nebo jeho potomek?*<br>
+{*ukazatel*}**-&gt;isa("**{*Název::JmProstoru*}**")**
+
+### Ostatní funkce
 
 *# **přiřadit** objektu třídu*<br>
 *// Funkce bless() vrací předaný ukazatel beze změny, ale až poté, co odkazovanému objektu přiřadila modul. Pozor! Jednou vytvořené přiřazení u daného objektu nelze zrušit ani přepsat, nepřenáší se však při kopírování, takže stačí přiřadit objekt (ne ukazatel na něj) do nové proměnné a získáte „čistou“ kopii, bez přiřazeného modulu.*<br>
 **bless(**{*ukazatel*}**,** {*Název::JmProstoru*}**)**
 
-### Definice metod
 
-*# obvyklá struktura **metody** (objektově orientované funkce)*<br>
-**sub** {*název\_metody*} [**: lvalue**]<br>
-**\{**<br>
-<odsadit1>**my $self = shift(@ARG);**<br>
-<odsadit1>{*tělo metody*}<br>
-**\}**
+<!--
 
-*# obvyklá struktura konstruktoru*<br>
-**sub new**<br>
-**\{**<br>
-<odsadit1>**my $self = {};**<br>
-<odsadit1>{*tělo konstruktoru*}<br>
-<odsadit1>**return bless($self, $ARG[0]);**<br>
-**\}**
+[ ] Problém: Přetížení operátoru konverze na skalár (řetězec) nestačí, abyste s objektem mohl/a pracovat.
 
-*# obvyklá struktura destruktoru*<br>
+### Přetěžování operátorů
+
+*# deklarovat přetížení operátorů (obecně)*<br>
+*// Přetěžující funkce může být uvedena buď jako ukazatel na pojmenovanou či anonymní funkci, nebo jako řetězec (název funkce v aktuální jmenném prostoru).*<br>
+**use overload(**<br>
+<odsadit1>[**(**{*'operátor'*}**,** {*přetěžující-funkce*}**),**]...<br>
+**);**
+
+*# deklarovat přetížení operátorů (příklad)*<br>
+**package MojeTřída;**<br>
+[{*...*}]<br>
+**use overload(**<br>
+<odsadit1>**('""', sub {$ARG[0]-&gt;{"text"}}),**<br>
+<odsadit1>**('+', sub {$ARG[0] . $ARG[1]})**<br>
+**);**
+
+*# deklarovat konverze na obyčejný skalár/ukazatel na pole/ukazatel na asociativní pole*<br>
+**('""',** {*přetěžující-funkce*}**)**<br>
+?<br>
 ?
 
-### Zkoumání objektů
+<neodsadit>Konverzní operátory vhodné k přetížení:
 
-*# je cíli ukazatele přiřazena třída?*<br>
-**defined(blessed(**{*ukazatel*}**))**
+'""' (konverze na obyčejný skalár)
 
-*# která třída je přiřazena cíli ukazatele?*<br>
-*// Pokud předaný skalár není ukazatel na objekt s přiřazeným modulem, tato funkce vrátí undef.*<br>
-**blessed(**{*ukazatel*}**)**
+<neodsadit>Binární operátory vhodné k přetížení:
 
-*# je možno nad daným objektem zavolat metodu určitého názvu?*<br>
-{*ukazatel*}**-&gt;can("**{*název\_metody*}**")**
+'\+' '-' '\*' '/' '%' '\*\*' '&lt;&lt;' '&gt;&gt;' 'x' '.' '&amp;' '\|' '^' 'lt' 'le' 'eq' 'ne' 'ge' 'gt' '&lt;' '&lt;=' '==' '!=' '&gt;=' '&gt;'
+
+<neodsadit>Unární operátory vhodné k přetížení:
+
+'neg' (unární minus) '!' '\~' '++' '\-\-'
+
+<neodsadit>Operátory dereference vhodné k přetížení:
+
+'${}' '@{}' '%{}' '&{}'
+
+Přetěžující metoda musí vracet ukazatel odpovídajícího typu, na kterém bude dereference provedena místo ukazatele na samotný objekt.
+-->
 
 ## Parametry příkazů
 <!--
@@ -260,5 +354,7 @@ Co hledat:
 * Různé další praktické stránky, recenze, videa, tutorialy, blogy, ...
 * Publikované knihy
 * [Stránky TL;DR](https://github.com/tldr-pages/tldr/tree/master/pages/common)
+
+* [Dokumentace přetěžování operátorů v Perlu](https://perldoc.perl.org/5.30.0/overload)
 
 !ÚzkýRežim: vyp

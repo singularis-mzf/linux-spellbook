@@ -85,13 +85,20 @@ Linuxu: Knihy kouzel na GitHubu.
 
 ### Proměnné a konstanty
 
-*# **deklarovat** proměnnou typu skalár/pole/asociativní pole viditelnou v bloku, kde je deklarována*<br>
+*# **deklarovat** místní proměnnou typu skalár/pole/asociativní pole*<br>
+*// „Místní proměnná“ je viditelná v bloku, kde je deklarována. Inicializuje se při každém průchodu znovu a opuštěním bloku zaniká. Místní proměnná není nikdy viditelná z jiných zdrojových souborů.*<br>
 **my $**{*identifikátor*} [**=** {*inicializace*}]**;**<br>
 **my @**{*identifikátor*} [**=** {*inicializace*}]**;**<br>
 **my %**{*identifikátor*} [**=** {*inicializace*}]**;**
 
-*# deklarovat proměnnou viditelnou i v jiných modulech*<br>
-**our** {*symbol*}{*identifikátor*} [**=** {*inicializace*}]**;**
+*# deklarovat **trvanlivou** proměnnou*<br>
+*// „Trvanlivá proměnná“ je stejně jako místní proměnná viditelná v bloku (popř. zdrojovém souboru), kde je deklarována. Inicializuje se však pouze při prvním průchodu a trvá až do ukončení programu.*<br>
+**state** {*$@%*}{*identifikátor*} [**=** {*inicializace*}]**;**
+
+*# deklarovat globální proměnnou*<br>
+*// „Globální proměnná“ je viditelná v celém programu (ve všech zdrojových souborech), inicializuje se při prvním průchodu a trvá až do ukončení programu.*<br>
+!: Mimo bloky:<br>
+**our** {*$@%*}{*identifikátor*} [**=** {*inicializace*}]**;**
 
 *# deklarovat **konstantu** typu skalár/seznam*<br>
 *// Poznámka: kvůli omezením Perlu je každá konstanta globální v rámci jmenného prostoru a viditelná i z ostatních zdrojových souborů. V její inicializaci může být obecný výraz, ale bude vyhodnocován v době překladu, takže je omezeno, co může obsahovat. Může však obsahovat již dříve definované konstanty.*<br>
@@ -100,7 +107,7 @@ Linuxu: Knihy kouzel na GitHubu.
 
 *# do konce bloku **překrýt** globální proměnnou*<br>
 *// Příkaz „local“ způsobí, že uvedená globální proměnná se „odloží“ a místo ní se vytvoří nová pod tímtéž názvem. Nová proměnná zanikne teprve po opuštění bloku, v němž byla příkazem „local“ překryta; do té doby ji nová proměnná zastupuje ve všech ohledech (i uvnitř volaných knihovních funkcí). Tato konstrukce se obvykle používá pro dočasné nastavení hodnot speciálních proměnných (např. „$ORS“).*<br>
-**local** {*symbol*}{*identifikátor*} [**=** {*nová-hodnota*}]**;**
+**local** {*$@%*}{*identifikátor*} [**=** {*nová-hodnota*}]**;**
 
 ### Skaláry a undef
 
@@ -178,6 +185,10 @@ Linuxu: Knihy kouzel na GitHubu.
 <odsadit1>[{*příkazy*}]...<br>
 **\}**
 
+*# předat řízení do funkce*<br>
+*// Tento příkaz předá řízení přímo na začátek uvedené funkce, jako by byla volána místo funkce právě prováděné. Všechny lokální proměnné jsou před voláním zrušeny a pole @ARG bude předáno tak, jak právě je (včetně případných změn, které v něm stávající funkce provedla). Nevím, co tato funkce udělá s globálními proměnnými překrytými v prováděné funkci deklarací „local“; doporučuji to raději nezkoušet.*<br>
+**goto &amp;**{*identifikátor\_funkce*}**;**
+
 ### Komentáře
 
 *# **komentář** do konce řádku*<br>
@@ -212,7 +223,7 @@ Linuxu: Knihy kouzel na GitHubu.
 *# nekonečný cyklus*<br>
 [{*návěští*}**:**] **for (;;) \{** [{*příkazy*}] **\}**
 
-### Řízení toku (skoky)
+### Řízení toku a volání bashe
 
 *# vyskočit z funkce a **vrátit** návratovou hodnotu*<br>
 *// Příkaz „return“ v Perlu není povinný. Při jeho nepoužití vrátí Perl hodnotu posledního provedeného příkazu ve funkci.*<br>
@@ -228,6 +239,11 @@ Linuxu: Knihy kouzel na GitHubu.
 **die("**{*text*}**"**[**,** {*pokračování textu*}]**);**<br>
 **die("Nastala chyba číslo&blank;", $čísloChyby, "!");**
 
+*# zavolat **příkaz** Bashe (i více příkazů)(obecně/příklad)*<br>
+*// Část „&gt;&gt; 8“ je nutná v případě, kdy vás zajímá návratový kód procesu. Ten je totiž v návratové hodnotě funkce vynásoben hodnotou 256 (tedy bitově posunut o 8 bitů doleva). Poznámka: funkce „system()“ vám neumožňuje zapisovat na vstup procesu nebo číst z jeho výstupu. K těmto účelům použijte roury popsané v sekci „Zaklínadla: Vstup/výstup“.*<br>
+**system("/bin/**[**ba**]**sh", "-c",** {*"text příkazů"*}[**, "\-\-",** {*seznam, dalších, parametrů, skriptu*}]**)** [**&gt;&gt; 8**]<br>
+**my $návrat = system("/bin/bash", "-c", "x=\\$#; x=\\$((\\$x + 1)); echo \\$x", "\-\-", "A", "B", "C") &gt;&gt; 8;**
+
 *# skočit těsně před uzavírací závorku cyklu*<br>
 **next** [{*návěští*}]**;**
 
@@ -238,8 +254,13 @@ Linuxu: Knihy kouzel na GitHubu.
 *# skočit přímo za otevírací závorku cyklu*<br>
 **redo** [{*návěští*}]**;**
 
-*# skočit na **návěští***<br>
-**goto** {*návěští*}**;**
+*# skočit na návěští (**goto**)(pevně dané/dynamicky určené)*<br>
+**goto** {*návěští*}**;**<br>
+**goto** {*skalární\_výraz*}**;**
+
+*# návěští pro příkaz goto*<br>
+*// Poznámka: jeden příkaz může být označen více návěštími.*<br>
+{*identifikátor*}**:** {*návěštím označený příkaz*}
 
 ### Podmínky
 
@@ -377,9 +398,6 @@ Linuxu: Knihy kouzel na GitHubu.
 [ ] Přesunout na správné místo.
 -->
 
-*# formátovat funkcí sprintf()*<br>
-**sprintf(**{*formát*}**,** {*seznam, parametrů*}**)**
-
 
 
 <!--
@@ -408,6 +426,12 @@ Linuxu: Knihy kouzel na GitHubu.
 *# jsou/nejsou si řetězce **rovny**?*<br>
 {*řetězec1*} **eq** {*řetězec2*}<br>
 {*řetězec1*} **ne** {*řetězec2*}
+
+*# formátovat parametry na řetězec funkcí **sprintf**()*<br>
+**sprintf(**{*formát*}**,** {*seznam, parametrů*}**)**
+
+*# jsou si řetězce rovny až na velikost písmen?*<br>
+**fc(**{*řetězec1*}** eq fc(**{*řetězec2*}**)**
 
 *# **kódové** číslo Unicode prvního/N-tého znaku řetězce*<br>
 **ord(**{*řetězec*}**)** ⊨ 382<br>

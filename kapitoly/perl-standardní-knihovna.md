@@ -1,6 +1,6 @@
 <!--
 
-Linux Kniha kouzel, kapitola Perl: Standardní knihovna
+Linux Kniha kouzel, kapitola Perl: standardní knihovna
 Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -17,7 +17,7 @@ Poznámky:
 ⊨
 -->
 
-# Perl: Standardní knihovna
+# Perl: standardní knihovna
 
 !Štítky: {program}{Perl}{programování}
 !FixaceIkon: 1754
@@ -39,6 +39,13 @@ v modulech distribuovaných běžně spolu se samotným interpretem.
 !ÚzkýRežim: vyp
 
 ## Zaklínadla: Ostatní
+
+### Analýza objektů
+
+*# vypsat pro člověka datovou strukturu*<br>
+^^**use Data::Dumper;**<br>
+**printf("%s", Dumper(**{*ukazatel*}**));**
+
 
 ### Práce s časem
 

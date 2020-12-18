@@ -127,10 +127,10 @@ Priority:
 | ID | Název kapitoly | Růst | Stav |
 | :--- | :--- | ---: | :--- |
 | [perl-základy](kapitoly/perl-základy.md) | Perl: základy | 100% | připravena k vydání |
+| [perl-objekty](kapitoly/perl-objekty.md) | Perl: objekty a jmenné prostory | 80% | dítě |
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
 | [firefox](kapitoly/firefox.md) | Firefox | 60% | dítě |
 | [kalkulace](kapitoly/kalkulace.md)| Kalkulace | 50% | dítě |
-| [perl-objekty](kapitoly/perl-objekty.md) | Perl: Objekty a jmenné prostory | 50% | embryo |
 | [stahování-z-webu](kapitoly/stahování-z-webu.md) | Stahování z webu | 40% | dítě |
 | [zpracování-obrázků](kapitoly/zpracování-obrázků.md) | Zpracování obrázků | 40% | dítě |
 | [moderní-věci](kapitoly/moderní-věci.md) | Moderní věci | 10% | dítě |
@@ -139,10 +139,10 @@ Priority:
 | [apache](kapitoly/apache.md) | Webový server Apache | 5% | dítě |
 | [latex](kapitoly/latex.md) | LaTeX | 5% | dítě |
 | [dosbox](kapitoly/dosbox.md) | DosBox | 5% | dítě |
+| [perl-standardní-knihovna](kapitoly/perl-standardní-knihovna.md) | Perl: standardní knihovna | 3% | dítě |
 | [bash](kapitoly/bash.md) | Bash | 2% | dítě |
 | [lkk](kapitoly/lkk.md) | Linux: Kniha kouzel | 2% | dítě |
 | [zpracování-psv](kapitoly/zpracování-psv.md) | Zpracování PSV | 2% | dítě |
-| [perl-standardní-knihovna](kapitoly/perl-standardní-knihovna.md) | Perl: standardní knihovna | 2% | dítě |
 | [správa-balíčků-2](kapitoly/správa-balíčků-2.md) | Správa balíčků 2 | 1% | dítě |
 | [grub](kapitoly/grub.md) | GRUB a jádro | 1% | dítě |
 | [konverze-formatů](kapitoly/konverze-formatů.md) | Konverze formátů | 0% | embryo |
