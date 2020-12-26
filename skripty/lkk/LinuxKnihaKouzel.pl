@@ -23,13 +23,19 @@ use strict;
 use utf8;
 use warnings;
 use English;
+
 use Exporter("import");
+use FindBin;
 use List::Util("min", "max");
+
+use constant MAIN_SCRIPT_DIR => $FindBin::Bin;
+
 our @EXPORT = qw{
 	alength array bool div fprint fprintf fput put typy
 	matches next_match next_match_captures next_match_begin next_match_length
 	next_match_end next_match_text
 	min max
+	MAIN_SCRIPT_DIR
 };
 our @EXPORT_OK = ();
 

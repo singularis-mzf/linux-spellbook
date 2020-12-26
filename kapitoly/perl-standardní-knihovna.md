@@ -40,6 +40,7 @@ v modulech distribuovaných běžně spolu se samotným interpretem.
 
 ## Zaklínadla: Ostatní
 
+
 ### Analýza objektů
 
 *# vypsat pro člověka datovou strukturu*<br>
@@ -68,6 +69,36 @@ v modulech distribuovaných běžně spolu se samotným interpretem.
 <!--
 [ ] zjistit posun lokální časové zóny oproti UTC!
 -->
+
+
+<!-- Archive::Tar -->
+<!-- Carp -->
+<!-- Class::Struct (?) -->
+<!-- Cwd -->
+<!-- Data::Dumper -->
+<!-- Digest + Digest::MD5 + Digest::SHA + Digest::file -->
+<!-- Encode -->
+<!-- English -->
+<!-- Exporter -->
+<!-- File::Basename -->
+<!-- File::Compare, File::Copy -->
+<!-- File::Fetch -->
+<!-- File::Find -->
+<!-- File::Path -->
+<!-- File::Spec + File::Spec::Functions -->
+<!-- File::Temp -->
+<!-- File::stat -->
+<!-- Getopt::Long (!) -->
+<!-- FindBin -->
+<!-- Filter::Simple -->
+<!-- -->
+<!-- -->
+<!-- -->
+<!-- -->
+<!-- -->
+<!-- -->
+<!-- -->
+<!-- -->
 
 
 ## Parametry příkazů

@@ -127,7 +127,7 @@ Priority:
 | ID | Název kapitoly | Růst | Stav |
 | :--- | :--- | ---: | :--- |
 | [perl-základy](kapitoly/perl-základy.md) | Perl: základy | 100% | připravena k vydání |
-| [perl-objekty](kapitoly/perl-objekty.md) | Perl: objekty a jmenné prostory | 80% | dítě |
+| [perl-moduly](kapitoly/perl-moduly.md) | Perl: moduly a objekty | 99% | dítě |
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
 | [firefox](kapitoly/firefox.md) | Firefox | 60% | dítě |
 | [kalkulace](kapitoly/kalkulace.md)| Kalkulace | 50% | dítě |

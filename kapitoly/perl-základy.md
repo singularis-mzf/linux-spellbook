@@ -17,6 +17,7 @@ Poznámky:
 [.] Zpracovat řazení čísel, řetězců a obecných objektů (funkce sort).
 [ ] Zpracovat tutorial začínající na: https://www.perltutorial.org/perl-syntax/
 [ ] pack/unpack
+[ ] exec()
 [x] Zpracovat referenční příručku funkcí:
 - Referenční příručka: https://perldoc.perl.org/5.30.0/index-functions-by-cat.html
 
@@ -51,6 +52,8 @@ se omezují na bezpečnou podmnožinu jeho funkcionality, čímž vám umožní 
 z jeho moci těžit velmi rychle a s minimem nutných znalostí a vyhýbat se
 přitom většině zákeřných pastí. (Pronikat do „hlubin Perlu“ můžete později.
 Nejdřív naprogramujte, co potřebujete.)
+
+Tato verze kapitoly nedostatečně pokrývá řazení polí.
 
 Tato kapitola nepokrývá jmenné prostory, objektově orientované programování
 a velkou část užitečných knihovních funkcí (např. práci s databázemi),
@@ -120,6 +123,7 @@ Linuxu: Knihy kouzel na GitHubu.
 **$**{*identifikátor*} **= undef**
 
 *# přečíst skalární **konstantu** (obecně/příklady)*<br>
+*// Závorky kolem identifikátoru konstanty můžete vynechat tehdy, když je obalený jinými kulatými závorkami; nesmíte je vynechat v případě, že je obalený složenými či hranatými závorkami!*<br>
 **(**{*identifikátor*}**)**<br>
 **printf("Hodnota konstanty je: %d\\n", (konstanta));**<br>
 **print(konstanta);**<br>
@@ -391,23 +395,6 @@ Linuxu: Knihy kouzel na GitHubu.
 
 *# časová známka okamžiku spuštění skriptu (jen čtení)*<br>
 **$BASETIME** ⊨ 1605871925
-
-### Ostatní
-
-<!--
-[ ] Přesunout na správné místo.
--->
-
-
-
-<!--
-[ ] Funkce exec()
-[ ] Funkce system()
--->
-
-
-
-
 
 <!--
 ==================================================================================
@@ -1403,6 +1390,7 @@ a aby byl dostupný modul LinuxKnihaKouzel.pm).
 
 * *Autovivifikace:* Operátory pro přístup k prvkům pole či asociativního pole přes ukazatel („-&gt;[]“ a „-&gt;{}“) lze bezpečně použít i v případech, kdy na jejich levé straně stojí neexistující prvek asociativního pole či pole nebo neinicializovaná proměnná. Perl totiž tuto hodnotu na levé straně tohoto operátoru před vyhodnocením zkontroluje, a pokud je undef, automaticky tam přiřadí ukazatel na nové, prázdné pole (resp. asociativní pole). Tato funkce se nazývá *autovivifikace* a výrazně usnadňuje práci s vnořenými asociativními poli. Dejte si ale pozor na skutečnost, že k ní dojde při každé dereferenci, nejen při takové, do které pak přiřazujete! To znamená, že i příkaz „delete $p-&gt;{"x"}“ způsobí, že se do $p (pokud je undef) přiřadí ukazatel na prázdné asociativní pole.
 * *Předávání parametrů do funkcí:* Přiřaditelné skaláry se do funkcí předávají vždy odkazem; přiřazením do prvků zvláštního pole „@ARG“ lze přiřadit do skalárních proměnných, které byly předány funkci jako parametry. Pole se při předávání do funkce (pokud tomu nebrání její prototyp) rozloží na všechny svoje prvky v náležitém pořadí a ty se předají odkazem. Asociativní pole se rozloží na posloupnost dvojic „klíč,hodnota“, příčemž klíče se předají hodnotou (jsou nepřiřaditelné), zatímco hodnoty se předají odkazem. Perl neprovádí žádnou automatickou kontrolu počtu, typu či hodnoty předaných parametrů; ta je výhradně zodpovědností volané funkce. Je výhodné při ní použít funkci „typy()“ a regulární výraz.
+* *Vnořená pole a zplošťování parametrů:* Vnořené datové struktury se v Perlu realizují téměř výhradně pomocí ukazatelů. Příklad: my @vnořená\_pole = ([1, 2], [3, 4]);
 * *print() a printf():* Dokumentace Perlu radí upřednostňovat funkci „print“ před „printf“, protože je rychlejší a snáze se píše. To první je nejspíš pravda, ale pokud ji chcete použít korektně, musíte mít kontrolu nad hodnotami globálních proměnných $OFS a $ORS, protože funkce „print“ je vypisuje, a budou-li nastaveny na nečekané hodnoty z jiné části programu, bude výstup vaší funkce nekorektní. Napsat "%s" do printf je mnohem jednodušší než neustále přiřazovat $OFS a $ORS.
 * *Blok kódu:* Blok kódu předávaný funkci jako zvláštní první parametr (což se týká především vestavěných funkcí grep(), map() a sort() *nesmí* obsahovat příkaz „return“, jinak tento příkaz ukončí obalující funkci a vrátí návratovou hodnotu z ní! To neplatí v případě, kdy se blok předává ukazatelem na anonymní funkci (s klíčovým slovem „sub“), tam je naopak příkaz „return“ vhodný.
 
@@ -1450,6 +1438,7 @@ z kapitol Linuxu: Knihy kouzel.
 
 * [Wikipedie: Perl](https://cs.wikipedia.org/wiki/Perl)
 * SATRAPA, Pavel. *Perl pro zelenáče.* 3. aktualizované a rozšířené vydání. Praha: CZ.NIC, z.s.p.o., 2018. CZ.NIC. ISBN 978-80-88168-35-5.
+* [Root.cz: seriál Perličky](https://www.root.cz/serialy/perlicky/)
 * [Kompletní oficiální dokumentace](https://perldoc.perl.org/5.30.3/perl) (anglicky — velmi dobrý zdroj)
 * perldoc perlrun; perldoc perlvar; perldoc perlfunc; perldoc perlop (vše anglicky)
 * [YouTube: Perl Tutorial](https://www.youtube.com/watch?v=WEghIXs8F6c) (anglicky)

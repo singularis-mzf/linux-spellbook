@@ -499,6 +499,9 @@ btrfs: sudo sfill -fllvz {*/přípojný/bod*}
 *# **vytvořit***<br>
 **sudo vgcreate** {*id-skupiny*} {*/dev/fyzický-svazek*}... [**-v**[**v**]]
 
+*# **deaktivovat** skupinu (nutné pro odpojení)*<br>
+**sudo vgchange \-\-verbose \-\-activate n** {*id-skupiny*}
+
 *# **přidat** fyzický svazek do skupiny*<br>
 **sudo vgextend** {*id-skupiny*} {*/dev/fyzický-svazek*}... [**-v**[**v**]]
 
@@ -516,6 +519,10 @@ btrfs: sudo sfill -fllvz {*/přípojný/bod*}
 *# **smazat***<br>
 **sudo lvremove** {*id-skupiny*}
 **sudo vgremove** {*id-skupiny*}
+
+*# aktivovat deaktivovanou skupinu*<br>
+*// Tento příkaz obvykle není potřeba, protože po připojení zařízení nebo startu systému se nalezené skupiny obvykle aktivují automaticky.*<br>
+**sudo vgchange \-\-verbose \-\-activate y** {*id-skupiny*}
 
 ### Logické oddíly
 
@@ -781,6 +788,7 @@ Nástroj GParted najdete v balíčku „gparted“; příkaz zerofree v balí�
 ### LVM
 
 * V případě změny velikosti oddílu v LVM je třeba samostatně změnit velikost souborového systému a samostatně velikost logického oddílu. Výjimkou je souborový systém „ext4“, u kterého je možné tyto operace sloučit použitím parametru „\-\-resizefs“.
+* LVM lze použít i na vyjímatelných médiích (např. flash discích); v takovém případě je ale před fyzickým odpojením média potřeba deaktivovat příslušnou skupinu svazků.
 * LVM poskytuje svůj vlastní interpret příkazové řádky, který nabízí pouze příkazy související s LVM (bez zadávání „sudo“). Spustíte ho příkazem „sudo lvm“.
 
 ### Btrfs

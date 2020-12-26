@@ -167,6 +167,9 @@ browser.tabs.allowTabDetach
 
 ### Vypínání funkcí
 
+*# vypnout otravování uživatele oznámením o nových funkcích*<br>
+**user\_pref("browser.messaging-system.whatsNewPanel.enabled", false);**
+
 *# vypnout **webové fonty** (stahované)*<br>
 **user\_pref("gfx.downloadable\_fonts.enabled", false);**<br>
 **user\_pref("layout.css.font-loading-api.enabled", false);**

@@ -101,19 +101,19 @@ není dobrý nápad
 
 ### Symbolické odkazy (vytvořit)
 
-*# **vytvořit** relativní/absolutní (s následováním)*<br>
-**ln -rsT**[**f**] <nic>[**\-\-**] {*cesta/k/cíli*} {*cesta/výsl/odkazu*}<br>
-**ln -sT**[**f**] **"$(realpath -e** [**\-\-**] {*cesta/k/cíli*}**)"** [**\-\-**] {*cesta/výsl/odkazu*}
-
-*# vytvořit relativní/absolutní (bez následování)*<br>
+*# **vytvořit** relativní/absolutní (bez následování)*<br>
 **ln -sT**[**f**] **"$(realpath -s "\-\-relative-to=$(dirname** [**\-\-**] {*cesta/výsl/odkazu*}**)"** [**\-\-**] {*cesta/k/cíli*}**)"** [**\-\-**] {*cesta/výsl/odkazu*}<br>
 **ln -sT**[**f**] **"$(realpath -s** [**\-\-**] {*cesta/k/cíli*}**)"** [**\-\-**] {*cesta/výsl/odkazu*}
 
-*# hromadné vytvoření relativních (s následováním)*<br>
+*# vytvořit relativní/absolutní (s následováním)*<br>
+**ln -rsT**[**f**] <nic>[**\-\-**] {*cesta/k/cíli*} {*cesta/výsl/odkazu*}<br>
+**ln -sT**[**f**] **"$(realpath -e** [**\-\-**] {*cesta/k/cíli*}**)"** [**\-\-**] {*cesta/výsl/odkazu*}
+
+*# **hromadné** vytvoření relativních (s následováním)*<br>
 *// Názvy vytvářených symbolických odkazů se odvodí od názvů v „cestě/k/cíli“.*<br>
 **ln -rs -t** {*cílový/adresář*} [**\-\-**] {*cesta/k/cíli*}...<br>
 
-*# vytvořit obecný*<br>
+*# vytvořit **obecný***<br>
 *// Obsah odkazů musí mít délku 1 až 4095 bajtů, jinak však v tomto případě neprovádí příkaz „ln“ žádnou kontrolu smysluplnosti obsahu odkazu. Toto je tedy preferovaný způsob vytváření symbolických odkazů na dosud neexistující soubory a adresáře.*<br>
 **ln -sT**[**f**] **"**{*obsah-odkazu*}**"** {*cesta/výsl/odkazu*}
 
