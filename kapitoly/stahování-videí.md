@@ -221,7 +221,7 @@ Začíná-li zaklínadlo v této kapitole příkazem „youtube-dl“, uvádí 
 
 ## Instalace na Ubuntu
 
-Aktuální instalační postup „youtube-dl“ hledejte na [oficiálních stránkách youtube-dl](https://yt-dl.org/download.html).
+Aktuální instalační postup „youtube-dl“ hledejte na [oficiálních stránkách youtube-dl](http://ytdl-org.github.io/youtube-dl/download.html).
 
 Zde uvádím trochu složitější postup, který sestává z následujících kroků: nejprve musíte samotný program stáhnout, pak můžete zkontrolovat jeho elektronický podpis (ačkoliv stahování z https je už samo o sobě slušná ochrana před podvržením). A nakonec ho musíte nainstalovat; buď pro všechny uživatele (což je běžná, doporučovaná cesta), nebo jen pro sebe (což nevyžaduje použití „sudo“).
 
@@ -239,6 +239,7 @@ Zde uvádím trochu složitější postup, který sestává z následujících 
 **sudo install -o root -g root -m u=rwx,go=rx youtube-dl /usr/local/bin/youtube-dl &amp;&amp; rm youtube-dl**
 
 *# instalace pouze pro současného uživatele (alternativa k instalaci pro všechny)*<br>
+**mkdir -pv ~/bin**<br>
 **install -D -m u=rwx,go=- youtube-dl ~/bin/youtube-dl &amp;&amp; rm youtube-dl**
 
 *# vytvoření konfiguračního souboru (volitelné)*<br>

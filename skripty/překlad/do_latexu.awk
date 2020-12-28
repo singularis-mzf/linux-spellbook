@@ -305,7 +305,7 @@ function KonecRadku() {
 
 function HypertextovyOdkaz(adresa, text,   cisloPoznamky) {
     cisloPoznamky = AlokovatPoznamkuPodCarou();
-    return text "\\footnotemark[" cisloPoznamky "]\\footnotetext[" cisloPoznamky "]{" adresa "}";
+    return text "\\footnotemark[" cisloPoznamky "]\\footnotetext[" cisloPoznamky "]{\\raggedright{}" adresa "}";
 }
 
 function ZacatekSeznamu(uroven, kompaktni) {

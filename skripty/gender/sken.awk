@@ -27,6 +27,11 @@ BEGIN {
     RS = "\n";
     OFS = "\t";
     ORS = "\n";
+
+    neslova["d"] = 1;
+    neslova["gt"] = 1;
+    neslova["lt"] = 1;
+    neslova["n"] = 1;
 }
 
 BEGINFILE {
@@ -37,7 +42,7 @@ BEGINFILE {
 NF > 0 {
     puvodniradek = gensub(/[\t\n]/, " ", "g", $0);
     for (i = 1; i <= NF; ++i) {
-        if ($i ~ /[[:alpha:]]/) {
+        if ($i ~ /[[:alpha:]]/ && !($i in neslova)) {
             if ((rod = UrcitRod(predchozi, $i)) != "") {
                 print id, FNR, tolower("(" predchozi ")" $i), rod, puvodniradek;
             }
@@ -89,7 +94,7 @@ function UrcitRod(predchozi, slovo) {
             # mužský, ledaže „vidím tu řádku“ nebo „aktuální/předchozí řádku“
             if (predchozi ~ /[éí](ho|m)$|^(jednom|číslo|konec|konce|konci|zbytek|část|rámci|v|prefix|podřetězec|začátek|začátku)$/) {
                 return "mužský";
-            } else if (predchozi ~ /(číst|ou|ní|zí)$/) {
+            } else if (predchozi ~ /(číst|jednu|ou|ní|zí)$/) {
                 return "ženský";
             } else {
                 return "?";
@@ -103,9 +108,9 @@ function UrcitRod(predchozi, slovo) {
             # s těmi řádky = mužský; bez té řádky = ženský
             if (predchozi ~ /^(dvěma|nad)$|ými$/) {
                 return "mužský";
-            } else if (predchozi ~ /^(zadání|prefix|z|číslo|čísla|číslem|znak|příkazové|pozici|konce|dvě|tři|čtyři|konec|koncem|zbytek|část|podřetězec|začátek|začátkem|ukončení|této|rámci)$|(ím)$/) {
+            } else if (predchozi ~ /^(zadání|prefix|z|číslo|čísla|číslem|znak|příkazové|pozici|konce|dvě|tři|čtyři|konec|koncem|zbytek|část|podřetězec|začátek|začátkem|ukončení|této|rámci|obsah|první|druhé|třetí|čtvrté|páté|řádky)$|(ím|ení)$/) {
                 return "ženský";
-            } else if (predchozi ~ /^(mít|všechny|má|tvoří|hledat|se|ostatní|znak)$|ící$/) {
+            } else if (predchozi ~ /^(mít|všechny|má|tvoří|hledat|se|ostatní|znak|join|chomp|print|my|alength)$|ící$/) {
                 return "0";
             } else {
                 return "?";

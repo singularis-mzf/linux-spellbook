@@ -17,13 +17,14 @@
 # souboru zdrojového kódu všechna svá práva autorská a práva příbuzná
 # k právu autorskému.
 #
+use utf8;
 package LinuxKnihaKouzel;
 use v5.26.0;
 use strict;
-use utf8;
 use warnings;
 use English;
 
+use Carp("carp", "croak", "confess");
 use Exporter("import");
 use FindBin;
 use List::Util("min", "max");
@@ -36,21 +37,22 @@ our @EXPORT = qw{
 	next_match_end next_match_text
 	min max
 	MAIN_SCRIPT_DIR
+	carp croak confess
 };
 our @EXPORT_OK = ();
 
 sub alength {return scalar(@ARG)}
 sub array {return @ARG}
 sub bool {return pop(@ARG) ? 1 : 0}
-sub div {my ($a, $b) = (abs($ARG[0]), abs($ARG[1])); use integer; return ($a / $b, $a % $b);}
+sub div {my ($a, $b) = @ARG; use integer; return ($a / $b, $a % $b);}
 sub fprint {my $soubor = shift(@ARG); return print($soubor @ARG);}
 sub fprintf {my $soubor = shift(@ARG); return printf($soubor @ARG);}
-sub fput {local $OFS = ""; local $ORS = ""; my $soubor = shift(@ARG); return print($soubor @ARG);}
-sub put {local $OFS = ""; local $ORS = ""; return print(@ARG);}
-sub typy {return join("", map {my $r;!defined($ARG) ? "u" : !($r = ref($ARG)) ? "s" : $r =~ /^(SCALAR|ARRAY|HASH|CODE|Regexp)$/ ? substr($r, 0, 1) : $r eq "GLOB" ? "F" : "<${r}>";} @ARG)}
+sub fput {local $OFS = undef; local $ORS = undef; my $soubor = shift(@ARG); return print($soubor @ARG);}
+sub put {local $OFS = undef; local $ORS = undef; return print(@ARG);}
+sub typy {return join("", map {my $r;!defined($ARG) ? "u" : !($r = ref($ARG)) ? "s" : $r =~ /\A(SCALAR|ARRAY|HASH|CODE|Regexp)\z/ ? substr($r, 0, 1) : $r eq "GLOB" ? "F" : "<${r}>";} @ARG)}
 
 sub matches { # => ([začátek, délka], [začátek, délka], ...) || ()
-    typy(@ARG) =~ /\AsRs{0,2}\z/ or die("matches: Chybné parametry: ".typy(@ARG));
+    typy(@ARG) =~ /\AsRs{0,2}\z/ or croak("matches: Chybné parametry: ".typy(@ARG));
     my @v;
     my ($s, $r, $begin, $maxlength) = @ARG;
     $begin = 0 if (!defined($begin));
@@ -64,7 +66,7 @@ sub matches { # => ([začátek, délka], [začátek, délka], ...) || ()
 }
 
 sub next_match { # => (začátek, délka) || (undef, undef)
-    typy(@ARG) =~ /\AsRs{0,2}\z/ or die("next_match: Chybné parametry: ".typy(@ARG));
+    typy(@ARG) =~ /\AsRs{0,2}\z/ or croak("next_match: Chybné parametry: ".typy(@ARG));
     my ($s, $r, $begin, $maxlength) = @ARG;
     $begin = 0 if (!defined($begin));
     $s = substr($s, 0, $begin + $maxlength) if (defined($maxlength) && $maxlength < length($s));
@@ -82,7 +84,7 @@ sub next_match_length {return (next_match(@ARG))[1]}
 sub next_match_text {my ($b, $l) = next_match(@ARG); return defined($b) ? substr($ARG[0], $b, $l) : undef;}
 
 sub next_match_captures { # => ([začátek, délka], [začátek, délka], ...) || ()
-    typy(@ARG) =~ /\AsRs{0,2}\z/ or die("next_match: Chybné parametry: ".typy(@ARG));
+    typy(@ARG) =~ /\AsRs{0,2}\z/ or croak("next_match: Chybné parametry: ".typy(@ARG));
     my @v;
     my ($s, $r, $begin, $maxlength) = @ARG;
     $begin = 0 if (!defined($begin));
@@ -95,8 +97,5 @@ sub next_match_captures { # => ([začátek, délka], [začátek, délka], ...) |
     }
     return @v;
 }
-
-#package main;
-#BEGIN {LinuxKnihaKouzel->import()}
 
 1;

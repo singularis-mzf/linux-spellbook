@@ -18,6 +18,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 | [Architektura překladu](architektura-překladu.md) | rozepsaný |
 | [Mechanismus překladu](mechanismus-překladu.md) | aktuální |
 | [Návody](návody.md) | různý (dělí se na části) |
+| [Perl bez balíčku DEB](perl-bez-balíčku-deb.md) | aktuální |
 | [Syntaxe kapitol](syntaxe-kapitol.md) | aktuální |
 
 ## Dokumentace týkající se sestavení

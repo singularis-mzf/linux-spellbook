@@ -293,6 +293,35 @@ hledání-souborů
 \bfseries{}přesně\mdseries{} N{\\\small gigabajtů/megabajtů/kilobajtů/bajtů}}%
 
 #
+# [perl-základy] 2100..2199
+# =========================================================================================
+
+2100
+pdf-a4.*
+perl-základy
+\begin{odstavce}\itshape{}Varování:\upshape{} Nikdy do svých skriptů Perlu neuvádějte direktivu interpretu \quotedblbase{}\#!\textquotedblleft{}
+\begin{odstavce}\itshape{}Varování:\upshape{} Nikdy do svých skriptů Perlu neuvádějte direktivu interpretu \quotedblbase{}\#!\textquotedblleft\\{}
+
+2110
+pdf-b5.*
+perl-základy
+\parametrprikazu{{\pismodejavusans{}○} {-}0 {\pismodejavusans{}○} {-}0777 {\pismodejavusans{}◉} {-}0x0A {\pismodejavusans{}○} {-}0x017D}{Nastavit \$RS na: \textquotedbl{}\textbackslash{}x\{0\}\textquotedbl{}/undef (celý soubor jako jeden záznam)/\textquotedbl{}\textbackslash{}n\textquotedbl{}/\textquotedbl{}Ž\textquotedbl{} (uvádí se kód hexadecimálně).}%\n
+\parametrprikazu{{\pismodejavusans{}○} {-}0 {\pismodejavusans{}○} {-}0777 {\pismodejavusans{}◉} {-}0x0A {\pismodejavusans{}○} {-}0x017D}{Nastavit \$RS na: \textquotedbl{}\textbackslash{}x\{0\}\textquotedbl{}/undef (celý soubor jako jeden záznam)/\linebreak[3]\textquotedbl{}\textbackslash{}n\textquotedbl{}/\textquotedbl{}Ž\textquotedbl{} (uvádí se kód hexadecimálně).}%\n
+
+2120
+pdf-b5.*
+perl-základy
+\parametrprikazu{{\pismodejavusans{}○} {-}n {\pismodejavusans{}○} {-}p}{Režim připomínající GNU~awk. Parametry skriptu jsou interpretovány jako cesty k~souborům, které mají být čteny. Celý program se pak obalí do implictní smyčky, která z~těchto souborů načítá záznamy ukončené \$RS do proměnné \$ARG. (Na rozdíl od GNU awk ukončovač záznamu není odebrán, k~tomu je potřeba použít \quotedblbase{}chomp(\$ARG);\textquotedblleft{}.) Hodnota \$ARG se na konci každého cyklu: zahodí/vypíše. Tyto volby se obvykle používají v~kombinaci s~volbou {-}e, u~delšího skriptu je totiž výhodnější čtecí cyklus napsat ručně.}%\n
+\parametrprikazu{{\pismodejavusans{}○} {-}n {\pismodejavusans{}○} {-}p}{Režim připomínající GNU~awk. Parametry skriptu jsou interpretovány jako cesty k~souborům, které mají být čteny. Celý program se pak obalí do implictní smyčky, která z~těchto souborů načítá záznamy ukončené \$RS do proměnné \$ARG. (Na rozdíl od GNU awk ukončovač záznamu není odebrán, k~tomu je potřeba použít\newline\quotedblbase{}chomp(\$ARG);\textquotedblleft{}.) Hodnota \$ARG se na konci každého cyklu: zahodí/vypíše. Tyto volby se obvykle používají v~kombinaci s~volbou {-}e, u~delšího skriptu je totiž výhodnější čtecí cyklus napsat ručně.}%\n
+
+2130
+pdf-b5.*
+perl-základy
+(např. \quotedblbase{}\#!/usr/bin/perl\textquotedblleft{})! Není snadné to udělat správně a~neopatrné použití
+(např.\\\quotedblbase{}\#!/usr/bin/perl\textquotedblleft{})! Není snadné to udělat správně a~neopatrné použití
+
+
+#
 # VYŘAZENÉ KAPITOLY
 # =========================================================================================
 

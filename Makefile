@@ -56,7 +56,7 @@ OBRAZKY := favicon.png by-sa.png logo-knihy-velké.png ve-výstavbě.png močál
 OBRAZKY += ik-výchozí.png
 SVG_OBRAZKY := kalendář.svg graf-filtrů.svg git.svg
 OBRAZKY_IK := awk.png datum-čas-kalendář.png diskové-oddíly.png docker.png git.png hledání-souborů.png
-OBRAZKY_IK += make.png markdown.png odkazy.png perl-základy.png plánování-úloh.png práce-s-archivy.png proměnné.png regulární-výrazy.png
+OBRAZKY_IK += make.png markdown.png odkazy.png perl-moduly.png perl-základy.png plánování-úloh.png práce-s-archivy.png proměnné.png regulární-výrazy.png
 OBRAZKY_IK += sed.png soubory-a-adresáře.png správa-balíčků.png správa-procesů.png správa-uživatelských-účtů.png
 OBRAZKY_IK += stahování-videí.png systém.png terminál.png vim.png
 OBRAZKY_IK += základní-znalosti.png zpracování-binárních-souborů.png zpracování-textových-souborů.png zpracování-videa-a-zvuku.png
@@ -366,7 +366,7 @@ $(VSECHNY_DODATKY:%=$(SOUBORY_PREKLADU)/pdf-společné/%.kap): \
 # ----------------------------------------------------------------------------
 $(OBRAZKY:%=$(SOUBORY_PREKLADU)/pdf-společné/_obrázky/%) $(OBRAZKY_IK:%=$(SOUBORY_PREKLADU)/pdf-společné/_obrázky/ik/%): $(SOUBORY_PREKLADU)/pdf-společné/_obrázky/%: obrázky/% konfig.ini
 	mkdir -pv $(dir $@)
-	$(CONVERT) $< $(shell bash -e skripty/přečíst-konfig.sh "Filtry" "$(@:$(SOUBORY_PREKLADU)/pdf-společné/_obrázky/%=../obrázky/%)" "-colorspace Gray" < konfig.ini) $@
+	$(CONVERT) $< $$(skripty/přečíst-konfig.sh "Filtry" "$(@:$(SOUBORY_PREKLADU)/pdf-společné/_obrázky/%=../obrázky/%)" "-colorspace Gray" < konfig.ini) $@
 
 $(SVG_OBRAZKY:%.svg=$(SOUBORY_PREKLADU)/pdf-společné/_obrázky/%.pdf): $(SOUBORY_PREKLADU)/pdf-společné/_obrázky/%.pdf: obrázky/%.svg
 	mkdir -pv $(dir $@)
@@ -375,7 +375,7 @@ $(SVG_OBRAZKY:%.svg=$(SOUBORY_PREKLADU)/pdf-společné/_obrázky/%.pdf): $(SOUBO
 	rsvg-convert -f pdf -o "$@" "$<"
 
 $(SOUBORY_PREKLADU)/pdf-společné/qr.eps: konfig.ini
-	bash skripty/přečíst-konfig.sh Adresy do-qr <$< | qrencode -o "$@" -t eps -s 8
+	skripty/přečíst-konfig.sh Adresy do-qr <$< | qrencode -o "$@" -t eps -s 8
 
 # PDF A4:
 # ============================================================================

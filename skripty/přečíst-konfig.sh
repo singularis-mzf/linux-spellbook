@@ -28,6 +28,16 @@
 
 set -e
 
+if test ! -v SOUBORY_PREKLADU
+then
+    printf 'CHYBA: proměnná $SOUBORY_PREKLADU neexistuje!' >&2
+    read </dev/tty
+elif test -z "$SOUBORY_PREKLADU"
+then
+    printf 'CHYBA: proměnná $SOUBORY_PREKLADU je prázdná!' >&2
+    read </dev/tty
+fi
+
 VYCHOZI=""
 if test $# -eq 3
 then
@@ -42,5 +52,8 @@ export SEKCE="$1"
 export KLIC="$2"
 export VYCHOZI
 VYSLEDEK=$(gawk -f "skripty/přečíst-konfig.awk"; printf x)
-printf 'přečíst_konfig:[%s][%s][%s] = "%s"\n' "$SEKCE" "$KLIC" "$VYCHOZI" "$VYSLEDEK" >>"$SOUBORY_PREKLADU/přečíst_konfig.log"
+if test -n "${SOUBORY_PREKLADU:-}"
+then
+    printf 'přečíst_konfig:[%s][%s][%s] = "%s"\n' "$SEKCE" "$KLIC" "$VYCHOZI" "$VYSLEDEK" >>"$SOUBORY_PREKLADU/přečíst_konfig.log"
+fi
 printf %s\\n "${VYSLEDEK%x}"

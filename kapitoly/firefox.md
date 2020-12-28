@@ -97,6 +97,15 @@ browser.tabs.allowTabDetach
 **user\_pref("browser.link.open\_newwindow", 3);**<br>
 **user\_pref("browser.link.open\_newwindow", 1);**
 
+*# nenačítat stránky na nově otevřených panelech v pozadí*<br>
+?
+<!--
+**user\_pref("browser.tabs.loadBookmarksInBackground", true);**<br>
+**user\_pref("browser.newtab.preload", false);**
+<!- -
+**user\_pref("browser.tabs.loadInBackground", true);**
+-->
+
 *# při zavření posledního panelu místo něj otevřít prázdný*<br>
 **user\_pref("browser.tabs.closeWindowWithLastTab", false);**
 

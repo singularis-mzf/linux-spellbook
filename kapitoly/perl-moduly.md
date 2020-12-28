@@ -52,18 +52,18 @@ v sekci „Další zdroje informací“.
 
 ## Definice
 
-* **Symbol** je identifikátor funkce nebo konstanty, méně často také identifkátor nelokální proměnné včetně rozlišovacího symbolu „$“, „@“ nebo „%“.
+* **Symbol** je identifikátor funkce nebo konstanty nebo identifikátor proměnné včetně rozlišovacího symbolu „$“, „@“ nebo „%“.
 * **Modul** (module) je pojmenovaný kontext pro umísťování funkcí a proměnných, oddělený od hlavního skriptu do samostatného souboru s příponou „.pm“ („Perl module“).
 * **Hlavní skript** je zdrojový soubor, který byl přímo spuštěn interpretem Perlu. Na hlavní skript se při jeho spuštění nabalí moduly odkazované přímo či nepřímo příkazy „use“ a „require“.
 * **Název modulu** je jednoznačné označení modulu, které se skládá z posloupnosti jednoho či více identifikátorů oddělených dvojí dvojtečkou („::“), např. „Digest::MD5“ nebo „English“. V adresářové cestě se pak dvojtečka nahradí za lomítko („/“) a na konec názvu se doplní „.pm“. Na rozdíl od jiných jazyků se název modulu v Perlu nezkracuje (vždy se uvádí celý) a mezi moduly není žádná automatická hierarchie.
 * **Importovat symbol** znamená zpřístupnit symbol z jiného modulu tak, jako by byl definován i v tomto modulu. To umožňuje daný symbol používat bez kvalifikace názvem modulu, případně ho dál exportovat. Importovat lze jen ty symboly, které jsou daným modulem exportovány.
-* **Exportovat symbol** znamená umožnit ostatním modulům ho importovat z tohoto modulu. Exportován může být pouze symbol, který je v daném modulu definován nebo který do něj byl předtím importován.
+* **Exportovat symbol** znamená umožnit symbol ostatním modulům z tohoto modulu importovat.
+* **Objekt** je místo paměti, které má svůj datový typ a hodnotu, je to tedy skalár, pole nebo asociativní pole. Objekty se dělí na **obyčejné objekty** a **objekty tříd** (jimž byla přiřazena třída).
 
 ### Objektově orientované programování
 
 * Jako **metoda** se označuje funkce použitá objektově orientovaným způsobem (volaná objektově orientovaným operátorem „-&gt;“) nebo k tomu uzpůsobená.
 * **Třída** (class) je modul obsahující metody (alespoň jednu). Kromě metod může obsahovat i funkce, které nejsou objektově orientované.
-* **Objekt** je dvojznačný pojem. V širším (a původním) slova smyslu označuje jakékoliv konkrétní místo paměti, které má svůj datový typ. V užším (objektově orientovaném) významu pak jde o objekt, jemuž byl přiřazena třída.
 * **Rodič** třídy je modul (třída) uvedený/á příkazem „use parent“. Není-li požadovaná metoda nalezena v třídě, která je objektu přímo přiřazena, bude ji Perl hledat v jejích rodičích.
 
 !ÚzkýRežim: vyp
@@ -103,7 +103,7 @@ v sekci „Další zdroje informací“.
 ### Vyhledávání a připojování modulů
 
 *# **připojit** modul a importovat výchozí symboly/konkrétní symboly/neimportovat žádné symboly*<br>
-*// Perl prohledá standardní adresáře a adresáře zadané příkazem „use lib“. Z každého takového adresáře hledá cestu sestavenou z komponent názvu modulu, kde poslední komponentu doplní o příponu „.pm“. Např. příkaz „use Digest::MD5“ bude hledat soubor „Digest/MD5.pm“. Nalezený modul se načte a z jeho jmenného prostoru se importují požadované symboly. Toto je obvyklý způsob používání modulů v Perlu.*<br>
+*// Perl prohledá standardní adresáře a adresáře zadané příkazem „use lib“ (resp. parametrem „-I“). Z každého takového adresáře hledá cestu sestavenou z komponent názvu modulu, kde poslední komponentu doplní o příponu „.pm“. Např. příkaz „use Digest::MD5“ bude hledat soubor „Digest/MD5.pm“. Nalezený modul se načte a z jeho jmenného prostoru se importují požadované symboly. Toto je obvyklý způsob používání modulů v Perlu.*<br>
 **use** {*Název::Modulu*}**;**<br>
 **use** {*Název::Modulu*}{*("seznam", "symbolů", "k", "importu")*}**;**<br>
 **use** {*Název::Modulu*}**();**
@@ -127,7 +127,7 @@ v sekci „Další zdroje informací“.
 **BEGIN {if (**{*podmínka*}**) \{**<br>
 <odsadit1>**require** {*Název::Modulu*}**;**<br>
 <odsadit1>[{*Název::Modulu*}**-&gt;import(**[{*"seznam", "symbolů"*}]**);**]
-**\}**
+**\}}**
 
 *# načíst zdrojový soubor jako modul, bez importu symbolů*<br>
 *// Uvedená cesta musí začínat „/“ (v případě absolutní cesty), nebo „./“ v případě relativní cesty. Soubor nemusí mít příponu „.pm“.*<br>
@@ -217,7 +217,7 @@ v sekci „Další zdroje informací“.
 
 ### Třída s pevnou strukturou (deklarace)
 
-*# omezit seznam dovolených klíčů*<br>
+*# **deklarovat** seznam dovolených klíčů*<br>
 !: V záhlaví modulu uvést:<br>
 **use fields(**{*"seznam", "dovolených", "klíčů"*}**);**
 
@@ -229,11 +229,16 @@ v sekci „Další zdroje informací“.
 <odsadit1>**return $self;**<br>
 **\}**
 
-*# vytvořit asociativní pole s pevnou strukturou*<br>
+*# vytvořit prázdný objekt třídy s pevnou strukturou*<br>
+*// Příkaz „use fields();“ je potřeba jen v případě, že v záhlaví modulu není uveden jiný příkaz „use fields“.*<br>
+^^**use fields();**<br>
+**fields::new(**{*"Název::Třídy"*}**)**
+
+*# vytvořit asociativní pole s dynamicky danou pevnou strukturou*<br>
 ^^**use Hash::Util;**<br>
 [{*$ukazatel*} **=**] **Hash::Util::lock\_ref\_keys({},** {*seznam, dovolených, klíčů*}**);**
 
-*# vytvořit typovaný objekt s pevnou strukturou dynamicky*<br>
+*# vytvořit typované asociativní pole s pevnou strukturou dynamicky*<br>
 ^^**use Hash::Util;**<br>
 [{*$ukazatel*} **=**] **Hash::Util::lock\_ref\_keys(bless({},** {*"Název::Modulu"*}**),** {*seznam, dovolených, klíčů*}**);**
 
@@ -258,10 +263,11 @@ v sekci „Další zdroje informací“.
 *# je možno nad daným objektem zavolat metodu určitého názvu?*<br>
 {*ukazatel*}**-&gt;can("**{*název\_metody*}**")**
 
+<!--
 *# obsahuje modul určitou funkci nebo konstantu?*<br>
 *// Tuto funkci používejte opatrně; nemusí být úplně spolehlivá, protože Perl může definovat identifikátory, pro které bude vracet pravdu, přestože modul ve skutečnosti takovou funkci či konstantu neobsahuje.*<br>
 {*Název::Modulu*}**-&gt;can("**{*identifikátor*}**")**
-<!--
+<!- -
 [ ] Zděděné konstanty?
 -->
 
@@ -289,7 +295,7 @@ v sekci „Další zdroje informací“.
 
 *# je klíč dovolený?*<br>
 ^^**use Hash::Util;**<br>
-**alength(grep {$ARG eq** {*"klíč"*}**\} Hash::Util::legal\_ref\_keys(**{*ukazatel*}**))**
+**alength(array(grep {$ARG eq** {*"klíč"*}**\} Hash::Util::legal\_ref\_keys(**{*ukazatel*}**)))**
 
 <!--
 
@@ -354,7 +360,7 @@ Všechny použité nástroje jsou základní součástí Ubuntu, přítomnou i 
 
 *# *<br>
 **# Jednoduchý testovací skript**<br>
-**use lib(".");**<br>
+**use lib((MAIN\_SCRIPT\_DIR));**<br>
 **use Ukázka;**<br>
 **use constant TEXT =&gt; "Hello, world.";**<br>
 **my $výsledek = Ukázka::vypsat\_text(TEXT);**<br>
@@ -383,12 +389,11 @@ Všechny použité nástroje jsou základní součástí Ubuntu, přítomnou i 
 - Popište typické chyby nových uživatelů a jak se jim vyhnout.
 - Buďte co nejstručnější; neodbíhejte k popisování čehokoliv vedlejšího, co je dost možné, že už čtenář zná.
 -->
-![ve výstavbě](../obrázky/ve-výstavbě.png)
-
 * Abyste se vyhnul/a problémům s názvy modulů, každá část názvu musí začínat velkým písmenem a obsahovat alespoň jedno malé písmeno. Např. názvy „Č7á“ nebo „Ay“ jsou vyhovující, názvy „xAb“ či „Z9“ ne.
-* Někteří uživatelé příkazem „use lib(".");“ nastavují, aby Perl moduly vyhledával i v aktuálním adresáři. To však není vůbec dobrý nápad, protože jakmile začnete skripty Perlu volat ze skriptů Bashe, začne se vám stávat, že aktuální adresář bude zcela jiný než adresář se skriptem, např. domovský adresář, adresář na flash disku apod. Proto doporučuji to nedělat a adresář pro vyhledávání modulů předávat jinak (např. parametrem Perlu -I, nebo přes proměnnou prostředí).
+* Někteří uživatelé příkazem „use lib(".");“ nastavují, aby Perl moduly vyhledával i v aktuálním adresáři. To však není vůbec dobrý nápad, protože aktuální adresář při spuštění skriptu může být zcela nečekaný. Proto doporučuji to nedělat a adresář pro vyhledávání modulů předávat jinak, nejlépe parametrem Perlu -I.
 * V Perlu je zvykem nevyužívat výchozí import (proměnnou „@EXPORT“), pokud to nezbytně nepotřebujete. Nechte na uživateli, aby si vybral, které symboly bude chtít importovat.
 * Jmenné prostory („package“) lze používat i v rámci jednoho souboru, tato kapitola se ale takovému použití záměrně vyhýbá, protože jsou s ním spojeny problémy — některé příkazy „use“ totiž účinkují na zdrojový soubor (a tedy nebudou účinkovat v tomtéž jmenném prostoru v jiných zdrojových souborech), zatímco jiné účinkují na jmenný prostor (a tedy zase nebudou účinkovat v tomtéž souboru v jiných jmenných prostorech), některé možná kombinují oba účinky.
+* Některé moduly používají seznam importovaných symbolů k jiným účelům než jako seznam symbolů, např. k předání nastavení.
 
 <!--
 * Proměnné deklarované na úrovni jmenného prostoru klíčovým slovem „my“ jsou zamýšleny tak, že jsou omezeny jen na daný zdrojový soubor. Ve skutečnosti takto deklarovanou proměnnou můžete použít ve více zdrojových souborech, ale v takovém případě pro každý z nich vznikne samostatná proměnná!

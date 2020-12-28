@@ -18,7 +18,6 @@ Poznámky:
 [ ] Pokrýt ovládání programu fdisk.
 [ ] Šifrování LVM?
 [ ] Připojování obyčejným uživatelem
-[ ] SquashFS.
 
 Zpracovat také:
 https://www.root.cz/clanky/pripojeni-obrazu-disku-pod-beznym-uzivatelem-bez-opravneni-roota/
@@ -477,8 +476,13 @@ btrfs: sudo sfill -fllvz {*/přípojný/bod*}
 
 ### Fyzické svazky
 
-*# **vytvořit** z celého zařízení/jeho oddílu*<br>
-**sudo pvcreate** {*/dev/zařízení*} [**-v**[**v**]]<br>
+*# **vytvořit** z celého zařízení*<br>
+**sudo wipefs -a** {*/dev/zařízení*}<br>
+**sudo pvcreate** {*/dev/zařízení*} [**-v**[**v**]]
+<!-- wipefs -f ? -->
+
+*# **vytvořit** z oddílu*<br>
+**sudo wipefs -a** {*/dev/oddíl*}<br>
 **sudo pvcreate** {*/dev/oddíl*} [**-v**[**v**]]
 
 *# **smazat***<br>
@@ -499,7 +503,7 @@ btrfs: sudo sfill -fllvz {*/přípojný/bod*}
 *# **vytvořit***<br>
 **sudo vgcreate** {*id-skupiny*} {*/dev/fyzický-svazek*}... [**-v**[**v**]]
 
-*# **deaktivovat** skupinu (nutné pro odpojení)*<br>
+*# **deaktivovat** skupinu*<br>
 **sudo vgchange \-\-verbose \-\-activate n** {*id-skupiny*}
 
 *# **přidat** fyzický svazek do skupiny*<br>
@@ -698,6 +702,14 @@ Před jejich použitím si musíte přečíst manuálové stránky vyvolané př
 * ☐ noauto :: Nepřipojovat automaticky při startu systému (resp. příkazem „mount -a“).
 * ☐ X-mount.mkdir :: Pokud přípojný bod neexistuje, vytvoří ho s přístupovými právy „u=rwx,go=rx“. (Poznámka: připojený adresář tato práva zpravidla přepíše.) Podle manuálové stránky je tato volba dovolena pouze superuživateli.
 
+### Zobrazení ve správcích souborů (pro všechny typy)
+
+Poznámka: funkčnost těchto voleb ve správcích souborů může být různá; mám vyzkoušeno, že Thunar je respektuje; v ostatních správcích raději nejprve vyzkoušejte, zda tam budou fungovat, než se na ně spolehnete.
+
+* ○ x-gvfs-show ○ x-gvfs-hide :: Systém souborů se má/nemá zobrazovat ve správcích souborů jako jednotka. Pozor: volby „nofail“ a „noauto“ uvedené před touto volbou nemusejí správně fungovat, proto je uvádějte až za ní.
+* ☐ x-gvfs-name={*zakódované%20jméno*} :: Nastaví název, pod kterým se bude zobrazovat ve správcích souborů. Může obsahovat i ne-ASCII znaky; naopak ASCII znaky kromě obyčejných písmen a číslic musejí být zakódovany do hexadecimální formy sestávající z procenta a dvou hexadecimálních číslic; nejužitečnější jsou „%20“ (mezera) a „%2C“ (čárka).
+* ☐ x-gvfs-icon={*id-ikony*} :: Nastaví ikonu, s jakou se bude zobrazovat ve správcích souborů; zkuste např. „folder-download“.
+
 ### Pro ext4, ext3 a ext2
 
 !Parametry:
@@ -793,7 +805,7 @@ Nástroj GParted najdete v balíčku „gparted“; příkaz zerofree v balí�
 
 ### Btrfs
 
-* Btrfs se prý nedokáže dobře zotavit ze selhání a chyb (i v manuálové stránce je varování, že program „btrfs check“ může problémy spíš zhoršit než vyřešit). Pokud dojde prostor pro metadata, souborový systém se nuceně přepne do režimu „jen pro čtení“ a je obtížné či skoro nemožné se z takového stavu zotavit – viz [stránku na superuser.com](https://superuser.com/questions/1419067/btrfs-root-no-space-left-on-device-auto-remount-read-only-cant-balance-cant). Navíc, když se mi to stalo, souborový systém stále hlásil cca 500 MiB volných. Proto doporučuji si za všech okolností nechávat jeden až dva gigabajty každého oddílu typu btrfs volné a jednou za čas provést „offline zálohu“ metodou sektor po sektoru, aby bylo v případě havárie možno obnovit původní obsah a funkčnost oddílu.
+* Btrfs se prý nedokáže dobře zotavit ze selhání a chyb (i v manuálové stránce je varování, že program „btrfs check“ může problémy spíš zhoršit než vyřešit). Pokud dojde prostor pro metadata, souborový systém se nuceně přepne do režimu „jen pro čtení“ a je obtížné či skoro nemožné se z takového stavu zotavit – viz [stránku na superuser.com](https://superuser.com/questions/1419067/btrfs-root-no-space-left-on-device-auto-remount-read-only-cant-balance-cant). Navíc, když se mi to stalo, souborový systém stále hlásil cca 500 MiB volných. Proto doporučuji si za všech okolností nechávat jeden až dva gibibajty každého oddílu typu btrfs volné a jednou za čas provést „offline zálohu“ metodou sektor po sektoru, aby bylo v případě havárie možno obnovit původní obsah a funkčnost oddílu.
 * Pododdíly se v některých ohledech chovají jako samostatně připojené souborové systémy – každý pododdíl má vlastní číslování i-uzlů (proto nejsou dovoleny pevné odkazy přes hranice pododdílu) a nástroje, které nepřekračují hranice souborových systémů (např. „find“ s parametrem „-xdev“), nesestoupí do adresáře reprezentujícího pododdíl. Důležitým technickým rozdílem oproti připojenému systému souborů však je, že adresář reprezentující pododdíl se nepovažuje za přípojný bod VFS a pododdíly nejsou viditelné pro příkazy jako „findmnt“.
 * Příznak neměnnosti se při klonování nepřenáší; pokud ho nenastavíte (např. parametrem „-r“), do klonů neměnného oddílu půjde zapisovat, což může být velmi užitečné (můžete např. vytvořit neměnný klon pododdílu a později původní pododdíl smazat a nahradit ho obyčejným klonem z neměnného klonu).
 * Umístění odkládacího souboru na souborový systém btrfs je možné, ale nedoporučuji to. Přesný postup a související omezení najdete v manuálové stránce zobrazené příkazem „man 5 btrfs“ (kapitola „SWAPFILE SUPPORT“).
