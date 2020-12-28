@@ -118,16 +118,16 @@ Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybra
 
 <!--
 Priority:
-1. perl-*
-2. [nabídka-aplikací]
+1. [nabídka-aplikací]
+2. [pdf]
 3. [wine]
 4. [firefox]
 -->
 
 | ID | Název kapitoly | Růst | Stav |
 | :--- | :--- | ---: | :--- |
+| [perl-moduly](kapitoly/perl-moduly.md) | Perl: moduly a objekty | 100% | připravena k vydání |
 | [perl-základy](kapitoly/perl-základy.md) | Perl: základy | 100% | připravena k vydání |
-| [perl-moduly](kapitoly/perl-moduly.md) | Perl: moduly a objekty | 99% | dítě |
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
 | [firefox](kapitoly/firefox.md) | Firefox | 60% | dítě |
 | [kalkulace](kapitoly/kalkulace.md)| Kalkulace | 50% | dítě |

@@ -692,9 +692,9 @@ $(SOUBORY_PREKLADU)/deb/usr/bin/lkk: skripty/lkk/lkk
 	cp --no-preserve=mode,timestamps -f $< $@
 	chmod 755 $@
 
-# 2. skripty/lkk/LinuxKnihaKouzel.pl => soubory_překladu/deb/usr/share/lkk/LinuxKnihaKouzel.pl
+# 2. skripty/lkk/LinuxKnihaKouzel.pm => soubory_překladu/deb/usr/share/lkk/perl/LinuxKnihaKouzel.pm
 # ----------------------------------------------------------------------------
-$(SOUBORY_PREKLADU)/deb/usr/share/lkk/LinuxKnihaKouzel.pl: skripty/lkk/LinuxKnihaKouzel.pl $(JMENO_SESTAVENI_SOUBOR)
+$(SOUBORY_PREKLADU)/deb/usr/share/lkk/perl/LinuxKnihaKouzel.pm: skripty/lkk/LinuxKnihaKouzel.pm $(JMENO_SESTAVENI_SOUBOR)
 	mkdir -pv $(dir $@)
 	$(SED) "s/\{\{JMÉNO VERZE\}\}/$(JMENO)/g" $< >$@
 
@@ -733,9 +733,9 @@ $(SOUBORY_PREKLADU)/deb/usr/share/bash-completion/completions/lkk: skripty/lkk/b
 $(SOUBORY_PREKLADU)/deb/DEBIAN/md5sums: \
   $(SOUBORY_PREKLADU)/deb/usr/bin/lkk \
   $(SOUBORY_PREKLADU)/deb/usr/share/doc/lkk/copyright \
-  $(SOUBORY_PREKLADU)/deb/usr/share/lkk/LinuxKnihaKouzel.pl \
   $(SOUBORY_PREKLADU)/deb/usr/share/lkk/lkk-spoustec.pl \
   $(SOUBORY_PREKLADU)/deb/usr/share/lkk/skripty/pomocné-funkce \
+  $(SOUBORY_PREKLADU)/deb/usr/share/lkk/perl/LinuxKnihaKouzel.pm \
   $(SOUBORY_PREKLADU)/deb/usr/share/bash-completion/completions/lkk
 	mkdir -pv $(dir $@)
 	(cd $(SOUBORY_PREKLADU)/deb && exec find * -path DEBIAN -prune -o -type f -exec md5sum -- '{}' +) | LC_ALL=C sort -k 1.33b >$@
