@@ -30,7 +30,7 @@ K sestavení formátů „html“, „log“ a „deb“ *Linuxu: Knihy kouzel
 
 V Ubuntu 20.04 LTS, Ubuntu 18.04 LTS, Linuxu Mint 20 a Linuxu Mint 17.3 můžete tyto nástroje nainstalovat příkazem:
 
-> ``sudo apt-get install git make gawk imagemagick qrencode xxd``
+> ``sudo apt-get install git make gawk imagemagick qrencode xxd locales language-pack-cs``
 
 ## Postup sestavení
 

@@ -45,7 +45,7 @@ Také budete potřebovat písma:
 
 Ověřil/a jsem, že v Ubuntu 20.04 LTS, Ubuntu 18.04 LTS a Linuxu Mint 20 můžete všechny potřebné nástroje a písma nainstalovat příkazem:
 
-> ``sudo apt-get install git make gawk xxd imagemagick librsvg2-bin qrencode texlive-xetex texlive-lang-czechslovak t1-cyrillic lmodern``
+> ``sudo apt-get install git make gawk xxd imagemagick librsvg2-bin qrencode locales language-pack-cs texlive-xetex texlive-lang-czechslovak t1-cyrillic lmodern``
 
 V budoucnu pravděpodobně sestavování přejde na Ubuntu 20.04, ale zatím je stále plně podporován i překlad na Ubuntu 18.04.
 

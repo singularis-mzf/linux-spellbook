@@ -16,7 +16,6 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 ## Chystané kapitoly
 
-* „Základy Perlu“ (jednoduše, konzistentně)
 * „PDF“ (dělení, slučování, operace po stránkách, transformace, konverze apod.)
 * „Zpracování obrázků“ (ImageMagick, konverze RAW z fotoaparátů, zatím asi bez animovaných gifů)
 * „Stahování z webu“ (wget, curl, firefox, wkhtmltoimage, robots.txt, ...)
@@ -52,9 +51,11 @@ nebo komentářem na GitHubu. Váš zájem mě určitě potěší a povzbudí.
 
 ## Možný přechod na jazyk Perl
 
-Vzhledem k blížícímu se vydání kapitoly Základy Perlu hodlám do Perlu přepsat část
-GNU-awk-skriptů fungujících spíše samostatně. Hlavní části mechanismu překladu ale
-zůstanou v GNU awk, protože jsou z velké části založeny na příkazech „switch“,
+Dříve nebo později do Perlu začnu přepisovat méně významné pomocné skripty.
+
+Připouštím možnost, že některé pomocné skripty v budoucnu přepíšu do Perlu,
+hlavní část mechanismu překladu ale zatím zůstane v GNU awk,
+protože je z velké části založena na příkazech „switch“,
 které Perl sám o sobě dobře neumí a náhražky v něm vypadají ošklivě
-nebo dobře nefungují. Pokud se mi ale podaří najít vhodnou a dostatečně výkonnou
-náhražku za konstrukci switch, bude přechod na Perl možný i u této části mechanismu překladu.
+nebo dobře nefungují. U hlavní části mechanismu překladu bude přechod
+možný v případě,

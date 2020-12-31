@@ -114,7 +114,7 @@ Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybra
 | [zpracování-textových-souborů](kapitoly/zpracování-textových-souborů.md) | Zpracování textových souborů | 1.2 | základní |
 | [zpracování-videa-a-zvuku](kapitoly/zpracování-videa-a-zvuku.md) | Zpracování videa a zvuku | 1.0 | základní |
 
-### Kapitoly ve vývoji
+### Rozpracované kapitoly
 
 <!--
 Priority:
@@ -166,7 +166,7 @@ Priority:
 * [Docker](kapitoly/docker.md)
 * [Plánování úloh](kapitoly/plánování-úloh.md)
 
-## Návod k zapojení se
+## Jak pomoci nebo se zapojit do vývoje
 
 Viz soubor [JAK-SE-ZAPOJIT.md](JAK-SE-ZAPOJIT.md).
 
