@@ -20,8 +20,8 @@ Toto je soubor README.md vývojové větve „vanilková příchuť 1.x“, kter
 určena především pro *Ubuntu 18.04 Bionic Beaver* a jeho deriváty
 a je ve stavu dlouhodobé pasivní údržby od 1. října 2020 do 1. března 2023.
 
-Aktivně vyvíjenou verzi projektu pravděpodobně najdete ve větvích „vyvojova“
-a „stabilni“ v repozitáři na GitHubu. Pokud používáte novější verzi linuxové distribuce
+Aktivně vyvíjenou verzi projektu pravděpodobně najdete ve větvích „vývojová“
+a „stabilní“ v repozitáři na GitHubu. Pokud používáte novější verzi linuxové distribuce
 než Ubuntu 18.04, hledejte prosím novější větev Linuxu: Knihy kouzel.
 
 Ve stavu dlouhodobé pasivní údržby budou opravovány nahlášené chyby
