@@ -453,6 +453,12 @@ na linuxu zatím ve výchozím stavu vypnuto
 *# zakázat všem webům obrázky na pozadí*<br>
 **\* {background-image: none !important;}**
 
+## Zaklínadla: Ostatní
+
+*# zakázat na YouTube „obraz v obraze“*<br>
+!: Nainstalujte si rozšíření „Enhancer for YouTube(TM)“.<br>
+!: V jeho nastavení odškrtejte všechna políčka, zejména „Pin the video player when scrolling down the page“.
+
 ## Parametry příkazů
 ![ve výstavbě](../obrázky/ve-výstavbě.png)
 

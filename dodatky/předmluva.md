@@ -209,32 +209,27 @@ Uživatele, který Linux: Knihu kouzel neprostudoval, poznáte např. takto:
 * Myslí si, že příkaz „apt list gimp*“ vypíše seznam balíčků začínajících „gimp“ (v tomto případě se musí hlavně naučit pravidla odzvláštňování).
 -->
 
-## Aktuální poznámka k verzi „vanilková příchuť 2.2 Jindra Janů“
+## Aktuální poznámka k verzi „vanilková příchuť 2.3 Klára Krejčí“
 
-Verze vanilkové příchuti 2.2, jménem Jindra Janů, přináší novou
-základní kapitolu Pevné a symbolické odkazy.
+Verze vanilkové příchuti 2.3, jménem Klára Krejčí, přináší nové
+kapitoly Perl: základy (základní) a Perl: moduly a objekty (prémiovou).
+V souvislosti s nimi je balíček se spouštěčem pomocných skriptů doplněn
+i o modul Perlu potřebný k použití většiny zaklínadel v těchto kapitolách.
 
-Důležitá informace: s vydáním této verze došlo k přejmenování větví
-na GitHubu. Větev „stabilni“ byla přejmenována na „stabilní“
-a větev „vyvojova“ na „vývojová“. Původní větve zůstanou v repozitáři
-do konce prosince a začátkem roku 2021 budou odstraněny.
-
-V kapitole Soubory a adresáře se user\_xattrs nově označují jako „uživatelské
-datové položky“ namísto předchozího označení „uživatelské rozšířené atributy“.
-Rovněž přibyla nová část kapitoly věnující se „rozšířeným zvláštním příznakům“.
-
-Spouštěč „lkk“ dodávaný k pomocným skriptům byl přepsán do Perlu,
-takže již nevyžaduje GNU awk. Jediným omezením nové verze je, že neumožňuje
-kombinovat krátké volby.
-
+V HTML variantě jsou novinkou „reklamní paty“ cílené na náhodné návštěvníky
+online HTML varianty a pobízející je k pomoci s projektem.
 <!--
 V HTML variantě...
 
 V PDF variantách...
 -->
 
-Vydání verze 2.3, jménem Klára Krejčí, očekávám v druhé polovině prosince 2020.
-Měla by přinést dvě nové prémiové kapitoly o programovacím jazyce Perl.
+V kapitole *Diskové oddíly* přibyly zkušenosti s LVM na vyjímatelných
+médiích a volby x-gvfs.
+V kapitole *Hledání souborů* přibylo vyloučení adresářů z prohledávání a další vylepšení.
+V kapitole *Správa balíčků* přibyla práce s prioritami APT.
+
+Vydání verze 2.4, jménem Leoš Liška, očekávám začátkem února 2021.
 
 Verze řady „vanilková příchuť 1.x“ jsou ve stádiu dlouhodobé pasivní údržby do 1. března 2023.
 

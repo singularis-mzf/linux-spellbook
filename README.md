@@ -19,7 +19,7 @@ Má formu připomínající konverzační slovník cizího jazyka a je vydává
 pro profesionální i domácí tisk a ve formátu HTML pro snadné vykopírování zaklínadel,
 můžete ji tedy používat na papíře i v počítači, proto „multimediální“.
 
-Verze *vanilková příchuť 2.2* je cílena na *Ubuntu 20.04 Focal Fossa* a jeho deriváty.
+Verze *vanilková příchuť 2.3 Klára Krejčí* je cílena na *Ubuntu 20.04 Focal Fossa* a jeho deriváty.
 
 Obsah podléhá licenci [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 Podrobné údaje o autorství zdrojových souborů jsou uvedeny v komentářích v jejich záhlaví;
@@ -98,6 +98,8 @@ Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybra
 | [make](kapitoly/make.md) | Make | 1.0 | prémiová |
 | [markdown](kapitoly/markdown.md) | Markdown | 1.0 | prémiová |
 | [odkazy](kapitoly/odkazy.md) | Pevné a symbolické odkazy | 2.2 | základní |
+| [perl-moduly](kapitoly/perl-moduly.md) | Perl: moduly a objekty | 2.3 | prémiová |
+| [perl-základy](kapitoly/perl-základy.md) | Perl: základy | 2.3 | základní |
 | [práce-s-archivy](kapitoly/práce-s-archivy.md) | Práce s archivy | 1.1 | základní |
 | [proměnné](kapitoly/proměnné.md) | Proměnné prostředí a interpretu | 1.9 | prémiová |
 | [regulární-výrazy](kapitoly/regulární-výrazy.md) | Regulární výrazy | 1.1 | základní |
@@ -119,15 +121,14 @@ Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybra
 <!--
 Priority:
 1. [nabídka-aplikací]
-2. [pdf]
-3. [wine]
-4. [firefox]
+2. [bash] (základní věci jako roury, správa úloh apod.)
+3. [pdf]
+4. [wine]
+5. [firefox]
 -->
 
 | ID | Název kapitoly | Růst | Stav |
 | :--- | :--- | ---: | :--- |
-| [perl-moduly](kapitoly/perl-moduly.md) | Perl: moduly a objekty | 100% | připravena k vydání |
-| [perl-základy](kapitoly/perl-základy.md) | Perl: základy | 100% | připravena k vydání |
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
 | [firefox](kapitoly/firefox.md) | Firefox | 60% | dítě |
 | [kalkulace](kapitoly/kalkulace.md)| Kalkulace | 50% | dítě |
@@ -172,8 +173,8 @@ Viz soubor [JAK-SE-ZAPOJIT.md](JAK-SE-ZAPOJIT.md).
 
 ## Větve na GitHubu
 
-* *vývojová* (dříve „vyvojova“) – Aktivně vyvíjený zdrojový kód. Sem směřují nejčerstvější příspěvky.
-* *stabilní* (dříve „stabilni“) – Zdrojový kód poslední vydané verze. Pokud vám nepůjde přeložit kód z větve „vývojová“, použijte kód z větve „stabilní“.
+* *vývojová* – Aktivně vyvíjený zdrojový kód. Sem směřují nejčerstvější příspěvky.
+* *stabilní* – Zdrojový kód poslední vydané verze. Pokud vám nepůjde přeložit kód z větve „vývojová“, použijte kód z větve „stabilní“.
 * *v1* — Větev 1.x; ve stádiu dlouhodobé pasivní údržby do 1. března 2023.
 
 ## Podobné projekty

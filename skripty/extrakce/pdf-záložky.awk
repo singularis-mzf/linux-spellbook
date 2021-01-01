@@ -106,7 +106,8 @@ BEGINFILE {
     pocty[cislo_kapitoly "/" cislo_sekce] += 1;
 }
 
-je_toc && $0 ~ /^\\contentsline \{(chapter|section|subsection)\}.*\{[^{}]+\}$/ {
+je_toc && $0 ~ /^\\contentsline \{(chapter|section|subsection)\}.*\{[^{}]+\}[% ]*$/ {
+    gsub(/[% ]*$/, "");
     match($0, /\{[^{}]+\}/);
     typ = substr($0, RSTART + 1, RLENGTH - 2);
     match($0, /\{[^{}]+\}$/);
