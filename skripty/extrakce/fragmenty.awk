@@ -41,16 +41,14 @@ BEGIN {
 
     # vydané kapitoly:
     delete premiove_kapitoly; # [id] -> 1
-    if (Test("-r vydané-kapitoly.lst")) {
-        while (getline s < "vydané-kapitoly.lst") {
-            if (s ~ /^[^#]/) {
-                if (!Test("-r kapitoly/" s ".md")) {
-                    ShoditFatalniVyjimku("Chyba v souboru vydané-kapitoly.lst: nelze číst kapitoly/" s ".md!");
-                }
+    soubor = "pořadí-kapitol.vydané.lst";
+    if (Test("-r " soubor)) {
+        while (getline s < soubor) {
+            if (s ~ /^[^#]/ && Test("-r kapitoly/" s ".md")) {
                 premiove_kapitoly[s] = 1;
             }
         }
-        close("vydané-kapitoly.lst");
+        close(soubor);
     }
 }
 BEGINFILE {

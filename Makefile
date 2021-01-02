@@ -163,7 +163,7 @@ $(SOUBORY_PREKLADU)/fragmenty.tsv: $(PORADI_KAPITOL_SOUBOR) $(NASTAVENI_SOUBOR) 
   skripty/extrakce/fragmenty.awk \
   $(VSECHNY_KAPITOLY_A_DODATKY_MD) \
   $(SOUBORY_PREKLADU)/ucs_ikony.dat konfig.ini \
-  $(wildcard vydané-kapitoly.lst)
+  $(wildcard pořadí-kapitol.vydané.lst)
 	mkdir -pv $(SOUBORY_PREKLADU)
 	skripty/pořadí-kapitol.sh $(VSECHNY_DODATKY) $(VSECHNY_KAPITOLY) | $(AWK) -v "PREMIOVE_KAPITOLY=$(PREMIOVE_KAPITOLY)" -f skripty/extrakce/fragmenty.awk 3>$(SOUBORY_PREKLADU)/fragmenty.tsv 4>$(SOUBORY_PREKLADU)/štítky.tsv
 
