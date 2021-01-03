@@ -120,15 +120,15 @@ Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybra
 
 <!--
 Priority:
-1. [nabídka-aplikací]
-2. [bash] (základní věci jako roury, správa úloh apod.)
-3. [pdf]
-4. [wine]
-5. [firefox]
+1. [bash] (základní věci jako roury, správa úloh apod.)
+2. [pdf]
+3. [wine]
+4. [firefox]
 -->
 
 | ID | Název kapitoly | Růst | Stav |
 | :--- | :--- | ---: | :--- |
+| [nabídka-aplikací](kapitoly/nabídka-aplikací.md) | Nabídka aplikací | 99% | dítě |
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
 | [firefox](kapitoly/firefox.md) | Firefox | 60% | dítě |
 | [kalkulace](kapitoly/kalkulace.md)| Kalkulace | 50% | dítě |
@@ -150,7 +150,6 @@ Priority:
 | [wine](kapitoly/wine.md) | Wine | 0% | embryo |
 | [pdf](kapitoly/pdf.md) | PDF | 0% | embryo |
 | [virtualbox](kapitoly/virtualbox.md) | VirtualBox | 0% | embryo |
-| [nabídka-aplikací](kapitoly/nabídka-aplikací.md) | Nabídka aplikací | 0% | embryo |
 | [šifrování](kapitoly/šifrování.md) | Šifrování a kryptografie | 0% | embryo |
 | přehrávání-videa | Přehrávání videa, zvuku a obrázků | - | přál/a bych si |
 | firewall | Firewall | - | přál/a bych si |

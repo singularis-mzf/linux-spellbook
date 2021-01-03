@@ -65,6 +65,42 @@ GNU Privacy Guard, jehož součástí je příkaz „gpg“, je vyvíjen v proj
 -->
 ![ve výstavbě](../obrázky/ve-výstavbě.png)
 
+*# vypsat seznam veřejných/soukromých klíčů v klíčence*<br>
+**gpg \-\-list-keys**<br>
+**gpg \-\-list-secret-keys**
+
+*# smazat veřejný/soukromý klíč z klíčenky*<br>
+**gpg \-\-delete-keys** {*otisk*}<br>
+**gpg** [**\-\-yes**] **\-\-delete-secret-keys** {*otisk*}
+
+*# stáhnout veřejný klíč ze serveru klíčů*<br>
+**gpg** [**\-\-keyserver** {*server*}] **\-\-recv-keys** {*otisk*}
+
+*# odeslat veřejný klíč na sever klíčů*<br>
+**gpg** [**\-\-keyserver** {*server*}] **\-\-send-keys** {*otisk*}
+
+<!--
+keys.gnupg.net
+-->
+
+*# zašifrovat soubor veřejným klíčem*<br>
+**gpg \-\-encrypt** [**\-\-armor**] **-r** {*otisk*} **&lt;**{*soubor*} **&gt;**{*cílový-soubor*}
+
+*# dešifrovat soubor soukromým klíčem*<br>
+**gpg \-\-decrypt &lt;**{*zašifrovaný-soubor*} **&gt;**{*výstupní-soubor*}
+
+*# ověřit podpis souboru*<br>
+?
+
+*# exportovat všechny veřejné klíče do textového souboru*<br>
+**gpg \-\-export &gt;**{*soubor.asc*}
+<!--
+--export-secret-keys
+-->
+
+*# importovat klíče z textového souboru do klíčenky*<br>
+**gpg \-\-import &lt;**{*soubor.asc*}
+
 ## Parametry příkazů
 <!--
 - Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.

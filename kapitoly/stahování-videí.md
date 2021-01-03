@@ -268,10 +268,10 @@ V repozitáři Ubuntu sice je balíček „youtube-dl“, ale zpravidla zastara
 Pro podrobný popis formátovacího řetězce a mechanismu automatického výběru formátu ke stažení navštivte oficiální dokumentaci. Bohužel, veškerá oficiální nápověda je jen v angličtině.
 
 * [Článek: Pět tipů pro přehrávání webového videa](https://www.root.cz/clanky/pet-tipu-pro-prehravani-weboveho-videa/)
-* [Oficiální dokumentace](https://github.com/ytdl-org/youtube-dl/blob/master/README.md) (anglicky, dočasně mimo provoz)
+* [Oficiální dokumentace](https://github.com/ytdl-org/youtube-dl/blob/master/README.md) (anglicky)
 * [Video: Downloading Videos, Music and More with Youtube DL](https://www.youtube.com/watch?v=9A-HLSvtBWc) (anglicky)
 * [Video: Command Line App For Downloading YouTube Videos](https://www.youtube.com/watch?v=fOjP-7-gI4Y) (anglicky)
-* [Oficiální stránka](https://ytdl-org.github.io/youtube-dl/index.html) (anglicky, dočasně mimo provoz)
+* [Oficiální stránka](https://ytdl-org.github.io/youtube-dl/index.html) (anglicky)
 * [Balíček Ubuntu](https://packages.ubuntu.com/focal/youtube-dl) (anglicky)
 * [Manuálová stránka](http://manpages.ubuntu.com/manpages/focal/en/man1/youtube-dl.1.html) (anglicky)
 * [TL;DR stránka „youtube-dl“](https://github.com/tldr-pages/tldr/blob/master/pages/common/youtube-dl.md) (anglicky)

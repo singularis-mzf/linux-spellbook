@@ -456,6 +456,7 @@ na linuxu zatím ve výchozím stavu vypnuto
 ## Zaklínadla: Ostatní
 
 *# zakázat na YouTube „obraz v obraze“*<br>
+*// Nefunguje úplně spolehlivě, ale výrazně sníží pravděpodobnost, že se okno videa objeví.*<br>
 !: Nainstalujte si rozšíření „Enhancer for YouTube(TM)“.<br>
 !: V jeho nastavení odškrtejte všechna políčka, zejména „Pin the video player when scrolling down the page“.
 
