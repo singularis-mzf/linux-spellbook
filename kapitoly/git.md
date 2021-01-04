@@ -71,7 +71,7 @@ Příkaz „git stash“ je pokryt částečně, příkaz „git rebase -i“ po
 
 V Gitu se používá několik způsobů, jak můžete v příkazech označovat jednotlivé revize:
 
-* **Úplná MD5 heš** je vhodná pouze ve skriptech, na ruční použití je nepraktická.
+* **Úplná SHA1 heš** je vhodná pouze ve skriptech, na ruční použití je nepraktická.
 * **Jednoznačná předpona heše** je vhodná pro ruční použití; v malých projektech obvykle stačí první tři znaky, ve velkých pět nebo šest. Pokud předpona není jednoznačná, Git ohlásí chybu.
 * **Symbolické označení**, např. název větve, jméno revize nebo „HEAD“.
 

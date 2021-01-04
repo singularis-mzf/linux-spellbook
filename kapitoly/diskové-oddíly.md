@@ -706,6 +706,8 @@ Před jejich použitím si musíte přečíst manuálové stránky vyvolané př
 
 Poznámka: funkčnost těchto voleb ve správcích souborů může být různá; mám vyzkoušeno, že Thunar je respektuje; v ostatních správcích raději nejprve vyzkoušejte, zda tam budou fungovat, než se na ně spolehnete.
 
+!Parametry:
+
 * ○ x-gvfs-show ○ x-gvfs-hide :: Systém souborů se má/nemá zobrazovat ve správcích souborů jako jednotka. Pozor: volby „nofail“ a „noauto“ uvedené před touto volbou nemusejí správně fungovat, proto je uvádějte až za ní.
 * ☐ x-gvfs-name={*zakódované%20jméno*} :: Nastaví název, pod kterým se bude zobrazovat ve správcích souborů. Může obsahovat i ne-ASCII znaky; naopak ASCII znaky kromě obyčejných písmen a číslic musejí být zakódovany do hexadecimální formy sestávající z procenta a dvou hexadecimálních číslic; nejužitečnější jsou „%20“ (mezera) a „%2C“ (čárka).
 * ☐ x-gvfs-icon={*id-ikony*} :: Nastaví ikonu, s jakou se bude zobrazovat ve správcích souborů; zkuste např. „folder-download“.
