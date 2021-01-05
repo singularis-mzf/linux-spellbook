@@ -253,7 +253,11 @@ Poznámka: znění zaklínadel v této sekci je upraveno pro uvedení uvnitř d
 **$(printf \\\\t)**
 
 *# **hodnota proměnné** při každém vypsání výzvy*<br>
-**\\\\\\$\{**{*název proměnné*}**\}**
+**\\$\{**{*název proměnné*}**\}**
+
+*# obsah souboru v momentě vypsání výzvy (konce řádek na konci souboru vynechat/vypsat také)*<br>
+**\\$(&lt;**{*/cesta/k/souboru*}**)**<br>
+?
 
 *# **uživatelské jméno** přihlášeného uživatele/jeho celé jméno*<br>
 **\\\\u** ⊨ novakova<br>
@@ -624,6 +628,23 @@ Testováno na fontu noto...
 **PS1="\\\\[$(lkk\_bezp\_set setaf 1; lkk\_bezp\_set setab 2; tput el)\\\\]\\\$&blank;"**<br>
 **PS0="$(lkk\_bezp\_set setaf 6; lkk\_bezp\_set setab 5; tput el)"**
 
+*# příkazy psát tučným zeleným písmem, výzvu bez zvýraznění*<br>
+^^**source &lt;(lkk \-\-funkce)**<br>
+**PS0="$(tput sgr0)"**<br>
+**PS1="\\\\[$(tput sgr0)\\\\]\\w\\\$&blank;\\\\[$(lkk\_bezp\_set setaf 2; tput bold)\\\\]"**<br>
+**PS2="\\\\[$(tput sgr0)\\\\]\|&blank;\\\\[$(lkk\_bezp\_set setaf 2; tput bold)\\\\]"**
+
+*# trvání posledního příkazu v sekundách, aktuální adresář a dolar*<br>
+**PS\_TIMESTAMP\_FILE="/tmp/\$\$-${USER}-${RANDOM}.timestamp"**<br>
+**date +%s%1N &gt;"$PS\_TIMESTAMP\_FILE"**<br>
+**PS0="\\$(date +%s%1N &gt;\\"\\$PS\_TIMESTAMP\_FILE\\")"**<br>
+**PS1="\\$(((\\$(date +%s%1N) - \\$(&lt;\\$PS\_TIMESTAMP\_FILE) + 5) / 10))s&blank;\\w\\\\\\$&blank;"**
+
+<!--
+**rm -f "$PS\_TIMESTAMP\_FILE"** ?
+- Je lepší dočasný soubor přepsat, nebo ho odstranit a znovu vytvořit?
+- Nemůže nastat konflikt s nastavením umask? A s nastavením „noclobber“?
+-->
 
 ## Parametry příkazů
 
