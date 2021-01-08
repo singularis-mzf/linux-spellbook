@@ -36,7 +36,7 @@ VSECHNY_DODATKY := předmluva koncepce-projektu plán-vývoje základní-znalost
 # _ A, B, C, D, E, F, G
 VSECHNY_KAPITOLY := _ostatní _ukázka apache awk bash css datum-čas-kalendář diskové-oddíly docker dosbox firefox git grub
 # H, I, J, K, L, M
-VSECHNY_KAPITOLY += hledání-souborů kalkulace konverze-formatů latex lkk make markdown moderní-věci
+VSECHNY_KAPITOLY += hledání-souborů kalkulace konverze-formatů latex lkk make manuálové-stránky markdown moderní-věci
 # N, O, P, Q, R, S
 VSECHNY_KAPITOLY += nabídka-aplikací odkazy pdf perl-moduly perl-standardní-knihovna perl-základy plánování-úloh práce-s-archivy proměnné regulární-výrazy
 # S
@@ -728,7 +728,16 @@ $(SOUBORY_PREKLADU)/deb/usr/share/bash-completion/completions/lkk: skripty/lkk/b
 	mkdir -pv $(dir $@)
 	cat $< >$@
 
-# 8. soubory_překladu/deb/** => soubory_překladu/deb/DEBIAN/md5sums
+# 8. skripty/lkk/lkk.en.1 => soubory_překladu/deb/usr/share/man/man1/lkk.1.gz
+#    skripty/lkk/lkk.cz.1 => soubory_překladu/deb/usr/share/man/cs/man1/lkk.1.gz
+$(SOUBORY_PREKLADU)/deb/usr/share/man/man1/lkk.1.gz: skripty/lkk/lkk.en.1 $(DATUM_SESTAVENI_SOUBOR) $(DEB_VERZE_SOUBOR)
+	mkdir -pv $(dir $@)
+	sed -E 's/^\.TH .*/.TH "LKK" 1 "'"$(LC_ALL="en_US.UTF-8" date +"%B %-d., %Y")"'" "Linux: Kniha kouzel, '"$(JMENO)\"/" $< | gzip -9 >$@
+$(SOUBORY_PREKLADU)/deb/usr/share/man/cs/man1/lkk.1.gz: skripty/lkk/lkk.cz.1 $(DATUM_SESTAVENI_SOUBOR) $(DEB_VERZE_SOUBOR)
+	mkdir -pv $(dir $@)
+	sed -E 's/^\.TH .*/.TH "LKK" 1 "'"$(LC_ALL="cs_CZ.UTF-8" date +"%-d. %B %Y")"'" "Linux: Kniha kouzel, '"$(JMENO)\"/" $< | gzip -9 >$@
+
+# 9. soubory_překladu/deb/** => soubory_překladu/deb/DEBIAN/md5sums
 # ----------------------------------------------------------------------------
 $(SOUBORY_PREKLADU)/deb/DEBIAN/md5sums: \
   $(SOUBORY_PREKLADU)/deb/usr/bin/lkk \
@@ -736,11 +745,13 @@ $(SOUBORY_PREKLADU)/deb/DEBIAN/md5sums: \
   $(SOUBORY_PREKLADU)/deb/usr/share/lkk/lkk-spoustec.pl \
   $(SOUBORY_PREKLADU)/deb/usr/share/lkk/skripty/pomocné-funkce \
   $(SOUBORY_PREKLADU)/deb/usr/share/lkk/perl/LinuxKnihaKouzel.pm \
-  $(SOUBORY_PREKLADU)/deb/usr/share/bash-completion/completions/lkk
+  $(SOUBORY_PREKLADU)/deb/usr/share/bash-completion/completions/lkk \
+  $(SOUBORY_PREKLADU)/deb/usr/share/man/man1/lkk.1.gz \
+  $(SOUBORY_PREKLADU)/deb/usr/share/man/cs/man1/lkk.1.gz
 	mkdir -pv $(dir $@)
 	(cd $(SOUBORY_PREKLADU)/deb && exec find * -path DEBIAN -prune -o -type f -exec md5sum -- '{}' +) | LC_ALL=C sort -k 1.33b >$@
 
-# 8. soubory_překladu/deb/** => vystup_překladu/lkk_{verze}_all.deb
+# 10. soubory_překladu/deb/** => vystup_překladu/lkk_{verze}_all.deb
 # ----------------------------------------------------------------------------
 # Poznámka: přes „md5sums“ závisí také na všech ostatních souborech v $(SOUBORY_PREKLADU)/deb mimo podadresář DEBIAN.
 $(VYSTUP_PREKLADU)/lkk_$(DEB_VERZE)_all.deb: \

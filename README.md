@@ -132,6 +132,7 @@ Priority:
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
 | [firefox](kapitoly/firefox.md) | Firefox | 60% | dítě |
 | [kalkulace](kapitoly/kalkulace.md)| Kalkulace | 50% | dítě |
+| [manuálové-stránky](kapitoly/manuálové-stránky.md) | Manuálové stránky | 50% | dítě |
 | [stahování-z-webu](kapitoly/stahování-z-webu.md) | Stahování z webu | 40% | dítě |
 | [zpracování-obrázků](kapitoly/zpracování-obrázků.md) | Zpracování obrázků | 40% | dítě |
 | [moderní-věci](kapitoly/moderní-věci.md) | Moderní věci | 10% | dítě |
