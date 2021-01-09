@@ -635,6 +635,7 @@ Testováno na fontu noto...
 **PS2="\\\\[$(tput sgr0)\\\\]\|&blank;\\\\[$(lkk\_bezp\_set setaf 2; tput bold)\\\\]"**
 
 *# trvání posledního příkazu v sekundách, aktuální adresář a dolar*<br>
+*// Poznámka: V případě použití této výzvy zůstávají v adresáři /tmp dočasné soubory s časovými známkami, operační systém je však nejpozději při příštím startu smaže. V případě, že nějaký příkaz spustíte na pozadí nebo ho přerušíte (Ctrl+Z), vypíše výzva dobu trvání po částech (vždy od potvrzení příkazu po následující zobrazení výzvy). Pro pokročilejší měření použijte příkaz „time“.*<br>
 **PS\_TIMESTAMP\_FILE="/tmp/\$\$-${USER}-${RANDOM}.timestamp"**<br>
 **date +%s%1N &gt;"$PS\_TIMESTAMP\_FILE"**<br>
 **PS0="\\$(date +%s%1N &gt;\\"\\$PS\_TIMESTAMP\_FILE\\")"**<br>

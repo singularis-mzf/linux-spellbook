@@ -15,6 +15,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 Poznámky:
 
 [x] BTRFS
+[ ] mdadm!
 [ ] Pokrýt ovládání programu fdisk.
 [ ] Šifrování LVM?
 [ ] Připojování obyčejným uživatelem

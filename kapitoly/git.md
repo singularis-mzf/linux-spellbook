@@ -87,10 +87,8 @@ Za jakýmkoliv označením revize můžete (i opakovaně a v kombinaci) použ
 ### Informace o stavu PO a PA
 
 *# **běžné informace** pro člověka*<br>
-**git status** [**-bs**]
-<!--
-[{*soubor-či-adresář*}]...
--->
+**git status** [**-bs**] <nic>[**\-\-ignored**]
+<!-- [{*soubor-či-adresář*}]... -->
 
 *# **změny** v PA oproti HEAD/v PA oproti PO/v PO oproti HEAD*<br>
 **git diff** [**\-\-name-status**] **HEAD** [**\-\-** {*soubor-nebo-adresář*}...]<br>
@@ -111,6 +109,9 @@ Za jakýmkoliv označením revize můžete (i opakovaně a v kombinaci) použ
 ?
 
 *# seznam verzovaných souborů*<br>
+?
+
+*# seznam ignorovaných souborů a adresářů*<br>
 ?
 
 ### Větve (ne vzdálené)

@@ -205,6 +205,7 @@ Většina použitých nástrojů je přítomna i v minimální instalaci Ubunt
 
 * [YouTube: Linux pro začátečníky: Jak vytvořit spouštěč](https://www.youtube.com/watch?v=QzXCJFpDBRQ)
 * [man exo-destop-item-edit](http://manpages.ubuntu.com/manpages/focal/en/man1/exo-desktop-item-edit.1.html) (anglicky)
+* [YouTube: Managing AppImages on Linux](https://www.youtube.com/watch?v=9Mph07loSMo) (anglicky)
 * [Oficiální specifikace formátu spouštěčů](https://specifications.freedesktop.org/desktop-entry-spec/latest/) (anglicky)
 * [Balíček exo-utils](https://packages.ubuntu.com/focal/exo-utils) (anglicky)
 * [Seznam hlavních kategorií](https://specifications.freedesktop.org/menu-spec/latest/apa.html) (anglicky)
