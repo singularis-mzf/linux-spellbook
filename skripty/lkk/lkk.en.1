@@ -1,0 +1,154 @@
+\" Linux Kniha kouzel, the manual page
+\"Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
+\"
+\"This work is work of free culture; you may modify and redistribute it
+\"under the terms of Creative Commons Attribution-ShareAlike 4.0 International
+\"License as issued by the non-profit organization Creative Commons.
+\"The license text is attached to this project, or you may find it at
+\"web address:
+\"
+\"https://creativecommons.org/licenses/by-sa/4.0/
+\"
+.TH "LKK" 1 "January 8th 2020" "Linux: Kniha kouzel, v.p. 2.0"
+.SH "NAME"
+lkk - runs and executes helper scripts of Linux: Kniha kouzel
+.SH "SYNOPSIS"
+.SY lkk
+[...] [\fB\-r\fR]
+.I script
+[\fIparameters\fR]
+.SY lkk
+[...] \fB{\-e|\-f|\-p|\-t} \fIscript\fR
+.SY lkk
+[...] \fB\-\-funkce\fR
+[\fIfunctionName\fR]
+.SY lkk
+[...] \fB{\-l|\-\-seznam\-cest}
+.YS
+
+.SH "POPIS"
+
+„lkk“ command is aimed for comfortable running of helper scripts and
+helper functions shipped with Linux: Kniha kouzel. All shipped scripts
+can be executed directly also. After installation scripts are located
+at \fI/usr/share/lkk/skripty\fR directory.
+
+Some files in the directory are not executable. Those files are called
+„snippets“ and they may be treated the same as the scripts,
+with exception that is is not possible to run them (they are aimed
+to be printed by „lkk \-p“ command).
+
+.SH "MODES AND OPTIONS"
+.SS "Modes"
+.TP
+\fB\-e \fIscript
+If the script exists in user local directory
+(\(ti/.local/share/lkk/skripty), it will be openned in the default editor.
+.RS
+.PP
+If the script is found in another directory, a copy of it will be
+created in the user local directory and openned in the default editor.
+.PP
+If the script is not found, a new empty script will be created in
+the user default directory and openned in the default editor.
+
+I recommend to combine this mode with \fB\-x\fR option to make
+a new script executable.
+.RE
+.TP
+\fB\-f \fIscript
+Prints the absolute path to he given script. If the script does not exist,
+nothing is printed and the command fails with return code 1.
+.TP
+\fB\-\-funkce \fR[\fIfunctionName\fR]
+Prints the code of the named helper function (prefix „lkk_“ may be omitted).
+If no function name is named, codes of all helper functions will be printed.
+If the function is not found, an error message will be outputted
+and the command fails with return code 255.
+.RS
+.PP
+The command \fBlkk \-\-funkce\fR is a synonym for \fBlkk -p pomocné-funkce\fR;
+it prints codes of all helper functions.
+.RE
+.TP
+\fB\-l
+Prints a list of all available scripts (in all searched directories).
+.TP
+\fB\-p \fIscript
+Prints the contents of the named script or snippet to the standard output.
+If the script does not exist, nothing is printed and the command fails
+with return code 1.
+.TP
+[\fB\-r\fR] \fIscript parameters
+The default mode of „lkk“ command. Named script is found and executed
+with given parameters.
+.TP
+\fB\-\-seznam\-cest
+Prints the list of absolute paths of existing directories, where the scripts
+would be searched for.
+.TP
+\fB-t \fIscript
+Succeeds, if the named script exists. If not, it fails with return code 1.
+Nothing is printed.
+
+.SS "Options"
+.TP
+\fB\-\-bash
+In \fB\-e\fR mode the „#!/bin/bash“ header is added to the newly created
+script. This option have no influence when an existing script is copied
+or openned.
+.TP
+\fB\-s
+Paranoid mode. Environment variable LKKPATH is ignored and scripts are
+searched for only in /usr/share/lkk/skripty directory.
+This have influence to all modes.
+If there is both user-local and system-wide script in \fB\-e\fR mode,
+the user-one will be overwritten by copy of the system one.
+.TP
+\fB\-x
+All modes except \fB\-e\fR:
+Ignore non-executable scripts. Only executable scripts will be considered.
+I recommend not to combine this with \fB\-\-funkce\fR mode.
+.RS
+.PP
+Mode \fB\-e\fR: If a new user-local script is created, an executable right
+is set on it. This is not true when the script si created as a copy of
+script from otherwhere.
+.RE
+
+.SH "ENVIRONMENT"
+.TP
+\fBEDITOR
+Selects the editor to use in \fB\-e\fR mode. If empty or undefined,
+„sensible-editor“ will be used.
+.TP
+\fBLKKPATH
+Semicolon-separated list of directory paths to search for scripts.
+If empty of undefined,
+„${HOME}/.local/share/lkk/skripty:/usr/share/lkk/skripty“ will be used.
+Directories are searched from the left to the right.
+
+.SH "BUG REPORTING"
+Please notify me of bugs using GitHub issues:
+.UR https://github.com/singularis-mzf/linux-spellbook
+GitHub repository
+.UE or e-mail address:
+.PP
+.RS
+Singularis <singularis@volny.cz>
+.RE
+
+.SH "LICENCE"
+All parts of „lkk“ package (especially the scripts) may be modified
+and redistributed under the terms of Creative Commons
+Attribution-ShareAlike 4.0 International License.
+You can found detail informations including authorship-info in the file
+\fI/usr/share/doc/lkk/copyright\fR.
+.PP
+The „lkk“ launcher is available also under the terms of
+GNU General Public License version 2.
+.PP
+The Perl module „LinuxKnihaKouzel.pm“ is freely available with no other
+conditions under Creative Commons CC0 1.0 License.
+
+\".SH "SEE ALSO"

@@ -1,0 +1,149 @@
+\" Linux Kniha kouzel, manuálová stránka
+\"Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
+\"
+\"Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
+\"podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
+\"vydané neziskovou organizací Creative Commons. Text licence je přiložený
+\"k tomuto projektu nebo ho můžete najít na webové adrese:
+\"
+\"https://creativecommons.org/licenses/by-sa/4.0/
+\"
+.TH "LKK" 1 "8. ledna 2020" "Linux: Kniha kouzel, v.p. 2.0"
+.SH "JMÉNO"
+lkk - spouští a\~vypisuje pomocné skripty Linuxu: Knihy kouzel
+.SH "POUŽITÍ"
+.SY lkk
+[...] [\fB\-r\fR]
+.I skript
+[\fIparametry\fR]
+.SY lkk
+[...] \fB{\-e|\-f|\-p|\-t} \fIskript\fR
+.SY lkk
+[...] \fB\-\-funkce\fR
+[\fInázevFunkce\fR]
+.SY lkk
+[...] \fB{\-l|\-\-seznam\-cest}
+.YS
+
+.SH "POPIS"
+
+Příkaz „lkk“ slouží k\~pohodlnému spouštění pomocných skriptů a\~funkcí
+dodávaných s\~Linuxem: Knihou kouzel. Všechny dodávané skripty lze spustit
+i\~přímo. Po instalaci se skripty nacházejí v\~adresáři
+\fI/usr/share/lkk/skripty\fR.
+
+Některé soubory v\~adresáři se skripty nejsou spustitelné.
+Tyto soubory se nazývají „úryvky“ a\~lze s\~nimi pracovat stejně jako
+se skripty, až na to, že není možné je přímo spouštět (jsou určeny
+k\~vypsání příkazem „lkk \-p“).
+
+.SH "REŽIMY A VOLBY"
+.SS "Režimy činnosti"
+.TP
+\fB\-e \fIskript
+Pokud skript existuje v\~uživatelově místním adresáři
+(\(ti/.local/share/lkk/skripty), otevře ho ve výchozím editoru.
+.RS
+.PP
+Pokud najde skript v\~jiném adresáři, vytvoří jeho kopii
+v\~uživatelově adresáři a\~otevře ji ve výchozím editoru.
+.PP
+Pokud skript nenajde, vytvoří prázdný skript v\~uživatelově adresáři
+a\~otevře ho ve výchozím editoru.
+
+Doporučuji kombinovat s volbou \fB\-x\fR, aby případný
+vytvořený skript byl spustitelný.
+.RE
+.TP
+\fB\-f \fIskript
+Vypíše absolutní cestu k zadanému skriptu. Pokud skript neexistuje,
+nic nevypíše a selže s\~návratovým kódem 1.
+.TP
+\fB\-\-funkce \fR[\fInázevFunkce\fR]
+Vypíše kód uvedené pomocné funkce (předponu „lkk_“ lze vynechat).
+Neuvedete-li název funkce, vypíše kódy všech pomocných funkcí.
+Pokud funkci nenajde, vypíše chybu a\~skončí s\~návratovým kódem 255.
+.RS
+.PP
+Příkaz \fBlkk \-\-funkce\fR je synonymum pro \fBlkk -p pomocné-funkce\fR;
+vypíše kód všech pomocných funkcí.
+.RE
+.TP
+\fB\-l
+Vypíše seznam všech dostupných skriptů (ve všech prohledávaných adresářích).
+.TP
+\fB\-p \fIskript
+Vypíše obsah uvedeného skriptu nebo úryvku na standardní výstup.
+Pokud skript neexistuje, nevypíše nic a\~selže s\~návratovým kódem 1.
+.TP
+[\fB\-r\fR] \fIskript parametry
+Výchozí režim příkazu „lkk“. Najde a spustí uvedený skript a předá mu zadané parametry.
+.TP
+\fB\-\-seznam\-cest
+Vypíše seznam absolutních cest existujících adresářů,
+ve kterých by byly vyhledávány skripty.
+.TP
+\fB-t \fIskript
+Uspěje, pokud uvedený skript existuje. Pokud ne, selže s\~návratovým kódem 1.
+Nic nevypisuje.
+
+.SS "Volby"
+.TP
+\fB\-\-bash
+V režimu \fB\-e\fR do nově vytvořeného skriptu přidá hlavičku
+„#!/bin/bash“. Nemá vliv v\~případě, že se otevírá existující skript nebo
+jeho kopie.
+.TP
+\fB\-s
+Paranoidní režim. Ignoruje proměnnou prostředí LKKPATH a skripty vyhledává
+výhradně v adresáři /usr/share/lkk/skripty. Ovlivňuje všechny režimy činnosti.
+Pokud v\~režimu \fB\-e\fR existuje uživatelův lokální skript i skript systémový,
+uživatelův lokální skript bude před otevřením přepsán kopií systémového.
+.TP
+\fB\-x
+Všechny režimy činnosti kromě \fB\-e\fR:
+Ignorovat skripty, které nejsou spustitelné. Příkaz bude zohledňovat pouze
+skripty s nastaveným právem spouštění. Doporučuji nekombinovat s\~režimem
+\fB\-\-funkce\fR.
+.RS
+.PP
+Režim činnosti \fB\-e\fR: Pokud vytvoří nový uživatelův lokální skript,
+nastaví mu právo spouštění. To neplatí, pokud bude vytvořen jako kopie
+skriptu nalezeného jinde.
+.RE
+
+.SH "PROMÉNNÉ PROSTŘEDÍ"
+.TP
+\fBEDITOR
+Určuje editor, který se spustí v režimu \fB\-e\fR. Je-li prázdná
+nebo nedefinovaná, použije se „sensible-editor“.
+.TP
+\fBLKKPATH
+Dvojtečkou oddělený seznam cest adresářů, kde budou vyhledávány skripty.
+Je-li prázdná nebo nedefinovaná, použije se
+„${HOME}/.local/share/lkk/skripty:/usr/share/lkk/skripty“.
+Adresáře se prohledávají zleva doprava.
+
+.SH "HLÁŠENÍ CHYB"
+Chyby prosím hlaste jako issue na GitHubu:
+.UR https://github.com/singularis-mzf/linux-spellbook
+Repozitář na GitHubu
+.UE , nebo na e-mailovou adresu:
+.PP
+.RS
+Singularis <singularis@volny.cz>
+.RE
+
+.SH "LICENCE"
+Všechny části balíčku „lkk“ (zejména samotné skripty) podléhají licenci
+Creative Commons Attribution-ShareAlike 4.0 International.
+Detailní informace včetně údajů o autorství najdete v souboru
+\fI/usr/share/doc/lkk/copyright\fR.
+.PP
+Spouštěč „lkk“ je možno používat a\~šířit také za podmínek
+GNU General Public License verze 2.
+.PP
+Modul Perlu „LinuxKnihaKouzel.pm“ je možno používat a\~šířit bez dalších
+podmínek podle licence Creative Commons CC0 1.0.
+
+\".SH "VIZ TAKÉ"
