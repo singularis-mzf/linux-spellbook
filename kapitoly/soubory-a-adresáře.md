@@ -374,6 +374,7 @@ Poznámka: srovnávané položky nemusejí být v tomtéž adresáři; můžete
 [**sudo**] **chmod** [**-R**] **ug-x** [**\-\-**] {*cesta*}...
 
 *# přidat/odebrat všem práva „r“ a „x“*<br>
+*// Pozor! Pokud má některý uživatel dané právo výslovně odebrané položkou rozšířených přístupových práv, uvedený příkaz na přidání práv všem mu ho nepřidá.*<br>
 [**sudo**] **chmod** [**-R**] **a+rx** [**\-\-**] {*cesta*}...<br>
 [**sudo**] **chmod** [**-R**] **a-rx** [**\-\-**] {*cesta*}...
 
@@ -383,7 +384,7 @@ Poznámka: srovnávané položky nemusejí být v tomtéž adresáři; můžete
 
 *# nastavit práva „rwx“ pro vlastníka a „rx“ pro ostatní, práva pro skupinu neměnit (alternativy)*<br>
 [**sudo**] **chmod** [**-R**] **u=rwx,o=rx** [**\-\-**] {*cesta*}...<br>
-[**sudo**] **setfacl** [**-R**] **u\:\:rwx,g\:\:rx,o\:\:-** [**\-\-**] {*cesta*}...
+[**sudo**] **setfacl** [**-R**] **-m u\:\:rwx,o\:\:-** [**\-\-**] {*cesta*}...
 
 *# nastavit rozšířená práva „rx“ uživateli „filip“*<br>
 [**sudo**] **setfacl** [**-R**] **-m u:filip:rx** [**\-\-**] {*cesta*}...
@@ -394,13 +395,19 @@ Poznámka: srovnávané položky nemusejí být v tomtéž adresáři; můžete
 *# zrušit rozšířená práva všech uživatelů a skupin*<br>
 [**sudo**] **setfacl** [**-R**] **-b** [**\-\-**] {*cesta*}...
 
+*# nastavit skupině („g“) a ostatním („o“) přístupová práva, jaká má vlastník („u“) (alternativy)*<br>
+[**sudo**] **chmod** [**-R**] **go=u** [**\-\-**] {*cesta*}...<br>
+[**sudo**] **getfacl** [**\-\-**] {*cesta*} **\| sed -nE 's/^user::/g::/;T;p;s/^[^:]+/o/;p' \|** [**sudo**] **setfacl -M-** [**\-\-**] {*cesta*}
+
 <!--
 [**sudo**] **chmod** [**-R**] **750** [**\-\-**] {*cesta*}...<br>
 -->
 
 ### Změnit čas, vlastnictví a skupinu
 
-*# nastavit čas poslední změny („mtime“) na aktuální čas*<br>
+*# **nastavit čas** „změněno“/čas „čteno“/oba časy na aktuální čas*<br>
+[**sudo**] **touch -cm** [**\-\-**] {*cesta*}...<br>
+[**sudo**] **touch -ca** [**\-\-**] {*cesta*}...<br>
 [**sudo**] **touch -c** [**\-\-**] {*cesta*}...
 
 *# změnit **vlastníka** souboru či adresáře (volitelně i skupinu)(obecně/příklad)*<br>
@@ -410,17 +417,21 @@ Poznámka: srovnávané položky nemusejí být v tomtéž adresáři; můžete
 *# změnit skupinu souboru či adresáře*<br>
 [**sudo**] **chgrp** [**-R**] <nic>[**-c**] {*nová-skupina*} [**\-\-**] {*cesta*}...
 
-*# nastavit čas poslední změny (obecně/příklady...)*<br>
-*// Pozor! Příkaz „touch“ při tomto použití tiše ignoruje neexistující soubory!*<br>
-[**sudo**] **touch -cd "**{*datum-čas*}**"** [**\-\-**] {*cesta*}...<br>
-**sudo touch -cd "2019-04-21 23:59:58" \-\- /root/mujsoubor.txt**<br>
-**touch -cd "2019-04-21 23:59:58.123456789" \-\- ~/mujsoubor.txt**<br>
+*# **přenést čas** „změněno“/„čteno“/oba časy ze zdrojového souboru či adresáře*<br>
+[**sudo**] **touch -cm -r** {*zdrojová/položka*} [**\-\-**] {*cesta*}...<br>
+[**sudo**] **touch -ca -r** {*zdrojová/položka*} [**\-\-**] {*cesta*}...<br>
+[**sudo**] **touch -c -r** {*zdrojová/položka*} [**\-\-**] {*cesta*}...
 
-### Přenést přístupová práva
+*# nastavit čas „změněno“ (obecně/příklady...)*<br>
+*// Pozor! Příkaz „touch“ při tomto použití tiše ignoruje neexistující soubory! Neuvedete-li u času posun, bude se interpretovat v místní časové zóně (podle proměnné prostředí „TZ“).*<br>
+[**sudo**] **touch -cmd "**{*datum-čas*}**"** [**\-\-**] {*cesta*}...<br>
+**sudo touch -cmd "2019-04-21&blank;23:59:58" \-\- /root/mujsoubor.txt**<br>
+**touch -cmd "2019-04-21&blank;23:59:58.123456789" \-\- ~/mujsoubor.txt**<br>
+**touch -cmd "2019-04-21&blank;23:59:58.123456789&blank;+0200" \-\- ~/mujsoubor.txt**
 
-*# nastavit skupině („g“) a ostatním („o“) přístupová práva, jaká má vlastník („u“) (alternativy)*<br>
-[**sudo**] **chmod** [**-R**] **go=u** [**\-\-**] {*cesta*}...<br>
-[**sudo**] **getfacl** [**\-\-**] {*cesta*} **\| sed -E 's/^user::/other::/;t;d' \|** [**sudo**] **setfacl -M-** {*cesta*}
+*# nastavit čas „čteno“/oba časy*<br>
+[**sudo**] **touch -cad "**{*datum-čas*}**"** [**\-\-**] {*cesta*}...<br>
+[**sudo**] **touch -cd "**{*datum-čas*}**"** [**\-\-**] {*cesta*}...
 
 ### Zvláštní příznaky (nastavit)
 
@@ -451,16 +462,16 @@ Pokus o použití na tmpfs vede k chybovému hlášení:
 
 ### Ostatní
 
-*# kolik je v adresáři položek?*<br>
-**find** {*adresář*} **-mindepth 1 -maxdepth 1 -printf \\0 \| wc -c**
+*# kolik je v adresáři položek? (včetně skrytých, ale bez „.“ a „..“)*<br>
+**find** {*adresář*} **-mindepth 1 -maxdepth 1 -printf \\\\0 \| wc -c**
 
 *# kolik je v adresáři neskrytých souborů/adresářů (bez symbolických odkazů)?*<br>
-**find** {*adresář*} **-mindepth 1 -maxdepth 1 -type f -name '[!.]\*' -printf \\0 \| wc -c**
-**find** {*adresář*} **-mindepth 1 -maxdepth 1 -type d -name '[!.]\*' -printf \\0 \| wc -c**
+**find** {*adresář*} **-mindepth 1 -maxdepth 1 -type f -name '[!.]\*' -printf \\\\0 \| wc -c**
+**find** {*adresář*} **-mindepth 1 -maxdepth 1 -type d -name '[!.]\*' -printf \\\\0 \| wc -c**
 
 *# kolik je v adresáři neskrytých souborů/adresářů (včetně symbolických odkazů)?*<br>
-**find -L** {*adresář*} **-mindepth 1 -maxdepth 1 -type f -name '[!.]\*' -printf \\0 \| wc -c**
-**find -L** {*adresář*} **-mindepth 1 -maxdepth 1 -type d -name '[!.]\*' -printf \\0 \| wc -c**
+**find -L** {*adresář*} **-mindepth 1 -maxdepth 1 -type f -name '[!.]\*' -printf \\\\0 \| wc -c**
+**find -L** {*adresář*} **-mindepth 1 -maxdepth 1 -type d -name '[!.]\*' -printf \\\\0 \| wc -c**
 
 ## Zaklínadla: Uživatelské datové položky
 

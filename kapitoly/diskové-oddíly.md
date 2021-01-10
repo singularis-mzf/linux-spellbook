@@ -260,6 +260,17 @@ Poznámka k pevným odkazům: pevný odkaz v souborovém systému typu btrfs n
 **sudo blkid -s PARTUUID -o value** {*/dev/oddíl*}
 -->
 
+*# aktuální počet **přečtených** bajtů od připojení zařízení (pro člověka/pro skript)*<br>
+**lkk diskstat** {*/dev/zařízení-nebo-oddíl*}... **\| cut -f 2 \| LC\_ALL=en\_US.UTF-8 numfmt \-\-to=iec \-\-format=%.3f**<br>
+**lkk diskstat** {*/dev/zařízení-nebo-oddíl*}... **\| cut -f 2**
+
+*# aktuální počet **zapsaných** bajtů od připojení zařízení (pro člověka/pro skript)*<br>
+**lkk diskstat** {*/dev/zařízení-nebo-oddíl*}... **\| cut -f 3 \| LC\_ALL=en\_US.UTF-8 numfmt \-\-to=iec \-\-format=%.3f**<br>
+**lkk diskstat** {*/dev/zařízení-nebo-oddíl*}... **\| cut -f 3**
+
+*# přehled přečtených a zapsaných bajtů pro člověka*<br>
+**lkk diskstat \| LC\_ALL=en\_US.UTF-8 numfmt \-\-to=iec \-\-field=2,3 \-\-format=%12.3f**
+
 *# **typ** souborového systému*<br>
 [**sudo**] **lsblk -ln -o FSTYPE** {*/dev/oddíl*}
 <!--
@@ -842,3 +853,55 @@ Pokud hledáte nástroj pro dělení disku ze skriptu, zkuste [sfdisk](http://ma
 * [man 8 btrfs-scrub](http://manpages.ubuntu.com/manpages/focal/en/man8/btrfs-scrub.8.html) (anglicky)
 
 !ÚzkýRežim: vyp
+
+## Pomocné funkce a skripty
+
+<!-- https://www.kernel.org/doc/html/latest/admin-guide/iostats.html -->
+*# lkk diskstat – vypíše počty čtených a zapsaných bajtů*<br>
+**#!/bin/sh**<br>
+**exec perl -CSDAL -Mv5.26.0 -Mstrict -Mutf8 -MEnglish -e '**<br>
+**my %data; my %rps; my $počet\_chyb = 0;**<br>
+**sub array {return @ARG}**<br>
+**$OFS = "\\t"; $ORS = "\\n";**<br>
+**\{ open(my $f, "&lt;:utf8", "/proc/diskstats") or die("Nemohu otevřít /proc/diskstats");**<br>
+<odsadit1>**my $l;**<br>
+<odsadit1>**while (defined($l = scalar(readline($f)))) \{**
+<odsadit2>**my @f = split(/\\s+/, $l =~ s/\\A\\s+//r);**<br>
+<odsadit2>**$data{$f[2]} = [512 \* $f[5], 512 \* $f[9], $f[2]]; # čtení, zápis, označení**<br>
+**\}\}**<br>
+**if (scalar(@ARGV) == 0) \{**<br>
+<odsadit1>**foreach my $x (do { no locale; array(sort {fc($a) cmp fc($b)} keys(%data)); }) \{**
+<odsadit2>**my @x = @{$data{$x}};**<br>
+<odsadit2>**print("/dev/" . $x[2], @x[0, 1]) if ($x[0] + $x[1] &gt; 0);**<br>
+**\}} else \{**<br>
+<odsadit1>**foreach my $x (@ARGV) \{**<br>
+<odsadit2>**my $z = $rps{$x} // do \{**<br>
+<!-- \x{27} = „'“ \x{5c} = „\“ -->
+<odsadit3>**my $s = ($x =~ s/\\x{27}/$&amp;\\x{5c}$&amp;$&amp;/rg);**<br>
+<odsadit3>**use open("IN", ":utf8"); local $RS = undef;**<br>
+<odsadit3>**$rps{$x} = (scalar(readpipe("realpath \-\- \\x{27}${s}\\x{27}")) =~ s/\\n\\z//r);**<br>
+<odsadit2>**\};**<br>
+<odsadit2>**if (defined($z) &amp;&amp; $z =~ /\\A\\/dev\\// &amp;&amp; defined($data{$z = substr($z, 5)})) \{**<br>
+<odsadit3>**$z = $data{$z};**<br>
+<odsadit3>**print($x, $z-&gt;[0], $z-&gt;[1]);**<br>
+<odsadit2>**\} else \{++$počet\_chyb\}}**<br>
+<odsadit1>**exit($počet\_chyb &lt; 254 ? $počet\_chyb : 254);**<br>
+**\}' \-\- "$@"**
+
+<!--
+Původní lkk diskstat:
+
+*# lkk diskstat – vypíše počty čtených a zapsaných bajtů*<br>
+**#!/bin/bash**<br>
+**set -e**<br>
+**if test $# -eq 0**
+**then auto=1; set \-\- $(printf %s\\\\n /sys/block/\*/stat \| sed -E 's!^/sys/block/!/dev/!;s!/stat$!!' \| LC\_ALL=en\_US.UTF-8 sort)**<br>
+**else unset auto; fi**<br>
+**for arg in "$@"**<br>
+**do**<br>
+<odsadit1>**a=$(readlink -e \-\- "$arg")**<br>
+<odsadit1>**[[ $a = /dev/\* ]]**<br>
+<odsadit1>**read -a data &lt;"/sys/block/${a:5}/stat"**<br>
+<odsadit1>**test -v auto -a "${data[2]}/${data[6]}" = "0/0" \|\| printf '%s\\t%s\\t%s\\n' "$arg" $((512 \* data[2])) $((512 \* data[6]))**<br>
+**done**
+-->

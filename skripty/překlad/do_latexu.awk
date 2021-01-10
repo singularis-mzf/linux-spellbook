@@ -500,21 +500,25 @@ function Obrazek(src, alt, rawSrc, rawAlt,   sirka) {
 }
 
 function ZapnoutRezimLicence() {
+    if (DO__REZIM_LICENCE) {ShoditFatalniVyjimku("CHYBA: Opakované zapnutí režimu licence!")}
     DO__REZIM_LICENCE = 1;
     return "\\zapnoutrezimlicence{}";
 }
 
 function VypnoutRezimLicence() {
+    if (!DO__REZIM_LICENCE) {ShoditFatalniVyjimku("CHYBA: Vypnutí režimu licence bez zapnutí!")}
     DO__REZIM_LICENCE = 0;
     return "\\vypnoutrezimlicence{}";
 }
 
 function ZapnoutUzkyRezim() {
+    if (DO__UZKY_REZIM) {ShoditFatalniVyjimku("CHYBA: Opakované zapnutí úzkého režimu!")}
     DO__UZKY_REZIM = 1;
     return "\\begin{uzkyrezim}";
 }
 
 function VypnoutUzkyRezim() {
+    if (!DO__UZKY_REZIM) {ShoditFatalniVyjimku("CHYBA: Vypnutí úzkého režimu bez zapnutí!")}
     DO__UZKY_REZIM = 0;
     return "\\end{uzkyrezim}";
 }

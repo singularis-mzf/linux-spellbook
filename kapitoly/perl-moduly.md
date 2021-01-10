@@ -144,7 +144,9 @@ v sekci „Další zdroje informací“.
 {*$@%*}{*Název::Modulu*}**::**{*identifikátor*}<br>
 {*Název::Modulu*}**::**{*identifikátor*}**(**[{*parametry*}]**)**
 
-
+*# přístup z modulu k proměnným/funkcím v hlavním skriptu*<br>
+{*$@%*}**main::**{*identifikátor*}<br>
+**main::**{*identifikátor*}**(**[{*parametry*}]**)**
 
 <!--
 ### Jmenné prostory
