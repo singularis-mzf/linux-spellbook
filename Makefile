@@ -728,14 +728,14 @@ $(SOUBORY_PREKLADU)/deb/usr/share/bash-completion/completions/lkk: skripty/lkk/b
 	mkdir -pv $(dir $@)
 	cat $< >$@
 
-# 8. skripty/lkk/lkk.en.1 => soubory_překladu/deb/usr/share/man/man1/lkk.1.gz
-#    skripty/lkk/lkk.cz.1 => soubory_překladu/deb/usr/share/man/cs/man1/lkk.1.gz
-$(SOUBORY_PREKLADU)/deb/usr/share/man/man1/lkk.1.gz: skripty/lkk/lkk.en.1 $(DATUM_SESTAVENI_SOUBOR) $(DEB_VERZE_SOUBOR)
+# 8. formáty/deb/manuálová-stránka.1 => soubory_překladu/deb/usr/share/man/man1/lkk.1.gz
+#    formáty/deb/manuálová-stránka.1 => soubory_překladu/deb/usr/share/man/cs/man1/lkk.1.gz
+$(SOUBORY_PREKLADU)/deb/usr/share/man/man1/lkk.1.gz: formáty/deb/manuálová-stránka.1 skripty/plnění-šablon/manuálová-stránka.awk $(DATUM_SESTAVENI_SOUBOR) $(DEB_VERZE_SOUBOR)
 	mkdir -pv $(dir $@)
-	sed -E 's/^\.TH .*/.TH "LKK" 1 "'"$(LC_ALL="en_US.UTF-8" date +"%B %-d., %Y")"'" "Linux: Kniha kouzel, '"$(JMENO)\"/" $< | gzip -9 >$@
-$(SOUBORY_PREKLADU)/deb/usr/share/man/cs/man1/lkk.1.gz: skripty/lkk/lkk.cz.1 $(DATUM_SESTAVENI_SOUBOR) $(DEB_VERZE_SOUBOR)
+	gawk "-vDATUM=$$(LC_ALL="en_US.UTF-8" date +"%B %-d., %Y")" -vJAZYK=en "-vJMENOVERZE=$(JMENO)" -f skripty/plnění-šablon/manuálová-stránka.awk formáty/deb/manuálová-stránka.1 | gzip -9 >$@
+$(SOUBORY_PREKLADU)/deb/usr/share/man/cs/man1/lkk.1.gz: formáty/deb/manuálová-stránka.1 skripty/plnění-šablon/manuálová-stránka.awk $(DATUM_SESTAVENI_SOUBOR) $(DEB_VERZE_SOUBOR)
 	mkdir -pv $(dir $@)
-	sed -E 's/^\.TH .*/.TH "LKK" 1 "'"$(LC_ALL="cs_CZ.UTF-8" date +"%-d. %B %Y")"'" "Linux: Kniha kouzel, '"$(JMENO)\"/" $< | gzip -9 >$@
+	gawk "-vDATUM=$$(LC_ALL="cs_CZ.UTF-8" date +"%-d. %B %Y")" -vJAZYK=cz "-vJMENOVERZE=$(JMENO)" -f skripty/plnění-šablon/manuálová-stránka.awk formáty/deb/manuálová-stránka.1 | gzip -9 >$@
 
 # 9. soubory_překladu/deb/** => soubory_překladu/deb/DEBIAN/md5sums
 # ----------------------------------------------------------------------------

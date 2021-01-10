@@ -47,11 +47,11 @@ sub bool {return pop(@ARG) ? 1 : 0}
 sub div {my ($a, $b) = @ARG; use integer; return ($a / $b, $a % $b);}
 sub fprint {my $soubor = shift(@ARG); return print($soubor @ARG);}
 sub fprintf {my $soubor = shift(@ARG); return printf($soubor @ARG);}
-sub fput {local $OFS = undef; local $ORS = undef; my $soubor = shift(@ARG); return print($soubor @ARG);}
-sub put {local $OFS = undef; local $ORS = undef; return print(@ARG);}
+sub fputs {local $OFS = undef; local $ORS = undef; my $soubor = shift(@ARG); return print($soubor @ARG);}
+sub puts {local $OFS = undef; local $ORS = undef; return print(@ARG);}
 sub typy {return join("", map {my $r;!defined($ARG) ? "u" : !($r = ref($ARG)) ? "s" : $r =~ /\A(SCALAR|ARRAY|HASH|CODE|Regexp)\z/ ? substr($r, 0, 1) : $r eq "GLOB" ? "F" : "<${r}>";} @ARG)}
 
-sub matches { # => ([začátek, délka], [začátek, délka], ...) || ()
+sub matches { # ⇒ ([začátek, délka], [začátek, délka], ...) || ()
     typy(@ARG) =~ /\AsRs{0,2}\z/ or croak("matches: Chybné parametry: ".typy(@ARG));
     my @v;
     my ($s, $r, $begin, $maxlength) = @ARG;
@@ -65,7 +65,7 @@ sub matches { # => ([začátek, délka], [začátek, délka], ...) || ()
     return @v;
 }
 
-sub next_match { # => (začátek, délka) || (undef, undef)
+sub next_match { # ⇒ (začátek, délka) || (undef, undef)
     typy(@ARG) =~ /\AsRs{0,2}\z/ or croak("next_match: Chybné parametry: ".typy(@ARG));
     my ($s, $r, $begin, $maxlength) = @ARG;
     $begin = 0 if (!defined($begin));
@@ -83,7 +83,7 @@ sub next_match_end {my ($b, $l) = next_match(@ARG); return defined($b) ? $b + $l
 sub next_match_length {return (next_match(@ARG))[1]}
 sub next_match_text {my ($b, $l) = next_match(@ARG); return defined($b) ? substr($ARG[0], $b, $l) : undef;}
 
-sub next_match_captures { # => ([začátek, délka], [začátek, délka], ...) || ()
+sub next_match_captures { # ⇒ ([začátek, délka], [začátek, délka], ...) || ()
     typy(@ARG) =~ /\AsRs{0,2}\z/ or croak("next_match: Chybné parametry: ".typy(@ARG));
     my @v;
     my ($s, $r, $begin, $maxlength) = @ARG;
