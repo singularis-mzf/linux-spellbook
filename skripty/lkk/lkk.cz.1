@@ -1,14 +1,14 @@
 \" Linux Kniha kouzel, manuálová stránka
 \"Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 \"
-\"Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
+\"Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 \"podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
 \"vydané neziskovou organizací Creative Commons. Text licence je přiložený
-\"k tomuto projektu nebo ho můžete najít na webové adrese:
+\"k tomuto projektu nebo ho můžete najít na webové adrese:
 \"
 \"https://creativecommons.org/licenses/by-sa/4.0/
 \"
-.TH "LKK" 1 "8. ledna 2020" "Linux: Kniha kouzel, v.p. 2.0"
+.TH "LKK" 1 "8.\~ledna\~2020" "Linux: Kniha kouzel, v.p. 2.0"
 .SH "JMÉNO"
 lkk - spouští a\~vypisuje pomocné skripty Linuxu: Knihy kouzel
 .SH "POUŽITÍ"
@@ -51,13 +51,13 @@ v\~uživatelově adresáři a\~otevře ji ve výchozím editoru.
 Pokud skript nenajde, vytvoří prázdný skript v\~uživatelově adresáři
 a\~otevře ho ve výchozím editoru.
 
-Doporučuji kombinovat s volbou \fB\-x\fR, aby případný
+Doporučuji kombinovat s\~volbou \fB\-x\fR, aby případný
 vytvořený skript byl spustitelný.
 .RE
 .TP
 \fB\-f \fIskript
-Vypíše absolutní cestu k zadanému skriptu. Pokud skript neexistuje,
-nic nevypíše a selže s\~návratovým kódem 1.
+Vypíše absolutní cestu k\~zadanému skriptu. Pokud skript neexistuje,
+nic nevypíše a\~selže s\~návratovým kódem 1.
 .TP
 \fB\-\-funkce \fR[\fInázevFunkce\fR]
 Vypíše kód uvedené pomocné funkce (předponu „lkk_“ lze vynechat).
@@ -77,7 +77,7 @@ Vypíše obsah uvedeného skriptu nebo úryvku na standardní výstup.
 Pokud skript neexistuje, nevypíše nic a\~selže s\~návratovým kódem 1.
 .TP
 [\fB\-r\fR] \fIskript parametry
-Výchozí režim příkazu „lkk“. Najde a spustí uvedený skript a předá mu zadané parametry.
+Výchozí režim příkazu „lkk“. Najde a\~spustí uvedený skript a\~předá mu zadané parametry.
 .TP
 \fB\-\-seznam\-cest
 Vypíše seznam absolutních cest existujících adresářů,
@@ -90,20 +90,20 @@ Nic nevypisuje.
 .SS "Volby"
 .TP
 \fB\-\-bash
-V režimu \fB\-e\fR do nově vytvořeného skriptu přidá hlavičku
+V\~režimu \fB\-e\fR do nově vytvořeného skriptu přidá hlavičku
 „#!/bin/bash“. Nemá vliv v\~případě, že se otevírá existující skript nebo
 jeho kopie.
 .TP
 \fB\-s
-Paranoidní režim. Ignoruje proměnnou prostředí LKKPATH a skripty vyhledává
-výhradně v adresáři /usr/share/lkk/skripty. Ovlivňuje všechny režimy činnosti.
-Pokud v\~režimu \fB\-e\fR existuje uživatelův lokální skript i skript systémový,
+Paranoidní režim. Ignoruje proměnnou prostředí LKKPATH a\~skripty vyhledává
+výhradně v\~adresáři /usr/share/lkk/skripty. Ovlivňuje všechny režimy činnosti.
+Pokud v\~režimu \fB\-e\fR existuje uživatelův lokální skript i\~skript systémový,
 uživatelův lokální skript bude před otevřením přepsán kopií systémového.
 .TP
 \fB\-x
 Všechny režimy činnosti kromě \fB\-e\fR:
 Ignorovat skripty, které nejsou spustitelné. Příkaz bude zohledňovat pouze
-skripty s nastaveným právem spouštění. Doporučuji nekombinovat s\~režimem
+skripty s\~nastaveným právem spouštění. Doporučuji nekombinovat s\~režimem
 \fB\-\-funkce\fR.
 .RS
 .PP
@@ -112,17 +112,65 @@ nastaví mu právo spouštění. To neplatí, pokud bude vytvořen jako kopie
 skriptu nalezeného jinde.
 .RE
 
+.SH "POMOCNÉ SKRIPTY A\~FUNKCE"
+Tato sekce manuálové stránky poskytuje popis některých konkrétních
+pomocných skriptů a\~funkcí dodávaných s\~Linuxem: Knihou kouzel (ne nutně všech).
+.SS "lkk diskstat (skript, kapitola Diskové oddíly)"
+\fBlkk diskstat \fR[\fI/dev/zařízení\fR]...
+.PP
+Vypisuje ve formátu TSV aktuální hodnoty počítadel přečtených a\~zapsaných bajtů
+pro zadaná zařízení. První sloupec obsahuje cestu zařízení, jak byla zadána,
+druhý počet bajtů přečtených od připojení zařízení (resp. od startu systému)
+a\~třetí počet bajtů zapsaných za stejné období.
+Bez parametrů vypíše všechny dostupné nenulové statistiky.
+.SS "lkk perl (skript, kapitola Perl: základy)"
+\fBlkk perl \fR[\fIparametry Perlu\fR] \fIskript\fR [\fIparametry skriptu\fR]
+.PP
+Spustí zadaný skript v\~Perlu s\~nastaveními potřebnými pro kapitolu
+Linuxu: Knihy kouzel o\~Perlu. (Mezi ně patří i\~připojení pomocného modulu
+Linuxu: Knihy kouzel.)
+.SS "lkk procesy (skript, kapitola Správa procesů)"
+Vypíše přehled PID všech procesů ve strojově zpracovatelném formátu TSV,
+kde oddělovačem je dvojtečka „:“. První sloupec obsahuje PID procesu,
+každý další sloupec pak obsahuje PPID procesu z předchozího sloupce,
+tím pádem každá řádka obsahuje sekvenci PID od konkrétního procesu až po
+démona s\~PID 1 nebo 2.
+.PP
+Poznámka: V\~této verzi vyžaduje nainstalovaný balíček „gawk“.
+.SS "lkk retence (skript, kapitola AWK)"
+Načte celý obsah standardního vstupu do paměti a\~teprve po jeho ukončení
+ho beze změny vypíše na standardní výstup.
+.PP
+Poznámka: V\~této verzi vyžaduje nainstalovaný balíček „gawk“.
+.SS "lkk_barvapronh (funkce, kapitola Terminál)"
+\fBlkk_barvapronh \fIčíslo
+.PP
+Pro 0 neudělá nic. Pro číslo 1 nastaví tučné červené písmo, pro číslo vyšší
+než 1 nastaví tučné zelené písmo.
+.SS "lkk_bezp_set (funkce, kapitola Terminál)"
+\fBlkk_bezp_set {setaf|setab} \fIčíslobarvy\fR...
+.PP
+Z\~uvedených barev vybere a\~nastaví tu první, kterou aktuální terminál
+podporuje (čísla musejí být v\~rozsahu 0 až 255). Pokud terminál nepodporuje
+žádné barvy, neudělá nic.
+.SS "lkk_pstput (funkce, kapitola Terminál)"
+\fBlkk_pstput {parametry}
+.PP
+Přijímá stejné parametry jako příkaz „tput“; před jeho provedením ovšem vypíše
+„\\[“ a\~po jeho provedení „\\]“. Smyslem je pohodlnější integrace příkazu
+tput do výzev PS1 a\~PS2.
 .SH "PROMÉNNÉ PROSTŘEDÍ"
 .TP
 \fBEDITOR
-Určuje editor, který se spustí v režimu \fB\-e\fR. Je-li prázdná
+Určuje editor, který se spustí v\~režimu \fB\-e\fR. Je-li prázdná
 nebo nedefinovaná, použije se „sensible-editor“.
 .TP
 \fBLKKPATH
 Dvojtečkou oddělený seznam cest adresářů, kde budou vyhledávány skripty.
 Je-li prázdná nebo nedefinovaná, použije se
 „${HOME}/.local/share/lkk/skripty:/usr/share/lkk/skripty“.
-Adresáře se prohledávají zleva doprava.
+Adresáře se prohledávají zleva doprava a\~neexistující adresáře jsou
+tiše ignorovány.
 
 .SH "HLÁŠENÍ CHYB"
 Chyby prosím hlaste jako issue na GitHubu:
@@ -137,7 +185,7 @@ Singularis <singularis@volny.cz>
 .SH "LICENCE"
 Všechny části balíčku „lkk“ (zejména samotné skripty) podléhají licenci
 Creative Commons Attribution-ShareAlike 4.0 International.
-Detailní informace včetně údajů o autorství najdete v souboru
+Detailní informace včetně údajů o\~autorství najdete v\~souboru
 \fI/usr/share/doc/lkk/copyright\fR.
 .PP
 Spouštěč „lkk“ je možno používat a\~šířit také za podmínek

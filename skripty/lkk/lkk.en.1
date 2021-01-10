@@ -26,7 +26,7 @@ lkk - runs and executes helper scripts of Linux: Kniha kouzel
 [...] \fB{\-l|\-\-seznam\-cest}
 .YS
 
-.SH "POPIS"
+.SH "DESCRIPTION"
 
 „lkk“ command is aimed for comfortable running of helper scripts and
 helper functions shipped with Linux: Kniha kouzel. All shipped scripts
@@ -116,6 +116,11 @@ is set on it. This is not true when the script si created as a copy of
 script from otherwhere.
 .RE
 
+.SH "HELPER SCRIPTS AND FUNCTIONS"
+
+Particular scripts and functions are described only in the czech version
+of this manual page.
+
 .SH "ENVIRONMENT"
 .TP
 \fBEDITOR
@@ -126,7 +131,8 @@ Selects the editor to use in \fB\-e\fR mode. If empty or undefined,
 Semicolon-separated list of directory paths to search for scripts.
 If empty of undefined,
 „${HOME}/.local/share/lkk/skripty:/usr/share/lkk/skripty“ will be used.
-Directories are searched from the left to the right.
+Directories are searched from the left to the right and non-existent
+directories are silently ignored.
 
 .SH "BUG REPORTING"
 Please notify me of bugs using GitHub issues:
