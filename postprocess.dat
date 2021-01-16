@@ -320,6 +320,20 @@ perl-základy
 (např. \quotedblbase{}\#!/usr/bin/perl\textquotedblleft{})! Není snadné to udělat správně a~neopatrné použití
 (např.\\\quotedblbase{}\#!/usr/bin/perl\textquotedblleft{})! Není snadné to udělat správně a~neopatrné použití
 
+#
+# [nabídka-aplikací] 2200.2299
+
+2200
+pdf-a4.*
+nabídka-aplikací
+\begin{odstavce}Tato kapitola pokrývá tvorbu spouštěčů aplikací (*.desktop)
+\begin{odstavce}Tato kapitola pokrývá tvorbu spouštěčů aplikací (*.desk\-top)
+
+2210
+pdf-b5.*
+nabídka-aplikací
+\char`\~{}/.local/share/applications/vycet.xterm.desktop}%
+\char`\~{}/.local/share/applications/\\vycet.xterm.desktop}%
 
 #
 # VYŘAZENÉ KAPITOLY

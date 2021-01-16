@@ -730,7 +730,7 @@ numberwidth=4
 *# **podtrhnout** aktuální řádek*<br>
 **:set cursorline**{_Enter_}
 
-*# vypnout **zalamování** řádků*<br>
+*# vypnout **zalamování** řádků při zobrazení*<br>
 **:set nowrap**{_Enter_}
 
 *# zvýrazňovat nezlomitelné mezery (alternativy)*<br>
@@ -763,6 +763,9 @@ Poznámka: v Ubuntu 18.04 zvýrazňování nezlomitelných mezer za určitých 
 **:set noshowmode**{_Enter_}
 
 ### Chování
+
+*# vypnout automatické **zalamování** při psaní*<br>
+**:set textwidth=0**{_Enter_}
 
 *# při vyhledávání **ignorovat** velikost písmen*<br>
 **:set ignorecase**{_Enter_}

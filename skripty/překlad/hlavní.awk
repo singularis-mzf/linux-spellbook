@@ -400,7 +400,7 @@ function ZacitTypRadku(   bylPredel) {
             break;
         case "POLOZKA_SEZNAMU":
             if (PREDCHOZI_TYP_RADKU != "POKRACOVANI_POLOZKY_SEZNAMU") {
-                printf("%s", ZacatekSeznamu(1, tolower(SEKCE) !~ /^(tipy a.zkušenosti|definice|úvod)/ && tolower(KAPITOLA) !~ /^(koncepce projektu)/));
+                printf("%s", ZacatekSeznamu(1, NR == KOMPAKTNI_SEZNAM_NR || (tolower(SEKCE) !~ /^(tipy a.zkušenosti|definice|úvod)/ && tolower(KAPITOLA) !~ /^(koncepce projektu)/)));
                 printf("%s", ZacatekPolozkySeznamu(1));
             }
             break;
@@ -790,6 +790,11 @@ TYP_RADKU == "DIREKTIVA" {
                 UCS_IKONY = substr(UCS_IKONY, 1, HODNOTA_DIREKTIVY);
                 UCS_IKONY_PISMA = substr(UCS_IKONY_PISMA, 1, HODNOTA_DIREKTIVY);
             }
+            break;
+
+        case "KOMPAKTNÍSEZNAM":
+            #printf("LADĚNÍ: NASTAVIT: NR = (%s); K_S_NR = (%s)\n", NR, KOMPAKTNI_SEZNAM_NR) > "/dev/pts/5";
+            KOMPAKTNI_SEZNAM_NR = NR + 1;
             break;
 
         case "PARAMETRY":

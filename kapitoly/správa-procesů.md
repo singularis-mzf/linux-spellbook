@@ -52,7 +52,7 @@ jako chroot či cgroups.
 
 ## Definice
 
-* **Proces** je instance počítačového programu v paměti, v dané chvíli jednoznačně identifikovaná kladným celým číslem **PID** (obvykle v rozsahu 1 až 32768). PID procesu se za jeho běhu nemůže změnit; může se však změnit **PPID** (pokud je rodič pohřben dřív než zrozenec) nebo to, který program v rámci daného procesu ve skutečnosti běží.
+* **Proces** je instance počítačového programu v paměti, v dané chvíli jednoznačně identifikovaná kladným celým číslem **PID** (obvykle v rozsahu 1 až 4 194 304). PID procesu se za jeho běhu nemůže změnit; může se však změnit **PPID** (pokud je rodič pohřben dřív než zrozenec) nebo to, který program v rámci daného procesu ve skutečnosti běží.
 * **Démon** je systémový proces bez uživatelského rozhraní, konkrétně jsou to dva **prvotní démoni** („systemd“ – PID 1 a „kthreadd“ – PID 2) a ti jejich přímí potomci, kteří nemají textové ani grafické uživatelské rozhraní. Prvotní démoni jako procesy nemají rodiče, jsou zřízeni přímo jádrem a jejich PPID je 0.
 * **Zombie** je proces, který skončil, ale jeho rodič dosud nepřevzal jeho návratovou hodnotu. Převzetím návratové hodnoty rodičem je zombie **pohřbena** a její PID se uvolní pro přidělení dalšímu procesu.
 * **Název procesu** je textový identifikátor přiřazený procesu jádrem. Není jednoznačný a vzniká (asi) tak, že se z ARGV[0] vezme jen název souboru (bez cesty) a zkrátí se na prvních 15 bajtů (obsahuje-li vícebajtové znaky, může dojít ke vzniku neplatné sekvence).
