@@ -19,7 +19,7 @@ Má formu připomínající konverzační slovník cizího jazyka a je vydává
 pro profesionální i domácí tisk a ve formátu HTML pro snadné vykopírování zaklínadel,
 můžete ji tedy používat na papíře i v počítači, proto „multimediální“.
 
-Verze *vanilková příchuť 2.3 Klára Krejčí* je cílena na *Ubuntu 20.04 Focal Fossa* a jeho deriváty.
+Verze *vanilková příchuť 2.4 Leoš Liška* je cílena na *Ubuntu 20.04 Focal Fossa* a jeho deriváty.
 
 Obsah podléhá licenci [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 Podrobné údaje o autorství zdrojových souborů jsou uvedeny v komentářích v jejich záhlaví;
@@ -98,7 +98,9 @@ Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybra
 | [git](kapitoly/git.md) | Git | 1.0 | základní |
 | [hledání-souborů](kapitoly/hledání-souborů.md) | Hledání souborů | 1.5 | základní |
 | [make](kapitoly/make.md) | Make | 1.0 | prémiová |
+| [manuálové-stránky](kapitoly/manuálové-stránky.md) | Manuálové stránky | 2.4 | prémiová |
 | [markdown](kapitoly/markdown.md) | Markdown | 1.0 | prémiová |
+| [nabídka-aplikací](kapitoly/nabídka-aplikací.md) | Nabídka aplikací | 2.4 | základní |
 | [odkazy](kapitoly/odkazy.md) | Pevné a symbolické odkazy | 2.2 | základní |
 | [perl-moduly](kapitoly/perl-moduly.md) | Perl: moduly a objekty | 2.3 | prémiová |
 | [perl-základy](kapitoly/perl-základy.md) | Perl: základy | 2.3 | základní |
@@ -130,8 +132,6 @@ Priority:
 
 | ID | Název kapitoly | Růst | Stav |
 | :--- | :--- | ---: | :--- |
-| [manuálové-stránky](kapitoly/manuálové-stránky.md) | Manuálové stránky | 100% | připravena k vydání |
-| [nabídka-aplikací](kapitoly/nabídka-aplikací.md) | Nabídka aplikací | 100% | připravena k vydání |
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
 | [firefox](kapitoly/firefox.md) | Firefox | 60% | dítě |
 | [kalkulace](kapitoly/kalkulace.md)| Kalkulace | 50% | dítě |
