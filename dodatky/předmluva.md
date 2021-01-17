@@ -209,27 +209,28 @@ Uživatele, který Linux: Knihu kouzel neprostudoval, poznáte např. takto:
 * Myslí si, že příkaz „apt list gimp*“ vypíše seznam balíčků začínajících „gimp“ (v tomto případě se musí hlavně naučit pravidla odzvláštňování).
 -->
 
-## Aktuální poznámka k verzi „vanilková příchuť 2.3 Klára Krejčí“
+## Aktuální poznámka k verzi „vanilková příchuť 2.4 Leoš Liška“
 
-Verze vanilkové příchuti 2.3, jménem Klára Krejčí, přináší nové
-kapitoly Perl: základy (základní) a Perl: moduly a objekty (prémiovou).
-V souvislosti s nimi je balíček se spouštěčem pomocných skriptů doplněn
-i o modul Perlu potřebný k použití většiny zaklínadel v těchto kapitolách.
+Verze vanilkové příchuti 2.4, jménem Leoš Liška, přináší nové kapitoly
+Manuálové stránky (prémiová) a Nabídka aplikací (základní).
 
-V HTML variantě jsou novinkou „reklamní paty“ cílené na náhodné návštěvníky
-online HTML varianty a pobízející je k pomoci s projektem.
 <!--
 V HTML variantě...
-
 V PDF variantách...
--->
 
 V kapitole *Diskové oddíly* přibyly zkušenosti s LVM na vyjímatelných
 médiích a volby x-gvfs.
 V kapitole *Hledání souborů* přibylo vyloučení adresářů z prohledávání a další vylepšení.
 V kapitole *Správa balíčků* přibyla práce s prioritami APT.
+-->
 
-Vydání verze 2.4, jménem Leoš Liška, očekávám začátkem února 2021.
+Balíček „DEB“ spouštěče „lkk“ nově obsahuje manuálovou stránku
+v angličtině i češtině. Funkce Perlu „put()“ a „fput()“ v dodávaném modulu
+byly přejmenovány na „puts()“ a „fputs()“.
+
+Další významnou novinkou je, že je nově oficiálně podporován překlad v Dockeru.
+
+Vydání verze 2.5, jménem Marie Macků, očekávám v druhé polovině února 2021.
 
 Verze řady „vanilková příchuť 1.x“ jsou ve stádiu dlouhodobé pasivní údržby do 1. března 2023.
 
