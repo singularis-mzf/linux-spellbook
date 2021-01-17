@@ -20,6 +20,7 @@ K úplnému sestavení *Linuxu: Knihy kouzel* ze zdrojového kódu budete potř
 Také budete potřebovat písma:
 
 * DejaVu Sans
+* Free Helvetian
 * Latin Modern Math
 * Latin Modern Mono Slanted
 * Latin Modern Mono Light Cond
@@ -29,7 +30,7 @@ Také budete potřebovat písma:
 
 Ověřil/a jsem, že v Ubuntu 18.04 LTS a Linuxu Mint 17.3 můžete všechny potřebné nástroje a písma nainstalovat příkazem:
 
-> ``sudo apt-get install git make gawk imagemagick librsvg2-bin qrencode texlive-xetex texlive-lang-czechslovak fonts-texgyre``
+> ``sudo apt-get install git make gawk imagemagick librsvg2-bin qrencode texlive-xetex texlive-lang-czechslovak fonts-texgyre t1-cyrillic``
 
 ## Postup sestavení
 

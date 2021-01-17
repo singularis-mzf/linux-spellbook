@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, kapitola Git
-Copyright (c) 2019 Singularis <singularis@volny.cz>
+Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -41,7 +41,7 @@ a příkaz „git stash“.
 
 ### Označení revize
 
-Každá revize je jednoznačně identifikována pomocí své MD5 heše. Kromě této úplné heše můžeme pojmenovat revizi těmito způsoby:
+Každá revize je jednoznačně identifikována pomocí své SHA-1 heše. Kromě této úplné heše můžeme pojmenovat revizi těmito způsoby:
 
 * Jednoznačný prefix heše (Nebude-li uvedený prefix jednoznačný, git vyvolá chybu a umožní vám situaci napravit, takže se nebojte používat ani velmi krátké prefixy.)
 * HEAD
