@@ -265,6 +265,23 @@ Poznámka: znění zaklínadel v této sekci je upraveno pro uvedení uvnitř d
 
 ### Méně častá
 
+*# **trvání** posledního příkazu v sekundách*<br>
+*// Poznámka: V případě, že nějaký příkaz spustíte na pozadí nebo ho přerušíte (Ctrl+Z), vypíše výzva dobu trvání po částech (vždy od potvrzení příkazu po následující zobrazení výzvy). Pro pokročilejší měření použijte příkaz „time“. Tyto příkazy navíc obsazují obsluhu signálu SIGUSR2, proto je nelze kombinovat s jinými příkazy, které by obsluhu tohoto signálu potřebovaly.*<br>
+^^**PS\_TIMESTAMP=$(date +%s%1N)**<br>
+^^**trap 'PS\_TIMESTAMP=$(date +%s%1N)' SIGUSR2**<br>
+^^**PS0="**{*...*}**\\$(kill -SIGUSR2 \$\$)**{*...*}**"**<br>
+**\\$(((\\$(date +%s%1N) - PS\_TIMESTAMP + 5) / 10))**
+
+*# trvání posledního příkazu v milisekundách*<br>
+*// Viz poznámku pod čarou k „trvání posledního příkazu v sekundách“.*<br>
+^^**PS\_TIMESTAMP=$(date +%s%4N)**<br>
+^^**trap 'PS\_TIMESTAMP=$(date +%s%4N)' SIGUSR2**<br>
+^^**PS0="**{*...*}**\\$(kill -SIGUSR2 \$\$)**{*...*}**"**<br>
+**\\$(((\\$(date +%s%4N) - PS\_TIMESTAMP + 5) / 10))**
+
+*# **PID** příkazového interpretu*<br>
+**\$\$** ⊨ 3338
+
 *# **číslo příkazu** (podle historie/pořadové)*<br>
 **\\\\!""** ⊨ 1984<br>
 **\\\\\#** ⊨ 9
@@ -272,9 +289,6 @@ Poznámka: znění zaklínadel v této sekci je upraveno pro uvedení uvnitř d
 *# označení **terminálu** (alternativy)*<br>
 **\\\\l** ⊨ 3 (pro textovou konzoli např. „tty3“)<br>
 **$(ps h -o tty:1 -p \$\$)** ⊨ pts/3 (pro textovou konzoli např. „tty3“)
-
-*# **PID** příkazového interpretu*<br>
-**\\${\\$}** ⊨ 3338
 
 *# počet úloh běžících na pozadí (těch, které lze vypsat příkazem „jobs“)*<br>
 **\\\\j** ⊨ 0
@@ -287,11 +301,9 @@ Poznámka: znění zaklínadel v této sekci je upraveno pro uvedení uvnitř d
 **\\$(pwd)** ⊨ /home/novakova/Dokumenty<br>
 **\\$(basename \\$(pwd))** ⊨ Dokumenty
 
-*# znak „$“ pro všechny (i pro uživatele root)*<br>
-**\\$(printf \\$)** ⊨ $
-<!--
-Další možnost: \\044\\[\\]
--->
+*# znak „$“ pro všechny (i pro uživatele root)(alternativy)*<br>
+**\\$(printf \\$)** ⊨ $<br>
+**\\044\\[\\]**
 
 ## Zaklínadla: Vybrané emotikony
 
@@ -633,19 +645,6 @@ Testováno na fontu noto...
 **PS0="$(tput sgr0)"**<br>
 **PS1="\\\\[$(tput sgr0)\\\\]\\w\\\$&blank;\\\\[$(lkk\_bezp\_set setaf 2; tput bold)\\\\]"**<br>
 **PS2="\\\\[$(tput sgr0)\\\\]\|&blank;\\\\[$(lkk\_bezp\_set setaf 2; tput bold)\\\\]"**
-
-*# trvání posledního příkazu v sekundách, aktuální adresář a dolar*<br>
-*// Poznámka: V případě použití této výzvy zůstávají v adresáři /tmp dočasné soubory s časovými známkami, operační systém je však nejpozději při příštím startu smaže. V případě, že nějaký příkaz spustíte na pozadí nebo ho přerušíte (Ctrl+Z), vypíše výzva dobu trvání po částech (vždy od potvrzení příkazu po následující zobrazení výzvy). Pro pokročilejší měření použijte příkaz „time“.*<br>
-**PS\_TIMESTAMP\_FILE="/tmp/\$\$-${USER}-${RANDOM}.timestamp"**<br>
-**date +%s%1N &gt;"$PS\_TIMESTAMP\_FILE"**<br>
-**PS0="\\$(date +%s%1N &gt;\\"\\$PS\_TIMESTAMP\_FILE\\")"**<br>
-**PS1="\\$(((\\$(date +%s%1N) - \\$(&lt;\\$PS\_TIMESTAMP\_FILE) + 5) / 10))s&blank;\\w\\\\\\$&blank;"**
-
-<!--
-**rm -f "$PS\_TIMESTAMP\_FILE"** ?
-- Je lepší dočasný soubor přepsat, nebo ho odstranit a znovu vytvořit?
-- Nemůže nastat konflikt s nastavením umask? A s nastavením „noclobber“?
--->
 
 ## Parametry příkazů
 

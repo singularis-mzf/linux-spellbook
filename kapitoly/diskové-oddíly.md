@@ -15,9 +15,10 @@ https://creativecommons.org/licenses/by-sa/4.0/
 Poznámky:
 
 [x] BTRFS
-[ ] mdadm!
+[x] mdadm!
+[ ] sfdisk
 [ ] Pokrýt ovládání programu fdisk.
-[ ] Šifrování LVM?
+[ ] Šifrování?
 [ ] Připojování obyčejným uživatelem
 
 Zpracovat také:
@@ -54,11 +55,13 @@ Nevýhody btrfs:
 
 Tato kapitola se zabývá dělením pevného disku na oddíly, jejich formátováním
 (zejména souborové systémy ext4, btrfs, FAT32 a NTFS), údržbou a připojováním
-(ručním i automatickým). Zabývá se také prací s ramdisky, odkládacím prostorem a LVM.
+(ručním i automatickým). Zabývá se také prací s ramdisky, odkládacím prostorem,
+a LVM a softwarovým RAID (prokládání, zrcadlení a RAID s paritou).
 <!-- a squash-fs.-->
 
 Tato verze kapitoly pokrývá jen částečně: dělení pevného disku na oddíly,
-práci se systémem btrfs, LVM (nejsou pokryty „layouty“ a „snapshoty“).
+práci se systémem btrfs, LVM (nejsou pokryty „layouty“ a „snapshoty“)
+a softwarový RAID (nejsou pokryty RAID6 a RAID10).
 
 Tato verze kapitoly nepokrývá: připojovaní souborových systémů obyčejnými uživateli;
 šifrování a nastavování kvót; další typy systému souborů (např. ZFS);
@@ -96,6 +99,7 @@ jednoho oddílu přes několik fyzických disků nebo snadné přesouvání odd�
 * **Logický oddíl** je v LVM obdoba běžného diskového oddílu (tzn. je možno ho naformátovat a používat k ukládání dat); na rozdíl od něj ale nemá pevné fyzické umístění na disku, jeho fyzické umístění je vymezené skupinou svazků, ve které je vytvořen. Logický oddíl LVM je dostupný pod cestou „/dev/{*skupina-svazků*}/{*název-oddílu*}“.
 * **Skupina svazků** je v LVM neprázdná pojmenovaná skupina fyzických svazků k vytváření logických oddílů. Data každého logického oddílu se fyzicky nacházejí pouze na fyzických svazcích příslušných do dané skupiny.
 * **Fyzický svazek** je v LVM blokové zařízení (celý disk nebo jeho oddíl), které je nastavené a naformátované k ukládání dat logických oddílů. Nemůže to být logický oddíl LVM.
+* Normálně je každá skupina svazků **aktivovaná**, což znamená, že její logické oddíly jsou dostupné a je možné je připojit. Skupina svazků, jejíž fyzické svazky se nacházejí na výměnných médiích, se automaticky aktivuje při připojení posledního z nich. Aby však bylo možno tato média odpojit bez vypnutí systému, je nutno skupinu ručně **deaktivovat**, čímž její logické oddíly přestanou být dostupné.
 
 ### Co a kam připojit
 
@@ -128,6 +132,23 @@ Tento tvar je vhodný pouze u logických oddílů LVM či při jednorázovém p
 * **Zrcadlené oddíly** jsou dva oddíly, kde každá změna je zapisována paralelně na oba, takže v případě poškození či ztráty jednoho z nich nedojde ke ztrátě dat.
 
 Poznámka k pevným odkazům: pevný odkaz v souborovém systému typu btrfs nemůže vést přes hranici pododdílu, místo toho však lze přes hranici pododdílů vytvořit klon souboru.
+
+### Softwarový RAID
+
+* **Pole** (array) je skupina disků nebo jejich oddílů skombinovaná softwarovým RAID do jednoho blokového zařízení. Normálně se každý z nich nachází na jiném fyzickém disku.
+* **Dílem** pole (device) se u RAIDu rozumí oddíl disku zapojený do pole; pokud je do RAIDu zapojený disk jako celek, rozumí se dílem disk jako celek.
+* Díly pole jsou dvou druhů — **základní díly** tvoří pole a jsou aktivně používány; **záložní díly** nejsou používány, ale v případě výpadku některého ze základních dílů se jeden záložní díl stane základním a RAID na něj postupně „nasynchronizuje“ data.
+<!--
+* Pole je v **degradovaném stavu**, pokud...
+-->
+
+V této kapitole budou pokryty tyto režimy softwarového RAID: prokládání (stripe, RAID0), zrcadlení (mirror, RAID1) a RAID s paritou (RAID5).
+
+Pole se na příkazovém řádku zadává jako cesta k zařízení RAID pole, nebo symbolický odkaz na ni. Obvyklé jsou tyto tři způsoby:
+
+* Jako zařízení s číslem 0 až 127 (např. „/dev/md127“). Číslo RAIDu musíte zadat při jeho vytváření a obvykle se nemění; může se však změnit, pokud dojde ke konfliktu čísel (např. po přidání nového disku, na kterém už nějaký RAID je). Proto doporučuji toto číslo používat pouze ručně, nezadávat ho do /etc/fstab ani do skriptů.
+* Jako UUID (např. „/dev/disk/by-uuid/ec2c7d38-“ atd.).
+* Symbolickým názvem (např. „/dev/md/mujraid“). Tento způsob je mnoha programy preferovaný, ale bohužel funguje nejhůř, protože někdy se do názvu přidá název počítače a někdy ne. Také nefunguje správně, pokud připojíte více výměnných médií se stejně pojmenovanými poli. Proto doporučuji tento způsob pojmenovávání vůbec nepoužívat.
 
 !ÚzkýRežim: vyp
 
@@ -513,6 +534,7 @@ btrfs: sudo sfill -fllvz {*/přípojný/bod*}
 ### Skupiny svazků
 
 *# **vytvořit***<br>
+*// Skupiny tvořené fyzickými svazky na více fyzických discích zvyšují pravděpodobnost ztráty dat, protože když havaruje kterýkoliv zúčastněný disk, přijdete o všechna data v celé skupině svazků. Proto pokud nepotřebujete slučovat úložný prostor na více fyzických discích, preferujte vytváření samostatné skupiny svazků pro fyzické svazky na každém fyzickém disku.*<br>
 **sudo vgcreate** {*id-skupiny*} {*/dev/fyzický-svazek*}... [**-v**[**v**]]
 
 *# **deaktivovat** skupinu*<br>
@@ -548,6 +570,15 @@ btrfs: sudo sfill -fllvz {*/přípojný/bod*}
 **sudo lvcreate** {*id-skupiny*} **\-\-name** {*id-oddílu*} **\-\-extents** {*procenta*}**%VG** [**-v**[**v**]]<br>
 **sudo lvcreate** {*id-skupiny*} **\-\-name** {*id-oddílu*} **\-\-extents** {*procenta*}**%FREE** [**-v**[**v**]]<br>
 **sudo lvcreate** {*id-skupiny*} **\-\-name** {*id-oddílu*} **\-\-extents 100%FREE** [**-v**[**v**]]
+
+*# vytvořit prokládaný logický oddíl*<br>
+*// Nechť N je uvedený „počet-zařízení“. Velikost prokládaného oddílu se rozdělí na N stejných dílů a každý se umístí na jeden fyzický svazek ze zadané skupiny svazků. Pokud se některý z dílů na svůj fyzický svazek nevejde, všechny díly budou zmenšeny společně, aby se tam vešel. Kapacita vytvořeného oddílu bude cca 90% součtu místa zabraného všemi díly prokládaného oddílu (prokládání má zřejmě svoji režii). Příklad: máte ve skupině dva fyzické svazky 2G a jeden 1G a pokusíte se vytvořit prokládaný svazek o velikosti 5G; příkaz ho rozdělí na tři díly o velikosti 1,66G; jenže na třetí fyzický svazek se díl nevejde, tak se všechny zmenší na 1G. Výsledný oddíl tedy zabere 3G (na prvním i druhém svazku zůstane 1G volný) a kapacita nově vzniklého oddílu bude cca 2765M.*<br>
+**sudo lvcreate** {*id-skupiny*} **\-\-name** {*id-oddílu*} {*parametr \-\-size nebo \-\-extents*} **\-\-stripes** {*počet-zařízení*} **\-\-stripesize 64** [**-v**[**v**]]
+
+<!--
+*# vytvořit zrcadlený logický oddíl*<br>
+?
+-->
 
 *# **vypsat** (pro člověka/pro skript)*<br>
 **sudo lvs**<br>
@@ -696,6 +727,103 @@ Před jejich použitím si musíte přečíst manuálové stránky vyvolané př
 *# aplikovat rozdíl*<br>
 **zcat** {*soubor.gz*} **\| sudo btrfs receive -e**[**v**] {*výstupní/adresář*}
 
+## Zaklínadla: softwarový RAID
+
+<!--
+[ ] assembly?
+-->
+
+### Zjišťování údajů
+
+*# **dynamické informace** o připojených polích*<br>
+**cat /proc/mdstat**
+
+*# podrobné statické informace o některém **poli***<br>
+**sudo mdadm \-\-detail** {*md-pole*}
+
+*# podrobné statické informace o **dílu** pole*<br>
+**sudo mdadm \-\-examine** {*/dev/disk-nebo-oddíl*}
+
+*# stručné informace o dílu pole (pro člověka)*<br>
+**sudo mdadm \-\-query** {*/dev/disk-nebo-oddíl*}
+
+*# zjistit **UUID** z čísla RAID pole/naopak*<br>
+**lsblk -rno /dev/md**{*číslo*}<br>
+**readlink /dev/disk/by-uuid/**{*UUID*} **\| sed -E 's/^[^0-9]+//'**
+
+*# **seznam** připojených polí (pro skript)*<br>
+**find /dev/disk/by-uuid -type l -xtype b -printf '%f %l\\n' \| sed -nE '/\\/md[0-9]+$/s!(\\.\\.\\/){2}!/dev/!;T;p'**
+
+### Správa pole
+
+*# **odpojit** pole*<br>
+**sudo mdadm \-\-stop** {*md-pole*}
+
+*# označit díl jako **k odpojení**/**selhavší***<br>
+*// Označení „k odpojení“ způsobí, že systém začne používat záložní díl a po dokončení „synchronizace“ díl označený k odpojení označí jako selhavší. Díl označený jako „selhavší“ se přestane používat okamžitě, ale pole se kvůli tomu může dostat do degradovaného stavu, kdy bude snížen jeho výkon a odolnost proti výpadkům dalších disků.*<br>
+**sudo mdadm** {*md-pole*} **\-\-replace** {*/dev/oddíl*}
+**sudo mdadm** {*md-pole*} **\-\-fail** {*/dev/oddíl*}
+
+### Vytvořit a připojit pole
+
+*# **prokládané** pole (RAID0)*<br>
+**for x in** {*/dev/oddíl*}...**; do sudo wipefs -a "$x"; done**<br>
+**sudo mdadm -Cv**[**v**] **/dev/md**{*číslo*} **-l stripe -n** {*počet-oddílů*} {*/dev/první-oddíl*} {*/dev/další-oddíl*}...
+<!--
+**sudo mdadm -Cv /dev/md/mojepole -l stripe -n 3 /dev/sdc /dev/sdd1 /dev/sde3**
+-->
+
+*# **zrcadlené** pole (RAID1)*<br>
+**for x in** {*/dev/oddíl*}...**; do sudo wipefs -a "$x"; done**<br>
+**sudo mdadm -Cv**[**v**] **/dev/md**{*číslo*} **-l mirror -n** {*počet-zákl-oddílů*} [**-x** {*počet-záložních-oddílů*}] {*/dev/první-oddíl*} {*/dev/další-oddíl*}...
+<!--
+**sudo mdadm -Cv /dev/md/mojepole -l stripe -n 2 /dev/sdc /dev/sdd1**
+-->
+
+*# pole s **paritou** (RAID5)*<br>
+**for x in** {*/dev/oddíl*}...**; do sudo wipefs -a "$x"; done**<br>
+**sudo mdadm -Cv**[**v**] **/dev/md**{*číslo*} **-l raid5 -n** {*počet-zákl-oddílů*} {*/dev/první-oddíl*} {*/dev/druhý-oddíl*} {*/dev/další-oddíl*}...<br>
+!: Před dalšími operacemi s polem počkejte, než se uklidní (lze sledovat pomocí „cat /proc/mdstat“).
+
+### Přidávat a odebírat díly (ne u prokládaného pole)
+
+*# **přidat** do pole záložní díl*<br>
+*// Pokud je pole v degradovaném stavu, přidaný záložní oddíl se okamžitě stane hlavním.*<br>
+**sudo mdadm** {*md-pole*} **-a** {*/dev/oddíl*}
+
+*# odebrat z pole **základní** díl*<br>
+*// Poznámka: Samotným odebráním základního dílu (bez volání „mdadm \-\-grow“) se nesníží deklarovaný počet základních dílů, a pole se tak může dostat do degradovaného stavu. Pokud má pole záložní díly a nepotřebujete základní díl odebrat ihned, uděláte lépe, když místo parametru „\-\-fail“ použijete parametr „\-\-replace“ a před dalším příkazem počkáte, než RAID plně nasynchronizuje data na náhradní díl.*<br>
+**sudo mdadm** {*md-pole*} **-v -f** {*/dev/oddíl*} **-r** {*/dev/oddíl*} [**&amp;&amp; mdadm \-\-grow** {*md-pole*} **-n** {*nový-počet-zákl-dílů*}]
+
+<!--
+**sudo mdadm** {*md-pole*} **\-\-fail** {*/dev/oddíl*} **&amp;&amp; sudo mdadm** {*md-pole*} **-vr** {*/dev/oddíl*} [**&amp;&amp; mdadm \-\-grow** {*md-pole*} **-n** {*nový-počet-zákl-dílů*}]
+-->
+
+*# **odebrat** z pole selhavší nebo záložní díl*<br>
+**sudo mdadm** {*md-pole*} **-vr** {*/dev/oddíl*}
+
+*# zvýšit počet základních dílů na úkor záložních*<br>
+**sudo mdadm \-\-grow** {*md-pole*} **-n** {*nový-počet-zákl-dílů*}
+
+<!--
+sudo mdadm md-pole -vr detached?
+-->
+
+<!--
+?
+*# vypsat seznam aktivních polí (pro člověka/pro skript)*<br>
+**cat /proc/mdstat**<br>
+**sudo mdadm \-\-detail \-\-scan**
+
+*# ručně aktivovat neúplné pole pro čtení (podle názvu/podle čísla)*<br>
+**sudo mdadm -Ro /dev/md/**{*název*}<br>
+**sudo mdadm -Ro /dev/md**{*číslo*}
+
+mdadm5 -D --scan >>/etc/mdadm/mdadm.conf && update-initramfs -u [-k all]
+
+
+-->
+
 ## Nejdůležitější volby připojení
 
 ### Pro všechny typy systému souborů
@@ -788,6 +916,11 @@ Pokud chcete používat btrfs, musíte doinstalovat:
 *# *<br>
 **sudo apt-get btrfs-progs**
 
+Pokud chcete používat softwarový RAID, musíte doinstalovat:
+
+*# *<br>
+**sudo apt-get install mdadm**
+
 Nástroj GParted najdete v balíčku „gparted“; příkaz zerofree v balíčku „zerofree“:
 
 *# *<br>
@@ -814,7 +947,8 @@ Nástroj GParted najdete v balíčku „gparted“; příkaz zerofree v balí�
 ### LVM
 
 * V případě změny velikosti oddílu v LVM je třeba samostatně změnit velikost souborového systému a samostatně velikost logického oddílu. Výjimkou je souborový systém „ext4“, u kterého je možné tyto operace sloučit použitím parametru „\-\-resizefs“.
-* LVM lze použít i na vyjímatelných médiích (např. flash discích); v takovém případě je ale před fyzickým odpojením média potřeba deaktivovat příslušnou skupinu svazků.
+* LVM lze použít i na vyjímatelných médiích (např. flash discích); v takovém případě je ale před fyzickým odpojením média potřeba deaktivovat příslušnou skupinu svazků. Je-li skupina svazků rozložena přes více takových médií, automaticky se aktivuje při připojení posledního z nich.
+* Při vytváření velkého logického oddílu přes několik SSD disků doporučuji vytvořit raději prokládaný oddíl než normální; sice tím přijde o cca 10% kapacity, ale zato se rozsáhlé zápisy budou rovnoměrně rozkládat mezi všechny disky, což by u SSD disků mělo zvýšit jejich životnost.
 * LVM poskytuje svůj vlastní interpret příkazové řádky, který nabízí pouze příkazy související s LVM (bez zadávání „sudo“). Spustíte ho příkazem „sudo lvm“.
 
 ### Btrfs
@@ -827,6 +961,11 @@ Nástroj GParted najdete v balíčku „gparted“; příkaz zerofree v balí�
 * Klonování pododdílu je velmi rychlé i u rozsáhlých pododdílů; naopak klonování jednotlivých souborů je sice podstatně rychlejší než jejich kopírování, ale pomalejší než vytváření pevných odkazů na ně.
 * Velmi špatná vlastnost Btrfs je, že je asynchronní – operace vypadají, že rychle a úspěšně proběhly, ale za několik minut souborový systém může zhavarovat, když „naslibovanou“ operaci nedokáže provést.
 * Transparentní komprese je jen zřídka užitečná. Její účinnost ve srovnání s archivy či SquashFS je mizivá, u dobře komprimovatelných textových souborů ušetří maximálně desítky procent kapacity, zatímco běžný „zip“ u stejných dat dokáže ušetřit třeba 95% jejich velikosti. Navíc většina dnes používaných formátů, které zabírají hodně místa, už komprimovaná je, takže je u nich další komprese zcela neúčinná.
+
+### Softwarový RAID
+
+* Prokládaný RAID nemá redundanci, nemá záložní díly a počet jeho dílů *není možné měnit*. Pokud přijdete o data na kterémkoliv z jeho dílů, přijdete o data v celém poli.
+* Podle mých zkušeností u RAIDu s paritou (RAID5) nelze snížit počet základních dílů a i některé další poměrně základní operace jsou tam obtížné.
 
 ## Další zdroje informací
 
@@ -851,6 +990,8 @@ Pokud hledáte nástroj pro dělení disku ze skriptu, zkuste [sfdisk](http://ma
 * [YouTube: LVM snapshots](https://www.youtube.com/watch?v=N8rUlYL2O_g) (anglicky)
 * [Wikipedie: Mount (computing)](https://en.wikipedia.org/wiki/Mount\_\(computing\)) (anglicky)
 * [man 8 btrfs-scrub](http://manpages.ubuntu.com/manpages/focal/en/man8/btrfs-scrub.8.html) (anglicky)
+* [How to create RAID arrays with mdadm...](https://www.digitalocean.com/community/tutorials/how-to-create-raid-arrays-with-mdadm-on-ubuntu-18-04) (anglicky)
+* [A guide to mdadm](https://raid.wiki.kernel.org/index.php/A\_guide\_to\_mdadm) (anglicky)
 
 !ÚzkýRežim: vyp
 

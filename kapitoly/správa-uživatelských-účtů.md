@@ -202,6 +202,34 @@ gawk -F : '$3 == 0 || $3 &gt;= 1000 {print $1;}'** [**\| LC\_ALL=C.UTF-8 sort**]
 *// Tento příkaz nepřejmenuje domovský adresář uživatele!*<br>
 **sudo usermod -l** {*nové-už-jméno*} {*původní-už-jméno*}
 
+### Automatické přihlašování
+
+*# **zapnout** (lightdm — jen Lubuntu, Ubuntu Budgie, Ubuntu MATE, Ubuntu Studio, Xubuntu)*<br>
+!: V souboru „/etc/lightdm/lightdm.conf“ v sekci „[Seat:\*]“ nastavte:<br>
+**autologin-user=**{*uživatelské-jméno*}<br>
+**autologin-user-timeout=0**
+
+*# zapnout (sddm — jen Kubuntu)*<br>
+!: V souboru „/etc/sddm.conf“ v sekci „[Autologin]“ nastavte:<br>
+**User=**{*uživatelské-jméno*}<br>
+**Session=plasma.desktop**
+
+*# zapnout (gdm — jen Ubuntu)*<br>
+!: V souboru „/etc/gdm3/custom.conf“ v sekci „[daemon]“ nastavte:<br>
+**AutomaticLoginEnable=true**<br>
+**AutomaticLogin=**{*uživatelské-jméno*}
+
+*# **vypnout** (lightdm — jen Lubuntu, Ubuntu Budgie, Ubuntu MATE, Ubuntu Studio, Xubuntu)*<br>
+!: V souboru „/etc/lightdm/lightdm.conf“ v sekci „[Seat:\*]“ smažte klíče „autologin-user“ a „autologin-user-timeout“.
+
+*# vypnout (sddm — jen Kubuntu)*<br>
+!: V souboru „/etc/sddm.conf“ v sekci „[Autologin]“ smažte klíče „User“ a „Session“.<br>
+
+*# vypnout (gdm — jen Ubuntu)*<br>
+!: V souboru „/etc/gdm3/custom.conf“ v sekci „[daemon]“ nastavte:<br>
+**AutomaticLoginEnable=false**<br>
+**AutomaticLogin=**
+
 ## Zaklínadla: Samospráva uživatele
 
 ### Vypsat nastavení

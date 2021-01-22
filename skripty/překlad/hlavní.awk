@@ -74,14 +74,22 @@ function ZpracujZnaky(text,     VSTUP, VYSTUP, ZNAK) {
 # Tato funkce vezme řádek textu ve vstupním formátu a zpracuje všechno
 # formátování na úrovni řádku. Výstupem je řádek ve výstupním formátu.
 #
-# Může využívat globálních proměnných TYP_RADKU a PREDCHOZI_TYP_RADKU.
+# Může využívat globálních proměnných TYP_RADKU, PREDCHOZI_TYP_RADKU a UROVEN.
 # Lokálně používá zásobník "format".
-function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C, priznak, stav) {
+function FormatovatRadek(text, stav,   VSTUP, VYSTUP, i, j, C, priznak) {
     priznak = 0; # příznak použitelný k zachování kontextu
-    stav = (TYP_RADKU == "RADEK_ZAKLINADLA" ? 0 : -1); # -1 = mimo zaklínadlo; 0 = v řádku zakl.; 1 = v textu příkladu hodnoty
     VSTUP = text;
     VYSTUP = "";
     VyprazdnitZasobnik("format");
+
+    if (stav == "") {
+        if (TYP_RADKU != "RADEK_ZAKLINADLA")
+            stav = -1; # -1 = mimo zaklínadlo
+        else if (UROVEN == UROVEN_AKCE)
+            stav = 1; # 1 = v textu akce či příkladu hodnoty
+        else
+            stav = 0; # 0 = v řádku zaklínadla
+    }
 
     while (VSTUP != "") {
         # 11 znaků
@@ -298,14 +306,14 @@ function FormatovatRadek(text,   VSTUP, VYSTUP, i, j, C, priznak, stav) {
                     VYSTUP = VYSTUP HypertextovyOdkaz(ZpracujZnaky(substr(VSTUP, i + 2, j - i - 2)), ZpracujZnaky(substr(VSTUP, 2, i - 2)));
                     VSTUP = substr(VSTUP, j + 1);
                     continue;
-                } else if (TYP_RADKU == "RADEK_ZAKLINADLA" && VelikostZasobniku("format") == 0) {
+                } else if (stav == 0 && VelikostZasobniku("format") == 0) {
                     VYSTUP = VYSTUP FormatVolitelny(1);
                     VSTUP = substr(VSTUP, 2);
                     continue;
                 }
                 break;
             case "]":
-                if (TYP_RADKU == "RADEK_ZAKLINADLA" && VelikostZasobniku("format") == 0) {
+                if (stav == 0 && VelikostZasobniku("format") == 0) {
                     VYSTUP = VYSTUP FormatVolitelny(0);
                     VSTUP = substr(VSTUP, 2);
                     continue;
