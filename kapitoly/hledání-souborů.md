@@ -55,7 +55,7 @@ GNU Findutils, jejichž součástí je příkaz „find“, jsou vyvíjeny v r�
 **\-type l \-xtype f**<br>
 **\-type l \-xtype d**<br>
 **\-lname "/\*"**<br>
-**\-type l \\! -lname "/\*"**
+**\-type l !&blank;-lname "/\*"**
 
 *# speciální zařízení (blokové/znakové/jakékoliv)*<br>
 **\-type b**<br>
@@ -161,8 +161,8 @@ Poznámka: Písmeno „i“ v následujících parametrech vypne rozlišování
 
 *# změněno/čteno v rozsahu dnů*<br>
 *// Dny zadejte ve formátu %F (YYYY-MM-DD).*<br>
-**-newermt "**{*první-den-intervalu*} **00:00:00" \\! -newermt "**{*poslední-den-intervalu*} **23:59:59.999999999"**<br>
-**-newerat "**{*první-den-intervalu*} **00:00:00" \\! -newerat "**{*poslední-den-intervalu*} **23:59:59.999999999"**
+**-newermt "**{*první-den-intervalu*} **00:00:00" ! -newermt "**{*poslední-den-intervalu*} **23:59:59.999999999"**<br>
+**-newerat "**{*první-den-intervalu*} **00:00:00" ! -newerat "**{*poslední-den-intervalu*} **23:59:59.999999999"**
 
 *# čteno od poslední změny*<br>
 ?
@@ -182,7 +182,7 @@ xxx , xxx # priorita?
 {*test1*} {*test2*}
 
 *# test nesmí být splněn (**ne-**)*<br>
-**\\!** {*test*}
+**!** {*test*}
 
 *# závorky (**seskupení** testů a akcí)*<br>
 **\\(** {*testy a akce*} **\\)**
@@ -200,7 +200,7 @@ xxx , xxx # priorita?
 **\-group** {*skupina*}<br>
 **\-gid** {*GID*}
 
-### Přístupová práva (ACL)
+### Přístupová práva
 
 *# soubor je přístupný pro **čtení***<br>
 **\-readable**
@@ -213,7 +213,7 @@ xxx , xxx # priorita?
 
 *# vlastník (u), skupina (g) či ostatní (o) mají právo (jedno z r, w, x)*<br>
 **\-perm /**{*kdo*}**=**{*právo*}<br>
-**\\! -perm /**{*kdo*}**=**{*právo*}
+**! -perm /**{*kdo*}**=**{*právo*}
 
 *# všichni mají určité právo*<br>
 **\-perm -ugo=**{*právo*}
@@ -241,15 +241,15 @@ xxx , xxx # priorita?
 [ ] Vyzkoušet!
 -->
 *# některý řádek obsahuje/žádný řádek neobsahuje shodu s regulárním výrazem*<br>
-**\\! \( -type d -o \( -type l -xtype d \) \) -readable \-exec egrep -q** [**\-\-**] **'**{*regulární výraz*}**' \\;**
-**\\! \( -type d -o \( -type l -xtype d \) \) -readable \\! \-exec egrep -q** [**\-\-**] **'**{*regulární výraz*}**' \\;**
+**! \( -type d -o \( -type l -xtype d \) \) -readable \-exec egrep -q** [**\-\-**] **'**{*regulární výraz*}**' \\;**
+**! \( -type d -o \( -type l -xtype d \) \) -readable ! \-exec egrep -q** [**\-\-**] **'**{*regulární výraz*}**' \\;**
 
 <!--
 [ ] Vyzkoušet!
 -->
 *# některá řádka obsahuje/žádná řádka neobsahuje podřetězec*<br>
-**\\! \( -type d -o \( -type l -xtype d \) \) -readable \-exec fgrep -q** [**\-\-**] **'**{*podřetězec*}**' \\;**
-**\\! \( -type d -o \( -type l -xtype d \) \) -readable \\! \-exec fgrep -q** [**\-\-**] **'**{*podřetězec*}**' \\;**
+**! \( -type d -o \( -type l -xtype d \) \) -readable \-exec fgrep -q** [**\-\-**] **'**{*podřetězec*}**' \\;**
+**! \( -type d -o \( -type l -xtype d \) \) -readable ! \-exec fgrep -q** [**\-\-**] **'**{*podřetězec*}**' \\;**
 
 ### Velikost adresáře
 
@@ -511,7 +511,7 @@ Většina uvedených příkazů je základními součástmi Ubuntu. Pouze přík
 -->
 
 * Naučte se s příkazem „find“ používat akci „-exec“, zejména její hromadnou variantu „po dávkách“. Její použití je většinou mnohem pohodlnější než tradiční kombinace s příkazem „xargs“. Jedinou výjimkou je případ, kdy chcete příkazy vykonávat paralelně.
-* Příkaz „find“ cesty na svém výstupu nijak neřadí.
+* Příkaz „find“ cesty na svém výstupu nijak neřadí, ale při průchodu do šířky (což je výchozí) „zpracuje“ adresář dřív, než do něj vstoupí a prohledá jeho obsah. Při průchodu do hloubky naopak zpracuje adresář až po zpracování celého podstromu uvnitř něj.
 * Příkaz „locate“ respektuje přístupová práva a najde pouze adresářové položky, ke kterým má uživatel v dané chvíli přístup.
 * Nepoužívejte akci „-execdir“. Je pomalá při spouštění akce v mnoha adresářích a odmítne pracovat, pokud bude v proměnné prostředí PATH relativní cesta nebo závěrečná dvojtečka.
 

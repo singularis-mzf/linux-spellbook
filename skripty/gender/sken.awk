@@ -39,6 +39,8 @@ BEGINFILE {
     id = gensub(/.*\/|\.md$/, "", "g", FILENAME);
 }
 
+$0 == "<!--", $0 == "-->" {next}
+
 NF > 0 {
     puvodniradek = gensub(/[\t\n]/, " ", "g", $0);
     for (i = 1; i <= NF; ++i) {
@@ -73,7 +75,7 @@ function UrcitRod(predchozi, slovo) {
             # ŘÁDEK
             # aktuální řádek / odsazení řádek
             if (predchozi ~ /^(n)$|(í)$/) {
-                if (predchozi ~ /^(aktuální|první|následující)$|(ání)$/) {return "mužský"}
+                if (predchozi ~ /^(aktuální|první|následující|příští|poslední|ukončí)$|(ání)$/) {return "mužský"}
                 if (predchozi ~ /^(odsazení)$/) {return "ženský"}
                 return "?";
             }
@@ -94,7 +96,7 @@ function UrcitRod(predchozi, slovo) {
             # mužský, ledaže „vidím tu řádku“ nebo „aktuální/předchozí řádku“
             if (predchozi ~ /[éí](ho|m)$|^(jednom|číslo|konec|konce|konci|zbytek|část|rámci|v|prefix|podřetězec|začátek|začátku)$/) {
                 return "mužský";
-            } else if (predchozi ~ /(číst|jednu|ou|ní|zí)$/) {
+            } else if (predchozi ~ /(číst|jednu|ou|ní|zí|nčí)$/) {
                 return "ženský";
             } else {
                 return "?";
@@ -108,9 +110,9 @@ function UrcitRod(predchozi, slovo) {
             # s těmi řádky = mužský; bez té řádky = ženský
             if (predchozi ~ /^(dvěma|nad)$|ými$/) {
                 return "mužský";
-            } else if (predchozi ~ /^(zadání|prefix|z|číslo|čísla|číslem|znak|příkazové|pozici|konce|dvě|tři|čtyři|konec|koncem|zbytek|část|podřetězec|začátek|začátkem|ukončení|této|rámci|obsah|první|druhé|třetí|čtvrté|páté|řádky)$|(ím|ení)$/) {
+            } else if (predchozi ~ /^(zadání|prefix|z|číslo|čísla|číslem|znak|příkazové|pozici|konce|dvě|tři|čtyři|konec|koncem|zbytek|část|podřetězec|začátek|začátkem|ukončení|této|rámci|obsah|první|druhé|třetí|čtvrté|páté|řádky|začátku)$|(ím|ení)$/) {
                 return "ženský";
-            } else if (predchozi ~ /^(mít|všechny|má|tvoří|hledat|se|ostatní|znak|join|chomp|print|my|alength)$|ící$/) {
+            } else if (predchozi ~ /^(mít|všechny|má|tvoří|hledat|se|ostatní|znak|join|chomp|print|my|alength|prázdné)$|ící$/) {
                 return "0";
             } else {
                 return "?";

@@ -91,7 +91,7 @@ dvojklikem nebo přetažením adresářových položek na něj.
 *# spustit příkaz v emulátoru terminálu*<br>
 **Terminal=true**
 
-*# řádka s komentářem (kdekoliv v souboru)*<br>
+*# řádek s komentářem (kdekoliv v souboru)*<br>
 **\#**[{*libovolný text*}]
 
 *# nastavit **popisek***<br>
@@ -141,7 +141,7 @@ ale s několika dvěma zásadními odchylkami:
 <!-- [ ] Blíž prozkoumat „*“ -->
 * Příkaz musí začínat názvem spustitelného souboru (bez cesty či s cestou); přiřazení do proměnných, funkce a vestavěné příkazy Bashe (včetně jakýchkoliv zvláštních konstrukcí) jsou vyloučeny.
 * Znak „\\“ má zvláštní význam všude kromě vnitřku apostrofů; znak „%“ i tam. Oba tyto znaky se zde odzvláštňují **zdvojením**.
-* Mimo vnitřek apostrofů lze vložit (nezvláštní) konec řádky sekvencí „\\n“.
+* Mimo vnitřek apostrofů lze vložit (nezvláštní) konec řádku sekvencí „\\n“.
 
 Pokud nějakou konstrukci z Bashe potřebujete, musíte zavolat Bash a příkaz mu předat parametrem „-c“;
 přitom si dejte pozor na nutnost odzvláštnění znaku „%“ a znaku „\\“ mimo apostrofy (GUI editor vám s tímto bohužel nepomůže).

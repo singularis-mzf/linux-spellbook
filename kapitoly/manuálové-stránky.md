@@ -138,10 +138,10 @@ nekompatibilních syntaxí:
 {*...*}
 
 *# komentář (varianta A/varianta B)*<br>
-*// Varianta A se vyhodnotí jako konec řádky; varianta se zcela vypustí (tzn. řádka s komentářem se po jeho vypuštění sloučí s následujícím řádkem).*<br>
+*// Varianta A se vyhodnotí jako konec řádky; varianta B se zcela vypustí (tzn. řádek s komentářem se po vypuštění komentáře sloučí s následujícím řádkem).*<br>
 !: Kdekoliv na řádku:<br>
 **\\"**{*Text komentáře do konce řádky*}<br>
-**\\#**{*Text komentáře do konce řádky*}
+**\\#**{*Text komentáře do konce řádku*}
 
 <!--
 *# syntaxe příkazu (synopsis)*<br>
@@ -180,7 +180,7 @@ nekompatibilních syntaxí:
 **.ad b**
 
 *# zvýšit úroveň **odsazení***<br>
-*// Samotný příkaz „.RS“ ukončí řádku, ale nikoliv odstavec, proto i typ písma zůstává zachovaný.*<br>
+*// Samotný příkaz „.RS“ ukončí řádek, ale nikoliv odstavec, proto i typ písma zůstává zachovaný.*<br>
 **.RS**<br>
 [**.PP**]
 
@@ -190,7 +190,7 @@ nekompatibilních syntaxí:
 [**.PP**]
 
 *# ukončit odsazení*<br>
-*// Samotný příkaz „.RE 1“ ukončí řádku, ale nikoliv odstavec, proto i typ písma zůstává zachovaný.*<br>
+*// Samotný příkaz „.RE 1“ ukončí řádek, ale nikoliv odstavec, proto i typ písma zůstává zachovaný.*<br>
 **.RE 1**<br>
 [**.PP**]
 
@@ -219,7 +219,7 @@ nekompatibilních syntaxí:
 **.OP** {*volba*} [{*argument*}]
 
 *# ukázka kódu (**&lt;pre&gt;**)*<br>
-*// Uvnitř bloku „.EX“ až „.EE“ neprobíhá automatické zalamování řádek a jejich odsazení mezerami či tabulátory bude na výstupu zachováno; použije se neproporcionální písmo (v terminálu je totéž jako to normální). Ostatní příkazy jsou však interpretovány.*<br>
+*// Uvnitř bloku „.EX“ až „.EE“ neprobíhá automatické zalamování řádků a jejich odsazení mezerami či tabulátory bude na výstupu zachováno; použije se neproporcionální písmo (v terminálu je totéž jako to normální). Ostatní příkazy jsou však interpretovány.*<br>
 **.EX**<br>
 {*řádky kódu*}...<br>
 **.EE**
@@ -255,7 +255,7 @@ nekompatibilních syntaxí:
 *// Pokud tyto znaky použijete přímo, terminál místo nich může zobrazit jiné, podobné znaky, což může způsobit problémy, pokud se je uživatel pokusí z manuálové stránky vykopírovat. Zpětné lomítko přímo použít nemůžete.*<br>
 **\\- \\\\ \\(aq \\(dq \\(ga \\(ha \\(ti**<br>
 
-*# konec řádky/prázdná řádka*<br>
+*# konec řádky/prázdný řádek*<br>
 **.br**<br>
 **.sp**
 

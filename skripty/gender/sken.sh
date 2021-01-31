@@ -23,7 +23,7 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-mkdir -pv "$SOUBORY_PREKLADU"
+mkdir -pv "${SOUBORY_PREKLADU:=soubory_překladu}"
 gawk -f skripty/gender/sken.awk dodatky/*.md kapitoly/*.md >"${SOUBORY_PREKLADU}/sken-genderu.tsv"
 gawk -f skripty/gender/report.awk "${SOUBORY_PREKLADU}/sken-genderu.tsv" >"${SOUBORY_PREKLADU}/report-genderu.csv"
 gawk 'BEGIN {FS=","; OFS="\t";} {print substr($1 "                                       ", 1, 32), $2, $3, $4, $5, $6}' "${SOUBORY_PREKLADU}/report-genderu.csv"

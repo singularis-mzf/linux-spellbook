@@ -414,16 +414,45 @@ V kapitole je použit také příkaz gawk:
 
 !ÚzkýRežim: vyp
 
-## Pomocné skripty
+## Pomocné funkce a skripty
+
+*# lkk\_limit\_jobs() - počká, než počet úloh běžících na pozadí klesne na požadovanou úroveň nebo pod ni*<br>
+**function lkk\_limit\_jobs() \{**<br>
+<odsadit1>**local j r=0**<br>
+<odsadit1>**while j=($(jobs -pr)); ((${#j[@]} &gt; ${1:-0}))**<br>
+<odsadit1>**do wait -n; r=$?**<br>
+<odsadit1>**done**<br>
+<odsadit1>**return $r**<br>
+**\}**
 
 *# lkk procesy – vypíše přehled procesů ve snadno zpracovatelném tvaru*<br>
-**#!/usr/bin/gawk -bf**<br>
-**BEGIN \{**<br>
-<odsadit1>**while ("ps h -e -o pid,ppid" \| getline) {ppids[pids[++n] = $1] = $2}**<br>
-<odsadit1>**OFS = ORS = "";**<br>
-<odsadit1>**for (i = 1; i &lt;= n; ++i) \{**<br>
-<odsadit2>**print pid = pids[i];**<br>
-<odsadit2>**while ((pid = ppids[pid]) in ppids) {print ":", pid}**<br>
-<odsadit2>**print "\\n";**<br>
+*// Procesy realizující samotný skript se nevypíšou, proto můžete při opakovaném volání dostat stejný výsledek.*<br>
+**#!/bin/bash**<br>
+**x=$(ps h -e -o pid,ppid)**<br>
+**x=$(perl -MEnglish -e '**<br>
+**my $stdin = \\\*STDIN; my $s; my %p;**<br>
+**while (defined($s = scalar(readline($stdin)))) \{**<br>
+<odsadit1>**my ($ppid, $pid) = split("\\x{0}", $s =~ s/^\\s\*(\\S+)\\s+(\\S+)\\s\*$/$2\\x{0}$1/r);**<br>
+<odsadit1>**$p{$pid + 0} = $ppid + 0 if ($pid != $PID);**<br>
+**\}**<br>
+**c: foreach my $k (keys(%p)) \{**<br>
+<odsadit1>**$s = $k;**<br>
+<odsadit1>**while ($k &gt; 2) \{**<br>
+<odsadit2>**next c if ($k == '\$\$');**<br>
+<odsadit2>**$s = $s . ":" . ($k = $p{$k});**<br>
 <odsadit1>**\}**<br>
-**\}**
+<odsadit1>**print $s, "\\n";**<br>
+**\}' &lt;&lt;&lt; "$x")**<br>
+**sort -n &lt;&lt;&lt; "$x"**
+
+<!--
+**ps h -e -o pid,ppid \| perl -MEnglish -e '**<br>
+**my $stdin = \\\*STDIN; my $s; my %p;**<br>
+**while (defined($s = scalar(readline($stdin)))) \{**<br>
+<odsadit1>**my ($ppid, $pid) = split("\\x{0}", $s =~ s/^\\s\*(\\S+)\\s+(\\S+)\\s\*$/$2\\x{0}$1/r);**<br>
+<odsadit1>**$p{$pid + 0} = $ppid + 0 if ($pid != $PID);**<br>
+**\}**<br>
+**foreach my $k (keys(%p)) \{**<br>
+<odsadit1>**print $k; while ($k &gt; 2) {print ":", $k = $p{$k}} print "\\n";**<br>
+**\}' \| sort -n**
+-->

@@ -43,6 +43,8 @@ Nevýhody btrfs:
 [ ] http://manpages.ubuntu.com/manpages/focal/en/man8/btrfs-check.8.html
 ? http://manpages.ubuntu.com/manpages/focal/en/man8/btrfs-balance.8.html
 
+- Na Ubuntu 20.04 je rozsah čísla /dev/md* 0 až 1048575 (2^20-1).
+
 -->
 
 # Diskové oddíly
@@ -135,20 +137,19 @@ Poznámka k pevným odkazům: pevný odkaz v souborovém systému typu btrfs n
 
 ### Softwarový RAID
 
-* **Pole** (array) je skupina disků nebo jejich oddílů skombinovaná softwarovým RAID do jednoho blokového zařízení. Normálně se každý z nich nachází na jiném fyzickém disku.
-* **Dílem** pole (device) se u RAIDu rozumí oddíl disku zapojený do pole; pokud je do RAIDu zapojený disk jako celek, rozumí se dílem disk jako celek.
-* Díly pole jsou dvou druhů — **základní díly** tvoří pole a jsou aktivně používány; **záložní díly** nejsou používány, ale v případě výpadku některého ze základních dílů se jeden záložní díl stane základním a RAID na něj postupně „nasynchronizuje“ data.
-<!--
-* Pole je v **degradovaném stavu**, pokud...
--->
+* **Pole** (array) je skupina disků nebo jejich oddílů skombinovaná softwarovým RAID do jednoho blokového zařízení.
+* **Dílem** pole (device) se v RAIDu rozumí jednotlivý oddíl disku či celý disk tvořící pole spolu s dalšími takovými díly. Obvykle se každý díl nachází na jiném fyzickém disku.
+* Díly pole jsou dvou druhů — **základní díly** (active devices) tvoří pole a jsou aktivně používány; **záložní díly** (spare devices) nejsou používány, ale v případě výpadku některého ze základních dílů se jeden záložní díl stane základním a RAID na něj postupně „nasynchronizuje“ data. Díl pole může být také ve stavech „F“ (selhavší), „R“ (k nahrazení) a možná i dalších.
+* Pole je v **degradovaném stavu**, pokud je počet jeho fungujících základních dílů nižší než deklarovaný.
 
 V této kapitole budou pokryty tyto režimy softwarového RAID: prokládání (stripe, RAID0), zrcadlení (mirror, RAID1) a RAID s paritou (RAID5).
 
-Pole se na příkazovém řádku zadává jako cesta k zařízení RAID pole, nebo symbolický odkaz na ni. Obvyklé jsou tyto tři způsoby:
+Kde máte v zaklínadlech zadat {*md-pole*}, můžete svoje pole identifikovat těmito způsoby:
 
-* Jako zařízení s číslem 0 až 127 (např. „/dev/md127“). Číslo RAIDu musíte zadat při jeho vytváření a obvykle se nemění; může se však změnit, pokud dojde ke konfliktu čísel (např. po přidání nového disku, na kterém už nějaký RAID je). Proto doporučuji toto číslo používat pouze ručně, nezadávat ho do /etc/fstab ani do skriptů.
-* Jako UUID (např. „/dev/disk/by-uuid/ec2c7d38-“ atd.).
-* Symbolickým názvem (např. „/dev/md/mujraid“). Tento způsob je mnoha programy preferovaný, ale bohužel funguje nejhůř, protože někdy se do názvu přidá název počítače a někdy ne. Také nefunguje správně, pokud připojíte více výměnných médií se stejně pojmenovanými poli. Proto doporučuji tento způsob pojmenovávání vůbec nepoužívat.
+* Pomocí UUID (např. „/dev/disk/by-uuid/ec2c7d38-“ atd.). Ve skriptech doporučuji preferovat tento způsob.
+* Názvem pole (např. „/dev/md/mujraid“). Tento způsob označování doporučuji pro ruční použití; většinou je spolehlivý, ale může způsobit problémy, pokud při vytváření zapomenete parametr „\-\-homehost=any“ nebo pokud dojde ke konfliktu názvů (typicky po připojení výměnných médií s RAID-polem).
+* Číslem md-zařízení (např. „/dev/md127“). Toto číslo se může změnit při každém připojení pole, ale může být potřeba v případě práce s neúplně sestaveným polem.
+* Jakýmkoliv symbolickým odkazem na jednu z výše uvedených cest.
 
 !ÚzkýRežim: vyp
 
@@ -259,7 +260,7 @@ Pole se na příkazovém řádku zadává jako cesta k zařízení RAID pole, n
 -->
 
 *# zjistit **zdrojové** zařízení z přípojného bodu/naopak*<br>
-*// Jedno zdrojové zařízení může být připojeno na víc přípojných bodů (např. při použití příkazu „mount \-\-bind“); v tom případě příkaz „findmnt“ vypíše každý přípojný bod na samostatnou řádku!*<br>
+*// Jedno zdrojové zařízení může být připojeno na víc přípojných bodů (např. při použití příkazu „mount \-\-bind“); v tom případě příkaz „findmnt“ vypíše každý přípojný bod na samostatný řádek!*<br>
 **findmnt -nu -o SOURCE** {*/přípojný/bod*}<br>
 **findmnt -nu -o TARGET** {*/dev/disknebooddíl*} [** \| head -n 1**]
 
@@ -420,7 +421,7 @@ Poznámka: souborové systémy FAT a NTFS by při nastavování jmenovky měly 
 **sudo e2label** {*/dev/oddíl*} **""**
 
 *# nastavit/smazat jmenovku **btrfs***<br>
-*// „Specifikace oddílu“ je v případě nepřipojeného oddílu „/dev/oddíl“, v případě připojeného oddílu je nutno uvést jeho přípojný bod. Příkaz selže s chybou, pokud uvedete připojený oddíl označením ve tvaru /dev/oddíl! Jmenovka může mít pravděpodobně maximálně 256 bajtů a nesmí obsahovat znak konce řádky nebo nulový bajt.*<br>
+*// „Specifikace oddílu“ je v případě nepřipojeného oddílu „/dev/oddíl“, v případě připojeného oddílu je nutno uvést jeho přípojný bod. Příkaz selže s chybou, pokud uvedete připojený oddíl označením ve tvaru /dev/oddíl! Jmenovka může mít pravděpodobně maximálně 256 bajtů a nesmí obsahovat znak konce řádku nebo nulový bajt.*<br>
 **sudo btrfs filesystem label** {*specifikace/oddílu*} **"**{*Nová jmenovka*}**"**<br>
 **sudo btrfs filesystem label** {*specifikace/oddílu*} **""**
 
@@ -675,12 +676,26 @@ Další možnost:
 *# osamostatnit klon souboru, aby nevyužíval sdílené datové bloky*<br>
 **btrfs filesystem defragment** [**-v**] <nic>[**\-\-**] {*cesta/k/souboru*}...
 
-### Práce se zrcadlenými oddíly
+### Práce s oddíly
+
+*# **přesunout** souborový systém z jednoho oddílu na jiný*<br>
+*// Cílový oddíl může být menší i větší než původní, musí se však na něj vejít všechna data a metadata.*<br>
+**sudo bash -c '**<br>
+**btrfs device add /dev/**{*nový-oddíl*} {*/přípojný/bod*} **\|\| exit $?**<br>
+**btrfs device remove /dev/**{*původní-oddíl*} {*/přípojný/bod*} **\|\|**<br>
+**(r=$?; btrfs device remove /dev/**{*nový-oddíl*} {*/přípojný/bod*}**; exit $r)**<br>
+**'**
 
 *# **vytvořit** dva zrcadlené oddíly z jednoho samostatného*<br>
 ?
 
 *# **osamostatnit** oddíl ze zrcadlené dvojice*<br>
+?
+
+*# vyvořit N-tici prokládaných oddílů z neprokládaného jednooddílového btrfs*<br>
+?
+
+*# vytvořit jednoduchý oddíl BTRFS z prokládané N-tice*<br>
 ?
 
 ### Přenos neměnných pododdílů přes soubor
@@ -730,10 +745,10 @@ Před jejich použitím si musíte přečíst manuálové stránky vyvolané př
 ## Zaklínadla: softwarový RAID
 
 <!--
-[ ] assembly?
+mdadm5 -D --scan >>/etc/mdadm/mdadm.conf && update-initramfs -u [-k all]
 -->
 
-### Zjišťování údajů
+### Všechny typy polí: zjišťování údajů
 
 *# **dynamické informace** o připojených polích*<br>
 **cat /proc/mdstat**
@@ -741,87 +756,152 @@ Před jejich použitím si musíte přečíst manuálové stránky vyvolané př
 *# podrobné statické informace o některém **poli***<br>
 **sudo mdadm \-\-detail** {*md-pole*}
 
-*# podrobné statické informace o **dílu** pole*<br>
-**sudo mdadm \-\-examine** {*/dev/disk-nebo-oddíl*}
-
-*# stručné informace o dílu pole (pro člověka)*<br>
-**sudo mdadm \-\-query** {*/dev/disk-nebo-oddíl*}
-
-*# zjistit **UUID** z čísla RAID pole/naopak*<br>
-**lsblk -rno /dev/md**{*číslo*}<br>
-**readlink /dev/disk/by-uuid/**{*UUID*} **\| sed -E 's/^[^0-9]+//'**
+*# statické informace o dílu pole (stručné/podrobné)*<br>
+**sudo mdadm \-\-query** {*/dev/díl*}<br>
+**sudo mdadm \-\-examine** {*/dev/díl*}
 
 *# **seznam** připojených polí (pro skript)*<br>
 **find /dev/disk/by-uuid -type l -xtype b -printf '%f %l\\n' \| sed -nE '/\\/md[0-9]+$/s!(\\.\\.\\/){2}!/dev/!;T;p'**
 
-### Správa pole
+*# **seznam dílů** připojeného pole (pro skript)*<br>
+?
+<!--
+[ ] nutno opravit: nezohledňuje, že za hranatými závorkami může být ještě stav
+**mdpole=**{*md-pole*}
+**test -e "$mdpole" &amp;&amp; sed -E "/^$(realpath -e \-\- "$mdpole" \| sed -E 's!.\*/!!')&blank;/!d;"'s![^]]+&blank;!&blank;!;s!&blank;([^][]+)\\\[\\S+\\\]!/dev/\\1\\n!g;s!\\n$!!' /proc/mdstat** [**\| LC\_ALL=C.UTF-8 sort**] **\| egrep .**
+-->
+<!--
+realpath -e \-\- {*md-pole*} **\| sed -E 's!.\*/!!' => získá označení typu „md127“
+/^$(...)&blank;/!d — vynechá řádky, které se hledaného pole netýkají
+s![^]]+&blank;!&blank;! — vynechá vše až po konec posledního slova, které nekončí hranatou závorkou
+s!&blank;([^][]+)\\\[\\S+\\\]!/dev/\\1\\n!g — vyjme označení dílu, přidá před něj /dev a každé umístí na samostatný řádek
+
+egrep . — Selže, pokud bude výstup prázdný.
+-->
+
+*# zjistit **UUID** pole*<br>
+?
+<!--
+[**sudo**] **lsblk -rno UUID** {*md-pole*}
+// nefunguje; např. po ručním připojení pole nic nevypíše
+-->
+
+*# zjistit název pole*<br>
+?
+<!--
+<br>
+**readlink /dev/disk/by-uuid/**{*UUID*} **\| sed -E 's/^[^0-9]+//'**
+-->
+
+*# zjistit číslo pole*<br>
+?
+
+
+### Všechny typy polí: změny
 
 *# **odpojit** pole*<br>
 **sudo mdadm \-\-stop** {*md-pole*}
 
-*# označit díl jako **k odpojení**/**selhavší***<br>
-*// Označení „k odpojení“ způsobí, že systém začne používat záložní díl a po dokončení „synchronizace“ díl označený k odpojení označí jako selhavší. Díl označený jako „selhavší“ se přestane používat okamžitě, ale pole se kvůli tomu může dostat do degradovaného stavu, kdy bude snížen jeho výkon a odolnost proti výpadkům dalších disků.*<br>
-**sudo mdadm** {*md-pole*} **\-\-replace** {*/dev/oddíl*}
-**sudo mdadm** {*md-pole*} **\-\-fail** {*/dev/oddíl*}
+*# ručně **připojit** existující pole*<br>
+*// Toto zaklínadlo budete obvykle potřebovat jen po ručním odpojení pole; jinak systém pole připojuje automaticky, jakmile ho zaregistruje, a stejně automaticky ho rozšiřuje, když narazí na nový díl, který do něj patří).*<br>
+**sudo mdadm -A** {*md-pole*} {*/dev/oddíl*}...
 
-### Vytvořit a připojit pole
+*# označit díl jako **selhavší***<br>
+*// Díl označený jako „selhavší“ pole okamžitě přestane používat a bude počítat se ztrátou všech dat na něm uložených.*<br>
+**sudo mdadm \-\-manage** {*md-pole*} **-f** {*/dev/oddíl*}
 
-*# **prokládané** pole (RAID0)*<br>
+*# **přejmenovat** pole*<br>
+**sudo mdadm \-\-detail** {*md-pole*}<br>
+!: Bezpečně si uschovejte přesné pořadí oddílů v poli.<br>
+**sudo mdadm \-\-stop** {*md-pole*} **&amp;&amp; sudo mdadm -A /dev/md/**{*nový-název*} **\-\-update=name \-\-name=**{*nový-název*} **\-\-homehost=any** {*/dev/oddíly-ve-správném-pořadí*}...
+
+### Prokládané pole (RAID0)
+
+*# **vytvořit***<br>
 **for x in** {*/dev/oddíl*}...**; do sudo wipefs -a "$x"; done**<br>
-**sudo mdadm -Cv**[**v**] **/dev/md**{*číslo*} **-l stripe -n** {*počet-oddílů*} {*/dev/první-oddíl*} {*/dev/další-oddíl*}...
+**sudo mdadm -Cv /dev/md/**{*název*} **\-\-homehost=any -l stripe -n** {*počet-oddílů*} {*/dev/první-oddíl*} {*/dev/další-oddíl*}...
 <!--
 **sudo mdadm -Cv /dev/md/mojepole -l stripe -n 3 /dev/sdc /dev/sdd1 /dev/sde3**
 -->
 
-*# **zrcadlené** pole (RAID1)*<br>
+*# **smazat***<br>
+!: Odpojte pole (madm \-\-stop)<br>
+**for x in** {*/dev/oddíl*}...**; do sudo mdadm \-\-zero-superblock "$x"; done**<br>
+
+### Zrcadlené pole (RAID1)
+
+*# **vytvořit***<br>
 **for x in** {*/dev/oddíl*}...**; do sudo wipefs -a "$x"; done**<br>
-**sudo mdadm -Cv**[**v**] **/dev/md**{*číslo*} **-l mirror -n** {*počet-zákl-oddílů*} [**-x** {*počet-záložních-oddílů*}] {*/dev/první-oddíl*} {*/dev/další-oddíl*}...
+**sudo mdadm -Cv /dev/md/**{*název*} **\-\-homehost=any -l mirror -n** {*počet-zákl-dílů*} [**-x** {*počet-záložních-dílů*}] {*/dev/první-oddíl*} {*/dev/další-oddíl*}...
 <!--
 **sudo mdadm -Cv /dev/md/mojepole -l stripe -n 2 /dev/sdc /dev/sdd1**
 -->
 
-*# pole s **paritou** (RAID5)*<br>
-**for x in** {*/dev/oddíl*}...**; do sudo wipefs -a "$x"; done**<br>
-**sudo mdadm -Cv**[**v**] **/dev/md**{*číslo*} **-l raid5 -n** {*počet-zákl-oddílů*} {*/dev/první-oddíl*} {*/dev/druhý-oddíl*} {*/dev/další-oddíl*}...<br>
-!: Před dalšími operacemi s polem počkejte, než se uklidní (lze sledovat pomocí „cat /proc/mdstat“).
+*# **smazat***<br>
+!: Odpojte pole (madm \-\-stop)<br>
+**for x in** {*/dev/oddíl*}...**; do sudo mdadm \-\-zero-superblock "$x"; done**<br>
 
-### Přidávat a odebírat díly (ne u prokládaného pole)
+*# přidat záložní/základní díl*<br>
+**sudo mdadm \-\-manage** {*md-pole*} **-va** {*/dev/nový-oddíl*}<br>
+**sudo mdadm \-\-grow** {*md-pole*} **-va** {*/dev/nový-oddíl*} **-n** {*nový-počet-zákl-oddílů*}
 
-*# **přidat** do pole záložní díl*<br>
-*// Pokud je pole v degradovaném stavu, přidaný záložní oddíl se okamžitě stane hlavním.*<br>
-**sudo mdadm** {*md-pole*} **-a** {*/dev/oddíl*}
-
-*# odebrat z pole **základní** díl*<br>
-*// Poznámka: Samotným odebráním základního dílu (bez volání „mdadm \-\-grow“) se nesníží deklarovaný počet základních dílů, a pole se tak může dostat do degradovaného stavu. Pokud má pole záložní díly a nepotřebujete základní díl odebrat ihned, uděláte lépe, když místo parametru „\-\-fail“ použijete parametr „\-\-replace“ a před dalším příkazem počkáte, než RAID plně nasynchronizuje data na náhradní díl.*<br>
-**sudo mdadm** {*md-pole*} **-v -f** {*/dev/oddíl*} **-r** {*/dev/oddíl*} [**&amp;&amp; mdadm \-\-grow** {*md-pole*} **-n** {*nový-počet-zákl-dílů*}]
-
-<!--
-**sudo mdadm** {*md-pole*} **\-\-fail** {*/dev/oddíl*} **&amp;&amp; sudo mdadm** {*md-pole*} **-vr** {*/dev/oddíl*} [**&amp;&amp; mdadm \-\-grow** {*md-pole*} **-n** {*nový-počet-zákl-dílů*}]
--->
-
-*# **odebrat** z pole selhavší nebo záložní díl*<br>
-**sudo mdadm** {*md-pole*} **-vr** {*/dev/oddíl*}
+*# odebrat záložní/základní díl*<br>
+**sudo mdadm \-\-manage** {*md-pole*} **-vr** {*/dev/nový-oddíl*}<br>
+**sudo mdadm \-\-manage -vf** {*/dev/díl*} **-r** {*/dev/díl*} **&amp;&amp; sudo mdadm \-\-grow -n** {*nový-počet-zákl-oddílů*}
 
 *# zvýšit počet základních dílů na úkor záložních*<br>
 **sudo mdadm \-\-grow** {*md-pole*} **-n** {*nový-počet-zákl-dílů*}
 
+*# učinit z některých základních oddílů záložní*<br>
+?
+
+### Pole s paritou (RAID5)
+
+*# **vytvořit***<br>
+**for x in** {*/dev/oddíl*}...**; do sudo wipefs -a "$x"; done**<br>
+**sudo mdadm -Cv /dev/md/**{*název*} **\-\-homehost=any -l raid5 -n** {*počet-zákl-dílů*} [**-x** {*počet-záložních-dílů*}] {*/dev/oddíl*}...<br>
+!: Před dalšími operacemi s polem počkejte, než se uklidní (lze sledovat pomocí „watch -n 1 cat /proc/mdstat“).
+
+*# **smazat***<br>
+!: Odpojte pole (madm \-\-stop)<br>
+**for x in** {*/dev/oddíl*}...**; do sudo mdadm \-\-zero-superblock "$x"; done**<br>
+
+*# přidat záložní/základní díl*<br>
+*// Po přidání základního dílu neprovádějte další zásadní operace s polem, dokud se neuklidní.*<br>
+**sudo mdadm \-\-manage** {*md-pole*} **-va** {*/dev/nový-oddíl*}<br>
+**sudo mdadm \-\-grow** {*md-pole*} **-va** {*/dev/nový-oddíl*} [**-a** {*/dev/další-nový-oddíl*}]... **-n** {*nový-počet-zákl-dílů*}
+
+*# odebrat záložní díl*<br>
+**sudo mdadm \-\-manage** {*md-pole*} **-vr** {*/dev/nový-oddíl*}
+
+*# odebrat základní díl*<br>
+?
 <!--
-sudo mdadm md-pole -vr detached?
+**sudo mdadm \-\-grow \-\-array-size ...
+**sudo mdadm \-\-manage -vf** {*/dev/díl*} **-r** {*/dev/díl*} **&amp;&amp; sudo mdadm \-\-grow -n** {*nový-počet-zákl-dílů*}
+-->
+
+*# zvýšit počet základních dílů na úkor záložních*<br>
+**sudo mdadm \-\-grow** {*md-pole*} **-n** {*nový-počet-zákl-dílů*}
+<!-- [ ] vyzkoušet -->
+
+*# učinit z některých základních oddílů záložní*<br>
+?
+
+*# nahradit díl za běhu jiným oddílem*<br>
+**sudo mdadm \-\-manage** {*md-pole*} **-v \-\-replace** {*/dev/díl-k-odstranění*} **-a** {*/dev/nový-oddíl*}<br>
+!: Počkejte, než se pole uklidní (lze sledovat pomocí „watch -n 1 cat /proc/mdstat“)<br>
+**sudo mdadm \-\-manage** {*md-pole*} **-vr** {*/dev/díl-k-odstranění*}
+
+<!--
+[ ] assembly?
 -->
 
 <!--
-?
-*# vypsat seznam aktivních polí (pro člověka/pro skript)*<br>
-**cat /proc/mdstat**<br>
-**sudo mdadm \-\-detail \-\-scan**
+### Nástroje k řešení potíží
 
-*# ručně aktivovat neúplné pole pro čtení (podle názvu/podle čísla)*<br>
-**sudo mdadm -Ro /dev/md/**{*název*}<br>
-**sudo mdadm -Ro /dev/md**{*číslo*}
-
-mdadm5 -D --scan >>/etc/mdadm/mdadm.conf && update-initramfs -u [-k all]
-
-
+*# pokusit se aktivovat všechna nalezená pole, i neúplná*<br> // ?
+**sudo mdadm -A \-\-scan**
 -->
 
 ## Nejdůležitější volby připojení
@@ -964,8 +1044,9 @@ Nástroj GParted najdete v balíčku „gparted“; příkaz zerofree v balí�
 
 ### Softwarový RAID
 
+<!-- * V /etc/fstab uvádějte UUID souborového systému (přidělené při formátování), ne UUID RAID-pole! -->
 * Prokládaný RAID nemá redundanci, nemá záložní díly a počet jeho dílů *není možné měnit*. Pokud přijdete o data na kterémkoliv z jeho dílů, přijdete o data v celém poli.
-* Podle mých zkušeností u RAIDu s paritou (RAID5) nelze snížit počet základních dílů a i některé další poměrně základní operace jsou tam obtížné.
+* Ve všech popsaných druzích RAIDu mají všechny díly pole stejnou velikost. Pokud se je pokusíte umístit na různě velké oddíly, RAID z nich použije jen části odpovídající velikosti nejmenšího z nich.
 
 ## Další zdroje informací
 

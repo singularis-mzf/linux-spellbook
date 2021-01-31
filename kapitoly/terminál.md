@@ -67,7 +67,7 @@ GNU Bash je vyvíjen v rámci projektu GNU.
 ### Titulek
 *# nastavit **titulek** okna emulátoru terminálu*<br>
 *// Poznámka: Protože ve výchozím nastavení nastavuje titulek terminálu výzva PS1, před jakýmkoliv experimentováním ji musíte vypnout nebo změnit (např. příkazem „PS=""“), jinak vám vaše nové nastavení hned přepíše, takže se vám bude zdát, že nefunguje.*<br>
-**printf %s\\\\n "$TERM" \| egrep -isq "^(xterm|rxvt)" &amp;&amp; printf "\\\\e]2;%s\\\\a" "**{*nový titulek*}**"**
+**lkk titulek "**{*nový titulek*}**"**
 
 ### Barvy
 
@@ -304,6 +304,29 @@ Poznámka: znění zaklínadel v této sekci je upraveno pro uvedení uvnitř d
 *# znak „$“ pro všechny (i pro uživatele root)(alternativy)*<br>
 **\\$(printf \\$)** ⊨ $<br>
 **\\044\\[\\]**
+
+### Ucelené příklady nastavení
+
+*# návratová hodnota, čas, aktuální adresář a dolar*<br>
+^^**source &lt;(lkk \-\-funkce)**<br>
+**PROMPT\_COMMAND="navr\_hodn=\\$?"**<br>
+**PS1="$(lkk\_pstput sgr0)\\$navr\_hodn $(lkk\_pstput setaf 6)\\A "**<br>
+**PS1+="$(lkk\_pstput sgr0; lkk\_pstput bold; lkk\_pstput setaf 2)\\w$(lkk\_pstput sgr0)\\\\\\$&blank;"**
+
+*# vedlejší výzva: zelené svislítko*<br>
+^^**source &lt;(lkk \-\-funkce)**<br>
+**PS2="\\\\[$(lkk\_bezp\_set setaf 2)\\\\]\|$(lkk\_pstput sgr0)&blank;"**
+
+*# příkazy psát červeně na zeleném pozadí, výpisy příkazů tyrkysově na fialové pozadí*<br>
+^^**source &lt;(lkk \-\-funkce)**<br>
+**PS1="\\\\[$(lkk\_bezp\_set setaf 1; lkk\_bezp\_set setab 2; tput el)\\\\]\\\$&blank;"**<br>
+**PS0="$(lkk\_bezp\_set setaf 6; lkk\_bezp\_set setab 5; tput el)"**
+
+*# příkazy psát tučným zeleným písmem, výzvu bez zvýraznění*<br>
+^^**source &lt;(lkk \-\-funkce)**<br>
+**PS0="$(tput sgr0)"**<br>
+**PS1="\\\\[$(tput sgr0)\\\\]\\w\\\$&blank;\\\\[$(lkk\_bezp\_set setaf 2; tput bold)\\\\]"**<br>
+**PS2="\\\\[$(tput sgr0)\\\\]\|&blank;\\\\[$(lkk\_bezp\_set setaf 2; tput bold)\\\\]"**
 
 ## Zaklínadla: Vybrané emotikony
 
@@ -623,28 +646,114 @@ Testováno na fontu noto...
 *# **zákaz** (zákaz vjezdu do jednosměrné ulice)*<br>
 [**printf**] **$'\\U00026d4**[**\\u200b**]**'**
 
-## Zaklínadla: Příklady
+## Zaklínadla: Zvýrazňování v příkazu „ls“
 
-*# návratová hodnota, čas, aktuální adresář a dolar*<br>
-^^**source &lt;(lkk \-\-funkce)**<br>
-**PROMPT\_COMMAND="navr\_hodn=\\$?"**<br>
-**PS1="$(lkk\_pstput sgr0)\\$navr\_hodn $(lkk\_pstput setaf 6)\\A "**<br>
-**PS1+="$(lkk\_pstput sgr0; lkk\_pstput bold; lkk\_pstput setaf 2)\\w$(lkk\_pstput sgr0)\\\\\\$&blank;"**
+Poznámka 1: Nastavení barevného zvýraznění příkazu „ls“ řídí proměnná prostředí
+„LS\_COLORS“, kterou bash nastavuje při spuštění interaktivní instance
+z konfiguračního souboru „~/.dircolors“ (pokud existuje).
+Změny tohoto souboru se tedy projeví teprve po jejich přepsání
+do proměnné „LS\_COLORS“.
 
-*# vedlejší výzva: zelené svislítko*<br>
-^^**source &lt;(lkk \-\-funkce)**<br>
-**PS2="\\\\[$(lkk\_bezp\_set setaf 2)\\\\]\|$(lkk\_pstput sgr0)&blank;"**
+Poznámka 2: {*nastavení*} v níže uvedených zaklínadlech je neprázdná posloupnost
+číselných kódů (podle vzorníku) oddělených středníkem, např. „1;32“ pro tučné
+modré písmo, „32“ pro modré písmo apod.
 
-*# příkazy psát červeně na zeleném pozadí, výpisy příkazů tyrkysově na fialové pozadí*<br>
-^^**source &lt;(lkk \-\-funkce)**<br>
-**PS1="\\\\[$(lkk\_bezp\_set setaf 1; lkk\_bezp\_set setab 2; tput el)\\\\]\\\$&blank;"**<br>
-**PS0="$(lkk\_bezp\_set setaf 6; lkk\_bezp\_set setab 5; tput el)"**
+### Bash: obecné příkazy
 
-*# příkazy psát tučným zeleným písmem, výzvu bez zvýraznění*<br>
-^^**source &lt;(lkk \-\-funkce)**<br>
-**PS0="$(tput sgr0)"**<br>
-**PS1="\\\\[$(tput sgr0)\\\\]\\w\\\$&blank;\\\\[$(lkk\_bezp\_set setaf 2; tput bold)\\\\]"**<br>
-**PS2="\\\\[$(tput sgr0)\\\\]\|&blank;\\\\[$(lkk\_bezp\_set setaf 2; tput bold)\\\\]"**
+*# vypsat **vzorník** číselných kódů pro nastavení*<br>
+*// Tip: pokud to váš terminál podporuje, můžete použít i barvy v rozsahu 16 až 255. Odpovídající sekvence kódu jsou ovšem netriviální a je potřeba je vygenerovat níže uvedeným zaklínadlem z příkazu „tput“. Jejich použití také může způsobit potíže, pokud se přepnete na terminál, který tyto barvy nepodporuje.*<br>
+**printf '\\e[0m0 = reset\\n\\e[1m1 = tučné písmo\\e[0m\\n\\e[4m4 = podtržení\\e[0m' &amp;&amp;**<br>
+**printf '\\ntext:&blank;&blank;&blank;' &amp;&amp; for x in {30..37} {90..97}; do printf '\\e[%dm%4s ' $x $x; done &amp;&amp;**<br>
+**printf '\\n\\e[0m\\e[1mtučný:&blank;&blank;' &amp;&amp; for x in {30..37} {90..97}; do printf '\\e[%dm%4s ' $x "1;$x"; done &amp;&amp;**<br>
+**printf '\\n\\e[0mpozadí:&blank;' &amp;&amp; for x in {40..47} {100..107}; do printf '\\e[%dm%4s\\e[0m ' $x $x; done &amp;&amp;**<br>
+**echo**
+
+*# vygenerovat výchozí nastavení a zapsat do konfiguračního souboru (výchozího/vlastního)*<br>
+**dircolors -p &gt;~/.dircolors**<br>
+**dircolors -p &gt;**{*konfigurační/soubor*}
+
+*# vygenerovat **sekvenci kódů** z příkazu „tput“*<br>
+*// Prázdný výstup znamená, že takovou sekvenci nelze vygenerovat.*<br>
+**tput** {*parametry*} **\| sed -znE 's/^\\x1b\\\[(\[0-9;\]+)m$/\\1\\n/;T;p'**
+
+*# ručně uplatit změny z konfiguračního souboru (z výchozího/z vlastního)*<br>
+[**test -e ~/.dircolors &amp;&amp;**] **eval "$(dircolors -b ~/.dircolors)"**<br>
+**eval "$(dircolors -b** [**\-\-**] {*konfigurační/soubor*}**)"**
+
+*# dočasně nastavit zvýraznění do výchozího stavu*<br>
+**dircolors -p \| dircolors -b -**
+
+### Bash: Vybrané změny v konfiguračním souboru
+
+*# u adresářů použít světle modré písmo místo tmavě modrého (doporučuji)*<br>
+**sed -i -E '/^DIR\\&gt;/s/\\&lt;34\\&gt;/94/' ~/.dircolors**
+
+*# změnit nastavení pro všechny obrázky a videa (jpg, mp4 apod.)*<br>
+**sed -i -E '/^\\s\*#\\s\*image formats/,/^\\s\*#\\s[^h]/s/^(\\.\\S+)\\s.\*$/\\1&blank;**{*nové;nastavení*}**/' ~/.dircolors**
+
+*# změnit nastavení pro všechny audioformáty (mp3, wav apod.)*<br>
+**sed -i -E '/^\\s\*#\\s\*audio formats/,/^\\s\*#\\s[^h]/s/^(\\.\\S+)\\s.\*$/\\1&blank;**{*nové;nastavení*}**/' ~/.dircolors**
+
+*# změnit nastavení pro archivy*<br>
+**sed -i -E '/^\\s\*#\\s\*archives/,/^\\s\*#\\s[^h]/s/^(\\.\\S+)\\s.\*$/\\1&blank;**{*nové;nastavení*}**/' ~/.dircolors**
+
+*# smazat nastavení podle přípony*<br>
+!: Otevřete konfigurační soubor ve vhodném textovém editoru.<br>
+!: Najděte a odstraňte řádky začínající příponou, podle které již nechcete zvýrazňovat.<br>
+!: Uložte konfigurační soubor a zavřete textový editor.
+
+### .dircolors: Zvýraznění adresářů
+
+*# adresáře (normální)*<br>
+**DIR** {*nastavení*}
+
+*# adresář, který má nastaveno o+w/+t/obojí*<br>
+**OTHER\_WRITABLE** {*nastavení*}<br>
+**STICKY** {*nastavení*}<br>
+**STICKY\_OTHER\_WRITABLE** {*nastavení*}
+
+### .dircolors: Zvýraznění podle typu adresářové položky
+
+*# symbolický odkaz (platný/neplatný/cíl neplatného)*<br>
+**LINK** {*nastavení*}<br>
+**ORPHAN** {*nastavení*}<br>
+**MISSING** {*nastavení*}
+
+*# zvláštní zařízení: blokové/znakové*<br>
+**BLK** {*nastavení*}<br>
+**CHR** {*nastavení*}
+
+*# pojmenovaná roura*<br>
+**FIFO** {*nastavení*}
+
+*# soket*<br>
+**SOCK** {*nastavení*}
+
+### .dircolors: Zvýraznění obyčejných souborů podle vlastností
+
+Poznámka: použije se jen jedno zvýraznění; priority jsou:
+SETUID &gt; SETGID &gt; EXEC &gt; MULTIHARDLINK &gt; FILE
+
+*# soubor, který má někdo (kdokoliv) právo spouštět*<br>
+**EXEC** {*nastavení*}
+
+*# soubor s nastaveným u+s/g+s*<br>
+**SETUID** {*nastavení*}<br>
+**SETGID** {*nastavení*}
+
+*# soubor s více než jedním pevným odkazem*<br>
+*// Poznámka: toto nastavení má nižší prioritu než EXEC, proto spustitelné soubory s více pevnými odkazy nebudou tímto nastavením zvýrazněny.*<br>
+**MULTIHARDLINK** {*nastavení*}
+
+*# soubor bez zvláštních vlastností*<br>
+*// Ve výchozím konfiguračním souboru musíte toto nastavení nejprve odkomentovat. Pozor, po odkomentování překryje nastavení MULTIHARDLINK!*<br>
+**FILE** {*nastavení*}
+
+### .dircolors: Zvýraznění obyčejných souborů podle přípony
+
+*# zvýraznit podle přípony (obecně/příklad)*<br>
+**.**{*zbytekpřípony*}**&blank;**{*nastavení*}<br>
+**.tar 01;31**
 
 ## Parametry příkazů
 
@@ -667,10 +776,12 @@ jedno z emotikonových písem, jinak se zobrazí nevzhledně a černobíle:
 
 Příkaz cmatrix, pokud ho potřebujete, je nutno doinstalovat:
 
+*# *<br>
 **sudo apt-get install cmatrix**
 
 Pokud potřebujete příkaz „toilet“, vždy ho instalujte v kombinaci s balíčkem „figlet“, který obsahuje potřebná písma:
 
+*# *<br>
 **sudo apt-get install toilet figlet**
 
 ## Ukázka
@@ -694,10 +805,11 @@ Pokud potřebujete příkaz „toilet“, vždy ho instalujte v kombinaci s ba
 - Buďte co nejstručnější; neodbíhejte k popisování čehokoliv vedlejšího, co je dost možné, že už čtenář zná.
 -->
 
-* Výchozí nastavení výzev se nachází v souboru „~/.bashrc“. Umístěním svých definic na konec tohoto souboru můžete výchozí nastavení přepsat. Změna se projeví při dalším spuštění bashe.
+* Výchozí nastavení výzev se nachází v souboru „~/.bashrc“. Umístěním svých definic na konec tohoto souboru můžete výchozí nastavení přepsat. Změna se projeví při dalším spuštění Bashe.
 * Konstrukci proměnné PS1 je vhodné pro přehlednost rozdělit do více řádek, kdy první řádka bude přiřazení a na dalších použijete operátor += k připojení hodnoty ke stávající hodnotě.
 * Tip: Před zkoušením nastavování barev a titulku terminálu si vypněte výzvu příkazem „PS1=""“. Výchozí výzva obsahuje escape sekvence, které by kolidovaly s těmi, které se snažíte zadat a rušily by jejich účinek.
 * Bash podporuje proměnnou „PROMPT\_COMMAND“. Je-li nastavena, je vykonána jako příkaz těsně před vypsáním hlavní výzvy. Toho lze využít k nastavení proměnných, které pak ve výzvě použijeme. Proměnná PROMPT\_COMMAND může obsahovat i více příkazů oddělených středníky. Podle manuálové stránky by příkazy uvedené v této proměnné neměly generovat žádný výstup na terminál! (Ale výstup do souboru je pravděpodobně v pořádku.)
+* Ve výzvách PS1 a PS2 nedoporučuji používat emotikony. Drtivá většina z nich je širších než jeden textový sloupec terminálu, což může způsobit rozbití schopnosti Bashe určit šířku výzvy. Jako důsledek se vám pak bude stávat, že při procházení historie se vám některé řádky zobrazí chybně.
 * Emotikony fungují pouze v emulátorech terminálu v grafickém prostředí; v textové konzoli se místo nich zobrazí jednobarevné kosočtverce, při připojení přes SSH jsem je nezkoušel/a.
 
 ## Další zdroje informací
@@ -723,7 +835,7 @@ Různé další tipy se dají najít v článku Bash/Prompt customization (angl
 
 !ÚzkýRežim: vyp
 
-## Pomocné funkce
+## Pomocné funkce a skripty
 
 *# lkk\_bezp\_set() – nastaví písmo či pozadí na první podporovanou barvu*<br>
 **function lkk\_bezp\_set () \{**<br>
@@ -744,3 +856,7 @@ Různé další tipy se dají najít v článku Bash/Prompt customization (angl
 **function lkk\_pstput () \{**<br>
 <odsadit1>**printf \\\\[; tput "$@" &amp;&amp; printf \\\\]**<br>
 **\}**
+
+*# lkk titulek – nastaví titulek emulátoru terminálu, je-li to podporováno*<br>
+**#!/bin/bash**<br>
+**[[ $TERM =~ ^(xterm\|rxvt) ]] &amp;&amp; printf '\\e]2;%s\\a' "$1"**

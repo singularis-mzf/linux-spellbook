@@ -329,7 +329,7 @@ Nástroje tar, gzip a zip jsou již součástí minimální instalace Ubuntu. N
 
 *# pro svobodnou podporu formátu RAR (pouze vybalování a vypsání obsahu)*<br>
 **sudo apt-get install unrar-free**<br>
-**sudo ln -s /etc/alternatives/unrar /usr/local/bin/rar**
+**sudo ln -fsT /etc/alternatives/unrar /usr/local/bin/rar**
 
 *# pokud se později rozhodnete přejít na nesvobodný balíček*<br>
 **sudo rm -f /usr/local/bin/rar**<br>
