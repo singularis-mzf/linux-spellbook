@@ -210,6 +210,10 @@ Kde máte v zaklínadlech zadat {*md-pole*}, můžete svoje pole identifikovat 
 **sudo mount -o remount,ro**[**,**{*další-volba*}]... {*/přípojný/bod/nebo/zařízení*}<br>
 **sudo mount -o remount,rw**[**,**{*další-volba*}]... {*/přípojný/bod/nebo/zařízení*}
 
+*# změnit volby připojení pro již připojený systém souborů*<br>
+*// Tento příkaz je výhodný především pro nastavování voleb připojení u souborových systémů na výměnných zařízeních, které si necháte připojit automaticky. Ne všechny volby takto jdou nastavit, proto doporučuji po změně ověřit příkazem „findmnt -nu -o OPTIONS /přípojný/bod“, zda byla úspěšná.*<br>
+**sudo mount -o remount,**{*nové,volby*}... {*/přípojný/bod/nebo/zařízení*}
+
 *# připojit **adresář** z již připojeného systému souborů na nový přípojný bod*<br>
 *// Poznámka: Tímto příkazem se vytvoří nové, nezávislé připojení téhož systému souborů do nového přípojného bodu. Tento příkaz umožňuje připojit i jiný než kořenový adresář připojovaného systému souborů.*<br>
 **sudo mount \-\-bind** {*/cesta/k/adresáři*} {*/nový/přípojný/bod*}
@@ -603,7 +607,13 @@ btrfs: sudo sfill -fllvz {*/přípojný/bod*}
 **sudo lvremove** {*id-skupiny*} [**-v**[**v**]]
 
 *# přesunout do jiné skupiny svazků*<br>
-?
+*// Přesouvaný oddíl nesmí být připojený a v aktuálním adresáři si toto zaklínadlo potřebuje vytvořit dočasný soubor „temp.dat“. Pokud vám tento název nevyhovuje, můžete použít jiný.*<br>
+**sudo lvcreate** {*cíl-skupina*} **\-\-name** {*cíl-název*} **\-\-size $(sudo lvs /dev/**{*pův-skupina*}**/**{*pův-název*} **\-\-noheadings \-\-nosuffix \-\-units b -o size \| sed -E 's/^\\s\*(\\S+)\\s\*$/\\1b/')** [**-v**] **&amp;&amp;**<br>
+**sudo dd if=/dev/**{*pův-skupina*}**/**{*pův-název*} **iflag=fullblock,skip\_bytes of=/dev/**{*cíl-skupina*}**/**{*cíl-název*} **oflag=seek\_bytes conv=nocreat,notrunc seek=1M skip=1M** [**status=progress**] **&amp;&amp;**<br>
+**sudo dd if=/dev/**{*pův-skupina*}**/**{*pův-název*} **iflag=fullblock,count\_bytes count=1M of=temp.dat** [**status=progress**] **&amp;&amp;**<br>
+**sudo dd if=temp.dat iflag=fullblock,count\_bytes count=1M of=/dev/**{*cíl-skupina*}**/**{*cíl-název*} **conv=notrunc,nocreat** [**status=progress**] **&amp;&amp;**<br>
+**sudo lvremove** {*pův-skupina*}**/**{*pův-název*} [**-v**] <nic>[**-y**]
+[**sudo rm -v temp.dat &amp;&amp;**]<br>
 
 ### Ostatní
 
@@ -811,9 +821,10 @@ egrep . — Selže, pokud bude výstup prázdný.
 **sudo mdadm \-\-manage** {*md-pole*} **-f** {*/dev/oddíl*}
 
 *# **přejmenovat** pole*<br>
+*// Přejmenováním pole se nezmění jeho UUID, může se však změnit číslo md-zařízení.*<br>
 **sudo mdadm \-\-detail** {*md-pole*}<br>
-!: Bezpečně si uschovejte přesné pořadí oddílů v poli.<br>
-**sudo mdadm \-\-stop** {*md-pole*} **&amp;&amp; sudo mdadm -A /dev/md/**{*nový-název*} **\-\-update=name \-\-name=**{*nový-název*} **\-\-homehost=any** {*/dev/oddíly-ve-správném-pořadí*}...
+!: Bezpečně si uschovejte seznam dílů pole.<br>
+**sudo mdadm \-\-stop** {*md-pole*} **&amp;&amp; sudo mdadm -A /dev/md/**{*nový-název*} **\-\-update=name \-\-name=**{*nový-název*} **\-\-homehost=any** {*/dev/všechny-díly*}...
 
 ### Prokládané pole (RAID0)
 
@@ -976,6 +987,7 @@ Poznámka: funkčnost těchto voleb ve správcích souborů může být různá;
 !Parametry:
 
 * ☐ user\_subvol\_rm\_allowed :: Umožní smazat pododdíl jeho vlastníkovi (doporučuji).
+* ☐ skip\_balance :: Po připojení nebude pokračovat v přerušené operaci „balance“. Tento parametr se používá především v situaci, kdy operace „balance“ selhala kvůli nedostatku místa na disku a způsobila vynucený přechod souborového systému do režimu „ro“ (jen pro čtení).
 * ○ compress-force={*hodnota*} ○ compress={*hodnota*} :: Nastavuje výchozí kompresi pro nově vytvořené soubory. Použijte hodnotu „off“ pro žádnou kompresi, „lzo“ pro nenáročnou kompresi, „zstd:10“ pro důkladnou kompresi nebo „zstd:15“ pro maximální kompresi.
 * ☐ degraded :: Umožní připojit oddíl zrcadleného systému souborů v situaci, kdy některé ze zařízení není dostupné. Doporučuji skombinovat s volbou „ro“.
 * ○ discard ○ nodiscard :: Zapne/vypne automatické označování prázdného prostoru na SSD discích (operace TRIM). Možná není nutné ho zadávat.

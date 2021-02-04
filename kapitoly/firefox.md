@@ -34,6 +34,9 @@ Ve zdrojovém kódu:
 modules/libpref/init/StaticPrefList.yaml – krátké komentáře k statickým volbám
  browser/app/profile/firefox.js – nestatické volby specifické pro Firefox na počítačích
 
+Ke stažení:
+https://archive.mozilla.org/pub/firefox/releases/{*verze*}/source/firefox-{*verze*}.source.tar.xz
+
 „menší nebo rovno“ (≤), „větší nebo rovno“ (≥), „nerovno“ (≠)
 -->
 
@@ -364,9 +367,13 @@ https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referer
 **user\_pref("network.http.referer.spoofSource", true);**
 
 
+### Ostatní
+
+*# kopírovat do schránky jen text (ne obrázky, formátování apod.)*<br>
+**user\_pref("clipboard.plainTextOnly", true);**
+
 <!--
 
-### Ostatní
 
 ### Volby k prozkoumání (zatím nezkoušené)
 
