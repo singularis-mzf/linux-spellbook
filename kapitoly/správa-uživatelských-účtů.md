@@ -340,21 +340,11 @@ Význam regulárního výrazu:
 **sudo deluser** {*uživatel*} {*skupina*}
 
 *# **vypsat** účty ve skupině (po řádcích)*<br>
-**getent group** {*skupina*} **&gt;/dev/null &amp;&amp; (gid=$(getent group** {*skupina*} **\| cut -d : -f 3); sed -E "/^([^<nic>:]\*:)\{3\}$gid:/!d;s/:.\*//" /etc/passwd; getent group $gid \| cut -d : -f 4 \| sed -E '/^$/d;s/,/\\n/g') \| LC\_ALL=C.UTF-8 sort -u**
-<!--
-Problém: vetšina příkazů nevypisuje výchozí skupiny.
-[ ] Vyčlenit do pomocné funkce!
--->
+**lkk veskupine** {*skupina*}
 
 *# je účet členem skupiny? (podle názvu/podle GID)(uspěje, pokud ano)*<br>
 **id -Gn** {*uživatel*} **\| fgrep -qw** {*název\_skupiny*}<br>
 **id -G** {*uživatel*} **\| fgrep -qw** {*GID*}
-
-<!--
-**getent group** {*skupina*} **\| sed -E 's/^([<nic>^:]\*:){3}([<nic>^:]\*).\*$/\\2/;/^$/d;s/,/\\n/g' \| fgrep -qx** {*uživatelské-jméno*}
-
-**printf ,%s,\\n "$(getent group** {*skupina*} **\| cut -f : -f 4)" \| fgrep -q ,**{*uživatel*}**,**
--->
 
 *# **vyprázdnit** skupinu (odebrat všechny účty)*<br>
 **sudo gpasswd -M ''** {*skupina*}
@@ -460,5 +450,17 @@ s výjimkou příkazů „convert“ a „identify“, které je potřeba doin
 * [YouTube: Linux Tip: How to add and delete user accounts](https://www.youtube.com/watch?v=933Uo9T4kfk) (anglicky)
 * [HowTo: Linux Add User To Group](https://www.hostingadvice.com/how-to/linux-add-user-to-group/) (anglicky)
 * [TL;DR stránka „adduser“](https://github.com/tldr-pages/tldr/blob/master/pages/linux/adduser.md) (anglicky)
+
+## Pomocné skripty a funkce
+
+*# lkk veskupine – vypíše seznam uživatelských účtů, které jsou v některé z uvedených skupin*<br>
+**#!/bin/bash**<br>
+**set -e; for x in "$@"; do getent group "$x"; done &gt;/dev/null; set +e**<br>
+**for x in "$@"**<br>
+**do**<br>
+<odsadit1>**gid=$(getent group "$x" \| cut -d : -f 3)**<br>
+<odsadit1>**sed -E "/^([^:]\*:){3}${gid}:/!""d;s/:.\*//" /etc/passwd**<br>
+<odsadit1>**getent group "$gid" \| cut -d : -f 4 \| sed -E '/^$/d;s/,/\\n/g'**<br>
+**done \| LC\_ALL=C.UTF-8 sort -u**
 
 !ÚzkýRežim: vyp
