@@ -42,9 +42,9 @@ Prvním krokem je stáhnout si a nastavit repozitář:
 
 V druhém kroku si vyberte kapitoly, které mají být součástí sestavení:
 
-> ``cp pořadí-kapitol.výchozí.lst pořadí-kapitol.lst``
+> ``cp pořadí-kapitol.výchozí.seznam pořadí-kapitol.seznam``
 
-Otevřete nově vytvořený soubor „pořadí-kapitol.lst“ v obyčejném textovém
+Otevřete nově vytvořený soubor „pořadí-kapitol.seznam“ v obyčejném textovém
 editoru (např. vim, nano, Gedit, Kate, Mousepad, Leafpad apod.,
 ne LibreOffice Writer!) a upravte pořadí či výběr kapitol.
 Tento soubor bude určovat, které kapitoly či dodatky a v jakém pořadí

@@ -22,8 +22,8 @@ Toto je poměrně snadný úkol.
 
 1. Vytvořte ze šablony [\_šablona.md](../kapitoly/_šablona.md) nový zdrojový soubor v adresáři „kapitoly“. Jeho název bez přípony „.md“ bude sloužit jako ID kapitoly. ID kapitoly může být tvořeno malými písmeny české abecedy, pomlčkami, podtržítky a číslicemi, nesmí však být tvořeno pouze číslicemi a nesmí být prázdné.
 2. Doplňte do souboru název kapitoly (na 2 místa) a vlastní licenční záhlaví do hlavičky (původní ponechejte).
-3. ID nové kapitoly doplňte v [Makefile](../Makefile) do proměnné „VSECHNY\_KAPITOLY“.
-4. ID nové kapitoly doplňte jako nový řádek do souboru „pořadí-kapitol.lst“, aby se kapitola generovala na výstup.
+3. ID nové kapitoly doplňte do [seznamu seznamy/kapitoly.seznam](seznamy/kapitoly.seznam), resp. [seznamy/dodatky.seznam](seznamy/dodatky.seznam).
+4. ID nové kapitoly doplňte jako nový řádek do souboru „pořadí-kapitol.seznam“, aby se kapitola generovala na výstup.
 5. Zkuste vše přeložit příkazem „make“ a zkontrolujte, že se nová kapitola přeložila.
 
 Pak už můžete novou kapitolu začít plnit obsahem.

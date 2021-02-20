@@ -17,70 +17,64 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 ## Vstup
 
-Vstupem pro mechanismus překladu jsou zdrojové soubory kapitol (v adresáři
-*kapitoly*) a dodatků (v adresáři *dodatky*). Tyto zdrojové kódy jsou
-v upraveném Markdownu. Referenční přehled všech podporovaných
-konstrukcí se nachází ve speciální kapitole [Ukázka](../kapitoly/_ukázka.md)
+Vstupem pro mechanismus překladu jsou zdrojové soubory kapitol a dodatků
+v adresářích **kapitoly** a **dodatky** a jejich bezprostředních
+poadresářích, které jsou jmenované v seznamech
+[dodatky.seznam](seznamy/dodatky.seznam) a [kapitoly.seznam](seznamy/kapitoly.seznam).
+Tyto zdrojové kódy jsou v upraveném Markdownu. Referenční přehled
+všech podporovaných konstrukcí se nachází ve speciální kapitole
+[Ukázka](../kapitoly/x-ukázka.md)
 a uživatelsky přívětivý popis v souboru [syntaxe-kapitol.md](syntaxe-kapitol.md).
 
 ## Výstup
 
-Mechanismus překladu dodržuje „čistotu stromu zdrojového kódu“ – zapisuje pouze
+Mechanismus překladu dodržuje „čistotu stromu zdrojového kódu“ — zapisuje pouze
 do dvou zvláštních adresářů, které si v případě potřeby vytvoří
 a které lze vždy znovu vygenerovat:
 
-* „soubory\_překladu“ – obsahuje dočasné, pomocné a pracovní soubory potřebné při překladu.
-* „výstup\_překladu“ – obsahuje koncový výsledek překladu – Linux: Knihu kouzel v různých výstupních formátech.
+* „soubory\_překladu“ — obsahuje dočasné, pomocné a pracovní soubory potřebné při překladu.
+* „výstup\_překladu“ — obsahuje koncový výsledek překladu – Linux: Knihu kouzel v různých výstupních formátech.
 
 ## Formáty
 
-* Formáty PDF se spadávkami (*pdf-a4*, *pdf-b5*, *pdf-b5-na-a4*) jsou určeny pro tisk v profesionálních tiskárnách, kde následně proběhne ořez podle ořezovných značek a vazba.
+* Formáty PDF se spadávkami (*pdf-a4*, *pdf-b5*, *pdf-b5-na-a4*) jsou určeny pro tisk v profesionálních tiskárnách, kde následně proběhne ořez podle ořezových značek a vazba.
 * Formáty PDF bez spadávek (*pdf-a4-bez*, *pdf-b5-bez*) jsou určeny pro domácí tisk.
 * Formát HTML s kaskádovými styly pro různé barevné motivy (*html*) je určen pro zobrazení na stolním počítači, případně laptopu. Jeho primární funkce je podpůrná – má umožnit pohodlně vykopírovat zaklínadla, a eliminovat tak vznik chyb při opisování. Rovněž do určité míry umožňuje textové vyhledávání.
 * Formát „log“ je určen k ladění mechanismu překladu. Jeho výstupní soubory obsahují čitelnou textovou reprezentaci proudu volání funkcí při překladu, což umožňuje odhalit případné chyby.
 * Formát „deb“ z kapitol shromáždí pouze pomocné funkce, skripty a výstřižky a sestaví balíček ve formátu „deb“ obsahující spouštěč „lkk“. (Podrobněji viz samostatná sekce.)
+* Formát „pdf-výplach“ slouží k vygenerování „výplachu repozitáře“, který bude prohlížen na počítači.
 
 ## Obsah adresáře „soubory\_překladu“, společná část
 
-### kapitoly.tsv
+### \*-Makefile
 
-Soubor „kapitoly.tsv“ obsahuje základní údaje o všech dodacích a kapitolách v pořadí seřazeném podle ID.
-
-Sloupce *kapitoly.tsv* jsou následující:
-
-| # | Identifikátor | Popis | Příklad |
-| ---: | --- | :--- | :--- |
-| 1 | nadid | Jde-li o podkapitolu, ID její nadkapitoly; jinak prázdné pole. | diskové-oddíly |
-| 2 | id | ID dodatku či kapitoly (název souboru bez přípony). | diskové-oddíly/lvm |
-| 3 | nadnazev | Jde-li o podkapitolu, název nadkapitoly; jinak prázdné pole. | Diskové oddíly |
-| 4 | nazev | Název dodatku či kapitoly. U podkapitoly jen název podkapitoly. | LVM |
-| 5 | adr | Adresář („dodatky“ nebo „kapitoly“). | kapitoly |
-| 6 | omezid | Takzvané omezené ID. Používá se především ve formátu PDF. Začíná prefixem „kap“ a obsahuje pouze malá písmena anglické abecedy. | kapxdiskovoddllvm |
-| 7 | ikkap | Ikona kapitoly (obrázek ve formátu „png“; cesta je relativní k adresáři „obrázky“). Pokud kapitola nemá vlastní ikonu, uvede se generická. | ik/diskové-oddíly.png |
-| 8 | stitky | Štítky kapitoly či podkapitoly ve složených závorkách bez oddělovačů; nejsou-li, hodnota „NULL“. | \{internet\}\{tematický okruh\} |
-| 9 | radek | Počet řádek zdrojového kódu |
+Soubory „Makefile“ pro překlad jednotlivých formátů; tyto soubory jsou generovány
+skripty „[skripty/makegen](skripty/makegen)/\*.awk“.
 
 ### fragmenty.tsv
 
 Soubor „fragmenty.tsv“ je tabulka ve formátu TSV, kterou generuje skript
-[skripty/extrakce/fragmenty.awk](../skripty/extrakce/fragmenty.awk).
-Uvádí dodatky a kapitoly určené k zařazení na výstup (vychází se
-z „pořadí-kapitol.lst“). Každý záznam představuje jednu kapitolu či dodatek.
-Ostatní kapitoly a dodatky (podle Makefile) se překládají
-(především kvůli kontrole syntaxe), ale na výstup se nedostanou.
-Tento soubor udává pořadí kapitol a dodatků na výstupu.
+[skripty/extrakce/fragmenty.pl](../skripty/extrakce/fragmenty.pl).
+Uvádí informace o všech fragmentech (kapitolách, podkapitolách i dodatcích).
+Každý záznam představuje jeden fragment.
 
 Sloupce *fragmenty.tsv* jsou následující:
 
 | # | Identifikátor | Popis | Příklad |
 | ---: | --- | :--- | :--- |
-| 1 | *není* | Pořadové číslo (od 1). Vždy odpovídá číslu záznamu. | 7 |
-| 2 | id | ID dodatku či kapitoly (název souboru bez přípony). | stahovani-web |
-| 3 | nazev | Název dodatku či kapitoly (extrahuje se ze zdrojového souboru). | Stahování webových stránek |
-| 4 | adr | Adresář („dodatky“ nebo „kapitoly“). | kapitoly |
-| 5 | omezid | Takzvané omezené ID kapitoly. Používá se především ve formátu PDF. Začíná prefixem „kap“ a obsahuje pouze malá písmena anglické abecedy. | kapxstahovniwebovchstrnek |
-| 6 | ikkap | Ikona kapitoly (obrázek ve formátu „png“; cesta je relativní k adresáři „obrázky“). Pokud kapitola nemá vlastní ikonu, uvede se generická. | ik/ik-kap.png |
-| 7 | stitky | Štítky kapitoly ve složených závorkách bez oddělovačů; nejsou-li, hodnota „NULL“. | \{internet\}\{tematický okruh\} |
+| 1 | *není* | Číslo fragmentu. U fragmentů určených na výstup odpovídá jejich pořadovému číslu na výstupu; fragmenty neurčené na výstup dostávají záporná čísla; číslo 0 se nepřiděluje. | 7 |
+| 2 | plné-id | ID fragmentu včetně případné nadkapitoly | diskové-oddíly/softwarový-raid |
+| 3 | ploché-id | Plné ID, kde je lomítko nahrazeno pomlčkou | diskové-oddíly-softwarový-raid |
+| 4 | holé-id | ID fragmentu bez identifikace nadkapitoly | softwarový-raid |
+| 5 | název-podkapitoly | Název bez nadkapitoly | Softwarový RAID |
+| 6 | adresář | Adresář („dodatky“ nebo „kapitoly“). | kapitoly |
+| 7 | příznaky | Příznaky fragmentu (viz níže). | v |
+| 8 | omezid | Omezené ID kapitoly. Používá se především ve formátu PDF. Začíná prefixem „kap“ a obsahuje pouze malá písmena anglické abecedy. | kapxstahovniwebovchstrnek |
+| 9 | id-nadkapitoly | Je-li fragment podkapitolou, je zde uvedeno ID jeho nadkapitoly; jinak je toto pole prázdné (NULL). | diskové-oddíly |
+| 10 | celý-název | Název s názvem nadkapitoly | Diskové oddíly / Softwarový RAID |
+| 11 | štítky | Štítky kapitoly ve složených závorkách bez oddělovačů. | \{internet\}\{tematický okruh\} |
+| 12 | ikkap | Ikona kapitoly (obrázek ve formátu „png“; cesta je relativní k adresáři „obrázky“). Pokud kapitola nemá vlastní ikonu, uvede se generická. | ik/diskové-oddíly.png |
+| 13 | ploché-id-bez-diakr | Ploché ID po odstranění diakritiky. Používá se v názvech souborů HTML verze. | diskove-oddily-softwarovy-raid |
 
 ### postprocess.dat a postprocessing
 
@@ -110,8 +104,8 @@ Funguje tak, že vyhledá výskyt řádky podle čtvrtého sloupce záznamu a n
 
 ### štítky.tsv
 
-Tabulka ve formátu TSV, která uvádí seznam vyskytujících se štítků a ke každému seznam příslušných kapitol.
-Vzniká jako vedlejší produkt skriptu [skripty/extrakce/fragmenty.awk](../skripty/extrakce/fragmenty.awk).
+Tabulka ve formátu TSV, generovaná spolu s *fragmenty.tsv*, která uvádí seznam
+vyskytujících se štítků a ke každému seznam příslušných kapitol.
 
 Sloupce *štítky.tsv* jsou následující:
 
@@ -119,10 +113,11 @@ Sloupce *štítky.tsv* jsou následující:
 | ---: | :--- | :--- |
 | 1 | Text štítku. | zpracování textu |
 | 2 | Omezené ID štítku. Začíná písmenem „s“. | szprcovnitextu |
-| 3 atd. | ID kapitol, které mají daný štítek. |
+| 3 atd. | Celá ID kapitol a podkapitol, které mají daný štítek. |
 
-U každého štítku musí být uvedena alespoň jedna kapitola a každá uvedená kapitola
-musí být určena na výstup (tzn. musí mít záznam ve *fragmenty.tsv*).
+U každého štítku musí být uvedena alespoň jedna kapitola či podkapitola
+a všechny uvedené fragmenty musí být určeny na výstup (tzn. mít kladné
+pořadové číslo).
 Štítky, které by neměly žádnou příslušnou kapitolu na výstupu, se neuvádí.
 
 ### ucs\_ikony.dat
@@ -130,21 +125,20 @@ musí být určena na výstup (tzn. musí mít záznam ve *fragmenty.tsv*).
 Textový soubor v kódování UTF-8, který vzniká skriptem [skripty/extrakce/ikony-zaklínadel.awk](../skripty/extrakce/ikony-zaklínadel.awk) ze souboru [ucs\_ikony/ikony.txt](../ucs\_ikony/ikony.txt) po přefiltrování podle [ucs\_ikony/povolene-ikony.tsv](../ucs\_ikony/povolene-ikony.tsv).
 Je tvořen dvěma dlouhými řádky. První řádka obsahuje znaky UTF-8 používané jako ikony zaklínadel, druhá udává jednopísmennými zkratkami na odpovídající pozici, jaké písmo se má použít k jejich vypsání (D znamená „DejaVu Sans“, L znamená „Latin Modern Math“).
 
-### osnova/\{id\}.tsv
+### osnova/\{ploché-id\}.tsv
 
-Soubory v adresáři „osnova“ obsahují záznamy odkazující na konkrétní místa jednotlivých kapitol.
-V této verzi jsou to jen záznamy sekcí a podsekcí. Vstupem jsou pro ně zdrojové kódy kapitol
-a dodatků a generuje je skript [skripty/extrakce/osnova.awk](../skripty/extrakce/osnova.awk).
-
-Pro kapitoly, které nejsou určeny na výstup, se tyto soubory vygenerují prázdné.
-Jinak obsahují údaje o sekcích a podsekcích v dané kapitole:
+Soubory v adresáři „osnova“, vznikající spolu s *fragmenty.tsv*,
+obsahují záznamy odkazující na konkrétní místa jednotlivých kapitol.
+V této verzi jsou to jen záznamy sekcí a podsekcí.
+Tyto soubory se generují pro všechny překládané fragmenty; i ty,
+které nejsou určeny na výstup.
 
 Sloupce *osnova/\*.tsv* jsou následující:
 
 | # | Popis | Příklad |
 | ---: | :--- | :--- |
 | 1 | Typ záznamu (KAPITOLA, SEKCE, PODSEKCE, nebo ZAKLINADLO). | PODSEKCE |
-| 2 | Identifikátor záznamu, jehož formát se liší podle typu záznamu. | 5x4 |
+| 2 | Identifikátor záznamu (formát se liší podle typu záznamu). | 5x4 |
 | 3 | Číslo řádky ve vstupním zdrojovém kódu (slouží výhradně k ladění). | 374 |
 | 4 | Text (např. název kapitoly). | Ostatní |
 | 5 | Text v UTF-16BE (viz poznámku) | \\uFEFF\\u004f\\u0073\\u0074\\u0061\\u0074\\u006E\\u00ED |
@@ -159,19 +153,19 @@ Formáty identifikátoru záznamu jsou následující:
 | PODSEKCE | Číslo sekce, „x“ a pořadové číslo podsekce v sekci. | 3x2 |
 | ZAKLINADLO | Není implementováno. | |
 
-Sloupec 5 vzniká následovně: před text (ze sloupce 4) se vloží znak „\\uFEFF“ a celek se konvertuje
-do kódování „UTF-16BE“.
-Pokud je výsledek delší než 32 znaků, zkrátí se na 29 znaků a doplní „...“.
-Výsledek se vypíše hexadecimálně ve tvaru „\\u006F“, tzn. předpona „\\u“, čtyři číslice na každý znak,
-velká písmena. Text v současnosti nesmí obsahovat znaky s kódem vyšším než „\\uFFFF“;
-do budoucna počítám s vynecháním nebo výměnou takových znaků.
+Sloupec 5 vzniká následovně: text je konvertován do kódování „UTF-16BE“;
+znaky s kódem „\\uFEFF“ nebo vyšším se vynechají a před celek se vloží znak
+s kódem „\\uFEFF“.
+Pokud je výsledek delší než 32 znaků, zkrátí se na 29 znaků a doplní na konci „...“.
+Výsledek se vypíše hexadecimálně ve tvaru „\\uXXXX“, tzn. předpona „\\u“,
+čtyři hexadecimální číslice na každý znak, velká písmena.
 
 ### symboly/\*
 
 Podadresář soubory\_překladu/symboly slouží k tomu, aby program „make“
 provedl nový překlad v případě, že se změní jedno z podstatných nastavení
-(datum sestavení nebo jeho jméno). Podrobnosti najdete v souboru Makefile;
-obvykle se ale tímto adresářem nemusíte zabývat.
+(datum sestavení, jméno sestavení nebo verze balíčku DEB).
+Obvykle se ale tímto adresářem nemusíte zabývat.
 
 ## Obsah adresáře „soubory\_překladu/deb“ (balíček DEB)
 
@@ -266,16 +260,24 @@ Symbolický odkaz na adresář „skripty“. Kvůli spouštění některých sk
 
 ## Konfigurační soubory
 
-### pořadí-kapitol.lst a pořadí-kapitol.výchozí.lst
+### seznamy/\*.seznam
 
-Úplný seznam překládaných kapitol a dodatků je uveden v proměnných
-*VSECHNY\_KAPITOLY* a *VSECHNY\_DODATKY* v [Makefile](../Makefile).
-Mechanismus překladu však potřebuje vědět, které z nich a v jakém pořadí
-patří na výstup. To se určí jedním ze tří způsobů:
+Tyto soubory uvádějí seznamy používané při překladu:
 
-* Pokud v hlavním adresáři existuje soubor „poradi-kapitol.lst“, vezmou se z něj neprázdné řádky nezačínající znakem „#“ a každý se interpretuje jako ID dodatku či kapitoly. (Tento soubor je uvedený v .gitignore, takže se nedostane do repozitáře.)
-* Jinak, pokud v hlavním adresáři existuje soubor „poradi-kapitol.vychozi.lst“, zpracuje se stejným způsobem. (Tento soubor se na rozdíl od předchozího do repozitáře ukládá.)
-* Jinak se vezmou všechny dodatky a kapitoly podle Makefile.
+| seznam | Popis |
+| --- | :--- |
+| css-motivy.seznam | Jen pro formát HTML. Uvádí seznam generovaných CSS motivů kromě motivu „hlavni“. |
+| dodatky.seznam | Seznam úplných ID všech dodatků. |
+| kapitoly.seznam | Seznam úplných ID všech kapitol. |
+| obrázky-ik.seznam | Seznam PNG ikon pro kapitoly v adresáři [obrázky/ik](obrázky/ik). |
+| obrázky-jpeg.seznam | Seznam JPEG ikon (s příponou „.jpg“) v adresáří [obrázky](obrázky). |
+| obrázky-png.seznam | Seznam PNG ikon v adresáří [obrázky](obrázky). |
+| obrázky-svg.seznam | Seznam SVG ikon v adresáří [obrázky](obrázky). |
+| vydané-fragmenty.seznam | Aktualizovaný seznam vydaných kapitol a dodatků. Všechny uvedené položky musí být uvedeny také v dodatky.seznam nebo kapitoly.seznam. |
+
+### pořadí-kapitol.seznam a pořadí-kapitol.výchozí.seznam
+
+Tyto soubory určují výběr a pořadí kapitol a dodatků na výstupu.
 
 Poznámka: jako první by měla být v každém případě Předmluva („predmluva“);
 není to sice vyžadováno, ale překlad bez splnění tohoto předpokladu jsem nikdy netestoval/a.

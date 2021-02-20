@@ -26,6 +26,7 @@ use Encode();
 
 # Nastavení
 my $stderr = \*STDERR;
+my $pdfZáložkyMaxDélka = max(4, (proměnnáProstředí("PDF_ZALOZKY_MAX_DELKA") // 32) + 0);
 my $soubory_překladu = proměnnáProstředí("SOUBORY_PREKLADU") // "soubory_překladu";
 my $zapnutyPrémiovéKapitoly = defined(proměnnáProstředí("PREMIOVE_KAPITOLY")) && proměnnáProstředí("PREMIOVE_KAPITOLY") ne "0";
 $OFS = "\t";
@@ -511,9 +512,13 @@ sub vypsatPoložkuOsnovy {
     my ($výstup, $typ, $id, $čŘádku, $název, $zarážka) = @ARG;
     $zarážka eq ";" or croak("Chybná zarážka!");
 
-    $název = mdTextNaČistýText($název);
-    my @x = array(unpack("U*", substr($název, 0, 32)));
-    @x = array(grep {$ARG < 0xfeff} @x);
+    my @x = array(grep {$ARG < 0xfeff}
+        array(unpack("U*",
+            $název = mdTextNaČistýText($název))));
+    if (alength(@x) > $pdfZáložkyMaxDélka - 1) {
+        splice(@x, $pdfZáložkyMaxDélka - 4);
+        push(@x, 0x2e x 3); # "..."
+    }
     @x = array(map {sprintf("%04X", $ARG)} @x);
     unshift(@x, "\\uFEFF");
     fprint($výstup, $typ, $id, $čŘádku, $název, join("\\u", @x), $zarážka);

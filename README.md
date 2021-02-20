@@ -163,9 +163,9 @@ Priority:
 
 ### Zvláštní a vyřazené kapitoly
 
-* [_ostatní](kapitoly/_ostatní.md) − Slouží k dočasnému shromážďování dosud nezařazených zaklínadel.
 * [_šablona](kapitoly/_šablona.md) − Nepřekládá se. Slouží jako výchozí podoba pro nově založené kapitoly.
-* [_ukázka](kapitoly/_ukázka.md) − Překládá se, ale není součástí vydaných verzí. Slouží k dokumentaci a testování mechanismu překladu. Obsahuje všechny podporované jazykové konstrukce a znaky.
+* [x-ostatní](kapitoly/x-ostatní.md) − Slouží k dočasnému shromážďování dosud nezařazených zaklínadel.
+* [x-ukázka](kapitoly/x-ukázka.md) − Překládá se, ale není součástí vydaných verzí. Slouží k dokumentaci a testování mechanismu překladu. Obsahuje všechny podporované jazykové konstrukce a znaky.
 * [Docker](kapitoly/docker.md)
 * [Plánování úloh](kapitoly/plánování-úloh.md)
 
