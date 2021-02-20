@@ -47,7 +47,7 @@ Nevýhody btrfs:
 
 -->
 
-# Diskové oddíly
+# LVM
 
 !Štítky: {tematický okruh}{systém}{LVM}{ramdisk}{odkládací prostor}
 !FixaceIkon: 1754
@@ -636,8 +636,11 @@ btrfs: sudo sfill -fllvz {*/přípojný/bod*}
 
 *# vypsat **seznam** pododdílů (s právy superuživatele/bez nich)*<br>
 **(cd ** {*/bod/připojení/btrfs*} ** &amp;&amp; pwd &amp;&amp; sudo btrfs subvolume list . | sed -E 's/^(\\S+\\s+){7}path\\s/'"$(pwd | sed -E 's!/!\\\\/!g')"'\\//')**<br>
-**find** {*/abs/cesta/přípojného/bodu*} **-type d -inum -257 -print**
-<!-- Hraniční adresáře pododdílů v Btrfs mají čísla i-uzlů <= 256 -->
+**find** {*/abs/cesta/přípojného/bodu*} **-type d -printf '%i:%p\\0' \| sed -zE 's/^(1?[<nic>^:]{1,2}|2[01234]<nic>[<nic>^:]|25[0123456])://;t;d' \| tr \\\\0 \\\\n**
+<!--
+s/^(1?[<nic>^:]{1,2}|2[01234]<nic>[<nic>^:]|25[0123456])://
+– Testuje, zda číslo i-uzlu je menší nebo rovno 256. Pokud ano, je to pododdíl a bude vypsán.
+-->
 
 *# přejmenovat či **přesunout** pododdíl (kromě neměnného)*<br>
 *// Nové umístění musí být v rámci téhož souborového systému btrfs, ale může to být i v jiném obklopujícím pododdílu. Poznámka: neměnný pododdíl nelze přejmenovat či přesunout.*<br>
@@ -863,10 +866,6 @@ egrep . — Selže, pokud bude výstup prázdný.
 *# učinit z některých základních oddílů záložní*<br>
 ?
 
-*# ručně spustit/ukončit kontrolu konzistence pole*<br>
-**sudo tee /sys/devices/virtual/block/$(basename $(realpath** {*md-pole*} **))/md/sync\_action &lt;&lt;&lt;check**<br>
-**sudo tee /sys/devices/virtual/block/$(basename $(realpath** {*md-pole*} **))/md/sync\_action &lt;&lt;&lt;idle**
-
 ### Pole s paritou (RAID5)
 
 *# **vytvořit***<br>
@@ -1060,7 +1059,6 @@ Nástroj GParted najdete v balíčku „gparted“; příkaz zerofree v balí�
 <!-- * V /etc/fstab uvádějte UUID souborového systému (přidělené při formátování), ne UUID RAID-pole! -->
 * Prokládaný RAID nemá redundanci, nemá záložní díly a počet jeho dílů *není možné měnit*. Pokud přijdete o data na kterémkoliv z jeho dílů, přijdete o data v celém poli.
 * Ve všech popsaných druzích RAIDu mají všechny díly pole stejnou velikost. Pokud se je pokusíte umístit na různě velké oddíly, RAID z nich použije jen části odpovídající velikosti nejmenšího z nich.
-* Máte-li v systému zrcadlené RAID pole, pravděpodobně jednou za měsíc se na něm automaticky spustí kontrola konzistence.
 
 ## Další zdroje informací
 

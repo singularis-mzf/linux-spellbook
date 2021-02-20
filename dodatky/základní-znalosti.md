@@ -194,8 +194,9 @@ Příklady:
 
 Mnoho příkazů, když selže, vypíše uživateli chybové hlášení. Bylo by ale nepraktické
 taková hlášení zpracovávat ve skriptu, proto příkazy současně s tím
+(a někdy dokonce místo toho)
 vracejí číselnou hodnotu 0 až 255, která signalizuje, zda daný příkaz uspěl nebo selhal.
-Tato hodnota se po skončení každého příkazu uloží do zvláštního parametru „$?“.
+Tato hodnota se po skončení každého příkazu uloží do zvláštní proměnné „$?“.
 Hodnota 0 znamená, že příkaz uspěl; hodnoty 1 až 255, že selhal.
 
 Je-li příkazem několik příkazů spojených rourami, návratovým kódem je kód *posledního* uvedeného.

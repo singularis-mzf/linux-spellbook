@@ -30,7 +30,7 @@ ne však ve spojení s označením „vanilková příchuť“.
 
 ## Základní cíle projektu (heslovitě)
 
-* Sbírat a sdílet co nejužitečnější přehled možností, které nabízí uživatelům svobodný software v linuxových distrubucí příbuzných s Debianem.
+* Sbírat a sdílet co nejužitečnější přehled možností, které nabízí uživatelům svobodný software v linuxových distrubucích příbuzných s Debianem.
 * Pomáhat mírně pokročilým a středně pokročilým uživatelům uvedených systémů, aby mohli pro daný úkol použít ty nejlepší dostupné nástroje s co nejmenším úsilím.
 * Okrajově také všem uživatelům pomoci najít nástroje a funkce svobodného software, které potřebují.
 

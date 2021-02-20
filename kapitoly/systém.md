@@ -88,7 +88,7 @@ GNU GRUB je vyvíjen v rámci projektu GNU.
 **uname -r** ⊨ 5.4.0-47-generic
 
 *# čas od spuštění systému (**uptime**)*<br>
-**uptime \-\-pretty**
+**uptime -p**
 
 *# kompletní informace o **hardware** (textově/s prohlížečem)*<br>
 **sudo lshw**<br>
@@ -107,9 +107,10 @@ GNU GRUB je vyvíjen v rámci projektu GNU.
 *# informace o velikosti a využití **paměti** a odkládacího prostoru*<br>
 **free -h**
 
-*# zjistit druh počítače (stolní počítač, nebo **notebook**?)*<br>
-*// Návratový kód je 0 pro notebook, 1 pro stolní počítač a 2, pokud to nelze zjistit. Ve virtuálním počítači dle mých zkušeností, tento přikaz zjistí druh fyzického počítače, na kterém virtuální počítač běží.*<br>
-**laptop-detect**
+*# zjistit druh počítače (stolní počítač, nebo **notebook**?)(pro skript/pro člověka)*<br>
+*// Návratový kód je 0 pro notebook, 1 pro stolní počítač a 2, pokud to nelze zjistit; varianta „pro člověka“ navíc zjištění vypíše anglickou větou. Ve virtuálním počítači (dle mých zkušeností) tento přikaz zjistí druh fyzického počítače, na kterém virtuální počítač běží.*<br>
+**laptop-detect**<br>
+**laptop-detect -v** [**\|\| true**]
 
 *# kódové jméno verze **distribuce***<br>
 **lsb\_release -sc** ⊨ focal
@@ -252,6 +253,12 @@ Podrobnější informace: příkaz „uptimes“ z balíčku „uptimed“.
 <!--
 Poznámka: k vyprázdnění logu krále démonů má příkaz „journalctl“ několik parametrů,
 ale při testování žádný z nich nefungoval, takže příkaz „find“ se zdá jedinou funkční možností.
+-->
+
+<!--
+Velikost by se měla dát omezit parametrem SystemMaxUse v /etc/systemd/journald.conf,
+např.:
+SystemMaxUse=500M
 -->
 
 ### Sezení

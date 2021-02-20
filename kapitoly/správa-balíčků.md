@@ -699,6 +699,7 @@ Pro APT: „man apt-get“ apod. (ale není příliš přehledná) Pro Flatpak: 
 * [Wikipedie: APT](https://cs.wikipedia.org/wiki/Advanced_Packaging_Tool)
 * [Příspěvek na fóru od „Sešívaného“](https://forum.ubuntu.cz/index.php/topic,83160.msg560223.html#msg560223)
 * [Video: Pokročilá správa balíčků v Debianu](https://www.youtube.com/watch?v=AzIxTU9PYp4)
+* [Blog: Jak používat apt a pár postřehů ze správy Debianu](https://www.abclinuxu.cz/blog/jenda/2020/12/jak-pouzivat-apt-a-par-postrehu-ze-spravy-debianu)
 * [Wikipedie: aptitude](https://cs.wikipedia.org/wiki/Aptitude)
 * [Wikipedie: dpkg](https://cs.wikipedia.org/wiki/Dpkg)
 * [Video „How to Use Flatpak“ (Chris Titus Tech)](https://youtu.be/bvybMVRaND0?t=75) (anglicky)

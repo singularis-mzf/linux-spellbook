@@ -540,10 +540,11 @@ však může být rozumně nahrazena inteligentním použitím asociativních po
 **chomp(**{*$proměnná*}**);**
 
 *# **rozdělit** řetězec na pole (obecně/příklady)*<br>
-*// Oddělovač může být buď skalár (např. řetězec), nebo literál regulárního výrazu v lomítkách. Pozor na pasti! Past č. 1: Řetězec "&blank;" se zde interpretuje jako regulární výraz „\\s+“. Pokud chcete jako oddělovač uvést mezeru, použijte místo řetězce regulární výraz „&blank;“ zadaný jako „/&blank;/“. Past č. 2: pokud regulární výraz obsahuje záchyty, příkaz „split“ pro každý záchyt vloží na dané místo výstupního pole navíc řetězec s textem záchytu; pokud daný záchyt nebyl použit, vloží se tam undef. Podrobnější vysvětlení v dokumentaci funkce „split“.*<br>
-[{*@pole*} **=**] **split(**{*oddělovač*}**,** {*dělený-řetězec*}[**,** {*maximální-počet-dílů*}]**)**<br>
-**@pole = split(":", $s);**<br>
-**@pole = split(/[:;]/, $s);**
+*// Pozor: pokud regulární výraz oddělovače obsahuje záchyty, příkaz „split“ pro každý záchyt vloží na dané místo výstupního pole navíc řetězec s textem záchytu; pokud daný záchyt nebyl použit, vloží se tam undef. Podrobnější vysvětlení v dokumentaci funkce „split“.*<br>
+[{*@pole*} **=**] **split(/**{*reg-výraz-oddělovač*}**/,** {*dělený-řetězec*}[**,** {*maximální-počet-dílů*}]**)**<br>
+**@pole = split(/:/, $s);**<br>
+**@pole = split(/[:;]/, $s);**<br>
+**my $odd = "@\*\\\\"; @pole = split(/\\Q${odd}\\E/, $s);**
 
 *# vyjmout z řetězce v proměnné **poslední znak** (obecně/příklad)*<br>
 *// Pro prázdný řetězec vrací funkce chop() prázdný řetězec a proměnnou nezmění. Podle dokumentace funkce „chop()“ nevyžaduje okopírování celého řetězce, takže může být použita v cyklu pro zpracování řetězce znak po znaku.*<br>

@@ -200,6 +200,9 @@ xxx , xxx # priorita?
 **\-group** {*skupina*}<br>
 **\-gid** {*GID*}
 
+*# vlastník nebo skupina souboru neexistuje*<br>
+**\\( -nogroup -o -nouser \\)**
+
 ### Přístupová práva
 
 *# soubor je přístupný pro **čtení***<br>
@@ -220,6 +223,9 @@ xxx , xxx # priorita?
 
 *# vlastník (u), skupina (g) či ostatní (o) mají všechna práva*<br>
 **\-perm -**{*kdo*}**=rwx**
+
+*# mód je přesně ABCD*<br>
+**\-perm** {*ABCD*}
 
 *# kdokoliv má určité právo*<br>
 ?
@@ -251,6 +257,28 @@ xxx , xxx # priorita?
 **! \( -type d -o \( -type l -xtype d \) \) -readable \-exec fgrep -q** [**\-\-**] **'**{*podřetězec*}**' \\;**
 **! \( -type d -o \( -type l -xtype d \) \) -readable ! \-exec fgrep -q** [**\-\-**] **'**{*podřetězec*}**' \\;**
 
+### Zvláštní příznaky a datové položky
+
+*# má/nemá příznak „u+s“*<br>
+**\-perm /u=s**<br>
+**! -perm /u=s**
+
+*# má příznak „g+s“*<br>
+**\-perm /g=s**
+
+*# má příznak omezení smazání „+t“*<br>
+**\-perm /1000**
+
+*# ma určitý zvláštní příznak*<br>
+?
+<!-- [ ] nutno použít -execdir a lsattr -->
+
+*# má alespoň jednu uživatelskou datovou položku*<br>
+?
+
+*# má určitou uživatelskou datovou položku*<br>
+?
+
 ### Velikost adresáře
 
 *# prázdný adresář*<br>
@@ -278,12 +306,6 @@ xxx , xxx # priorita?
 **\-true**<br>
 **\-false**
 
-*# má uživatelské datové položky*<br>
-?
-
-*# vlastník nebo skupina souboru neexistuje*<br>
-**\\( -nogroup -o -nouser \\)**
-
 *# typ souborového systému*<br>
 *// Např. „ext4“, „tmpfs“, „ntfs“, „vfat“.*<br>
 **\-fstype** {*typ*}
@@ -291,8 +313,8 @@ xxx , xxx # priorita?
 [ ] Znovu otestovat. Mám podezření, že někdy nefunguje.
 -->
 
-*# čislo **inode***<br>
-**\-inum** {*inode*}
+*# čislo **i-uzlu***<br>
+**\-inum** {*číslo*}
 
 *# **hloubka** prohledávání (řešení 1/řešení 2; viz poznámku)*<br>
 *// Řešení 1 využívá globálních parametrů, které omezují celé prohledávání a nemohou být složitěji kombinovány s ostatními testy (např. parametr „-mindepth“ způsobí, že na položky s nižší hloubkou testy vůbec nebudou zavolány, což znamená, že se u nich např. neuplatní „-prune“). Řešení 2 pak není použitelné, pokud find prohledává více cílů, které ve své definici obsahují různý počet lomítek.*<br>

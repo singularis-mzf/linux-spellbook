@@ -416,7 +416,7 @@ V kapitole je použit také příkaz gawk:
 
 ## Pomocné funkce a skripty
 
-*# lkk\_limit\_jobs() - počká, než počet úloh běžících na pozadí klesne na požadovanou úroveň nebo pod ni*<br>
+*# lkk\_limit\_jobs() – počká, než počet úloh běžících na pozadí klesne na požadovanou úroveň nebo pod ni*<br>
 **function lkk\_limit\_jobs() \{**<br>
 <odsadit1>**local j r=0**<br>
 <odsadit1>**while j=($(jobs -pr)); ((${#j[@]} &gt; ${1:-0}))**<br>
