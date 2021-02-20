@@ -1,5 +1,5 @@
 #!/bin/bash
-# Linux Kniha kouzel, skript omezit-název.sh
+# Linux Kniha kouzel, skript h2
 # Copyright (c) 2020 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -23,20 +23,19 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-set -e
+# Volání:
+# h2 {text}...
 
-#printf 'O(%s)' "$@" >&2
-
-if test $# -eq 0
+if test $# -gt 0
 then
-    cat
-else
-    printf %s\\n "$@"
-fi | sed -E 's/.*/\L&/;s!.*/!!;'"$(printf 's/%s/%s/g;' á a č c ď d '[éě]' e í i ň n ó o ř r š s ť t '[úů]' u ý y ž z)"'s/[-_]+/-/g;s/^-|-$//g'
-# Postup:
-#   1. Převést na malá písmena.
-#   2. Obsahuje-li řetězec /, odstranit vše až po poslední výskyt „/“ včetně.
-#   3. Odstranit diakritiku.
-#   4. Sekvence znaků „-“ a „_“ nahradit jednou pomlčkou.
-#   5. Případnou pomlčku na začátku nebo na konci řetězce vypustit.
-
+    reset="$(tput sgr0)"
+    text="$(tput bold)$1"
+    while test $# -gt 1
+    do
+        shift
+        text+=" $1"
+    done
+    text+="$reset"$'\n'
+    printf %s "$text"
+fi
+true

@@ -510,21 +510,25 @@ BEGIN {
         ShoditFatalniVyjimku("Vyžadovaná proměnná SOUBORY_PREKLADU není nastavena!");
     }
 
-    # Určit ID kapitoly
-    IDKAPITOLY = ARGV[1];
-    gsub(/^.*\/|\.md$/, "", IDKAPITOLY);
+    # Určit ID kapitoly, nadkapitoly a podkapitoly
+    n = split(gensub(/\.md$/, "", 1, ARGV[1]), casti, /\/+/);
+    IDNADKAPITOLY = casti[n - 1] ~ /^(dodatky|kapitoly)$/ ? "" : casti[n - 1];
+    IDPODKAPITOLY = casti[n];
+    IDKAPITOLY = (IDNADKAPITOLY != "" ? IDNADKAPITOLY "/" : "") IDPODKAPITOLY;
 
     # Načíst a zpracovat údaje z fragmenty.tsv, jsou-li k dispozici:
     NacistFragmentyTSV(SOUBORY_PREKLADU "/fragmenty.tsv");
-    if ("id/" IDKAPITOLY in FRAGMENTY) {
-        # číslo kapitoly
-        C_KAPITOLY = FRAGMENTY["id/" IDKAPITOLY];
+    # číslo kapitoly
+    C_KAPITOLY = FragInfo(IDKAPITOLY "?");
+    if (C_KAPITOLY != 0 && FragInfo(C_KAPITOLY, "příznaky") ~ /z/) {
         # štítky
-        STITKY = gensub(/\}\{/, "|", "g", gensub(/^\{|\}$|^NULL$/, "", "g", FRAGMENTY[C_KAPITOLY "/stitky"]));
+        STITKY = FragInfo(C_KAPITOLY, "štítky");
+        gsub(/^\{|\}$/, "", STITKY);
+        gsub(/\}\{/, "|", STITKY);
         # ikona kapitoly
-        IKONA_KAPITOLY = FRAGMENTY[C_KAPITOLY "/ikkap"];
+        IKONA_KAPITOLY = FragInfo(C_KAPITOLY, "ikona-kapitoly");
         # je dodatek?
-        JE_DODATEK = FRAGMENTY[C_KAPITOLY "/adr"] == "dodatky";
+        JE_DODATEK = FragInfo(C_KAPITOLY, "příznaky") ~ /d/;
     } else {
         C_KAPITOLY = 0;
         STITKY = "";
@@ -574,11 +578,12 @@ BEGIN {
 
     # Načíst osnovu:
     delete OSNOVA;
-    while (getline < (SOUBORY_PREKLADU "/osnova/" IDKAPITOLY ".tsv")) {
+    soubor = (SOUBORY_PREKLADU "/osnova/" gensub(/\//, "-", "g", IDKAPITOLY) ".tsv");
+    while (getline < soubor) {
 # $1=TYP $2=ID $3=ČÍSLO_ŘÁDKU $4=NÁZEV $5=;
         OSNOVA[1 + length(OSNOVA)] = sprintf("%s\t%s\t%s\t%s\t%s", $1, $2, $3, ZpracujZnaky($4), ";");
     }
-    close(SOUBORY_PREKLADU "/osnova/" IDKAPITOLY ".tsv");
+    close(soubor);
 }
 
 # komentář započatý na samostatném řádku kompletně ignorovat

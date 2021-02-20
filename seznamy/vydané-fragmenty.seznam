@@ -1,9 +1,9 @@
 předmluva
 základní-znalosti
-
 awk
 datum-čas-kalendář
 diskové-oddíly
+diskové-oddíly/lvm
 git
 hledání-souborů
 make
@@ -28,8 +28,6 @@ vim
 zpracování-binárních-souborů
 zpracování-textových-souborů
 zpracování-videa-a-zvuku
-
 koncepce-projektu
 plán-vývoje
 licence
-

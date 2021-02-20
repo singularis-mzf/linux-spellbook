@@ -57,8 +57,8 @@ function Pokud(podminka) {
 function RidiciRadek(text,   i, s) {
     s = text;
     if (sub(/^VYČLENIT SEM PODLE ID:/, "", s) && s !~ /^$|\}/) {
-        if ("id/" s in FRAGMENTY) {
-            VypsatOdkazNaKapitolu(FRAGMENTY["id/" s], 1);
+        if (FragInfo(s "?") != 0) {
+            VypsatOdkazNaKapitolu(FragInfo(s), 1);
         }
         return 0;
     }
@@ -66,7 +66,7 @@ function RidiciRadek(text,   i, s) {
     s = text;
     if (sub(/^VYČLENIT SEM PODLE ŠTÍTKU:/, "", s) && s !~ /^$|\}/) {
         for (i = 1; i <= pocet; ++i) {
-            if (index(FRAGMENTY[i "/stitky"], "{" s "}")) {VypsatOdkazNaKapitolu(i, 1)}
+            if (index(FragInfo(i, "štítky"), "{" s "}")) {VypsatOdkazNaKapitolu(i, 1)}
         }
         return 0;
     }
@@ -80,13 +80,13 @@ function RidiciRadek(text,   i, s) {
 
         case "VYPSAT ZBYTEK KAPITOL":
             for (i = 1; i <= pocet; ++i) {
-                if (!vycleneno[i] && FRAGMENTY[i "/adr"] == "kapitoly") {VypsatOdkazNaKapitolu(i, 1)}
+                if (!vycleneno[i] && FragInfo(i, "adresář") == "kapitoly") {VypsatOdkazNaKapitolu(i, 1)}
             }
             return 0;
 
         case "VYPSAT ZBYTEK DODATKŮ":
             for (i = 1; i <= pocet; ++i) {
-                if (!vycleneno[i] && FRAGMENTY[i "/adr"] == "dodatky") {VypsatOdkazNaKapitolu(i, 1)}
+                if (!vycleneno[i] && FragInfo(i, "adresář") == "dodatky") {VypsatOdkazNaKapitolu(i, 1)}
             }
             return 0;
 
@@ -120,12 +120,11 @@ function Konec() {
 # ============================================================================
 
 function VypsatOdkazNaKapitolu(i, vyclenit) {
-    if (!(i in FRAGMENTY)) {ShoditFatalniVyjimku("Nemohu vypsat odkaz na kapitolu číslo " i "!")}
-
-    print "<div><a href=\"" OmezitNazev(FRAGMENTY[i "/id"]) ".htm\"><span class=\"cislo\">" i \
-        "</span> <span class=\"ikona\"><img src=\"obrazky/" OmezitNazev(FRAGMENTY[i "/ikkap"], 1) "\" alt=\"\"></span>" \
-        "<span class=\"nazev\">" FRAGMENTY[i "/nazev"] "</span></a></div>";
+    print "<div><a href=\"" FragInfo(i, "ploché-id-bez-diakr") ".htm\"><span class=\"cislo\">" i \
+        "</span> <span class=\"ikona\"><img src=\"obrazky/" OmezitNazev(FragInfo(i, "ikona-kapitoly"), 1) "\" alt=\"\"></span>" \
+        "<span class=\"nazev\">" FragInfo(i, "celý-název") "</span></a></div>";
     if (vyclenit) {vycleneno[i] = 1}
+    #printf("LADĚNÍ: Vypsán odkaz na kapitolu č. %s\n", i) > "/dev/stderr";
     return 0;
 }
 

@@ -1,4 +1,5 @@
-# Linux Kniha kouzel, skript extrakce/debverze.awk
+#!/bin/bash
+# Linux Kniha kouzel, skript transakce
 # Copyright (c) 2020 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -22,14 +23,47 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-BEGIN {
-    if (ARGC != 2) {
-        print "debverze.awk: Chybný počet parametrů (" ARGC ")!" > "/dev/stderr";
-    }
-    s = gensub(/[,\n].*/, "", 1, ARGV[1]);
-    s = gensub(/^[^0-9.]*([0-9]+(\.[0-9]+)*).*$/, "\\1", 1, s);
-    if (s == "") {s = "0"}
-    if (tolower(ARGV[1]) ~ /sid/) {s = "0." s}
-    if (tolower(ARGV[1]) ~ /beta/) {s = s "~beta"}
-    print s;
-}
+# Volání:
+# transakce {-o|-z} {soubory}...
+
+set -e
+
+if test "$1" = "-o"
+then
+    shift
+    for cil in "$@"
+    do
+        t="${cil}.transakce"
+        if test -e "$cil"
+        then
+            exec cp -fpT -- "$cil" "$t"
+        elif test -e "$t"
+        then
+            exec rm -f -- "$t"
+        else
+            exit 0
+        fi
+    done
+
+elif test "$1" = "-z"
+then
+    shift
+    for cil in "$@"
+    do
+        t="${cil}.transakce"
+        if test -e "$cil" -a -e "$t" && cmp -s -- "$cil" "$t"
+        then
+            mv -fT -- "$t" "$cil" && printf 'transakce: nezměněno (%s)\n' "$cil"
+        else
+            rm -f -- "$t" && printf 'transakce: změny potvrzeny (%s)\n' "$cil"
+        fi
+    done
+
+elif test "$#" = 0 -o "$1" = "--help"
+then
+    printf 'Nápověda není implementována.\n'
+    exit 0
+else
+    printf %s\\n "Chybné použití!" >&2
+    exit 1
+fi

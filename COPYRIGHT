@@ -7,19 +7,33 @@ Files: *
 Copyright: 2020, Singularis
 License: CC-BY-SA-4.0
 
+Files: docker/malé-sestavení/Dockerfile docker/velké-sestavení/Dockerfile
+Copyright: 2020, Singularis
+License: CC-BY-SA-4.0 or GPL-2+
+
 Files: dodatky/licence.md
 Copyright: Creative Commons
 License: public-domain
  Public domain according to: https://creativecommons.org/faq/#can-i-change-the-license-terms-or-conditions
  „CC does not assert copyright in the text of its licenses“.
 
-Files: Makefile skripty/*.awk skripty/extrakce/*.awk skripty/gender/*.awk skripty/lkk/bash-doplňování.sh skripty/lkk/lkk skripty/lkk/lkk-spouštěč.pl skripty/plnění-šablon/*.awk skripty/překlad/*.awk
-Copyright: 2020, Singularis
-License: CC-BY-SA-4.0 or GPL-2+
-
-Files: skripty/lkk/LinuxKnihaKouzel.pl
+Files: formáty/deb/control
 Copyright: 2020, Singularis
 License: CC0
+
+Files: formáty/deb/manuálová-stránka.1 formáty/html/šablona.* formáty/log/šablona formáty/pdf/šablona.tex
+Copyright: 2019-2020, Singularis
+License: CC-BY-SA-4.0
+
+Files: obrázky/ik/awk.png obrázky/ik/datum-čas-kalendář.png obrázky/ik/diskové-oddíly.png obrázky/ik/docker.png obrázky/ik/git.png obrázky/ik/hledání-souborů.png obrázky/ik/koncepce-projektu.png obrázky/ik/licence.png obrázky/ik/make.png obrázky/ik/markdown.png obrázky/ik/plánování-úloh.png obrázky/ik/práce-s-archivy.png obrázky/ik/předmluva.png obrázky/ik/proměnné.png obrázky/ik/regulární-výrazy.png obrázky/ik/sed.png obrázky/ik/soubory-a-adresáře.png obrázky/ik/správa-balíčků.png obrázky/ik/správa-procesů.png obrázky/ik/správa-uživatelských-účtů.png obrázky/ik/stahování-videí.png obrázky/ik/systém.png obrázky/ik/terminál.png obrázky/ik/vim.png obrázky/ik/základní-znalosti.png obrázky/ik/zpracování-binárních-souborů.png obrázky/ik/zpracování-textových-souborů.png obrázky/ik/zpracování-videa-a-zvuku.png obrázky/ik/plán-vývoje.png
+Copyright: 2020, Singularis <singularis@volny.cz>
+License: CC-BY-SA-4.0
+
+Files: obrázky/banner.png
+Copyright: 2019, Singularis <singularis@volny.cz>
+License: CC-BY-SA-4.0
+ There is no originality in this file, but it contains a code of a simple computer program.
+ In my opinion, only the code is copyrighted in this picture.
 
 Files: obrázky/by-sa.png
 Copyright: Creative Commons
@@ -27,32 +41,6 @@ License: public-domain
  Unsufficient originality.
  Source: https://creativecommons.org/about/downloads/
  Public domain according to: https://commons.wikimedia.org/wiki/File:CC-BY-SA_icon.svg
-
-Files: obrázky/močál.jpg
-Copyright: 2013, U.S. Fish and Wildlife Service
-License: public-domain
- Public domain according to https://www.fws.gov/southeast/gulf-restoration/next-steps/focal-area/mississippi-alluvial-valley/
- Source: https://commons.wikimedia.org/wiki/File:A_scenic_view_of_the_marsh.jpg
- This file is in public domain, not copyrighted, no rights reserved, free for any use.
- You can use this picture for any use including commercial purposes
- without the prior written permission and without fee or obligation.
-
-Files: obrázky/údolí.jpg
-Copyright: 2016, US Bureau of Land Management
- 2020, Singularis
-License: CC-BY-SA-4.0
- Source: https://commons.wikimedia.org/wiki/File:Valley_of_the_Gods_at_night.jpg
- Source: https://mypubliclands.tumblr.com/
- The original photo is in the public domain in the United States because
- it is a work prepared by an officer or employee of the United States Government
- as part of that person’s official duties under the terms of Title 17, Chapter 1,
- Section 105 of the US Code. Adapted by Singularis.
-
-Files: obrázky/ve-výstavbě.png
-Copyright: 2010, Sarang <https://de.wikipedia.org/wiki/Benutzer:Sarang>
-License: public-domain
- Source: https://commons.wikimedia.org/wiki/File:UnderCon_icon.svg
- Public domain according to the law of Germany.
 
 Files: obrázky/favicon.png obrázky/logo-knihy-velké.png zdroje_obrázků/favicon/*
 Copyright: Larry Ewing <http://www.isc.tamu.edu/~lewing/>
@@ -73,35 +61,59 @@ License: CC0
  .
  The copyright holder of this file allows anyone to use it for any purpose, provided that the copyright holder is properly attributed. Redistribution, derivative work, commercial use, and all other use is permitted. (https://commons.wikimedia.org/wiki/File:Tux.svg)
 
-Files: obrázky/banner.png
-Copyright: 2019, Singularis <singularis@volny.cz>
+Files: obrázky/git.svg
+Copyright: 2020, Singularis <singularis@volny.cz>
 License: CC-BY-SA-4.0
- There is no originality in this file, but it contains a code of a simple computer program.
- In my opinion, only the code is copyrighted in this picture.
 
 Files: obrázky/graf-filtrů.svg obrázky/kalendář.svg
 Copyright: 2019, Singularis <singularis@volny.cz>
-License: CC-BY-SA-4.0
-
-Files: obrázky/git.svg
-Copyright: 2020, Singularis <singularis@volny.cz>
 License: CC-BY-SA-4.0
 
 Files: obrázky/ik-výchozí.png zdroje_obrázků/tab.png
 Copyright: 2019, Singularis <singularis@volny.cz>
 License: CC0
 
-Files: obrázky/ik/awk.png obrázky/ik/datum-čas-kalendář.png obrázky/ik/diskové-oddíly.png obrázky/ik/docker.png obrázky/ik/git.png obrázky/ik/hledání-souborů.png obrázky/ik/koncepce-projektu.png obrázky/ik/licence.png obrázky/ik/make.png obrázky/ik/markdown.png obrázky/ik/plánování-úloh.png obrázky/ik/práce-s-archivy.png obrázky/ik/předmluva.png obrázky/ik/proměnné.png obrázky/ik/regulární-výrazy.png obrázky/ik/sed.png obrázky/ik/soubory-a-adresáře.png obrázky/ik/správa-balíčků.png obrázky/ik/správa-procesů.png obrázky/ik/správa-uživatelských-účtů.png obrázky/ik/stahování-videí.png obrázky/ik/systém.png obrázky/ik/terminál.png obrázky/ik/vim.png obrázky/ik/základní-znalosti.png obrázky/ik/zpracování-binárních-souborů.png obrázky/ik/zpracování-textových-souborů.png obrázky/ik/zpracování-videa-a-zvuku.png obrázky/ik/plán-vývoje.png
-Copyright: 2020, Singularis <singularis@volny.cz>
-License: CC-BY-SA-4.0
+Files: obrázky/močál.jpg
+Copyright: 2013, U.S. Fish and Wildlife Service
+License: public-domain
+ Public domain according to https://www.fws.gov/southeast/gulf-restoration/next-steps/focal-area/mississippi-alluvial-valley/
+ Source: https://commons.wikimedia.org/wiki/File:A_scenic_view_of_the_marsh.jpg
+ This file is in public domain, not copyrighted, no rights reserved, free for any use.
+ You can use this picture for any use including commercial purposes
+ without the prior written permission and without fee or obligation.
 
-Files: konfig.ini
-Copyright: 2019, Singularis <singularis@volny.cz>
+Files: obrázky/ve-výstavbě.png
+Copyright: 2010, Sarang <https://de.wikipedia.org/wiki/Benutzer:Sarang>
+License: public-domain
+ Source: https://commons.wikimedia.org/wiki/File:UnderCon_icon.svg
+ Public domain according to the law of Germany.
+
+Files: obrázky/údolí.jpg
+Copyright: 2016, US Bureau of Land Management
+ 2020, Singularis
+License: CC-BY-SA-4.0
+ Source: https://commons.wikimedia.org/wiki/File:Valley_of_the_Gods_at_night.jpg
+ Source: https://mypubliclands.tumblr.com/
+ The original photo is in the public domain in the United States because
+ it is a work prepared by an officer or employee of the United States Government
+ as part of that person’s official duties under the terms of Title 17, Chapter 1,
+ Section 105 of the US Code. Adapted by Singularis.
+
+Files: seznamy/*.seznam
+Copyright: 2020, Singularis
 License: CC0
 
-Files: skripty/lkk/awkvolby.awk
-Copyright: 2019, Singularis <singularis@volny.cz>
-License: CC-BY-SA-4.0 or Expat
+Files: Makefile skripty/*.awk skripty/*.sh skripty/h1 skripty/h2 skripty/li skripty/transakce skripty/extrakce/*.awk skripty/extrakce/fragmenty.pl skripty/gender/*.awk skripty/gender/*.sh skripty/lkk/bash-doplňování.sh skripty/lkk/lkk skripty/lkk/lkk-spouštěč.pl skripty/makegen/*.awk skripty/plnění-šablon/*.awk skripty/překlad/*.awk
+Copyright: 2020, Singularis
+License: CC-BY-SA-4.0 or GPL-2+
+
+Files: skripty/lkk/LinuxKnihaKouzel.pl
+Copyright: 2020, Singularis
+License: CC0
+
+Files: ucs_ikony/ikony.txt ucs_ikony/povolené-ikony.*
+Copyright: 2020, Singularis
+License: CC-BY-SA-4.0
 
 Files: zdroje_obrázků/ik.xcf
 Copyright: 2020, Singularis <singularis@volny.cz>
@@ -110,6 +122,10 @@ License: CC0
 Files: zdroje_obrázků/vmezera.png
 License: public-domain
  Public domain, because there is no originality in this file and it's nor photography nor computer program.
+
+Files: konfig.ini
+Copyright: 2019, Singularis <singularis@volny.cz>
+License: CC0
 
 License: CC0
  CC0 1.0 Universal

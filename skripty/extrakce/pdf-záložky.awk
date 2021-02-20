@@ -33,13 +33,14 @@ BEGIN {
     if (SOUBORY_PREKLADU == "") {ShoditFatalniVyjimku("Proměnná SOUBORY_PREKLADU není nastavena!")}
     if (ARGC != 2) {ShoditFatalniVyjimku("Skript vyžaduje právě jeden vstupní soubor!")}
 
-    FRAGMENTY_TSV = SOUBORY_PREKLADU "/fragmenty.tsv";
     KNIHA_TOC = ARGV[1];
     delete id_na_cislo;
     cislo_kapitoly = 0;
-    while (getline < FRAGMENTY_TSV) {
-        id_na_cislo[$2] = ++cislo_kapitoly;
-        ARGV[cislo_kapitoly] = SOUBORY_PREKLADU "/osnova/" $2 ".tsv";
+    NacistFragmentyTSV(SOUBORY_PREKLADU "/fragmenty.tsv");
+    while (FragInfo(cislo_kapitoly + 1, "existuje")) {
+        ++cislo_kapitoly;
+        id_na_cislo[FragInfo(cislo_kapitoly, "ploché-id")] = cislo_kapitoly;
+        ARGV[cislo_kapitoly] = SOUBORY_PREKLADU "/osnova/" FragInfo(cislo_kapitoly, "ploché-id") ".tsv";
     }
     if (cislo_kapitoly == 0) {ShoditFatalniVyjimku("Ve fragmenty.tsv nenalezena žádná kapitola!")}
     ARGV[cislo_kapitoly + 1] = KNIHA_TOC;

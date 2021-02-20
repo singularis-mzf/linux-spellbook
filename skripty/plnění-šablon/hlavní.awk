@@ -183,7 +183,7 @@ function RidiciRadekSpolecnaObsluha(text,   i, soubor) {
                 return 0;
             }
             VyzadujeFragmentyTSV();
-            soubor = gensub(/fragmenty\.tsv$/, "osnova/" IDKAPITOLY ".tsv", 1, FRAGMENTY_TSV);
+            soubor = gensub(/fragmenty\.tsv$/, "osnova/" gensub(/\//, "-", 1, IDKAPITOLY) ".tsv", 1, FRAGMENTY_TSV);
             if (system("test -r '" soubor "'")) {
                 ShoditFatalniVyjimku("Soubor '" soubor "' neexistuje nebo nelze otevřít ke čtení!");
             }
@@ -206,8 +206,8 @@ function RidiciRadekSpolecnaObsluha(text,   i, soubor) {
         case "MENU KAPITOLY":
             if (IDFORMATU != "html") {ShoditFatalniVyjimku("{{MENU KAPITOLY}} je podporováno jen pro formát HTML!")}
             VyzadujeFragmentyTSV();
-            for (i = 1; i in FRAGMENTY; ++i) {
-                printf("<a href=\"%s.htm\" class=\"kapitola\"><span class=\"ikona\"><img src=\"obrazky/%s\" alt=\"[]\"></span><span class=\"cislo\">%d</span><span class=\"nazev\">%s</span></a>\n", OmezitNazev(FRAGMENTY[i "/id"]), OmezitNazev(FRAGMENTY[i "/ikkap"], 1), i, FRAGMENTY[i "/nazev"]);
+            for (i = 1; FragInfo(i, "existuje"); ++i) {
+                printf("<a href=\"%s.htm\" class=\"kapitola\"><span class=\"ikona\"><img src=\"obrazky/%s\" alt=\"[]\"></span><span class=\"cislo\">%d</span><span class=\"nazev\">%s</span></a>\n", FragInfo(i, "ploché-id-bez-diakr"), OmezitNazev(FragInfo(i, "ikona-kapitoly"), 1), i, FragInfo(i, "celý-název"));
             }
             jsou_premiove = 0;
             soubor = ENVIRON["SOUBORY_PREKLADU"] "/prémiové-kapitoly.tsv";
@@ -240,11 +240,13 @@ function RidiciRadekSpolecnaObsluha(text,   i, soubor) {
         case "MENU NÁPOVĚDA":
             if (IDFORMATU != "html") {ShoditFatalniVyjimku("{{MENU NÁPOVÉDA}} je podporováno jen pro formát HTML!")}
             VyzadujeFragmentyTSV();
-            if ("id/predmluva" in FRAGMENTY) {
-                printf("%s\n", "<a href=\"predmluva.htm\">Předmluva</a>");
+            cislo = FragInfo("předmluva");
+            if (FragInfo(cislo, "příznaky") ~ /z/) {
+                printf("<a href=\"%s.htm\">%s</a>\n", FragInfo(cislo, "ploché-id-bez-diakr"), FragInfo(cislo, "celý-název"));
             }
-            if ("id/koncepce-projektu" in FRAGMENTY) {
-                printf("%s\n", "<a href=\"koncepce-projektu.htm\">Koncepce projektu</a>");
+            cislo = FragInfo("koncepce-projektu");
+            if (FragInfo(cislo, "příznaky") ~ /z/) {
+                printf("<a href=\"%s.htm\">%s</a>\n", FragInfo(cislo, "ploché-id-bez-diakr"), FragInfo(cislo, "celý-název"));
             }
             printf("%s\n%s\n%s\n", "<a href=\"https://singularis-mzf.github.io/\">Ostatní verze knihy</a>",
                 "<a href=\"https://github.com/singularis-mzf/linux-spellbook\">Repozitář na GitHubu</a>",

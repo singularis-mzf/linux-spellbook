@@ -28,6 +28,8 @@
 # ============================================================================
 BEGIN {
     VyzadujeFragmentyTSV();
+    JMENOVERZE = ENVIRON["JMENO"];
+    DATUMSESTAVENI = ENVIRON["DATUM_SESTAVENI"];
     VyzadujePromennou("IDKAPITOLY");
     VyzadujePromennou("JMENOVERZE");
     VyzadujePromennou("DATUMSESTAVENI");
@@ -44,38 +46,33 @@ BEGIN {
 function Zacatek() {
     datum = sprintf("%d. %s %s", substr(DATUMSESTAVENI, 7, 2), MesicVDruhemPade(sprintf("%d", substr(DATUMSESTAVENI, 5, 2))), substr(DATUMSESTAVENI, 1, 4));
 
-    if ("id/" IDKAPITOLY in FRAGMENTY) {
-        cislo_kapitoly = FRAGMENTY["id/" IDKAPITOLY];
-        adresar = FRAGMENTY[cislo_kapitoly "/adr"];
-        nazev_kapitoly = FRAGMENTY[cislo_kapitoly "/nazev"];
-        if (cislo_kapitoly != 1) {
-            id_predchozi = FRAGMENTY[(cislo_kapitoly - 1) "/id"];
-            nazev_predchozi = FRAGMENTY[(cislo_kapitoly - 1) "/nazev"];
-        } else {
-            id_predchozi = nazev_predchozi = "";
-        }
-        if ((cislo_kapitoly + 1) in FRAGMENTY) {
-            id_nasledujici = FRAGMENTY[(cislo_kapitoly + 1) "/id"];
-            nazev_nasledujici = FRAGMENTY[(cislo_kapitoly + 1) "/nazev"];
-        } else {
-            id_nasledujici = nazev_nasledujici = "";
-        }
-        ikona_kapitoly = FRAGMENTY[cislo_kapitoly "/ikkap"];
-    } else if (IDKAPITOLY ~ /^_(autori|stitky)$/) {
+    if (IDKAPITOLY ~ /^_(autori|stitky)$/) {
         id_predchozi = id_nasledujici = nazev_predchozi = nazev_nasledujici = "";
         cislo_kapitoly = 0;
         ikona_kapitoly = "ik-výchozí.png";
-    } else {
-        # kapitola, pro kterou neexistuje záznam, takže pravděpodobně nebude zapsána na výstup:
-        existuje_kapitola = Test("-r kapitoly/" IDKAPITOLY ".md");
-        existuje_dodatek = Test("-r dodatky/" IDKAPITOLY ".md");
-        if (existuje_dodatek == existuje_kapitola) {
-            ShoditFatalniVyjimku("ID \"" IDKAPITOLY "\": " (existuje_kapitola ? "existuje kapitola i dodatek!" : "neexistuje ani kapitola ani dodatek!"));
+    } else if ((cislo_kapitoly = FragInfo(IDKAPITOLY "?")) != 0 && FragInfo(cislo_kapitoly, "příznaky") ~ /z/) {
+        adresar = FragInfo(cislo_kapitoly, "adresář");
+        nazev_kapitoly = FragInfo(cislo_kapitoly, "celý-název");
+        if (cislo_kapitoly != 1) {
+            id_predchozi = FragInfo(cislo_kapitoly - 1, "plné-id");
+            id_predchozi_bez_diakr = FragInfo(cislo_kapitoly - 1, "ploché-id-bez-diakr");
+            nazev_predchozi = FragInfo(cislo_kapitoly - 1, "celý-název");
+        } else {
+            id_predchozi = id_predchozi_bez_diakr = nazev_predchozi = "";
         }
-        adresar = (existuje_kapitola ? "kapitoly" : "dodatky");
+        if (FragInfo(cislo_kapitoly + 1, "existuje")) {
+            id_nasledujici = FragInfo(cislo_kapitoly + 1, "plné-id");
+            id_nasledujici_bez_diakr = FragInfo(cislo_kapitoly + 1, "ploché-id-bez-diakr");
+            nazev_nasledujici = FragInfo(cislo_kapitoly + 1, "celý-název");
+        } else {
+            id_nasledujici = id_nasledujici_bez_diakr = nazev_nasledujici = "";
+        }
+        ikona_kapitoly = FragInfo(cislo_kapitoly, "ikona-kapitoly");
+    } else {
+        # kapitola, která není určena na výstup:
+        adresar = FragInfo(FragInfo(IDKAPITOLY), "adresář");
         nazev_kapitoly = "(Není na výstup)";
-        id_predchozi = id_nasledujici = nazev_predchozi = nazev_nasledujici = "";
-        cislo_kapitoly = 0;
+        id_predchozi = id_predchozi_bez_diakr = id_nasledujici = id_nasledujici_bez_diakr = nazev_predchozi = nazev_nasledujici = "";
         ikona_kapitoly = "ik-výchozí.png";
     }
 
@@ -132,20 +129,20 @@ function RidiciRadek(text,   prikaz, i) {
             VyzadujeFragmentyTSV();
             if (IDKAPITOLY == "") {ShoditFatalniVyjimku("Chybějící ID kapitoly pro {{ODKAZY DOLE}}!")}
             if (IDFORMATU != "html") {ShoditFatalniVyjimku("{{ODKAZY DOLE}} jsou implementovány pouze pro formát HTML!")}
-            prikaz = "seq 1 " FRAGMENTY["pocet"] " | shuf";
+            prikaz = "seq 1 " FragInfo("", "počet") " | shuf";
             i = 1;
             while (i <= 3 && (prikaz | getline)) {
-                if (!($0 in FRAGMENTY)) {ShoditFatalniVyjimku("Chybná iterační hodnota: \"" $0 "\"!")}
+                if (!FragInfo($0, "existuje")) {ShoditFatalniVyjimku("Chybná iterační hodnota: \"" $0 "\"!")}
                 # Aby byla kapitola přijatelná pro odkazy dole...
                 # 1. Musí to být jiná kapitola než ta současná
-                if (FRAGMENTY[$0 "/id"] == IDKAPITOLY) {continue}
+                if (FragInfo($0, "plné-id") == IDKAPITOLY) {continue}
                 # 2. Musí to být kapitola
-                if (FRAGMENTY[$0 "/adr"] != "kapitoly") {continue}
+                if (FragInfo($0, "adresář") != "kapitoly") {continue}
                 # 3. Musí mít štítky
-                if (FRAGMENTY[$0 "/stitky"] == "NULL") {continue}
+                if (FragInfo($0, "štítky") == "") {continue}
                 #
                 if (i == 1) {printf("<div class=\"odkazydole\"><div>")}
-                printf("<a href=\"%s.htm\"><img src=\"obrazky/%s\" alt=\"\" width=\"32\" height=\"32\">%s</a>", OmezitNazev(FRAGMENTY[$0 "/id"]), OmezitNazev(FRAGMENTY[$0 "/ikkap"], 1), FRAGMENTY[$0 "/nazev"]);
+                printf("<a href=\"%s.htm\"><img src=\"obrazky/%s\" alt=\"\" width=\"32\" height=\"32\">%s</a>", FragInfo($0, "ploché-id-bez-diakr"), OmezitNazev(FragInfo($0, "ikona-kapitoly"), 1), FragInfo($0, "celý-název"));
                 ++i;
             }
             if (i != 1) {printf("</div></div>\n")}
@@ -166,11 +163,11 @@ function PrelozitVystup(radek) {
 #    gsub(/\{\{JMÉNO VERZE\}\}/, OdzvlastnitKNahrade(JMENOVERZE), radek);
     gsub(/\{\{NÁZEV KAPITOLY\}\}/, nazev_kapitoly, radek);
     gsub(/\{\{PŘEDCHOZÍ ID\}\}/, id_predchozi, radek);
-    gsub(/\{\{PŘEDCHOZÍ ID BEZ DIAKRITIKY\}\}/, OmezitNazev(id_predchozi), radek);
+    gsub(/\{\{PŘEDCHOZÍ ID BEZ DIAKRITIKY\}\}/, id_predchozi_bez_diakr, radek);
     gsub(/\{\{PŘEDCHOZÍ NÁZEV\}\}/, nazev_predchozi, radek);
     gsub(/\{\{PŘEDCHOZÍ ČÍSLO\}\}/, id_predchozi != "" ? cislo_kapitoly - 1 : 0, radek);
     gsub(/\{\{NÁSLEDUJÍCÍ ID\}\}/, id_nasledujici, radek);
-    gsub(/\{\{NÁSLEDUJÍCÍ ID BEZ DIAKRITIKY\}\}/, OmezitNazev(id_nasledujici), radek);
+    gsub(/\{\{NÁSLEDUJÍCÍ ID BEZ DIAKRITIKY\}\}/, id_nasledujici_bez_diakr, radek);
     gsub(/\{\{NÁSLEDUJÍCÍ NÁZEV\}\}/, nazev_nasledujici, radek);
     gsub(/\{\{NÁSLEDUJÍCÍ ČÍSLO\}\}/, id_nasledujici != "" ? cislo_kapitoly + 1 : 0, radek);
     gsub(/\{\{ČÍSLO KAPITOLY\}\}/, cislo_kapitoly, radek);
@@ -219,17 +216,17 @@ function VypsatPrehledStitku(format,   i, n, s, cislo_kapitoly, stitky_kapitol, 
     # Načíst štítky ze štítky.tsv:
     stitky_tsv = gensub(/fragmenty/, "štítky", 1, FRAGMENTY_TSV);
     while (getline < stitky_tsv) {
-        if (NF < 3) {ShoditFatalniVyjimku("Chyba formátu stitky.tsv: očekávány alespoň tři sloupce!")}
-        # $1 = štítek $2 = omezené id štítku $3..$NF = id kapitol
+        if (NF < 3) {ShoditFatalniVyjimku("Chyba formátu štítky.tsv: očekávány alespoň tři sloupce!")}
+        # $1 = štítek $2 = omezené id štítku $3..$NF = plná id kapitol
         print "<dt id=\"" $2 "\" class=\"stitky\"><span><a href=\"#" $2 "\">" $1 "</a></span></dt><dd>";
         for (i = 3; i <= NF; ++i) {
-            idkap = OmezitNazev($i);
-            if (!("id/" $i in FRAGMENTY)) {ShoditFatalniVyjimku("Nečekané id kapitoly: " $i)}
-            cislo_kapitoly = FRAGMENTY["id/" $i];
+            cislo_kapitoly = FragInfo($i "?");
+            if (cislo_kapitoly == 0) {ShoditFatalniVyjimku("Nečekané id kapitoly: " $i)}
+            idkap = FragInfo(cislo_kapitoly, "ploché-id-bez-diakr");
 
-            print "<div><a href=\"" idkap ".htm\"><span class=\"cislo\">" cislo_kapitoly ".</span>\n<img src=\"obrazky/" OmezitNazev(FRAGMENTY[cislo_kapitoly "/ikkap"], 1) "\" width=\"64\" height=\"64\" alt=\"\">\n<span class=\"nazev\">" FRAGMENTY[cislo_kapitoly "/nazev"] "</span></a><span class=\"dalsistitky\">";
-            if (FRAGMENTY[cislo_kapitoly "/stitky"] != "NULL") {
-                n = split(gensub(/^\{|\}$/, "", "g", FRAGMENTY[cislo_kapitoly "/stitky"]), stitky_kapitoly, "\\}\\{");
+            print "<div><a href=\"" idkap ".htm\"><span class=\"cislo\">" cislo_kapitoly ".</span>\n<img src=\"obrazky/" OmezitNazev(FragInfo(cislo_kapitoly, "ikona-kapitoly"), 1) "\" width=\"64\" height=\"64\" alt=\"\">\n<span class=\"nazev\">" FragInfo(cislo_kapitoly, "celý-název") "</span></a><span class=\"dalsistitky\">";
+            if (FragInfo(cislo_kapitoly, "štítky") != "") {
+                n = split(gensub(/^\{|\}$/, "", "g", FragInfo(cislo_kapitoly, "štítky")), stitky_kapitoly, "\\}\\{");
                 for (j = 1; j <= n; ++j) {
                     print "<a href=\"#" GenerovatOmezeneId("s", stitky_kapitoly[j]) "\">" stitky_kapitoly[j] "</a>";
                 }

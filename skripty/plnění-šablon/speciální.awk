@@ -52,9 +52,9 @@ function RidiciRadek(text) {
             # 1. Shromáždit a seřadit existující štítky
             delete stitky;
             prikaz = "printf %s '";
-            for (i = 1; i in FRAGMENTY; ++i) {
-                if (FRAGMENTY[i "/stitky"] != "NULL") {
-                    prikaz = prikaz gensub(/\{|\}|\|/, "\n", "g", gensub(/'/, "'\\\\''", "g", FRAGMENTY[i "/stitky"]));
+            for (i = 1; FragInfo(i, "existuje"); ++i) {
+                if (FragInfo(i, "štítky") != "") {
+                    prikaz = prikaz gensub(/\{|\}|\|/, "\n", "g", gensub(/'/, "'\\\\''", "g", FragInfo(i, "štítky")));
                 }
             }
             prikaz = prikaz "\n' | LC_ALL=\"cs_CZ.UTF-8\" sort -fu";
@@ -65,18 +65,17 @@ function RidiciRadek(text) {
 
             for (i = 1; i <= l; ++i) {
                 prvniZaznamNaStitek = 1;
-                for (j = 1; j in FRAGMENTY; ++j) {
-                    stitkykapitoly = FRAGMENTY[j "/stitky"];
+                for (j = 1; FragInfo(j, "existuje"); ++j) {
+                    stitkykapitoly = FragInfo(j, "štítky");
                     if (index(stitkykapitoly, "{" stitky[i] "}")) {
                         if (prvniZaznamNaStitek) {
                             prvniZaznamNaStitek = 0;
                             print "\\begin{ppsstitek}{" stitky[i] "}";
                         }
                         gsub(/\{/, "\\ppsstitekpolozky{", stitkykapitoly); /\}/; # „/\}/“ jen kvůli zvýrazňování syntaxe, nic nedělá
-                        print "\\ppspolozka{" $3 "}{" stitkykapitoly "}{" FRAGMENTY[j "/omezid"] "}%";
+                        print "\\ppspolozka{" $3 "}{" stitkykapitoly "}{" FragInfo(j, "ploché-id-bez-diakr") "}%";
                     }
                 }
-                close(FRAGMENTY_TSV);
                 if (!prvniZaznamNaStitek) {print "\\end{ppsstitek}"}
             }
             return 0;

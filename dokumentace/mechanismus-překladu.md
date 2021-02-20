@@ -42,6 +42,24 @@ a které lze vždy znovu vygenerovat:
 
 ## Obsah adresáře „soubory\_překladu“, společná část
 
+### kapitoly.tsv
+
+Soubor „kapitoly.tsv“ obsahuje základní údaje o všech dodacích a kapitolách v pořadí seřazeném podle ID.
+
+Sloupce *kapitoly.tsv* jsou následující:
+
+| # | Identifikátor | Popis | Příklad |
+| ---: | --- | :--- | :--- |
+| 1 | nadid | Jde-li o podkapitolu, ID její nadkapitoly; jinak prázdné pole. | diskové-oddíly |
+| 2 | id | ID dodatku či kapitoly (název souboru bez přípony). | diskové-oddíly/lvm |
+| 3 | nadnazev | Jde-li o podkapitolu, název nadkapitoly; jinak prázdné pole. | Diskové oddíly |
+| 4 | nazev | Název dodatku či kapitoly. U podkapitoly jen název podkapitoly. | LVM |
+| 5 | adr | Adresář („dodatky“ nebo „kapitoly“). | kapitoly |
+| 6 | omezid | Takzvané omezené ID. Používá se především ve formátu PDF. Začíná prefixem „kap“ a obsahuje pouze malá písmena anglické abecedy. | kapxdiskovoddllvm |
+| 7 | ikkap | Ikona kapitoly (obrázek ve formátu „png“; cesta je relativní k adresáři „obrázky“). Pokud kapitola nemá vlastní ikonu, uvede se generická. | ik/diskové-oddíly.png |
+| 8 | stitky | Štítky kapitoly či podkapitoly ve složených závorkách bez oddělovačů; nejsou-li, hodnota „NULL“. | \{internet\}\{tematický okruh\} |
+| 9 | radek | Počet řádek zdrojového kódu |
+
 ### fragmenty.tsv
 
 Soubor „fragmenty.tsv“ je tabulka ve formátu TSV, kterou generuje skript

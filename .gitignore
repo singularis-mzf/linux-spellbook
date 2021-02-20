@@ -27,11 +27,8 @@
 *.ist
 
 # Specifická pravidla pro tento projekt:
-poradi-kapitol.lst
-pořadí-kapitol.lst
-soubory_prekladu/
+pořadí-kapitol.seznam
 soubory_překladu/
-vystup_prekladu/
 výstup_překladu/
 .swp
 

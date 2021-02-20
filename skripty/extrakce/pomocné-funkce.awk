@@ -132,7 +132,6 @@ BEGIN {
     OFS = "";
     RS = ORS = "\n";
 
-    delete idkapitol;       # [ARGIND] => "id-kapitoly"
     delete funkce_puvod;    # [jméno_funkce] => "id-kapitoly"
     delete funkce_definice; # [jméno_funkce] => "definice\n"
     delete skripty_puvod;   # [jméno-skriptu] => "id-kapitoly"
@@ -145,27 +144,15 @@ BEGIN {
 
     SOUBORY_PREKLADU = ENVIRON["SOUBORY_PREKLADU"];
 
-    NacistFragmentyTSV(SOUBORY_PREKLADU "/fragmenty.tsv");
-    i = 1;
-    while (i in FRAGMENTY) {
-        if (FRAGMENTY[i "/adr"] == "kapitoly") {
-            f = "kapitoly/" FRAGMENTY[i "/id"] ".md";
-            if (!Test("-r " f)) {
-                ShoditFatalniVyjimku("Nemohu číst ze souboru " f "!");
-            }
-            idkapitol[ARGC] = FRAGMENTY[i "/id"];
-            ARGV[ARGC++] = f;
-        }
-        ++i;
-    }
-    if (i > 1) {
-        print "=== Zahajuji extrakci pomocných funkcí a skriptů. ===";
-    }
+    print "=== Zahajuji extrakci pomocných funkcí a skriptů. ===";
 }
 
 BEGINFILE {
     zapnuto = 0;
-    if (LADENI) {print "LADĚNÍ: otevírám soubor " FILENAME > "/dev/stderr"}
+    id_kapitoly = FILENAME;
+    sub(/^kapitoly\//, "", id_kapitoly);
+    sub(/\.md$/, "", id_kapitoly);
+    if (LADENI) {print "LADĚNÍ: otevírám soubor " FILENAME " (id kapitoly " id_kapitoly ")" > "/dev/stderr"}
 }
 
 # vynechat zakomentované úseky
@@ -227,27 +214,27 @@ jmeno != "" && /^(<odsadit[1-8]>)?\*\*.*\*\*(<br>)?$/ {
         if (typ == "FUNKCE") {
             if (jmeno in funkce_puvod) {
                 if (funkce_definice[jmeno] == telo) {
-                    print "VAROVÁNÍ: Opakovaná (ale identická) definice pomocné funkce " jmeno "() v kapitole [" idkapitol[ARGIND] "], původně definována v kapitole [" funkce_puvod[jmeno] "]." > "/dev/stderr";
+                    print "VAROVÁNÍ: Opakovaná (ale identická) definice pomocné funkce " jmeno "() v kapitole [" id_kapitoly "], původně definována v kapitole [" funkce_puvod[jmeno] "]." > "/dev/stderr";
                 } else {
                     ShoditFatalniVyjimku("Opakovaná definice pomocné funkce " jmeno "()!");
                 }
             }
-            funkce_puvod[jmeno] = idkapitol[ARGIND];
+            funkce_puvod[jmeno] = id_kapitoly;
             funkce_definice[jmeno] = telo;
         } else {
             if (jmeno in skripty_puvod) {
                 if (skripty_definice[jmeno] == telo) {
-                    print "VAROVÁNÍ: Opakovaná (ale identická) definice pomocného skriptu " jmeno " v kapitole [" idkapitol[ARGIND] "], původně definován v kapitole [" skripty_puvod[jmeno] "]." > "/dev/stderr";
+                    print "VAROVÁNÍ: Opakovaná (ale identická) definice pomocného skriptu " jmeno " v kapitole [" id_kapitoly "], původně definován v kapitole [" skripty_puvod[jmeno] "]." > "/dev/stderr";
                 } else {
                     ShoditFatalniVyjimku("Opakovaná definice pomocného skriptu" jmeno "!");
                 }
             }
-            skripty_puvod[jmeno] = idkapitol[ARGIND];
+            skripty_puvod[jmeno] = id_kapitoly;
             skripty_definice[jmeno] = telo;
             skripty_x[jmeno] = (typ == "SKRIPT" ? 1 : 0);
         }
         delka = length(gensub(/[^\n]/, "", "g", telo));
-        print "V kapitole [" idkapitol[ARGIND] "] nalezen" (typ == "FUNKCE" ? "a funkce " jmeno "()" : typ == "SKRIPT" ? " skript " jmeno : " úryvek " jmeno) "; definici tvoří " (delka == 1 ? "1 řádek" : delka " řádk" (1 < delka && delka < 5 ? "y" : "ů")) ".";
+        print "V kapitole [" id_kapitoly "] nalezen" (typ == "FUNKCE" ? "a funkce " jmeno "()" : typ == "SKRIPT" ? " skript " jmeno : " úryvek " jmeno) "; definici tvoří " (delka == 1 ? "1 řádek" : delka " řádk" (1 < delka && delka < 5 ? "y" : "ů")) ".";
         jmeno = "";
         popis = "";
         telo = "";
@@ -273,5 +260,5 @@ END {
         }
         close(fn);
     }
-    print "=== Extrakce pomocných funkcí a skriptů dokončena. ===\nPočty nalezených funkcí a skriptů+úryvků: " length(funkce_puvod) " a " length(skripty_puvod) " v " length(idkapitol) " kapitolách.";
+    print "=== Extrakce pomocných funkcí a skriptů dokončena. ===\nPočty nalezených funkcí a skriptů+úryvků: " length(funkce_puvod) " a " length(skripty_puvod) " v " (ARGC - 1) " kapitolách.";
 }

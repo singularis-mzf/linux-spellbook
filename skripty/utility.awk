@@ -270,29 +270,112 @@ function ZjistitJmenoVerze(textverze,   i) {
     return i != 0 ? gensub(/^\s*|\s*$/, "", "g", substr(textverze, i + 1)) : "";
 }
 
-function NacistFragmentyTSV(soubor,   oldFS, oldRS, oldLN, i, tmp) {
+function NacistFragmentyTSV(soubor,   oldFS, oldRS, oldLN, i, vystupMax, nevystupMax, plneId) {
     delete FRAGMENTY;
-    i = 0;
-    oldFS = FS; FS = "\t";
-    oldRS = RS; RS = "\n";
-    oldLN = $0;
+    vystupMax = 0; # max. číslo fragmentu na výstup
+    nevystupMax = 0; # počítadlo fragmentů ne-na-výstup
+    oldFS = FS; oldRS = RS; oldLN = $0;
+    FS = "\t"; RS = "\n";
+
     while (getline < soubor) {
-        ++i;
+        if ($1 != 0) {
+            # je na výstup ($1 = číslo na výstupu)
+            i = $1;
+            if ($1 > vystupMax) {vystupMax = $1}
+        } else {
+            i = -(++nevystupMax);
+        }
         FRAGMENTY[i] = $0;
         FRAGMENTY["id/" $2] = i;
-        FRAGMENTY[i "/id"] = $2;
-        FRAGMENTY[i "/nazev"] = $3;
-        FRAGMENTY[i "/adr"] = $4;
-        FRAGMENTY[i "/omezid"] = $5;
-        FRAGMENTY[i "/ikkap"] = $6;
-        FRAGMENTY[i "/stitky"] = $7;
+        FRAGMENTY[i "/plné-id"] = $2;
+        FRAGMENTY[i "/ploché-id"] = $3;
+        FRAGMENTY[i "/holé-id"] = $4;
+        FRAGMENTY[i "/název-podkapitoly"] = $5;
+        FRAGMENTY[i "/adresář"] = $6;
+        FRAGMENTY[i "/příznaky"] = $7;
+        FRAGMENTY[i "/omezid"] = $8;
+        FRAGMENTY[i "/id-nadkapitoly"] = $9;
+        FRAGMENTY[i "/celý-název"] = $10 == "NULL" ? $5 : $10 " / " $5;
+        FRAGMENTY[i "/štítky"] = $11;
+        FRAGMENTY[i "/ikkap"] = $12;
+        FRAGMENTY[i "/ploché-id-bez-diakr"] = $13;
     }
     close(soubor);
 
-    FS = oldFS;
-    RS = oldRS;
-    $0 = oldLN;
-    return FRAGMENTY["pocet"] = i;
+    FS = oldFS; RS = oldRS; $0 = oldLN;
+    FRAGMENTY["počet"] = vystupMax;
+    FRAGMENTY["početnevýstup"] = nevystupMax;
+    return vystupMax;
+}
+
+function FragInfo(a, b,   x) {
+    if (a ~ /^[^-0-9]/ && b == "") {
+        # Použití A: zadává se celé id; vrací číslo
+        #   pokud fragment nekončí otazníkem, musí existovat
+        #   pokud končí otazníkem, pro neexistující fragmenty vrací 0
+        # Příklady:
+        #   c = FragInfo("diskové-oddíly/lvm");
+        #   c = FragInfo("diskové-oddíly/lvm?");
+        #
+        if (a ~ /[^?]$/) {
+            if (("id/" a) in FRAGMENTY) {
+                return FRAGMENTY["id/" a];
+            } else {
+                ShoditFatalniVyjimku("FragInfo: Neznámé id fragmentu \"" a "\"!");
+            }
+        } else {
+            sub(/\?$/, "", a);
+            return (("id/" a) in FRAGMENTY) ? FRAGMENTY["id/" a] : 0;
+        }
+    } else if (a ~ /^-?[0-9]+$/ && b != "") {
+        # Použití B: zadává se číslo, vrací informaci
+        # Příklad:
+        #   if (FragInfo(15, "existuje")) {s = FragInfo(15, "celý-název")}
+        #
+        if (!((a "/plné-id") in FRAGMENTY)) {
+            if (b == "existuje") {return 0}
+            ShoditFatalniVyjimku("FragInfo: Neznámé číslo fragmentu: " a "!");
+        }
+        switch (b) {
+        case "existuje": return 1;
+        case "plné-id": x = FRAGMENTY[a "/plné-id"]; break;
+        case "ploché-id": x = FRAGMENTY[a "/ploché-id"]; break;
+        case "holé-id": x = FRAGMENTY[a "/holé-id"]; break;
+        case "název-podkapitoly": x = FRAGMENTY[a "/název-podkapitoly"]; break;
+        case "adresář": x = FRAGMENTY[a "/adresář"]; break;
+        case "příznaky": x = FRAGMENTY[a "/příznaky"]; break;
+        case "omezené-id": x = FRAGMENTY[a "/omezid"]; break;
+        case "id-nadkapitoly": x = FRAGMENTY[a "/id-nadkapitoly"]; break;
+        case "celý-název": x = FRAGMENTY[a "/celý-název"]; break;
+        case "štítky": x = FRAGMENTY[a "/štítky"]; break;
+        case "ikona-kapitoly": x = FRAGMENTY[a "/ikkap"]; break;
+        case "ploché-id-bez-diakr": x = FRAGMENTY[a "/ploché-id-bez-diakr"]; break;
+        default:
+            ShoditFatalniVyjimku("FragInfo: vyžadována naznámá informace \"" b "\"!");
+        }
+        if (x == "") {
+            ShoditFatalniVyjimku("FragInfo: k fragmentu číslo \"" a "\" chybí informace \"" b "\"!");
+        } else if (x == "NULL") {
+            return "";
+        } else {
+            return x;
+        }
+    } else if (a == "" && b != "") {
+        # Použití C: vrací globální informace
+        # Příklad:
+        #   n = FragInfo("", "počet");
+        #
+        switch (b) {
+        case "počet":
+            return FRAGMENTY["počet"];
+        case "počet-nevýstup":
+            return FRAGMENTY["početnevýstup"];
+        default:
+            ShoditFatalniVyjimku("Neznámá globální informace \"" b "\"!");
+        }
+    } else {
+        ShoditFatalniVyjimku("Chybné použití FragInfo(\"" a "\", \"" b "\")!");
+    }
 }
 
 function OmezitNazev(s, ponechatCestu) {
