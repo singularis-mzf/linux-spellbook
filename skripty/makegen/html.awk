@@ -56,8 +56,9 @@ BEGIN {
     Zavislost("skripty/utility.awk");
     Zavislost(SOUBORY_PREKLADU "/fragmenty.tsv");
     # příkazy
-    Prikaz("mkdir -pv $(dir $@)");
-    Prikaz(AWK " -f skripty/překlad/do_html.awk $< >$@");
+    PrikazLI("'[HTML] " uplneId " (1/2)'");
+    PrikazVytvorAdresar();
+    Prikaz("@" AWK " -f skripty/překlad/do_html.awk $< >$@");
 
     if ($1 != 0) {
         # Jen pro fragmenty určené na výstup:
@@ -72,8 +73,9 @@ BEGIN {
         Zavislost(SOUBORY_PREKLADU "/fragmenty.tsv");
         ZavislostNaDatuSestaveni();
         # příkazy
-        Prikaz("mkdir -pv $(dir $@)");
-        Prikaz(AWK " -f skripty/plnění-šablon/kapitola.awk " \
+        PrikazLI("'[HTML] " uplneId " (2/2)'");
+        PrikazVytvorAdresar();
+        Prikaz("@" AWK " -f skripty/plnění-šablon/kapitola.awk " \
             "-v IDFORMATU=html " \
             "-v IDKAPITOLY='" uplneId "' " \
             "-v TELOKAPITOLY=$< " \

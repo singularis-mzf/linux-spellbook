@@ -28,14 +28,14 @@
 
 if test $# -gt 0
 then
-    reset="$(tput sgr0)"
-    text="$(tput bold)∙ $1"
+    #reset="$(tput sgr0)"
+    text="∙ $1"
     while test $# -gt 1
     do
         shift
         text+=" $1"
     done
-    text+="${reset}"$'\n'
+    text+=$'\n'
     printf %s "$text"
 fi
 true

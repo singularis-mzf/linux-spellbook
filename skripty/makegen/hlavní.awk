@@ -146,6 +146,26 @@ function join(oddelovac, pole,   i, s)
     return s;
 }
 
+function PrikazVytvorAdresar(viditelne)
+{
+    return Prikaz(viditelne ? "mkdir -pv $(dir $@)" : "@mkdir -pv $(dir $@)");
+}
+
+function PrikazH1(s)
+{
+    return Prikaz("@skripty/h1 " s);
+}
+
+function PrikazH2(s)
+{
+    return Prikaz("@skripty/h2 " s);
+}
+
+function PrikazLI(s)
+{
+    return Prikaz("@skripty/li " s);
+}
+
 #$(DATUM_SESTAVENI_SOUBOR) $(DEB_VERZE_SOUBOR) $(JMENO_SESTAVENI_SOUBOR):
 
 function ZavislostNaJmenuSestaveni() {
