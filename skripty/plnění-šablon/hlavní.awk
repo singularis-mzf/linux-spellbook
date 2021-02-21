@@ -114,7 +114,14 @@ STAV_PODMINENENO_PREKLADU == 3 {next}
     switch ($0)
     {
         case "{{POKUD JSOU PRÉMIOVÉ KAPITOLY}}":
-            STAV_PODMINENENO_PREKLADU = (system("test -s '" ENVIRON["SOUBORY_PREKLADU"] "/prémiové-kapitoly.tsv'") == 0) ? 1 : 2;
+            VyzadujeFragmentyTSV();
+            for (i = -1; FragInfo(i, "existuje"); --i) {
+                if (FragInfo(i, "příznaky") ~ /p/) {
+                    STAV_PODMINENENO_PREKLADU = 1;
+                    next;
+                }
+            }
+            STAV_PODMINENENO_PREKLADU = 2;
             next;
         case "{{POKUD MÁ REKLAMNÍ PATU}}":
             STAV_PODMINENENO_PREKLADU = REKLAMNI_PATA != "" ? 1 : 2;
@@ -210,13 +217,14 @@ function RidiciRadekSpolecnaObsluha(text,   i, soubor) {
                 printf("<a href=\"%s.htm\" class=\"kapitola\"><span class=\"ikona\"><img src=\"obrazky/%s\" alt=\"[]\"></span><span class=\"cislo\">%d</span><span class=\"nazev\">%s</span></a>\n", FragInfo(i, "ploché-id-bez-diakr"), OmezitNazev(FragInfo(i, "ikona-kapitoly"), 1), i, FragInfo(i, "celý-název"));
             }
             jsou_premiove = 0;
-            soubor = ENVIRON["SOUBORY_PREKLADU"] "/prémiové-kapitoly.tsv";
-            while (getline < soubor) {
-                if (!jsou_premiove) {
-                    jsou_premiove = 1;
-                    printf("%s\n", "<div class=\"premiove\"><strong>Prémiové kapitoly:</strong>");
+            for (i = -1; FragInfo(i, "existuje"); --i) {
+                if (FragInfo(i, "příznaky") ~ /p/) {
+                    if (!jsou_premiove) {
+                        jsou_premiove = 1;
+                        printf("%s\n", "<div class=\"premiove\"><strong>Prémiové kapitoly:</strong>");
+                    }
+                    printf("<div>%s</div>\n", FragInfo(i, "celý-název"));
                 }
-                printf("<div>%s</div>\n", $2);
             }
             close(soubor);
             if (jsou_premiove) {

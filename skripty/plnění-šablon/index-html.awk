@@ -91,7 +91,15 @@ function RidiciRadek(text,   i, s) {
             return 0;
 
         case "VYPSAT PRÉMIOVÉ KAPITOLY":
-            system("sed -E 's/^[^\t]*\t/<div>/;s/(\t.*)?$/<\\/div>/' \"${SOUBORY_PREKLADU}/prémiové-kapitoly.tsv\"");
+            prikaz = "LC_ALL=cs_CZ.UTF-8 sort";
+            if (FragInfo(-1, "existuje")) {
+                for (i = -1; FragInfo(i, "existuje"); --i) {
+                    if (FragInfo(i, "příznaky") ~ /p/) {
+                        printf("<div>%s</div>", FragInfo(i, "celý-název")) | prikaz;
+                    }
+                }
+                close(prikaz);
+            }
             return 0;
 
         default:

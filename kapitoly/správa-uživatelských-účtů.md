@@ -451,6 +451,8 @@ s výjimkou příkazů „convert“ a „identify“, které je potřeba doin
 * [HowTo: Linux Add User To Group](https://www.hostingadvice.com/how-to/linux-add-user-to-group/) (anglicky)
 * [TL;DR stránka „adduser“](https://github.com/tldr-pages/tldr/blob/master/pages/linux/adduser.md) (anglicky)
 
+!ÚzkýRežim: vyp
+
 ## Pomocné skripty a funkce
 
 *# lkk veskupine – vypíše seznam uživatelských účtů, které jsou v některé z uvedených skupin*<br>
@@ -462,5 +464,3 @@ s výjimkou příkazů „convert“ a „identify“, které je potřeba doin
 <odsadit1>**sed -E "/^([^:]\*:){3}${gid}:/!""d;s/:.\*//" /etc/passwd**<br>
 <odsadit1>**getent group "$gid" \| cut -d : -f 4 \| sed -E '/^$/d;s/,/\\n/g'**<br>
 **done \| LC\_ALL=C.UTF-8 sort -u**
-
-!ÚzkýRežim: vyp

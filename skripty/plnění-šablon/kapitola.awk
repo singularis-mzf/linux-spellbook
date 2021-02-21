@@ -180,7 +180,7 @@ function PrelozitVystup(radek) {
     gsub(/\{\{IKONA KAPITOLY\}\}/, ikona_kapitoly, radek);
     gsub(/\{\{IKONA KAPITOLY BEZ DIAKRITIKY\}\}/, OmezitNazev(ikona_kapitoly, 1), radek);
     if (radek ~ /\{\{REKLAMNÍ PATA\}\}/) {
-        print "XYZ" > "/dev/stderr";
+        #print "XYZ" > "/dev/stderr";
         VyzadujeFragmentyTSV();
         VyzadujePromennou("IDFORMATU", "{{REKLAMNÍ PATA}} je podporována jen ve formátech HTML a LOG!");
         if (IDFORMATU != "html") {ShoditFatalniVyjimku("{{REKLAMNÍ PATA}} je podporována jen ve formátech HTML a LOG!")}

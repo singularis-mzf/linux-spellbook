@@ -62,19 +62,29 @@ Sloupce *fragmenty.tsv* jsou následující:
 
 | # | Identifikátor | Popis | Příklad |
 | ---: | --- | :--- | :--- |
-| 1 | *není* | Číslo fragmentu. U fragmentů určených na výstup odpovídá jejich pořadovému číslu na výstupu; fragmenty neurčené na výstup dostávají záporná čísla; číslo 0 se nepřiděluje. | 7 |
+| 1 | *není* | Číslo fragmentu. U fragmentů určených na výstup odpovídá jejich pořadovému číslu na výstupu (&gt; 0); fragmenty neurčené na výstup zde mají „0“. | 7 |
 | 2 | plné-id | ID fragmentu včetně případné nadkapitoly | diskové-oddíly/softwarový-raid |
 | 3 | ploché-id | Plné ID, kde je lomítko nahrazeno pomlčkou | diskové-oddíly-softwarový-raid |
 | 4 | holé-id | ID fragmentu bez identifikace nadkapitoly | softwarový-raid |
 | 5 | název-podkapitoly | Název bez nadkapitoly | Softwarový RAID |
 | 6 | adresář | Adresář („dodatky“ nebo „kapitoly“). | kapitoly |
-| 7 | příznaky | Příznaky fragmentu (viz níže). | v |
+| 7 | příznaky | Příznaky fragmentu (viz níže). | zN |
 | 8 | omezid | Omezené ID kapitoly. Používá se především ve formátu PDF. Začíná prefixem „kap“ a obsahuje pouze malá písmena anglické abecedy. | kapxstahovniwebovchstrnek |
 | 9 | id-nadkapitoly | Je-li fragment podkapitolou, je zde uvedeno ID jeho nadkapitoly; jinak je toto pole prázdné (NULL). | diskové-oddíly |
-| 10 | celý-název | Název s názvem nadkapitoly | Diskové oddíly / Softwarový RAID |
+| 10 | *není* | Název nadkapitoly (není-li, je pole prázdné, tedy NULL) | Diskové oddíly |
 | 11 | štítky | Štítky kapitoly ve složených závorkách bez oddělovačů. | \{internet\}\{tematický okruh\} |
 | 12 | ikkap | Ikona kapitoly (obrázek ve formátu „png“; cesta je relativní k adresáři „obrázky“). Pokud kapitola nemá vlastní ikonu, uvede se generická. | ik/diskové-oddíly.png |
 | 13 | ploché-id-bez-diakr | Ploché ID po odstranění diakritiky. Používá se v názvech souborů HTML verze. | diskove-oddily-softwarovy-raid |
+
+Id *celý-název* se ve skriptech rozvine na název s názvem nadkapitoly i podkapitoly (např. „Diskové oddíly / Softwarový RAID“).
+
+Příznaky:
+
+* **d** — Dodatek.
+* **N** — Nadkapitola kapitoly určené na výstup (bez ohledu na to, zda je sama na výstup určena).
+* **p** — Prémiová kapitola (jen tehdy, jsou-li prémiové kapitoly zapnuty).
+* **v** — Vydaný fragment (bez ohledu na to, zda patří na výstup).
+* **z** — Fragment určený na výstup (má v první sloupci kladné číslo).
 
 ### postprocess.dat a postprocessing
 

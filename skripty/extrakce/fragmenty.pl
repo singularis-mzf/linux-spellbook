@@ -102,12 +102,12 @@ my %číslaKapitol; # ID => pořadové číslo na výstupu (1, 2, ...)
 
 # přečíst seznam vydaných kapitol a případně nastavit příznak „p“
 {
-    my $f = čístPrvníZ(qw(pořadí-kapitol.vydané.lst poradi-kapitol.vydane.lst));
+    my $f = čístPrvníZ("seznamy/vydané-fragmenty.seznam");
     if (defined($f)) {
         my $s;
         while (defined($s = scalar(readline($f)))) {
             chomp($s);
-            next if ($s !~ /\A[^# ]+\z/); # komentář
+            #next if ($s !~ /\A[^# ]+\z/); # komentář
             jePlatnéId($s)
                 or die("Chyba syntaxe: \"${s}\" není platní ID kapitoly či dodatku!");
             my $index = $všechnyFragmenty{$s};
@@ -309,20 +309,6 @@ ladění("Druhý průchod skončil.");
             bezDiakritiky($všechnyFragmenty[$i] =~ s/\//-/gr)
             );
     }
-    close($f);
-}
-
-# Vypsat prémiové-kapitoly.tsv
-{
-    open(my $f, ">:utf8", "${soubory_překladu}/prémiové-kapitoly.tsv");
-
-    for my $i (0..(alength(@všechnyFragmenty) - 1)) {
-        if (máPříznak($i, "p")) #á
-        {
-            fprintf($f, "%s\t%s\n", $všechnyFragmenty[$i], $název[$i]);
-        }
-    }
-
     close($f);
 }
 

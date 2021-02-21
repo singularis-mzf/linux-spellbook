@@ -29,6 +29,7 @@
 BEGIN {
     VyzadujeFragmentyTSV();
     VyzadujePromennou("IDFORMATU");
+    JMENOVERZE = ENVIRON["JMENO"];
     VyzadujePromennou("JMENOVERZE");
 }
 
@@ -88,7 +89,11 @@ function RidiciRadek(text) {
         case "VYPSAT PRÉMIOVÉ KAPITOLY":
             VyzadujeFragmentyTSV();
             if (IDFORMATU == "html") {ShoditFatalniVyjimku("Značka {{VYPSAT PRÉMIOVÉ KAPITOLY}} je pro formát HTML implementována pouze ve skriptu index-html.awk!")}
-            system("sed -E 's/^[^\t]*\t/\\\\premiovakapitola{/;s/(\t.*)?$/}%/' \"${SOUBORY_PREKLADU}/prémiové-kapitoly.tsv\"");
+            for (i = -1; FragInfo(i, "existuje"); --i) {
+                if (FragInfo(i, "příznaky") ~ /p/) {
+                    printf("\\premiovakapitola{%s}\n", FragInfo(i, "celý-název"));
+                }
+            }
             return 0;
 
         default:
