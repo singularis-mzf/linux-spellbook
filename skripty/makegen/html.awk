@@ -167,6 +167,7 @@ END {
     Zavislost("formáty/html/šablona.htm");
     Zavislost("skripty/plnění-šablon/index-html.awk");
     Zavislost("skripty/plnění-šablon/hlavní.awk");
+    Zavislost("skripty/utility.awk");
     Zavislost(SOUBORY_PREKLADU "/fragmenty.tsv");
     # [ ] + datum sestavení
     # příkazy
@@ -202,7 +203,7 @@ END {
         "-v DATUMSESTAVENI=" DATUM_SESTAVENI " " \
         "-v COPYRIGHTY_KAPITOL=" SOUBORY_PREKLADU "/html/kap-copys.htm " \
         "-v COPYRIGHTY_OBRAZKU=" SOUBORY_PREKLADU "/html/obr-copys.htm " \
-        "-v VARIANTA=autori " \
+        "-v VARIANTA=autoři " \
         "formáty/html/šablona.htm > $@");
 
     # 7. shromáždit štítky na stránku x-stitky.htm
@@ -222,7 +223,7 @@ END {
         "-v IDKAPITOLY=_stitky " \
         "-v DATUMSESTAVENI=" DATUM_SESTAVENI " " \
         "-v FRAGMENTY_TSV=" SOUBORY_PREKLADU "/fragmenty.tsv " \
-        "-v VARIANTA=stitky " \
+        "-v VARIANTA=štítky " \
         "formáty/html/šablona.htm >$@");
 
     # Závěr

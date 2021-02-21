@@ -94,6 +94,9 @@ function Pokud(podminka,   i, pole) {
             return predevsim_pro != "";
         case "MÁ VERZE JMÉNO":
             return ZjistitJmenoVerze(JMENOVERZE) != "";
+        case "MÁ PODKAPITOLY":
+            i = FragInfo(IDKAPITOLY "?");
+            return i != 0 && FragInfo(i, "příznaky") ~ /N/;
     }
     ShoditFatalniVyjimku("Neznámá direktiva {{POKUD " podminka "}}!");
 }
@@ -159,9 +162,12 @@ function RidiciRadek(text,   prikaz, i) {
 #       – Má za úkol zpracovat obyčejný řádek, než bude vypsán na výstup.
 #       – Typicky nahrazuje výskyty speciálních značek.
 #
-function PrelozitVystup(radek) {
+function PrelozitVystup(radek,   i, vysl) {
 #    gsub(/\{\{JMÉNO VERZE\}\}/, OdzvlastnitKNahrade(JMENOVERZE), radek);
     gsub(/\{\{NÁZEV KAPITOLY\}\}/, nazev_kapitoly, radek);
+    if (radek ~ /\{\{NÁZEV KAPITOLY HTML EXTRA\}\}/) {
+        gsub(/\{\{NÁZEV KAPITOLY HTML EXTRA\}\}/, ZiskatNazevKapitolyHtmlExtra(IDKAPITOLY), radek);
+    }
     gsub(/\{\{PŘEDCHOZÍ ID\}\}/, id_predchozi, radek);
     gsub(/\{\{PŘEDCHOZÍ ID BEZ DIAKRITIKY\}\}/, id_predchozi_bez_diakr, radek);
     gsub(/\{\{PŘEDCHOZÍ NÁZEV\}\}/, nazev_predchozi, radek);
@@ -186,6 +192,19 @@ function PrelozitVystup(radek) {
         if (IDFORMATU != "html") {ShoditFatalniVyjimku("{{REKLAMNÍ PATA}} je podporována jen ve formátech HTML a LOG!")}
         gsub(/\{\{REKLAMNÍ PATA\}\}/, REKLAMNI_PATA, radek);
     }
+    if (radek ~ /\{\{ODKAZY NA PODKAPITOLY\}\}/) {
+        VyzadujeFragmentyTSV();
+        if (IDKAPITOLY == "") {ShoditFatalniVyjimku("Chybějící ID kapitoly pro {{ODKAZY NA PODKAPITOLY}}!")}
+        if (IDFORMATU != "html") {ShoditFatalniVyjimku("{{ODKAZY NA PODKAPITOLY}} jsou implementovány pouze pro formát HTML!")}
+        vysl = "";
+        for (i = 1; FragInfo(i, "existuje"); ++i) {
+            if (FragInfo(i, "id-nadkapitoly") == IDKAPITOLY) {
+                vysl = sprintf("%s<a href=\"%s.htm\">%s %s</a>;\n", vysl, \
+                    FragInfo(i, "ploché-id-bez-diakr"), i, FragInfo(i, "název-podkapitoly"));
+            }
+        }
+        gsub(/\{\{ODKAZY NA PODKAPITOLY\}\}/, vysl, radek);
+    }
 
     /^{/; # prázdný příkaz kvůli zvýrazňování syntaxe
     if (match(radek, /\{\{[^}]+\}\}/)) {
@@ -205,6 +224,15 @@ function Konec() {
 
 # Soukromé funkce a proměnné:
 # ============================================================================
+
+function ZiskatNazevKapitolyHtmlExtra(plneId,   cisloKapitoly, cisloNadkapitoly)
+{
+    cisloKapitoly = FragInfo(plneId);
+    if (plneId ~ /\// && (cisloNadkapitoly = FragInfo(cisloKapitoly, "číslo-nadkapitoly")) > 0) {
+        return "<a href=\"" FragInfo(cisloNadkapitoly, "ploché-id-bez-diakr") ".htm\">"FragInfo(cisloNadkapitoly, "celý-název") "</a> / " FragInfo(cisloKapitoly, "název-podkapitoly");
+    }
+    return FragInfo(FragInfo(plneId), "celý-název");
+}
 
 function VypsatPrehledStitku(format,   i, n, s, cislo_kapitoly, stitky_kapitol, stitky_kapitoly, ikony_kapitol) {
     if (format != "html") {

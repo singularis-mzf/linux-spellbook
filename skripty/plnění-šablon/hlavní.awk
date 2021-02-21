@@ -213,25 +213,7 @@ function RidiciRadekSpolecnaObsluha(text,   i, soubor) {
         case "MENU KAPITOLY":
             if (IDFORMATU != "html") {ShoditFatalniVyjimku("{{MENU KAPITOLY}} je podporováno jen pro formát HTML!")}
             VyzadujeFragmentyTSV();
-            for (i = 1; FragInfo(i, "existuje"); ++i) {
-                printf("<a href=\"%s.htm\" class=\"kapitola\"><span class=\"ikona\"><img src=\"obrazky/%s\" alt=\"[]\"></span><span class=\"cislo\">%d</span><span class=\"nazev\">%s</span></a>\n", FragInfo(i, "ploché-id-bez-diakr"), OmezitNazev(FragInfo(i, "ikona-kapitoly"), 1), i, FragInfo(i, "celý-název"));
-            }
-            jsou_premiove = 0;
-            for (i = -1; FragInfo(i, "existuje"); --i) {
-                if (FragInfo(i, "příznaky") ~ /p/) {
-                    if (!jsou_premiove) {
-                        jsou_premiove = 1;
-                        printf("%s\n", "<div class=\"premiove\"><strong>Prémiové kapitoly:</strong>");
-                    }
-                    printf("<div>%s</div>\n", FragInfo(i, "celý-název"));
-                }
-            }
-            close(soubor);
-            if (jsou_premiove) {
-                printf("%s %s\n", "</div><p>Tyto kapitoly můžete získat jako odměnu za překlad ze zdrojového kódu. Podrobnější informace",
-                       "<a href=\"https://github.com/singularis-mzf/linux-spellbook/blob/stabiln%C3%AD/dokumentace/odm%C4%9Bna-za-sestaven%C3%AD.md\">na GitHubu</a>.</p>");
-            }
-            return 0;
+            return MenuKapitoly();
 
         case "MENU ŠTÍTKY":
             if (IDFORMATU != "html") {ShoditFatalniVyjimku("{{MENU ŠTÍTKY}} je podporováno jen pro formát HTML!")}
@@ -265,6 +247,43 @@ function RidiciRadekSpolecnaObsluha(text,   i, soubor) {
             ShoditFatalniVyjimku("Neznámý řídicí řádek: {{" text "}}!");
     }
 }
+
+# Místní pomocné funkce
+# ====================================================
+function MenuKapitoly(    i, x, zpracovane_nadkapitoly, podkapitolyText, podkapitoly, podkapitolyPocet)
+{
+    delete zpracovane_nadkapitoly;
+
+    for (i = 1; FragInfo(i, "existuje"); ++i) {
+
+        x = FragInfo(i, "číslo-nadkapitoly");
+        x = x != 0 ? x : i;
+        if (x in zpracovane_nadkapitoly) {continue}
+        zpracovane_nadkapitoly[x] = 1;
+
+        podkapitolyText = NajitPodkapitoly(i, 1);
+        podkapitolyPocet = podkapitolyText == "" ? 0 : split(podkapitolyText, podkapitoly, /\s+/);
+
+        printf("%s\n", HtmlDivOdkaz(x, podkapitolyText));
+    }
+    jsou_premiove = 0;
+    for (i = -1; FragInfo(i, "existuje"); --i) {
+        if (FragInfo(i, "příznaky") ~ /p/) {
+            if (!jsou_premiove) {
+                jsou_premiove = 1;
+                printf("%s\n", "<div class=\"premiove\"><strong>Prémiové kapitoly:</strong>");
+            }
+            printf("<div>%s</div>\n", FragInfo(i, "celý-název"));
+        }
+    }
+    close(soubor);
+    if (jsou_premiove) {
+        printf("%s %s\n", "</div><p>Tyto kapitoly můžete získat jako odměnu za překlad ze zdrojového kódu. Podrobnější informace",
+               "<a href=\"https://github.com/singularis-mzf/linux-spellbook/blob/stabiln%C3%AD/dokumentace/odm%C4%9Bna-za-sestaven%C3%AD.md\">na GitHubu</a>.</p>");
+    }
+    return 0;
+}
+
 
 END {
     if (!FATALNI_VYJIMKA && !BYL_ZACATEK) {

@@ -39,6 +39,8 @@ Poznámky:
 
 * **Selektor** je...
 * **Vlastnost** je...
+* **Logický řádek** (zkratkou „l. ř.“) je v metodě flexbox: pokud je základní směr umísťování zrozenců po řádcích (zleva doprava nebo zprava doleva), je to každý řádek; pokud je základní směr umísťování zrozenců po sloupcích (shora dolů nebo zdola nahoru), je to každý sloupec.
+* **Logický sloupec** (zkratkou „l. s.“) je v metodě flexbox doplněk k logickému řádku: jsou-li logickými řádky řádky, jsou logickými sloupci sloupce; naopak jsou-li logickými řádky sloupce, jsou logickými sloupci řádky.
 
 !ÚzkýRežim: vyp
 
@@ -66,7 +68,124 @@ Poznámky:
 **margin:** {*nahoře*} {*vpravo*} {*dole*} {*vlevo*}**;**<br>
 **padding:** {*nahoře*} {*vpravo*} {*dole*} {*vlevo*}**;**
 
-### Ostatní
+### Zaklínadla: Flexbox
+
+*# zobrazit prvek a jeho potomky metodou „flexbox“*<br>
+**display: flex;**
+
+### Kontejner: orientace l. ř
+
+*# zleva doprava, nezalamovat*<br>
+**flex-flow: row nowrap;**<br>
+
+*# zleva doprava, další l. ř. pod stávajícím*<br>
+**flex-flow: row wrap;**
+
+*# zleva doprava, další l. ř. nad stávající*<br>
+**flex-flow: row wrap-reverse;**
+
+*# shora dolů, nezalamovat*<br>
+**flex-flow: column nowrap;**
+
+*# shora dolů, další l. ř. vpravo od stávajícího*<br>
+**flex-flow: column wrap;**
+
+*# shora dolů, další l. ř. vlevo od stávající*<br>
+**flex-flow: column wrap-reverse;**
+
+*# zprava doleva, nezalamovat*<br>
+**flex-flow: row-reverse nowrap;**
+
+*# zprava doleva, další l. ř. pod stávajícím*<br>
+**flex-flow: row-reverse wrap;**
+
+*# zprava doleva, další l. ř. nad stávající*<br>
+**flex-flow: row-reverse wrap-reverse;**
+
+*# zespodu nahoru, nezalamovat*<br>
+**flex-flow: column-reverse nowrap;**
+
+*# zespodu nahoru, další l. ř. vpravo od stávajícího*<br>
+**flex-flow: column-reverse wrap;**
+
+*# zespodu nahoru, další l. ř. vlevo od stávající*<br>
+**flex-flow: column-reverse wrap-reverse;**
+
+<!--
+flex-flow: row nowrap;
+flex-flow: row wrap;
+flex-flow: row wrap-reverse;
+flex-flow: column nowrap;
+flex-flow: column wrap;
+flex-flow: column wrap-reverse;
+flex-flow: row-reverse nowrap;
+flex-flow: row-reverse wrap;
+flex-flow: row-reverse wrap-reverse;
+flex-flow: column-reverse nowrap;
+flex-flow: column-reverse wrap;
+flex-flow: column-reverse wrap-reverse;
+-->
+
+### Kontejner: kam umístit přebytečné místo l. ř.
+
+Poznámka: toto nastavení je ignorováno, pokud má kterýkoliv prvek na logickém
+řádku nastaveno nenulové roztažení (vlastnost „flex-grow“, resp. „flex“).
+
+*# za posledního zrozence (výchozí)*<br>
+**justify-content: flex-start;**
+
+*# rozložit na začátek a konec l.ř.*<br>
+**justify-content: center;**
+
+*# před prvního zrozence*<br>
+**justify-content: flex-end;**
+
+*# rozložit do mezer mezi zrozence; na začátek a konec žádnou/polovinu mezery*<br>
+**justify-content: space-between;**<br>
+**justify-content: space-around;**
+
+*# roztáhnout prvky, aby přebytečné místo zabraly*<br>
+!: Nastavte prvkům (ne kontejneru):<br>
+**flex: 1 1 auto;**
+
+### Kontejner: kam umístit přebytečné místo l. s.
+
+*# za poslední l. ř. (výchozí)*<br>
+**align-content: flex-start;**
+
+*# rozložit před první a za poslední l. ř.*<br>
+**align-content: center;**
+
+*# před první l. ř.*<br>
+**align-content: flex-end;**
+
+*# rozložit do mezer mezi logickými řádky; na začátek a konec žádnou/polovinu mezery*<br>
+**align-content: space-between;**<br>
+**align-content: space-around;**
+
+### Prvek: ortogonální zarovnání v l. ř.
+
+*# roztáhnout na celou výšku (resp. šířku) l. ř. (výchozí)*<br>
+**align-self: stretch;**
+
+*# zarovnat k přímce předchozím a tímto/tímto a následujícím logickým řádkem*<br>
+**align-self: flex-start;**<br>
+
+*# zarovnat účaří*<br>
+**align-self: baseline;**
+
+### Prvek: další vlastnosti
+
+*# nastavit chování délky prvku na logickém řádku (obecně/výchozí nastavení)*<br>
+*// „Roztažení“ je nezáporné celé číslo; výchozí je 0, která znamená, že se prvek neroztahuje. Má-li kterýkoliv prvek na logické řádce nenulové roztažení, zbylé volné místo na l. ř. se rozdělí na tolik dílů, kolik je potřeba, a všechny prvky se roztáhnou o tolik dílů, kolik udává jejich „roztažení“. Pouze v případě, že mají všechny prvky roztažení nulové, rozmístí se volné místo podle vlastnosti kontejneru „justify-content“.*<br>
+*// „Smrštění“ je nezáporné celé číslo; výchozí je 1. Není-li na logické řádce dostatek místa pro všechny prvky, chybějící místo se rozdělí na tolik dílů, kolik je potřeba, a délka každého prvku se zmenší o tolik dílů, kolik udává jeho „smrštění“. Nastavením smrštění na 0 lze zmenšení délky prvku zabránit.*<br>
+*// „Výchozí-délka“ je buď „auto“ (výchozí hodnota, která znamená přirozenou šířku prvku), konkrétní délka (např. „10em“) nebo hodnota v procentech (např. „50%“).*<br>
+**flex:** {*roztažení*} {*smrštění*} {*výchozí-délka*}<br>
+**flex: 0 1 auto;**
+
+*# stanovit **pořadí** prvku v kontejneru*<br>
+*// Výchozí pořadí je 0.*<br>
+**order:** {*celé-číslo*}
 
 ## Parametry příkazů
 <!--

@@ -14,8 +14,6 @@ https://creativecommons.org/licenses/by-sa/4.0/
 <!--
 Poznámky:
 
-[x] BTRFS
-[x] mdadm!
 [ ] sfdisk
 [ ] Pokrýt ovládání programu fdisk.
 [ ] Šifrování?
@@ -27,21 +25,6 @@ https://www.root.cz/clanky/pripojeni-obrazu-disku-pod-beznym-uzivatelem-bez-opra
 Volby připojení:
 data=ordered
 uhelper=udisks2
-
-Výhody btrfs:
-* umožňuje klonování pododdílů s tím, že kopie se vytvoří až při zápisu
-* automaticky počítá a ukládá kontrolní součty dat; umožňuje jejich kontrolu
-* umožňuje použít při ukládání dat kompresi
-
-Nevýhody btrfs:
-* odkládací soubor může být na btrfs umístěn jen za zvláštních okolností
-* je obtížné správně zjistit a interpretovat velikost volného místa v btrfs
-* je asynchronní, takže chyby a selhání se projevují opožděně a není snadné určit jejich příčinu
-* s jeho zřízením je víc starostí
-
-[ ] http://manpages.ubuntu.com/manpages/focal/en/man8/btrfs-filesystem.8.html
-[ ] http://manpages.ubuntu.com/manpages/focal/en/man8/btrfs-check.8.html
-? http://manpages.ubuntu.com/manpages/focal/en/man8/btrfs-balance.8.html
 
 - Na Ubuntu 20.04 je rozsah čísla /dev/md* 0 až 1048575 (2^20-1).
 
@@ -57,13 +40,9 @@ Nevýhody btrfs:
 
 Tato kapitola se zabývá dělením pevného disku na oddíly, jejich formátováním
 (zejména souborové systémy ext4, btrfs, FAT32 a NTFS), údržbou a připojováním
-(ručním i automatickým). Zabývá se také prací s ramdisky, odkládacím prostorem,
-a LVM a softwarovým RAID (prokládání, zrcadlení a RAID s paritou).
-<!-- a squash-fs.-->
+(ručním i automatickým). Zabývá se také prací s ramdisky a odkládacím prostorem.
 
-Tato verze kapitoly pokrývá jen částečně: dělení pevného disku na oddíly,
-práci se systémem btrfs, LVM (nejsou pokryty „layouty“ a „snapshoty“)
-a softwarový RAID (nejsou pokryty RAID6 a RAID10).
+Tato verze kapitoly pokrývá jen částečně: dělení pevného disku na oddíly.
 
 Tato verze kapitoly nepokrývá: připojovaní souborových systémů obyčejnými uživateli;
 šifrování a nastavování kvót; další typy systému souborů (např. ZFS);
@@ -92,17 +71,6 @@ K identifikaci konkrétního systému souborů se používá několik druhů id
 * **Jmenovka** je textový identifikátor souborového systému přidělovaný uživatelem, zpravidla při formátování.
 * Poslední možností je cesta k zařízení v /dev, např. „/dev/sda1“. Tato možnost je preferována u logických oddílů LVM; u oddílů na discích se nedoporučuje, protože cesta k zařízení se může snadno změnit.
 
-### LVM
-
-LVM (logical volume management) je metoda rozložení oddílů na pevném disku, která má
-odstínit uživatele od fyzického rozložení dat a poskytnout nové možnosti, např. rozložení
-jednoho oddílu přes několik fyzických disků nebo snadné přesouvání oddílů a změnu jejich velikosti, často i bez nutnosti restartu počítače.
-
-* **Logický oddíl** je v LVM obdoba běžného diskového oddílu (tzn. je možno ho naformátovat a používat k ukládání dat); na rozdíl od něj ale nemá pevné fyzické umístění na disku, jeho fyzické umístění je vymezené skupinou svazků, ve které je vytvořen. Logický oddíl LVM je dostupný pod cestou „/dev/{*skupina-svazků*}/{*název-oddílu*}“.
-* **Skupina svazků** je v LVM neprázdná pojmenovaná skupina fyzických svazků k vytváření logických oddílů. Data každého logického oddílu se fyzicky nacházejí pouze na fyzických svazcích příslušných do dané skupiny.
-* **Fyzický svazek** je v LVM blokové zařízení (celý disk nebo jeho oddíl), které je nastavené a naformátované k ukládání dat logických oddílů. Nemůže to být logický oddíl LVM.
-* Normálně je každá skupina svazků **aktivovaná**, což znamená, že její logické oddíly jsou dostupné a je možné je připojit. Skupina svazků, jejíž fyzické svazky se nacházejí na výměnných médiích, se automaticky aktivuje při připojení posledního z nich. Aby však bylo možno tato média odpojit bez vypnutí systému, je nutno skupinu ručně **deaktivovat**, čímž její logické oddíly přestanou být dostupné.
-
 ### Co a kam připojit
 
 V následujících zaklínadlech platí:
@@ -124,32 +92,6 @@ Tento tvar je vhodný pouze u logických oddílů LVM či při jednorázovém p
 {*typ-soub-sys*} je identifikátor typu souborového systému (např. ext4, btrfs, vfat, ntfs, tmpfs apod.) Lze použít i „auto“; systém se pak typ pokusí detekovat automaticky.
 
 {*volby-připojení*} je seznam čárkami oddělených voleb nebo klíčové slovo „defaults“, které má význam „rw,suid,dev,exec,auto,nouser,async“.
-
-### Btrfs
-
-* Souborový systém typu btrfs se dělí na takzvané **pododdíly**. Každý pododdíl je reprezentován svým vlastním „kořenovým“ adresářem. Reprezentující adresář představuje jednoznačnou hranici mezi vnějším (obklopujícím) pododdílem a vnitřním (vnořeným) pododdílem. Pododdíly se vždy překrývají pouze tímto hraničním adresářem, jinak jsou oddělené. Operace prováděné s obklopujícím pododdílem (např. klonování) se vnořeného pododdílu netýkají. (V důsledku toho, když naklonujete pododdíl, hraniční adresáře v něm vnořených pododdílů budou v klonu prázdné.) Každý pododdíl má také svoje číselné „id“, ale jeho používání není příliš praktické.
-* **Kořenový pododdíl** je pododdíl reprezentovaný kořenovým adresářem souborového systému. Nemá žádný obklopující pododdíl, má vždy id 5 a není možno ho (samostatně) odstranit ani přesunout.
-* **Klon** (reflink/snapshot) je v btrfs virtuální kopie souboru nebo celého pododdílu, která se navenek chová jako zcela nezávislá kopie, ale vnitřně sdílí část datových či metadatových bloků s původním souborem či pododdílem, dokud se do nich nikdo nepokusí zapisovat (teprve poté se vytvoří skutečné kopie, ale jen bloků, u kterých je to potřeba). Díky tomu je vytváření klonů rychlé, nenáročné a klony zprvu zabírají jen velmi málo místa.
-* Pododdíl může být označený jako „**neměnný**“ (toto označení lze přidat či odebrat i dodatečně); neměnný pododdíl je chráněný proti změnám dat i metadat, bez ohledu na přístupová práva, může však být odstraněn jako celek. Nejčastěji se jako neměnné nastavují klony pododdílů.
-* **Zrcadlené oddíly** jsou dva oddíly, kde každá změna je zapisována paralelně na oba, takže v případě poškození či ztráty jednoho z nich nedojde ke ztrátě dat.
-
-Poznámka k pevným odkazům: pevný odkaz v souborovém systému typu btrfs nemůže vést přes hranici pododdílu, místo toho však lze přes hranici pododdílů vytvořit klon souboru.
-
-### Softwarový RAID
-
-* **Pole** (array) je skupina disků nebo jejich oddílů skombinovaná softwarovým RAID do jednoho blokového zařízení.
-* **Dílem** pole (device) se v RAIDu rozumí jednotlivý oddíl disku či celý disk tvořící pole spolu s dalšími takovými díly. Obvykle se každý díl nachází na jiném fyzickém disku.
-* Díly pole jsou dvou druhů — **základní díly** (active devices) tvoří pole a jsou aktivně používány; **záložní díly** (spare devices) nejsou používány, ale v případě výpadku některého ze základních dílů se jeden záložní díl stane základním a RAID na něj postupně „nasynchronizuje“ data. Díl pole může být také ve stavech „F“ (selhavší), „R“ (k nahrazení) a možná i dalších.
-* Pole je v **degradovaném stavu**, pokud je počet jeho fungujících základních dílů nižší než deklarovaný.
-
-V této kapitole budou pokryty tyto režimy softwarového RAID: prokládání (stripe, RAID0), zrcadlení (mirror, RAID1) a RAID s paritou (RAID5).
-
-Kde máte v zaklínadlech zadat {*md-pole*}, můžete svoje pole identifikovat těmito způsoby:
-
-* Pomocí UUID (např. „/dev/disk/by-uuid/ec2c7d38-“ atd.). Ve skriptech doporučuji preferovat tento způsob.
-* Názvem pole (např. „/dev/md/mujraid“). Tento způsob označování doporučuji pro ruční použití; většinou je spolehlivý, ale může způsobit problémy, pokud při vytváření zapomenete parametr „\-\-homehost=any“ nebo pokud dojde ke konfliktu názvů (typicky po připojení výměnných médií s RAID-polem).
-* Číslem md-zařízení (např. „/dev/md127“). Toto číslo se může změnit při každém připojení pole, ale může být potřeba v případě práce s neúplně sestaveným polem.
-* Jakýmkoliv symbolickým odkazem na jednu z výše uvedených cest.
 
 !ÚzkýRežim: vyp
 
@@ -510,412 +452,6 @@ btrfs: sudo sfill -fllvz {*/přípojný/bod*}
 **sudo dd if=**{*cesta*} **of=/dev/**{*oddíl*} [**status=progress**]<br>
 **zcat** {*cesta.gz*} **\| sudo dd of=**{*/dev/oddíl*} [**status=progress**]
 
-## Zaklínadla: LVM
-
-### Fyzické svazky
-
-*# **vytvořit** z celého zařízení*<br>
-**sudo wipefs -a** {*/dev/zařízení*}<br>
-**sudo pvcreate** {*/dev/zařízení*} [**-v**[**v**]]
-<!-- wipefs -f ? -->
-
-*# **vytvořit** z oddílu*<br>
-**sudo wipefs -a** {*/dev/oddíl*}<br>
-**sudo pvcreate** {*/dev/oddíl*} [**-v**[**v**]]
-
-*# **smazat***<br>
-**sudo pvremove** {*/dev/zařízení-nebo-oddíl*} [**-v**[**v**]]
-
-*# **zkontrolovat***<br>
-**sudo pvck** {*/dev/zařízení-nebo-oddíl*}
-
-*# **vypsat** (pro člověka/pro skript)*<br>
-**sudo pvs**<br>
-**sudo pvs \-\-noheadings \| sed -E 's/^\\s\*(\\S+)\\s.\*$/\\1/'**
-
-*# uvolnit všechno místo na fyzickém svazku*<br>
-**sudo pvmove** {*/dev/zařízení-nebo-oddíl*}
-
-### Skupiny svazků
-
-*# **vytvořit***<br>
-*// Skupiny tvořené fyzickými svazky na více fyzických discích zvyšují pravděpodobnost ztráty dat, protože když havaruje kterýkoliv zúčastněný disk, přijdete o všechna data v celé skupině svazků. Proto pokud nepotřebujete slučovat úložný prostor na více fyzických discích, preferujte vytváření samostatné skupiny svazků pro fyzické svazky na každém fyzickém disku.*<br>
-**sudo vgcreate** {*id-skupiny*} {*/dev/fyzický-svazek*}... [**-v**[**v**]]
-
-*# **deaktivovat** skupinu*<br>
-**sudo vgchange \-\-verbose \-\-activate n** {*id-skupiny*}
-
-*# **přidat** fyzický svazek do skupiny*<br>
-**sudo vgextend** {*id-skupiny*} {*/dev/fyzický-svazek*}... [**-v**[**v**]]
-
-*# **odebrat** fyzický svazek ze skupiny*<br>
-**sudo pvmove** {*/dev/fyzický-svazek*}<br>
-**sudo vgreduce** {*id-skupiny*} {*/dev/fyzický-svazek*}
-
-*# **přejmenovat***<br>
-**sudo vgrename** {*id-skupiny*} {*nove-id-skupiny*}
-
-*# **vypsat** (pro člověka/pro skript)*<br>
-**sudo vgs**<br>
-?
-
-*# **smazat***<br>
-**sudo lvremove** {*id-skupiny*}
-**sudo vgremove** {*id-skupiny*}
-
-*# aktivovat deaktivovanou skupinu*<br>
-*// Tento příkaz obvykle není potřeba, protože po připojení zařízení nebo startu systému se nalezené skupiny obvykle aktivují automaticky.*<br>
-**sudo vgchange \-\-verbose \-\-activate y** {*id-skupiny*}
-
-### Logické oddíly
-
-*# **vytvořit** (velikost zadat: absolutně/v procentech velikosti skupiny/v procentech velikosti volného místa/všechno volné místo)*<br>
-*// Pro přesnější určení rozměru můžete zadat velikost oddílu v mebibajtech místo gibibajtů (místo přípony „G“ uveďte příponu „M“), ale v takovém případě počítejte s možností, že příkaz zadanout hodnotu může zaokrouhlit o několik mebibajtů nahoru.*<br>
-**sudo lvcreate** {*id-skupiny*} **\-\-name** {*id-oddílu*} **\-\-size** {*gibibajtů*}**G** [**-v**[**v**]] <nic>[{*/dev/fyzický-svazek*}]...<br>
-**sudo lvcreate** {*id-skupiny*} **\-\-name** {*id-oddílu*} **\-\-extents** {*procenta*}**%VG** [**-v**[**v**]]<br>
-**sudo lvcreate** {*id-skupiny*} **\-\-name** {*id-oddílu*} **\-\-extents** {*procenta*}**%FREE** [**-v**[**v**]]<br>
-**sudo lvcreate** {*id-skupiny*} **\-\-name** {*id-oddílu*} **\-\-extents 100%FREE** [**-v**[**v**]]
-
-*# vytvořit prokládaný logický oddíl*<br>
-*// Nechť N je uvedený „počet-zařízení“. Velikost prokládaného oddílu se rozdělí na N stejných dílů a každý se umístí na jeden fyzický svazek ze zadané skupiny svazků. Pokud se některý z dílů na svůj fyzický svazek nevejde, všechny díly budou zmenšeny společně, aby se tam vešel. Kapacita vytvořeného oddílu bude cca 90% součtu místa zabraného všemi díly prokládaného oddílu (prokládání má zřejmě svoji režii). Příklad: máte ve skupině dva fyzické svazky 2G a jeden 1G a pokusíte se vytvořit prokládaný svazek o velikosti 5G; příkaz ho rozdělí na tři díly o velikosti 1,66G; jenže na třetí fyzický svazek se díl nevejde, tak se všechny zmenší na 1G. Výsledný oddíl tedy zabere 3G (na prvním i druhém svazku zůstane 1G volný) a kapacita nově vzniklého oddílu bude cca 2765M.*<br>
-**sudo lvcreate** {*id-skupiny*} **\-\-name** {*id-oddílu*} {*parametr \-\-size nebo \-\-extents*} **\-\-stripes** {*počet-zařízení*} **\-\-stripesize 64** [**-v**[**v**]]
-
-<!--
-*# vytvořit zrcadlený logický oddíl*<br>
-?
--->
-
-*# **vypsat** (pro člověka/pro skript)*<br>
-**sudo lvs**<br>
-?
-
-*# **zvětšit** (na velikost/relativně)*<br>
-*// Volba \-\-resizefs je podporována pouze pro některé typy systému souborů, zejména pro ext4.*<br>
-**sudo lvextend** {*id-skupiny*}**/**{*id-oddílu*} **\-\-size** {*gibibajtů*}**G** [**-v**[**v**]]<br>
-**sudo lvextend** {*id-skupiny*}**/**{*id-oddílu*} **\-\-size +**{*gibibajtů*}**G** [**-v**[**v**]] <nic>[**\-\-resizefs**]
-
-*# **zmenšit** (na velikost/relativně)*<br>
-*// Pozor! Pokud je na zmenšovaném oddíle souborový systém, musíte ho před zmenšením oddílu zmenšit na odpovídající velikost, jinak dojde ke ztrátě dat! To neplatí, použijete-li zde parametr \-\-resizefs.*<br>
-**sudo lvreduce** {*id-skupiny*}**/**{*id-oddílu*} **\-\-size** {*gibibajtů*}**G** [**-v**[**v**]]<br>
-**sudo lvreduce** {*id-skupiny*}**/**{*id-oddílu*} **\-\-size +**{*gibibajtů*}**G** [**-v**[**v**]] <nic>[**\-\-resizefs**]
-
-*# **přejmenovat** oddíl*<br>
-**sudo lvrename** {*id-skupiny*}**/**{*id-oddílu*} {*nové-id-oddílu*}
-
-*# **smazat** oddíl/všechny oddíly ve skupině*<br>
-**sudo lvremove** {*id-skupiny*}**/**{*id-oddílu*} [**-v**[**v**]]<br>
-**sudo lvremove** {*id-skupiny*} [**-v**[**v**]]
-
-*# přesunout do jiné skupiny svazků*<br>
-*// Přesouvaný oddíl nesmí být připojený a v aktuálním adresáři si toto zaklínadlo potřebuje vytvořit dočasný soubor „temp.dat“. Pokud vám tento název nevyhovuje, můžete použít jiný.*<br>
-**sudo lvcreate** {*cíl-skupina*} **\-\-name** {*cíl-název*} **\-\-size $(sudo lvs /dev/**{*pův-skupina*}**/**{*pův-název*} **\-\-noheadings \-\-nosuffix \-\-units b -o size \| sed -E 's/^\\s\*(\\S+)\\s\*$/\\1b/')** [**-v**] **&amp;&amp;**<br>
-**sudo dd if=/dev/**{*pův-skupina*}**/**{*pův-název*} **iflag=fullblock,skip\_bytes of=/dev/**{*cíl-skupina*}**/**{*cíl-název*} **oflag=seek\_bytes conv=nocreat,notrunc seek=1M skip=1M** [**status=progress**] **&amp;&amp;**<br>
-**sudo dd if=/dev/**{*pův-skupina*}**/**{*pův-název*} **iflag=fullblock,count\_bytes count=1M of=temp.dat** [**status=progress**] **&amp;&amp;**<br>
-**sudo dd if=temp.dat iflag=fullblock,count\_bytes count=1M of=/dev/**{*cíl-skupina*}**/**{*cíl-název*} **conv=notrunc,nocreat** [**status=progress**] **&amp;&amp;**<br>
-**sudo lvremove** {*pův-skupina*}**/**{*pův-název*} [**-v**] <nic>[**-y**]
-[**sudo rm -v temp.dat &amp;&amp;**]<br>
-
-### Ostatní
-
-*# aktualizovat systémový přehled LVM podle připojených zařízení*<br>
-**sudo lvscan \-\-mknodes**
-
-## Zaklínadla: btrfs
-
-### Správa pododdílů
-
-*# **vytvořit** pododdíl (obecně/příklad)*<br>
-*// Příklad vytvoří poddíl reprezentováný novým adresářem „test“ v aktuálním adresáři. (Nově vytvářený adresář nesmí předem existovat!)*<br>
-**btrfs subvolume create** {*cesta/k/novému/adresáři*}<br>
-**btrfs subvolume create test**
-
-*# **smazat** pododdíl*<br>
-*// Pokud souborový systém nebyl připojen s volbou „user\_subvol\_rm\_allowed“, smí pododdíl smazat jen superuživatel. Jinak ho smí smazat i jeho vlastník (tzn. vlastník adresáře reprezentujícího pododdíl); pokud je však oddíl neměnný, musí mu tuto vlastnost nejprve odebrat. Vlastník také může pododdíl smazat jako obyčejný adresář příkazem „rm -R“, ale ten bývá pomalejší, protože nejprve projde a smaže všechny soubory a adresáře v daném pododdílu.*<br>
-[**btrfs property set** {*cesta/k/pododdílu*} **ro false**]<br>
-[**sudo**] **btrfs subvolume delete -c** {*cesta/k/pododdílu*}...
-
-*# vypsat **seznam** pododdílů (s právy superuživatele/bez nich)*<br>
-**(cd ** {*/bod/připojení/btrfs*} ** &amp;&amp; pwd &amp;&amp; sudo btrfs subvolume list . | sed -E 's/^(\\S+\\s+){7}path\\s/'"$(pwd | sed -E 's!/!\\\\/!g')"'\\//')**<br>
-**find** {*/abs/cesta/přípojného/bodu*} **-type d -inum -257 -print**
-<!-- Hraniční adresáře pododdílů v Btrfs mají čísla i-uzlů <= 256 -->
-
-*# přejmenovat či **přesunout** pododdíl (kromě neměnného)*<br>
-*// Nové umístění musí být v rámci téhož souborového systému btrfs, ale může to být i v jiném obklopujícím pododdílu. Poznámka: neměnný pododdíl nelze přejmenovat či přesunout.*<br>
-**mv -T** {*cesta/pododdílu*} {*nové/umístění*}
-
-*# přejmenovat či přesunout neměnný pododdíl*<br>
-**btrfs property set** {*původní/cesta*} **ro false**<br>
-**mv** [**-v**] {*původní/cesta*} {*nová/cesta*}<br>
-**(rv=$?; for x in {*původní/cesta*} {*nová/cesta*}; do btrfs property set "$x" ro true 2&gt;/dev/null; done; exit $rv)**
-
-*# nastavení pododdílu jako **neměnného** (vypnout/zapnout)*<br>
-**btrfs property set** {*cesta/k/pododdílu*} **ro false**<br>
-**btrfs property set** {*cesta/k/pododdílu*} **ro true**
-
-*# **je** adresář pododdíl btrfs?*<br>
-*// Pokud víte s jistotou, že testovaný adresář leží na oddílu typu btrfs, můžete první test vynechat.*<br>
-**adr="$(realpath "**{*cesta/k/adresáři*}**")"**<br>
-[**test "$(stat -fc %T "$adr")" = btrfs &amp;&amp;**] **test "$(stat -c %i "$adr")" -le 256**
-<!--
-Test částečně podle: https://stackoverflow.com/questions/25908149/how-to-test-if-location-is-a-btrfs-subvolume
-
-Další možnost:
-**btrfs property get** {*cesta/k/adresáři*} **ro 2&gt;/dev/null**
--->
-
-*# je pododdíl neměnný?*<br>
-**btrfs property get** {*cesta/k/adresáři*} **ro \| fgrep -qx ro=true**
-
-### Klonování
-
-*# vytvořit **klon podstromu** adresářů*<br>
-*// Cíl („/cesta/pro/klon“) před vykonáním příkazu nesmí existovat. Poznámka: Naklonují se pouze soubory; adresáře se pro ně vytvoří nové, takže pokud je podstrom rozsáhlejší, bude to chvíli trvat.*<br>
-[**rm -Rf** {*/cesta/pro/klon*} **&amp;&amp;**]<br>
-**cp \-\-reflink=always -R** [**\-\-preserve=all**] <nic>[**-v**] {*/cesta/k/adresáři*} {*/cesta/pro/klon*}
-
-*# vytvořit klon **pododdílu** (normální/neměnný)*<br>
-**btrfs subvolume snapshot** {*cesta/k/pododdílu*} {*cesta/k/novému/pododdílu*}<br>
-**btrfs subvolume snapshot -r** {*cesta/k/pododdílu*} {*cesta/k/novému/pododdílu*}
-
-*# vytvořit klon **souboru***<br>
-**cp \-\-reflink=always** [**\-\-preserve=all**] <nic>[**-t**] <nic>[**-v**] {*/cesta/k/souboru*} {*/cesta/pro/klon*}
-
-*# osamostatnit klon souboru, aby nevyužíval sdílené datové bloky*<br>
-**btrfs filesystem defragment** [**-v**] <nic>[**\-\-**] {*cesta/k/souboru*}...
-
-### Práce s oddíly
-
-*# **přesunout** souborový systém z jednoho oddílu na jiný*<br>
-*// Cílový oddíl může být menší i větší než původní, musí se však na něj vejít všechna data a metadata.*<br>
-**sudo bash -c '**<br>
-**btrfs device add /dev/**{*nový-oddíl*} {*/přípojný/bod*} **\|\| exit $?**<br>
-**btrfs device remove /dev/**{*původní-oddíl*} {*/přípojný/bod*} **\|\|**<br>
-**(r=$?; btrfs device remove /dev/**{*nový-oddíl*} {*/přípojný/bod*}**; exit $r)**<br>
-**'**
-
-*# **vytvořit** dva zrcadlené oddíly z jednoho samostatného*<br>
-?
-
-*# **osamostatnit** oddíl ze zrcadlené dvojice*<br>
-?
-
-*# vyvořit N-tici prokládaných oddílů z neprokládaného jednooddílového btrfs*<br>
-?
-
-*# vytvořit jednoduchý oddíl BTRFS z prokládané N-tice*<br>
-?
-
-### Přenos neměnných pododdílů přes soubor
-
-*# **uložit** neměnný pododdíl do souboru*<br>
-*// Pokud ukládáte více pododdílů, jejich reprezentující adresáře se musejí lišit jménem, a to i v případě, že leží v různých podadresářích!*<br>
-**sudo btrfs send -e**[**v**] {*/cesta/k/pododdílu*}... **\| gzip &gt;**{*cílový/soubor.gz*}
-
-*# **načíst** neměnné oddíly ze souboru*<br>
-*// Příkaz vytvoří ve výstupním adresáři pododdíly uložené v souboru pod jejich původními názvy a na konci operace je nastaví jako neměnné.*<br>
-**zcat** {*soubor.gz*} **\| sudo btrfs receive -e**[**v**] {*výstupní/adresář*}
-
-*# zkontrolovat v souboru uložené neměnný oddíly*<br>
-**zcat** {*soubor.gz*} **\| btrfs receive \-\-dump**
-
-### Ostatní
-
-<!--
-btrfs filesystem defrag -v -c{*komprese*} {*soubor*} — umožňuje rekomprimovat soubor
--->
-
-*# vypsat podrobné údaje o obsazení souborového systému*<br>
-[**sudo**] **btrfs filesystem usage** {*/přípojný/bod/btrfs*}
-
-*# ověřit kontrolní součty všech souborů*<br>
-**sudo btrfs scrub start -B -d -r** {*/přípojný/bod/btrfs*}
-
-*# ověřit kontrolní součty některých souborů*<br>
-?
-
-*# defragmentovat pododdíl*<br>
-**sudo btrfs filesystem defragment -r** {*cesta/pododdílu*}
-
-### Přenos rozdílu klonů
-
-Pozor! Tyto operace slouží k přenosu změn z jednoho oddílu btrfs na jiný (obvykle na jiném počítači)
-a mají poměrně tvrdé požadavky na to, co musejí klony na jednom i druhém počítači splňovat.
-Před jejich použitím si musíte přečíst manuálové stránky vyvolané příkazem
-„man 8 btrfs-send btrfs-receive“.
-
-*# uložit do souboru rozdíl*<br>
-**sudo btrfs send -e**[**v**] **-c** {*/cesta/k/původnímu-klonu*} {*/cesta/k/novému/klonu*} **\| gzip &gt;**{*cílový/soubor.gz*}
-
-*# aplikovat rozdíl*<br>
-**zcat** {*soubor.gz*} **\| sudo btrfs receive -e**[**v**] {*výstupní/adresář*}
-
-## Zaklínadla: softwarový RAID
-
-<!--
-mdadm5 -D --scan >>/etc/mdadm/mdadm.conf && update-initramfs -u [-k all]
--->
-
-### Všechny typy polí: zjišťování údajů
-
-*# **dynamické informace** o připojených polích*<br>
-**cat /proc/mdstat**
-
-*# podrobné statické informace o některém **poli***<br>
-**sudo mdadm \-\-detail** {*md-pole*}
-
-*# statické informace o dílu pole (stručné/podrobné)*<br>
-**sudo mdadm \-\-query** {*/dev/díl*}<br>
-**sudo mdadm \-\-examine** {*/dev/díl*}
-
-*# **seznam** připojených polí (pro skript)*<br>
-**find /dev/disk/by-uuid -type l -xtype b -printf '%f %l\\n' \| sed -nE '/\\/md[0-9]+$/s!(\\.\\.\\/){2}!/dev/!;T;p'**
-
-*# **seznam dílů** připojeného pole (pro skript)*<br>
-?
-<!--
-[ ] nutno opravit: nezohledňuje, že za hranatými závorkami může být ještě stav
-**mdpole=**{*md-pole*}
-**test -e "$mdpole" &amp;&amp; sed -E "/^$(realpath -e \-\- "$mdpole" \| sed -E 's!.\*/!!')&blank;/!d;"'s![^]]+&blank;!&blank;!;s!&blank;([^][]+)\\\[\\S+\\\]!/dev/\\1\\n!g;s!\\n$!!' /proc/mdstat** [**\| LC\_ALL=C.UTF-8 sort**] **\| egrep .**
--->
-<!--
-realpath -e \-\- {*md-pole*} **\| sed -E 's!.\*/!!' => získá označení typu „md127“
-/^$(...)&blank;/!d — vynechá řádky, které se hledaného pole netýkají
-s![^]]+&blank;!&blank;! — vynechá vše až po konec posledního slova, které nekončí hranatou závorkou
-s!&blank;([^][]+)\\\[\\S+\\\]!/dev/\\1\\n!g — vyjme označení dílu, přidá před něj /dev a každé umístí na samostatný řádek
-
-egrep . — Selže, pokud bude výstup prázdný.
--->
-
-*# zjistit **UUID** pole*<br>
-?
-<!--
-[**sudo**] **lsblk -rno UUID** {*md-pole*}
-// nefunguje; např. po ručním připojení pole nic nevypíše
--->
-
-*# zjistit název pole*<br>
-?
-<!--
-<br>
-**readlink /dev/disk/by-uuid/**{*UUID*} **\| sed -E 's/^[^0-9]+//'**
--->
-
-*# zjistit číslo pole*<br>
-?
-
-
-### Všechny typy polí: změny
-
-*# **odpojit** pole*<br>
-**sudo mdadm \-\-stop** {*md-pole*}
-
-*# ručně **připojit** existující pole*<br>
-*// Toto zaklínadlo budete obvykle potřebovat jen po ručním odpojení pole; jinak systém pole připojuje automaticky, jakmile ho zaregistruje, a stejně automaticky ho rozšiřuje, když narazí na nový díl, který do něj patří).*<br>
-**sudo mdadm -A** {*md-pole*} {*/dev/oddíl*}...
-
-*# označit díl jako **selhavší***<br>
-*// Díl označený jako „selhavší“ pole okamžitě přestane používat a bude počítat se ztrátou všech dat na něm uložených.*<br>
-**sudo mdadm \-\-manage** {*md-pole*} **-f** {*/dev/oddíl*}
-
-*# **přejmenovat** pole*<br>
-*// Přejmenováním pole se nezmění jeho UUID, může se však změnit číslo md-zařízení.*<br>
-**sudo mdadm \-\-detail** {*md-pole*}<br>
-!: Bezpečně si uschovejte seznam dílů pole.<br>
-**sudo mdadm \-\-stop** {*md-pole*} **&amp;&amp; sudo mdadm -A /dev/md/**{*nový-název*} **\-\-update=name \-\-name=**{*nový-název*} **\-\-homehost=any** {*/dev/všechny-díly*}...
-
-### Prokládané pole (RAID0)
-
-*# **vytvořit***<br>
-**for x in** {*/dev/oddíl*}...**; do sudo wipefs -a "$x"; done**<br>
-**sudo mdadm -Cv /dev/md/**{*název*} **\-\-homehost=any -l stripe -n** {*počet-oddílů*} {*/dev/první-oddíl*} {*/dev/další-oddíl*}...
-<!--
-**sudo mdadm -Cv /dev/md/mojepole -l stripe -n 3 /dev/sdc /dev/sdd1 /dev/sde3**
--->
-
-*# **smazat***<br>
-!: Odpojte pole (madm \-\-stop)<br>
-**for x in** {*/dev/oddíl*}...**; do sudo mdadm \-\-zero-superblock "$x"; done**<br>
-
-### Zrcadlené pole (RAID1)
-
-*# **vytvořit***<br>
-**for x in** {*/dev/oddíl*}...**; do sudo wipefs -a "$x"; done**<br>
-**sudo mdadm -Cv /dev/md/**{*název*} **\-\-homehost=any -l mirror -n** {*počet-zákl-dílů*} [**-x** {*počet-záložních-dílů*}] {*/dev/první-oddíl*} {*/dev/další-oddíl*}...
-<!--
-**sudo mdadm -Cv /dev/md/mojepole -l stripe -n 2 /dev/sdc /dev/sdd1**
--->
-
-*# **smazat***<br>
-!: Odpojte pole (madm \-\-stop)<br>
-**for x in** {*/dev/oddíl*}...**; do sudo mdadm \-\-zero-superblock "$x"; done**<br>
-
-*# přidat záložní/základní díl*<br>
-**sudo mdadm \-\-manage** {*md-pole*} **-va** {*/dev/nový-oddíl*}<br>
-**sudo mdadm \-\-grow** {*md-pole*} **-va** {*/dev/nový-oddíl*} **-n** {*nový-počet-zákl-oddílů*}
-
-*# odebrat záložní/základní díl*<br>
-**sudo mdadm \-\-manage** {*md-pole*} **-vr** {*/dev/nový-oddíl*}<br>
-**sudo mdadm \-\-manage -vf** {*/dev/díl*} **-r** {*/dev/díl*} **&amp;&amp; sudo mdadm \-\-grow -n** {*nový-počet-zákl-oddílů*}
-
-*# zvýšit počet základních dílů na úkor záložních*<br>
-**sudo mdadm \-\-grow** {*md-pole*} **-n** {*nový-počet-zákl-dílů*}
-
-*# učinit z některých základních oddílů záložní*<br>
-?
-
-*# ručně spustit/ukončit kontrolu konzistence pole*<br>
-**sudo tee /sys/devices/virtual/block/$(basename $(realpath** {*md-pole*} **))/md/sync\_action &lt;&lt;&lt;check**<br>
-**sudo tee /sys/devices/virtual/block/$(basename $(realpath** {*md-pole*} **))/md/sync\_action &lt;&lt;&lt;idle**
-
-### Pole s paritou (RAID5)
-
-*# **vytvořit***<br>
-**for x in** {*/dev/oddíl*}...**; do sudo wipefs -a "$x"; done**<br>
-**sudo mdadm -Cv /dev/md/**{*název*} **\-\-homehost=any -l raid5 -n** {*počet-zákl-dílů*} [**-x** {*počet-záložních-dílů*}] {*/dev/oddíl*}...<br>
-!: Před dalšími operacemi s polem počkejte, než se uklidní (lze sledovat pomocí „watch -n 1 cat /proc/mdstat“).
-
-*# **smazat***<br>
-!: Odpojte pole (madm \-\-stop)<br>
-**for x in** {*/dev/oddíl*}...**; do sudo mdadm \-\-zero-superblock "$x"; done**<br>
-
-*# přidat záložní/základní díl*<br>
-*// Po přidání základního dílu neprovádějte další zásadní operace s polem, dokud se neuklidní.*<br>
-**sudo mdadm \-\-manage** {*md-pole*} **-va** {*/dev/nový-oddíl*}<br>
-**sudo mdadm \-\-grow** {*md-pole*} **-va** {*/dev/nový-oddíl*} [**-a** {*/dev/další-nový-oddíl*}]... **-n** {*nový-počet-zákl-dílů*}
-
-*# odebrat záložní díl*<br>
-**sudo mdadm \-\-manage** {*md-pole*} **-vr** {*/dev/nový-oddíl*}
-
-*# odebrat základní díl*<br>
-?
-<!--
-**sudo mdadm \-\-grow \-\-array-size ...
-**sudo mdadm \-\-manage -vf** {*/dev/díl*} **-r** {*/dev/díl*} **&amp;&amp; sudo mdadm \-\-grow -n** {*nový-počet-zákl-dílů*}
--->
-
-*# zvýšit počet základních dílů na úkor záložních*<br>
-**sudo mdadm \-\-grow** {*md-pole*} **-n** {*nový-počet-zákl-dílů*}
-<!-- [ ] vyzkoušet -->
-
-*# učinit z některých základních oddílů záložní*<br>
-?
-
-*# nahradit díl za běhu jiným oddílem*<br>
-**sudo mdadm \-\-manage** {*md-pole*} **-v \-\-replace** {*/dev/díl-k-odstranění*} **-a** {*/dev/nový-oddíl*}<br>
-!: Počkejte, než se pole uklidní (lze sledovat pomocí „watch -n 1 cat /proc/mdstat“)<br>
-**sudo mdadm \-\-manage** {*md-pole*} **-vr** {*/dev/díl-k-odstranění*}
-
-<!--
-[ ] assembly?
--->
-
-<!--
-### Nástroje k řešení potíží
-
-*# pokusit se aktivovat všechna nalezená pole, i neúplná*<br> // ?
-**sudo mdadm -A \-\-scan**
--->
-
 ## Nejdůležitější volby připojení
 
 ### Pro všechny typy systému souborů
@@ -983,38 +519,10 @@ Poznámka: funkčnost těchto voleb ve správcích souborů může být různá;
 * ☐ gid={*GID*} :: Nastaví počáteční skupinu kořenového adresáře.
 * ○ umask={*mód*} :: Nastaví počítační přístupová práva a příznaky kořenového adresáře.
 
-### Pro „btrfs“
-
-!Parametry:
-
-* ☐ user\_subvol\_rm\_allowed :: Umožní smazat pododdíl jeho vlastníkovi (doporučuji).
-* ☐ skip\_balance :: Po připojení nebude pokračovat v přerušené operaci „balance“. Tento parametr se používá především v situaci, kdy operace „balance“ selhala kvůli nedostatku místa na disku a způsobila vynucený přechod souborového systému do režimu „ro“ (jen pro čtení).
-* ○ compress-force={*hodnota*} ○ compress={*hodnota*} :: Nastavuje výchozí kompresi pro nově vytvořené soubory. Použijte hodnotu „off“ pro žádnou kompresi, „lzo“ pro nenáročnou kompresi, „zstd:10“ pro důkladnou kompresi nebo „zstd:15“ pro maximální kompresi.
-* ☐ degraded :: Umožní připojit oddíl zrcadleného systému souborů v situaci, kdy některé ze zařízení není dostupné. Doporučuji skombinovat s volbou „ro“.
-* ○ discard ○ nodiscard :: Zapne/vypne automatické označování prázdného prostoru na SSD discích (operace TRIM). Možná není nutné ho zadávat.
-* ○ subvol={*/cesta*} ○ subvolid={*id*} :: Připojí zadaný pododdíl namísto výchozího (což je zpravidla ten kořenový). Varování: jeden souborový systém typu btrfs je dovoleno připojit vícenásobně (na různé přípojné body), ale pokud se chcete vyhnout problémům, použijte u všech připojení přesně stejné volby až na „subvol“ či „subvolid“ (vyzkoušel/a jsem, že další volby, které se mohou bezpečně lišit, jsou \*atime a ro/rw).
-
-Manuálová stránka pro zlepšení výkonu doporučuje použít obecnou volbu „noatime“.
-
 ## Instalace na Ubuntu
 
-Všechny použité nástroje jsou základními součástmi Ubuntu, kromě nástrojů pro práci s LVM, btrfs, příkazu zerofree a nástroje GParted.
-Pokud chcete používat LVM, musíte doinstalovat:
-
-*# *<br>
-**sudo apt-get install lvm2**
-
-Pokud chcete používat btrfs, musíte doinstalovat:
-
-*# *<br>
-**sudo apt-get btrfs-progs**
-
-Pokud chcete používat softwarový RAID, musíte doinstalovat:
-
-*# *<br>
-**sudo apt-get install mdadm**
-
-Nástroj GParted najdete v balíčku „gparted“; příkaz zerofree v balíčku „zerofree“:
+Všechny použité nástroje jsou základními součástmi Ubuntu, kromě příkazu zerofree a nástroje GParted,
+které v případě potřeby musíte doinstalovat:
 
 *# *<br>
 **sudo apt-get install gparted zerofree**
@@ -1037,56 +545,11 @@ Nástroj GParted najdete v balíčku „gparted“; příkaz zerofree v balí�
 * Zadáte-li výměnnou jednotku (např. USB flash disk) v /etc/fstab a tato jednotka nebude dostupná při startu systému, zavádění selže a nabídne vám přechod do záchranného režimu. Proti tomu pomohou volby „nofail“ (v případě jakékoliv chyby se připojení systému souborů tiše přeskočí) a „noauto“ (systém se vůbec nepokusí o připojení, ale oddíl či jednotku půjde připojit zkrácenou syntaxí příkazu „mount“).
 * Určitý konkrétní adresář může být použit jako přípojný bod vícenásobně, ale nedoporučuji to (nedává to příliš smysl). Také je možné připojením jiného souborového systému na adresář nadřazený přípojnému bodu překrýt přípojný bod i s jeho obsahem, ale rovněž to nedoporučuji.
 
-### LVM
-
-* V případě změny velikosti oddílu v LVM je třeba samostatně změnit velikost souborového systému a samostatně velikost logického oddílu. Výjimkou je souborový systém „ext4“, u kterého je možné tyto operace sloučit použitím parametru „\-\-resizefs“.
-* LVM lze použít i na vyjímatelných médiích (např. flash discích); v takovém případě je ale před fyzickým odpojením média potřeba deaktivovat příslušnou skupinu svazků. Je-li skupina svazků rozložena přes více takových médií, automaticky se aktivuje při připojení posledního z nich.
-* Při vytváření velkého logického oddílu přes několik SSD disků doporučuji vytvořit raději prokládaný oddíl než normální; sice tím přijde o cca 10% kapacity, ale zato se rozsáhlé zápisy budou rovnoměrně rozkládat mezi všechny disky, což by u SSD disků mělo zvýšit jejich životnost.
-* LVM poskytuje svůj vlastní interpret příkazové řádky, který nabízí pouze příkazy související s LVM (bez zadávání „sudo“). Spustíte ho příkazem „sudo lvm“.
-
-### Btrfs
-
-* Btrfs se prý nedokáže dobře zotavit ze selhání a chyb (i v manuálové stránce je varování, že program „btrfs check“ může problémy spíš zhoršit než vyřešit). Pokud dojde prostor pro metadata, souborový systém se nuceně přepne do režimu „jen pro čtení“ a je obtížné či skoro nemožné se z takového stavu zotavit – viz [stránku na superuser.com](https://superuser.com/questions/1419067/btrfs-root-no-space-left-on-device-auto-remount-read-only-cant-balance-cant). Navíc, když se mi to stalo, souborový systém stále hlásil cca 500 MiB volných. Proto doporučuji si za všech okolností nechávat jeden až dva gibibajty každého oddílu typu btrfs volné a jednou za čas provést „offline zálohu“ metodou sektor po sektoru, aby bylo v případě havárie možno obnovit původní obsah a funkčnost oddílu.
-* Pododdíly se v některých ohledech chovají jako samostatně připojené souborové systémy – každý pododdíl má vlastní číslování i-uzlů (proto nejsou dovoleny pevné odkazy přes hranice pododdílu) a nástroje, které nepřekračují hranice souborových systémů (např. „find“ s parametrem „-xdev“), nesestoupí do adresáře reprezentujícího pododdíl. Důležitým technickým rozdílem oproti připojenému systému souborů však je, že adresář reprezentující pododdíl se nepovažuje za přípojný bod VFS a pododdíly nejsou viditelné pro příkazy jako „findmnt“.
-* Příznak neměnnosti se při klonování nepřenáší; pokud ho nenastavíte (např. parametrem „-r“), do klonů neměnného oddílu půjde zapisovat, což může být velmi užitečné (můžete např. vytvořit neměnný klon pododdílu a později původní pododdíl smazat a nahradit ho obyčejným klonem z neměnného klonu).
-* Umístění odkládacího souboru na souborový systém btrfs je možné, ale nedoporučuji to. Přesný postup a související omezení najdete v manuálové stránce zobrazené příkazem „man 5 btrfs“ (kapitola „SWAPFILE SUPPORT“).
-* Doporučuji se vyhýbat volbám připojení „subvol“ a „subvolid“; pro připojení pododdílů na různá místa souborového systému raději použijte „mount \-\-bind“, resp. jeho obdobu v /etc/fstab.
-* Klonování pododdílu je velmi rychlé i u rozsáhlých pododdílů; naopak klonování jednotlivých souborů je sice podstatně rychlejší než jejich kopírování, ale pomalejší než vytváření pevných odkazů na ně.
-* Velmi špatná vlastnost Btrfs je, že je asynchronní – operace vypadají, že rychle a úspěšně proběhly, ale za několik minut souborový systém může zhavarovat, když „naslibovanou“ operaci nedokáže provést.
-* Transparentní komprese je jen zřídka užitečná. Její účinnost ve srovnání s archivy či SquashFS je mizivá, u dobře komprimovatelných textových souborů ušetří maximálně desítky procent kapacity, zatímco běžný „zip“ u stejných dat dokáže ušetřit třeba 95% jejich velikosti. Navíc většina dnes používaných formátů, které zabírají hodně místa, už komprimovaná je, takže je u nich další komprese zcela neúčinná.
-
-### Softwarový RAID
-
-<!-- * V /etc/fstab uvádějte UUID souborového systému (přidělené při formátování), ne UUID RAID-pole! -->
-* Prokládaný RAID nemá redundanci, nemá záložní díly a počet jeho dílů *není možné měnit*. Pokud přijdete o data na kterémkoliv z jeho dílů, přijdete o data v celém poli.
-* Ve všech popsaných druzích RAIDu mají všechny díly pole stejnou velikost. Pokud se je pokusíte umístit na různě velké oddíly, RAID z nich použije jen části odpovídající velikosti nejmenšího z nich.
-* Máte-li v systému zrcadlené RAID pole, pravděpodobně jednou za měsíc se na něm automaticky spustí kontrola konzistence.
-
 ## Další zdroje informací
 
 Pokud hledáte nástroj pro dělení disku ze skriptu, zkuste [sfdisk](http://manpages.ubuntu.com/manpages/focal/en/man8/sfdisk.8.html) (anglicky).
 
-* [Root.cz: Souborový systém Btrfs: vlastnosti a výhody moderního ukládání dat](https://www.root.cz/clanky/souborovy-system-btrfs-vlastnosti-a-vyhody-moderniho-ukladani-dat/)
-* [Seriál Logical Volume Manager](https://www.abclinuxu.cz/serialy/lvm)
-* [Wikipedie: Logical Volume Management](https://cs.wikipedia.org/wiki/Logical_Volume_Management)
-* [Wikipedie: Btrfs](https://cs.wikipedia.org/wiki/Btrfs)
-* [Chris Titus Tech: Btrfs Guide](https://christitus.com/btrfs-guide/) (anglicky)
-* [LVM Ubuntu Tutorial](https://linuxhint.com/lvm-ubuntu-tutorial/) (anglicky)
-* [man lvm](http://manpages.ubuntu.com/manpages/focal/en/man8/lvm.8.html) (anglicky)
-* [man 8 btrfs-subvolume](http://manpages.ubuntu.com/manpages/focal/en/man8/btrfs-subvolume.8.html) (anglicky)
-* [man 5 btrfs](http://manpages.ubuntu.com/manpages/focal/en/man5/btrfs.5.html) (anglicky)
-* [Arch Wiki: LVM](https://wiki.archlinux.org/index.php/LVM) (anglicky)
-* [Btrfs Sysadmin Guide](https://btrfs.wiki.kernel.org/index.php/SysadminGuide) (anglicky)
-* [Kernel Btrfs Wiki](https://btrfs.wiki.kernel.org/index.php/Main\_Page) (anglicky)
-* [Arch Wiki: Btrfs](https://wiki.archlinux.org/index.php/Btrfs) (anglicky)
-* [Balíček Bionic: lvm2](https://packages.ubuntu.com/bionic/lvm2) (anglicky)
-* [YouTube: Lesson 20 Managing LVM](https://www.youtube.com/watch?v=m9SNN6IWyZo) (anglicky)
-* [YouTube: Combining Drives Together](https://www.youtube.com/watch?v=scMkYQxBtJ4) (anglicky)
-* [YouTube: LVM snapshots](https://www.youtube.com/watch?v=N8rUlYL2O_g) (anglicky)
 * [Wikipedie: Mount (computing)](https://en.wikipedia.org/wiki/Mount\_\(computing\)) (anglicky)
-* [man 8 btrfs-scrub](http://manpages.ubuntu.com/manpages/focal/en/man8/btrfs-scrub.8.html) (anglicky)
-* [How to create RAID arrays with mdadm...](https://www.digitalocean.com/community/tutorials/how-to-create-raid-arrays-with-mdadm-on-ubuntu-18-04) (anglicky)
-* [A guide to mdadm](https://raid.wiki.kernel.org/index.php/A\_guide\_to\_mdadm) (anglicky)
 
 !ÚzkýRežim: vyp
 
@@ -1123,21 +586,3 @@ Pokud hledáte nástroj pro dělení disku ze skriptu, zkuste [sfdisk](http://ma
 <odsadit2>**\} else \{++$počet\_chyb\}}**<br>
 <odsadit1>**exit($počet\_chyb &lt; 254 ? $počet\_chyb : 254);**<br>
 **\}' \-\- "$@"**
-
-<!--
-Původní lkk diskstat:
-
-*# lkk diskstat – vypíše počty čtených a zapsaných bajtů*<br>
-**#!/bin/bash**<br>
-**set -e**<br>
-**if test $# -eq 0**
-**then auto=1; set \-\- $(printf %s\\\\n /sys/block/\*/stat \| sed -E 's!^/sys/block/!/dev/!;s!/stat$!!' \| LC\_ALL=en\_US.UTF-8 sort)**<br>
-**else unset auto; fi**<br>
-**for arg in "$@"**<br>
-**do**<br>
-<odsadit1>**a=$(readlink -e \-\- "$arg")**<br>
-<odsadit1>**[[ $a = /dev/\* ]]**<br>
-<odsadit1>**read -a data &lt;"/sys/block/${a:5}/stat"**<br>
-<odsadit1>**test -v auto -a "${data[2]}/${data[6]}" = "0/0" \|\| printf '%s\\t%s\\t%s\\n' "$arg" $((512 \* data[2])) $((512 \* data[6]))**<br>
-**done**
--->

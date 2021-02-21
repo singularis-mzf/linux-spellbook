@@ -422,7 +422,8 @@ a[href^="http://"]::after, a[href^="https://"]::after {
 a:hover {text-decoration:underline;}
 
 /* Sebeodkazy nadpisů */
-h1>a:link, h1>a:visited, h2>a:link, h2>a:visited, h3>span>a:link, h3>span>a:visited, h4>a:link, h4>a:visited, h5>a:link, h5>a:visited, h6>a:link, h6>a:visited {
+# h1>a:link, h1>a:visited,
+h2>a:link, h2>a:visited, h3>span>a:link, h3>span>a:visited, h4>a:link, h4>a:visited, h5>a:link, h5>a:visited, h6>a:link, h6>a:visited {
     display:block;
     color:inherit;
 }
@@ -1030,23 +1031,9 @@ nav.menu>a:target+aside {
 }
 
 nav.menu>a+aside>div {
+# hlavní rám zobrazeného menu
     position:absolute;top:0;right:0;bottom:0;left:0;z-index:5;
-    /*padding:3em 2em 2em;*/
     overflow:auto;
-}
-nav.menu div.polozky {
-    display:block;
-}
-nav.menu div.polozky>a {
-    display:block;
-    background-color:rgb({{zb-pozadi}});
-    color:rgb({{zb-text}});
-    margin:0;border:none;padding:0.25em 1rem;
-    text-decoration:none;
-}
-nav.menu div.polozky>a:hover {
-    background-color:rgb({{zb-tmava}});
-    color:rgb({{zb-pozadi}});
 }
 nav.menu .nadpis {
     margin:0;
@@ -1055,29 +1042,10 @@ nav.menu .nadpis {
     font-size:150%;
     text-transform:uppercase;
 }
-
 nav.menu .text {
     padding:1em;
     line-height:1.5;
 }
-
-nav.menu div.polozky .cislo {
-    display:inline-block;
-    margin:0 0.5em;
-    min-width:1.5em;
-    text-align:right;
-}
-
-nav.menu div.polozky .sekce {font-weight:bold}
-nav.menu div.polozky .podsekce {padding-left:3rem}
-
-nav.menu div.polozky .ikona {
-    display:inline-block;
-    width:3em;
-    vertical-align:middle;
-}
-nav.menu div.polozky .ikona img {width:100%; height:auto;}
-
 nav.menu a.zavritmenu {
     position:absolute;top:0.3rem;right:2rem;bottom:auto;left:auto;z-index:10;
     white-space:nowrap;
@@ -1089,6 +1057,37 @@ nav.menu a.zavritmenu::after {
     font-size:150%;
     vertical-align:-0.07em;
 }
+
+nav.menu div.polozky {
+    display:flex;
+    flex-flow:column nowrap;
+}
+nav.menu div.polozky a {
+    color:inherit;
+    text-decoration:none;
+    margin:0;
+}
+nav.menu div.polozky>a {
+    display:block;
+    padding:0.25em 1rem;
+}
+nav.menu div.polozky a:hover {
+    background-color:rgb({{zb-tmava}});
+    color:rgb({{zb-pozadi}});
+}
+nav.menu div.polozky .fragodkazy>a,
+nav.menu div.polozky .fragodkazy>span>a
+{color:inherit}
+nav.menu div.polozky .fragodkazy>a .cislo {
+    display:inline-block;
+    margin:0 0.5em;
+    text-align:right;
+}
+
+nav.menu div.polozky .podkpodkazy .odkaz {padding:0.1em 0.5em 0 0.5em}
+
+nav.menu div.polozky .sekce {font-weight:bold}
+nav.menu div.polozky .podsekce {padding-left:3rem}
 
 #
 # Formátování pro úvodní stránku (index.htm)
@@ -1168,6 +1167,58 @@ nav.menu a.zavritmenu::after {
 }
 
 #
+# Odkaz na kapitolu v menu, rozcestníku apod.
+##############################################################################
+.fragodkaz {
+    display:flex;
+    flex-flow:row nowrap;
+    margin:0;border:none;padding:0 0 0 0.25em;
+}
+.fragodkaz>.ikona {
+    flex:0 0 3em;
+}
+.fragodkaz>.ikona img {
+    width:100%; height:auto;
+}
+.fragodkaz .fragodkazy {
+    display:flex;
+    flex-flow:column nowrap;
+    flex:1 1 auto;
+    justify-content:center;
+}
+.fragodkaz .fragodkazy>a {
+    display:flex;
+    flex-flow:column nowrap;
+    justify-content:center;
+    flex:1 1 auto;
+}
+.fragodkaz .fragodkazy>a .cislo {
+    /*display:inline-block;*/
+    margin-left:0.5em;
+    min-width:1.5em;
+    text-align:right;
+}
+.fragodkaz .fragodkazy>a .cislo::after {
+    content:" ";
+}
+.fragodkaz .podkpodkazy {
+    display:flex;
+    flex-flow:row wrap;
+    flex:4 1 auto;
+    justify-content:center;
+    font-size:90%;
+    font-style:italic;
+}
+.fragodkaz .podkpodkazy a {
+    display:inline-block;
+    margin-left:0.5em;
+    white-space:nowrap;
+}
+.fragodkaz .podkpodkazy .cislo::after {
+    content:" ";
+}
+
+#
 # Rozcestník kapitol (.prehledy - na index.htm)
 ##############################################################################
 
@@ -1178,42 +1229,14 @@ nav.menu a.zavritmenu::after {
     align-items:flex-start;
     margin:2em 0 2em 1em;
 }
-.prehledy>div {width:33%;}
-.prehledy>div>div {margin-bottom:5rem;}
-.prehledy>div>div>div {width:85%;margin-top:0.5em;}
-.prehledy a {
-    display:flex;
-/*    border-bottom:thin dotted rgba(0,0,0,0.2);*/
-    align-items:center;
-    flex-direction:row;
-    text-decoration:none;
-}
-.prehledy a>* {display:block;}
-.prehledy strong {display:block;font-weight:bold;}
-/*.prehledy .cislo, .prehledy .nazev {margin-top:1em;}*/
-.prehledy .cislo {
-    flex-shrink:0;
-    width:3em;
-    text-align:right;
-}
-.prehledy .cislo::after {content:"."}
+.prehledy>div {flex:1 1 30%}
+.prehledy strong {display:block;font-weight:bold;margin-bottom:0.5em;}
+.prehledy div+strong {margin-top:2em;}
 .prehledy .ikona {
-    flex-shrink:0;
-    display:inline-block;
-    margin-right:0.5em;
-    width:3em;height:3em;
     opacity:0.7;
 }
-.prehledy .ikona img {
-    width:100%;height:auto;vertical-align:middle;
-}
-.prehledy .nazev {
-    flex-shrink:1;
-}
-.prehledy a:hover .nazev {text-decoration:underline;}
-.prehledy a:hover span.ikona, .prehledy a:active span.ikona {
+.prehledy .fragodkaz:hover .ikona {
     opacity:1;
-    z-index:5;
 }
 .premiove {
     margin-bottom:1em !important;

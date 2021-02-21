@@ -40,6 +40,8 @@ function Zacatek() {
 
     predevsim_pro = ZjistitPredevsimPro(JMENOVERZE);
     pocet = NacistFragmentyTSV(FRAGMENTY_TSV);
+    delete vycleneno;
+    delete vypsano;
     for (i = 1; i <= pocet; ++i) {vycleneno[i] = 0}
     return 0;
 }
@@ -57,36 +59,56 @@ function Pokud(podminka) {
 function RidiciRadek(text,   i, s) {
     s = text;
     if (sub(/^VYČLENIT SEM PODLE ID:/, "", s) && s !~ /^$|\}/) {
-        if (FragInfo(s "?") != 0) {
-            VypsatOdkazNaKapitolu(FragInfo(s), 1);
+        if ((x = FragInfo(s "?")) != 0) {
+            delete vypsano;
+            VypsatOdkazNaKapitolu(x, 1, 1, 1);
         }
         return 0;
     }
 
     s = text;
     if (sub(/^VYČLENIT SEM PODLE ŠTÍTKU:/, "", s) && s !~ /^$|\}/) {
+        #printf("LADĚNÍ: Vyčleňuji podle štítku %s...\n", s)  > "/dev/stderr";
+        delete vypsano;
         for (i = 1; i <= pocet; ++i) {
-            if (index(FragInfo(i, "štítky"), "{" s "}")) {VypsatOdkazNaKapitolu(i, 1)}
+            if (index(FragInfo(i, "štítky"), "{" s "}")) {
+                x = FragInfo(i, "číslo-nadkapitoly");
+                VypsatOdkazNaKapitolu(x == 0 ? i : x, 1, 1, 1);
+                #printf("LADĚNÍ: Vyčleněno[x:%s]=%s\n", x, vycleneno[x]) > "/dev/stderr";
+            }
         }
+        #printf("LADĚNÍ: Vyčleněno podle štítku %s.\n", s) > "/dev/stderr";
         return 0;
     }
 
     switch (text) {
         case "VYPSAT ZBYTEK PO VYČLENĚNÍ":
+            delete vypsano;
             for (i = 1; i <= pocet; ++i) {
-                if (!vycleneno[i]) {VypsatOdkazNaKapitolu(i, 1)}
+                if (!vycleneno[i]) {
+                    x = FragInfo(i, "číslo-nadkapitoly");
+                    VypsatOdkazNaKapitolu(x == 0 ? i : x, 1, 1);
+                }
             }
             return 0;
 
         case "VYPSAT ZBYTEK KAPITOL":
+            delete vypsano;
             for (i = 1; i <= pocet; ++i) {
-                if (!vycleneno[i] && FragInfo(i, "adresář") == "kapitoly") {VypsatOdkazNaKapitolu(i, 1)}
+                if (!vycleneno[i] && FragInfo(i, "adresář") == "kapitoly") {
+                    x = FragInfo(i, "číslo-nadkapitoly");
+                    VypsatOdkazNaKapitolu(x == 0 ? i : x, 1, 1);
+                }
             }
             return 0;
 
         case "VYPSAT ZBYTEK DODATKŮ":
+            delete vypsano;
             for (i = 1; i <= pocet; ++i) {
-                if (!vycleneno[i] && FragInfo(i, "adresář") == "dodatky") {VypsatOdkazNaKapitolu(i, 1)}
+                if (!vycleneno[i] && FragInfo(i, "adresář") == "dodatky") {
+                    x = FragInfo(i, "číslo-nadkapitoly");
+                    VypsatOdkazNaKapitolu(x == 0 ? i : x, 1, 1);
+                }
             }
             return 0;
 
@@ -127,11 +149,27 @@ function Konec() {
 # Soukromé funkce a proměnné:
 # ============================================================================
 
-function VypsatOdkazNaKapitolu(i, vyclenit) {
-    print "<div><a href=\"" FragInfo(i, "ploché-id-bez-diakr") ".htm\"><span class=\"cislo\">" i \
-        "</span> <span class=\"ikona\"><img src=\"obrazky/" OmezitNazev(FragInfo(i, "ikona-kapitoly"), 1) "\" alt=\"\"></span>" \
-        "<span class=\"nazev\">" FragInfo(i, "celý-název") "</span></a></div>";
+function VypsatOdkazNaKapitolu(i, vyclenit, iPodkapitoly, jenPokudNeniVypsano,   podkapitoly, podkapitolyPocet)
+{
+    if (jenPokudNeniVypsano && vypsano[i]) {return 0}
+
+    iPodkapitoly = iPodkapitoly ? NajitPodkapitoly(i, 1) : "";
+    #printf("LADĚNÍ: %s: Nalezeny podkapitoly \"%s\"!\n", i, iPodkapitoly) > "/dev/stderr";
+    #printf("LADĚNÍ: vyčlenit=%s\n", vyclenit ? "ano" : "ne") > "/dev/stderr";
+    print HtmlDivOdkaz(i, iPodkapitoly);
+    vypsano[i] = 1;
     if (vyclenit) {vycleneno[i] = 1}
+    if (iPodkapitoly != "") {
+        podkapitolyPocet = split(iPodkapitoly, podkapitoly, /\s+/);
+        #printf("LADĚNÍ: počet podkapitol: %d\n", podkapitolyPocet) > "/dev/stderr";
+        for (i = 1; i <= podkapitolyPocet; ++i) {
+            #printf("LADĚNÍ: K vyčlenění: podkapitola %s\n", podkapitoly[i])  > "/dev/stderr";
+            if (podkapitoly[i] > 0) {
+                vypsano[podkapitoly[i]] = 1;
+                if (vyclenit) {vycleneno[podkapitoly[i]] = 1}
+            }
+        }
+    }
     #printf("LADĚNÍ: Vypsán odkaz na kapitolu č. %s\n", i) > "/dev/stderr";
     return 0;
 }

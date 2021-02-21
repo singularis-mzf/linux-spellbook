@@ -309,6 +309,9 @@ function NacistFragmentyTSV(soubor,   oldFS, oldRS, oldLN, i, vystupMax, nevystu
 }
 
 function FragInfo(a, b,   x) {
+    if (!(1 in FRAGMENTY)) {
+        ShoditFatalniVyjimku("fragmenty.tsv nejsou načteny!");
+    }
     if (a ~ /^[^-0-9]/ && b == "") {
         # Použití A: zadává se celé id; vrací číslo
         #   pokud fragment nekončí otazníkem, musí existovat
@@ -346,6 +349,10 @@ function FragInfo(a, b,   x) {
         case "příznaky": x = FRAGMENTY[a "/příznaky"]; break;
         case "omezené-id": x = FRAGMENTY[a "/omezid"]; break;
         case "id-nadkapitoly": x = FRAGMENTY[a "/id-nadkapitoly"]; break;
+        case "číslo-nadkapitoly":
+            x = FRAGMENTY[a "/id-nadkapitoly"];
+            x = x == "NULL" ? 0 : FRAGMENTY["id/" x];
+            break;
         case "celý-název": x = FRAGMENTY[a "/celý-název"]; break;
         case "štítky": x = FRAGMENTY[a "/štítky"]; break;
         case "ikona-kapitoly": x = FRAGMENTY[a "/ikkap"]; break;
@@ -393,4 +400,71 @@ function OmezitNazev(s, ponechatCestu) {
     if (ponechatCestu) {gsub(/-\/|\/-/, "/", s)}
 
     return s;
+}
+
+# HtmlDivOdkaz(int indexFragmentu, bool iPodkapitoly) -> string
+function HtmlDivOdkaz(fragIndex, cislaPodkapitol,   i, priznaky, vysl, plneId, podkapitoly, podkapitolyPocet) {
+    if (!FragInfo(fragIndex, "existuje")) {
+        ShoditFatalniVyjimku("Nemohu vypsat odkaz na neexistující fragment č. " fragIndex "!");
+    }
+    delete podkapitoly;
+    podkapitolyPocet = cislaPodkapitol == "" ? 0 : split(cislaPodkapitol, podkapitoly, /\s+/);
+    for (i = 1; i <= podkapitolyPocet; ++i) {
+        if (!FragInfo(podkapitoly[i], "existuje")) {
+            ShoditFatalniVyjimku("Nemohu vypsat odkaz na neexistující fragment č. " podkapitoly[i] "!");
+        }
+    }
+
+    vysl = "<div class=\"fragodkaz\">" \
+        "<span class=\"ikona\"><img src=\"obrazky/" OmezitNazev(FragInfo(fragIndex, "ikona-kapitoly"), 1) "\" alt=\"[]\"></span>" \
+        "<span class=\"fragodkazy\">";
+    priznaky = FragInfo(fragIndex, "příznaky");
+    if (priznaky ~ /z/) {
+        vysl = vysl "<a href=\"" FragInfo(fragIndex, "ploché-id-bez-diakr") ".htm\" class=\"odkaz\"><span><span class=\"cislo\">" fragIndex "</span>";
+    } else {
+        vysl = vysl "<span class=\"odkaz\"><span class=\"cislo\"></span>";
+    }
+    vysl = vysl FragInfo(fragIndex, "celý-název") "</span>" (priznaky ~ /z/ ? "</a>" : "");
+    if (podkapitolyPocet > 0) {
+        vysl = vysl "<span class=\"podkpodkazy\">";
+        for (i = 1; i <= podkapitolyPocet; ++i) {
+            plneId = FragInfo(podkapitoly[i], "plné-id");
+            priznaky = FragInfo(podkapitoly[i], "příznaky");
+            if (priznaky ~ /z/) {
+                vysl = vysl "<a href=\"" FragInfo(podkapitoly[i], "ploché-id-bez-diakr") ".htm\" class=\"odkaz\"><span><span class=\"cislo\">" podkapitoly[i] "</span>";
+            } else {
+                vysl = vysl "<span class=\"odkaz\"><span class=\"cislo\"></span>";
+            }
+            vysl = vysl FragInfo(podkapitoly[i], "název-podkapitoly") "</span>"
+            if (priznaky ~ /z/) {vysl = vysl "</a>"}
+        }
+        vysl = vysl "</span>";
+    }
+    vysl = vysl "</span></div>";
+    return vysl;
+}
+
+function NajitPodkapitoly(fragIndex, jenNaVystup,   plneId, vysl)
+{
+    plneId = FragInfo(fragIndex, "plné-id");
+    vysl = "";
+    # optimalizace:
+    # - podkapitola nemůže mít další podkapitoly
+    # - má-li fragment podkapitoly na výstup, má nastavený příznak "N"
+    if (plneId ~ /\// || (jenNaVystup && FragInfo(fragIndex, "příznaky") !~ /N/)) {return ""}
+
+    for (i = 1; FragInfo(i, "existuje"); ++i) {
+        if (FragInfo(i, "id-nadkapitoly") == plneId) {
+            vysl = vysl " " i;
+        }
+    }
+    if (!jenNaVystup) {
+        for (i = -1; FragInfo(i, "existuje"); --i) {
+            if (FragInfo(i, "id-nadkapitoly") == plneId) {
+                vysl = vysl " " i;
+            }
+        }
+    }
+    sub(/^ /, "", vysl);
+    return vysl;
 }
