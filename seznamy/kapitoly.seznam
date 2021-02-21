@@ -4,7 +4,9 @@ bash
 css
 datum-čas-kalendář
 diskové-oddíly
+diskové-oddíly/btrfs
 diskové-oddíly/lvm
+diskové-oddíly/softwarový-raid
 docker
 dosbox
 firefox
