@@ -186,9 +186,10 @@ $(SOUBORY_PREKLADU)/fragmenty.tsv: # generování se spouští pokaždé
 # skripty/extrakce/fragmenty.pl $(VSECHNY_KAPITOLY_A_DODATKY_MD) $(SOUBORY_PREKLADU)/ucs_ikony.dat konfig.ini
 	@skripty/h1 "Regeneruji $(SOUBORY_PREKLADU)/fragmenty.tsv a Makefily..."
 	@mkdir -pv $(dir $@)
-	@$(TRANSAKCE) -o $@
+	@shopt -qu failglob; shopt -qs nullglob; $(TRANSAKCE) -o $@ $(SOUBORY_PREKLADU)/osnova/*.tsv
 	@$(PERL) skripty/extrakce/fragmenty.pl
-	@$(TRANSAKCE) -z $@
+	@$(TRANSAKCE) -z $@ $(SOUBORY_PREKLADU)/osnova/*.tsv
+	@$(RM) -v $(SOUBORY_PREKLADU)/osnova/*.transakce
 
 $(SOUBORY_PREKLADU)/postprocess.dat: $(wildcard postprocess.dat)
 	@skripty/h2 'Obnovuji $@...'

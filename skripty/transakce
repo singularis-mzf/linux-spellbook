@@ -36,12 +36,12 @@ then
         t="${cil}.transakce"
         if test -e "$cil"
         then
-            exec cp -fpT -- "$cil" "$t"
+            cp -fpT -- "$cil" "$t"
         elif test -e "$t"
         then
-            exec rm -f -- "$t"
+            rm -f -- "$t"
         else
-            exit 0
+            true
         fi
     done
 
