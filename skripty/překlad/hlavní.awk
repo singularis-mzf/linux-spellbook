@@ -529,11 +529,17 @@ BEGIN {
         IKONA_KAPITOLY = FragInfo(C_KAPITOLY, "ikona-kapitoly");
         # je dodatek?
         JE_DODATEK = FragInfo(C_KAPITOLY, "příznaky") ~ /d/;
+        # název
+        NAZEV_PODKAPITOLY = FragInfo(C_KAPITOLY, "název-podkapitoly");
+        n = FragInfo(C_KAPITOLY, "číslo-nadkapitoly");
+        NAZEV_NADKAPITOLY = n != 0 ? FragInfo(n, "celý-název") : "";
     } else {
         C_KAPITOLY = 0;
         STITKY = "";
         IKONA_KAPITOLY = "ik-vychozi.png";
         JE_DODATEK = 0;
+        NAZEV_NADKAPITOLY = "";
+        NAZEV_PODKAPITOLY = "Není";
     }
 
     # Načíst zvýraznění
@@ -709,7 +715,9 @@ TYP_RADKU == "NADPIS" {
         C_PODSEKCE = 0;
         delete ppcall;
         delete pptall;
-        printf("%s", ZacatekKapitoly(KAPITOLA, ++C_KAPITOLY, STITKY, OSNOVA, IKONA_KAPITOLY, JE_DODATEK));
+        printf("%s", ZacatekKapitoly( \
+            (NAZEV_NADKAPITOLY != "" ? NAZEV_NADKAPITOLY "/" : "") NAZEV_PODKAPITOLY,
+            ++C_KAPITOLY, STITKY, OSNOVA, IKONA_KAPITOLY, JE_DODATEK));
         if (tolower(KAPITOLA) == "licence") {
             printf("%s", ZapnoutRezimLicence());
         }
@@ -717,10 +725,10 @@ TYP_RADKU == "NADPIS" {
         SEKCE = ZpracujZnaky(substr($0, 4));
         PODSEKCE = "";
         C_PODSEKCE = 0;
-        printf("%s", ZacatekSekce(KAPITOLA, SEKCE, C_KAPITOLY, ++C_SEKCE));
+        printf("%s", ZacatekSekce((NAZEV_NADKAPITOLY != "" ? NAZEV_NADKAPITOLY "/" : "") NAZEV_PODKAPITOLY, SEKCE, C_KAPITOLY, ++C_SEKCE));
     } else {
         PODSEKCE = ZpracujZnaky(substr($0, 5));
-        printf("%s", ZacatekPodsekce(KAPITOLA, SEKCE, PODSEKCE, C_KAPITOLY, C_SEKCE, ++C_PODSEKCE));
+        printf("%s", ZacatekPodsekce((NAZEV_NADKAPITOLY != "" ? NAZEV_NADKAPITOLY "/" : "") NAZEV_PODKAPITOLY, SEKCE, PODSEKCE, C_KAPITOLY, C_SEKCE, ++C_PODSEKCE));
     }
     next;
 }

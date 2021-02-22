@@ -241,7 +241,9 @@ function Tabulator(delka,  i, vysledek) {
     return "\\textcolor{seda}{\\guillemotright}{" Zopakovat("~", max(0, delka - 1)) "}";
 }
 
-function ZacatekKapitoly(nazevKapitoly, cisloKapitoly, stitky, osnova, ikonaKapitoly, jeDodatek,   kapitolaVelkymi, zkratkaKapitoly) {
+function ZacatekKapitoly(nazevKapitoly, cisloKapitoly, stitky, osnova, ikonaKapitoly, jeDodatek, \
+    kapitolaVelkymi, zkratkaKapitoly)
+{
     DO_LATEXU_ODSTAVEC_PRED_ZAKLINADLEM = 0;
     kapitolaVelkymi = toupper(nazevKapitoly);
     zkratkaKapitoly = jeDodatek ? "" : SubstrZleva(gensub(/[^[:alnum:]]/, "", "g", kapitolaVelkymi), 3);
