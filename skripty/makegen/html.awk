@@ -169,7 +169,7 @@ END {
     Zavislost("skripty/plnění-šablon/hlavní.awk");
     Zavislost("skripty/utility.awk");
     Zavislost(SOUBORY_PREKLADU "/fragmenty.tsv");
-    # [ ] + datum sestavení
+    ZavislostNaDatuSestaveni();
     # příkazy
     Prikaz("mkdir -pv $(dir $@)");
     Prikaz(AWK " -f skripty/plnění-šablon/index-html.awk " \
@@ -190,7 +190,7 @@ END {
     Zavislost("formáty/html/šablona.htm");
     Zavislost(vsechny_md);
     Zavislost(SOUBORY_PREKLADU "/fragmenty.tsv");
-    # [ ] + datum sestavení
+    ZavislostNaDatuSestaveni();
     # příkazy
     Prikaz("mkdir -pv $(dir $@) " SOUBORY_PREKLADU "/html");
     Prikaz(AWK " -f skripty/extrakce/copyrighty.awk " join(" ", vsechny_md) " >" SOUBORY_PREKLADU "/html/kap-copys.htm");
@@ -214,7 +214,7 @@ END {
     Zavislost("skripty/plnění-šablon/hlavní.awk");
     Zavislost("formáty/html/šablona.htm");
     Zavislost(SOUBORY_PREKLADU "/fragmenty.tsv");
-    # [ ] + datum sestavení
+    ZavislostNaDatuSestaveni();
     # příkazy
     Prikaz("mkdir -pv $(dir $@)");
     Prikaz(AWK " -f skripty/plnění-šablon/kapitola.awk " \
