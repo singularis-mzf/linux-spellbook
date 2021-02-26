@@ -39,8 +39,12 @@ Poznámky:
 
 * **Selektor** je...
 * **Vlastnost** je...
-* **Logický řádek** (zkratkou „l. ř.“) je v metodě flexbox: pokud je základní směr umísťování zrozenců po řádcích (zleva doprava nebo zprava doleva), je to každý řádek; pokud je základní směr umísťování zrozenců po sloupcích (shora dolů nebo zdola nahoru), je to každý sloupec.
-* **Logický sloupec** (zkratkou „l. s.“) je v metodě flexbox doplněk k logickému řádku: jsou-li logickými řádky řádky, jsou logickými sloupci sloupce; naopak jsou-li logickými řádky sloupce, jsou logickými sloupci řádky.
+
+### Flexbox
+
+* **Kontejner** je HTML prvek s nastavením „display: flex“; takový prvek se chová jako blokový a prvky v něm bezprostředně vnořené (takzvané **prvky kontejneru**) také, a navíc se rozmísťují metodou „flexbox“ do logických řádků a případně i do logických sloupců.
+* **Logický řádek** (zkratkou „l. ř.“): pokud je základní směr umísťování prvků po řádcích (zleva doprava nebo zprava doleva), je to každý řádek; pokud je základní směr umísťování prvků po sloupcích (shora dolů nebo zdola nahoru), je to každý sloupec.
+* **Logický sloupec** (zkratkou „l. s.“) je doplněk k logickému řádku: jsou-li logickými řádky řádky, jsou logickými sloupci sloupce; naopak jsou-li logickými řádky sloupce, jsou logickými sloupci řádky. Pokud nedojde k zalomení logické řádky, bude mít flexbox jen jeden logický sloupec.
 
 !ÚzkýRežim: vyp
 
@@ -70,7 +74,7 @@ Poznámky:
 
 ### Zaklínadla: Flexbox
 
-*# zobrazit prvek a jeho potomky metodou „flexbox“*<br>
+*# zobrazit prvek a jeho bezprostřední potomky metodou „flexbox“*<br>
 **display: flex;**
 
 ### Kontejner: orientace l. ř
@@ -131,16 +135,16 @@ flex-flow: column-reverse wrap-reverse;
 Poznámka: toto nastavení je ignorováno, pokud má kterýkoliv prvek na logickém
 řádku nastaveno nenulové roztažení (vlastnost „flex-grow“, resp. „flex“).
 
-*# za posledního zrozence (výchozí)*<br>
+*# za poslední prvek kontejneru (výchozí)*<br>
 **justify-content: flex-start;**
 
 *# rozložit na začátek a konec l.ř.*<br>
 **justify-content: center;**
 
-*# před prvního zrozence*<br>
+*# před první prvek kontejneru*<br>
 **justify-content: flex-end;**
 
-*# rozložit do mezer mezi zrozence; na začátek a konec žádnou/polovinu mezery*<br>
+*# rozložit do mezer mezi prvky; na začátek a konec žádnou/polovinu mezery*<br>
 **justify-content: space-between;**<br>
 **justify-content: space-around;**
 
@@ -163,7 +167,7 @@ Poznámka: toto nastavení je ignorováno, pokud má kterýkoliv prvek na logick
 **align-content: space-between;**<br>
 **align-content: space-around;**
 
-### Prvek: ortogonální zarovnání v l. ř.
+### Prvek kontejneru: ortogonální zarovnání v l. ř.
 
 *# roztáhnout na celou výšku (resp. šířku) l. ř. (výchozí)*<br>
 **align-self: stretch;**
@@ -174,7 +178,7 @@ Poznámka: toto nastavení je ignorováno, pokud má kterýkoliv prvek na logick
 *# zarovnat účaří*<br>
 **align-self: baseline;**
 
-### Prvek: další vlastnosti
+### Prvek kontejneru: další vlastnosti
 
 *# nastavit chování délky prvku na logickém řádku (obecně/výchozí nastavení)*<br>
 *// „Roztažení“ je nezáporné celé číslo; výchozí je 0, která znamená, že se prvek neroztahuje. Má-li kterýkoliv prvek na logické řádce nenulové roztažení, zbylé volné místo na l. ř. se rozdělí na tolik dílů, kolik je potřeba, a všechny prvky se roztáhnou o tolik dílů, kolik udává jejich „roztažení“. Pouze v případě, že mají všechny prvky roztažení nulové, rozmístí se volné místo podle vlastnosti kontejneru „justify-content“.*<br>

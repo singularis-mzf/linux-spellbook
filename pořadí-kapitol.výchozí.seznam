@@ -4,6 +4,9 @@ základní-znalosti
 #awk
 #datum-čas-kalendář
 diskové-oddíly
+diskové-oddíly/btrfs
+diskové-oddíly/lvm
+diskové-oddíly/softwarový-raid
 git
 hledání-souborů
 #make

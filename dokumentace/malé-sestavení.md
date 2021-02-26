@@ -94,9 +94,9 @@ Překlad pravděpodobně bude fungovat i při nedodržení doporučené syntaxe
 
 ``make REKLAMNI_PATY=1 -j4 html``
 
-* Nastavením proměnné prostředí „PORADI\_KAPITOL“ na zvláštní hodnotu „\_VŠE\_“ můžete vynutit automatické přeložení všech kapitol a dodatků zapsaných v Makefile (tato funkce je používána při sestavování „výplachu repozitáře“):
+* Nastavením proměnné prostředí „PORADI\_KAPITOL“ na zvláštní hodnotu „\_\_VŠE\_\_“ můžete vynutit automatické přeložení všech kapitol a dodatků zapsaných v Makefile (tato funkce je používána při sestavování „výplachu repozitáře“):
 
-``PORADI_KAPITOL='_VŠE_' make -j4 html``
+``PORADI_KAPITOL='__VŠE__' make -j4 html``
 
 ## Ověření české lokalizace systému
 

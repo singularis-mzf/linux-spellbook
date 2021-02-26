@@ -12,6 +12,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
 <!--
+[ ] https://www.userchrome.org/
+[ ] https://www.youtube.com/watch?v=1mGhMBWmGDY
 
 http://kb.mozillazine.org/About:config_entries
 http://kb.mozillazine.org/Category:Preferences (novější volby)
@@ -124,6 +126,12 @@ browser.tabs.allowTabDetach
 
 *# neotevírat nabídku při psaní do adresního řádku (FF ≥ 83)*<br>
 **user\_pref("browser.urlbar.maxRichResults", 0);**
+<!--
+možná vypne i automatické doplňování
+-->
+
+*# neotevírat nabídku při kliknutí do adresního řádku (FF ≥ 78)*<br>
+**user\_pref("browser.urlbar.suggest.topsites", false);**
 
 *# nenašeptávat: záložky/navštívené stránky/otevřené panely/vyhledávání/top stránky*<br>
 **user\_pref("browser.urlbar.suggest.bookmark", false);**<br>
@@ -138,6 +146,9 @@ browser.tabs.allowTabDetach
 *# adresu zadanou do adresní řádky otevírat v tomto panelu/novém panelu*<br>
 **user\_pref("browser.urlbar.openintab", false);**<br>
 **user\_pref("browser.urlbar.openintab", true);**
+
+*# nezvětšovat adresní řádek po kliknutí*<br>
+**user\_pref("ui.prefersReducedMotion", 1);**
 
 ### Záložky
 
@@ -459,6 +470,14 @@ na linuxu zatím ve výchozím stavu vypnuto
 
 *# zakázat všem webům obrázky na pozadí*<br>
 **\* {background-image: none !important;}**
+
+
+## Zaklínadla: userChrome.css
+
+### Ostatní
+
+*# skrýt „hamburger menu“*<br>
+**\#PanelUI-menu-button {display: none;}**
 
 ## Zaklínadla: Ostatní
 

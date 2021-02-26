@@ -19,7 +19,7 @@ Má formu připomínající konverzační slovník cizího jazyka a je vydává
 pro profesionální i domácí tisk a ve formátu HTML pro snadné vykopírování zaklínadel,
 můžete ji tedy používat na papíře i v počítači, proto „multimediální“.
 
-Verze *vanilková příchuť 2.4 Leoš Liška* je cílena na *Ubuntu 20.04 Focal Fossa* a jeho deriváty.
+Verze *vanilková příchuť 2.5 Marie Macků* je cílena na *Ubuntu 20.04 Focal Fossa* a jeho deriváty.
 
 Obsah podléhá licenci [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 Podrobné údaje o autorství zdrojových souborů jsou uvedeny v komentářích v jejich záhlaví;
@@ -95,6 +95,9 @@ Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybra
 | [awk](kapitoly/awk.md) | AWK | 1.2 | prémiová |
 | [datum-čas-kalendář](kapitoly/datum-čas-kalendář.md) | Datum, čas a kalendář | 1.1 | prémiová |
 | [diskové-oddíly](kapitoly/diskové-oddíly.md) | Diskové oddíly | 1.6 | základní |
+| [diskové-oddíly/btrfs](kapitoly/diskové-oddíly/btrfs.md) | Diskové oddíly/Btrfs | 2.5 | základní? |
+| [diskové-oddíly/lvm](kapitoly/diskové-oddíly/lvm.md) | Diskové oddíly/LVM | 2.5 | základní? |
+| [diskové-oddíly/softwarový-raid](kapitoly/diskové-oddíly/softwarový-raid.md) | Diskové oddíly/Softwarový RAID | 2.5 | základní? |
 | [git](kapitoly/git.md) | Git | 1.0 | základní |
 | [hledání-souborů](kapitoly/hledání-souborů.md) | Hledání souborů | 1.5 | základní |
 | [make](kapitoly/make.md) | Make | 1.0 | prémiová |

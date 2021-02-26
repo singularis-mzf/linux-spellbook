@@ -209,28 +209,37 @@ Uživatele, který Linux: Knihu kouzel neprostudoval, poznáte např. takto:
 * Myslí si, že příkaz „apt list gimp*“ vypíše seznam balíčků začínajících „gimp“ (v tomto případě se musí hlavně naučit pravidla odzvláštňování).
 -->
 
-## Aktuální poznámka k verzi „vanilková příchuť 2.4 Leoš Liška“
+## Aktuální poznámka k verzi „vanilková příchuť 2.5 Marie Macků“
 
-Verze vanilkové příchuti 2.4, jménem Leoš Liška, přináší nové kapitoly
-Manuálové stránky (prémiová) a Nabídka aplikací (základní).
+Verze vanilkové příchuti 2.5, jménem Marie Macků přináší především
+podporu podkapitol, která si vynutila přepsání části mechanismu překladu.
+Z kapitoly „Diskové oddíly“ byly vyděleny podkapitoly „Btrfs“ a „LVM“.
+(V příští verzi počítám s podobným rozdělením u kapitol Správa balíčků,
+Systém, Terminál, Zpracování textových souborů a dalších.)
+
+Novinkou je podkapitola „Diskové oddíly/Softwarový RAID“ a podkapitola
+„Diskové oddíly/LVM“ nově pokrývá i logické snímky (LVM snapshots).
+
+V souvislosti se změnami v mechanismu překladu došlo i k několika změnám
+zásadním pro uživatele: soubor „pořadí-kapitol.lst“ se nyní jmenuje
+„pořadí-kapitol.seznam“, seznam vydaných kapitol a dodatků najdete
+v souboru „seznamy/vydané-fragmenty.seznam“ a podtržítka v nastavení
+„PORADI\_KAPITOL=\_\_VŠE\_\_“ jsou nyní zdvojená (původně byla jednoduchá).
+Dokumentace již byla aktualizována.
+
+V kapitole Správa procesů najdete novou pomocnou funkci „lkk\_limit\_jobs“;
+v kapitole Terminál přibylo nastavení barev pro příkaz „ls“.
+V kapitola Správa uživatelských účtů byl nefunkční příkaz pro výpis
+seznamu členů skupiny nahrazen pomocným skriptem.
 
 <!--
-V HTML variantě...
-V PDF variantách...
+- V HTML variantě...
+- V PDF variantách...
 
-V kapitole *Diskové oddíly* přibyly zkušenosti s LVM na vyjímatelných
-médiích a volby x-gvfs.
-V kapitole *Hledání souborů* přibylo vyloučení adresářů z prohledávání a další vylepšení.
-V kapitole *Správa balíčků* přibyla práce s prioritami APT.
+- V kapitole *XY* přibyly ...
 -->
 
-Balíček „DEB“ spouštěče „lkk“ nově obsahuje manuálovou stránku
-v angličtině i češtině. Funkce Perlu „put()“ a „fput()“ v dodávaném modulu
-byly přejmenovány na „puts()“ a „fputs()“.
-
-Další významnou novinkou je, že je nově oficiálně podporován překlad v Dockeru.
-
-Vydání verze 2.5, jménem Marie Macků, očekávám v druhé polovině února 2021.
+Vydání verze 2.6, jménem Nikita Nálepka, očekávám v druhé polovině března 2021.
 
 Verze řady „vanilková příchuť 1.x“ jsou ve stádiu dlouhodobé pasivní údržby do 1. března 2023.
 

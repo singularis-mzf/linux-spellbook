@@ -330,6 +330,12 @@ nabídka-aplikací
 \begin{odstavce}Tato kapitola pokrývá tvorbu spouštěčů aplikací (*.desk\-top)
 
 2210
+pdf-a4.*
+nabídka-aplikací
+\char`\~{}/.local/share/applications/vycet.xterm.desktop}%
+\char`\~{}/.local/share/applications/\\vycet.xterm.desktop}%
+
+2211
 pdf-b5.*
 nabídka-aplikací
 \char`\~{}/.local/share/applications/vycet.xterm.desktop}%
