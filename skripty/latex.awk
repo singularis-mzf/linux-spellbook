@@ -151,7 +151,7 @@ BEGIN {
         }
 
         # Závěr
-        vysledek = close(prikaz) / 256;
+        vysledek = close(prikaz);
         if (vysledek > 0) {
             print cervena, "CHYBA: LaTeX skončil s chybovým kódem ", vysledek, "!", resetbarvy > "/dev/stderr";
             exit vysledek;

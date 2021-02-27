@@ -338,7 +338,6 @@
 % DEFINICE SPECIFICKÉ PRO VÝSTUPNÍ FORMÁTY
 % ============================================================================
 %
-\newenvironment*{obsahdosloupcu}{}{}
 \newenvironment*{uzkyrezim}{}{}
 \newcommand*{\nadpisobsahu}{\mbox{PŘEHLED (OBSAH)}}%
 
@@ -346,7 +345,6 @@
 \setlength{\sirkakodu}{0.9\textwidth} % šířka kódu v řádcích zaklínadel (obvykle odvozena od šířky textu „\textwidth“)
 \setlength{\omezeniodstavce}{4cm}
 
-\renewenvironment*{obsahdosloupcu}{\begin{multicols*}{2}}{\end{multicols*}}
 \renewenvironment*{uzkyrezim}{%
     \setlength{\omezeniodstavce}{0pt}%
     \setlength{\odsazeni}{0.5\odsazeni}% zmenšit odsazení odsazených odstavců na polovinu
@@ -410,6 +408,11 @@
 % ============================================================================
 \newenvironment*{blok}{}{}
 \newcommand*{\fontsz}[1]{\fontsize{#1}{#1}\selectfont}%
+\newenvironment*{obsahdosloupcu}{%
+        \begin{multicols*}{2}\footnotesize%
+    }{%
+        \end{multicols*}%
+    }%
 
 
 % +x(doprava)+y(nahoru){obsah}

@@ -350,6 +350,7 @@ Poznámka: Dělení záznamů na sloupce určují proměnné FS, FPAT a FIELDWI
 **close(**{*"řetězec reprezentující příkaz"*}**)**
 
 *# uzavřít zápis na vstup příkazu*<br>
+*// Funkce „close()“ počká na skončení příkazu a vrátí jeho návratovou hodnotu.*<br>
 **close(**{*"řetězec reprezentující příkaz"*}**)**
 
 *# vyprázdnit **vyrovnávací paměť** zápisu (soubor/standardní výstup)*<br>
