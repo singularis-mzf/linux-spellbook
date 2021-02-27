@@ -120,6 +120,8 @@ Poznámka: ve Firefoxu se nezlomitelné mezery zkopírují do schránky jako oby
 **a příklad hodnoty či komentář** ⊨ jako je **tento**.<br>
 ^^**i určený do záhlaví** ⊨ jako je **tento**.
 
+*# lorem ipsum*<br>
+**lorem ipsum 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9**
 
 ## Obrázky
 

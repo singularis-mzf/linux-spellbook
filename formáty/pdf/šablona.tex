@@ -328,7 +328,7 @@
 % ============================================================================
 \setlength{\sirkatitulkuzaklinadla}{\textwidth}
 \addtolength{\sirkatitulkuzaklinadla}{-\sirkaikony}
-\addtolength{\sirkatitulkuzaklinadla}{-\sirkacislazaklinadla}
+%\addtolength{\sirkatitulkuzaklinadla}{-\sirkacislazaklinadla}
 \addtolength{\sirkatitulkuzaklinadla}{-8\zaklinadlotabcolsep}
 \addtolength{\sirkatitulkuzaklinadla}{-1.5pt}
 \setlength{\sirkaradkuzaklinadla}{0.6\sirkatitulkuzaklinadla}
@@ -587,6 +587,7 @@
         {##2}%
         }%
     \newcommand*{\zacatek}[1]{%
+        \addtolength{\sirkaradkuzaklinadla}{3pt}% doladění...
         \noindent\begin{tabular}{%
             % ikona zaklínadla:
             >{\centering##1}p{\sirkaikony}@{\hspace{2pt}}%
@@ -594,9 +595,9 @@
             >{\raggedright##1\fontsize{10pt}{10pt}\selectfont\pismosansserif}p{\sirkatitulkuzaklinadla}%
             @{\hspace{10pt}}%
             % řádky zaklínadla:
-            |>{\raggedright\pismozaklinadlo\zaklinadlosize}p{\sirkaradkuzaklinadla}%
+            |>{\raggedright\pismozaklinadlo\zaklinadlosize}p{\sirkaradkuzaklinadla}|@{}%
             % číslo zaklínadla:
-            >{\raggedleft##1\fontsize{9pt}{0pt}\selectfont}p{\sirkacislazaklinadla}%
+            %>{\raggedleft##1\fontsize{9pt}{0pt}\selectfont}p{\sirkacislazaklinadla}%
         }%
     }%
     \newcommand*{\konec}{\tabularnewline\end{tabular}\hspace*{-2pt}}%
@@ -612,7 +613,7 @@
     % řádky zaklínadla:
     &{\raggedright\budepoprve{}#6}%
     % číslo zaklínadla:
-    &\##2%
+    %&\##2%
     \konec{}#5\par\vspace{4pt plus5pt minus5pt}\mbox{}%
     }}
 
