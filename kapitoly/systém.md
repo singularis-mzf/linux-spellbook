@@ -288,6 +288,9 @@ SystemMaxUse=500M
 **sudo sed -i -E 's/(\\s)'${stare}'$/\\1'${nove}'/' /etc/hosts &amp;&amp; sudo hostnamectl set-hostname "$nove"**<br>
 !: Restartujte počítač.
 
+*# spustit program a po dobu jeho běhu neumožnit běžným uživatelům uspání počítače, restart či vypnutí systému*<br>
+**systemd-inhibit** [**"\-\-why=**{*Popis důvodu*}**"**] <nic>[**"\-\-who=**{*Popis příkazu*}**"**] <nic>[**sudo**] {*příkaz*} {*parametry*}
+
 *# otestovat volnou paměť RAM*<br>
 **sudo memtester** {*velikost-P*} [{*počet-iterací*}]]
 

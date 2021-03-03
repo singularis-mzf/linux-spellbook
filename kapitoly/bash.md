@@ -15,6 +15,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 Poznámky:
 
 [ ] + alias/unalias
+[ ] koprocesy https://www.gnu.org/software/bash/manual/html_node/Coprocesses.html#Coprocesses
+[ ] trap
 
 ⊨
 -->
@@ -22,7 +24,7 @@ Poznámky:
 # Bash
 
 !Štítky: {program}{bash}
-
+!FixaceIkon: 1754
 !ÚzkýRežim: zap
 
 ## Úvod
@@ -41,6 +43,9 @@ GNU Bash...
 -->
 ![ve výstavbě](../obrázky/ve-výstavbě.png)
 
+* **Deskriptor** je číselné označení vstupu či výstupu interpretu, případně jím spouštěných programů. Deskriptor 0 se nazývá **standardní vstup**, deskriptor 1 **standardní výstup** a deskriptor 2 **standardní chybový výstup**. Deskriptory 0 až 9 jsou pro volné využití uživatelem; deskriptory 10 až 255 jsou vyhrazeny pro vnitřní použití interpretem.
+* **Podprostředí** (subshell) je oddělené prostředí pro vykonávání příkazů. Příkazy v podprostředí získají kopii všech proměnných, deskriptorů a nastavení, ale změny, které provedou, se vrátí do původního stavu, jakmile bude podprostředí opuštěno. Podprostředí má jako celek svůj návratový kód a jako na celek na něj mohou být aplikována přesměrování.
+
 !ÚzkýRežim: vyp
 
 ## Zaklínadla
@@ -49,13 +54,237 @@ GNU Bash...
 -->
 ![ve výstavbě](../obrázky/ve-výstavbě.png)
 
-### Rozvoj proměnných
+### Roura
 
-*# obsah proměnné (pokud neexistuje, prázdný řetězec) *<br>
-**$\{**{*název\_proměnné*}**\}**
+*# přesměrovat std. výstup příkazu A na std. vstup příkazu B*<br>
+{*příkaz-A včetně přesměrování*} **\|** {*příkaz-B včetně přesměrování*}
 
-*# obsah s nahrazením prvního/každého výskytu vzorku novým podřetězcem*<br>
-**$\{**{*název\_proměnné*}**/**{*vzorek*}**/**{*řetězec náhrady*}**\}**
+*# přesměrovat std. výstup a std. chyb. výstup příkazu A na std. vstup příkazu B*<br>
+{*příkaz-A včetně přesměrování*} **\|&amp;** {*příkaz-B včetně přesměrování*}
+
+### Přesměrování vstupu (čtení)
+
+*# vstup z existujícího souboru*<br>
+[{*deskriptor*}]**&lt;** {*cesta*}
+
+*# prázdný vstup*<br>
+[{*deskriptor*}]**&lt; /dev/null**
+
+*# na vstup příkazu zapsat zadaný text a znak konce řádky „\\n“ (obecně/příklady)*<br>
+*// Poznámka: znak „\\n“ bude na konec přidán i v případě, že už jím zadaný text končí.*<br>
+[{*deskriptor*}]**&lt;&lt;&lt;** {*parametr*}<br>
+**sort &lt;&lt;&lt; $'zoo\\nahoj\\nseminář'**<br>
+**sort &lt;&lt;&lt; "A$(echo BC)D"**
+
+*# na vstup příkazu zapsat blok řádek*<br>
+*// Zadaný ukončovač musí být neprázdný řetězec. Bash na přesměrovávaný vstup zapíše všechny řádky počínaje první řádkou po aktuálním příkazu a konče poslední řádkou, která se přesně neshoduje s ukončovačem (musí odpovídat i odsazení).*<br>
+[{*deskriptor*}]**&lt;&lt; '**{*ukončovač*}**'**
+
+*# vstup z pojmenovaného deskriptoru*<br>
+{*příkaz a parametry*} [{*cílový-deskriptor*}]**&lt;&amp;$**{*identifikator-pojm-desk*}
+
+*# zduplikovat deskriptor*<br>
+*// Zduplikování deskriptoru čtoucího ze souboru není totéž jako dvojité otevření téhož souboru; duplikáty téhož deskriptoru totiž sdílí stejnou pozici, takže čtením z jednoho se posouvá i pozice pro čtení z ostatních. Naproti tomu při otevření téhož souboru na dva různé deskriptory bude každý z nich mít samostatnou pozici čtení, která nebude ovlivňována čtením z toho druhého.*<br>
+[{*cílový-deskriptor*}]**&lt;&amp;**{*zdrojový-deskriptor*}
+
+*# vstup ze standardního výstupu bloku příkazů (obecně/příklad)*<br>
+[{*deskriptor*}]**&lt;&blank;&lt;(**{*příkazy...*}**)**<br>
+**sort &lt;(echo Zoo; echo Abeceda)**
+
+*# přečíslovat („přesunout“) deskriptor*<br>
+[{*cílový-deskriptor*}]**&gt;&amp;**{*zdrojový-deskriptor*}**-**
+
+*# zavřít deskriptor*<br>
+{*deskriptor*}**&lt;&amp;-**
+
+*# na vstup zapsat blok řádek po rozvoji*<br>
+*// Pozor! Při použití tohoto zaklínadla nesmí být žádný znak v identifikátoru odzvláštněn (tzn. používejte jen znaky, které pro Bash nemají zvláštní význam). Bash na přesměrovávaný vstup zapíše všechny řádku počínaje první řádkou po aktuálním příkazu a konče poslední řádkou, která se přesně neshoduje se zadaným identifikátorem (shoda musí být přesná, ani bílé znaky na začátku či konci nejsou dovoleny). Před jejich použitím je Bash intepretuje, přičemž za zvláštní považuje znaky „$“, „\\“ a „\`“ (s výjimkou apostrofů s dolarem, ty tam přímo použít nelze), můžete tam tedy vkládat hodnoty proměnných a výstupy příkazů.*<br>
+[{*deskriptor*}]**&lt;&lt;-** {*identifikátor*}
+
+### Přesměrování výstupu (zápis/přepis)
+
+*# výstup do souboru (vytvořit prázdný nebo zkrátit existující)*<br>
+*// Znak „\|“ má význam pouze v případě, že máte nastavenou volbu „noclobber“. V takovém případě umožní přepsání existujícího souboru.*<br>
+[{*deskriptor*}]**&gt;**[**\|**] {*cesta*}
+
+*# výstup připojit výstup za konec souboru (pokud neexistuje, vytvořit prázdný)*<br>
+[{*deskriptor*}]**&gt;&gt;**[**\|**] {*cesta*}
+
+*# výstup **nikam***<br>
+[{*deskriptor*}]**&gt; /dev/null**
+
+*# zduplikovat deskriptor*<br>
+[{*cílový-deskriptor*}]**&gt;&amp;**{*zdrojový-deskriptor*}
+
+*# výstup na standardní vstup bloku příkazů (obecně/příklad)*<br>
+[{*deskriptor*}]**&gt;&blank;&gt;(**{*příkaz*}...**)**<br>
+**df -h &gt;&blank;&gt;(sed -u 1q; sort)**
+
+*# přečíslovat („přesunout“) deskriptor*<br>
+[{*cílový-deskriptor*}]**&gt;&amp;**{*zdrojový-deskriptor*}**-**
+
+*# zavřít deskriptor*<br>
+{*deskriptor*}**&gt;&amp;-**
+
+*# **přepis** souboru (čtení i zápis, bez zkrácení) (obecně/příklad příkazu)*<br>
+*// Vyžaduje právo soubor číst i do něj zapisovat; neexistující soubor bude vytvořen, existující soubor nebude zkrácen a zápis začne bajt po bajtu přepisovat jeho obsah od začátku souboru.*<br>
+{*cílový-deskriptor*}**&lt;&gt;**{*cesta*}<br>
+**echo ABC 2&gt;&amp;1 1&lt;&gt; můj-soubor.txt**
+
+*# výstup do pojmenovaného deskriptoru*<br>
+{*příkaz a parametry*} [{*cílový-deskriptor*}]**&gt;&amp;$**{*identifikator-pojm-desk*}
+
+### Otevírání a zavírání pojmenovaných deskriptorů
+
+*# otevřít existující soubor pro vstup (čtení) (obecně/příklad)*<br>
+**exec \{**{*identifikator*}**\}&gt;** {*cesta/k/souboru*}<br>
+**exec {mujdesk}&lt; můj-soubor.txt**
+
+*# otevřít soubor pro výstup (zápis či přepis) (obecně/příklad)*<br>
+*// „Režim“ může být „&gt;“, „&gt;\|“, „&gt;&gt;“ nebo „&lt;&gt;“ s významem odpovídajícím přesměrování u číslovaného deskriptoru.*<br>
+**exec \{**{*identifikator*}**\}&gt;** {*cesta/k/souboru*}<br>
+**exec {mujdesk}&gt; můj-soubor.txt**
+
+*# zavřít pojmenovaný deskriptor pro vstup/pro výstup*<br>
+**exec \{**{*identifikator*}**\}&lt;&amp;-**<br>
+**exec \{**{*identifikator*}**\}&gt;&amp;-**
+
+*# příklad použití*<br>
+**exec {mujd}&gt;&gt;můj-log.txt**<br>
+**date "+%F %T" &gt;&amp;$mujd**<br>
+**printf 'Skript spuštěn (deskriptor %d)\\n' "$mujd" &gt;&amp;$mujd**<br>
+**exec {mujd}&gt;&amp;-**
+
+### Spouštění příkazů a metapříkazy
+
+*# spustit příkaz na pozadí*<br>
+*// Za znakem „&amp;“ již nesmí následovat další oddělovač příkazů jako „;“, „&amp;&amp;“ nebo „\|\|“. Spuštění příkazu na pozadí nezmění návratový kód uložený v „$?“. PID nově spuštěného procesu bude přiřazeno do zvláštní proměnné „$!“.*<br>
+{*příkaz s parametry nebo sestava s rourou*} **&amp;**
+
+*# spustit příkazy v podprostředí*<br>
+**(** {*příkazy*}... **)** [{*přesměrování pro podprostředí*}] <nic>[**&amp;**]
+
+
+
+### Řízení běhu
+
+*# cyklus „while“*<br>
+*// Cyklus se opakuje, dokud testovací příkazy skončí úspěchem (s kódem 0).*<br>
+**while** {*testovací-příkazy*}<br>
+**do** {*příkazy; cyklu*}<br>
+**done**
+
+*# cyklus „foreach“*<br>
+**for** {*identifikator\_promenne*} **in** {*parametry*}<br>
+**do** {*příkazy; cyklu*}<br>
+**done**
+
+*# cyklus „for“*<br>
+**for** {*identifikator\_promenne*} **in \{**{*počáteční-hodnota*}**..**{*poslední-hodnota*}**\}**<br>
+**do** {*příkazy; cyklu*}<br>
+**done**
+
+*# skok za/před konec cyklu*<br>
+**break** [{*o-kolik-úrovní*}]<br>
+**continue** [{*o-kolik-úrovní*}]
+
+*# podmínka if-else-if*<br>
+**if** {*testovací-příkazy*}<br>
+**then** {*příkazy větve*}<br>
+[**elif** {*testovací-příkazy*}
+**then** {*příkazy větve*}]...<br>
+[**else** {*příkazy větve else*}]<br>
+**fi**
+
+*# větvení podle shody se vzorkem*<br>
+*// Text je (po provedení rozvoje) testován proti jednomu vzorku za druhým. Je-li nalezen vzorek, se kterým se text shoduje, provedou se příkazy příslušné větve a zbytek vzorků se netestuje. Ukončovač větve „;;“ je možno umístit na konec příkazu nebo na samostatnou řádku. Tip: části vzorků můžete podle potřeby odzvláštnit běžnými způsoby (zpětným lomítkem, dvojitými uvozovkami apod.).*<br>
+**case "**{*text*}**" in**<br>
+<odsadit1>**(**{*vzorek*}[**\|**{*alternativní-vzorek*}]...**)** {*příkazy větve*}... **;;**<br>
+<odsadit1>[**(**{*vzorek*}[**\|**{*alternativní-vzorek*}]...**)** {*příkazy větve*}... **;;**]...<br>
+**esac**
+
+*# cyklus s menu*<br>
+*// Pokud není seznam „parametry“ prázdný, vypíše uživateli (na standardní chybový výstup) číslované menu, přečte od něj odpověď a text vybraného parametru uloží do proměnné. Uživatel může požádat o znovuvypsání menu stisknutím „Enter“ bez odpovědi. Zadá-li uživatel neplatnou odpověď, do proměnné se uloží prázdný řetězec. Cyklus se opakuje, dokud není seznam parametrů prázdný (ale je obvyklé ho přerušit příkazem „break“).*<br>
+**select** {*identifikator\_promenne*} **in** {*parametry*}<br>
+**do** {*příkazy; cyklu*}<br>
+**done**
+
+### Funkce
+
+*# definovat funkci*<br>
+**function** {*identifikator*} **\{**<br>
+<odsadit1>{*příkazy funkce*}...<br>
+**\}** [{*přesměrování pro funkci*}]
+
+*# ukončit funkci s určitým návratovým kódem*<br>
+**return** {*kód*}
+
+*# deklarovat ve funkci lokální proměnné*<br>
+**local** {*identifikator*}[**=**{*hodnota*}] <nic>[{*identifikator*}[**=**{*hodnota*}]]...
+
+### Rozvoje na příkazové řádce
+
+*# kartézský součin alternativ (obecně/příklad)*<br>
+[{*předpona*}]**\{**{*alternativa1*}[**,**{*další-alternativa*}]...**\}**[{*přípona*}]<br>
+?
+
+*# sekvence celých čísel (obecně/příklad)*<br>
+**\{**{*počáteční-hodnota*}**..**{*limit*}[**..**{*skok*}]**\}**<br>
+?
+
+*# dosadit standardní výstup bloku příkazů*<br>
+*// Uvedené příkazy se spouštějí v podprostředí; návratová hodnota podprostředí je ignorována (neuloží se do $?). Pozor: jakkoliv dlouhá sekvence znaků „\\n“ na konci dosazovaného výstupu bude při dosazení vynechána.*<br>
+**$(**{*příkazy*}**)**
+
+*# dosadit výsledek celočíselného výrazu*<br>
+**$((**{*výraz*}**))**
+
+*# dosadit pojmenovanou rouru vedoucí na vstup/výstup bloku příkazů*<br>
+**&gt;(**{*příkazy*}**)**<br>
+**&lt;(**{*příkazy*}**)**
+
+### Aktuální adresář
+
+*# přejít do daného adresáře/na předchozí aktuální adresář*<br>
+**cd** [**\-\-**] {*cesta*}<br>
+**cd -**
+
+*# zjistit aktuální adresář*<br>
+**pwd** ⊨ /home/aneta
+
+*# přejít do domovského adresáře*<br>
+**cd**
+
+*# přejít o úroveň výš*<br>
+**cd ..**
+
+*# přejít do kořenového adresáře*<br>
+**cd /**
+
+*# přejít do předchozího aktuálního adresáře dané instance interpretu*<br>
+**cd -**
+
+
+
+### Ostatní vestavěné příkazy
+
+*# ignorovat parametry a uspět*<br>
+**true** [{*libovolné parametry*}]
+
+*# ignorovat parametry a selhat s kódem 1*<br>
+**false** [{*libovolné parametry*}]
+
+*# načíst příkazy ze souboru/ze standardního vstupu a vykonat je v této instanci interpretu*<br>
+**source** [**\-\-**] {*cesta*}<br>
+**source -**
+
+*# vykonat příkazy v této instanci interpretu*<br>
+**eval "**{*příkazy*}**"**
+
+<!--
+[ ] pokračovat příkazem „exec“
+-->
+
 
 ### Testy souborů a adresářů: typ a existence
 
@@ -247,7 +476,7 @@ GNU Bash...
 **set -o pipefail**<br>
 **set +o pipefail**
 
-*# při chybě ukončit interpret (zapnout/vypnout)*
+*# při chybě ukončit interpret (zapnout/vypnout)*<br>
 **set -e**<br>
 **set +e**
 
@@ -531,6 +760,11 @@ https://www.gnu.org/software/bash/manual/html_node/Programmable-Completion-Built
 - Buďte co nejstručnější; neodbíhejte k popisování čehokoliv vedlejšího, co je dost možné, že už čtenář zná.
 -->
 ![ve výstavbě](../obrázky/ve-výstavbě.png)
+
+### Rozvoj složených závorek
+
+Pokud parametr příkazového řádku obsahuje slova uvnitř složených závorek oddělených čárkami, ... (DOPSAT)
+
 
 ## Další zdroje informací
 <!--

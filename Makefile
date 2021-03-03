@@ -72,8 +72,7 @@ clean:
 	@skripty/h2 Čištění dokončeno
 
 info: $(DATUM_SESTAVENI_SOUBOR) $(DEB_VERZE_SOUBOR) $(JMENO_SESTAVENI_SOUBOR) $(SOUBORY_PREKLADU)/fragmenty.tsv
-	@printf '%s\n' "Jméno sestavení: <$(JMENO)>" "DEB verze: <$(DEB_VERZE)>" "Datum sestavení: <$(DATUM_SESTAVENI)>" "Datum sestavení soubor: <$(DATUM_SESTAVENI_SOUBOR)>" "Deb verze soubor: <$(DEB_VERZE_SOUBOR)>" "Jméno sestavení soubor: <$(JMENO_SESTAVENI_SOUBOR)>" "Adresáře překladu: <$(SOUBORY_PREKLADU)> <$(VYSTUP_PREKLADU)>" "" "Kapitoly na výstup:"
-	@sed -nE $$'s/^([^0][^\t]*)\t([^\t]*)\t([^\t]*)\t([^\t]*)\t([^\t]*)\t.*$$/''    \1. \4: \5 <\2\/\3>/;T;s/NULL(: |\/)//g;p' $(SOUBORY_PREKLADU)/fragmenty.tsv | sort -n
+	$(AWK) -f skripty/info.awk
 
 # Podporované formáty:
 deb: $(SOUBORY_PREKLADU)/deb-Makefile $(DATUM_SESTAVENI_SOUBOR) $(DEB_VERZE_SOUBOR) $(JMENO_SESTAVENI_SOUBOR)
@@ -186,9 +185,9 @@ $(SOUBORY_PREKLADU)/fragmenty.tsv: # generování se spouští pokaždé
 # skripty/extrakce/fragmenty.pl $(VSECHNY_KAPITOLY_A_DODATKY_MD) $(SOUBORY_PREKLADU)/ucs_ikony.dat konfig.ini
 	@skripty/h1 "Regeneruji $(SOUBORY_PREKLADU)/fragmenty.tsv a Makefily..."
 	@mkdir -pv $(dir $@)
-	@shopt -qu failglob; shopt -qs nullglob; $(TRANSAKCE) -o $@ $(SOUBORY_PREKLADU)/osnova/*.tsv
+	@shopt -qu failglob; shopt -qs nullglob; $(TRANSAKCE) -on $@ $(SOUBORY_PREKLADU)/osnova/*.tsv
 	@$(PERL) skripty/extrakce/fragmenty.pl
-	@$(TRANSAKCE) -z $@ $(SOUBORY_PREKLADU)/osnova/*.tsv
+	@$(TRANSAKCE) -zn $@ $(SOUBORY_PREKLADU)/osnova/*.tsv
 	@$(RM) -v $(SOUBORY_PREKLADU)/osnova/*.transakce
 
 $(SOUBORY_PREKLADU)/postprocess.dat: $(wildcard postprocess.dat)

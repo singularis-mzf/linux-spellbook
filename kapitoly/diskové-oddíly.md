@@ -15,7 +15,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 Poznámky:
 
 [ ] sfdisk
-[ ] Pokrýt ovládání programu fdisk.
+[ ] Pokrýt ovládání programu fdisk. (?)
 [ ] Šifrování?
 [ ] Připojování obyčejným uživatelem
 
@@ -27,6 +27,14 @@ data=ordered
 uhelper=udisks2
 
 - Na Ubuntu 20.04 je rozsah čísla /dev/md* 0 až 1048575 (2^20-1).
+
+sfdisk
+======
+label: gpt
+label: dos
+[**start=**{*č. sektoru*}**,**] [**size=**{*velikost*}**,**] **type=**{*typ*} [**, bootable**] <nic>[**, uuid=**{*požadované-PARTUUID*}] <nic>[**, name="**{*jméno oddílu*}]
+
+bootable := - (ne) | * (ano)
 
 -->
 
@@ -341,17 +349,6 @@ asi PHY-SEC/LOG-SEC u lsblk
 *# **naformátovat** odkládací oddíl*<br>
 **sudo mkswap** [**-L** {*jmenovka*}] <nic>[**-U** {*požadované-UUID*}] {*/dev/oddíl*}
 
-### Dělení disku
-
-*# GUI (grafické uživatelské rozhraní)*<br>
-**sudo gparted**
-
-*# TUI (textové uživatelské rozhraní)*<br>
-**sudo cfdisk** {*/dev/zařízení*}
-
-*# CLI (ovládání z terminálu)*<br>
-**sudo fdisk** {*/dev/zařízení*}
-
 ### Jmenovka (nastavit)
 
 <!--
@@ -452,6 +449,82 @@ btrfs: sudo sfill -fllvz {*/přípojný/bod*}
 **sudo dd if=**{*cesta*} **of=/dev/**{*oddíl*} [**status=progress**]<br>
 **zcat** {*cesta.gz*} **\| sudo dd of=**{*/dev/oddíl*} [**status=progress**]
 
+## Zaklínadla: Dělení disku
+
+### Dělení disku interaktivně
+
+*# GUI (grafické uživatelské rozhraní)*<br>
+**gnome-disks**
+
+*# TUI (textové uživatelské rozhraní)*<br>
+**sudo cfdisk** {*/dev/zařízení*}
+
+*# CLI (ovládání z terminálu)*<br>
+**sudo fdisk** {*/dev/zařízení*}
+
+### Skript pro sfdisk: tabulka GPT
+
+*# vytvořit novou tabulku oddílů*<br>
+**label: gpt**
+
+*# vytvořit oddíl (obecně)*<br>
+*// Velikost může být udána třemi způsoby: číslo bez přípony (např. 1024000) znamená přesný počet sektorů; číslo s příponou „KiB“, „MiB“, „GiB“ nebo „TiB“ znamená požadovanou velikost v kibibajtech, mebibajtech atd. Třetí možnost je položku „size“ vůbec neuvést; v takovém případě se vytvoří oddíl do konce disku. Položky „start“ a „uuid“ doporučuji uvádět jen tehdy, když se snažíte obnovit dříve existující oddíl a jejich hodnoty bezpečně znáte. „Typ“ musíte učit podle seznamu uvedeného v sekci „Tipy a zkušenosti“.*<br>
+[**start=**{*první-sektor*}**,**] <nic>[**size=**{*velikost*}**,**] **type=**{*typ*} [**, bootable**] <nic>[**, uuid=**{*požadované-PARTUUID*}] <nic>[**, name="**{*jméno oddílu*}]
+
+*# vytvořit **datový** oddíl GPT*<br>
+[**start=**{*první-sektor*}**,**] <nic>[**size=**{*velikost*}**,**] **type=0FC63DAF-8483-4772-8E79-3D69D8477DE4** [**, bootable**] <nic>[**, uuid=**{*požadované-PARTUUID*}] <nic>[**, name="**{*jméno oddílu*}]
+
+*# vytvořit **odkládací** oddíl GPT*<br>
+[**start=**{*první-sektor*}**,**] <nic>[**size=**{*velikost*}**,**] **type=0657FD6D-A4AB-43C4-84E5-0933C84B4F4F** <nic>[**, uuid=**{*požadované-PARTUUID*}] <nic>[**, name="**{*jméno oddílu*}]
+
+*# vytvořit oddíl **EFI***<br>
+[**start=**{*první-sektor*}**,**] <nic>[**size=**{*velikost*}**,**] **type=C12A7328-F81F-11D2-BA4B-00A0C93EC93B** [**, bootable**] <nic>[**, uuid=**{*požadované-PARTUUID*}] <nic>[**, name="**{*jméno oddílu*}]
+
+### Skript pro sfdisk: tabulka MBR
+
+Poznámka: pro vytvoření oddílů v rozšířeném oddílu musíte nejprve vytvořit
+rozšířený oddíl do konce disku; další oddíly pak budou vytvářeny
+uvnitř tohoto rozšířeného oddílu.
+
+*# vytvořit novou tabulku oddílů*<br>
+**label: dos**
+
+*# vytvořit oddíl (obecně)*<br>
+*// Velikost může být udána třemi způsoby: číslo bez přípony (např. 1024000) znamená přesný počet sektorů; číslo s příponou „KiB“, „MiB“, „GiB“ nebo „TiB“ znamená požadovanou velikost v kibibajtech, mebibajtech atd. Třetí možnost je položku „size“ vůbec neuvést; v takovém případě se vytvoří oddíl do konce disku. Položky „start“ a „uuid“ doporučuji uvádět jen tehdy, když se snažíte obnovit dříve existující oddíl a jejich hodnoty bezpečně znáte. „Typ“ musíte učit podle seznamu uvedeného v sekci „Tipy a zkušenosti“.*<br>
+[**start=**{*první-sektor*}**,**] <nic>[**size=**{*velikost*}**,**] **type=**{*typ*} [**, bootable**] <nic>[**, uuid=**{*požadované-PARTUUID*}] <nic>[**, name="**{*jméno oddílu*}]
+
+*# vytvořit datový oddíl*<br>
+[**start=**{*první-sektor*}**,**] <nic>[**size=**{*velikost*}**,**] **type=83** [**, bootable**] <nic>[**, uuid=**{*požadované-PARTUUID*}] <nic>[**, name="**{*jméno oddílu*}]
+
+*# vytvořit odkládací oddíl GPT*<br>
+[**start=**{*první-sektor*}**,**] <nic>[**size=**{*velikost*}**,**] **type=82** <nic>[**, uuid=**{*požadované-PARTUUID*}] <nic>[**, name="**{*jméno oddílu*}]
+
+*# vytvořit oddíl EFI*<br>
+[**start=**{*první-sektor*}**,**] <nic>[**size=**{*velikost*}**,**] **type=EF** [**, bootable**] <nic>[**, uuid=**{*požadované-PARTUUID*}] <nic>[**, name="**{*jméno oddílu*}]
+
+<!--
+* Oddíl linuxového souborového systému (např. ext4 nebo btrfs): „0FC63DAF-8483-4772-8E79-3D69D8477DE4“ (GPT), „83“ pro MBR.
+* Odkládací oddíl: „0657FD6D-A4AB-43C4-84E5-0933C84B4F4F“ (GPT), „82“ (MBR).
+* Oddíl FAT32: „EBD0A0A2-B9E5-4433-87C0-68B6B72699C7“ (GPT), „0C“ (MBR).
+* Oddíl NTFS: „EBD0A0A2-B9E5-4433-87C0-68B6B72699C7“ (GPT), „07“ (MBR).
+* Rozšířený oddíl MBR: „5“ (nezkoušeno).
+* Oddíl EFI: „C12A7328-F81F-11D2-BA4B-00A0C93EC93B“ (GPT), „EF“ (MBR).
+-->
+
+### Skript pro sfdisk: Ostatní
+
+*# komentář*<br>
+**\#**{*komentář do konce řádky*}
+
+*# příklad skriptu*<br>
+**label: gpt**<br>
+**\# datový oddíl:**<br>
+**size=120GiB, type=0FC63DAF-8483-4772-8E79-3D69D8477DE4**<br>
+**\# odkládací oddíl:**<br>
+**size=4GiB, type=0657FD6D-A4AB-43C4-84E5-0933C84B4F4F**<br>
+**\# zbytek jako další datový oddíl:**<br>
+**type=0FC63DAF-8483-4772-8E79-3D69D8477DE4**
+
 ## Nejdůležitější volby připojení
 
 ### Pro všechny typy systému souborů
@@ -521,11 +594,11 @@ Poznámka: funkčnost těchto voleb ve správcích souborů může být různá;
 
 ## Instalace na Ubuntu
 
-Všechny použité nástroje jsou základními součástmi Ubuntu, kromě příkazu zerofree a nástroje GParted,
-které v případě potřeby musíte doinstalovat:
+Všechny použité nástroje jsou základními součástmi Ubuntu, kromě příkazu
+zerofree a nástroje GNOME Disky, které v případě potřeby musíte doinstalovat:
 
 *# *<br>
-**sudo apt-get install gparted zerofree**
+**sudo apt-get install gnome-disk-utility zerofree**
 
 <!--
 ## Ukázka
@@ -544,6 +617,15 @@ které v případě potřeby musíte doinstalovat:
 * Pomocí příkazu „mount \-\-bind“ můžete jeden ramdisk připojit na několik různých míst VFS!
 * Zadáte-li výměnnou jednotku (např. USB flash disk) v /etc/fstab a tato jednotka nebude dostupná při startu systému, zavádění selže a nabídne vám přechod do záchranného režimu. Proti tomu pomohou volby „nofail“ (v případě jakékoliv chyby se připojení systému souborů tiše přeskočí) a „noauto“ (systém se vůbec nepokusí o připojení, ale oddíl či jednotku půjde připojit zkrácenou syntaxí příkazu „mount“).
 * Určitý konkrétní adresář může být použit jako přípojný bod vícenásobně, ale nedoporučuji to (nedává to příliš smysl). Také je možné připojením jiného souborového systému na adresář nadřazený přípojnému bodu překrýt přípojný bod i s jeho obsahem, ale rovněž to nedoporučuji.
+
+## Typy pro vytvoření oddílu pomocí sfdisku
+
+* Oddíl linuxového souborového systému (např. ext4 nebo btrfs): „0FC63DAF-8483-4772-8E79-3D69D8477DE4“ (GPT), „83“ pro MBR.
+* Odkládací oddíl: „0657FD6D-A4AB-43C4-84E5-0933C84B4F4F“ (GPT), „82“ (MBR).
+* Oddíl FAT32: „EBD0A0A2-B9E5-4433-87C0-68B6B72699C7“ (GPT), „0C“ (MBR).
+* Oddíl NTFS: „EBD0A0A2-B9E5-4433-87C0-68B6B72699C7“ (GPT), „07“ (MBR).
+* Rozšířený oddíl MBR: „5“ (nezkoušeno).
+* Oddíl EFI: „C12A7328-F81F-11D2-BA4B-00A0C93EC93B“ (GPT), „EF“ (MBR).
 
 ## Další zdroje informací
 

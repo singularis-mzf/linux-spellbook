@@ -24,11 +24,23 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 # Volání:
-# transakce {-o|-z} {soubory}...
+# transakce {-ozn} {soubory}...
+#
+# -o: otevřít transakce
+# -z: zavřít transakce
+# -n: nevypisovat zprávu „nezměněno“
 
 set -e
 
-if test "$1" = "-o"
+prvni=${1:-}
+shift || true
+
+if ! [[ $prvni =~ ^-([ozn]+|-help)$ ]]
+then
+    printf %s\\n "Chybné použití!" >&2
+    exit 1
+fi
+if [[ $prvni = -*o* ]]
 then
     shift
     for cil in "$@"
@@ -45,7 +57,7 @@ then
         fi
     done
 
-elif test "$1" = "-z"
+elif [[ $prvni = -*z* ]]
 then
     shift
     for cil in "$@"
@@ -53,17 +65,13 @@ then
         t="${cil}.transakce"
         if test -e "$cil" -a -e "$t" && cmp -s -- "$cil" "$t"
         then
-            mv -fT -- "$t" "$cil" && printf 'transakce: nezměněno (%s)\n' "$cil"
+            mv -fT -- "$t" "$cil" && [[ $prvni = -*n* ]] || printf 'transakce: nezměněno (%s)\n' "$cil"
         else
             rm -f -- "$t" && printf 'transakce: změny potvrzeny (%s)\n' "$cil"
         fi
     done
 
-elif test "$#" = 0 -o "$1" = "--help"
-then
+else
     printf 'Nápověda není implementována.\n'
     exit 0
-else
-    printf %s\\n "Chybné použití!" >&2
-    exit 1
 fi
