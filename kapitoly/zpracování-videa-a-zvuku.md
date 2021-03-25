@@ -677,7 +677,13 @@ a platí pouze pro daný výstup.
 
 *# **spojit** za sebou soubory*<br>
 *// Názvy souborů při volání tímto způsobem nesmějí obsahovat apostrof. Při spojování tímto způsobem nedochází k překódování, takže vstupní soubory si musejí velmi přesně odpovídat všemi parametry, jinak hrozí problémy při přehrávání.*<br>
-**ffmpeg -f concat -safe 0 -i &lt;(printf "file '%s'\\\\n"** {*soubor*}...**) -c copy** {*výstup*}
+**ffmpeg -f concat -safe 0 -i &lt;(for x in** {*soubor*}...**; do realpath -ze \-\- "$x"; done \| sed -zE $'/^\\\\x2f/!d;s/\\x27/&amp;\\\\x5c&amp;&amp;/g;s/.\*/file&blank;\\x27&amp;\\x27/' \| tr \\\\0 \\\\n) -c copy** {*výstup*}
+<!-- \x27 = '  \x2f = /  \x5c = \ -->
+<!--
+/^\\x2f/!d; -- vypustit záznamy, které nezačínají "/" (= nejsou platná absolutní cesta)
+s/\\x27/&amp;\\\\x5c&amp;&amp;/g; -- všechny ' nahradit za '\''
+s/.\*/file&blank;\\x27&amp;\\x27/' -- obalit záznamy do file '*'
+-->
 
 ## Zaklínadla: Ostatní příkazy
 
