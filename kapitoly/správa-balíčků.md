@@ -617,7 +617,6 @@ http://docs.flatpak.org/en/latest/single-file-bundles.html
 Poznámka: Neinstalujte balíček apt-file, pokud ho nevyužijete. Výrazně zvyšuje objem dat přednášených při každé aktualizaci (při každém „sudo apt-get update“)!
 
 *# Příkaz „apt-offline“*<br>
-*// *<br>
 **sudo apt-get install apt-offline**
 
 *# Flatpak*<br>

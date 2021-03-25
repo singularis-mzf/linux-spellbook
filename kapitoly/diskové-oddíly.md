@@ -27,6 +27,8 @@ data=ordered
 uhelper=udisks2
 
 - Na Ubuntu 20.04 je rozsah čísla /dev/md* 0 až 1048575 (2^20-1).
+- MBR: 4 primární oddíly, v rozšířeném asi až 56 logických
+- GPT: maximálně 128 oddílů
 
 sfdisk
 ======

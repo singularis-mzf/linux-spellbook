@@ -18,6 +18,14 @@ Poznámky:
 [ ] koprocesy https://www.gnu.org/software/bash/manual/html_node/Coprocesses.html#Coprocesses
 [ ] trap
 
+Zvláštní návratové kódy ( https://tldp.org/LDP/abs/html/exitcodes.html ):
+
+126 — příkaz nelze spustit (program nalezen, ale není spustitelný)
+127 — příkaz nenalezen
+128..165 — příkaz ukončen signálem $(($? - 128))
+130 — příkaz ukončen Ctrl + C (SIGINT)
+148 — příkaz přerušen Ctrl + Z (SIGTSTP)
+
 ⊨
 -->
 

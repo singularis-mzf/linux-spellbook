@@ -21,10 +21,11 @@ https://creativecommons.org/licenses/by-sa/4.0/
 K úplnému sestavení *Linuxu: Knihy kouzel* ze zdrojového kódu budete potřebovat:
 
 * Git
-* GNU awk
+* GNU awk 5.0 nebo novější
 * GNU make
 * GNU sed
 * ImageMagick
+* Perl 5.26 nebo novější
 * GhostScript
 * rsvg-convert (kvůli konverzi SVG na PDF)
 * XeLaTeX
@@ -43,9 +44,9 @@ Také budete potřebovat písma:
 * Latin Modern Roman
 * Latin Modern Sans
 
-Ověřil/a jsem, že v Ubuntu 20.04 LTS, Ubuntu 18.04 LTS a Linuxu Mint 20 můžete všechny potřebné nástroje a písma nainstalovat příkazem:
+Ověřil/a jsem, že v Ubuntu 20.04 LTS a Linuxu Mint 20 můžete všechny potřebné nástroje a písma nainstalovat příkazem:
 
-> ``sudo apt-get install git make gawk xxd imagemagick librsvg2-bin qrencode locales language-pack-cs texlive-xetex texlive-lang-czechslovak t1-cyrillic lmodern``
+> ``sudo apt-get install git make gawk xxd imagemagick librsvg2-bin qrencode locales language-pack-cs  perl perl-modules texlive-xetex texlive-lang-czechslovak t1-cyrillic lmodern``
 
 V budoucnu pravděpodobně sestavování přejde na Ubuntu 20.04, ale zatím je stále plně podporován i překlad na Ubuntu 18.04.
 
@@ -142,6 +143,12 @@ Překlad pravděpodobně bude fungovat i při nedodržení doporučené syntaxe
 *Příklad:*
 
 ``make REKLAMNI_PATY=1 -j4 html``
+
+* Nastavením proměnné prostředí „PORADI\_KAPITOL“ na zvláštní hodnotu „\_\_VŠE\_\_“ můžete vynutit automatické přeložení všech kapitol a dodatků zapsaných v Makefile (tato funkce je používána při sestavování „výplachu repozitáře“):
+
+*Příklad:*
+
+``PORADI_KAPITOL='__VŠE__' make -j4 html``
 
 ## Ověření české lokalizace systému
 

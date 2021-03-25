@@ -33,6 +33,7 @@ proměnné
 regulární-výrazy
 sed
 soubory-a-adresáře
+soubory-a-adresáře/kopírování
 správa-balíčků
 správa-balíčků-2
 správa-procesů
@@ -53,6 +54,6 @@ x-ostatní
 x-ukázka
 zpracování-binárních-souborů
 zpracování-obrázků
-zpracování-psv
 zpracování-textových-souborů
+zpracování-textových-souborů/psv
 zpracování-videa-a-zvuku

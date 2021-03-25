@@ -142,8 +142,9 @@ for my $i (0..(alength(@všechnyFragmenty) - 1))
     my $holéId = ($id =~ s!.*/!!r);
     my $plochéId = ($id =~ s!/!-!gr);
     my $omezenéId = generovatOmezenéId($id);
+    #fprintf($stderr, "%s\n", "LADĚNÍ: \$id=(${id}) omezenéId=(${omezenéId})");
     !exists($omezenáIdNaPlná{$omezenéId})
-        or die("Duplicita v omezeném id: " . $omezenáIdNaPlná{$omezenéId} . " x " . $id) ;
+        or die("Duplicita v omezeném id: (${omezenéId}) => (" . $omezenáIdNaPlná{$omezenéId} . ") x (" . $id . ")") ;
     $omezenéId[$i] = $omezenéId;
     $omezenáIdNaPlná{$omezenéId} = $id;
 
@@ -362,7 +363,7 @@ sub generovatOmezenéId {
     typy(@ARG) =~ /\As?s\z/ or croak("Chybné typy parametrů!");
     my $id = pop(@ARG);
     my $prefix = pop(@ARG) // "";
-    return $prefix . substr(lc(bezDiakritiky($id)) =~ s/[^abcdefghijklmnopqrstuvwxyz0123456789]//gr, 0, 16);
+    return $prefix . substr(lc(bezDiakritiky($id)) =~ s/[^abcdefghijklmnopqrstuvwxyz0123456789]//gr, 0, 32);
 }
 
 sub jePlatnéId {

@@ -120,7 +120,7 @@ https://cs.lipsum.com/ (stránka česky, text v pseudolatině)
 
 ### Data URL
 
-*# konvertovat obrázek na „data URL“/z „data URL“*<br>
+*# konvertovat obrázek na „data URL“*<br>
 **printf "data:%s;base64," "$(file -b \-\-mime-type "**{*soubor*}**")"; base64 -w 0** {*soubor*}
 
 *# konvertovat data URL na obrázek*<br>

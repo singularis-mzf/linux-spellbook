@@ -88,7 +88,7 @@ Pokud budete upravovat zdrojové kódy kapitol, vyplatí se si před tím proč�
 
 Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybrat v souboru „pořadí-kapitol.lst“:
 
-### Vydané kapitoly
+### Vydané kapitoly a podkapitoly
 
 | ID | Název kapitoly | Vydána od verze | Zařazení |
 | :--- | :--- | :--- | --- |
@@ -118,12 +118,13 @@ Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybra
 | [stahování-videí](kapitoly/stahování-videí.md) | Stahování videí | 1.0 | prémiová |
 | [systém](kapitoly/systém.md) | Systém | 1.2 | základní |
 | [terminál](kapitoly/terminál.md) | Terminál | (1.0) | prémiová |
+| [terminál/emodži](kapitoly/terminál/emodži.md) | Terminál / Emodži | (2.0) | prémiová |
 | [vim](kapitoly/vim.md) | Vim | 1.8 | prémiová |
 | [zpracování-binárních-souborů](kapitoly/zpracování-binárních-souborů.md) | Zpracování binárních souborů | 2.0 | prémiová |
 | [zpracování-textových-souborů](kapitoly/zpracování-textových-souborů.md) | Zpracování textových souborů | 1.2 | základní |
 | [zpracování-videa-a-zvuku](kapitoly/zpracování-videa-a-zvuku.md) | Zpracování videa a zvuku | 1.0 | základní |
 
-### Rozpracované kapitoly
+### Rozpracované kapitoly a podkapitoly
 
 <!--
 Priority:
@@ -157,6 +158,7 @@ Priority:
 | [pdf](kapitoly/pdf.md) | PDF | 0% | embryo |
 | [virtualbox](kapitoly/virtualbox.md) | VirtualBox | 0% | embryo |
 | [šifrování](kapitoly/šifrování.md) | Šifrování a kryptografie | 0% | embryo |
+| [soubory-a-adresáře/kopírování](kapitoly/soubory-a-adresáře/kopírování.md) | Soubory a adresáře/Kopírování | 0% | embryo |
 | přehrávání-videa | Přehrávání videa, zvuku a obrázků | - | přál/a bych si |
 | firewall | Firewall | - | přál/a bych si |
 | sql | SQL | - | přál/a bych si |

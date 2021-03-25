@@ -20,17 +20,18 @@ https://creativecommons.org/licenses/by-sa/4.0/
 K sestavení formátů „html“, „log“ a „deb“ *Linuxu: Knihy kouzel* ze zdrojového kódu budete potřebovat:
 
 * Git
-* GNU awk
+* GNU awk 5.0 nebo novější
 * GNU make
 * GNU sed
 * ImageMagick
+* Perl 5.26 nebo novější
 * qrencode, iconv, xxd
 * české locale „cs\_CZ.UTF-8“ (musí fungovat české řazení příkazem „sort“) − nemusí být aktivní, stačí nainstalované a funkční
 * pro balíček DEB také příkaz dpkg-deb (v Debianu a Ubuntu předinstalovaný)
 
-V Ubuntu 20.04 LTS, Ubuntu 18.04 LTS, Linuxu Mint 20 a Linuxu Mint 17.3 můžete tyto nástroje nainstalovat příkazem:
+V Ubuntu 20.04 LTS a Linuxu Mint 20 můžete tyto nástroje nainstalovat příkazem:
 
-> ``sudo apt-get install git make gawk imagemagick qrencode xxd locales language-pack-cs``
+> ``sudo apt-get install git make gawk imagemagick qrencode xxd locales language-pack-cs perl perl-modules``
 
 ## Postup sestavení
 

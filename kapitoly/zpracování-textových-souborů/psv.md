@@ -1,6 +1,6 @@
 <!--
 
-Linux Kniha kouzel, kapitola Zpracování PSV
+Linux Kniha kouzel, podkapitola Zpracování textových souborů / PSV
 Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
@@ -17,7 +17,7 @@ Poznámky:
 ⊨
 -->
 
-# Zpracování PSV
+# PSV
 
 !Štítky: {tematický okruh}{zpracování textu}{formát}
 !FixaceIkon: 1754
