@@ -58,4 +58,5 @@ hlavní část mechanismu překladu ale zatím zůstane v GNU awk,
 protože je z velké části založena na příkazech „switch“,
 které Perl sám o sobě dobře neumí a náhražky v něm vypadají ošklivě
 nebo dobře nefungují. U hlavní části mechanismu překladu bude přechod
-možný v případě,
+možný v případě, že se podaří najít efektivní náhradu za příkazy switch
+(zatím vypadají nadějně asociativní pole); zatím ale není prioritou.

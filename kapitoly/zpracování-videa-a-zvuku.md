@@ -668,13 +668,6 @@ a platí pouze pro daný výstup.
 *// Uvedený parametr „-qscale“ se pokusí zachovat kvalitu vstupního souboru.*<br>
 **ffmpeg -i** {*vstupní-soubor.přípona*} **-qscale:0 0** [**-qscale:1 0**] {*výstupní soubor.přípona*}
 
-*# rozložit **video na obrázky** ve formátu podle výstupní přípony: JPEG (jpg), PNG (png), BMP (bmp), TIFF (tif)*<br>
-**ffmpeg -i** {*video.přípona*} **-r** {*počet-snímků-za-sekundu*} **-f image2 -q:v 0** {*obrázek*}**-%05d.**{*výstupní-přípona*}
-
-*# vygenerovat sekvenci **zmenšených náhledů** z videa (šířka max. 640 pixelů), přibližně pro každou minutu*<br>
-*// Časování je u tohoto příkazu velmi přibližné, proto se hodí spíše na dlouhá videa, kde posun o půl minuty či minutu nebude vadit.*<br>
-**ffmpeg -i** {*video*} **-r 1/60 -q:v 14 -vf 'scale=min(640\\,iw):-1' nahled%05d.jpg**
-
 *# **spojit** za sebou soubory*<br>
 *// Názvy souborů při volání tímto způsobem nesmějí obsahovat apostrof. Při spojování tímto způsobem nedochází k překódování, takže vstupní soubory si musejí velmi přesně odpovídat všemi parametry, jinak hrozí problémy při přehrávání.*<br>
 **ffmpeg -f concat -safe 0 -i &lt;(for x in** {*soubor*}...**; do realpath -ze \-\- "$x"; done \| sed -zE $'/^\\\\x2f/!d;s/\\x27/&amp;\\\\x5c&amp;&amp;/g;s/.\*/file&blank;\\x27&amp;\\x27/' \| tr \\\\0 \\\\n) -c copy** {*výstup*}
@@ -684,6 +677,13 @@ a platí pouze pro daný výstup.
 s/\\x27/&amp;\\\\x5c&amp;&amp;/g; -- všechny ' nahradit za '\''
 s/.\*/file&blank;\\x27&amp;\\x27/' -- obalit záznamy do file '*'
 -->
+
+*# rozložit **video na obrázky** ve formátu podle výstupní přípony: JPEG (jpg), PNG (png), BMP (bmp), TIFF (tif)*<br>
+**ffmpeg -i** {*video.přípona*} **-r** {*počet-snímků-za-sekundu*} **-f image2 -q:v 0** {*obrázek*}**-%05d.**{*výstupní-přípona*}
+
+*# vygenerovat sekvenci **zmenšených náhledů** z videa (šířka max. 640 pixelů), přibližně pro každou minutu*<br>
+*// Časování je u tohoto příkazu velmi přibližné, proto se hodí spíše na dlouhá videa, kde posun o půl minuty či minutu nebude vadit.*<br>
+**ffmpeg -i** {*video*} **-r 1/60 -q:v 14 -vf 'scale=min(640\\,iw):-1' nahled%05d.jpg**
 
 ## Zaklínadla: Ostatní příkazy
 

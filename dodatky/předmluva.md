@@ -31,7 +31,7 @@ odpovědi na svoje otázky použitím webového vyhledavače,
 dozvíte se zpravidla jen to, na co se ho „zeptáte“ (tzn. co si
 necháte vyhledat). Problém je, že ač si to nejspíš neuvědomujete,
 na mnoho podstatného se nezeptáte, protože vás to nenapadne,
-takže i když webové stránky tuto podstatnou informaci obsahuji,
+takže i když webové stránky tuto podstatnou informaci obsahují,
 vy se ji touto cestou stejně nedozvíte.
 Druhým typem online zdroje je podrobná dokumentace konkrétního programu,
 ta bývá opravdu kvalitní, ale trpí jiným nedostatkem – pokud daný program
@@ -209,28 +209,17 @@ Uživatele, který Linux: Knihu kouzel neprostudoval, poznáte např. takto:
 * Myslí si, že příkaz „apt list gimp*“ vypíše seznam balíčků začínajících „gimp“ (v tomto případě se musí hlavně naučit pravidla odzvláštňování).
 -->
 
-## Aktuální poznámka k verzi „vanilková příchuť 2.5 Marie Macků“
+## Aktuální poznámka k verzi „vanilková příchuť 2.6 Nikita Nálepka“
 
-Verze vanilkové příchuti 2.5, jménem Marie Macků přináší především
-podporu podkapitol, která si vynutila přepsání části mechanismu překladu.
-Z kapitoly „Diskové oddíly“ byly vyděleny podkapitoly „Btrfs“ a „LVM“.
-(V příští verzi počítám s podobným rozdělením u kapitol Správa balíčků,
-Systém, Terminál, Zpracování textových souborů a dalších.)
+Verze vanilkové příchuti 2.6, jménem Nikita Nálepka přináší spíše méně novinek,
+protože na projektu pracuji v současnosti jen já a tento měsíc jsem byl/a
+vytížen/a jinými svými projekty.
 
-Novinkou je podkapitola „Diskové oddíly/Softwarový RAID“ a podkapitola
-„Diskové oddíly/LVM“ nově pokrývá i logické snímky (LVM snapshots).
+Dodatek „Základní znalosti“ byl mírně doplněn.
+V kapitole „Diskové oddíly“ jsou nově zaklínadla pro tvorbu skriptů pro sfdisk.
 
-V souvislosti se změnami v mechanismu překladu došlo i k několika změnám
-zásadním pro uživatele: soubor „pořadí-kapitol.lst“ se nyní jmenuje
-„pořadí-kapitol.seznam“, seznam vydaných kapitol a dodatků najdete
-v souboru „seznamy/vydané-fragmenty.seznam“ a podtržítka v nastavení
-„PORADI\_KAPITOL=\_\_VŠE\_\_“ jsou nyní zdvojená (původně byla jednoduchá).
-Dokumentace již byla aktualizována.
-
-V kapitole Správa procesů najdete novou pomocnou funkci „lkk\_limit\_jobs“;
-v kapitole Terminál přibylo nastavení barev pro příkaz „ls“.
-V kapitola Správa uživatelských účtů byl nefunkční příkaz pro výpis
-seznamu členů skupiny nahrazen pomocným skriptem.
+V PDF variantách je přehled kapitol tištěn menším písmem a je sázen do dvou
+sloupců i ve formátu B5. Čísla zaklínadel v podsekcích byla odstraněna.
 
 <!--
 - V HTML variantě...
@@ -239,7 +228,7 @@ seznamu členů skupiny nahrazen pomocným skriptem.
 - V kapitole *XY* přibyly ...
 -->
 
-Vydání verze 2.6, jménem Nikita Nálepka, očekávám v druhé polovině března 2021.
+Vydání verze 2.7, jménem Olga Osová, očekávám koncem dubna 2021.
 
 Verze řady „vanilková příchuť 1.x“ jsou ve stádiu dlouhodobé pasivní údržby do 1. března 2023.
 
