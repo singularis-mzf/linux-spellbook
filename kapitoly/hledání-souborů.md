@@ -106,37 +106,37 @@ Poznámka: Písmeno „i“ v následujících parametrech vypne rozlišování
 **\-size +$((**{*N*}**\*2\*\*30-1))c**<br>
 **\-size +$((**{*N*}**\*2\*\*20-1))c**<br>
 **\-size +$((**{*N*}**\*2\*\*10-1))c**<br>
-**\-size +$((**{*N*}**-1))c**<br>
+**\-size +$((**{*N*}**-1))c**
 
 *# **maximálně** N gibibajtů/mebibajtů/kibibajtů/bajtů*<br>
 **\-size -$((**{*N*}**\*2\*\*30+1))c**<br>
 **\-size -$((**{*N*}**\*2\*\*20+1))c**<br>
 **\-size -$((**{*N*}**\*2\*\*10+1))c**<br>
-**\-size -$((**{*N*}**+1))c**<br>
+**\-size -$((**{*N*}**+1))c**
 
 *# **minimálně** N gigabajtů/megabajtů/kilobajtů*<br>
 **\-size +$((**{*N*}**\*10\*\*9-1))c**<br>
 **\-size +$((**{*N*}**\*10\*\*6-1))c**<br>
 **\-size +$((**{*N*}**\*10\*\*3-1))c**<br>
-**\-size +$((**{*N*}**-1))c**<br>
+**\-size +$((**{*N*}**-1))c**
 
 *# **maximálně** N gigabajtů/megabajtů/kilobajtů*<br>
 **\-size -$((**{*N*}**\*10\*\*9+1))c**<br>
 **\-size -$((**{*N*}**\*10\*\*6+1))c**<br>
 **\-size -$((**{*N*}**\*10\*\*3+1))c**<br>
-**\-size -$((**{*N*}**+1))c**<br>
+**\-size -$((**{*N*}**+1))c**
 
 *# **přesně** N gibibajtů/mebibajtů/kibibajtů/bajtů*<br>
 **\-size $((**{*N*}**\*2\*\*30))c**<br>
 **\-size $((**{*N*}**\*2\*\*20))c**<br>
 **\-size $((**{*N*}**\*2\*\*10))c**<br>
-**\-size** {*N*}**c**<br>
+**\-size** {*N*}**c**
 
 *# **přesně** N gigabajtů/megabajtů/kilobajtů/bajtů*<br>
 **\-size $((**{*N*}**\*10\*\*9))c**<br>
 **\-size $((**{*N*}**\*10\*\*6))c**<br>
 **\-size $((**{*N*}**\*10\*\*3))c**<br>
-**\-size** {*N*}**c**<br>
+**\-size** {*N*}**c**
 
 *# **prázdný** soubor*<br>
 **\-size 0**
@@ -247,14 +247,14 @@ xxx , xxx # priorita?
 [ ] Vyzkoušet!
 -->
 *# některý řádek obsahuje/žádný řádek neobsahuje shodu s regulárním výrazem*<br>
-**! \( -type d -o \( -type l -xtype d \) \) -readable \-exec egrep -q** [**\-\-**] **'**{*regulární výraz*}**' \\;**
+**! \( -type d -o \( -type l -xtype d \) \) -readable \-exec egrep -q** [**\-\-**] **'**{*regulární výraz*}**' \\;**<br>
 **! \( -type d -o \( -type l -xtype d \) \) -readable ! \-exec egrep -q** [**\-\-**] **'**{*regulární výraz*}**' \\;**
 
 <!--
 [ ] Vyzkoušet!
 -->
 *# některá řádka obsahuje/žádná řádka neobsahuje podřetězec*<br>
-**! \( -type d -o \( -type l -xtype d \) \) -readable \-exec fgrep -q** [**\-\-**] **'**{*podřetězec*}**' \\;**
+**! \( -type d -o \( -type l -xtype d \) \) -readable \-exec fgrep -q** [**\-\-**] **'**{*podřetězec*}**' \\;**<br>
 **! \( -type d -o \( -type l -xtype d \) \) -readable ! \-exec fgrep -q** [**\-\-**] **'**{*podřetězec*}**' \\;**
 
 ### Zvláštní příznaky a datové položky
@@ -477,7 +477,7 @@ fprintf:
 
 *# najít **neplatné** symbolické odkazy (pro člověka/pro skript)*<br>
 *// Pozor! Příkaz nemůže správně určit, zda je symbolický odkaz neplatný, pokud nemá přístupová práva k adresáři, na který symbolický odkaz odkazuje! Příkaz „symlinks“ v takovém případě hlásí odkaz jako neplatný, uvedená podoba příkazu „find“ vypíše chybové hlášení „Permission denied“, ale odkaz do seznamu neplatných nezahrne.*<br>
-[**sudo**] **find** {*kde*}... **-type d -exec symlinks '{}' + \| egrep '^dangling:&blank;'**
+[**sudo**] **find** {*kde*}... **-type d -exec symlinks '{}' + \| egrep '^dangling:&blank;'**<br>
 [**sudo**] **find** {*kde*}... **-type l -xtype l** [**-print0**]
 
 *# najít adresářové položky, jejichž název/celá cesta obsahují shodu s regulárním výrazem (pomoc databáze „mlocate“)*<br>

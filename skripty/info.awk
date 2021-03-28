@@ -78,7 +78,7 @@ BEGIN {
             priznaky ~ /d/ ? "dodatek" : FragInfo(i, "id-nadkapitoly") != "" ? "podkapitola" : "kapitola", \
             priznaky \
         );
-        printf("   vedlejší id: <%s><%s><%s><%s>\n", FragInfo(i, "ploché-id"), FragInfo(i, "ploché-id-bez-diakr"), FragInfo(i, "holé-id"), FragInfo(i, "omezené-id"));
+        printf("   vedlejší id: <%s><%s><%s><%s>\n", FragInfo(i, "ploché-id"), FragInfo(i, "ploché-id-bez-diakr"), FragInfo(i, "holé-id"), FragInfo(i, "xheš"));
         printf("   název podkapitoly = <%s>\n", FragInfo(i, "název-podkapitoly"));
         if (FragInfo(i, "id-nadkapitoly") != "") {
             printf("   nadkapitola: <%s> <%s>\n", FragInfo(i, "číslo-nadkapitoly"), FragInfo(i, "id-nadkapitoly"));

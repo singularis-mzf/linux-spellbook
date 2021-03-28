@@ -111,7 +111,7 @@ jako chroot či cgroups.
 **ps h -o ppid:1 -p** {*PID*} ⊨ 3077
 
 *# název procesu*<br>
-**ps h -o comm:1 -p** {*PID*} ⊨ bash<br>
+**ps h -o comm:1 -p** {*PID*} ⊨ bash
 
 *# spuštěný soubor (na disku)*<br>
 [**sudo**] **readlink /proc/**{*PID*}**/exe** ⊨ /bin/bash
@@ -121,7 +121,7 @@ jako chroot či cgroups.
 **ps h -o tty:1 -p** {*PID*} ⊨ pts/1
 
 *# aktuální **adresář** (pro člověka/pro skript)*<br>
-[**sudo**] **pwdx** {*PID*}... ⊨ 2343: /home/nana
+[**sudo**] **pwdx** {*PID*}... ⊨ 2343: /home/nana<br>
 [**sudo**] **readlink /proc/**{*PID*}**/cwd** ⊨ /home/nana
 
 *# **uživatel** vlastnící proces (jméno/UID)*<br>
@@ -158,7 +158,7 @@ jako chroot či cgroups.
 
 *# procesy, které nejvíc zatěžují procesor/RAM*<br>
 **ps h -e -o pcpu,pid,comm \| sort -rn \| head**<br>
-**ps h -e -o rss,pid,comm \| sort -rn \| head**<br>
+**ps h -e -o rss,pid,comm \| sort -rn \| head**
 
 *# číslo přiděleného logického procesoru (od nuly)*<br>
 **ps h -o psr:1 -p** {*PID*} ⊨ 0
@@ -260,7 +260,7 @@ Viz také: příkaz „tlp“ z balíčku „tlp“.
 **exec** {*příkaz*} [{*parametr-příkazu*}]...
 
 *# spustit proces s nastavenou prioritou (ne vyšší/libovolnou)*<br>
-**nice -n $((**{*priorita*} **- $(nice)))** {*příkaz*} [{*parametry příkazu*}]...
+**nice -n $((**{*priorita*} **- $(nice)))** {*příkaz*} [{*parametry příkazu*}]...<br>
 **sudo nice -n $((**{*priorita*} **- $(nice))) sudo -u "$(id -nu)" -g "$(id -ng)"** {*příkaz*} [{*parametry příkazu*}]...
 
 <!--

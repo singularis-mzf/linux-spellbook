@@ -151,7 +151,7 @@ např. celé komponenty repozitářů.
 
 *# vypsat seznam **nainstalovaných balíčků** včetně verzí (pro člověka – alternativy)*<br>
 **apt list \-\-installed**<br>
-**dpkg-query -l** [**\| less**]<br>
+**dpkg-query -l** [**\| less**]
 
 *# vypsat seznam **nainstalovaných balíčků** (pro skript – alternativy)*<br>
 **dpkg-query -Wf '${Package}:${Architecture}/${Version}/${db:Status-Status}\\n'** [**'**{*vzorek*}**'**] **\| egrep '/installed$'**<br>

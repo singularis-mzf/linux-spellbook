@@ -87,7 +87,7 @@ Zdroj roku: https://en.wikipedia.org/wiki/X_Window_System#Release_history
 
 *# zavřít okno („křížkem“/násilně ukončit celý program)*<br>
 *// Pozor, má-li daný proces otevřených víc oken (typické např. pro webové prohlížeče), po provedení „xkill“ zmizí všechna, protože xkill nezavírá okno, ale ukončuje proces!*<br>
-**wmctrl -ic** {*id-okna*}
+**wmctrl -ic** {*id-okna*}<br>
 **xkill -id** {*id-okna*}
 
 *# vypsat PID příslušné k oknu*<br>

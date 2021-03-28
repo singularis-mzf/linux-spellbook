@@ -147,7 +147,7 @@ german
 **espeak -v slovak** [{*další parametry*}] <nic>[**\-\-**] **"**{*Text.*}**"**<br>
 **espeak** [{*další parametry*}] <nic>[**\-\-**] **"**{*Text.*}**"**<br>
 **espeak -v english-us** [{*další parametry*}] <nic>[**\-\-**] **"**{*Text.*}**"**<br>
-**espeak -v esperanto** [{*další parametry*}] <nic>[**\-\-**] **"**{*Text.*}**"**<br>
+**espeak -v esperanto** [{*další parametry*}] <nic>[**\-\-**] **"**{*Text.*}**"**
 
 *# text číst ze souboru/ze standardního vstupu*<br>
 **espeak** {*parametry*} **-f** {*soubor*}<br>

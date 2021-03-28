@@ -80,7 +80,7 @@ Poznámky:
 ### Kontejner: orientace l. ř
 
 *# zleva doprava, nezalamovat*<br>
-**flex-flow: row nowrap;**<br>
+**flex-flow: row nowrap;**
 
 *# zleva doprava, další l. ř. pod stávajícím*<br>
 **flex-flow: row wrap;**
@@ -173,7 +173,7 @@ Poznámka: toto nastavení je ignorováno, pokud má kterýkoliv prvek na logick
 **align-self: stretch;**
 
 *# zarovnat k přímce předchozím a tímto/tímto a následujícím logickým řádkem*<br>
-**align-self: flex-start;**<br>
+**align-self: flex-start;**
 
 *# zarovnat účaří*<br>
 **align-self: baseline;**

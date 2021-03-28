@@ -81,7 +81,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 **\\bigskip**<br>
 **\\smallskip**<br>
 **\\vspace\{**{*délka*}**\}**<br>
-**\\vspace\*\{**{*délka*}**\}**<br>
+**\\vspace\*\{**{*délka*}**\}**
 
 *# formát papíru A4 (alternativy)*<br>
 **\\usepackage[**[**showframe,**]**a4paper,inner=top=**{*horní-okraj*}**,bottom=**{*spodní-okraj*}**,inner=**{*vnitřní-okraj*}**,outer=**{*vnější-okraj*}**]{geometry}**
@@ -95,7 +95,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 *# nastavit výchozí písma dokumentu (\\rmfamily, \\sffamily, \\ttfamily)*<br>
 **\\setmainfont\{**{*Název písma*}**\}**[**[**{*vlastnosti,písma*}**]**]<br>
 **\\setsansfont\{**{*Název písma*}**\}**[**[**{*vlastnosti,písma*}**]**]<br>
-**\\setmonofont\{**{*Název písma*}**\}**[**[**{*vlastnosti,písma*}**]**]<br>
+**\\setmonofont\{**{*Název písma*}**\}**[**[**{*vlastnosti,písma*}**]**]
 
 *# jednorázově přepnout na nedeklarované písmo*<br>
 **\\fontspec\{**{*Název písma*}**\}**[**[**{*vlastnosti,písma*}**]**]

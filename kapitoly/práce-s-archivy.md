@@ -263,7 +263,7 @@ Poznámka: Archiv typu SquashFS obsahuje vždy svůj kořenový adresář (zprav
 -->
 
 *# **vypsat** soubory a adresáře v archivu (pro člověka/pro skript)*<br>
-**unsquashfs -lln** {*archiv.squashfs*}
+**unsquashfs -lln** {*archiv.squashfs*}<br>
 **unsquashfs -l** {*archiv.squashfs*} **\| sed -E '0,/^$/d;/^squashfs-root$/s!$!/!;s/^squashfs-root//'**
 
 *# **přidat** další soubory či adresáře*<br>

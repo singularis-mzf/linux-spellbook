@@ -41,14 +41,18 @@ function Tabulator(delka) {
     return "Tabulator(" delka ")";
 }
 
-function ZacatekKapitoly(nazevKapitoly, cisloKapitoly, stitky, osnova, ikonaKapitoly, jeDodatek,   osnovadohromady) {
+function ZacatekKapitoly(nazevKapitoly, cisloKapitoly, stitky, stitkyxhes, osnova, ikonaKapitoly, jeDodatek,   osnovadohromady, stitkytext) {
     DO_LOGU_UROVEN_ODSTAVCE = 0;
-    gsub(/\|/, "}{", stitky);
     for (i = 1; i <= length(osnova); ++i) {
         osnovadohromady = osnovadohromady "\t" osnova[i] "\n";
 #        if (i > 500) { ShoditFatalniVyjimku("Příliš mnoho osnovy!"); }
     }
-    return "ZacatekKapitoly(\"" nazevKapitoly "\"" (stitky != "" ? ", štítky={" stitky "}" : "") ", ikona={" ikonaKapitoly "}, jedodatek=" (jeDodatek ? "ano" : "ne") ") {\n" osnovadohromady "};\n";
+    stitkytext = "";
+    for (i = 1; i in stitky; ++i) {
+        stitkytext = stitkytext "|" stitky[i] "[" stitkyxhes[i] "]";
+    }
+    stitkytext = stitkytext != "" ? substr(stitkytext, 2) : "";
+    return "ZacatekKapitoly(\"" nazevKapitoly "\"" (stitkytext != "" ? ", štítky={" stitkytext "}" : "") ", ikona={" ikonaKapitoly "}, jedodatek=" (jeDodatek ? "ano" : "ne") ") {\n" osnovadohromady "};\n";
 }
 
 function KonecKapitoly(nazevKapitoly, cislaPoznamek, textyPoznamek,   i, vysledek) {

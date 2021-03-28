@@ -253,7 +253,7 @@ nekompatibilních syntaxí:
 
 *# ASCII znaky: „-“, „\\“, „'“, „"“, „\`“, „^“, „\~“*<br>
 *// Pokud tyto znaky použijete přímo, terminál místo nich může zobrazit jiné, podobné znaky, což může způsobit problémy, pokud se je uživatel pokusí z manuálové stránky vykopírovat. Zpětné lomítko přímo použít nemůžete.*<br>
-**\\- \\\\ \\(aq \\(dq \\(ga \\(ha \\(ti**<br>
+**\\- \\\\ \\(aq \\(dq \\(ga \\(ha \\(ti**
 
 *# konec řádky/prázdný řádek*<br>
 **.br**<br>

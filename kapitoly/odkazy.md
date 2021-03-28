@@ -111,7 +111,7 @@ není dobrý nápad
 
 *# **hromadné** vytvoření relativních (s následováním)*<br>
 *// Názvy vytvářených symbolických odkazů se odvodí od názvů v „cestě/k/cíli“.*<br>
-**ln -rs -t** {*cílový/adresář*} [**\-\-**] {*cesta/k/cíli*}...<br>
+**ln -rs -t** {*cílový/adresář*} [**\-\-**] {*cesta/k/cíli*}...
 
 *# vytvořit **obecný***<br>
 *// Obsah odkazů musí mít délku 1 až 4095 bajtů, jinak však v tomto případě neprovádí příkaz „ln“ žádnou kontrolu smysluplnosti obsahu odkazu. Toto je tedy preferovaný způsob vytváření symbolických odkazů na dosud neexistující soubory a adresáře.*<br>

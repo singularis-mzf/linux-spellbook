@@ -138,7 +138,7 @@ Pozor! V AWK se všechny druhy indexů a číslování číslují vždy od jed
 {*index*} **in** [{*jmenny\_prostor*}**\:\:**]{*pole*}
 
 *# **smazat** z pole jeden prvek/všechny prvky*<br>
-**delete** [{*jmenny\_prostor*}**\:\:**]{*pole*}**[**{*index*}**];**
+**delete** [{*jmenny\_prostor*}**\:\:**]{*pole*}**[**{*index*}**];**<br>
 **delete** [{*jmenny\_prostor*}**\:\:**]{*pole*}**;**
 
 *# **počet prvků***<br>
@@ -212,7 +212,7 @@ nevyzkoušeno
 *# přepínač **switch***<br>
 *// Přepínač switch pracuje v gawk stejně jako v jazyce C, ovšem pracuje s řetězci místo celých čísel.*<br>
 **switch (**{*skalární-výraz*}**) \{**<br>
-[[**case** {*konstantní-hodnota*}**:**]... <nic>[**default:**] {*příkazy*}]...
+[[**case** {*konstantní-hodnota*}**:**]... <nic>[**default:**] {*příkazy*}]...<br>
 **\}**
 
 *# cyklus **do-while** (alternativy)*<br>
@@ -304,7 +304,7 @@ Poznámka: Dělení záznamů na sloupce určují proměnné FS, FPAT a FIELDWI
 
 *# **výstupní oddělovač** sloupců/záznamů příkazu print*<br>
 *// Výchozí hodnota je „ “ (mezera); může být přednastaven také parametrem příkazové řádky „-F“.*<br>
-**OFS = "**[{*řetězec*}]**"**<br>
+**OFS = "**[{*řetězec*}]**"**
 
 *# vstupní oddělovač záznamu (jeden znak/regulární výraz)*<br>
 *// Výchozí hodnotou je konec řádku „\\n“.*<br>
@@ -375,7 +375,7 @@ Pokud soubor existuje, při otevření se jeho obsah smaže; pokud chcete přid�
 *# poslat na (standardní) vstup jiného příkazu (print/printf)*<br>
 *// Odkazovaný příkaz se spustí v interpretu /bin/sh a svoje vstupy a výstupy zdědí od instance GNU awk, kterou byl spuštěn, pokud je výslovně nepřesměrujete.*<br>
 **print** {*parametr*}[**,** {*další parametr*}]... **\|** {*"řetězec s příkazem"*} **;**<br>
-**printf(**{*formátovací-řetězec*}[**,**{*parametr*}]...**) \|** {*"řetězec s příkazem"*} **;**<br>
+**printf(**{*formátovací-řetězec*}[**,**{*parametr*}]...**) \|** {*"řetězec s příkazem"*} **;**
 
 *# zapsat na vstup jiného příkazu (příklad)*<br>
 **print I, S, "." \| "sort -n";**

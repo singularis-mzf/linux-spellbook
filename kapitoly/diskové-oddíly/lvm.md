@@ -93,7 +93,7 @@ několik fyzických disků nebo snadné přemísťování oddílů a změnu jej
 ?
 
 *# **smazat***<br>
-**sudo lvremove** {*nazev-skupiny*}
+**sudo lvremove** {*nazev-skupiny*}<br>
 **sudo vgremove** {*nazev-skupiny*}
 
 *# aktivovat deaktivovanou skupinu*<br>
@@ -145,8 +145,8 @@ několik fyzických disků nebo snadné přemísťování oddílů a změnu jej
 **sudo dd if=/dev/**{*pův-skupina*}**/**{*pův-název*} **iflag=fullblock,skip\_bytes of=/dev/**{*cíl-skupina*}**/**{*cíl-název*} **oflag=seek\_bytes conv=nocreat,notrunc seek=1M skip=1M** [**status=progress**] **&amp;&amp;**<br>
 **sudo dd if=/dev/**{*pův-skupina*}**/**{*pův-název*} **iflag=fullblock,count\_bytes count=1M of=temp.dat** [**status=progress**] **&amp;&amp;**<br>
 **sudo dd if=temp.dat iflag=fullblock,count\_bytes count=1M of=/dev/**{*cíl-skupina*}**/**{*cíl-název*} **conv=notrunc,nocreat** [**status=progress**] **&amp;&amp;**<br>
-**sudo lvremove** {*pův-skupina*}**/**{*pův-název*} [**-v**] <nic>[**-y**]
-[**sudo rm -v temp.dat &amp;&amp;**]<br>
+**sudo lvremove** {*pův-skupina*}**/**{*pův-název*} [**-v**] <nic>[**-y**]<br>
+[**sudo rm -v temp.dat &amp;&amp;**]
 
 ### Logické snímky
 

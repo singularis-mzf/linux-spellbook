@@ -234,7 +234,7 @@ function ZiskatNazevKapitolyHtmlExtra(plneId,   cisloKapitoly, cisloNadkapitoly)
     return FragInfo(FragInfo(plneId), "celý-název");
 }
 
-function VypsatPrehledStitku(format,   i, n, s, cislo_kapitoly, stitky_kapitol, stitky_kapitoly, ikony_kapitol) {
+function VypsatPrehledStitku(format,   i, n, s, cislo_kapitoly, stitky_kapitol, stitky_kapitoly, ikony_kapitol, stitek_na_xhes) {
     if (format != "html") {
         ShoditFatalniVyjimku("Přehled štítků pro formát " format " není podporován!");
     }
@@ -243,9 +243,14 @@ function VypsatPrehledStitku(format,   i, n, s, cislo_kapitoly, stitky_kapitol, 
 
     # Načíst štítky ze štítky.tsv:
     stitky_tsv = gensub(/fragmenty/, "štítky", 1, FRAGMENTY_TSV);
+    delete stitek_na_xhes;
     while (getline < stitky_tsv) {
         if (NF < 3) {ShoditFatalniVyjimku("Chyba formátu štítky.tsv: očekávány alespoň tři sloupce!")}
-        # $1 = štítek $2 = omezené id štítku $3..$NF = plná id kapitol
+        stitek_na_xhes[$1] = $2;
+    }
+    close(stitky_tsv);
+    while (getline < stitky_tsv) {
+        # $1 = štítek (text) $2 = xheš štítku $3..$NF = plná id kapitol
         print "<dt id=\"" $2 "\" class=\"stitky\"><span><a href=\"#" $2 "\">" $1 "</a></span></dt><dd>";
         for (i = 3; i <= NF; ++i) {
             cislo_kapitoly = FragInfo($i "?");
@@ -256,7 +261,7 @@ function VypsatPrehledStitku(format,   i, n, s, cislo_kapitoly, stitky_kapitol, 
             if (FragInfo(cislo_kapitoly, "štítky") != "") {
                 n = split(gensub(/^\{|\}$/, "", "g", FragInfo(cislo_kapitoly, "štítky")), stitky_kapitoly, "\\}\\{");
                 for (j = 1; j <= n; ++j) {
-                    print "<a href=\"#" GenerovatOmezeneId("s", stitky_kapitoly[j]) "\">" stitky_kapitoly[j] "</a>";
+                    print "<a href=\"#" stitek_na_xhes[stitky_kapitoly[j]] "\">" stitky_kapitoly[j] "</a>";
                 }
             }
             print "</span></div>";

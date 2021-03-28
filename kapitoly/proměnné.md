@@ -101,7 +101,7 @@ Názvy proměnných a funkcí jsou obvykle tvořeny jen velkými a malými pí
 *// Pozor! Zapnutí této konverze nezmění stávající hodnotu proměnné, účinek nastane až při následujícím přiřazení!*<br>
 **declare -u** {*název\_proměnné*}...<br>
 **declare -l** {*název\_proměnné*}...<br>
-**declare +lu** {*název\_proměnné*}...<br>
+**declare +lu** {*název\_proměnné*}...
 
 ### Exportování proměnných
 
@@ -165,7 +165,7 @@ proměnnou „_“, ačkoliv tu ani jako proměnnou prostředí nastavit nelze.
 
 *# **vytvořit** či přepsat/**zrušit**/vyprázdnit*<br>
 *// Prvky pole se zadávají stejně jako parametry příkazu, tzn. oddělují se mezerami; obsahují-li zvláštní znaky, budou interpretovány, pokud je neodzvláštníte (vhodné je umístění do uvozovek či apostrofů).*<br>
-{*název\_pole*}**=(**[{*prvky*}]...**)**
+{*název\_pole*}**=(**[{*prvky*}]...**)**<br>
 **unset -v** {*název\_pole*}<br>
 {*název\_pole*}**=()**
 
@@ -227,7 +227,7 @@ proměnnou „_“, ačkoliv tu ani jako proměnnou prostředí nastavit nelze.
 {*název\_pole*}**+=("**{*nový prvek*}**")**
 
 *# **odstranit** N prvků na začátku/konci*<br>
-{*název\_pole*}**=("$\{**{*názevpole*}**[@]:**{*N*}**\}")**
+{*název\_pole*}**=("$\{**{*názevpole*}**[@]:**{*N*}**\}")**<br>
 {*název\_pole*}**=("$\{**{*názevpole*}**[@]:0:$((${#**{*název\_pole*}**[@]}-**{*N*}**))}")**
 
 ### Asociativní pole (jako celek)
@@ -243,7 +243,7 @@ https://www.artificialworlds.net/blog/2012/10/17/bash-associative-array-examples
 **unset -v** {*název*}
 
 *# jde o **asociativní pole**?*<br>
-**[[ $\{**{*název\_proměnné*}**@a} = \*A\* ]]**<br>
+**[[ $\{**{*název\_proměnné*}**@a} = \*A\* ]]**
 
 *# seznam asociativních polí (bez hodnot)*<br>
 **for \_ in $(compgen -v); do [[ ! ${!\_@a} = \*A\* ]] \|\| printf '%s\\n' "$\_"; done**
@@ -349,7 +349,7 @@ Prázdný klíč způsobí chybu „chybný podskript pole“.
 *// Hodnoty přiřazené do celočíselných proměnných se automaticky vyhodnocují jako výrazy a konvertují na celé číslo. Místo každého druhého názvu proměnné v uvedeném příkazu pochopitelně můžete uvést novou hodnotu proměnné, a to i výrazem.*<br>
 **declare -i** {*název\_proměnné*}**=$**{*název\_proměnné*} [{*další\_proměnná*}**=$**{*další\_proměnná*}]...<br>
 **declare -i x=$x**<br>
-**declare -i x=-1**<br>
+**declare -i x=-1**
 
 *# nastavit pole či asociativní pole, že jeho prvky budou celočíselné*<br>
 *// Pozor! Účinek této deklarace nastává až při následujícím přiřazení. Pokud tedy deklarované pole či asociativní pole již obsahuje neceločíselné hodnoty, zůstanou v původní podobě, dokud nebudou přepsány!*<br>
@@ -393,7 +393,7 @@ Prázdný klíč způsobí chybu „chybný podskript pole“.
 ### Jednoduché a nepřímé dosazení
 
 *# **dosadit** hodnotu řetězcové proměnné (alternativy)*<br>
-**$**{*název\_proměnné*} ⊨ Hello, world!
+**$**{*název\_proměnné*} ⊨ Hello, world!<br>
 **$\{**{*název\_proměnné*}**\}**
 
 *# dosadit hodnotu řetězcové proměnné s **odzvláštněním***<br>
@@ -474,7 +474,7 @@ Prázdný klíč způsobí chybu „chybný podskript pole“.
 **$\{**{*název\_proměnné*}**,,}**
 
 *# interpretovat hodnotu jako by byla uvedena v konstrukci $'text' a výsledek dosadit*<br>
-**$\{**{*název\_proměnné*}**@E}**<br>
+**$\{**{*název\_proměnné*}**@E}**
 
 ### Parametry skriptu
 
@@ -600,7 +600,7 @@ Prázdný klíč způsobí chybu „chybný podskript pole“.
 Poznámka: proměnné prostředí EDITOR, VISUAL a PAGER se obvykle nastavují v souboru „~/.bashrc“.
 
 *# výchozí textový editor (terminálový/grafický)*<br>
-**EDITOR=/bin/nano**
+**EDITOR=/bin/nano**<br>
 **VISUAL=/usr/bin/gedit**
 
 *# výchozí terminálový stránkovač*<br>

@@ -241,16 +241,17 @@ function Tabulator(delka,  i, vysledek) {
     return "\\textcolor{seda}{\\guillemotright}{" Zopakovat("~", max(0, delka - 1)) "}";
 }
 
-function ZacatekKapitoly(nazevKapitoly, cisloKapitoly, stitky, osnova, ikonaKapitoly, jeDodatek, \
-    kapitolaVelkymi, zkratkaKapitoly)
+function ZacatekKapitoly(nazevKapitoly, cisloKapitoly, stitky, stitkyxhes, osnova, ikonaKapitoly, jeDodatek, \
+    kapitolaVelkymi, zkratkaKapitoly,   n)
 {
     DO_LATEXU_ODSTAVEC_PRED_ZAKLINADLEM = 0;
     kapitolaVelkymi = toupper(nazevKapitoly);
     zkratkaKapitoly = jeDodatek ? "" : SubstrZleva(gensub(/[^[:alnum:]]/, "", "g", kapitolaVelkymi), 3);
-    nazevKapitoly = "\\kapitola{" ((cisloKapitoly - 1) % 21) "}{" zkratkaKapitoly "}{" kapitolaVelkymi "}{../pdf-společné/_obrázky/" ikonaKapitoly "}%\n\\label{kapx" ID_KAPITOLY_OMEZENE "}";
-    if (stitky != "") {
-        gsub(/\|/, "} \\stitek{", stitky);
-        return nazevKapitoly "\\noindent\\stitek{" stitky "}\n";
+    nazevKapitoly = "\\kapitola{" ((cisloKapitoly - 1) % 21) "}{" zkratkaKapitoly "}{" kapitolaVelkymi "}{../pdf-společné/_obrázky/" ikonaKapitoly "}%\n\\label{kapx" XHES_KAPITOLY "}";
+    if (1 in stitky) {
+        nazevKapitoly = nazevKapitoly "\\noindent\\stitek{" stitky[1];
+        for (n = 2; n in stitky; ++n) {nazevKapitoly = nazevKapitoly "}\\stitek{" stitky[n]}
+        nazevKapitoly = nazevKapitoly "}\n";
     }
     return nazevKapitoly;
 }

@@ -22,7 +22,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
-use Encode();
+use Digest::MD5("md5_hex");
+use Encode("decode_utf8", "encode_utf8");
 
 # Nastavení
 my $stderr = \*STDERR;
@@ -48,7 +49,6 @@ my @adresář = @nedefy;
 my @čísloNaVýstupu = @nedefy; # jen u fragmentů na výstup, jinak undef
 my @nadkapitola = @nedefy; # id nadkapitoly této kapitoly; "", pokud nadkapitolu nemá
 my @název = @nedefy;
-my @omezenéId = @nedefy;
 my @početŘádek = @nedefy;
 my @příznaky = ("") x alength(@nedefy);
 my @štítky = @nedefy; # => [štítky, ...]
@@ -128,7 +128,6 @@ my %číslaKapitol; # ID => pořadové číslo na výstupu (1, 2, ...)
 }
 
 # Další data:
-my %omezenáIdNaPlná; # slouží také ke kontrole duplicit
 my %kapitolyŠtítků; # štítek => [indexy kapitol...]
 
 for my $i (0..(alength(@všechnyFragmenty) - 1))
@@ -138,17 +137,9 @@ for my $i (0..(alength(@všechnyFragmenty) - 1))
 
     ladění("Začínám zpracování fragmentu <${id}>");
 
-    # @omezenéId
     my $holéId = ($id =~ s!.*/!!r);
     my $plochéId = ($id =~ s!/!-!gr);
-    my $omezenéId = generovatOmezenéId($id);
-    #fprintf($stderr, "%s\n", "LADĚNÍ: \$id=(${id}) omezenéId=(${omezenéId})");
-    !exists($omezenáIdNaPlná{$omezenéId})
-        or die("Duplicita v omezeném id: (${omezenéId}) => (" . $omezenáIdNaPlná{$omezenéId} . ") x (" . $id . ")") ;
-    $omezenéId[$i] = $omezenéId;
-    $omezenáIdNaPlná{$omezenéId} = $id;
-
-    ladění("${i}: ID(${id}) HOLÉ(${holéId}) PLOCHÉ(${plochéId}) OMEZENÉ(${omezenéId})");
+    #my $xheš = xheš($id); # xheš kapitoly
 
     # @nadkapitola
     $nadkapitola[$i] = length($holéId) < length($id)
@@ -179,8 +170,9 @@ for my $i (0..(alength(@všechnyFragmenty) - 1))
     open(my $fOsnova, ">:utf8", "${soubory_překladu}/osnova/${plochéId}.tsv") or die("Nemohu otevřít soubor ${soubory_překladu}/osnova/${plochéId}.tsv!");
     my $čŘádky = 0;
     my $vKomentáři = 0; # nastavuje se na 1 uvnitř víceřádkového komentáře
+    my $vZaklínadle = 0; # 1 = řádky zaklínadla; 2 = za zaklínadlem (vyžadován prázdný řádek)
     my $s; # text řádku
-    my ($čSekce, $čPodsekce) = 0;
+    my ($čSekce, $čPodsekce, $názevSekce, $názevPodsekce) = (0, 0, "", "");
     while (defined($s = scalar(readline($f)))) {
         chomp($s);
         ++$čŘádky;
@@ -192,6 +184,26 @@ for my $i (0..(alength(@všechnyFragmenty) - 1))
         }
         if ($s =~ /\A<!--([^-]|-[^-])*-->\z/) {next} # jednořádkový
         if ($vKomentáři = ($s eq "<!--")) {next}
+
+        # Zpracovat zaklínadla (jen ta s titulkem)
+        if ($vZaklínadle == 0) {
+            if ($s =~ /\A\*# .+\*(<br>)?\z/) {
+                $s =~ /<br>\z/
+                    or die("Chyba syntaxe ${id}:${čŘádky}: ${s}");
+                $vZaklínadle = mdTextNaČistýText(substr($s, 3, length($s) - 8)); # text zaklínadla
+                vypsatPoložkuOsnovy($fOsnova, "ZAKLÍNADLO", xheš($vZaklínadle), $čŘádky, $vZaklínadle, ";");
+                $vZaklínadle = 1;
+            }
+        } elsif ($vZaklínadle == 1) {
+            $s ne ""
+                or die("Chyba syntaxe ${id}:${čŘádky}: ${s}");
+            $s =~ /<br>\z/
+                or $vZaklínadle = 2;
+        } elsif ($vZaklínadle == 2) {
+            $s eq ""
+                or die("Chyba syntaxe ${id}:${čŘádky}: ${s}");
+            $vZaklínadle = 0;
+        }
 
         # Nadpisy:
         if ($s =~ /\A#+ \S/) {
@@ -205,11 +217,13 @@ for my $i (0..(alength(@všechnyFragmenty) - 1))
                 $název[$i] !~ /\t/ or die("Název v souboru ${cesta} obsahuje tabulátor, což není dovoleno!");
                 vypsatPoložkuOsnovy($fOsnova, "KAPITOLA", $čísloNaVýstupu[$i] // 0, $čŘádky, $název[$i], ";");
                 $čSekce = $čPodsekce = 0;
+                $názevSekce = $názevPodsekce = "";
             } elsif ($s =~ /\A#{2} /) {
-                vypsatPoložkuOsnovy($fOsnova, "SEKCE", ++$čSekce, $čŘádky, mdTextNaČistýText(substr($s, 3)), ";");
+                vypsatPoložkuOsnovy($fOsnova, "SEKCE", ++$čSekce, $čŘádky, $názevSekce = mdTextNaČistýText(substr($s, 3)), ";");
                 $čPodsekce = 0;
+                $názevPodsekce = "";
             } elsif ($s =~ /\A#{3} /) {
-                vypsatPoložkuOsnovy($fOsnova, "PODSEKCE", $čSekce . "x" . (++$čPodsekce), $čŘádky, mdTextNaČistýText(substr($s, 4)), ";");
+                vypsatPoložkuOsnovy($fOsnova, "PODSEKCE", $čSekce . "x" . (++$čPodsekce), $čŘádky, $názevPodsekce = mdTextNaČistýText(substr($s, 4)), ";");
             } else {
                 die("Chyba syntaxe ${id}:${čŘádky}: ${s}");
             }
@@ -224,9 +238,7 @@ for my $i (0..(alength(@všechnyFragmenty) - 1))
             my %štítkyTétoKapitoly;
             for my $štítek (split(/\}\{/, "}${s}{")) {
                 if ($štítek ne "") {
-                    my $omezenéIdŠtítku = generovatOmezenéId("s", $štítek);
-                    !exists($omezenáIdNaPlná{$omezenéIdŠtítku}) || $omezenáIdNaPlná{$omezenéIdŠtítku} eq $štítek
-                        or die("Konflikt štítků \"${štítek}\" a \"" . $omezenáIdNaPlná{$omezenéIdŠtítku} . "\" (omezené ID ${omezenéIdŠtítku})!");
+                    my $omezenéIdŠtítku = xheš($štítek);
                     !exists($štítkyTétoKapitoly{$štítek})
                         or die("Duplicitní štítek ${štítek} v kapitole ${id}!");
                     push(@{$štítky[$i]}, $štítek);
@@ -258,7 +270,7 @@ ladění("Druhý průchod skončil.");
         or die("Nemohu otevřít soubor štítky.tsv!");
     for my $štítek (seřaditČesky(keys(%kapitolyŠtítků))) {
         vypsatŠtítek($f, $štítek,
-            generovatOmezenéId("s", $štítek),
+            xheš($štítek),
             seřaditČesky(array(map {$všechnyFragmenty[$ARG]} @{$kapitolyŠtítků{$štítek}})));
     }
     close($f);
@@ -296,8 +308,8 @@ ladění("Druhý průchod skončil.");
             máPříznak($i, "d") ? "dodatky" : "kapitoly", # á
             # 7: Příznaky
             $příznaky[$i] ne "" ? $příznaky[$i] : "NULL",
-            # 8: Omezené ID
-            $omezenéId[$i],
+            # 8: Xheš úplného ID
+            xheš($všechnyFragmenty[$i]),
             # 9: ID nadkapitoly
             $máNadkapitolu ? $nadkapitola[$i] : "NULL",
             # 10: Název nadkapitoly
@@ -356,14 +368,6 @@ sub čístPrvníZ {
         }
     }
     return undef;
-}
-
-sub generovatOmezenéId {
-    # ([prefix], id) => omezenéId
-    typy(@ARG) =~ /\As?s\z/ or croak("Chybné typy parametrů!");
-    my $id = pop(@ARG);
-    my $prefix = pop(@ARG) // "";
-    return $prefix . substr(lc(bezDiakritiky($id)) =~ s/[^abcdefghijklmnopqrstuvwxyz0123456789]//gr, 0, 32);
 }
 
 sub jePlatnéId {
@@ -526,7 +530,7 @@ sub vypsatFragment {
     ladění("FRAG[${řádka}]/název: " . $ARG[5]);
     ladění("FRAG[${řádka}]/adresář: " . $ARG[6]);
     ladění("FRAG[${řádka}]/příznaky: " . $ARG[7]);
-    ladění("FRAG[${řádka}]/omezené-ID: " . $ARG[8]);
+    ladění("FRAG[${řádka}]/xheš: " . $ARG[8]);
     ladění("FRAG[${řádka}]/ID-nadkapitoly: " . $ARG[9]);
     ladění("FRAG[${řádka}]/název-nadkapitoly: " . $ARG[10]);
     ladění("FRAG[${řádka}]/štítky: " . $ARG[11]);
@@ -573,4 +577,35 @@ sub vypsatŠtítek {
     }
 
     return fprint($f, $štítek, $omezenéID, @ARG);
+}
+
+my %xheš_keš; # řetězec -> xheš
+my %xheš_revkeš; # xheš -> řetězec
+
+sub xheš {
+    typy(@ARG) =~ /\As\z/ or croak("Chybné typy parametrů!");
+    my $x = $ARG[0];
+    $x =~ /\A[^\t\n\0]+\z/ or croak("Řetězec pro xheš obsahuje nepovolený znak nebo je prázdný!");
+    my $xheš = $xheš_keš{$x};
+    if (!defined($xheš)) {
+        $xheš = lc(md5_hex(encode_utf8($x)));
+        !exists($xheš_revkeš{$xheš})
+            or die("Detekován konflikt x-heší: " . $xheš . " pro \"" . $xheš_revkeš{$xheš} .
+            "\" (MD5:" . md5_hex(encode_utf8($xheš_revkeš{$xheš})) .
+            ") a pro \"" . $x . "\" (MD5:" . md5_hex(encode_utf8($x)) . ")!");
+        $xheš_revkeš{$xheš} = $x;
+        $xheš_keš{$x} = $xheš;
+    }
+    return $xheš;
+}
+
+# jen ladění
+sub xheš_vypsat {
+    alength(@ARG) == 0 or croak("Tato funkce nepřijímá parametry!");
+    open(my $f, ">:utf8", $soubory_překladu . "/xheš.výpis") or die("Nemohu otevřít soubor!");
+    for my $xheš (keys(%xheš_revkeš)) {
+        fprintf("%s\t%s\n", $xheš, $xheš_revkeš{$xheš});
+    }
+    close($f);
+    return alength(keys(%xheš_revkeš));
 }

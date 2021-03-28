@@ -64,7 +64,7 @@ Následující zaklínadla kromě hromadných konverzí platí jen pro celá č�
 **$(printf %**[**0**{*min-délka*}]**x** {*číslo*}**)**
 
 *# na binární (doplěné nulami/nejkratší)*<br>
-**$(printf %**[{*min-délka*}]**s $(bc &lt;&lt;&lt;"obase=2;**{*číslo*}**") \| tr '&blank;' 0)**
+**$(printf %**[{*min-délka*}]**s $(bc &lt;&lt;&lt;"obase=2;**{*číslo*}**") \| tr '&blank;' 0)**<br>
 **$(bc &lt;&lt;&lt;"obase=2;**{*číslo*}**")**
 
 *# na osmičkovou*<br>
@@ -97,7 +97,7 @@ Následující zaklínadla kromě hromadných konverzí platí jen pro celá č�
 ### Z osmičkové soustavy
 
 *# na desítkovou*<br>
-**$((8#**{*číslo*}**))**<br>
+**$((8#**{*číslo*}**))**
 
 *# na hexadecimální (s velkými/malými písmeny)*<br>
 **$(printf %**[**0**{*min-délka*}]**X $((8#**{*číslo*}**)))**<br>
@@ -239,7 +239,7 @@ V „bc“ jsou dostupné tyto operátory:
 *# **mocnina** s nezáporným celočíselným exponentem*<br>
 {*základ*} **^** {*exponent*}
 
-*# druhá/čtvrtá **odmocnina***
+*# druhá/čtvrtá **odmocnina***<br>
 **sqrt(**{*x*}**)**<br>
 **sqrt(sqrt(**{*x*}**))**
 
@@ -277,7 +277,7 @@ skončí s chybou „Function not defined“.
 *# **logaritmus** (přirozený/o základu B/o základu 10)*<br>
 **l(**{*x*}**)**<br>
 **l(**{*x*}**) / l(**{*B*}**)**<br>
-**l(**{*x*}**) / l(10)**<br>
+**l(**{*x*}**) / l(10)**
 
 *# hodnota **pí***<br>
 *// Toto zaklínadlo vyžaduje spuštění „bc“ s parametrem „-l“ a je vhodné pro výpočet pí na malé množství desetinných míst (řádově do 1000).*<br>
@@ -434,7 +434,7 @@ Aritmetický (celočíselný) kontext se v bashi vyskytuje ve třech situacích
 ### bc
 
 *# bc (alternativy)*<br>
-{*zdroj*} **\| bc** [**-l**] <nic>[{*bc-skript*}]...
+{*zdroj*} **\| bc** [**-l**] <nic>[{*bc-skript*}]...<br>
 **bc** [**-l**] <nic>[{*bc-skript*}]...
 
 ### octave

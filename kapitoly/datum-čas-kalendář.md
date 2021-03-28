@@ -163,7 +163,7 @@ pro zarovnání mezerami místo nulami tam vložte „\_“, např. „%\_m“ v
 {*rok*}**-**{*měsíc*}**-**{*den*}**T**{*hodina*}**:**{*minuta*}**:**{*sekunda*}[**.**{*f*}]**Z**<br>
 {*rok*}**-**{*měsíc*}**-**{*den*}**&blank;**{*hodina*}**:**{*minuta*}**:**{*sekunda*}[**.**{*f*}]<nic>[**&blank;**]**+0000**<br>
 {*rok*}**-**{*měsíc*}**-**{*den*}**T**{*hodina*}**:**{*minuta*}**:**{*sekunda*}[**.**{*f*}]**+0000**<br>
-**TZ="UTC"&blank;**{*rok*}**-**{*měsíc*}**-**{*den*}**&blank;**{*hodina*}**:**{*minuta*}**:**{*sekunda*}[**.**{*f*}]<br>
+**TZ="UTC"&blank;**{*rok*}**-**{*měsíc*}**-**{*den*}**&blank;**{*hodina*}**:**{*minuta*}**:**{*sekunda*}[**.**{*f*}]
 
 *# **časová známka Unixu***<br>
 *// „číslo“ může být kladné i záporné, celé i s desetinnou tečkou. Odpovídá formátu „%s“, resp. „%s.%N“*<br>

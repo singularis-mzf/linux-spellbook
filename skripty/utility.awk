@@ -107,10 +107,6 @@ function MesicVDruhemPade(cislo) {
 function Odzvlastnit(s) {gsub(/[\\|.*+?{}\\/^$]/, "\\\\&", s);return s;}
 function OdzvlastnitKNahrade(s) {gsub(/[\\&]/, "\\\\&", s);return s;}
 
-function GenerovatOmezeneId(prefix, id) {
-    return prefix substr(gensub(/[^abcdefghijklmnopqrstuvwxyz0123456789]/, "", "g", tolower(BezDiakritiky(id))), 1, 16);
-}
-
 function Test(parametry) {return !system("test " parametry);}
 
 function BezDiakritiky(s,   t, c, i, bd) {
@@ -293,7 +289,7 @@ function NacistFragmentyTSV(soubor,   oldFS, oldRS, oldLN, i, vystupMax, nevystu
         FRAGMENTY[i "/název-podkapitoly"] = $5;
         FRAGMENTY[i "/adresář"] = $6;
         FRAGMENTY[i "/příznaky"] = $7;
-        FRAGMENTY[i "/omezid"] = $8;
+        FRAGMENTY[i "/xheš"] = $8;
         FRAGMENTY[i "/id-nadkapitoly"] = $9;
         FRAGMENTY[i "/celý-název"] = $10 == "NULL" ? $5 : $10 " / " $5;
         FRAGMENTY[i "/štítky"] = $11;
@@ -347,7 +343,7 @@ function FragInfo(a, b,   x) {
         case "název-podkapitoly": x = FRAGMENTY[a "/název-podkapitoly"]; break;
         case "adresář": x = FRAGMENTY[a "/adresář"]; break;
         case "příznaky": x = FRAGMENTY[a "/příznaky"]; break;
-        case "omezené-id": x = FRAGMENTY[a "/omezid"]; break;
+        case "xheš": x = FRAGMENTY[a "/xheš"]; break;
         case "id-nadkapitoly": x = FRAGMENTY[a "/id-nadkapitoly"]; break;
         case "číslo-nadkapitoly":
             x = FRAGMENTY[a "/id-nadkapitoly"];

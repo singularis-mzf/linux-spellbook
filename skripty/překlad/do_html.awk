@@ -66,17 +66,15 @@ function Tabulator(delka,  i, vysledek) {
 
 # + OSNOVA, DELKA_OSNOVY
 
-function ZacatekKapitoly(nazevKapitoly, cisloKapitoly, stitky, osnova, ikonaKapitoly, jeDodatek,  vysledek, polozky, jePrvni, melaPodsekce, maPodsekce, poleStitku, i, n) {
+function ZacatekKapitoly(nazevKapitoly, cisloKapitoly, stitky, stitkyxhes, osnova, ikonaKapitoly, jeDodatek,  vysledek, i) {
 # Generování prvku <h1> obstarává šablona kapitoly.
 #    return "<h1>" nazevKapitoly "</h1>\n";
     vysledek = "";
-    delete polozky;
 
-    if (stitky != "") {
+    if (1 in stitky) {
         vysledek = "";
-        n = split(stitky, poleStitku, "|");
-        for (i = 1; i <= n; ++i) {
-            vysledek = vysledek "<a href=\"x-stitky.htm#" GenerovatOmezeneId("s", poleStitku[i]) "\">" poleStitku[i] "</a>\n";
+        for (i = 1; i in stitky; ++i) {
+            vysledek = vysledek "<a href=\"x-stitky.htm#" stitkyxhes[i] "\">" stitky[i] "</a>\n";
         }
         vysledek = "<div class=\"stitky\">" vysledek "</div>";
     } else {
@@ -84,39 +82,6 @@ function ZacatekKapitoly(nazevKapitoly, cisloKapitoly, stitky, osnova, ikonaKapi
     }
 
     return vysledek; # negenerovat osnovu (je v menu)
-
-    jePrvni = 1;
-    melaPodsekce = 1;
-    for (i = 1; i <= length(osnova); ++i) {
-        if (osnova[i] ~ /^SEKCE\t/) {
-            split(osnova[i], polozky);
-            maPodsekce = i < length(osnova) && osnova[i + 1] ~ /^PODSEKCE\t/;
-            if (jePrvni) {
-                vysledek = vysledek "<div class=\"rozcestnikkapitol\">\n";
-            } else if (melaPodsekce || maPodsekce) {
-                vysledek = vysledek "<br>\n";
-            } else {
-                vysledek = vysledek "<span class=\"oddelovac\">&nbsp;|</span>\n";
-            }
-            vysledek = vysledek "<a href=\"#cast" polozky[2] "\" class=\"sekce\">" polozky[4] "</a>";
-            if (maPodsekce) {
-                vysledek = vysledek ": ";
-                jePrvni = 1;
-                do {
-                    if (osnova[++i] ~ /^PODSEKCE\t/) {
-                        split(osnova[i], polozky);
-                        if (!jePrvni) {vysledek = vysledek "<span class=\"oddelovac\">&nbsp;|</span>\n"}
-                        vysledek = vysledek "<a href=\"#cast" polozky[2] "\">" polozky[4] "</a>";
-                        jePrvni = 0;
-                    }
-                } while (i < length(osnova) && osnova[i + 1] !~ /^SEKCE\t/);
-            }
-            jePrvni = 0;
-            melaPodsekce = maPodsekce;
-        }
-    }
-    if (!jePrvni) {vysledek = vysledek "</div>"}
-    return vysledek;
 }
 
 function KonecKapitoly(nazevKapitoly, cislaPoznamek, textyPoznamek,   i, vysledek, prikaz, htmlPoznamky) {
@@ -125,7 +90,7 @@ function KonecKapitoly(nazevKapitoly, cislaPoznamek, textyPoznamek,   i, vyslede
         vysledek = "<div class=\"ppc\">";
         for (i = 0; i < length(cislaPoznamek); ++i) {
             htmlPoznamky = textyPoznamek[cislaPoznamek[i]];
-            vysledek = vysledek "<div id=\"kap" ID_KAPITOLY_OMEZENE "ppc" cislaPoznamek[i] "\"><a href=\"#kap" ID_KAPITOLY_OMEZENE "ppcr" cislaPoznamek[i] "\" class=\"cislopozn\">" cislaPoznamek[i] "</a>&nbsp;" htmlPoznamky "</div>\n<script>document.write(\"<div class=\\\"zpetdotextu\\\" onclick=\\\"window.history.back()\\\">zpět do textu</div>\");</script>\n";
+            vysledek = vysledek "<div id=\"kap" XHES_KAPITOLY "ppc" cislaPoznamek[i] "\"><a href=\"#kap" XHES_KAPITOLY "ppcr" cislaPoznamek[i] "\" class=\"cislopozn\">" cislaPoznamek[i] "</a>&nbsp;" htmlPoznamky "</div>\n<script>document.write(\"<div class=\\\"zpetdotextu\\\" onclick=\\\"window.history.back()\\\">zpět do textu</div>\");</script>\n";
         }
         #vysledek = vysledek "<div class=\"zrusitzvyrazneni\" id=\"zzv\"><a href=\"#zzv\">zrušit zvýraznění poznámky pod čarou</a></div></div>\n";
         vysledek = vysledek "</div>\n";
@@ -228,7 +193,7 @@ function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, ikona, cislaPoznamek
                 gsub(/\n/, "", textPoznamky);
                 gsub(/\t/, " ", textPoznamky);
                 gsub(Odzvlastnit(ZpracujZnak("␣")), OdzvlastnitKNahrade("&blank;"), textPoznamky);
-                vysledek = vysledek "<a href=\"#kap" ID_KAPITOLY_OMEZENE "ppc" cislaPoznamek[i] "\" id=\"kap" ID_KAPITOLY_OMEZENE "ppcr" cislaPoznamek[i] "\" title=\"" textPoznamky "\">(" cislaPoznamek[i] ")</a>";
+                vysledek = vysledek "<a href=\"#kap" XHES_KAPITOLY "ppc" cislaPoznamek[i] "\" id=\"kap" XHES_KAPITOLY "ppcr" cislaPoznamek[i] "\" title=\"" textPoznamky "\">(" cislaPoznamek[i] ")</a>";
             }
             vysledek = vysledek "</sup>";
         }

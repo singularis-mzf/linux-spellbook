@@ -48,7 +48,7 @@ Tato verze kapitoly nepokrývá GFM (GitHub Flavoured Markdown), nicméně všec
 **\###** {*nadpis*}<br>
 **\####** {*nadpis*}<br>
 **\#####** {*nadpis*}<br>
-**\######** {*nadpis*}<br>
+**\######** {*nadpis*}
 
 ### Základní formátování
 

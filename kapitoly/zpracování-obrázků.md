@@ -236,7 +236,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 **\-size** {*šířka*}**x**{*výška*} **xc:#FF000080**
 
 *# vertikální/kruhový barevný gradient*<br>
-**\-size** {*šířka*}**x**{*výška*} **gradient:**{*barva-nahoře*}**-**{*barva-dole*}
+**\-size** {*šířka*}**x**{*výška*} **gradient:**{*barva-nahoře*}**-**{*barva-dole*}<br>
 **\-size** {*šířka*}**x**{*výška*} **radial-gradient:**{*barva-středu*}**-**{*barva-okraje*}
 
 *# plazma-gradient (náhodný)*<br>

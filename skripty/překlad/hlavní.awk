@@ -516,15 +516,24 @@ BEGIN {
     IDPODKAPITOLY = casti[n];
     IDKAPITOLY = (IDNADKAPITOLY != "" ? IDNADKAPITOLY "/" : "") IDPODKAPITOLY;
 
+    # Načíst a zpracovat štítky.tsv:
+    delete STITKY_TEXT_NA_XHES;
+    soubor = SOUBORY_PREKLADU "/štítky.tsv";
+    while (getline < soubor) {
+        STITKY_TEXT_NA_XHES[$1] = $2;
+    }
+    close(soubor);
+
     # Načíst a zpracovat údaje z fragmenty.tsv, jsou-li k dispozici:
     NacistFragmentyTSV(SOUBORY_PREKLADU "/fragmenty.tsv");
     # číslo kapitoly
     C_KAPITOLY = FragInfo(IDKAPITOLY "?");
     if (C_KAPITOLY != 0 && FragInfo(C_KAPITOLY, "příznaky") ~ /z/) {
         # štítky
-        STITKY = FragInfo(C_KAPITOLY, "štítky");
-        gsub(/^\{|\}$/, "", STITKY);
-        gsub(/\}\{/, "|", STITKY);
+        stitky = FragInfo(C_KAPITOLY, "štítky");
+        gsub(/^\{|\}$/, "", stitky);
+        split(stitky, STITKY, /\}\{/);
+        for (n in STITKY) {STITKY_XHES[STITKY[n]] = STITKY_TEXT_NA_XHES[STITKY[n]]}
         # ikona kapitoly
         IKONA_KAPITOLY = FragInfo(C_KAPITOLY, "ikona-kapitoly");
         # je dodatek?
@@ -533,13 +542,17 @@ BEGIN {
         NAZEV_PODKAPITOLY = FragInfo(C_KAPITOLY, "název-podkapitoly");
         n = FragInfo(C_KAPITOLY, "číslo-nadkapitoly");
         NAZEV_NADKAPITOLY = n != 0 ? FragInfo(n, "celý-název") : "";
+        # xheš
+        XHES_KAPITOLY = FragInfo(C_KAPITOLY, "xheš");
     } else {
         C_KAPITOLY = 0;
-        STITKY = "";
+        delete STITKY;
+        delete STITKY_XHES;
         IKONA_KAPITOLY = "ik-vychozi.png";
         JE_DODATEK = 0;
         NAZEV_NADKAPITOLY = "";
         NAZEV_PODKAPITOLY = "Není";
+        XHES_KAPITOLY = "x00000000";
     }
 
     # Načíst zvýraznění
@@ -555,7 +568,6 @@ BEGIN {
     }
 
     # Inicializovat globální proměnné:
-    ID_KAPITOLY_OMEZENE = GenerovatOmezeneId("", IDKAPITOLY);
     NULL_STRING = "\x01\x02";
     KAPITOLA = "";
     SEKCE = "";
@@ -717,7 +729,7 @@ TYP_RADKU == "NADPIS" {
         delete pptall;
         printf("%s", ZacatekKapitoly( \
             (NAZEV_NADKAPITOLY != "" ? NAZEV_NADKAPITOLY "/" : "") NAZEV_PODKAPITOLY,
-            ++C_KAPITOLY, STITKY, OSNOVA, IKONA_KAPITOLY, JE_DODATEK));
+            ++C_KAPITOLY, STITKY, STITKY_XHES, OSNOVA, IKONA_KAPITOLY, JE_DODATEK));
         if (tolower(KAPITOLA) == "licence") {
             printf("%s", ZapnoutRezimLicence());
         }

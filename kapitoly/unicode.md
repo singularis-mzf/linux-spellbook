@@ -52,7 +52,7 @@ https://unix.stackexchange.com/questions/198849/how-can-i-find-the-common-name-f
 
 *# vypsat znak podle kódu (desítkového/hexadecimálního)*<br>
 **printf \\\\U$(printf %08x** {*desítkový-kód*}**)**[**\\\\n**]<br>
-**printf \\\\U$(printf %08x 0x**{*hexadecimální-kód*}**)**[**\\\\n**]<br>
+**printf \\\\U$(printf %08x 0x**{*hexadecimální-kód*}**)**[**\\\\n**]
 
 *# rozdělit řetězec po znacích a ke každému vypsat desítkový a hexadecimální kód*<br>
 ?

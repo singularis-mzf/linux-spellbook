@@ -57,12 +57,12 @@ GNU Wget je vyvíjen v rámci projektu GNU.
 
 *# stáhnout soubor do adresáře/na standardní výstup*<br>
 *// Cílový adresář nemusí existovat.*<br>
-**wget -nd** [**-P** {*cílový/adresář*}] <nic>[**\-\-no-use-server-timestamps**] <nic>[**\-\-restrict-file-names=windows,ascii**] <nic>[{*další parametry*}] <nic>[**\-\-**] {*protokol://adresa*}
+**wget -nd** [**-P** {*cílový/adresář*}] <nic>[**\-\-no-use-server-timestamps**] <nic>[**\-\-restrict-file-names=windows,ascii**] <nic>[{*další parametry*}] <nic>[**\-\-**] {*protokol://adresa*}<br>
 **wget -O -** <nic>[{*další parametry*}] <nic>[**\-\-**] {*protokol://adresa*}...
 
 *# stáhnout soubory ze seznamu do adresáře/na standardní výstup*<br>
 *// Seznam musí být ve formátu TXT (tzn. jedna URI na řádku). Při stažení více souborů na standardní výstup se vypíšou postupně.*<br>
-**wget -i** {*seznam.txt*} **-nd** [**-P** {*cílový/adresář*}] <nic>[**\-\-no-use-server-timestamps**] <nic>[**\-\-restrict-file-names=windows,ascii**] <nic>[{*další parametry*}]
+**wget -i** {*seznam.txt*} **-nd** [**-P** {*cílový/adresář*}] <nic>[**\-\-no-use-server-timestamps**] <nic>[**\-\-restrict-file-names=windows,ascii**] <nic>[{*další parametry*}]<br>
 **wget -i** {*seznam.txt*} **-O -** <nic>[{*další parametry*}]
 
 *# stáhnout soubory odkazované z HTML dokumentu*<br>
@@ -93,7 +93,7 @@ GNU Wget je vyvíjen v rámci projektu GNU.
 ### Kontrola existence
 
 *# zkontrolovat existenci souborů ze seznamu URI/najít neexistující*<br>
-**wget -i** {*seznam.txt*} **\-\-spider -nv** [**2&gt;&amp;1 \| cut -d "&blank;" -f 4-**]
+**wget -i** {*seznam.txt*} **\-\-spider -nv** [**2&gt;&amp;1 \| cut -d "&blank;" -f 4-**]<br>
 **wget -i** {*seznam.txt*} **\-\-spider -nv 2&gt;&amp;1 \| cut -d "&blank;" -f 4- \| egrep -v '200&blank;OK$'**
 
 *# zkontrolovat existenci souborů odkazovaných z HTML dokumentu*<br>
@@ -118,7 +118,7 @@ GNU Wget je vyvíjen v rámci projektu GNU.
 *# nečíst konfigurační soubor*<br>
 **\-\-no-config**
 
-*# kromě stažení také vypsat uživateli hlavičky z HTTP/FTP odpovědi*
+*# kromě stažení také vypsat uživateli hlavičky z HTTP/FTP odpovědi*<br>
 **\-S**
 
 *# přestat stahovat další soubory, pokud ty stažené již zabraly víc než N mebibajtů*<br>
@@ -228,7 +228,7 @@ GNU Wget je vyvíjen v rámci projektu GNU.
 
 -->
 
-*# získat seznam souborů v FTP adresáři (bez vnoření/rekurzivně)*
+*# získat seznam souborů v FTP adresáři (bez vnoření/rekurzivně)*<br>
 ?<br>
 ?
 

@@ -178,7 +178,7 @@ s/[01]<nic>(.)/\\1/g            # odstranit nuly a jedničky před znaky
 **sed** [**-z**] {*číslo-záznamu*}**d** [{*soubor*}]...
 
 *# vzít/vynechat **rozsah** záznamů*<br>
-**sed -**[**z**]**n** {*první-ponechaný*}**,**{*poslední-ponechaný*}**p** [{*soubor*}]...
+**sed -**[**z**]**n** {*první-ponechaný*}**,**{*poslední-ponechaný*}**p** [{*soubor*}]...<br>
 **sed** [**-z**] {*první-vynechaný*}**,**{*poslední-vynechaný*}**d** [{*soubor*}]
 
 *# vzít pouze **liché/sudé** záznamy*<br>
@@ -333,8 +333,8 @@ egrep -Lr {*regulární-výraz*} {*soubor-či adresář*}...
 
 *# vzít/vynechat určité sloupce*<br>
 *// Specifikace sloupců specifikuje množinu (tzn. ne výčet) sloupců. Má tvar jednotlivých čísel oddělených čárkami, např. „7,3,2,5,2“ vypíše sloupce 2, 3, 5 a 7. Místo jednotlivého čísla lze zadat rozsah ve tvaru „číslo-číslo“, „číslo-“ nebo „-číslo“, který se rozvine na všechny odpovídající sloupce, takže např. specifikace „7,3-5,-4“ odpovídá sloupcům 1, 2, 3, 4, 5 a 7.*<br>
-**cut** [**-z**] <nic>[**-d** {*oddělovač*}] **-f** {*specifikace,sloupců*} [{*soubor*}]...
-**cut \-\-complement** [**-z**] <nic>[**-d** {*oddělovač*}] **-f** {*specifikace,sloupců*} [{*soubor*}]...<br>
+**cut** [**-z**] <nic>[**-d** {*oddělovač*}] **-f** {*specifikace,sloupců*} [{*soubor*}]...<br>
+**cut \-\-complement** [**-z**] <nic>[**-d** {*oddělovač*}] **-f** {*specifikace,sloupců*} [{*soubor*}]...
 
 *# vzít určité sloupce (bez omezení)*<br>
 *// Pro čtení ze standarního vstupu zadejte místo souboru „-“.*<br>

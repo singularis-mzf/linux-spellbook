@@ -350,7 +350,7 @@ Poznámka: srovnávané položky nemusejí být v tomtéž adresáři; můžete
 **rm** [**-f**] <nic>[**\-\-**] {*cesta*}...
 
 *# smazat prázdný adresář*<br>
-**rmdir** [**\-\-**] {*cesta*}<br>
+**rmdir** [**\-\-**] {*cesta*}
 
 *# smazat rekurzivně veškerý obsah adresáře a nakonec i samotný adresář*<br>
 *// Tuto variantu můžete použít i na jednotlivé soubory.*<br>
@@ -466,11 +466,11 @@ Pokus o použití na tmpfs vede k chybovému hlášení:
 **find** {*adresář*} **-mindepth 1 -maxdepth 1 -printf \\\\0 \| wc -c**
 
 *# kolik je v adresáři neskrytých souborů/adresářů (bez symbolických odkazů)?*<br>
-**find** {*adresář*} **-mindepth 1 -maxdepth 1 -type f -name '[!.]\*' -printf \\\\0 \| wc -c**
+**find** {*adresář*} **-mindepth 1 -maxdepth 1 -type f -name '[!.]\*' -printf \\\\0 \| wc -c**<br>
 **find** {*adresář*} **-mindepth 1 -maxdepth 1 -type d -name '[!.]\*' -printf \\\\0 \| wc -c**
 
 *# kolik je v adresáři neskrytých souborů/adresářů (včetně symbolických odkazů)?*<br>
-**find -L** {*adresář*} **-mindepth 1 -maxdepth 1 -type f -name '[!.]\*' -printf \\\\0 \| wc -c**
+**find -L** {*adresář*} **-mindepth 1 -maxdepth 1 -type f -name '[!.]\*' -printf \\\\0 \| wc -c**<br>
 **find -L** {*adresář*} **-mindepth 1 -maxdepth 1 -type d -name '[!.]\*' -printf \\\\0 \| wc -c**
 
 ## Zaklínadla: Uživatelské datové položky
@@ -528,7 +528,7 @@ Podle manuálové stránky je délka klíče omezena na 256 bajtů a délka hod
 
 *# **získat** hodnotu datové položky*<br>
 *// Poznámka: hodnotou mohou obecná binárná data. Nepředpokládejte, že obsahuje text v kódování UTF-8 nebo že neobsahuje nulové bajty!*<br>
-[**sudo**] **getfattr \-\-only-values -n** {*klíč*} [**\-\-**] {*adr/položka*} **\|** {*zpracování*}<br>
+[**sudo**] **getfattr \-\-only-values -n** {*klíč*} [**\-\-**] {*adr/položka*} **\|** {*zpracování*}
 <!--
 [**sudo**] **xattr -p**[**z**] {*user.klíč*} [**\-\-**] {*cesta*}...
 -->

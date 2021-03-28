@@ -302,7 +302,7 @@ Barvy se zadávají ve formátu AABBGGRR, kde AA=FF je úplná průhlednost a A
 
 *# spojit za sebe dva **zvukové** vstupy **prolínačkou** (konkrétně sedmisekundovou/obecně)*<br>
 **[**{*ai*}**]<nic>[**{*ai*}**] acrossfade=d=7:c1=exp:c2=exp [**{*ao*}**]**<br>
-**[**{*ai*}**]<nic>[**{*ai*}**] acrossfade=d=**{*trvání-prolínačky*}**:c1=**{*funkce-zatmívačky*}**:c2=**{*funkce-roztmívačky*} **[**{*ao*}**]**<br>
+**[**{*ai*}**]<nic>[**{*ai*}**] acrossfade=d=**{*trvání-prolínačky*}**:c1=**{*funkce-zatmívačky*}**:c2=**{*funkce-roztmívačky*} **[**{*ao*}**]**
 
 *# spojit za sebe dva **obrazové** vstupy **prolínačkou** (konkrétně sedmisekundovou/obecně)*<br>
 *// Tip: Pro pochopení fungování této konstrukce důrazně doporučuji si uvedený graf filtrů nakreslit.*<br>
@@ -387,7 +387,7 @@ Problém: geq závisí na použitém barevném formátu
 
 *# sestavit každý nový snímek z pixelů původního (obecně/příklad)*<br>
 *// Ve výrazech můžete použít souřadnice výstupního pixelu „(X/SW)“ a „(Y/SH)“, šířku snímku „(W/SW)“, výšku snímku „(H/SH)“, čas v sekundách „T“ a sekvenční číslo snímku „N“. Souřadnice mimo rozsah budou zarovnány na nejbližší platnou hodnotu.*<br>
-**[**{*vi*}**] geq=p(SW\*(**{*výraz-x*}**)\\,SH\*(**{*výraz-y*}**)) [**{*vo*}**]**
+**[**{*vi*}**] geq=p(SW\*(**{*výraz-x*}**)\\,SH\*(**{*výraz-y*}**)) [**{*vo*}**]**<br>
 **[video] geq=p(SW\*((X/SW)+100)\\,SH\*((Y/SH)+150)) [**{*vo*}**]**
 
 *# oříznout hodnoty složek obrazu (kromě alfa-kanálu)*<br>

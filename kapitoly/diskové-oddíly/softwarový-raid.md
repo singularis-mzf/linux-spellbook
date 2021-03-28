@@ -127,7 +127,7 @@ egrep . — Selže, pokud bude výstup prázdný.
 
 *# **smazat***<br>
 !: Odpojte pole (madm \-\-stop)<br>
-**for x in** {*/dev/oddíl*}...**; do sudo mdadm \-\-zero-superblock "$x"; done**<br>
+**for x in** {*/dev/oddíl*}...**; do sudo mdadm \-\-zero-superblock "$x"; done**
 
 ### Zrcadlené pole (RAID1)
 
@@ -140,7 +140,7 @@ egrep . — Selže, pokud bude výstup prázdný.
 
 *# **smazat***<br>
 !: Odpojte pole (madm \-\-stop)<br>
-**for x in** {*/dev/oddíl*}...**; do sudo mdadm \-\-zero-superblock "$x"; done**<br>
+**for x in** {*/dev/oddíl*}...**; do sudo mdadm \-\-zero-superblock "$x"; done**
 
 *# přidat záložní/základní díl*<br>
 **sudo mdadm \-\-manage** {*md-pole*} **-va** {*/dev/nový-oddíl*}<br>
@@ -169,7 +169,7 @@ egrep . — Selže, pokud bude výstup prázdný.
 
 *# **smazat***<br>
 !: Odpojte pole (madm \-\-stop)<br>
-**for x in** {*/dev/oddíl*}...**; do sudo mdadm \-\-zero-superblock "$x"; done**<br>
+**for x in** {*/dev/oddíl*}...**; do sudo mdadm \-\-zero-superblock "$x"; done**
 
 *# přidat záložní/základní díl*<br>
 *// Po přidání základního dílu neprovádějte další zásadní operace s polem, dokud se neuklidní.*<br>

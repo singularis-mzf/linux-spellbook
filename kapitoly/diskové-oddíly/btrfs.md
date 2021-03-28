@@ -77,7 +77,7 @@ Poznámka k pevným odkazům: pevný odkaz v souborovém systému typu btrfs n
 *# změnit velikost souborového systému typu btrfs (na udanou velikost/na celý oddíl)*<br>
 *// Souborový systém musí být připojený, aby bylo možno změnit jeho velikost!*<br>
 **sudo btrfs filesystem resize** {*cílová-velikost-P*} {*/přípojný/bod*}<br>
-**sudo btrfs filesystem resize max** {*/přípojný/bod*}<br>
+**sudo btrfs filesystem resize max** {*/přípojný/bod*}
 
 ### Jmenovka (nastavit)
 

@@ -96,7 +96,7 @@ GNU Bash je vyvíjen v rámci projektu GNU.
 **\\D**
 
 *# závorky „()[]{}“ (rozšířený/ základní)*<br>
-**[(][)]\\[\\]\\{\\}**
+**[(][)]\\[\\]\\{\\}**<br>
 **[(][)]\\[\\]{}**
 
 *# libovolný alfanumerický znak, i národní abecedy (rozšířený/základní/Perl)*<br>
@@ -314,7 +314,7 @@ Podvzorek v následujících zaklínadlech je jakýkoliv vzorek, který by byl 
 
 *# všechny znaky po první výskyt některého z uvedených/případně až do konce řetězce*<br>
 **\*([<nic>^**{*znaky*}**])[**{*znaky*}**]**<br>
-**\*([<nic>^**{*znaky*}**])**<br>
+**\*([<nic>^**{*znaky*}**])**
 
 *# přesně **N-krát** (= N)*<br>
 ?

@@ -493,7 +493,7 @@ však může být rozumně nahrazena inteligentním použitím asociativních po
 
 *# **spojit** řetězce/pole na řetězec*<br>
 {*$řetězec*} **.** {*$další\_řetězec*} [**.** {*$ještě\_další\_řetězec*}]<br>
-**join("**[{*oddělovač*}]**",** {*pole-a-seznamy*}**)**<br>
+**join("**[{*oddělovač*}]**",** {*pole-a-seznamy*}**)**
 
 *# zjistit **délku** řetězce ve znacích*<br>
 **length(**{*$skalár*}**)** ⊨ 12
@@ -615,7 +615,7 @@ Poznámka: funkce next\_match\_\*() hledají shodu s regulárním výrazem v p
 *# index začátku prvního/posledního výskytu **podřetězce***<br>
 *// Nebyl-li podřetězec nalezen, funkce vrací -1. Limit u funkce „rindex()“ znamená, že budou ignorovány výskyty podřetězce, které začínají na vyšším indexu, než je uvedený limit.*<br>
 **index(**{*řetězec*}**,** {*podřetězec*} [**,**{*index-začátku-vyhledávání*}]**)**<br>
-**rindex(**{*řetězec*}**,** {*podřetězec*} [**,**{*limit*}]**)**<br>
+**rindex(**{*řetězec*}**,** {*podřetězec*} [**,**{*limit*}]**)**
 
 *# najít následující shodu s regulárním výrazem (ze shody vrátit: začátek a délku/index začátku/index za koncem/text/délku)*<br>
 *// Pokud další shoda nebyla nalezena, funkce vrací undef, resp. next\_match() vrací (undef, undef).*<br>
@@ -776,7 +776,7 @@ https://metacpan.org/pod/List::MoreUtils
 **qw\{**{*slova*}**\}**
 
 *# získat **ukazatel** na anonymní **pole***<br>
-**[**[{*prvek seznamu*}[**,** {*další prvek seznamu*}]...]**]**<br>
+**[**[{*prvek seznamu*}[**,** {*další prvek seznamu*}]...]**]**
 
 *# seznam celých čísel v daném **rozsahu** (obecně/příklady)*<br>
 **(**{*celé-číslo*}**..**{*celé-číslo*}**)**<br>
@@ -945,7 +945,7 @@ https://metacpan.org/pod/List::MoreUtils
 
 *# zpracovat pole po N-ticích (destruktivně)*<br>
 *// Tip: místo uložení do pole můžete získanou N-tici rovnou rozložit do proměnných, nebo můžete místo funkce splice() použít opakované volání funkce shift(). Poslední N-tice může být neúplná. Pokud chcete přebytečné prvky zahodit, nahraďte podmínku „!= 0“ za „&gt;= N“.*<br>
-**while (alength(**{*@pole*}**) != 0) \{**
+**while (alength(**{*@pole*}**) != 0) \{**<br>
 <odsadit1>**my @ntice = array(splice(**{*@pole*}**, 0, N));**<br>
 <odsadit1>{*zpracování*}<br>
 **\}**
@@ -1151,7 +1151,7 @@ odsuňte do samostatné funkce.
 *# získat ukazatel na **prvek pole**/hodnotu v asociativním poli*<br>
 *// Poznámka: klíče v asociativním poli jsou nepřiřaditelné, proto ukazatel na ně nelze získat.*<br>
 **\\$**{*identifkátor\_pole*}**[**{*index*}**]**<br>
-**\\$**{*identifkátor\_asociativního\_pole*}**\{**{*klíč*}**\}**<br>
+**\\$**{*identifkátor\_asociativního\_pole*}**\{**{*klíč*}**\}**
 
 *# získat ukazatel na **anonymní objekt**: skalár/pole/asociativní pole*<br>
 **\\(**{*hodnota-nebo-undef*}**)**<br>
@@ -1227,7 +1227,7 @@ odsuňte do samostatné funkce.
 *# **přepnout režim** proudu na binární/textový*<br>
 *// Tento příkaz nesmí být použit poté, co už bylo s proudem od otevření manipulováno (např. čtením, zápisem, přesouváním apod.) Proto ho doporučuji používat jen okamžitě po otevření proudu.*<br>
 **binmode(**{*$proud*}**, ":raw");**<br>
-**binmode(**{*$proud*}**, ":utf8");**<br>
+**binmode(**{*$proud*}**, ":utf8");**
 
 ### Standardní výstup a chybová hlášení
 
@@ -1262,7 +1262,7 @@ odsuňte do samostatné funkce.
 
 *# načíst N znaků (N≥1)/1 znak*<br>
 *// Podle manuálu tyto funkce nejsou příliš efektivní; je vhodnější raději načítat po řádcích s ukončovačem a každou řádku rozdělit po znacích. Při čtení za koncem souboru funkce vracejí undef.*<br>
-{*$cíl*} **= do {local $RS = \\(**{*N*}**); scalar(readline(**{*$proud*}**));}**
+{*$cíl*} **= do {local $RS = \\(**{*N*}**); scalar(readline(**{*$proud*}**));}**<br>
 {*$cíl*} **= getc(**{*$proud*}**);**
 
 *# načíst celý zbytek souboru do řetězce*<br>
@@ -1304,7 +1304,7 @@ odsuňte do samostatné funkce.
 
 *# zapsat bajty (z řetězce bajtů/z pole čísel)*<br>
 **fprintf(**{*$proud*}**, "%s",** {*řetězec*}**);**<br>
-**fprintf(**{*$proud*}**, "%s", pack("C\*",** {*řetězec*}**));**<br>
+**fprintf(**{*$proud*}**, "%s", pack("C\*",** {*řetězec*}**));**
 
 *# zapsat bajt (znak/z číselné hodnoty)*<br>
 **fprintf(**{*$proud*}**, "%s",** {*$znak*}**);**<br>
@@ -1312,8 +1312,8 @@ odsuňte do samostatné funkce.
 
 *# přesun na pozici N bajtů od začátku/od konce/od akt. pozice vpřed/od akt. poz. vzad (nepoužívat na roury)*<br>
 **seek(**{*$f*}**,** {*N*}**, 0);**<br>
-**seek(**{*$f*}**, -**{*N*}**, 2);**
-**seek(**{*$f*}**,** {*N*}**, 1);**
+**seek(**{*$f*}**, -**{*N*}**, 2);**<br>
+**seek(**{*$f*}**,** {*N*}**, 1);**<br>
 **seek(**{*$f*}**, -**{*N*}**, 1);**
 <!--
 [ ] Vyzkoušet.

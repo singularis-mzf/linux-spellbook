@@ -281,7 +281,7 @@ Poznámka: tail -c +1K přeskočí jen 1023 bajtů!
 ### Analyzovat po bajtech
 
 *# určit počet bajtů určité hodnoty v daném souboru (obecně/určit počet bajtů 0xa9)*<br>
-**tr -cd \\\\$(printf %o** {*hodnota-bajtu*}**) &lt;**{*soubor*} **\| wc -c**
+**tr -cd \\\\$(printf %o** {*hodnota-bajtu*}**) &lt;**{*soubor*} **\| wc -c**<br>
 **tr -cd \\\\$(printf %o 0xa9) &lt;**{*soubor*} **\| wc -c**
 
 ### Konverze na/z číselné reprezentace

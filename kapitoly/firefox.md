@@ -279,7 +279,7 @@ http://kb.mozillazine.org/Animated_images
 **user\_pref("layout.css.visited\_links\_enabled", false);**
 
 *# vypnout „performance API“/„gamepad API“*<br>
-**user\_pref("dom.enable\_performance", false);**
+**user\_pref("dom.enable\_performance", false);**<br>
 **user\_pref("dom.gamepad.enabled", false);**
 
 *# vypnout odesílání DNS požadavků*<br>
@@ -303,8 +303,7 @@ http://kb.mozillazine.org/Animated_images
 *// Ve verzi Firefox 80 je formát AVIF ve výchozím nastavení vypnutý.*<br>
 **user\_pref("svg.disabled", true);**<br>
 **user\_pref("image.webp.enabled", false);**<br>
-**user\_pref("image.avif.enabled", false);**<br>
-
+**user\_pref("image.avif.enabled", false);**
 
 ### Uživatelské rozhraní (kromě panelů a adresní řádky)
 

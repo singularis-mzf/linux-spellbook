@@ -201,7 +201,7 @@ PO -> REPO
 PA/PO
 -->
 *# **smazat** soubor z PO i PA/jen z PO*<br>
-**git rm** [**-f**] <nic>[**-r**] <nic>[[\-\-] {*soubor-či-adresář*}...]
+**git rm** [**-f**] <nic>[**-r**] <nic>[[\-\-] {*soubor-či-adresář*}...]<br>
 **git rm \-\-cached** [**-f**] <nic>[**-r**] <nic>[[\-\-] {*soubor-či-adresář*}...]
 
 <!--
@@ -345,7 +345,7 @@ Ve starších verzích použít „git symbolic-ref --short HEAD 2&gt;/dev/null�
 **git push** {*vzdálený-repozitář*} **:**{*vzdálená-větev*} [**:**{*další-vzdálená-větev*}]...
 
 *# **vytvořit** místní větev napojenou na existující vzdálenou větev (obecně/příklad)*<br>
-**git branch** {*místní-název*} {*vzdálený-repozitář*}**/**{*vzdálená-větev*}
+**git branch** {*místní-název*} {*vzdálený-repozitář*}**/**{*vzdálená-větev*}<br>
 **git branch moje-stabilni origin/stabilni**
 
 *# odeslat do vzdáleného repozitáře **jména revizí***<br>
@@ -506,7 +506,7 @@ git remote set-head {*vzdálený-repozitář*} -d
 
 *# ignorovat soubory a adresáře/jen adresáře vyhovující vzorku*<br>
 *// Vzorek může obsahovat zvláštní znaky „?“, „\*“, a konstrukce „[...]“ a „[<nic>^...]“.*<br>
-{*vzorek*}<br>
+{*vzorek*}
 
 *# komentář*<br>
 **#** [{*text do konce řádky*}]
@@ -523,8 +523,8 @@ git remote set-head {*vzdálený-repozitář*} -d
 **git config** [**\-\-global**] {*klíč*} **"**{*nová hodnota*}**"**
 
 *# vypsat celou konfiguraci (lokální/globální/globální a pod ní lokální)*<br>
-**git config \-\-local -l**
-**git config \-\-global -l**
+**git config \-\-local -l**<br>
+**git config \-\-global -l**<br>
 **git config -l**
 
 *# vypsat platné konfigurační dvojice klíč=hodnota*<br>
@@ -535,7 +535,7 @@ git remote set-head {*vzdálený-repozitář*} -d
 
 *# najít seznam podporovaných konfiguračních klíčů*<br>
 **git help config**<br>
-!: Zadejte:
+!: Zadejte:<br>
 **/^\\s\*Variables** {_Enter_}
 
 ### Konfigurace konkrétně
@@ -624,10 +624,10 @@ Globálně zadané hodnoty můžete pro jednotlivé repozitáře změnit.
 **mkdir Projekt &amp;&amp; cd Projekt**<br>
 **printf %s\\\\n "#!""/bin/bash" "cat text" &gt; skript**<br>
 **chmod 755 skript**<br>
-**printf %s\\\\n "Toto je textový soubor" &gt; text**<br>
+**printf %s\\\\n "Toto je textový soubor" &gt; text**
 
 *# Tělo příkladu*<br>
-**git init**
+**git init**<br>
 **git add skript text**<br>
 **git commit -m "První verze"**<br>
 **printf %s\\\\n "Druhá řádka" &gt;&gt; text**<br>

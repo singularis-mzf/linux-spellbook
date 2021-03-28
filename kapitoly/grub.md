@@ -71,8 +71,7 @@ GNU GRUB je vyvíjen v rámci projektu GNU.
 *// Konkrétní verze jádra se zadává ve formátu „4.15.0-99-generic“.*<br>
 **sudo update-initramfs -u**[**v**]<br>
 **sudo update-initramfs -u**[**v**] **-k all**<br>
-**sudo update-initramfs -u**[**v**] **-k** {*verze-jádra*}<br>
-
+**sudo update-initramfs -u**[**v**] **-k** {*verze-jádra*}
 
 ## Parametry příkazů
 <!--

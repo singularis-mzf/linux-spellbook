@@ -41,7 +41,7 @@ jemuž se bude věnovat většina této kapitoly.
 
 ### Nastavení proměnných
 *# **nastavit** proměnnou (expandovat v místě definice)*<br>
-{*NÁZEV\_PROMĚNNÉ*} **:=** {*hodnota včetně mezer*}<br>
+{*NÁZEV\_PROMĚNNÉ*} **:=** {*hodnota včetně mezer*}
 
 *# **připojit** obsah na konec proměnné (expanze stejně jako v původní definici)*<br>
 {*NÁZEV\_PROMĚNNÉ*} **\+=** {*hodnota včetně mezer*}

@@ -59,7 +59,7 @@ dovnitř dvojic \*\*{*text*}\*\*. To platí i pro jednoznakové úseky jako \*\
 
 *# obecný tvar zaklínadla*<br>
 **\*#&blank;**[{*titulek*}]**\*&lt;br&gt;**<br>
-[**\*//&blank;**{*text poznámky pod čarou*}**\*&lt;br&gt;**]...
+[**\*//&blank;**{*text poznámky pod čarou*}**\*&lt;br&gt;**]...<br>
 {*řádka zaklínadla*}...
 
 *# obecný tvar řádky zaklínadla (základní/akce/do hlavičky)*<br>
@@ -72,7 +72,7 @@ dovnitř dvojic \*\*{*text*}\*\*. To platí i pro jednoznakové úseky jako \*\
 ?
 
 *# příklady akcí*<br>
-**!: Klikněte na záhlaví okna.**<br>
+**!: Klikněte na záhlaví okna.**
 
 ### Základní řádky zaklínadla
 

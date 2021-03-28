@@ -193,7 +193,7 @@ PNZ = první nebílý znak
 
 *# posun na znak, který je zobrazený **nad**/**pod** aktuálním*<br>
 [{*počet-opakování*}]**gk**<br>
-[{*počet-opakování*}]**gj**<br>
+[{*počet-opakování*}]**gj**
 
 *# skok na odpovídající párovou **závorku***<br>
 *// Tento příkaz funguje (za předpokladu správného spárování závorek) přinejmenším pro závorky (), [] a {}.*<br>
@@ -235,7 +235,7 @@ PNZ = první nebílý znak
 **i**{*(režim vkládání)*}<br>
 **a**{*(režim vkládání)*}<br>
 **A**{*(režim vkládání)*}<br>
-**0i**{*(režim vkládání)*}<br>
+**0i**{*(režim vkládání)*}
 
 *# vložit **novou** prázdnou řádku před/za aktuální a psát na ní text*<br>
 **O**{*(režim vkládání)*}<br>
@@ -333,7 +333,7 @@ Tip: jako výchozí používejte schránku „p“.
 **d/^$**{_Enter_}<br>
 **"**{*schránka*}**d/^$**{_Enter_}<br>
 **"**{*schránka*}**y/^$**{_Enter_}<br>
-[**"**{*schránka*}]**c/^$**{_Enter_}{*text*}<br>
+[**"**{*schránka*}]**c/^$**{_Enter_}{*text*}
 
 *# N řádků počínaje aktuálním (smazat/vyjmout/zkopírovat/nahradit textem)*<br>
 {*N*}**dd**<br>
@@ -535,7 +535,7 @@ Poznámka: parametr „kde“ u příkazu „:s“ může být:
 [{*počet-opakování*}]**.**
 
 *# vrátit poslední změnu (**zpět**)*<br>
-**u**<br>
+**u**
 
 *# znovu provést vrácenou změnu (**znovu**)*<br>
 {_Ctrl_}**+**{_R_}

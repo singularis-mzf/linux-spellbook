@@ -87,7 +87,7 @@ v sekci „Další zdroje informací“.
 [{*komentář*}]...<br>
 **use utf8;**<br>
 **package** {*Název::Modulu*}**;**<br>
-**use strict; use warnings; use v5.26.0;**
+**use strict; use warnings; use v5.26.0;**<br>
 **use LinuxKnihaKouzel; use English;**<br>
 **use Exporter("import");**<br>
 [{*další příkazy use*}]<br>
@@ -114,7 +114,7 @@ v sekci „Další zdroje informací“.
 
 *# hledat moduly i v adresáři hlavního skriptu/jeho podadresáři*<br>
 **use lib((MAIN\_SCRIPT\_DIR));**<br>
-**use lib((MAIN\_SCRIPT\_DIR) . "/**{*relativní/cesta*}**");**<br>
+**use lib((MAIN\_SCRIPT\_DIR) . "/**{*relativní/cesta*}**");**
 
 *# hledat moduly i ve stejném adresáři, kde se nachází daný zdrojový soubor*<br>
 **use lib(((\_\_FILE\_\_ =~ s/^\[<nic>^\\/]\*$/.\\/x/r) =~ s/\\/\[<nic>^\\/]\*$//r));**
@@ -126,7 +126,7 @@ v sekci „Další zdroje informací“.
 *// Vynechání volání „import“ je ekvivalentní příkazu „use“ s prázdným seznamem (neimportuje nic). Volání „import“ s prázdným seznamem je ekvivalentní příkazu „use“ bez seznamu (importuje výchozí symboly).*<br>
 **BEGIN {if (**{*podmínka*}**) \{**<br>
 <odsadit1>**require** {*Název::Modulu*}**;**<br>
-<odsadit1>[{*Název::Modulu*}**-&gt;import(**[{*"seznam", "symbolů"*}]**);**]
+<odsadit1>[{*Název::Modulu*}**-&gt;import(**[{*"seznam", "symbolů"*}]**);**]<br>
 **\}}**
 
 *# načíst zdrojový soubor jako modul, bez importu symbolů*<br>
@@ -283,7 +283,7 @@ v sekci „Další zdroje informací“.
 **Hash::Util::hashref\_locked(**{*ukazatel*}**)**
 
 *# získat pole **dovolených klíčů** třídy s pevnou strukturou (z ukazatele/z třídy)*<br>
-^^**require fields;**
+^^**require fields;**<br>
 ^^**use Hash::Util;**<br>
 **Hash::Util::legal\_ref\_keys(**{*ukazatel*}**)**<br>
 **Hash::Util::legal\_ref\_keys(fields::new("**{*Název::Modulu*}**"))**

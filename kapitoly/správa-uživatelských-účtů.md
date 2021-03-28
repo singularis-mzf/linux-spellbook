@@ -150,7 +150,7 @@ gawk -F : '$3 == 0 || $3 &gt;= 1000 {print $1;}'** [**\| LC\_ALL=C.UTF-8 sort**]
 **id -Gn** {*uživatel*} **\| tr "&blank;" \\\\n \|** [**LC\_ALL=C.UTF-8**] **sort**
 
 *# **UID***<br>
-**id -u** {*uživatelské-jméno*}<br>
+**id -u** {*uživatelské-jméno*}
 <!--
 **getent passwd** {*uživatel*} **\| cut -d : -f 3**
 -->
@@ -188,7 +188,7 @@ gawk -F : '$3 == 0 || $3 &gt;= 1000 {print $1;}'** [**\| LC\_ALL=C.UTF-8 sort**]
 **convert** {*obrázek*} **-gravity center -crop "$(identify -format "%[fx:min(w,h)]x%[fx:min(w,h)]"** {*obrázek*}**)" +repage -delete -1 png24:- \|** [**sudo**] **tee ~**{*uživatelské-jméno*}**/.face**
 
 *# **příkazový interpret** (shell)*<br>
-**sudo chsh** [**-s** {*/cesta/k/novému/shellu*}] {*uživatelské-jméno*}<br>
+**sudo chsh** [**-s** {*/cesta/k/novému/shellu*}] {*uživatelské-jméno*}
 
 *# změnit UID*<br>
 *// Tento příkaz také rekurzivně projde domovský adresář uživatele a všechny adresářové položky, jejichž je daný uživatel vlastníkem, přepíše na nové UID, aby uživatel jejich vlastníkem zůstal.*<br>
@@ -223,7 +223,7 @@ gawk -F : '$3 == 0 || $3 &gt;= 1000 {print $1;}'** [**\| LC\_ALL=C.UTF-8 sort**]
 !: V souboru „/etc/lightdm/lightdm.conf“ v sekci „[Seat:\*]“ smažte klíče „autologin-user“ a „autologin-user-timeout“.
 
 *# vypnout (sddm — jen Kubuntu)*<br>
-!: V souboru „/etc/sddm.conf“ v sekci „[Autologin]“ smažte klíče „User“ a „Session“.<br>
+!: V souboru „/etc/sddm.conf“ v sekci „[Autologin]“ smažte klíče „User“ a „Session“.
 
 *# vypnout (gdm — jen Ubuntu)*<br>
 !: V souboru „/etc/gdm3/custom.conf“ v sekci „[daemon]“ nastavte:<br>
@@ -236,7 +236,7 @@ gawk -F : '$3 == 0 || $3 &gt;= 1000 {print $1;}'** [**\| LC\_ALL=C.UTF-8 sort**]
 
 *# skupiny, ve kterých je členem (pro člověka/pro skript)*<br>
 **groups**<br>
-**id -Gn \| tr "&blank;" \\\\n \|** [**LC\_ALL=C.UTF-8**] **sort**<br>
+**id -Gn \| tr "&blank;" \\\\n \|** [**LC\_ALL=C.UTF-8**] **sort**
 
 *# domovský adresář (doporučená varianta/spolehlivá varianta)*<br>
 **printf %s\\\\n "$HOME"**<br>
@@ -361,7 +361,7 @@ Význam regulárního výrazu:
 *# nastavit/zrušit **správce** skupiny*<br>
 *// Správce skupiny může přidávat do skupiny a odebírat ze skupiny odstatní uživatele a nastavovat skupině heslo, ale to vše pouze s pomocí příkazu „gpasswd“.*<br>
 **sudo gpasswd -A** {*uživatelské-jméno*}[**,**{*další-správce*}]... {*název\_skupiny*}<br>
-**sudo gpasswd -A ""** {*název\_skupiny*}<br>
+**sudo gpasswd -A ""** {*název\_skupiny*}
 
 *# nastavit **heslo** skupiny (pro člověka)*<br>
 **sudo gpasswd** {*skupina*}<br>

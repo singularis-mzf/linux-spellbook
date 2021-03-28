@@ -320,7 +320,7 @@ asi PHY-SEC/LOG-SEC u lsblk
 *# změnit velikost souborového systému typu btrfs (na udanou velikost/na celý oddíl)*<br>
 *// Souborový systém musí být připojený, aby bylo možno změnit jeho velikost!*<br>
 **sudo btrfs filesystem resize** {*cílová-velikost-P*} {*/přípojný/bod*}<br>
-**sudo btrfs filesystem resize max** {*/přípojný/bod*}<br>
+**sudo btrfs filesystem resize max** {*/přípojný/bod*}
 
 ### Odkládací oddíly a soubory
 
@@ -358,7 +358,7 @@ Poznámka: souborové systémy FAT a NTFS by při nastavování jmenovky měly 
 -->
 
 *# nastavit/smazat jmenovku **odkládacího** oddílu*<br>
-**sudo swaplabel -L "**{*novájmenovka*}**"** {*/dev/oddíl*}
+**sudo swaplabel -L "**{*novájmenovka*}**"** {*/dev/oddíl*}<br>
 **sudo swaplabel -L ""** {*/dev/oddíl*}
 
 *# nastavit/smazat jmenovku **ext4***<br>
@@ -378,7 +378,7 @@ Poznámka: souborové systémy FAT a NTFS by při nastavování jmenovky měly 
 *# nastavit/smazat jmenovku **NTFS***<br>
 *// Souborový systém typu NTFS by při nastavování jmenovky měl být odpojený.*<br>
 **sudo ntfslabel** [**\-\-new-serial**] {*/dev/oddíl*} **"**{*novájmenovka*}**"**<br>
-**sudo ntfslabel** [**\-\-new-serial**] {*/dev/oddíl*} **""**<br>
+**sudo ntfslabel** [**\-\-new-serial**] {*/dev/oddíl*} **""**
 
 *# zjistit jmenovku jakéhokoliv oddílu*<br>
 *// Poznámka: pokud byla jmenovka od startu systému (resp. od připojení příslušného zařízení) změněna, tento příkaz může u některých souborových systémů ukazovat původní jmenovku (podle mých zkušeností to tak dělá obyčejným uživatelům u oddílů btrfs; superuživateli však ukáže již aktuální jmenovku).*<br>
@@ -648,12 +648,12 @@ Pokud hledáte nástroj pro dělení disku ze skriptu, zkuste [sfdisk](http://ma
 **$OFS = "\\t"; $ORS = "\\n";**<br>
 **\{ open(my $f, "&lt;:utf8", "/proc/diskstats") or die("Nemohu otevřít /proc/diskstats");**<br>
 <odsadit1>**my $l;**<br>
-<odsadit1>**while (defined($l = scalar(readline($f)))) \{**
+<odsadit1>**while (defined($l = scalar(readline($f)))) \{**<br>
 <odsadit2>**my @f = split(/\\s+/, $l =~ s/\\A\\s+//r);**<br>
 <odsadit2>**$data{$f[2]} = [512 \* $f[5], 512 \* $f[9], $f[2]]; # čtení, zápis, označení**<br>
 **\}\}**<br>
 **if (scalar(@ARGV) == 0) \{**<br>
-<odsadit1>**foreach my $x (do { no locale; array(sort {fc($a) cmp fc($b)} keys(%data)); }) \{**
+<odsadit1>**foreach my $x (do { no locale; array(sort {fc($a) cmp fc($b)} keys(%data)); }) \{**<br>
 <odsadit2>**my @x = @{$data{$x}};**<br>
 <odsadit2>**print("/dev/" . $x[2], @x[0, 1]) if ($x[0] + $x[1] &gt; 0);**<br>
 **\}} else \{**<br>

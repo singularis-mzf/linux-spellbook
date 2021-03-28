@@ -110,7 +110,7 @@ sudo apt-get install libmath-prime-util-perl
 **pkexec \-\-user** {*uživatel*} {*příkaz*} {*parametry*}
 
 *# spustit příkaz na pozadí, který neskončí s volajícím shellem*<br>
-*// Pokud výstup nepřesměrujete mimo terminál či konzoli, „nohup“ jej automaticky přesměruje do souboru „nohup.out“, popř. „~/nohup.out“.*
+*// Pokud výstup nepřesměrujete mimo terminál či konzoli, „nohup“ jej automaticky přesměruje do souboru „nohup.out“, popř. „~/nohup.out“.*<br>
 **nohup** {*příkaz*} {*parametry*}... [**&gt;/dev/null**] **&amp;**
 
 *# spustit příkaz s jiným efektivním ID skupiny*<br>

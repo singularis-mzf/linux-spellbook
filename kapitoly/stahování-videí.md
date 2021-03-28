@@ -189,7 +189,7 @@ se těmto změnám obvykle poměrně rychle přizpůsobuje.
 **youtube-dl \-\-write-auto-sub** [**\-\-sub-lang** {*jazyk*}] **\-\-convert-subs** {*formát-titulků*} **"**{*URL-videa*}**"**
 
 *# stáhnout s videem titulky a sloučit je do jednoho kontejneru (typicky mkv)*<br>
-**youtube-dl \-\-write-sub** [**\-\-sub-lang** {*jazyk*}] **\-\-embed-subs "**{*URL-videa*}**"**<br>
+**youtube-dl \-\-write-sub** [**\-\-sub-lang** {*jazyk*}] **\-\-embed-subs "**{*URL-videa*}**"**
 
 *# stáhnout z videa jen titulky (normální/automaticky přeložené)*<br>
 ?<br>
@@ -227,13 +227,13 @@ Zde uvádím trochu složitější postup, který sestává z následujících 
 
 *# stažení (nezbytná část)*<br>
 **sudo apt-get install -y python wget**<br>
-**wget https://yt-dl.org/downloads/latest/youtube-dl -O youtube-dl**<br>
+**wget https://yt-dl.org/downloads/latest/youtube-dl -O youtube-dl**
 
 *# kontrola elektronického podpisu (volitelná)*<br>
 **wget https://yt-dl.org/downloads/latest/youtube-dl.sig -O youtube-dl.sig**<br>
 **gpg \-\-verify youtube-dl.sig youtube-dl**<br>
-!: Pokud chcete, zkontrolujte, zda vypsaný otisk klíče odpovídá jednomu z otisků uvedených na oficiální stahovací stránce.
-**rm youtube-dl.sig**<br>
+!: Pokud chcete, zkontrolujte, zda vypsaný otisk klíče odpovídá jednomu z otisků uvedených na oficiální stahovací stránce.<br>
+**rm youtube-dl.sig**
 
 *# instalace pro všechny uživatele*<br>
 **sudo install -o root -g root -m u=rwx,go=rx youtube-dl /usr/local/bin/youtube-dl &amp;&amp; rm youtube-dl**
