@@ -101,7 +101,7 @@ Poznámky:
 ## Instalace na Ubuntu
 
 *# *<br>
-**sudo apt-get install apache2 php libapache2-mod-php php-gd php-mbstring php-sqlite3**
+**sudo apt-get install apache2 php libapache2-mod-php php-gd php-mbstring php-sqlite3**<br>
 **sudo a2enmod php7.2**<br>
 **sudo a2enmod rewrite**<br>
 **sudo sed -Ei '/^&lt;Directory \\/var\\/www\\/&gt;$/,/^&lt;\\/Directory&gt;$/s/^(\\s\*AllowOverride )None$/\\1All/' /etc/apache2/apache2.conf**<br>

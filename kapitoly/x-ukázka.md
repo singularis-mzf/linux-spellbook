@@ -123,6 +123,14 @@ Poznámka: ve Firefoxu se nezlomitelné mezery zkopírují do schránky jako oby
 *# lorem ipsum*<br>
 **lorem ipsum 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9**
 
+## Test opakovaných názvů
+
+*# test*<br>
+**toto je test**
+
+*# test*<br>
+**toto je test 2**
+
 ## Obrázky
 
 Obrázky je dovoleno vkládat pouze jako samostatné odstavce:

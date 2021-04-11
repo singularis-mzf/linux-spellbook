@@ -528,11 +528,11 @@ Poznámka k řetězci náhrady: V tomto řetězci je nutno odzvláštnit znaky
 
 *# desítkové číslo na hexadecimální/hexadecimální na desítkové*<br>
 **sprintf("**[**0x**]**%x",** {*číslo*}**)**<br>
-**strtonum("0x**{*hex-číslo*}**)**
+**strtonum("0x**{*hex-číslo*}**")**
 
 *# desítkové číslo na osmičkové/osmičkové na desítkové*<br>
 **sprintf("**[**0**]**%o",** {*číslo*}**)**<br>
-**strtonum("0**{*osmičkové-číslo*}**)**
+**strtonum("0**{*osmičkové-číslo*}**")**
 
 ### Číselné funkce
 

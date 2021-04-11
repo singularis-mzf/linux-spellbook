@@ -141,6 +141,7 @@ Priority:
 | [kalkulace](kapitoly/kalkulace.md)| Kalkulace | 50% | dítě |
 | [stahování-z-webu](kapitoly/stahování-z-webu.md) | Stahování z webu | 40% | dítě |
 | [zpracování-obrázků](kapitoly/zpracování-obrázků.md) | Zpracování obrázků | 40% | dítě |
+| [metapříkazy](kapitoly/metapříkazy.md) | Metapříkazy | 20% | dítě |
 | [moderní-věci](kapitoly/moderní-věci.md) | Moderní věci | 10% | dítě |
 | [unicode](kapitoly/unicode.md) | Unicode a emotikony | 10% | dítě |
 | [uživatelská-rozhraní](kapitoly/uživatelská-rozhraní.md) | Uživatelská rozhraní skriptů | 5% | dítě |
