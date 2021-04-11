@@ -164,7 +164,23 @@ function KonecParametruPrikazu() {
     return "</tbody></table>\n"
 }
 
-function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, ikona, cislaPoznamek, textyPoznamek,   prvni, textPoznamky) {
+function ZacatekZaklinadla( \
+    cisloKapitoly, # číslo > 0, pokud půjde kapitola na výstup; jinak 0
+    nazevNadkapitoly, # "", pokud nemá nadkapitolu
+    nazevPodkapitoly, # holý název kapitoly (např. „LVM“)
+    cisloSekce, # číslo > 0, pokud není zaklínadlo mimo sekce; jinak 0
+    nazevSekce, # název sekce, pokud není zaklínadlo mimo sekce; jinak ""
+    cisloPodsekce, # číslo > 0, pokud není zaklínadlo mimo podsekci; jinak 0
+    nazevPodsekce, # název podsekce, není-li zaklínadlo mimo podsekci; jinak ""
+    cisloZaklinadla, # číslo > 0
+    textZaklinadla, # neprázdný text v cílovém formátu, pokud nejde o zaklínadlo bez titulku; jinak ""
+    hesZaklinadla, # heš zaklínadla (např. „“)
+    ikona, # ikona zaklínadla (znak, tabulátor a znak symbolizující písmo)
+    cislaPoznamek,
+    textyPoznamek,
+    samostatne, # normálně 0; je-li pravdivý, zaklínadlo je sázeno mimo svoji obvyklou polohu a mělo by být označeno i názvem sekce a podsekce
+
+    prvni, textPoznamky) {
     if (!isarray(cislaPoznamek) || !isarray(textyPoznamek)) {
         ShoditFatalniVyjimku("ZacatekZaklinadla(): Očekáváno pole!");
     }
@@ -174,11 +190,8 @@ function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, ikona, cislaPoznamek
     vysledek = "<div class=\"zaklinadlo\">";
     if (textZaklinadla != "") {
         if (ikona == "") {ikona = "&nbsp;\tD"}
-        idzaklinadla = Hes(textZaklinadla);
-        while (idzaklinadla in pridelenaIdZaklinadel) {idzaklinadla = idzaklinadla "x"}
-        pridelenaIdZaklinadel[idzaklinadla] = 1;
         vysledek = vysledek "<div class=\"zahlavi\">" \
-            gensub(/([^\t]*)\t([^\t]*)/, "<span class=\"ikona \\2\" id=\"z" idzaklinadla "\"><span><a href=\"#z" idzaklinadla "\">\\1</a></span></span>", 1, ikona) \
+            gensub(/([^\t]*)\t([^\t]*)/, "<span class=\"ikona \\2\" id=\"z" hesZaklinadla "\"><span><a href=\"#z" hesZaklinadla "\">\\1</a></span></span>", 1, ikona) \
             textZaklinadla "<span class=\"cislo\">#" cisloZaklinadla " </span>";
         prvni = 1;
         if (length(cislaPoznamek) > 0) {

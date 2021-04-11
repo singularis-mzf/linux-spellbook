@@ -24,6 +24,47 @@
 
 @include "skripty/utility.awk"
 
+BEGIN {
+    delete DO_LOGU_ZASOBNIK_UROVNI;
+    DO_LOGU_ZASOBNIK_UROVNI_POCET = 0;
+}
+
+function ZasobnikUrovniPush(id)
+{
+    DO_LOGU_ZASOBNIK_UROVNI[++DO_LOGU_ZASOBNIK_UROVNI_POCET] = id;
+    #printf("LADĚNÍ: [%d] = %s\n", DO_LOGU_ZASOBNIK_UROVNI_POCET, id) > "/dev/stderr";
+    return 0;
+}
+
+function ZasobnikUrovniKontrola(id, popis)
+{
+    if (DO_LOGU_ZASOBNIK_UROVNI_POCET == 0)
+    {
+        ShoditFatalniVyjimku("Chybné vnoření úrovní: prázdný zásobník, když má platit úroveň " id " (popis=" popis ")!");
+    }
+    if (DO_LOGU_ZASOBNIK_UROVNI[DO_LOGU_ZASOBNIK_UROVNI_POCET] != id)
+    {
+        ShoditFatalniVyjimku("Chybné vnoření úrovní: úroveň " DO_LOGU_ZASOBNIK_UROVNI[DO_LOGU_ZASOBNIK_UROVNI_POCET] ", když má platit " id " (popis=" popis ")!");
+    }
+    return 0;
+}
+
+function ZasobnikUrovniPop(id, popis)
+{
+    if (DO_LOGU_ZASOBNIK_UROVNI_POCET == 0)
+    {
+        ShoditFatalniVyjimku("Chybné vnoření úrovní: prázdný zásobník, když má být ukončena úroveň " id " (popis=" popis ")!");
+    }
+    if (DO_LOGU_ZASOBNIK_UROVNI[DO_LOGU_ZASOBNIK_UROVNI_POCET] != id)
+    {
+        ShoditFatalniVyjimku("Chybné vnoření úrovní: úroveň " DO_LOGU_ZASOBNIK_UROVNI[DO_LOGU_ZASOBNIK_UROVNI_POCET] ", když je očekávána " id " (popis=" popis ")!");
+    }
+    --DO_LOGU_ZASOBNIK_UROVNI_POCET;
+    #printf("LADĚNÍ: POP(%d, %s)\n", DO_LOGU_ZASOBNIK_UROVNI_POCET + 1, id) > "/dev/stderr";
+    return 0;
+}
+
+# -------------------------------------------------------------------
 function ZpracujZnak(znak) {
     return "_" znak;
 }
@@ -42,6 +83,8 @@ function Tabulator(delka) {
 }
 
 function ZacatekKapitoly(nazevKapitoly, cisloKapitoly, stitky, stitkyxhes, osnova, ikonaKapitoly, jeDodatek,   osnovadohromady, stitkytext) {
+    ZasobnikUrovniPush("kapitola");
+
     DO_LOGU_UROVEN_ODSTAVCE = 0;
     for (i = 1; i <= length(osnova); ++i) {
         osnovadohromady = osnovadohromady "\t" osnova[i] "\n";
@@ -56,6 +99,8 @@ function ZacatekKapitoly(nazevKapitoly, cisloKapitoly, stitky, stitkyxhes, osnov
 }
 
 function KonecKapitoly(nazevKapitoly, cislaPoznamek, textyPoznamek,   i, vysledek) {
+    ZasobnikUrovniPop("kapitola");
+
     if (!isarray(cislaPoznamek) || !isarray(textyPoznamek)) {
         ShoditFatalniVyjimku("KonecKapitoly(): Očekáváno pole!");
     }
@@ -80,22 +125,27 @@ function KonecKapitoly(nazevKapitoly, cislaPoznamek, textyPoznamek,   i, vyslede
 }
 
 function ZacatekSekce(kapitola, sekce, cisloKapitoly, cisloSekce) {
+    ZasobnikUrovniPush("sekce");
     return "ZacatekSekce(\"" kapitola "\", \"" sekce "\");\n";
 }
 
 function KonecSekce(kapitola, sekce) {
+    ZasobnikUrovniPop("sekce");
     return "KonecSekce(\"" kapitola "\", \"" sekce "\");\n";
 }
 
 function ZacatekPodsekce(kapitola, sekce, podsekce, cisloKapitoly, cisloSekce, cisloPodsekce) {
+    ZasobnikUrovniPush("podsekce");
     return "ZacatekPodsekce(\"" kapitola "\", \"" sekce "\", \"" podsekce "\");\n";
 }
 
 function KonecPodsekce(kapitola, sekce, podsekce) {
+    ZasobnikUrovniPop("podsekce");
     return "KonecPodsekce(\"" kapitola "\", \"" sekce "\", \"" podsekce "\");\n";
 }
 
 function ZacatekOdstavcu(bylNadpis) {
+    ZasobnikUrovniPush("odstavce");
     if (DO_LOGU_UROVEN_ODSTAVCE != 0) {
         ShoditFatalniVyjimku("Nečekaná úroveň odstavce na začátku odstavce: " DO_LOGU_UROVEN_ODSTAVCE);
     }
@@ -104,6 +154,7 @@ function ZacatekOdstavcu(bylNadpis) {
 }
 
 function PredelOdstavcu() {
+    ZasobnikUrovniKontrola("odstavce");
     if (DO_LOGU_UROVEN_ODSTAVCE != 1) {
         ShoditFatalniVyjimku("Nečekaná úroveň odstavce v předělu: " DO_LOGU_UROVEN_ODSTAVCE);
     }
@@ -111,6 +162,7 @@ function PredelOdstavcu() {
 }
 
 function KonecOdstavcu() {
+    ZasobnikUrovniPop("odstavce");
     if (DO_LOGU_UROVEN_ODSTAVCE != 1) {
         ShoditFatalniVyjimku("Nečekaná úroveň odstavce na konci odstavce: " DO_LOGU_UROVEN_ODSTAVCE);
     }
@@ -141,40 +193,69 @@ function HypertextovyOdkaz(adresa, text) {
 }
 
 function ZacatekSeznamu(uroven, kompaktni) {
+    ZasobnikUrovniPush("seznam");
     return "ZacatekSeznamu(" uroven ", kompaktni=" (kompaktni ? "ANO" : "NE") ");\n";
 }
 
 function ZacatekPolozkySeznamu(uroven) {
+    ZasobnikUrovniKontrola("seznam");
+    ZasobnikUrovniPush("položkaseznamu");
     return "ZacatekPolozkySeznamu(" uroven ");\n";
 }
 
 function KonecPolozkySeznamu(uroven) {
+    ZasobnikUrovniPop("položkaseznamu");
     return "KonecPolozkySeznamu(" uroven ");\n";
 }
 
 function KonecSeznamu(uroven) {
+    ZasobnikUrovniPop("seznam");
     return "KonecSeznamu(" uroven ");\n";;
 }
 
 function ZacatekParametruPrikazu() {
+    ZasobnikUrovniPush("parametrypříkazu");
     return "ZacatekParametruPrikazu();\n"
 }
 
 function ParametrPrikazu(parametr, text) {
-#    print "LADĚNÍ: ParametrPrikazu(\"" parametr "\", \"" text "\");" > "/dev/stderr";
+    ZasobnikUrovniKontrola("parametrypříkazu");
+    #    print "LADĚNÍ: ParametrPrikazu(\"" parametr "\", \"" text "\");" > "/dev/stderr";
     return "ParametrPrikazu(\"" parametr "\", \"" text "\");";
 }
 
 function KonecParametruPrikazu() {
+    ZasobnikUrovniPop("parametrypříkazu");
     return "KonecParametruPrikazu();\n"
 }
 
-function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, ikona, cislaPoznamek, textyPoznamek,   vysledek) {
+function ZacatekZaklinadla( \
+    cisloKapitoly,
+    nazevNadkapitoly,
+    nazevPodkapitoly,
+    cisloSekce,
+    nazevSekce,
+    cisloPodsekce,
+    nazevPodsekce,
+    cisloZaklinadla,
+    textZaklinadla,
+    hesZaklinadla,
+    ikona,
+    cislaPoznamek,
+    textyPoznamek,
+    samostatne,
+
+    vysledek)
+{
+    ZasobnikUrovniPush("zaklínadlo");
+
     if (!isarray(cislaPoznamek) || !isarray(textyPoznamek)) {
         ShoditFatalniVyjimku("ZacatekZaklinadla(): Očekáváno pole!");
     }
 
-    vysledek = "ZacatekZaklinadla(ikona:<" gensub(/\t.*/, "", 1, ikona) ">(písmo:" gensub(/.*\t/, "", 1, ikona) ")|" cisloZaklinadla ", \"" textZaklinadla "\", {";
+    vysledek = "ZacatekZaklinadla(@(" cisloKapitoly "=" nazevNadkapitoly "/" nazevPodkapitoly ")/(" cisloSekce "=" nazevSekce ")/(" cisloPodsekce "=" nazevPodsekce "), " \
+        (samostatne ? "(+samostatně)" : "") \
+        "ikona:<" gensub(/\t.*/, "", 1, ikona) ">(písmo:" gensub(/.*\t/, "", 1, ikona) ")|" cisloZaklinadla ", \"" textZaklinadla "\", \"" hesZaklinadla "\", {";
     for (i = 0; i < length(cislaPoznamek); ++i) {
         if (!(i in cislaPoznamek)) {
             ShoditFatalniVyjimku("Vnitřní chyba: v poli cislaPoznamek očekáván index [" i "]!");
@@ -194,6 +275,8 @@ function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, ikona, cislaPoznamek
 
 # urovenOdsazeni: 0 = normální řádek; 1, 2, atd. = odsazený řádek; -1 = UROVEN_AKCE; -2 = UROVEN_PREAMBULE
 function RadekZaklinadla(text, urovenOdsazeni, prikladHodnoty) {
+    ZasobnikUrovniKontrola("zaklínadlo");
+
     text = "    RadekZaklinadla(\"" text "\"";
     if (urovenOdsazeni == 0) {
 
@@ -216,6 +299,7 @@ function RadekZaklinadla(text, urovenOdsazeni, prikladHodnoty) {
 }
 
 function KonecZaklinadla() {
+    ZasobnikUrovniPop("zaklínadlo");
     return "KonecZaklinadla();\n";
 }
 

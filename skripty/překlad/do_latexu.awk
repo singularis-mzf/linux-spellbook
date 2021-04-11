@@ -340,7 +340,23 @@ function KonecParametruPrikazu() {
     return "\\end{parametryprikazu}\n"
 }
 
-function ZacatekZaklinadla(cisloZaklinadla, textZaklinadla, ikona, cislaPoznamek, textyPoznamek,   i, ax, base) {
+function ZacatekZaklinadla(\
+    cisloKapitoly,
+    nazevNadkapitoly,
+    nazevPodkapitoly,
+    cisloSekce,
+    nazevSekce,
+    cisloPodsekce,
+    nazevPodsekce,
+    cisloZaklinadla,
+    textZaklinadla,
+    hesZaklinadla,
+    ikona,
+    cislaPoznamek,
+    textyPoznamek,
+    samostatne,
+
+    i, ax, base) {
     ax = "%\n";
     if (DO_LATEXU_ODSTAVEC_PRED_ZAKLINADLEM && cisloZaklinadla == 1 && textZaklinadla != "") {
         ax = ax "\\vspace{2ex}";

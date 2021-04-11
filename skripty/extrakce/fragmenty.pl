@@ -173,6 +173,7 @@ for my $i (0..(alength(@všechnyFragmenty) - 1))
     my $vZaklínadle = 0; # 1 = řádky zaklínadla; 2 = za zaklínadlem (vyžadován prázdný řádek)
     my $s; # text řádku
     my ($čSekce, $čPodsekce, $názevSekce, $názevPodsekce) = (0, 0, "", "");
+    my %cestyZaklínadelNaXheše;
     while (defined($s = scalar(readline($f)))) {
         chomp($s);
         ++$čŘádky;
@@ -190,8 +191,11 @@ for my $i (0..(alength(@všechnyFragmenty) - 1))
             if ($s =~ /\A\*# .+\*(<br>)?\z/) {
                 $s =~ /<br>\z/
                     or die("Chyba syntaxe ${id}:${čŘádky}: ${s}");
-                $vZaklínadle = mdTextNaČistýText(substr($s, 3, length($s) - 8)); # text zaklínadla
-                vypsatPoložkuOsnovy($fOsnova, "ZAKLÍNADLO", xheš($vZaklínadle), $čŘádky, $vZaklínadle, ";");
+                my $textZaklínadla = $názevSekce . "/" . $názevPodsekce . "/" . mdTextNaČistýText(substr($s, 3, length($s) - 8));
+                while (exists($cestyZaklínadelNaXheše{$textZaklínadla})) {$textZaklínadla .= "x"}
+                my $xhešZaklínadla = xheš($textZaklínadla);
+                $cestyZaklínadelNaXheše{$textZaklínadla} = $xhešZaklínadla;
+                vypsatPoložkuOsnovy($fOsnova, "ZAKLÍNADLO", $xhešZaklínadla, $čŘádky, $textZaklínadla, ";");
                 $vZaklínadle = 1;
             }
         } elsif ($vZaklínadle == 1) {
@@ -410,16 +414,17 @@ sub máPříznak {
 sub mdTextNaČistýText {
     typy(@ARG) =~ /\As\z/ or croak("Chybné typy parametrů!");
     my $s = $ARG[0];
-    my @prvky = matches($s, qr/&(blank|[lg]t|amp|apo|nbsp|quot);|\\./);
+    my @prvky = matches($s, qr/&(blank|[lg]t|amp|apo|nbsp|quot);|\\.|\*{1,2}|\{[_*]|[*_]\}/);
     state %překlad = ("&blank;", "␣", "&lt;", "<", "&gt;", ">",
-        "&amp;", "&", "&apo;", "'", "&nbsp;", " ", "&quot;", '"');
+        "&amp;", "&", "&apo;", "'", "&nbsp;", " ", "&quot;", '"',
+        "*", "", "**", "", "{*", "", "*}", "", "{_", "", "_}", "");
     while (alength(@prvky) > 0) {
         my ($b, $l) = @{pop(@prvky)};
         my $token = substr($s, $b, $l);
         ladění("mdTextNaČistýText: extrahován token \"${token}\" (\"${s}\", ${b}, ${l}); --alength(\@prvky) = " . alength(@prvky));
         substr($s, $b, $l, $token =~ /\A\\.\z/ ? substr($token, 1) : ($překlad{$token} // die("Chybný token: \"${token}\" (délka " . length($token) .")!")));
     }
-    return $s;
+    return $s =~ s/\s+/ /gr;
 }
 
 sub načístVšechnyFragmenty {
@@ -503,16 +508,20 @@ sub vypsatPoložkuOsnovy {
     my ($výstup, $typ, $id, $čŘádku, $název, $zarážka) = @ARG;
     $zarážka eq ";" or croak("Chybná zarážka!");
 
-    my @x = array(grep {$ARG < 0xfeff}
-        array(unpack("U*",
-            $název = mdTextNaČistýText($název))));
-    if (alength(@x) > $pdfZáložkyMaxDélka - 1) {
-        splice(@x, $pdfZáložkyMaxDélka - 4);
-        push(@x, 0x2e x 3); # "..."
+    my $pdfZáložka = "NULL";
+    if ($typ ne "ZAKLÍNADLO") { # negenerovat PDF záložku pro záklínadla
+        my @x = array(grep {$ARG < 0xfeff}
+            array(unpack("U*",
+                $název = mdTextNaČistýText($název))));
+        if (alength(@x) > $pdfZáložkyMaxDélka - 1) {
+            splice(@x, $pdfZáložkyMaxDélka - 4);
+            push(@x, 0x2e x 3); # "..."
+        }
+        @x = array(map {sprintf("%04X", $ARG)} @x);
+        unshift(@x, "\\uFEFF");
+        $pdfZáložka = join("\\u", @x);
     }
-    @x = array(map {sprintf("%04X", $ARG)} @x);
-    unshift(@x, "\\uFEFF");
-    fprint($výstup, $typ, $id, $čŘádku, $název, join("\\u", @x), $zarážka);
+    fprint($výstup, $typ, $id, $čŘádku, $název, $pdfZáložka, $zarážka);
     return 1;
 }
 
@@ -588,7 +597,7 @@ sub xheš {
     $x =~ /\A[^\t\n\0]+\z/ or croak("Řetězec pro xheš obsahuje nepovolený znak nebo je prázdný!");
     my $xheš = $xheš_keš{$x};
     if (!defined($xheš)) {
-        $xheš = lc(md5_hex(encode_utf8($x)));
+        $xheš = lc("x" . substr(md5_hex(encode_utf8($x)), 0, 7));
         !exists($xheš_revkeš{$xheš})
             or die("Detekován konflikt x-heší: " . $xheš . " pro \"" . $xheš_revkeš{$xheš} .
             "\" (MD5:" . md5_hex(encode_utf8($xheš_revkeš{$xheš})) .

@@ -74,7 +74,6 @@ function ZpracujZnaky(text,     VSTUP, VYSTUP, ZNAK) {
 # Tato funkce vezme řádek textu ve vstupním formátu a zpracuje všechno
 # formátování na úrovni řádku. Výstupem je řádek ve výstupním formátu.
 #
-# Může využívat globálních proměnných TYP_RADKU, PREDCHOZI_TYP_RADKU a UROVEN.
 # Lokálně používá zásobník "format".
 function FormatovatRadek(text, stav,   VSTUP, VYSTUP, i, j, C, priznak) {
     priznak = 0; # příznak použitelný k zachování kontextu
@@ -82,14 +81,9 @@ function FormatovatRadek(text, stav,   VSTUP, VYSTUP, i, j, C, priznak) {
     VYSTUP = "";
     VyprazdnitZasobnik("format");
 
-    if (stav == "") {
-        if (TYP_RADKU != "RADEK_ZAKLINADLA")
-            stav = -1; # -1 = mimo zaklínadlo
-        else if (UROVEN == UROVEN_AKCE)
-            stav = 1; # 1 = v textu akce či příkladu hodnoty
-        else
-            stav = 0; # 0 = v řádku zaklínadla
-    }
+    if (stav != FR_STAV_MIMO_ZAKLINADLO &&
+        stav != FR_STAV_RADEK_ZAKLINADLA &&
+        stav != FR_STAV_TEXT_AKCE) {ShoditFatalniVyjimku("Neplatný kontext formátování: " stav)}
 
     while (VSTUP != "") {
         # 11 znaků
@@ -199,7 +193,7 @@ function FormatovatRadek(text, stav,   VSTUP, VYSTUP, i, j, C, priznak) {
             case "**}":
                 ShoditFatalniVyjimku("Neodzvláštněná kombinace \"**}\" není ve zdrojovém kódu povolena. Zkontrolujte prosím, co jste chtěl/a napsat.");
             case "...":
-                if (TYP_RADKU == "RADEK_ZAKLINADLA" && VelikostZasobniku("format") == 0 && substr(VSTUP, 4, 1) != ".") {
+                if (stav == FR_STAV_RADEK_ZAKLINADLA && VelikostZasobniku("format") == 0 && substr(VSTUP, 4, 1) != ".") {
                     VYSTUP = VYSTUP TriTecky();
                     VSTUP = substr(VSTUP, 4);
                     continue;
@@ -212,12 +206,12 @@ function FormatovatRadek(text, stav,   VSTUP, VYSTUP, i, j, C, priznak) {
         switch (C = substr(VSTUP, 1, 2)) {
             case "**":
                 if (Vrchol("format") != "**") {
-                    if (stav != 0) {
+                    if (stav != FR_STAV_RADEK_ZAKLINADLA) {
                         VYSTUP = VYSTUP FormatTucne(1);
                     }
                     Push("format", "**");
                 } else {
-                    if (stav != 0) {
+                    if (stav != FR_STAV_RADEK_ZAKLINADLA) {
                         VYSTUP = VYSTUP FormatTucne(0);
                     }
                     Pop("format");
@@ -290,7 +284,7 @@ function FormatovatRadek(text, stav,   VSTUP, VYSTUP, i, j, C, priznak) {
                 # Odlišné umístění závorek kvůli problémům se zvýrazněním syntaxe.
                 if (match(VSTUP, /^&[0-9a-zA-Z#]{1,64};/))
                 {
-                    ShoditFatalniVyjimku("Nepovolená entita na řádku: '" substr($0, RSTART, RLENGTH) "'.");
+                    ShoditFatalniVyjimku("Nepovolená entita na řádku: '" substr(VSTUP, RSTART, RLENGTH) "'.");
                 }
                 else
                 {
@@ -334,18 +328,13 @@ function FormatovatRadek(text, stav,   VSTUP, VYSTUP, i, j, C, priznak) {
                 VSTUP = substr(VSTUP, 2);
                 continue;
             case "⊨":
-                if (stav == -1) {
-                    ShoditFatalniVyjimku("Znak ⊨ není povolen mimo jeho zvláštní použití v řádku zaklínadla!");
-                } else if (stav != 0) {
-                    ShoditFatalniVyjimku("Znak ⊨ se v řádku zaklínadla nesmí opakovat!");
-                } else if (VelikostZasobniku("format") != 0) {
-                    ShoditFatalniVyjimku("Znak ⊨ před uzavřením formátování (značka " Vrchol("format") ")!");
-                } else {
-                    stav = 1;
-                    VYSTUP = VYSTUP "⊨";
-                    VSTUP = substr(VSTUP, 2);
-                    continue;
-                }
+                if (stav == FR_STAV_MIMO_ZAKLINADLO) {ShoditFatalniVyjimku("Znak ⊨ není povolen mimo jeho zvláštní použití v řádku zaklínadla!")}
+                if (stav == FR_STAV_TEXT_AKCE) {ShoditFatalniVyjimku("Znak ⊨ se v řádku zaklínadla nesmí opakovat!")}
+                if (VelikostZasobniku("format") != 0) {ShoditFatalniVyjimku("Znak ⊨ před uzavřením formátování (značka " Vrchol("format") ")!")}
+                stav = FR_STAV_TEXT_AKCE;
+                VYSTUP = VYSTUP "⊨";
+                VSTUP = substr(VSTUP, 2);
+                continue;
             case "`":
             case "_":
                 ShoditFatalniVyjimku("Neodzvláštněný znak " C "! Všechny výskyty tohoto znaku musejí být odzvláštněny zpětným lomítkem.");
@@ -361,7 +350,7 @@ function FormatovatRadek(text, stav,   VSTUP, VYSTUP, i, j, C, priznak) {
                 }
                 break;
         }
-        VYSTUP = VYSTUP ((stav == 0 && UROVEN != UROVEN_AKCE && VelikostZasobniku("format") == 0) ? ZpracujChybnyZnak(C) : ZpracujZnak(C));
+        VYSTUP = VYSTUP ((stav == FR_STAV_RADEK_ZAKLINADLA && VelikostZasobniku("format") == 0) ? ZpracujChybnyZnak(C) : ZpracujZnak(C));
         VSTUP = substr(VSTUP, 2);
     }
 
@@ -371,131 +360,142 @@ function FormatovatRadek(text, stav,   VSTUP, VYSTUP, i, j, C, priznak) {
     return VYSTUP;
 }
 
-# Tato funkce se volá pro první ze sekvence řádků určitého typu.
-function ZacitTypRadku(   bylPredel) {
-    bylPredel = 0;
-    if (TYP_RADKU != "PRAZDNY" && JE_ODSTAVEC_K_UKONCENI) {
-        if (TYP_RADKU != "NORMALNI" || tolower(KAPITOLA) == "licence" || $0 ~ /^<neodsadit>/) {
-            printf("%s", KonecOdstavcu());
+# Vrací počet řádek tvořících zaklínadlo (o kolik je třeba zvýšit „i“)
+function VypsatZaklinadlo(iZacatek, jakoOblibene,    c, i, iKonec, iPPC, ikona, pozice, ppc, ppt, s, tz)
+{
+    if (ZR_TYP[iZacatek] != "ZAKLÍNADLO") {ShoditFatalniVyjimku("Chybný index pro výstup zaklínadla: " iZacatek)}
+    if (iZacatek > 1 && ZR_TYP[i - 1] ~ /^(ZAKLÍNADLO|POZNÁMKA|ŘÁDEK_ZAKLÍNADLA)$/) {
+        ShoditFatalniVyjimku("Zaklínadlo nesmí následovat bezprostředně po předchozím zaklínadle. Vložte před něj prázdný řádek.");
+    }
+    JE_UVNITR_ZAKLINADLA = 1;
+    # tz = text zaklínadla (pro zaklínadla bez titulku "")
+    tz = ZR_TEXT[iZacatek] == "*# *<br>" ? "" : gensub(/^\*# |\*<br>$/, "", "g", ZR_TEXT[iZacatek]);
+    if (length(tz) != length(ZR_TEXT[iZacatek]) - 8) {
+        ShoditFatalniVyjimku("Vnitřní chyba: chybná náhrada \"" ZR_TEXT[iZacatek] "\" -> \"" tz "\"");
+    }
+    #else {printf("LADĚNÍ: zaklínadlo \"%s\" -> \"%s\"\n", ZR_TEXT[iZacatek], tz) > "/dev/stderr"}
+    if (tz != "") {tz = FormatovatRadek(tz, FR_STAV_MIMO_ZAKLINADLO)}
+    HES_ZAKLINADLA = ZR_HES[iZacatek];
+    if (tz != "") {
+        if (HES_ZAKLINADLA == "") {ShoditFatalniVyjimku("Chybí očekávaná heš zaklínadla!")}
+    } else {
+        # zaklínadlo bez titulku:
+        if (HES_ZAKLINADLA != "") {ShoditFatalniVyjimku("Přebytečná heš pro zaklínadlo bez titulku!")}
+        if (jakoOblibene) {ShoditFatalniVyjimku("Zaklínadlo bez titulku nemůže být vysázeno jako oblíbené!")}
+    }
+    for (iKonec = iZacatek + 1; ZR_TYP[iKonec] ~ /^(POZNÁMKA|ŘÁDEK_ZAKLÍNADLA)$/; ++iKonec);
+    delete ppc;
+    delete ppt;
+    for (i = iZacatek + 1; ZR_TYP[i] == "POZNÁMKA"; ++i) {
+        # "*// " ... "*<br>"
+        iPPC = length(ppcall); # index poznámky pod čarou
+        s = FormatovatRadek(gensub(/^\*\/\/ |\*<br>$/, "", "g", ZR_TEXT[i]), FR_STAV_MIMO_ZAKLINADLO); # správný kontext?
+        ppcall[iPPC] = ppc[length(ppc)] = 1 + iPPC;
+        pptall[iPPC + 1] = ppt[1 + iPPC] = s;
+    }
+
+    if (ZR_TYP[i] != "ŘÁDEK_ZAKLÍNADLA") {ShoditFatalniVyjimku("Zaklínadlo musí obsahovat alespoň jeden řádek!")}
+    if (tz != "") {
+        # zaklínadlo s titulkem
+        c = strtonum("0" HES_ZAKLINADLA) % length(UCS_IKONY);
+        ikona = substr(UCS_IKONY, 1 + c, 1) "\t" substr(UCS_IKONY_PISMA, 1 + c, 1);
+        if (!jakoOblibene) {
+            s = ZacatekZaklinadla(\
+                C_KAPITOLY, NAZEV_NADKAPITOLY, NAZEV_PODKAPITOLY, C_SEKCE, C_SEKCE ? SEKCE : "", C_PODSEKCE, C_PODSEKCE ? PODSEKCE : "",
+                ++C_ZAKLINADLA, tz, HES_ZAKLINADLA,
+                ikona, ppc, ppt, 0);
         } else {
-            printf("%s", PredelOdstavcu());
-            bylPredel = 1;
+            s = ZacatekZaklinadla(\
+                C_KAPITOLY, NAZEV_NADKAPITOLY, NAZEV_PODKAPITOLY, C_SEKCE, C_SEKCE ? SEKCE : "", C_PODSEKCE, C_PODSEKCE ? PODSEKCE : "",
+                ++CISLO_OBLIBENEHO_ZAKLINADLA, tz, HES_ZAKLINADLA,
+                ikona, ppc, ppt, 1);
         }
-        JE_ODSTAVEC_K_UKONCENI = 0;
+    } else {
+        # zaklínadlo bez titulku
+        s = ZacatekZaklinadla(C_KAPITOLY, NAZEV_NADKAPITOLY, NAZEV_PODKAPITOLY, C_SEKCE, C_SEKCE ? SEKCE : "", C_PODSEKCE, C_PODSEKCE ? PODSEKCE : "",
+            0, "", "", "", ppc, ppt, 0);
     }
+    printf("%s", s);
 
-    switch (TYP_RADKU) {
-        case "NORMALNI":
-            if (!bylPredel) {
-# + dodatečné pravidlo: v kapitole „Licence“ se všechny začátky odstavců uvažují jako po nadpisu (vypne odsazení).
-                printf("%s", ZacatekOdstavcu(PREDCHOZI_NEPRAZDNY_TYP_RADKU == "NADPIS" || tolower(KAPITOLA) == "licence" || $0 ~ /^<neodsadit>/));
-            }
-            if ($0 ~ /^<neodsadit>/) {
-                $0 = substr($0, 12);
-            }
-            break;
-        case "ODSAZENY_1":
-        case "ODSAZENY_2":
-        case "ODSAZENY_3":
-        case "ODSAZENY_4":
-        case "ODSAZENY_5":
-        case "ODSAZENY_6":
-            printf("%s", ZacatekOdsazenehoOdstavce(substr(TYP_RADKU, 10)));
-            break;
-        case "PARAMETR_PRIKAZU":
-            printf("%s", ZacatekParametruPrikazu());
-            BUDOU_PARAMETRY_PRIKAZU = 2;
-            break;
-        case "POLOZKA_SEZNAMU":
-            if (PREDCHOZI_TYP_RADKU != "POKRACOVANI_POLOZKY_SEZNAMU") {
-                printf("%s", ZacatekSeznamu(1, NR == KOMPAKTNI_SEZNAM_NR || (tolower(SEKCE) !~ /^(tipy a.zkušenosti|definice|úvod)/ && tolower(KAPITOLA) !~ /^(koncepce projektu)/)));
-                printf("%s", ZacatekPolozkySeznamu(1));
-            }
-            break;
-        case "ZAKLINADLO":
-            delete ppc;
-            delete ppt;
-        default:
-            break;
-    }
-}
-
-# Tato funkce se volá po posledním ze sekvence řádků určitého typu.
-# Slouží k řádnému uzavření konstrukcí typu začátek-oddělovač-konec.
-function UkoncitPredchoziTypRadku() {
-    switch (PREDCHOZI_TYP_RADKU) {
-        case "NORMALNI":
-            JE_ODSTAVEC_K_UKONCENI = 1;
-            return "";
-
-        case "ODSAZENY_1":
-        case "ODSAZENY_2":
-        case "ODSAZENY_3":
-        case "ODSAZENY_4":
-        case "ODSAZENY_5":
-        case "ODSAZENY_6":
-            printf("%s", KonecOdsazenehoOdstavce(substr(PREDCHOZI_TYP_RADKU, 10)));
-            break;
-
-        case "PARAMETR_PRIKAZU":
-            if (BUDOU_PARAMETRY_PRIKAZU != 2) {
-                ShoditFatalniVyjimku("Interní chyba: nečekaná hodnota BUDOU_PARAMETRY_PRIKAZU: " BUDOU_PARAMETRY_PRIKAZU);
-            }
-            if (TYP_RADKU != "PRAZDNY") {
-                ShoditFatalniVyjimku("Parametry příkazů musejí být ukončeny prázdným řádkem!");
-            }
-            printf("%s", KonecParametruPrikazu());
-            BUDOU_PARAMETRY_PRIKAZU = 0;
-            break;
-
-        case "POLOZKA_SEZNAMU":
-            if (TYP_RADKU != "POKRACOVANI_POLOZKY_SEZNAMU") {
-                printf("%s", KonecPolozkySeznamu(1));
-                printf("%s", KonecSeznamu(1));
-            }
-            return "";
-
-        case "POKRACOVANI_POLOZKY_SEZNAMU":
-            printf("%s", KonecPolozkySeznamu(1));
-            if (TYP_RADKU != "POLOZKA_SEZNAMU") {
-                printf("%s", KonecSeznamu(1));
+    # zpracovat řádku zaklínadla:
+    while (i < iKonec) {
+        s = gensub(/<br>$/, "", 1, ZR_TEXT[i]);
+        if (s ~ /^<odsadit[1-8]>./) {
+            UROVEN = substr(s, 9, 1);
+            s = substr(s, 11);
+            if (s ~ /^!: ?/) {ShoditFatalniVyjimku("Odsazení akcí není umožněno!")}
+        } else if (s ~ /^\^\^./) {
+            UROVEN = UROVEN_PREAMBULE;
+            s = substr(s, 3);
+        } else if (match(s, /^<odsadit[0-9]+>./)) {
+            ShoditFatalniVyjimku("Nepodporovaná úroveň odsazení: " substr(s, RSTART, RLENGTH) "!");
+        } else if (match(s, /^!: ?/)) {
+            UROVEN = UROVEN_AKCE;
+            s = substr(s, 1 + RLENGTH);
+        } else {
+            UROVEN = 0;
+        }
+        if (UROVEN == 0 && s == "?") {
+            s = RadekZaklinadla(ReseniNezname(), 0, "");
+        } else {
+            gsub(/\s*⊨\s*/, "⊨", s);
+            s = FormatovatRadek(s, UROVEN != UROVEN_AKCE ? FR_STAV_RADEK_ZAKLINADLA : FR_STAV_TEXT_AKCE);
+            pozice = index(s, "⊨");
+            if (pozice == 0) {
+                s = RadekZaklinadla(s, UROVEN, "");
+            } else if (UROVEN != UROVEN_AKCE) {
+                s = RadekZaklinadla(substr(s, 1, pozice - 1), UROVEN, substr(s, pozice + 1));
             } else {
-                printf("%s", ZacatekPolozkySeznamu(1));
+                ShoditFatalniVyjimku("Dělení akce znakem ⊨ není podporováno!");
             }
-            return "";
-
-        case "POZNAMKA":
-        case "ZAKLINADLO":
-            if (JE_UVNITR_ZAKLINADLA && TYP_RADKU != "POZNAMKA" && TYP_RADKU != "RADEK_ZAKLINADLA") {
-                VypsatZahlaviZaklinadla();
-            }
-            return "";
-
-        case "RADEK_ZAKLINADLA":
-            printf("%s", KonecZaklinadla());
-            JE_UVNITR_ZAKLINADLA = 0;
-            return "";
-
-        default:
-            return "";
+        }
+        printf("%s", s);
+        ++i;
     }
+    printf("%s", KonecZaklinadla());
+    JE_UVNITR_ZAKLINADLA = 0;
+    HES_ZAKLINADLA = "";
+    return iKonec - iZacatek;
 }
 
-function VypsatZahlaviZaklinadla(   i) {
-    if (TYP_RADKU != "RADEK_ZAKLINADLA") {
-        ShoditFatalniVyjimku("Zaklínadlo musí mít alespoň jeden řádek!");
+function UzavritPodsekci()
+{
+    if (C_PODSEKCE != 0) {
+        printf("%s", KonecPodsekce(NAZEV_PODKAPITOLY, C_SEKCE, C_PODSEKCE));
+        C_PODSEKCE = 0;
+        PODSEKCE = "";
     }
-    if (TEXT_ZAKLINADLA != NULL_STRING) {
-        if (TEXT_ZAKLINADLA != "") {
-            i = OmezenaHes(TEXT_ZAKLINADLA) % length(UCS_IKONY);
-            printf("%s", ZacatekZaklinadla(++C_ZAKLINADLA, TEXT_ZAKLINADLA, substr(UCS_IKONY, 1 + i, 1) "\t" substr(UCS_IKONY_PISMA, 1 + i, 1), ppc, ppt));
-        } else {
-            printf("%s", ZacatekZaklinadla(0, "", "", ppc, ppt));
-        }
-        TEXT_ZAKLINADLA = NULL_STRING;
-        delete ppc;
-        delete ppt;
+    return 0;
+}
+function UzavritSekci()
+{
+    if (C_SEKCE != 0) {
+        UzavritPodsekci();
+        printf("%s", KonecSekce(NAZEV_PODKAPITOLY, C_SEKCE));
+        C_SEKCE = 0;
+        SEKCE = "";
     }
+    return 0;
+}
+
+function OtevritSekci(cislo, nazev)
+{
+    if (C_SEKCE != 0) {ShoditFatalniVyjimku("Nelze otevřít sekci (" cislo ":" nazev "), když je stále otevřena sekce (" C_SEKCE ": " SEKCE ")!")}
+    C_SEKCE = cislo;
+    SEKCE = nazev;
+    printf("%s", ZacatekSekce((NAZEV_NADKAPITOLY != "" ? NAZEV_NADKAPITOLY "/" : "") NAZEV_PODKAPITOLY, SEKCE, C_KAPITOLY, C_SEKCE));
+    C_ZAKLINADLA = 0;
+    return 0;
+}
+
+function OtevritPodsekci(cislo, nazev)
+{
+    if (C_PODSEKCE != 0) {ShoditFatalniVyjimku("Nelze otevřít podsekci (" cislo ":" nazev "), když je stále otevřena podsekce (" C_PODSEKCE ":" PODSEKCE ")!")}
+    if (C_SEKCE == 0) {ShoditFatalniVyjimku("Nelze otevřít podsekci (" cislo ":" nazev "), když není otevřena žádná sekce!")}
+    C_PODSEKCE = cislo;
+    PODSEKCE = nazev;
+    printf("%s", ZacatekPodsekce((NAZEV_NADKAPITOLY != "" ? NAZEV_NADKAPITOLY "/" : "") NAZEV_PODKAPITOLY, SEKCE, PODSEKCE, C_KAPITOLY, C_SEKCE, C_PODSEKCE));
+    C_ZAKLINADLA = 0;
     return 0;
 }
 
@@ -528,6 +528,7 @@ BEGIN {
     NacistFragmentyTSV(SOUBORY_PREKLADU "/fragmenty.tsv");
     # číslo kapitoly
     C_KAPITOLY = FragInfo(IDKAPITOLY "?");
+    #printf("LADĚNÍ: číslo kapitoly(%s) id(%s)\n", C_KAPITOLY, IDKAPITOLY) > "/dev/stderr";
     if (C_KAPITOLY != 0 && FragInfo(C_KAPITOLY, "příznaky") ~ /z/) {
         # štítky
         stitky = FragInfo(C_KAPITOLY, "štítky");
@@ -567,32 +568,46 @@ BEGIN {
         close(prikaz);
     }
 
+    # Výčty:
+    UROVEN = 0;
+    UROVEN_AKCE = -1;
+    UROVEN_PREAMBULE = -2;
+
+    FR_STAV_MIMO_ZAKLINADLO = -1;
+    FR_STAV_TEXT_AKCE = 1;
+    FR_STAV_RADEK_ZAKLINADLA = 0;
+
     # Inicializovat globální proměnné:
     NULL_STRING = "\x01\x02";
-    KAPITOLA = "";
+    KAPITOLA = NAZEV_NADKAPITOLY == "" ? NAZEV_PODKAPITOLY : NAZEV_NADKAPITOLY "/" NAZEV_PODKAPITOLY;
     SEKCE = "";
     PODSEKCE = "";
     C_SEKCE = 0;
     C_PODSEKCE = 0;
     C_ZAKLINADLA = 0;
     FATALNI_VYJIMKA = 0;
-    PREDCHOZI_NEPRAZDNY_TYP_RADKU = "";
-    PREDCHOZI_TYP_RADKU = "PRAZDNY";
-    TYP_RADKU = "PRAZDNY";
     JE_UVNITR_ZAKLINADLA = 0;
-    JE_UVNITR_KOMENTARE = 0;
-    JE_ODSTAVEC_K_UKONCENI = 0;
-    BUDOU_PARAMETRY_PRIKAZU = 0; # 0 = normální, 1 = očekává začátek parametrů, 2 = očekává další parametry a konec
     TEXT_ZAKLINADLA = NULL_STRING;
-    UROVEN = 0;
-    UROVEN_AKCE = -1;
-    UROVEN_PREAMBULE = -2;
+
     UCS_IKONY = VYCHOZI_UCS_IKONA = "♣";
     UCS_IKONY_PISMA = VYCHOZI_UCS_IKONA_PISMO = "L";
-    delete ppc;
-    delete ppt;
+    HES_ZAKLINADLA = "";
+    RADKY_OZ_POCET = 0;
+    CISLO_OBLIBENEHO_ZAKLINADLA = 0;
     delete ppcall;
     delete pptall;
+    delete RADKY_OZ;
+    delete vstup; vstup_pocet = 0;
+
+    ZR_POCET = 0;
+    delete ZR_CISLO;
+    delete ZR_TEXT;
+    delete ZR_TYP;
+    delete ZR_HES;
+    delete ZR_C_SEKCE;
+    delete ZR_N_SEKCE;
+    delete ZR_C_PODSEKCE;
+    delete ZR_N_PODSEKCE;
 
     # Načíst osnovu:
     delete OSNOVA;
@@ -602,362 +617,428 @@ BEGIN {
         OSNOVA[1 + length(OSNOVA)] = sprintf("%s\t%s\t%s\t%s\t%s", $1, $2, $3, ZpracujZnaky($4), ";");
     }
     close(soubor);
-}
 
-# komentář započatý na samostatném řádku kompletně ignorovat
-# (není to ideální řešení, ale dokonalejší řešení jsou problematická)
-/^<!--$/,/^-->$/ {
-    JE_UVNITR_KOMENTARE = ($0 != "-->");
-    next;
-}
-
-# jednořádkový komentář (nesmí obsahovat --)
-/^<!--.*-->$/ {
-    if ($0 ~ /^<!--.*--.*-->$/) {
-        ShoditFatalniVyjimku("Jednořádkový komentář nesmí obsahovat kombinaci „--“!: " $0);
+    # Načíst oblíbená zaklínadla:
+    delete OBLIBENE_HESE;
+    for (i = 0; i in OSNOVA; ++i) {
+        if (OSNOVA[i] ~ /^ZAKLÍNADLO\tf/) {
+            OBLIBENE_HESE[gensub(/^[^\t]+\t([^\t]+)\t.*$/, "", 1, OSNOVA[i])] = 1; # DOČASNÉ ŘEŠENÍ
+        }
     }
-    next;
 }
-
 {
-    if (TYP_RADKU != "PRAZDNY") {
-        PREDCHOZI_NEPRAZDNY_TYP_RADKU = TYP_RADKU;
-    }
-    PREDCHOZI_TYP_RADKU = TYP_RADKU;
-    TYP_RADKU = "";
-    ZPRACOVANO = 0;
-    PATRI_DO_PREAMBULE = 0;
+    vstup[vstup_pocet = FNR] = $0;
 }
-
-#
-# URČIT TYP ŘÁDKU (a zkontrolovat některé podmínky)
-# ============================================================================
-
-# zaznamenat prázdný řádek
-/^$/ {
-    TYP_RADKU = "PRAZDNY";
-}
-
-# vyloučit nepovolené bílé znaky na začátku/konci řádku
-/^[ \t\v\r\n]+$/ {
-    ShoditFatalniVyjimku("Řádek tvořený pouze bílými znaky není v tomto projektu dovolen!\nŘádek: <" $0 ">");
-}
-/[ \t\v\r\n]$/ {
-    ShoditFatalniVyjimku("Bílé znaky na konci řádku nejsou v tomto projektu dovoleny!\nŘádek: <" $0 ">");
-}
-/^[ \t\v\r\n]/ {
-    ShoditFatalniVyjimku("Bílé znaky na začátku řádku nejsou v tomto projektu dovoleny!\nŘádek: <" $0 ">");
-}
-
-# vypustit z řádku inline komentáře (popř. je zpracovat)
-/<!--.*-->/ {
-    while ((i = index($0, "<!--")) && (j = 4 + index(substr($0, i + 4), "-->"))) {
-#        text_komentare = substr($0, i + 4, j - 5);
-#        print "LADĚNÍ: inline komentář <!--" text_komentare "-->.";
-
-        $0 = substr($0, 1, i - 1) substr($0, i + j + 2);
-    }
-}
-
-# určit typ řádku, nebyl-li již určen jako prázdný
+# jako v jazyce C
+function main(    i, o, s, pozice, uroven, pokracuje, c_sekce, n_sekce, c_podsekce, n_podsekce)
 {
-    if (TYP_RADKU != "") {
-        # typ řádku již byl určen
-    } else if ($0 ~ /^#+ .+/) {
-        TYP_RADKU = "NADPIS";
-    } else if ($0 ~ /^>+ .+/) {
-        UROVEN = index($0, " ") - 1;
-        if (UROVEN > 6) {
-            ShoditFatalniVyjimku("Příliš vysoká úroveň odsazení (víc než 6): " $0);
+    # 1. Vypustit komentáře
+    i = o = 1;
+    while (i <= vstup_pocet) {
+        FNR = i;
+        # komentář započatý na samostatném řádku kompletně ignorovat
+        # (není to ideální řešení, ale dokonalejší řešení jsou problematická)
+        if (vstup[i] == "<!--") {
+            while (vstup[++i] != "-->") {
+                if (i >= vstup_pocet) {
+                    ShoditFatalniVyjimku("Komentář otevřený samostatným řádkem \"<!--\" musí být ukončený v rámci téhož zdrojového souboru samostatným řádkem \"-->\".");
+                }
+            }
+            ++i;
+            continue;
         }
-        TYP_RADKU = "ODSAZENY_" UROVEN;
-        $0 = substr($0, UROVEN + 2);
-    } else if (PREDCHOZI_TYP_RADKU != "NORMALNI" && $0 ~ /^\* .+/) {
-        TYP_RADKU = (BUDOU_PARAMETRY_PRIKAZU == 0) ? "POLOZKA_SEZNAMU" : "PARAMETR_PRIKAZU";
-        $0 = substr($0, 3);
-    } else if (PREDCHOZI_TYP_RADKU != "NORMALNI" && $0 ~ /^\*# .*\*<br>$/) {
-        TYP_RADKU = "ZAKLINADLO";
-        JE_UVNITR_ZAKLINADLA = 1;
-    } else if (PREDCHOZI_TYP_RADKU != "NORMALNI" && $0 ~ /^\*\/\/ .+\*(<br>)?$/) {
-        TYP_RADKU = "POZNAMKA";
-    } else if (PREDCHOZI_TYP_RADKU != "NORMALNI" && $0 ~ /^!\[.+\]\(.+\)$/) {
-        TYP_RADKU = "OBRAZEK";
-    } else if (PREDCHOZI_TYP_RADKU != "NORMALNI" && $0 ~ /^![A-Za-z0-9ÁČĎÉĚÍŇÓŘŠŤÚŮÝŽáčďéěíňóřšťúůýž]+:( |$)/) {
-        TYP_RADKU = "DIREKTIVA";
-    } else if (JE_UVNITR_ZAKLINADLA) {
-        TYP_RADKU = "RADEK_ZAKLINADLA";
-    } else if (PREDCHOZI_TYP_RADKU == "POLOZKA_SEZNAMU" || PREDCHOZI_TYP_RADKU == "POKRACOVANI_POLOZKY_SEZNAMU") {
-        TYP_RADKU = "POKRACOVANI_POLOZKY_SEZNAMU";
-    } else {
-        TYP_RADKU = "NORMALNI";
-    }
-#
-# LADĚNÍ:
-#    printf("\n<TYP=%s>%s>", PREDCHOZI_TYP_RADKU, TYP_RADKU);
-}
-
-#
-# Pokud se typ řádku změnil, ukončit ten předchozí a zahájit nový
-# ============================================================================
-PREDCHOZI_TYP_RADKU != TYP_RADKU {
-    UkoncitPredchoziTypRadku();
-    ZacitTypRadku();
-}
-
-#
-# ZPRACOVÁNÍ JEDNOTLIVÝCH TYPŮ ŘÁDKŮ
-# ============================================================================
-TYP_RADKU == "NADPIS" {
-    if (PODSEKCE != "")
-        printf("%s", KonecPodsekce(KAPITOLA, SEKCE, PODSEKCE));
-    if (SEKCE != "" && $0 ~ /^##? /)
-        printf("%s", KonecSekce(KAPITOLA, SEKCE));
-    if (KAPITOLA != "" && $0 ~ /^# /) {
-        if (tolower(KAPITOLA) == "licence") {
-            printf("%s", VypnoutRezimLicence());
+        if (vstup[i] ~ /^<!--.*-->$/) { # jednořádkový komentář (nesmí obsahovat --)
+            if (vstup[i] ~ /^<!--.*--.*-->$/) {ShoditFatalniVyjimku("Chyba syntaxe: jednořádkový komentář nesmí obsahovat „--“!")}
+            ++i;
+            continue;
         }
-        printf("%s", KonecKapitoly(KAPITOLA, ppcall, pptall));
-    }
-    C_ZAKLINADLA = 0;
-    if ($0 ~ /^# /) {
-        KAPITOLA = ZpracujZnaky(substr($0, 3));
-        SEKCE = "";
-        PODSEKCE = "";
-        C_SEKCE = 0;
-        C_PODSEKCE = 0;
-        delete ppcall;
-        delete pptall;
-        printf("%s", ZacatekKapitoly( \
-            (NAZEV_NADKAPITOLY != "" ? NAZEV_NADKAPITOLY "/" : "") NAZEV_PODKAPITOLY,
-            ++C_KAPITOLY, STITKY, STITKY_XHES, OSNOVA, IKONA_KAPITOLY, JE_DODATEK));
-        if (tolower(KAPITOLA) == "licence") {
-            printf("%s", ZapnoutRezimLicence());
+        while (match(vstup[i], /<!--[^>]*-->/)) {
+            zacatek = RSTART;
+            konec = RSTART + RLENGTH;
+            if (substr(vstup[i], RSTART + 4, RLENGTH - 7) ~ /--|>/) {ShoditFatalniVyjimku("Chyba syntaxe: komentář uvnitř řádky nesmí obsahovat „--“ ani „>“!")}
+            vstup[i] = substr(vstup[i], 1, konec - 1) substr(vstup[i], konec); # [ ] vyzkoušet!
         }
-    } else if ($0 ~ /^## /) {
-        SEKCE = ZpracujZnaky(substr($0, 4));
-        PODSEKCE = "";
-        C_PODSEKCE = 0;
-        printf("%s", ZacatekSekce((NAZEV_NADKAPITOLY != "" ? NAZEV_NADKAPITOLY "/" : "") NAZEV_PODKAPITOLY, SEKCE, C_KAPITOLY, ++C_SEKCE));
-    } else {
-        PODSEKCE = ZpracujZnaky(substr($0, 5));
-        printf("%s", ZacatekPodsekce((NAZEV_NADKAPITOLY != "" ? NAZEV_NADKAPITOLY "/" : "") NAZEV_PODKAPITOLY, SEKCE, PODSEKCE, C_KAPITOLY, C_SEKCE, ++C_PODSEKCE));
+        if (vstup[i] ~ /^[ \t\v\r\n]+$/) {ShoditFatalniVyjimku("Řádek tvořený pouze bílými znaky není v tomto projektu dovolen!\nŘádek č. " i ": <" vstup[i] ">")}
+        if (vstup[i] ~ /[ \t\v\r\n]$/) {ShoditFatalniVyjimku("Bílé znaky na konci řádku nejsou v tomto projektu dovoleny!\nŘádek č. " i ": " vstup[i] ">")}
+        if (vstup[i] ~ /^[ \t\v\r\n]/) {ShoditFatalniVyjimku("Bílé znaky na začátku řádku nejsou v tomto projektu dovoleny!\nŘádek č. " i ": " vstup[i] ">")}
+        if (vstup[i] ~ /^# .+$/) {++i; continue;} # nadpis kapitoly vynechat (nebude se zpracovávat při překladu)
+        if (vstup[i] != "" || o == 1 || ZR_TEXT[o - 1] != "") { # prázdný řádek nevkládat vícekrát
+            ZR_CISLO[o] = i;
+            ZR_TEXT[o] = vstup[i];
+            ++o;
+        }
+        ++i;
     }
-    next;
-}
+    ZR_POCET = o - 1;
+    #printf("LADĚNÍ: %d zdrojových řádek načteno, %d propuštěno.\n", vstup_pocet, ZR_POCET) > "/dev/stderr";
+    delete vstup;
+    vstup_pocet = 0;
 
-TYP_RADKU == "OBRAZEK" {
-    match($0, /\]\(/);
-    alt = substr($0, 3, RSTART - 3);
-    src = substr($0, RSTART + 2, length($0) - RSTART - 2);
-    printf("%s", Obrazek(ZpracujZnaky(src), ZpracujZnaky(alt), src, alt));
-    next;
-}
+    # 2. Určit typ řádku a strukturu sekcí a podsekcí (o = index v osnově)
+    o = 0;
+    c_sekce = c_podsekce = 0;
+    n_sekce = n_podsekce = "";
+    for (i = 1; i <= ZR_POCET; ++i) {
+        FNR = ZR_CISLO[i];
+        ZR_C_SEKCE[i] = c_sekce;
+        ZR_C_PODSEKCE[i] = c_podsekce;
+        ZR_N_SEKCE[i] = n_sekce;
+        ZR_N_PODSEKCE[i] = n_podsekce;
 
-TYP_RADKU == "NORMALNI" || TYP_RADKU ~ /^ODSAZENY_[123456]$/ {
-    printf("%s\n", FormatovatRadek($0));
-    next;
-}
-
-TYP_RADKU == "POLOZKA_SEZNAMU" {
-    if (PREDCHOZI_TYP_RADKU == TYP_RADKU) {
-        printf("%s", KonecPolozkySeznamu(1));
-        printf("%s", ZacatekPolozkySeznamu(1));
-    }
-    printf("%s\n", FormatovatRadek($0));
-    next;
-}
-
-TYP_RADKU == "PARAMETR_PRIKAZU" {
-    i = index($0, "::");
-    if (i == 0) {
-        ShoditFatalniVyjimku("Parametr příkazů musí obsahovat oddělovač „::“!");
-    }
-    s = substr($0, 1, substr($0, i - 1, 1) ~ /\s/ ? i - 2 : i - 1);
-    gsub("\f", "", s);
-    gsub(/\\-/, "\f", s);
-    gsub("-|\f", "\\-", s);
-    printf("%s\n", ParametrPrikazu(FormatovatRadek(s), FormatovatRadek(substr($0, substr($0, i + 2, 1) ~ /\s/ ? i + 3 : i + 2))));
-    next;
-}
-
-TYP_RADKU == "POKRACOVANI_POLOZKY_SEZNAMU" {
-    printf("%s\n", FormatovatRadek($0));
-    next;
-}
-
-TYP_RADKU == "DIREKTIVA" {
-    match($0, /[^!][^:]*:/);
-    DIREKTIVA = toupper(substr($0, RSTART, RLENGTH - 1));
-    HODNOTA_DIREKTIVY = substr($0, RSTART + RLENGTH);
-    if (HODNOTA_DIREKTIVY ~ /^ /) {
-        HODNOTA_DIREKTIVY = substr(HODNOTA_DIREKTIVY, 2);
-    }
-    #print "LADĚNÍ: Direktiva !" DIREKTIVA "=" HODNOTA_DIREKTIVY "\\n" > "/dev/stderr";
-    switch (DIREKTIVA) {
-        case "FIXACEIKON":
-            if (HODNOTA_DIREKTIVY !~ /^([0123456789]+|\*)$/) {ShoditFatalniVyjimku("Neplatný parametr direktivy !FixaceIkon: \"" HODNOTA_DIREKTIVY "\"!")}
-            UCS_IKONY = VYCHOZI_UCS_IKONA;
-            UCS_IKONY_PISMA = VYCHOZI_UCS_IKONA_PISMO;
-            if (HODNOTA_DIREKTIVY ~ /^0+$/) {break} # "!FixaceIkon: 0 vrací výchozí nastavení"
-
-            if ((getline UCS_IKONY < (SOUBORY_PREKLADU "/ucs_ikony.dat")) && (getline UCS_IKONY_PISMA < (SOUBORY_PREKLADU "/ucs_ikony.dat"))) {
-                close(SOUBORY_PREKLADU "/ucs_ikony.dat");
+        ZR_TYP[i] = "";
+        if (ZR_TEXT[i] == "") {
+            ZR_TYP[i] = "PRÁZDNÝ";
+        } else if (ZR_TEXT[i] ~ /^#+ .+/) {
+            ZR_TYP[i] = "NADPIS";
+            pozice = index(s = ZR_TEXT[i], " ");
+            ZR_TEXT[i] = substr(ZR_TEXT[i], pozice + 1);
+            switch (pozice) {
+                case 2: # kapitola
+                    ShoditFatalniVyjimku("Vnitřní chyba: označení kapitoly již mělo být odfiltrováno v předchozí fázi!");
+                    #if (KAPITOLA != "") {ShoditFatalniVyjimku("Ve zdrojovém kódu kapitoly je dovolen jen jeden nadpis první úrovně!")}
+                    #KAPITOLA = ZpracujZnaky(ZR_TEXT[i]);
+                    #if (KAPITOLA == "") {ShoditFatalniVyjimku("Prázdný název kapitoly!")}
+                    #ZR_C_SEKCE[i] = ZR_C_PODSEKCE[i] = c_sekce = c_podsekce = 0;
+                    #ZR_N_SEKCE[i] = ZR_N_PODSEKCE[i] = n_sekce = n_podsekce = "";
+                    #break;
+                case 3: # sekce
+                    ZR_C_SEKCE[i] = ++c_sekce;
+                    ZR_N_SEKCE[i] = n_sekce = ZpracujZnaky(ZR_TEXT[i]);
+                    ZR_C_PODSEKCE[i] = c_podsekce = 0;
+                    ZR_N_PODSEKCE[i] = n_podsekce = "";
+                    break;
+                case 4: # podsekce
+                    ZR_C_PODSEKCE[i] = ++c_podsekce;
+                    ZR_N_PODSEKCE[i] = n_podsekce = ZpracujZnaky(ZR_TEXT[i]);
+                    break;
+                default: # ?
+                    ShoditFatalniVyjimku("Chyba syntaxe nadpisu: \"" s "\"");
+            }
+        } else if (ZR_TEXT[i] ~ /^>+ .+/) {
+            uroven = index(ZR_TEXT[i], " ") - 1;
+            if (uroven > 6) {ShoditFatalniVyjimku("Příliš vysoká úroveň odsazení (víc než 6): " ZR_TEXT[i])}
+            ZR_TYP[i] = "ODSAZENÝ_" uroven;
+            ZR_TEXT[i] = substr(ZR_TEXT[i], uroven + 2);
+        }
+        if (ZR_TYP[i] == "" && ZR_TYP[i - 1] != "NORMÁLNÍ") {
+            if (ZR_TEXT[i] ~ /^\* .+/) {
+                ZR_TYP[i] = "POLOŽKA_SEZNAMU";
+                ZR_TEXT[i] = substr(ZR_TEXT[i], 3);
+            } else if (ZR_TEXT[i] ~ /^\*# .*\*<br>$/) {
+                ZR_TYP[i] = "ZAKLÍNADLO";
+                if (ZR_TEXT[i] ~ /^\*# .+\*<br>$/) {
+                    # zaklínadlo s titulkem => přidělit heš
+                    while (++o in OSNOVA && OSNOVA[o] !~ /^ZAKLÍNADLO\t/) {}
+                    if (!(o in OSNOVA)) {ShoditFatalniVyjimku("V osnově chybí očekávané zaklínadlo! Pravděpodobně jde o vnitřní chybu mechanismu překladu.")}
+                    ZR_HES[i] = gensub(/^[^\t]+\t([^\t]+)\t.*$/, "\\1", 1, OSNOVA[o]);
+                }
+            } else if (ZR_TEXT[i] ~ /^\*\/\/ .+\*(<br>)?$/) {
+                ZR_TYP[i] = "POZNÁMKA";
+            } else if (ZR_TEXT[i] ~ /^!\[.+\]\(.+\)$/) {
+                ZR_TYP[i] = "OBRÁZEK";
+            } else if (ZR_TEXT[i] ~ /^![A-Za-z0-9ÁČĎÉĚÍŇÓŘŠŤÚŮÝŽáčďéěíňóřšťúůýž]+:( |$)/) {
+                ZR_TYP[i] = "DIREKTIVA";
+            }
+        }
+        if (ZR_TYP[i] == "") {
+            if (i > 1 && ZR_TYP[i - 1] ~ /^(ZAKLÍNADLO|POZNÁMKA|ŘÁDEK_ZAKLÍNADLA)$/) {
+                ZR_TYP[i] = "ŘÁDEK_ZAKLÍNADLA";
+            } else if (i > 1 && ZR_TYP[i - 1] == "POLOŽKA_SEZNAMU" || ZR_TYP[i - 1] == "POKRAČOVÁNÍ_POLOŽKY_SEZNAMU") {
+                ZR_TYP[i] = "POKRAČOVÁNÍ_POLOŽKY_SEZNAMU";
             } else {
-                ShoditFatalniVyjimku("Nemohu správně načíst soubor " SOUBORY_PREKLADU "/ucs_ikony.dat!");
+                ZR_TYP[i] = "NORMÁLNÍ";
             }
-            if (length(UCS_IKONY) < 1 || length(UCS_IKONY_PISMA) < 1) {
-                UCS_IKONY = VYCHOZI_UCS_IKONA;
-                UCS_IKONY_PISMA = VYCHOZI_UCS_IKONA_PISMO;
-            }
-            if (length(UCS_IKONY) == length(UCS_IKONY_PISMA)) {
-                #print "LADĚNÍ: Načteno " length(UCS_IKONY) " ikon." > "/dev/stderr";
-            } else {
-                ShoditFatalniVyjimku("Interní chyba: počet ikon neodpovídá počtu informací o písmu! (" length(UCS_IKONY) " != " length(UCS_IKONY_PISMA) ")!");
-            }
-            if (HODNOTA_DIREKTIVY == "*") {break}
-            while (HODNOTA_DIREKTIVY > length(UCS_IKONY)) {
-                UCS_IKONY = UCS_IKONY UCS_IKONY;
-                UCS_IKONY_PISMA = UCS_IKONY_PISMA UCS_IKONY_PISMA;
-            }
-            if (HODNOTA_DIREKTIVY < length(UCS_IKONY)) {
-                UCS_IKONY = substr(UCS_IKONY, 1, HODNOTA_DIREKTIVY);
-                UCS_IKONY_PISMA = substr(UCS_IKONY_PISMA, 1, HODNOTA_DIREKTIVY);
-            }
-            break;
-
-        case "KOMPAKTNÍSEZNAM":
-            #printf("LADĚNÍ: NASTAVIT: NR = (%s); K_S_NR = (%s)\n", NR, KOMPAKTNI_SEZNAM_NR) > "/dev/pts/5";
-            KOMPAKTNI_SEZNAM_NR = NR + 1;
-            break;
-
-        case "PARAMETRY":
-            if (HODNOTA_DIREKTIVY != "") {
-                ShoditFatalniVyjimku("Direktiva !PARAMETRY nepřijímá žádný parametr!");
-            }
-            if (BUDOU_PARAMETRY_PRIKAZU != 0) {
-                ShoditFatalniVyjimku("Neočekávaný stav direktivy !PARAMETRY: " BUDOU_PARAMETRY_PRIKAZU);
-            }
-            BUDOU_PARAMETRY_PRIKAZU = 1;
-            break;
-
-        case "ŠTÍTKY":
-            break;
-
-        case "ÚZKÝREŽIM":
-            if (toupper(HODNOTA_DIREKTIVY) == "ZAP") {
-                printf("%s", ZapnoutUzkyRezim());
-            } else if (toupper(HODNOTA_DIREKTIVY) == "VYP") {
-                printf("%s", VypnoutUzkyRezim());
-            } else {
-                ShoditFatalniVyjimku("Neznámá hodnota direktivy ÚZKÝREŽIM: \"" HODNOTA_DIREKTIVY "\"");
-            }
-            break;
-
-        case "VZORNÍKIKON":
-            if (JE_ODSTAVEC_K_UKONCENI) {
-                printf("%s", KonecOdstavcu());
-                JE_ODSTAVEC_K_UKONCENI = 0;
-            }
-            n = length(UCS_IKONY);
-            delete ikony;
-            for (i = 1; i <= n; ++i) {
-                ikony[i] = substr(UCS_IKONY, i, 1) "\t" substr(UCS_IKONY_PISMA, i, 1);
-            }
-            printf("%s", VzornikIkon(n, ikony));
-            delete ikony;
-            break;
-
-        default:
-            ShoditFatalniVyjimku("Neznámá direktiva na řádku: \"" $0 "\"!");
+        }
+        if (ZR_TYP[i] == "") {ShoditFatalniVyjimku("Vnitřní chyba: nebylo možno určit typ zdrojové řádky!")}
+        #
+        # LADĚNÍ:
+        #    printf("\n<TYP=%s>%s>", PREDCHOZI_TYP_RADKU, TYP_RADKU);
     }
-#
-#    print "LADĚNÍ: Direktiva „" DIREKTIVA "“ = \"" HODNOTA_DIREKTIVY "\"" > "/dev/stderr";
-#
-    next;
-}
+    ++ZR_POCET;
+    ZR_CISLO[ZR_POCET] = ZR_CISLO[ZR_POCET - 1] + 1;
+    ZR_TEXT[ZR_POCET] = "";
+    ZR_TYP[ZR_POCET] = "KONEC";
 
-TYP_RADKU == "ZAKLINADLO" {
-    if (PREDCHOZI_TYP_RADKU == "ZAKLINADLO") {
-        ShoditFatalniVyjimku("Zaklínadlo nesmí následovat bezprostředně po předchozím zaklínadle. Vložte před něj prázdný řádek.");
-    }
-    if ($0 ~ /<br>$/) {
-        $0 = substr($0, 1, length($0) - 4);
-    }
-    TEXT_ZAKLINADLA = FormatovatRadek(substr($0, 4, length($0) - 4));
-    next;
-}
+    while (++o in OSNOVA && OSNOVA[o] !~ /^ZAKLÍNADLO\t/) {}
+    if (o in OSNOVA) {ShoditFatalniVyjimku("Přebytečné zaklínadlo v osnově! Pravděpodobně jde o vnitřní chybu mechanismu překladu (o = " o ").")}
 
-TYP_RADKU == "POZNAMKA" {
-    if ($0 ~ /<br>$/) {
-        $0 = substr($0, 1, length($0) - 4);
+    # Parametry příkazů:
+    i = 1;
+    while (i <= ZR_POCET) {
+        if (ZR_TYP[i] == "DIREKTIVA" && ZR_TEXT[i] ~ /^![Pp][Aa][Rr][Aa][Mm][Ee][Tt][Rr][Yy]:( |$)/) {
+            while (++i <= ZR_POCET && ZR_TYP[i] == "PRÁZDNÝ");
+            if (i > ZR_POCET || ZR_TYP[i] != "POLOŽKA_SEZNAMU") {
+                FNR = ZR_CISLO[i];
+                ShoditFatalniVyjimku("Po direktivě !Parametry musí následovat seznam!");
+            }
+            do {
+                ZR_TYP[i++] = "PARAMETR_PŘÍKAZU";
+            } while (ZR_TYP[i] == "POLOŽKA_SEZNAMU");
+            if (ZR_TYP[i] != "PRÁZDNÝ") {ShoditFatalniVyjimku("Parametry příkazů musejí být ukončeny prázdným řádkem!")}
+        }
+        ++i;
     }
-    if (!JE_UVNITR_ZAKLINADLA) {
-        ShoditFatalniVyjimku("Poznámky jsou v této verzi podporovány pouze uvnitř zaklínadel.");
-        #printf("%s", Poznamka(FormatovatRadek(substr($0, 5, length($0) - 5)), JE_UVNITR_ZAKLINADLA));
-    } else {
-        INDEX_POZNAMKY_POD_CAROU = length(ppcall);
-        CISLO_POZNAMKY_POD_CAROU = INDEX_POZNAMKY_POD_CAROU + 1;
-        TEXT_POZNAMKY_POD_CAROU = FormatovatRadek(substr($0, 5, length($0) - 5));
-        ppc[length(ppc)] = CISLO_POZNAMKY_POD_CAROU;
-        ppt[CISLO_POZNAMKY_POD_CAROU] = TEXT_POZNAMKY_POD_CAROU;
-        ppcall[INDEX_POZNAMKY_POD_CAROU] = CISLO_POZNAMKY_POD_CAROU;
-        pptall[CISLO_POZNAMKY_POD_CAROU] = TEXT_POZNAMKY_POD_CAROU;
-    }
-    next;
-}
 
-TYP_RADKU == "RADEK_ZAKLINADLA" {
-    if ($0 ~ /<br>$/) {
-        $0 = substr($0, 1, length($0) - 4);
+    # LADĚNÍ:
+    for (i = 1; i <= ZR_POCET; ++i) {
+        printf("[%3d] %s <%s> (%s/%s)=(%s//%s)%s\n", ZR_CISLO[i], ZR_TEXT[i], ZR_TYP[i], ZR_C_SEKCE[i], ZR_C_PODSEKCE[i],
+               ZR_N_SEKCE[i], ZR_N_PODSEKCE[i], ZR_HES[i] != "" ? "(heš=" ZR_HES[i] ")" : "") > "/home/kalandira/ram/" NAZEV_PODKAPITOLY ".md";
     }
-    if ($0 ~ /^<odsadit[1-8]>./) {
-        UROVEN = substr($0, 9, 1);
-        $0 = substr($0, 11);
-        if ($0 ~ /^!: ?/) {
-            ShoditFatalniVyjimku("Odsazení akcí není umožněno!");
+    #ShoditFatalniVyjimku("Test");
+
+    # 3. Otevřít kapitolu
+    delete ppcall;
+    delete pptall;
+    printf("%s", ZacatekKapitoly((NAZEV_NADKAPITOLY != "" ? NAZEV_NADKAPITOLY "/" : "") NAZEV_PODKAPITOLY,
+        C_KAPITOLY, STITKY, STITKY_XHES, OSNOVA, IKONA_KAPITOLY, JE_DODATEK));
+    if (tolower(NAZEV_PODKAPITOLY) == "licence") {
+        printf("%s", ZapnoutRezimLicence());
+    }
+
+    # 4. Zpracovat zdrojový kód
+    for (i = 1; i <= ZR_POCET; ++i) {
+        FNR = ZR_CISLO[i];
+
+        # Zvláštní situace: předěl odstavce
+        if (i > 1 && ZR_TYP[i - 1] == "NORMÁLNÍ" && ZR_TYP[i] == "PRÁZDNÝ" && ZR_TYP[i + 1] == "NORMÁLNÍ") {
+            printf("%s", PredelOdstavcu());
+            continue;
         }
 
-    } else if ($0 ~ /^\^\^./) {
-        UROVEN = UROVEN_PREAMBULE;
-        $0 = substr($0, 3);
-    } else if (match($0, /^<odsadit[0-9]+>./)) {
-        ShoditFatalniVyjimku("Nepodporovaná úroveň odsazení: " substr($0, RSTART, RLENGTH) "!");
-    } else if (match($0, /^!: ?/)) {
-        UROVEN = UROVEN_AKCE;
-        $0 = substr($0, 1 + RLENGTH);
-    } else {
-        UROVEN = 0;
-    }
-    VypsatZahlaviZaklinadla();
-    if (UROVEN == 0 && $0 == "?") {
-        printf("%s", RadekZaklinadla(ReseniNezname(), 0, ""));
-    } else {
-        gsub(/\s*⊨\s*/, "⊨");
-        s = FormatovatRadek($0);
-        i = index(s, "⊨");
-        if (i == 0) {
-            printf("%s", RadekZaklinadla(s, UROVEN, ""));
-        } else if (UROVEN != UROVEN_AKCE) {
-            printf("%s", RadekZaklinadla(substr(s, 1, i - 1), UROVEN, substr(s, i + 1)));
-        } else {
-            ShoditFatalniVyjimku("Dělení akce znakem ⊨ není podporováno!");
+        pokracuje = i > 1 && ZR_TYP[i - 1] == ZR_TYP[i];
+
+        # Ukončit předchozí typ řádku
+        if (i > 1 && !pokracuje) {
+            switch (ZR_TYP[i - 1]) {
+                case "NORMÁLNÍ":
+                    printf("%s", KonecOdstavcu());
+                    break;
+
+                case "ODSAZENÝ_1":
+                case "ODSAZENÝ_2":
+                case "ODSAZENÝ_3":
+                case "ODSAZENÝ_4":
+                case "ODSAZENÝ_5":
+                case "ODSAZENÝ_6":
+                    printf("%s", KonecOdsazenehoOdstavce(substr(ZR_TYP[i - 1], 10)));
+                    break;
+
+                case "PARAMETR_PŘÍKAZU":
+                    printf("%s", KonecParametruPrikazu());
+                    break;
+
+                case "POLOŽKA_SEZNAMU":
+                    if (ZR_TYP[i] != "POKRAČOVÁNÍ_POLOŽKY_SEZNAMU") {
+                        printf("%s", KonecPolozkySeznamu(1));
+                        printf("%s", KonecSeznamu(1));
+                    }
+                    break;
+
+                case "POKRAČOVÁNÍ_POLOŽKY_SEZNAMU":
+                    printf("%s", KonecPolozkySeznamu(1));
+                    printf("%s", ZR_TYP[i] != "POLOŽKA_SEZNAMU" ? KonecSeznamu(1) : ZacatekPolozkySeznamu(1));
+                    break;
+            }
+        }
+
+        # Zpracovat řádku podle jejího typu
+        switch (ZR_TYP[i]) {
+            case "NADPIS":
+                if (ZR_C_PODSEKCE[i - 1] != 0 && ZR_C_PODSEKCE[i - 1] != ZR_C_PODSEKCE[i]) {
+                    UzavritPodsekci();
+                }
+                if (ZR_C_SEKCE[i - 1] != ZR_C_SEKCE[i]) {
+                    if (ZR_C_SEKCE[i - 1] != 0) {UzavritSekci()}
+                    if (ZR_C_SEKCE[i] != 0) {OtevritSekci(ZR_C_SEKCE[i], ZR_N_SEKCE[i])}
+                }
+                if (ZR_C_PODSEKCE[i] != 0 && ZR_C_PODSEKCE[i - 1] != ZR_C_PODSEKCE[i]) {
+                    OtevritPodsekci(ZR_C_PODSEKCE[i], ZR_N_PODSEKCE[i]);
+                }
+                break;
+
+            case "OBRÁZEK":
+                match(ZR_TEXT[i], /\]\(/);
+                alt = substr(ZR_TEXT[i], 3, RSTART - 3);
+                src = substr(ZR_TEXT[i], RSTART + 2, length(ZR_TEXT[i]) - RSTART - 2);
+                printf("%s", Obrazek(ZpracujZnaky(src), ZpracujZnaky(alt), src, alt));
+                break;
+
+            case "NORMÁLNÍ":
+                if (!pokracuje) {
+                    if (i < 2 || (ZR_TYP[i - 2] != "NORMÁLNÍ" || ZR_TYP[i - 1] != "PRÁZDNÝ")) { # nebyl-li předěl
+                        # + dodatečné pravidlo: v kapitole „Licence“ se všechny začátky odstavců uvažují jako po nadpisu (vypne odsazení).
+                        printf("%s", ZacatekOdstavcu(i == 1 || ZR_TYP[i - 1] == "NADPIS" || tolower(KAPITOLA) == "licence" || ZR_TEXT[i] ~ /^<neodsadit>/));
+                    }
+                }
+                s = gensub(/^<neodsadit>/, "", 1, ZR_TEXT[i]);
+                printf("%s\n", FormatovatRadek(s, FR_STAV_MIMO_ZAKLINADLO));
+                break;
+
+            case "ODSAZENÝ_1":
+            case "ODSAZENÝ_2":
+            case "ODSAZENÝ_3":
+            case "ODSAZENÝ_4":
+            case "ODSAZENÝ_5":
+            case "ODSAZENÝ_6":
+                if (!pokracuje) {
+                    printf("%s", ZacatekOdsazenehoOdstavce(substr(ZR_TYP[i], 10)));
+                }
+                printf("%s\n", FormatovatRadek(ZR_TEXT[i], FR_STAV_MIMO_ZAKLINADLO));
+                break;
+
+            case "POLOŽKA_SEZNAMU":
+                if (pokracuje) {
+                    printf("%s", KonecPolozkySeznamu(1));
+                    printf("%s", ZacatekPolozkySeznamu(1));
+                } else if (i == 1 || (ZR_TYP[i - 1] != "POLOŽKA_SEZNAMU" && ZR_TYP[i - 1] != "POKRAČOVÁNÍ_POLOŽKY_SEZNAMU")) {
+                    printf("%s", ZacatekSeznamu(1, NR == KOMPAKTNI_SEZNAM_NR || (tolower(ZR_N_SEKCE[i]) !~ /^(tipy a.zkušenosti|definice|úvod)/ && tolower(KAPITOLA) !~ /^(koncepce projektu)/)));
+                    printf("%s", ZacatekPolozkySeznamu(1));
+                }
+                printf("%s\n", FormatovatRadek(ZR_TEXT[i], FR_STAV_MIMO_ZAKLINADLO));
+                break;
+
+            case "PARAMETR_PŘÍKAZU":
+                if (!pokracuje) {
+                    printf("%s", ZacatekParametruPrikazu());
+                }
+                if (!match(ZR_TEXT[i], /\s*::\s*/)) {
+                    ShoditFatalniVyjimku("Parametr příkazů musí obsahovat oddělovač „::“!");
+                }
+                parametr = gensub(/\f/, "", "g", substr(ZR_TEXT[i], 1, RSTART - 1));
+                gsub(/\\?-/, "\\-", parametr);
+                #gsub(/\\-/, "\f", parametr);
+                #gsub("-|\f", "\\-", parametr);
+                s = substr(ZR_TEXT[i], RSTART + RLENGTH);
+                #ShoditFatalniVyjimku(sprintf("LADĚNÍ: Parametr: <%s>=<%s>+<%s>\n", ZR_TEXT[i], parametr, s));
+                printf("%s\n", ParametrPrikazu(\
+                    FormatovatRadek(parametr, FR_STAV_MIMO_ZAKLINADLO),
+                    FormatovatRadek(s, FR_STAV_MIMO_ZAKLINADLO)));
+                break;
+
+            case "POKRAČOVÁNÍ_POLOŽKY_SEZNAMU":
+                printf("%s\n", FormatovatRadek(ZR_TEXT[i], FR_STAV_MIMO_ZAKLINADLO));
+                break;
+
+            case "DIREKTIVA":
+                match(ZR_TEXT[i], /[^!][^:]*:/);
+                DIREKTIVA = toupper(substr(ZR_TEXT[i], RSTART, RLENGTH - 1));
+                HODNOTA_DIREKTIVY = substr(ZR_TEXT[i], RSTART + RLENGTH);
+                if (HODNOTA_DIREKTIVY ~ /^ /) {
+                    HODNOTA_DIREKTIVY = substr(HODNOTA_DIREKTIVY, 2);
+                }
+                #print "LADĚNÍ: Direktiva !" DIREKTIVA "=" HODNOTA_DIREKTIVY "\\n" > "/dev/stderr";
+                switch (DIREKTIVA) {
+                    case "FIXACEIKON":
+                        if (HODNOTA_DIREKTIVY !~ /^([0123456789]+|\*)$/) {ShoditFatalniVyjimku("Neplatný parametr direktivy !FixaceIkon: \"" HODNOTA_DIREKTIVY "\"!")}
+                        UCS_IKONY = VYCHOZI_UCS_IKONA;
+                        UCS_IKONY_PISMA = VYCHOZI_UCS_IKONA_PISMO;
+                        if (HODNOTA_DIREKTIVY ~ /^0+$/) {break} # "!FixaceIkon: 0 vrací výchozí nastavení"
+                        if ((getline UCS_IKONY < (SOUBORY_PREKLADU "/ucs_ikony.dat")) && (getline UCS_IKONY_PISMA < (SOUBORY_PREKLADU "/ucs_ikony.dat"))) {
+                            close(SOUBORY_PREKLADU "/ucs_ikony.dat");
+                        } else {
+                            ShoditFatalniVyjimku("Nemohu správně načíst soubor " SOUBORY_PREKLADU "/ucs_ikony.dat!");
+                        }
+                        if (length(UCS_IKONY) < 1 || length(UCS_IKONY_PISMA) < 1) {
+                            UCS_IKONY = VYCHOZI_UCS_IKONA;
+                            UCS_IKONY_PISMA = VYCHOZI_UCS_IKONA_PISMO;
+                        }
+                        if (length(UCS_IKONY) == length(UCS_IKONY_PISMA)) {
+                            #print "LADĚNÍ: Načteno " length(UCS_IKONY) " ikon." > "/dev/stderr";
+                        } else {
+                            ShoditFatalniVyjimku("Interní chyba: počet ikon neodpovídá počtu informací o písmu! (" length(UCS_IKONY) " != " length(UCS_IKONY_PISMA) ")!");
+                        }
+                        if (HODNOTA_DIREKTIVY == "*") {break}
+                        while (HODNOTA_DIREKTIVY > length(UCS_IKONY)) {
+                            UCS_IKONY = UCS_IKONY UCS_IKONY;
+                            UCS_IKONY_PISMA = UCS_IKONY_PISMA UCS_IKONY_PISMA;
+                        }
+                        if (HODNOTA_DIREKTIVY < length(UCS_IKONY)) {
+                            UCS_IKONY = substr(UCS_IKONY, 1, HODNOTA_DIREKTIVY);
+                            UCS_IKONY_PISMA = substr(UCS_IKONY_PISMA, 1, HODNOTA_DIREKTIVY);
+                        }
+                        break;
+
+                    case "KOMPAKTNÍSEZNAM":
+                        #printf("LADĚNÍ: NASTAVIT: NR = (%s); K_S_NR = (%s)\n", NR, KOMPAKTNI_SEZNAM_NR) > "/dev/pts/5";
+                        KOMPAKTNI_SEZNAM_NR = NR + 1;
+                        break;
+
+                    case "PARAMETRY":
+                        if (HODNOTA_DIREKTIVY != "") {
+                            ShoditFatalniVyjimku("Direktiva !PARAMETRY nepřijímá žádný parametr!");
+                        }
+                        # zpracování je jinde
+                        break;
+
+                    case "ŠTÍTKY":
+                        break;
+
+                    case "ÚZKÝREŽIM":
+                        if (toupper(HODNOTA_DIREKTIVY) == "ZAP") {
+                            printf("%s", ZapnoutUzkyRezim());
+                        } else if (toupper(HODNOTA_DIREKTIVY) == "VYP") {
+                            printf("%s", VypnoutUzkyRezim());
+                        } else {
+                            ShoditFatalniVyjimku("Neznámá hodnota direktivy ÚZKÝREŽIM: \"" HODNOTA_DIREKTIVY "\"");
+                        }
+                        break;
+
+                    case "VZORNÍKIKON":
+                        n = length(UCS_IKONY);
+                        delete ikony;
+                        for (i = 1; i <= n; ++i) {
+                            ikony[i] = substr(UCS_IKONY, i, 1) "\t" substr(UCS_IKONY_PISMA, i, 1);
+                        }
+                        printf("%s", VzornikIkon(n, ikony));
+                        delete ikony;
+                        break;
+
+                    case "OBLÍBENÁZAKLÍNADLA":
+                        delete indexyOblZakl;
+                        pocetOblZakl = 0;
+                        for (j = 1; j <= ZR_POCET; ++j) {
+                            if (ZR_HES[j] in OBLIBENE_HESE) {
+                                indexyOblZakl[++pocetOblZakl] = j;
+                            }
+                        }
+                        if (pocetOblZakl > 0) {
+                            printf("%s", ZacatekOblibenychZaklinadel(pocetOblZakl));
+                            for (j = 1; j <= pocetOblZakl; ++j) {
+                                # TODO: ...
+                            }
+                            printf("%s", KonecOblibenychZaklinadel(pocetOblZakl));
+                        }
+                        break;
+
+                    default:
+                        ShoditFatalniVyjimku("Neznámá direktiva na řádku: \"" ZR_TEXT[i] "\"!");
+                }
+                #
+                #    print "LADĚNÍ: Direktiva „" DIREKTIVA "“ = \"" HODNOTA_DIREKTIVY "\"" > "/dev/stderr";
+                #
+                break;
+
+            case "ZAKLÍNADLO":
+                puvodniI = i;
+                i += VypsatZaklinadlo(i);
+                #printf("LADĚNÍ: i: %d[%d]<%s> => %d[%d]<%s> (posun o %d)\n", puvodniI, ZR_CISLO[puvodniI], ZR_TYP[puvodniI], i, ZR_CISLO[i], ZR_TYP[i], i - puvodniI) > "/dev/stderr";
+                break;
+
+            case "POZNÁMKA":
+            case "ŘÁDEK_ZAKLÍNADLA":
+                ShoditFatalniVyjimku("Vnitřní chyba: Neočekávaný typ řádky: " ZR_TYP[i] "(i = " i ", text:" ZR_TEXT[i] ")");
         }
     }
-    next;
-}
 
-TYP_RADKU == "NEPRAZDNY" {
-    next;
-}
+    # 5. Uzavřít všechny konstrukce a kapitolu
+    if (C_SEKCE != 0) {UzavritSekci()}
+    else if (C_PODSEKCE != 0) {UzavritPodsekci()}
 
-TYP_RADKU == "PRAZDNY" {
-    next;
-}
-
-# Pokud nebyl daný typ řádku zpracován, pravděpodobně nebyl implementován,
-# což je fatální chyba.
-{
-    ShoditFatalniVyjimku("Nezpracovany typ radku: " TYP_RADKU);
+    if (tolower(NAZEV_PODKAPITOLY) == "licence") {
+        printf("%s", VypnoutRezimLicence());
+    }
+    printf("%s", KonecKapitoly(KAPITOLA, ppcall, pptall));
+    return 0;
 }
 
 END {
@@ -965,31 +1046,5 @@ END {
     if (FATALNI_VYJIMKA) {
         exit FATALNI_VYJIMKA;
     }
-
-    # Neukončený komentář?
-    if (JE_UVNITR_KOMENTARE) {
-        ShoditFatalniVyjimku("Komentář otevřený samostatným řádkem \"<!--\" musí být ukončený v rámci téhož zdrojového souboru samostatným řádkem \"-->\".");
-    }
-
-    # Řádně ukončit poslední otevřený typ řádku.
-    if (TYP_RADKU != "") {
-        PREDCHOZI_TYP_RADKU = TYP_RADKU;
-        TYP_RADKU = "PRAZDNY";
-        UkoncitPredchoziTypRadku();
-        if (JE_ODSTAVEC_K_UKONCENI) {
-            printf("%s", KonecOdstavcu());
-        }
-    }
-
-    # Řádně ukončit kapitolu, je-li otevřena.
-    if (PODSEKCE != "")
-        printf("%s", KonecPodsekce(KAPITOLA, SEKCE, PODSEKCE));
-    if (SEKCE != "")
-        printf("%s", KonecSekce(KAPITOLA, SEKCE));
-    if (KAPITOLA != "") {
-        if (tolower(KAPITOLA) == "licence") {
-            printf("%s", VypnoutRezimLicence());
-        }
-        printf("%s", KonecKapitoly(KAPITOLA, ppcall, pptall));
-    }
+    main();
 }
