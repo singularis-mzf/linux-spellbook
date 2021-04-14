@@ -25,6 +25,7 @@ Poznámky:
 
 !Štítky: {program}{emulace}{hry}
 !FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

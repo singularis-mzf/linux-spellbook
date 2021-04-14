@@ -19,6 +19,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 !Štítky: {tematický okruh}{adresáře}{hledání}
 !FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

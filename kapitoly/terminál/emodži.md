@@ -18,7 +18,8 @@ Původní název kapitoly: Barvy, titulek a výzva terminálu
 
 !Štítky: {Unicode}{emodži}
 !FixaceIkon: 1754
-!ÚzkýRežim: ZAP
+!OblíbenáZaklínadla:
+!ÚzkýRežim: zap
 
 ## Úvod
 

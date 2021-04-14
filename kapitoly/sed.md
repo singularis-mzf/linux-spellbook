@@ -27,6 +27,7 @@ https://www.sallyx.org/sally/linux/prikazy/sed
 
 !Štítky: {program}{syntaxe}{zpracování textu}
 !FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

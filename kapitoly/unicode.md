@@ -21,6 +21,8 @@ https://unix.stackexchange.com/questions/198849/how-can-i-find-the-common-name-f
 # Unicode a emotikony
 
 !Štítky: {tematický okruh}{emotikony}{znaky}
+!FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

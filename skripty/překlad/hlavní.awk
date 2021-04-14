@@ -401,18 +401,18 @@ function VypsatZaklinadlo(iZacatek, jakoOblibene,    c, i, iKonec, iPPC, ikona, 
         ikona = substr(UCS_IKONY, 1 + c, 1) "\t" substr(UCS_IKONY_PISMA, 1 + c, 1);
         if (!jakoOblibene) {
             s = ZacatekZaklinadla(\
-                C_KAPITOLY, NAZEV_NADKAPITOLY, NAZEV_PODKAPITOLY, C_SEKCE, C_SEKCE ? SEKCE : "", C_PODSEKCE, C_PODSEKCE ? PODSEKCE : "",
+                C_KAPITOLY, NAZEV_NADKAPITOLY, NAZEV_PODKAPITOLY, ZR_C_SEKCE[iZacatek], ZR_N_SEKCE[iZacatek], ZR_C_PODSEKCE[iZacatek], ZR_N_PODSEKCE[iZacatek],
                 ++C_ZAKLINADLA, tz, HES_ZAKLINADLA,
                 ikona, ppc, ppt, 0);
         } else {
             s = ZacatekZaklinadla(\
-                C_KAPITOLY, NAZEV_NADKAPITOLY, NAZEV_PODKAPITOLY, C_SEKCE, C_SEKCE ? SEKCE : "", C_PODSEKCE, C_PODSEKCE ? PODSEKCE : "",
+                C_KAPITOLY, NAZEV_NADKAPITOLY, NAZEV_PODKAPITOLY, ZR_C_SEKCE[iZacatek], ZR_N_SEKCE[iZacatek], ZR_C_PODSEKCE[iZacatek], ZR_N_PODSEKCE[iZacatek],
                 ++CISLO_OBLIBENEHO_ZAKLINADLA, tz, HES_ZAKLINADLA,
                 ikona, ppc, ppt, 1);
         }
     } else {
         # zaklínadlo bez titulku
-        s = ZacatekZaklinadla(C_KAPITOLY, NAZEV_NADKAPITOLY, NAZEV_PODKAPITOLY, C_SEKCE, C_SEKCE ? SEKCE : "", C_PODSEKCE, C_PODSEKCE ? PODSEKCE : "",
+        s = ZacatekZaklinadla(C_KAPITOLY, NAZEV_NADKAPITOLY, NAZEV_PODKAPITOLY, ZR_C_SEKCE[iZacatek], ZR_N_SEKCE[iZacatek], ZR_C_PODSEKCE[iZacatek], ZR_N_PODSEKCE[iZacatek],
             0, "", "", "", ppc, ppt, 0);
     }
     printf("%s", s);
@@ -588,6 +588,7 @@ BEGIN {
     FATALNI_VYJIMKA = 0;
     JE_UVNITR_ZAKLINADLA = 0;
     TEXT_ZAKLINADLA = NULL_STRING;
+    JE_ZAPNUTY_UZKY_REZIM = 0;
 
     UCS_IKONY = VYCHOZI_UCS_IKONA = "♣";
     UCS_IKONY_PISMA = VYCHOZI_UCS_IKONA_PISMO = "L";
@@ -620,11 +621,13 @@ BEGIN {
 
     # Načíst oblíbená zaklínadla:
     delete OBLIBENE_HESE;
-    for (i = 0; i in OSNOVA; ++i) {
-        if (OSNOVA[i] ~ /^ZAKLÍNADLO\tf/) {
-            OBLIBENE_HESE[gensub(/^[^\t]+\t([^\t]+)\t.*$/, "", 1, OSNOVA[i])] = 1; # DOČASNÉ ŘEŠENÍ
+    while (getline < "oblíbená-zaklínadla.seznam") {
+        if ($0 ~ /^[^#]/ && (s = gensub(/\s.*$/, "", 1)) != "") {
+            if (s !~ /^x[0123456789abcdef]+$/) {ShoditFatalniVyjimku("Chybný formát řádky v seznamu oblíbených zaklínadel: \"" $0 "\"!")}
+            OBLIBENE_HESE[s] = 1;
         }
     }
+    #for (s in OBLIBENE_HESE) {printf("LADĚNÍ: Oblíbená heš: %s\n", s) > "/dev/stderr"}
 }
 {
     vstup[vstup_pocet = FNR] = $0;
@@ -780,10 +783,10 @@ function main(    i, o, s, pozice, uroven, pokracuje, c_sekce, n_sekce, c_podsek
     }
 
     # LADĚNÍ:
-    for (i = 1; i <= ZR_POCET; ++i) {
-        printf("[%3d] %s <%s> (%s/%s)=(%s//%s)%s\n", ZR_CISLO[i], ZR_TEXT[i], ZR_TYP[i], ZR_C_SEKCE[i], ZR_C_PODSEKCE[i],
-               ZR_N_SEKCE[i], ZR_N_PODSEKCE[i], ZR_HES[i] != "" ? "(heš=" ZR_HES[i] ")" : "") > "/home/kalandira/ram/" NAZEV_PODKAPITOLY ".md";
-    }
+    #for (i = 1; i <= ZR_POCET; ++i) {
+        #printf("[%3d] %s <%s> (%s/%s)=(%s//%s)%s\n", ZR_CISLO[i], ZR_TEXT[i], ZR_TYP[i], ZR_C_SEKCE[i], ZR_C_PODSEKCE[i],
+               #ZR_N_SEKCE[i], ZR_N_PODSEKCE[i], ZR_HES[i] != "" ? "(heš=" ZR_HES[i] ")" : "") > "/tmp/" NAZEV_PODKAPITOLY ".md";
+    #}
     #ShoditFatalniVyjimku("Test");
 
     # 3. Otevřít kapitolu
@@ -976,8 +979,10 @@ function main(    i, o, s, pozice, uroven, pokracuje, c_sekce, n_sekce, c_podsek
                     case "ÚZKÝREŽIM":
                         if (toupper(HODNOTA_DIREKTIVY) == "ZAP") {
                             printf("%s", ZapnoutUzkyRezim());
+                            JE_ZAPNUTY_UZKY_REZIM = 1;
                         } else if (toupper(HODNOTA_DIREKTIVY) == "VYP") {
                             printf("%s", VypnoutUzkyRezim());
+                            JE_ZAPNUTY_UZKY_REZIM = 0;
                         } else {
                             ShoditFatalniVyjimku("Neznámá hodnota direktivy ÚZKÝREŽIM: \"" HODNOTA_DIREKTIVY "\"");
                         }
@@ -994,6 +999,7 @@ function main(    i, o, s, pozice, uroven, pokracuje, c_sekce, n_sekce, c_podsek
                         break;
 
                     case "OBLÍBENÁZAKLÍNADLA":
+                        if (JE_ZAPNUTY_UZKY_REZIM) {ShoditFatalniVyjimku("Direktiva !OblíbenáZaklínadla není dovolena v úzkém režimu!")}
                         delete indexyOblZakl;
                         pocetOblZakl = 0;
                         for (j = 1; j <= ZR_POCET; ++j) {
@@ -1002,9 +1008,10 @@ function main(    i, o, s, pozice, uroven, pokracuje, c_sekce, n_sekce, c_podsek
                             }
                         }
                         if (pocetOblZakl > 0) {
+                            CISLO_OBLIBENEHO_ZAKLINADLA = 0;
                             printf("%s", ZacatekOblibenychZaklinadel(pocetOblZakl));
                             for (j = 1; j <= pocetOblZakl; ++j) {
-                                # TODO: ...
+                                VypsatZaklinadlo(indexyOblZakl[j], 1);
                             }
                             printf("%s", KonecOblibenychZaklinadel(pocetOblZakl));
                         }

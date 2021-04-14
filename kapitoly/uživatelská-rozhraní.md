@@ -20,7 +20,8 @@ Poznámky:
 # Uživatelská rozhraní skriptů
 
 !Štítky: {tematický okruh}{programování}{skripty}{bash}{GUI}{TUI}
-
+!FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

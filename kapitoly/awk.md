@@ -26,6 +26,7 @@ Poznámka:
 
 !Štítky: {program}{syntaxe}{zpracování textu}{programování}
 !FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

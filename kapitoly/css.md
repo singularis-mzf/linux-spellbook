@@ -20,7 +20,8 @@ Poznámky:
 # CSS
 
 !Štítky: {tematický okruh}{syntaxe}
-
+!FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

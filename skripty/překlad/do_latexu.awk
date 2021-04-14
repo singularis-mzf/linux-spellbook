@@ -340,6 +340,15 @@ function KonecParametruPrikazu() {
     return "\\end{parametryprikazu}\n"
 }
 
+function ZacatekOblibenychZaklinadel(pocet) {
+    DO_LATEXU_ODSTAVEC_PRED_ZAKLINADLEM = 0;
+    return "\\sekcex{Oblíbená zaklínadla}%\n";
+}
+
+function KonecOblibenychZaklinadel(pocet) {
+    return "";
+}
+
 function ZacatekZaklinadla(\
     cisloKapitoly,
     nazevNadkapitoly,
@@ -372,6 +381,9 @@ function ZacatekZaklinadla(\
         ax = ax DoLatexuIkonaZaklinadla(ikona) "}{";
         # #4 = titulek zaklínadla + \footnotemark
         # Poznámka: kvůli mechanismu „postprocess“ je potřeba oddělit titulek zaklínadla na víceméně samostatný řádek.
+        if (samostatne) {
+            ax = ax "\\underline{\\emph{" gensub(/^[Zz][Aa][Kk][Ll][íÍ][nN][Aa][Dd][Ll][Aa]:? ?/, "", 1, nazevSekce) "}}\\\\" (nazevPodsekce != "" ? "\\underline{\\emph{" nazevPodsekce "}}\\\\" : "");
+        }
         ax = ax "%\n" textZaklinadla;
         if (length(cislaPoznamek) > 0) {
             base = AlokovatPoznamkuPodCarou();

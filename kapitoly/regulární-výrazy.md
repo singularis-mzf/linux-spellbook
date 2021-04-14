@@ -24,6 +24,7 @@ Náměty k vylepšení:
 
 !Štítky: {syntaxe}{zpracování textu}{bash}
 !FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

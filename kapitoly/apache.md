@@ -26,7 +26,8 @@ Poznámky:
 # Webový server Apache
 
 !Štítky: {program}{web}{server}{http}{https}
-
+!FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

@@ -21,6 +21,7 @@ Poznámky:
 
 !Štítky: {program}{virtualizace}
 !FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

@@ -24,6 +24,8 @@ Odkomentujte a vyplňte štítky, zejména rozlišení na {program} a {tematic
 -- !Štítky: {...}{...}
 -->
 
+!FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

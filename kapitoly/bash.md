@@ -33,6 +33,7 @@ Zvláštní návratové kódy ( https://tldp.org/LDP/abs/html/exitcodes.html ):
 
 !Štítky: {program}{bash}
 !FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

@@ -32,6 +32,7 @@ Poznámky:
 
 !Štítky: {tematický okruh}
 !FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

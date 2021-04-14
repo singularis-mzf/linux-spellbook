@@ -37,6 +37,7 @@ Přechod na Focal Fossa:
 
 !Štítky: {program}{editor}{ovládání}
 !FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

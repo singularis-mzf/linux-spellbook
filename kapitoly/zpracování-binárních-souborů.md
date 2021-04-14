@@ -23,6 +23,7 @@ Poznámky:
 
 !Štítky: {tematický okruh}{hešovací funkce}{kódování}{data}{bajty}
 !FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

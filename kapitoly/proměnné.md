@@ -27,6 +27,7 @@ Poznámky:
 
 !Štítky: {tematický okruh}{bash}{systém}
 !FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

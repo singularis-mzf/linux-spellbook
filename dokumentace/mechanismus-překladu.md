@@ -13,7 +13,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 -->
 # Mechanismus překladu
 
-**STAV TEXTU:** aktuální
+**STAV TEXTU:** zastaralý (nutno aktualizovat fragmenty a osnovu)
 
 ## Vstup
 

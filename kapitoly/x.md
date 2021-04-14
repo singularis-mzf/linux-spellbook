@@ -19,6 +19,8 @@ Poznámky:
 # X (ovládání oken)
 
 !Štítky: {tematický okruh}{GUI}{automatizace}{klávesnice}{myš}
+!FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

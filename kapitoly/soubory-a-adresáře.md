@@ -24,6 +24,7 @@ Poznámky:
 
 !Štítky: {tematický okruh}{adresáře}{soubory}{přístupová práva}
 !FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

@@ -16,6 +16,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 # Ostatní
 
 !Štítky: {interní kapitola}{ostatní}
+!FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

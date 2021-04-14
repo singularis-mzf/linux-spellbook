@@ -21,6 +21,7 @@ Poznámky:
 
 !Štítky: {program}{databáze}
 !FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

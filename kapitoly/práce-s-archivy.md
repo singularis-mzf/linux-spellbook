@@ -22,6 +22,7 @@ Poznámky:
 
 !Štítky: {tematický okruh}{komprese}{zip}
 !FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

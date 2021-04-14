@@ -26,6 +26,7 @@ Nebo udělat samostatnou kapitolu Zavádění a přihlašování?
 
 !Štítky: {tematický okruh}{systém}{přístupová práva}
 !FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

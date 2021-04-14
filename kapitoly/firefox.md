@@ -46,6 +46,7 @@ https://archive.mozilla.org/pub/firefox/releases/{*verze*}/source/firefox-{*verz
 
 !Štítky: {program}{internet}
 !FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

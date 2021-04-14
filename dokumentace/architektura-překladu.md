@@ -13,6 +13,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 -->
 # Architekura překladu
 
+**STAV TEXTU:** rozepsaný
+
 Samotný překlad ze zdrojového kódu v Markdownu zajišťují skripty v adresáři
 **skripty/překlad**. Jejich společným základem je skript
 [hlavní.awk](../skripty/překlad/hlavní.awk),

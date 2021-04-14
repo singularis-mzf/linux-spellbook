@@ -29,6 +29,7 @@ git config --global init.defaultBranch {název} // od git 2.28 je možno změnit
 
 !Štítky: {program}{správa verzí}
 !FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

@@ -229,6 +229,16 @@ function KonecParametruPrikazu() {
     return "KonecParametruPrikazu();\n"
 }
 
+function ZacatekOblibenychZaklinadel(pocet) {
+    ZasobnikUrovniPush("oblíbenázaklínadla");
+    return "ZacatekOblibenychZaklinadel(" pocet ");\n";
+}
+
+function KonecOblibenychZaklinadel(pocet) {
+    ZasobnikUrovniPop("oblíbenázaklínadla");
+    return "KonecOblibenychZaklinadel(" pocet ");\n";
+}
+
 function ZacatekZaklinadla( \
     cisloKapitoly,
     nazevNadkapitoly,

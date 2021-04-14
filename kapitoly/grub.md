@@ -22,6 +22,8 @@ Poznámky:
 # GRUB a jádro
 
 !Štítky: {systém}{program}
+!FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

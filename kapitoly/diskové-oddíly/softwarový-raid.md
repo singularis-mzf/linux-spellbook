@@ -16,6 +16,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 !Štítky: {tematický okruh}{systém}{RAID}
 !FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

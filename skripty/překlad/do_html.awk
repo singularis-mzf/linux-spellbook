@@ -164,6 +164,14 @@ function KonecParametruPrikazu() {
     return "</tbody></table>\n"
 }
 
+function ZacatekOblibenychZaklinadel(pocet) {
+    return "";
+}
+
+function KonecOblibenychZaklinadel(pocet) {
+    return "";
+}
+
 function ZacatekZaklinadla( \
     cisloKapitoly, # číslo > 0, pokud půjde kapitola na výstup; jinak 0
     nazevNadkapitoly, # "", pokud nemá nadkapitolu
@@ -191,7 +199,7 @@ function ZacatekZaklinadla( \
     if (textZaklinadla != "") {
         if (ikona == "") {ikona = "&nbsp;\tD"}
         vysledek = vysledek "<div class=\"zahlavi\">" \
-            gensub(/([^\t]*)\t([^\t]*)/, "<span class=\"ikona \\2\" id=\"z" hesZaklinadla "\"><span><a href=\"#z" hesZaklinadla "\">\\1</a></span></span>", 1, ikona) \
+            gensub(/([^\t]*)\t([^\t]*)/, "<span class=\"ikona \\2" (samostatne ? "" : "\" id=\"z" hesZaklinadla) "\"><span><a href=\"#z" hesZaklinadla "\">\\1</a></span></span>", 1, ikona) \
             textZaklinadla "<span class=\"cislo\">#" cisloZaklinadla " </span>";
         prvni = 1;
         if (length(cislaPoznamek) > 0) {

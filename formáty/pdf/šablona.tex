@@ -485,6 +485,9 @@
     \renewcommand*{\thesection}{}%
     \section{#2}%
 }}
+\newcommand*{\sekcex}[2][]{{%
+    \section*{#2}%
+}}
 \newcommand*{\podsekce}[2][]{{%
     \renewcommand*{\thesubsection}{\arabic{section}.\arabic{subsection}}%
     \subsection{#2}%
@@ -541,9 +544,10 @@
 }}
 
 % #1 = nastavení rodiny písma (např. \pismolmmath) + znak ikony
-\newcommand*{\ikonazaklinadla}[1]{{%
-    \raisebox{-0.08em}{{\pismodejavusans{•}}}\rule{0.2em}{0pt}%
-}}
+%\newcommand*{\ikonazaklinadla}[1]{{%
+%    \raisebox{-0.08em}{{\pismodejavusans{•}}}\rule{0.2em}{0pt}%
+%}}
+\newcommand*{\ikonazaklinadla}[1]{}
 
 %
 % Přehled podle štítků (pps)

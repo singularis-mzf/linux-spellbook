@@ -23,6 +23,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 !Štítky: {tematický okruh}{systém}{procesy}{bash}
 !FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

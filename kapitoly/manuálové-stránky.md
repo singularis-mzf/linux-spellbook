@@ -23,6 +23,7 @@ Poznámky:
 
 !Štítky: {tematický okruh}{dokumentace}{syntaxe}
 !FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

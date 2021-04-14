@@ -24,6 +24,7 @@ libdatetime-event-sunrise-perl
 
 !Štítky: {tematický okruh}{čas}
 !FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

@@ -34,6 +34,7 @@ Nevýhody btrfs:
 
 !Štítky: {tematický okruh}{systém}
 !FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

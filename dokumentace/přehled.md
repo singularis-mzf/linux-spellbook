@@ -16,7 +16,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 | Název dokumentu | Stav dokumentu |
 | :-- | :-- |
 | [Architektura překladu](architektura-překladu.md) | rozepsaný |
-| [Mechanismus překladu](mechanismus-překladu.md) | aktuální |
+| [Mechanismus překladu](mechanismus-překladu.md) | zastaralý |
 | [Návody](návody.md) | různý (dělí se na části) |
 | [Perl bez balíčku DEB](perl-bez-balíčku-deb.md) | aktuální |
 | [Syntaxe kapitol](syntaxe-kapitol.md) | aktuální |

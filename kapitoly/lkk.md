@@ -20,7 +20,8 @@ Poznámky:
 # Linux: Kniha kouzel
 
 !Štítky: {ostatní}
-!FixaceIkon: 1700
+!FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

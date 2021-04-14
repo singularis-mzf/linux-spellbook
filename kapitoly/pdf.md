@@ -20,7 +20,8 @@ Poznámky:
 # PDF
 
 !Štítky: {tematický okruh}{PDF}
-
+!FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

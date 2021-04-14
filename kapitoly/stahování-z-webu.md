@@ -25,6 +25,7 @@ Poznámky:
 
 !Štítky: {tematický okruh}{internet}
 !FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

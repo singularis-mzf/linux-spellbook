@@ -27,6 +27,7 @@ Poznámky:
 
 !Štítky: {tematický okruh}{zpracování textu}
 !FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

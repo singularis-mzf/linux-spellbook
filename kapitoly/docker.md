@@ -20,6 +20,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 !Štítky: {program}{kontejnery}{virtualizace}
 !FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

@@ -44,6 +44,7 @@ bootable := - (ne) | * (ano)
 
 !Štítky: {tematický okruh}{systém}{LVM}{ramdisk}{odkládací prostor}
 !FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

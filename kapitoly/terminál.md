@@ -29,7 +29,8 @@ __git_ps1
 
 !Štítky: {tematický okruh}{bash}{barvy}
 !FixaceIkon: 1754
-!ÚzkýRežim: ZAP
+!OblíbenáZaklínadla:
+!ÚzkýRežim: zap
 
 ## Úvod
 

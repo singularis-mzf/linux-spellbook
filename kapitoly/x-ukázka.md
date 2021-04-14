@@ -18,6 +18,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 !Štítky: {ostatní}{ukázka}
 !FixaceIkon: *
+!OblíbenáZaklínadla:
 
 ## Úvod
 Tato kapitola je jen ukázka dovoleného formátování. Je zatím poměrně omezené.

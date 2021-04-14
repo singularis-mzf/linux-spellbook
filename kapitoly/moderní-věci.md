@@ -20,7 +20,8 @@ Poznámky:
 # Moderní věci
 
 !Štítky: {tematický okruh}{ostatní}
-
+!FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

@@ -31,6 +31,7 @@ virtuálními konzolemi a X.
 
 !Štítky: {tematický okruh}{systém}{démoni}{klávesnice}
 !FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod

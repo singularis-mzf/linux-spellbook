@@ -15,6 +15,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 # LaTeX
 
 !Štítky: {program}{typografie}
+!FixaceIkon: 1754
+!OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
 ## Úvod
