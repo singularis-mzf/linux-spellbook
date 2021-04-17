@@ -45,12 +45,6 @@ tak, že namísto ukazatele na objekt uvedete na levou stranu operátoru
 v dodatečném parametru místo ukazatele řetězec s tímto názvem.
 -->
 
-Tato verze kapitoly nepokrývá export/import symbolů po skupinách.
-
-Tato verze kapitoly nepokrývá přetěžování operátorů, protože jsou s ním
-komplikované problémy. Zájemce proto odkazuji na stránky odkazované
-v sekci „Další zdroje informací“.
-
 ## Definice
 
 * **Symbol** je identifikátor funkce nebo konstanty nebo identifikátor proměnné včetně rozlišovacího symbolu „$“, „@“ nebo „%“.
@@ -410,5 +404,20 @@ Všechny použité nástroje jsou základní součástí Ubuntu, přítomnou i 
 * [YouTube: Perl Session 13](https://www.youtube.com/watch?v=eR4uPY6UH0I) (anglicky)
 * [YouTube: Perl: Packages and Modules](https://www.youtube.com/watch?v=UVlgFmg0UCs) (anglicky)
 * [Dokumentace přetěžování operátorů v Perlu](https://perldoc.perl.org/5.30.0/overload) (anglicky)
+
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* export/import symbolů po skupinách
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* přetěžování operátorů (jsou s ním komplikované problémy)
 
 !ÚzkýRežim: vyp

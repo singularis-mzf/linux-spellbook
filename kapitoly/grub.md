@@ -133,4 +133,19 @@ Oficiální dokumentace ohledně motivů:
 https://www.gnu.org/software/grub/manual/grub/html_node/Theme-file-format.html
 -->
 
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* nic
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* nic
+
 !ÚzkýRežim: vyp

@@ -331,3 +331,22 @@ Co hledat:
 <!--
 Vyžaduje balíček: libhtml-linkextractor-perl
 -->
+
+!ÚzkýRežim: zap
+
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* nic
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* nic
+
+!ÚzkýRežim: vyp

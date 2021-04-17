@@ -351,6 +351,21 @@ GNU sed je základní součástí Ubuntu přítomnou i v minimální instalaci
 * [TL;DR: sed](https://github.com/tldr-pages/tldr/blob/master/pages/common/sed.md) (anglicky)
 
 
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* nic
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* nic
+
 !ÚzkýRežim: vyp
 <!--
 Prostory:

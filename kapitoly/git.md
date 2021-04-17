@@ -700,4 +700,20 @@ Přehled podporovaných konfiguračních voleb pro příkaz „git config“ naj
 * [Balíček Ubuntu „git“](https://packages.ubuntu.com/focal/git) (anglicky)
 * [Balíček Ubuntu „gitk“](https://packages.ubuntu.com/focal/gitk) (anglicky)
 
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* git for-each-ref
+* git rev-list (je třeba lepší zpracování)
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* nic
+
 !ÚzkýRežim: vyp

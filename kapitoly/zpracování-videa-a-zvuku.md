@@ -757,4 +757,23 @@ Podle https://superuser.com/questions/435941/which-codecs-are-most-suitable-for-
 * [Playlist videí: FFMPEG &amp; Command Line](https://www.youtube.com/playlist?list=PLJse9iV6Reqiy8wP0rXTgFQkMNutRMN0j) (anglicky)
 * [Oficiální stránky](https://ffmpeg.org/) (anglicky)
 
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* filtry chorus, equalizer, highpass, lowpass, pan, silenceremove, stereowiden, volume (dynamicky)
+* popis vestavěných aritmetických funkcí
+* vysvětlení PTS
+* Otestovat, zda „-pix\_fmt yuv420p“ umožní bezproblémové přehrátí videa s kodekem h264 (nebo mpeg4) na Windows 7 a Windows 10.
+* Dodělat ukázku.
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* nic
+
 !ÚzkýRežim: vyp

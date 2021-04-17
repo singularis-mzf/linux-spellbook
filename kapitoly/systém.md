@@ -47,14 +47,6 @@ se do systému (popř. automaticky přihlásí výchozího uživatele). Když se
 vznikne takzvané „sezení“, které zanikne, až se uživatel odhlásí
 (včetně případů, kdy je odhlášení součástí restartu či vypnutí počítače).
 
-Tato kapitola se nezabývá samotným zaváděním operačního systému a diskovými oddíly.
-
-Tato verze kapitoly pokrývá jen velmi omezeně zjišťování informací o hardware;
-nepokrývá nastavení automatického přihlašování do X,
-nastavování cílů, nastavení synchronizace systémového času s NTP servery
-ani vytváření vlastních služeb a démonů.
-Rovněž nepokrývá ovládání kontejnerů příkazem „machinectl“.
-
 <!--
 Poznámka: jádro si ponechává možnost spouštět svoje vlastní, nezávislé procesy prostřednictvím
 svého vlastního démona „kthreadd“ (PID 2).
@@ -469,8 +461,30 @@ Většina použitých příkazů je základní součástí Ubuntu, pouze příka
 * [Balíček systemd](https://packages.ubuntu.com/focal/systemd) (anglicky)
 * [TL;DR systemctl](https://github.com/tldr-pages/tldr/blob/master/pages/linux/systemctl.md) (anglicky)
 
-!ÚzkýRežim: vyp
 <!--
 sudo systemctl daemon-reload
 systemctl is-system-running
 -->
+
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* zjišťování informací o hardware
+* nastavení automatického přihlašování do X (GDM/SDDM/Lightdm)
+* synchronizace času (zapnout/vypnout/ručné provést)
+* ukázka
+* lspci
+* lsusb
+* vytváření vlastních služeb a démonů
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* zavádění operačního systému, diskové oddíly
+
+!ÚzkýRežim: vyp

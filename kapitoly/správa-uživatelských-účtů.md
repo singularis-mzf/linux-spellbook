@@ -42,10 +42,6 @@ se první uživatelský účet (s UID 1000) vytváří při instalaci, další 
 později. Každý uživatelský účet má svůj domovský adresář, kde se uchovává
 veškeré nastavení specifické pro daný účet a obvykle rovněž většina uživatelských souborů.
 
-Do této kapitoly nespadá nastavování přihlašování do systému a většina nastavení
-specifických pro určité grafické prostředí (např. nastavení pozadí plochy).
-Tato verze kapitoly nevysvětluje význam důležitých systémových skupin (jako např. skupiny „sudo“).
-
 ## Definice
 
 * **Uživatelský účet** je v této kapitole systémový účet jednoznačně identifikovaný pomocí **uživatelského jména** (také „přihlašovacího jména“; pozor, neplést si s „celým jménem“) a také pomocí čísla **UID**. Existují tři typy uživatelských účtů: **běžný účet** (UID ≥ 1000), **systémový účet** (UID 1 až 999) a **superuživatel** (UID 0). Každý soubor nebo běžící proces přísluší nějakému uživatelskému účtu.
@@ -465,3 +461,22 @@ s výjimkou příkazů „convert“ a „identify“, které je potřeba doin
 <odsadit1>**sed -E "/^([^:]\*:){3}${gid}:/!""d;s/:.\*//" /etc/passwd**<br>
 <odsadit1>**getent group "$gid" \| cut -d : -f 4 \| sed -E '/^$/d;s/,/\\n/g'**<br>
 **done \| LC\_ALL=C.UTF-8 sort -u**
+
+!ÚzkýRežim: zap
+
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* vysvětlení významu důležitých systémových skupin (jako např. skupiny „sudo“)
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* nastavování přihlašování do systému a většina nastavení specifických pro určité grafické prostředí (např. nastavení pozadí plochy)
+
+!ÚzkýRežim: vyp

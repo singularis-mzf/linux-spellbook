@@ -488,4 +488,19 @@ Pro zmíněné programy:
 * [Balíček „perl“](https://packages.ubuntu.com/focal/perl) (anglicky)
 * [Balíček „sed“](https://packages.ubuntu.com/focal/sed) (anglicky)
 
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* nic
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* nic
+
 !ÚzkýRežim: vyp

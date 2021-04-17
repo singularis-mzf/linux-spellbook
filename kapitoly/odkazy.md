@@ -307,4 +307,19 @@ Pevné odkazy se také vyplatí pro různé dočasné účely, kdy mohou být je
 * man ln (anglicky)
 * [YouTube: BeginLinux Guru: Hard Links and Symbolic Links](https://www.youtube.com/watch?v=rQpT0bRpV3Y) (anglicky)
 
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* nic
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* nic
+
 !ÚzkýRežim: vyp

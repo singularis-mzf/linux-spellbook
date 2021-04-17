@@ -13,10 +13,6 @@ https://creativecommons.org/licenses/by-sa/4.0/
 -->
 <!--
 
-[ ] Zpracovat „pngquant“ a výstup „PNG8:“.
-[ ] exiftool
-[ ] identify
-
 -->
 
 # Zpracování obrázků
@@ -321,5 +317,23 @@ Jediným zdrojem, který se mi osvědčil, je web „Examples of ImageMagick Usa
 * [Oficiální stránka ImageMagick](https://imagemagick.org/) (anglicky)
 * [TL;DR stránka „convert“](https://github.com/tldr-pages/tldr/blob/master/pages/common/convert.md) (anglicky)
 * [Balíček Bionic](https://packages.ubuntu.com/bionic/imagemagick) (anglicky)
+
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* pngquant
+* výstup „PNG8:“
+* exiftool
+* identify
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* nic
 
 !ÚzkýRežim: vyp

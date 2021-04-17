@@ -41,10 +41,6 @@ tvořených řetězci znaků z tzv. znakové sady. V souboru jsou znaky ulože
 či vícebajtových sekvencí, jejichž význam určuje použité kódování znaků (v dnešní praxi téměř výhradně
 UTF-8 nebo jeho podmnožina ASCII).
 
-Tato verze kapitoly nepokrývá zpracování formátů CSV a PSV.
-
-Tato kapitola se nezabývá zpracováním textových formátů se složitější strukturou jako např. JSON či XML.
-
 Většina nástrojů používaných v této kapitole je vyvíjena v rámci projektu GNU.
 
 ## Definice
@@ -608,5 +604,20 @@ Nejlepším zdrojem podrobnějších informací o jednotlivých použitých př
 * [TL;DR sed](https://github.com/tldr-pages/tldr/blob/master/pages/common/sed.md) (anglicky)
 * [TL;DR shuf](https://github.com/tldr-pages/tldr/blob/master/pages/common/shuf.md) (anglicky)
 * [TL;DR sort](https://github.com/tldr-pages/tldr/blob/master/pages/common/sort.md) (anglicky)
+
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* zpracování formátů CSV a PSV
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* zpracování textových formátů se složitější strukturou jako např. JSON či XML
 
 !ÚzkýRežim: vyp

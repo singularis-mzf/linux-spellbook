@@ -23,8 +23,6 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 Tato kapitola se zabývá softwarovým RAID (prokládání, zrcadlení a RAID s paritou).
 
-Tato verze kapitoly nepokrývá RAID6 a RAID10.
-
 ## Definice
 
 * **Pole** (array) je skupina disků nebo jejich oddílů skombinovaná softwarovým RAID do jednoho blokového zařízení.
@@ -241,5 +239,21 @@ Podporu softwarového RAID je nutno doinstalovat:
 * [YouTube: Combining Drives Together](https://www.youtube.com/watch?v=scMkYQxBtJ4) (anglicky)
 * [How to create RAID arrays with mdadm...](https://www.digitalocean.com/community/tutorials/how-to-create-raid-arrays-with-mdadm-on-ubuntu-18-04) (anglicky)
 * [A guide to mdadm](https://raid.wiki.kernel.org/index.php/A\_guide\_to\_mdadm) (anglicky)
+
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* RAID6
+* RAID10
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* nic
 
 !ÚzkýRežim: vyp

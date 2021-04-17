@@ -14,9 +14,6 @@ https://creativecommons.org/licenses/by-sa/4.0/
 <!--
 Poznámky:
 
-- Kdo má právo nastavovat příslušnou skupinu?
-- [ ] možná přidat kopírování (ale pro to bude možná samostatná kapitola).
-- [ ] duperemove (pevné odkazy/btrfs klony)
 ⊨
 -->
 
@@ -32,11 +29,6 @@ Poznámky:
 Tato kapitola se zabývá prací s adresáři a jejich položkami (soubory, podadresáři apod.),
 včetně jejich velikosti, vlastnictví, přístupových práv, příznaků a datových položek.
 Nepokrývá však zacházení s konkrétním obsahem souborů (analýzu, kopírování, zálohování apod.).
-
-Pevnými a symbolickými odkazy se tato kapitola zabývá velmi okrajově,
-bude jim věnována samostatná kapitola.
-
-Tato kapitola se nezabývá připojováním souborových systémů ani prací s pododdíly btrfs.
 
 Příkazy chmod, find, stat a některé další jsou vyvíjeny v rámci projektu GNU.
 
@@ -696,5 +688,23 @@ Všechny použité nástroje jsou základními součástmi Ubuntu, s výjimkou 
 * [TL;DR: setfacl](https://github.com/tldr-pages/tldr/blob/master/pages/linux/setfacl.md) (anglicky)
 * [TL;DR: chattr](https://github.com/tldr-pages/tldr/blob/master/pages/linux/chattr.md) (anglicky)
 * [TL;DR: getfacl](https://github.com/tldr-pages/tldr/blob/master/pages/linux/getfacl.md) (anglicky)
+
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* Kdo má právo nastavovat příslušnou skupinu?
+* kopírování (bude samostatná kapitola).
+* hledání a eliminace duplikátů (pevné odkazy/btrfs klony)
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* pevné a symbolické odkazy (mají vlastní kapitolu)
+* připojováním souborových systémů či prací s pododdíly btrfs (mají vlastní kapitolu)
 
 !ÚzkýRežim: vyp

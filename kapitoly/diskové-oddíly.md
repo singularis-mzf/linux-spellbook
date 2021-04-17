@@ -671,3 +671,26 @@ Pokud hledáte nástroj pro dělení disku ze skriptu, zkuste [sfdisk](http://ma
 <odsadit2>**\} else \{++$počet\_chyb\}}**<br>
 <odsadit1>**exit($počet\_chyb &lt; 254 ? $počet\_chyb : 254);**<br>
 **\}' \-\- "$@"**
+
+!ÚzkýRežim: zap
+
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* použití programu „sfdisk“
+* ovládání programu „fdisk“
+* šifrování oddílů
+* připojování obyčejným uživatelem
+<!-- https://www.root.cz/clanky/pripojeni-obrazu-disku-pod-beznym-uzivatelem-bez-opravneni-roota/ -->
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* nic
+
+!ÚzkýRežim: vyp

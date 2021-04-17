@@ -32,7 +32,9 @@ které přijímají další příkaz i s jeho argumenty. Většina těchto př
 najde externí program toho názvu a spustí ho v nějakým způsobem pozměněném
 prostředí, např. s právy superuživatele, s nižší prioritou nebo v jiném
 adresáři. Některé metapříkazy je možno použít i s vestavěnými příkazy
-GNU Bashe.
+Bashe.
+
+Interpret Bash je vyvíjen v rámci projektu GNU.
 
 ## Definice
 

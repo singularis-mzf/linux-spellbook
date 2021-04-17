@@ -14,13 +14,6 @@ https://creativecommons.org/licenses/by-sa/4.0/
 <!--
 Poznámky:
 
-⊨
-☐
-○ ◉
-
-[ ] Přednastavování proměnných prostředí (.profile, /etc/environment apod.)
-[ ] Pattern matching (možná spíš do jiné kapitoly): https://www.gnu.org/software/bash/manual/html_node/Pattern-Matching.html#Pattern-Matching
-
 -->
 
 # Proměnné prostředí a interpretu
@@ -42,13 +35,6 @@ je viditelná pouze v rámci dané instance interpretu; pro práci s prostřed
 se používají „exportované“ proměnné, které instance bashe vytvoří z proměnných
 prostředí v momentě svého spuštění a ze kterých sestaví prostředí každého
 procesu, který spustí.
-
-Tato verze kapitoly nepokrývá zvláštní proměnné interpretu Bash,
-které řídí jeho funkci, ale nebývají proměnnými prostředí;
-nedostatečně pokrývá lokální proměnné ve funkcích;
-nepokrývá možnosti přednastavení proměnných v souborech jako
-/etc/environment, „.profile“ či „.bashrc“.
-Do této kapitoly nespadají takzvané zvláštní parametry (jako např. $?, $! apod.).
 
 GNU Bash je vyvíjen v rámci projektu GNU.
 
@@ -687,7 +673,7 @@ Všechny použité nástroje jsou základní součástí Ubuntu, přítomné i 
 * [Bash Reference Manual: Shell Parameter Expansion](https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html) (anglicky)
 * [TL;DR: env](https://github.com/tldr-pages/tldr/blob/master/pages/common/env.md) (anglicky)
 
-!ÚzkýRežim: vyp
+<!-- !ÚzkýRežim: vyp -->
 
 <!--
 ## Pomocné funkce
@@ -701,3 +687,24 @@ Všechny použité nástroje jsou základní součástí Ubuntu, přítomné i 
 <odsadit1>**done \| sed -zE 's/^\\S+\\s+(\\S+)\\s+([<nic>^&blank;=]+)=/\\2&blank;\\1&blank;/;s/\\n$//'**<br>
 **\}**
 -->
+
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* zvláštní proměnné interpretu Bash, které řídí jeho funkci, ale nebývají proměnnými prostředí
+* lokální proměnné ve funkcích (pokryty nedostatečně)
+* možnosti přednastavení proměnných v souborech jako /etc/environment, „.profile“ či „.bashrc“
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* zvláštní parametry (jako např. $?, $! apod.)
+* pattern matching (patřil by do jiné kapitoly)
+<!-- https://www.gnu.org/software/bash/manual/html_node/Pattern-Matching.html#Pattern-Matching -->
+
+!ÚzkýRežim: vyp

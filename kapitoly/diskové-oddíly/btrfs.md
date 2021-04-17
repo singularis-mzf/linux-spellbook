@@ -301,4 +301,19 @@ Pro podporu Btrfs je nutno doinstalovat:
 * [Arch Wiki: Btrfs](https://wiki.archlinux.org/index.php/Btrfs) (anglicky)
 * [man 8 btrfs-scrub](http://manpages.ubuntu.com/manpages/focal/en/man8/btrfs-scrub.8.html) (anglicky)
 
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* nic
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* nic
+
 !ÚzkýRežim: vyp

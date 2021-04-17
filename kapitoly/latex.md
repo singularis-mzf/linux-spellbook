@@ -316,4 +316,19 @@ Co hledat:
 * [DeTeXify](http://detexify.kirelabs.org/classify.html) (anglicky) – pomůcka k nalezení symbolů LaTeXu podle ruční kresby
 * publikované knihy
 
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* nic
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* nic
+
 !ÚzkýRežim: vyp

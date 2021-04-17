@@ -16,8 +16,6 @@ Poznámky:
 
 ⊨
 
-libdatetime-event-sunrise-perl
-
 -->
 
 # Datum, čas a kalendář
@@ -32,11 +30,6 @@ libdatetime-event-sunrise-perl
 Obsahem této kapitoly je veškerá práce s hodnotami času a data a kalendářem jako takovým,
 to znamená výpočty, formátování, práci s časovými zónami a vizualizace. Kapitola rovněž
 pokrývá nastavování systémového a hardwarového času.
-
-Tato verze kapitoly nepokrývá menstruační kalendář, výpočet času muslimských modliteb
-ani konverze mezi druhy kalendářů (juliánský, gregoriánský, hebrejský, čínský apod.).
-
-Plánování úloh na konkrétní čas do této kapitoly nespadá.
 
 Příkaz „date“ je vyvíjen v rámci projektu GNU.
 
@@ -401,5 +394,25 @@ který je třeba doinstalovat:
 * [Manuálová stránka „ncal“](http://manpages.ubuntu.com/manpages/focal/en/man1/ncal.1.html) (anglicky)
 * [Video Linux Operating System \| Commands \| Date And Time](https://www.youtube.com/watch?v=FMrV5FdmBVI) (anglicky)
 * [TL;DR stránka „date“](https://github.com/tldr-pages/tldr/blob/master/pages/common/date.md) (anglicky)
+
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+
+libdatetime-event-sunrise-perl
+
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* menstruační kalendář
+* výpočet času muslimských modliteb
+* konverze mezi druhy kalendářů (juliánský, gregoriánský, hebrejský, čínský apod.).
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* plánování úloh na konkrétní čas
 
 !ÚzkýRežim: vyp

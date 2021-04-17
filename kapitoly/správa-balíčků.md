@@ -11,17 +11,6 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
-<!--
-[x] dpkg-deb (!)
-[ ] dpkg-reconfigure
-[ ] snap saved
-[ ] snap forget <balíček>
-[ ] snap remove <balíček> --purge
-[ ] snap changes
-[ ] sudo snap set refresh.hold='...'
-[ ] sudo snap get refresh.hold
-[ ] prozkoumat „apt search“ a „apt-cache search“
--->
 
 # Správa balíčků
 
@@ -56,15 +45,6 @@ Snap je nový balíčkovací systém firmy Canonical. Není dobře přijímán l
 z mnoha důvodů, především proto, že serverová část systému (repozitář) je proprietární
 (nesvobodná) a výhradně závislá na firmě Canonical; není možné vytvářet jiné repozitáře
 Snapu ani Snap nastavit tak, aby s firmou Canonical nekomunikoval.
-
-Tato kapitola se nezabývá vytvářením balíčků, vytvářením repozitářů ani jejich zrcadel
-(pro zrcadla zkuste např. [aptly](https://www.aptly.info/)) (anglicky).
-Rovněž se (pochopitelně) nezabývá sestavováním programů ze zdrojového kódu
-nebo instalací balíčků jiného typu (.rpm, .tar.xz apod.).
-
-Tato verze kapitoly nepokrývá offline instalaci balíčků Flatpaku a až na výjimky
-nepokrývá uživatelské nastavení práv aplikací ve Flathubu (výchozí nastavení práv
-určuje dodavatel aplikace, ale uživatel může práva aplikace zúžit nebo rozšířit).
 
 ## Definice
 
@@ -720,5 +700,26 @@ Pro APT: „man apt-get“ apod. (ale není příliš přehledná) Pro Flatpak: 
 Podrobněji o aptitude, včetně TUI:
 https://www.youtube.com/watch?v=xca3Ywf54N0
 -->
+
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* offline instalace balíčků Flatpaku
+* uživatelské nastavení práv aplikací (pokryto nedostatečně)
+* dpkg-reconfigure
+* snap saved, snap forge, snap remove \-\-purge, snap changes, snap set refresh.hold
+* apt search a apt-cache search
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* vytváření balíčků či repozitářů; zrcadlením repozitářů
+* sestavování programů ze zdrojového kódu
+* instalaci balíčků jiného typu (rpm, tar.xz apod.)
 
 !ÚzkýRežim: vyp

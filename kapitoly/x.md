@@ -314,6 +314,21 @@ Co hledat:
 * různé další praktické stránky, recenze, videa, tutorialy, blogy, ...
 * publikované knihy
 
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* nic
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* nic
+
 !ÚzkýRežim: vyp
 
 <!--

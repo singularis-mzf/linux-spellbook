@@ -344,4 +344,19 @@ jemuž se bude věnovat většina této kapitoly.
 * [Oficiální stránka GNU make](https://www.gnu.org/software/make/) (anglicky)
 * [TL;DR stránka „make“](https://github.com/tldr-pages/tldr/blob/master/pages/common/make.md) (anglicky)
 
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* nic
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* nic
+
 !ÚzkýRežim: vyp

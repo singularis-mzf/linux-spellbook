@@ -388,7 +388,23 @@ Toto jsou sekce obvyklé na jedné manuálové stránce; neplést si s manuálo
 * [Oficiální stránky man-db](https://nongnu.org/man-db/) (anglicky)
 * [Balíček man-db](https://packages.ubuntu.com/focal/man-db) (anglicky)
 
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* nic
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* nic
+
 !ÚzkýRežim: vyp
+
 <!--
 Odloženo:
 .ad l|r|c|b|n => zarování?

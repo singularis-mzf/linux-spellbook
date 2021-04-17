@@ -14,9 +14,6 @@ https://creativecommons.org/licenses/by-sa/4.0/
 <!--
 
 ⊨
-
-[ ] lkk procesy přepsat do Perlu
-
 -->
 
 # Správa procesů
@@ -43,13 +40,6 @@ Procesy jsou v linuxu identifikovány čísly PID (což neznamená „Pražská
 a jsou uspořádány do „rodinné“ struktury, kde každý proces s výjimkou
 dvou prvotních démonů má právě jednoho rodiče. PID rodiče je u vlastního procesu uvedeno
 jako vlastnost „PPID“. (Pozor – nepleťte si PID a PPID!)
-
-Tato verze kapitoly nepokrývá sledování systémových volání procesů (ptrace, strace)
-ani zjišťování, které systémové knihovny jsou procesy využívány.
-
-Tato kapitola se nezabývá správou systémových zdrojů z celkového hlediska,
-ani používáním kvót, kontejnerů či izolačních a virtualizačních technik
-jako chroot či cgroups.
 
 ## Definice
 
@@ -457,3 +447,24 @@ V kapitole je použit také příkaz gawk:
 <odsadit1>**print $k; while ($k &gt; 2) {print ":", $k = $p{$k}} print "\\n";**<br>
 **\}' \| sort -n**
 -->
+
+!ÚzkýRežim: zap
+
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* sledování systémových volání procesů (ptrace, strace)
+* sledování systémových knihoven
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* správu systémových zdrojů
+* kvóty, kontejnery, izolační a virtualizační techniky jako chroot, lxc či cgroups
+
+!ÚzkýRežim: vyp

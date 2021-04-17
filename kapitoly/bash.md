@@ -12,11 +12,6 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
 <!--
-Poznámky:
-
-[ ] + alias/unalias
-[ ] koprocesy https://www.gnu.org/software/bash/manual/html_node/Coprocesses.html#Coprocesses
-[ ] trap
 
 Zvláštní návratové kódy ( https://tldp.org/LDP/abs/html/exitcodes.html ):
 
@@ -795,5 +790,24 @@ Co hledat:
 * Různé další praktické stránky, recenze, videa, tutorialy, blogy, ...
 * Publikované knihy
 * [Stránky TL;DR](https://github.com/tldr-pages/tldr/tree/master/pages/common)
+
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* alias/unalias
+* koprocesy
+<!-- https://www.gnu.org/software/bash/manual/html_node/Coprocesses.html#Coprocesses -->
+* trap
+
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* nic
 
 !ÚzkýRežim: vyp

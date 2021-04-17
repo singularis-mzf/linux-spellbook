@@ -680,3 +680,22 @@ Poznámka: Parametry -f a -e můžete kombinovat a zadávat opakovaně. Každ�
 *# lkk retence – načte celý standardní vstup do paměti a po uzavření vstupu jej vypíše na výstup*<br>
 **#!/bin/bash**<br>
 **exec gawk -b -e 'BEGIN {RS = FS = "^$"; ORS = "";} {print}'**
+
+!ÚzkýRežim: zap
+
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* nic
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* nic
+
+!ÚzkýRežim: vyp

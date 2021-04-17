@@ -480,4 +480,19 @@ Ostatní použité příkazy jsou přítomny i v minimální instalaci Ubuntu.
 * [TL;DR: split](https://github.com/tldr-pages/tldr/blob/master/pages/common/split.md)
 * [TL;DR: xxd](https://github.com/tldr-pages/tldr/blob/master/pages/common/xxd.md)
 
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* nic
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* nic
+
 !ÚzkýRežim: vyp

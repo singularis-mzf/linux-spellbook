@@ -560,4 +560,19 @@ Většina uvedených příkazů je základními součástmi Ubuntu. Pouze přík
 https://www.youtube.com/watch?v=zmlNuMKJSkc – Dobré video, ale dělá chybu *.log bez uvozovek.
 -->
 
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* nic
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* nic
+
 !ÚzkýRežim: vyp

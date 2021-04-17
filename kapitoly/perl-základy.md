@@ -11,16 +11,6 @@ k tomuto projektu nebo ho můžete najít na webové adrese:
 https://creativecommons.org/licenses/by-sa/4.0/
 
 -->
-<!--
-Poznámky:
-
-[ ] Zpracovat tutorial začínající na: https://www.perltutorial.org/perl-syntax/
-[ ] pack/unpack
-[ ] exec()
-[x] Zpracovat referenční příručku funkcí: https://perldoc.perl.org/5.30.0/index-functions-by-cat.html
-[x] Zpracovat řazení čísel, řetězců a obecných objektů (funkce sort).
-
--->
 
 # Perl: základy
 
@@ -1545,3 +1535,22 @@ z kapitol Linuxu: Knihy kouzel.
 *# lkk perl – spouštěč, který spustí skript Perlu s doporučenými parametry*<br>
 **#!/bin/bash**<br>
 **exec perl -CSDAL -I/usr/share/lkk/perl -Mv5.26.0 -Mstrict -Mwarnings -Mutf8 -MEnglish -MLinuxKnihaKouzel "$@"**
+
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* pack/unpack
+* exec()
+* zpracovat [tutorial](https://www.perltutorial.org/perl-syntax/)
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* nic
+
+!ÚzkýRežim: vyp

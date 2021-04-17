@@ -223,4 +223,19 @@ Pro základní přehled lze použít i příkazy:
 * [Oficiální stránka programu](https://www.docker.com/) (anglicky)
 * [Balíček Bionic „docker.io“](https://packages.ubuntu.com/bionic/docker.io) (anglicky)
 
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* nic
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* nic
+
 !ÚzkýRežim: vyp

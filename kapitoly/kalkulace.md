@@ -40,8 +40,6 @@ který v linuxu najdeme, tato kapitola se zaměřuje především na tři nást
 * Interpret „bc“, který je vhodný pro základní aritmetiku s racionálními čísly libovolné (zvolené) přesnosti a pro aritmetiku s mimořádně vysokými celými čísly.
 * Okrajově na specializovaný program Octave, který lze použít např. k výpočtům s komplexními čísly a maticemi.
 
-Tato kapitola se nezabývá aritmetikou s datem a časem, ta spadá do kapitoly „Datum, čas a kalendář“.
-
 GNU Bash a interpret „bc“ jsou vyvíjeny v rámci projektu GNU.
 
 ## Definice
@@ -510,5 +508,20 @@ Co hledat:
 * [10 tisíc desetinných míst](http://www.subidiom.com/pi/pi_10k.txt)
 * [10 milionů desetinných míst](https://introcs.cs.princeton.edu/java/data/pi-10million.txt)
 * [výřezy z 2 miliard desetinných míst](http://www.subidiom.com/pi/) (umí zobrazit až 250 číslic ze zadané pozice)
+
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* nic
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* aritmetika s datem a časem (ta spadá do kapitoly „Datum, čas a kalendář“)
 
 !ÚzkýRežim: vyp

@@ -384,6 +384,19 @@ z emodži-písem, jinak se zobrazí nevzhledně a černobíle:
 * [Unicode Full Emoji List](http://unicode.org/emoji/charts/full-emoji-list.html) (anglicky)
 * [Video: How to Install Emojis on Linux](https://lbry.tv/@christitustech:5/how-to-install-emojis-on-linux:7) (anglicky)
 
-!ÚzkýRežim: vyp
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
 
-<!-- ## Pomocné funkce a skripty -->
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* nic
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* nic
+
+!ÚzkýRežim: vyp

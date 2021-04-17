@@ -30,8 +30,6 @@ Markdown je jednoduchý a praktický značkovací jazyk pro pohodlné psaní i�
 
 Bohužel existuje řada ne zcela kompatibilních implementací Markdownu. Proto se tato kapitola zaměřuje především na původní (standardní) Markdown, který je základem pro všechny ostatní varianty, a poměrně značně rozšířenou variantu Markdown Extra.
 
-Tato verze kapitoly nepokrývá GFM (GitHub Flavoured Markdown), nicméně všechna uvedená zaklínadla na GitHubu fungují.
-
 <!--
 -- Definice nejsou v této kapitole třeba.
 ## Definice
@@ -259,5 +257,20 @@ Velmi obsáhlým a formálně přesným zdrojem je „Specifikace GitHub Flavor
 * [Balíček pandoc](https://packages.ubuntu.com/focal/pandoc) (anglicky)
 * [Balíček retext](https://packages.ubuntu.com/focal/retext) (anglicky)
 * [Balíček Remarkable v ALUR](https://aur.archlinux.org/packages/remarkable/) (anglicky)
+
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* GFM (GitHub Flavoured Markdown) (nicméně všechna uvedená zaklínadla na GitHubu fungují)
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* nic
 
 !ÚzkýRežim: vyp

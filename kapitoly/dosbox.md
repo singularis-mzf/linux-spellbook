@@ -145,4 +145,19 @@ Co hledat:
 * Publikované knihy
 * [Stránky TL;DR](https://github.com/tldr-pages/tldr/tree/master/pages/common)
 
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* nic
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* nic
+
 !ÚzkýRežim: vyp

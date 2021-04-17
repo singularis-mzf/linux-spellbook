@@ -37,10 +37,6 @@ odpovídající nástroj, je-li v systému nainstalovaný.
 Oproti tomu příkazy pro práci s určitým typem archivu (např. 7z, tar či zip)
 pracují s archivem samy.
 
-Tato kapitola se nezabývá zálohováním ani správou verzí.
-Nepokrývá práci s obrazy souborových systémů ani různé typy softwarových balíčků
-(např. .deb či .rpm). Nezabývá se konverzí jednoho archivního formátu na jiný.
-
 Poznámka: Použití „souborů se seznamem“ při psaní této kapitoly nebylo testováno.
 
 GNU Tar je vyvíjen v rámci projektu GNU.
@@ -382,5 +378,24 @@ Nástroje tar, gzip a zip jsou již součástí minimální instalace Ubuntu. N
 * [Balíček „p7zip-full“](https://packages.ubuntu.com/focal/p7zip-full) (anglicky)
 * [SquashFS HowTo](https://elinux.org/Squash\_FS\_Howto) (anglicky)
 * [Pseudo file example](https://github.com/plougher/squashfs-tools/blob/master/RELEASE-READMEs/pseudo-file.example) (anglicky)
+
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* nic
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* zálohování
+* správu verzí
+* práci s obrazy souborových systémů
+* různé typy softwarových balíčků
+* konverze z jednoho archivního formátu na jiný (lze realizovat vybalením a zabalením)
 
 !ÚzkýRežim: vyp

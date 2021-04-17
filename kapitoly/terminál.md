@@ -532,3 +532,23 @@ Různé další tipy se dají najít v článku Bash/Prompt customization (angl
 *# lkk titulek – nastaví titulek emulátoru terminálu, je-li to podporováno*<br>
 **#!/bin/bash**<br>
 **[[ $TERM =~ ^(xterm\|rxvt) ]] &amp;&amp; printf '\\e]2;%s\\a' "$1"**
+
+!ÚzkýRežim: zap
+
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* nic
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* nic
+
+!ÚzkýRežim: vyp
+

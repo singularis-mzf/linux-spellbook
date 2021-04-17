@@ -223,4 +223,19 @@ Většina použitých nástrojů je přítomna i v minimální instalaci Ubunt
 * [Seznam hlavních kategorií](https://specifications.freedesktop.org/menu-spec/latest/apa.html) (anglicky)
 * [Seznam vedlejších kategorií](https://specifications.freedesktop.org/menu-spec/latest/apas02.html) (anglicky)
 
+## Zákulisí kapitoly
+<!--
+- Doplňte, pokud víte. Udržujte aktuální.
+-->
+
+V této verzi kapitoly chybí:
+
+!KompaktníSeznam:
+* nic
+
+Tato kapitola záměrně nepokrývá:
+
+!KompaktníSeznam:
+* nic
+
 !ÚzkýRežim: vyp
