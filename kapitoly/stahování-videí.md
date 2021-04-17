@@ -59,7 +59,7 @@ se těmto změnám obvykle poměrně rychle přizpůsobuje.
 
 *# vytvořit **úplný** záznamový soubor z playlistu či kanálu (jen YouTube)*<br>
 *// Vytvořený záznamový soubor bude obsahovat identifikátory všech videí z daného playlistu či kanálu, takže při jeho příštím použití se stáhnou jen ta, která přibyla od jeho vytvoření.*<br>
-**youtube-dl -o "youtube %(id)s" \-\-get-filename \-\-flat-playlist -i '**{*URL/playlistu/či/kanálu*}**' &gt;**{*nový-soubor*}
+**youtube-dl -o "youtube %(id)s" \-\-get-filename -i '**{*URL/playlistu/či/kanálu*}**' &gt;**{*nový-soubor*}
 
 ### Formátovací řetězec (-o)
 
@@ -103,10 +103,17 @@ se těmto změnám obvykle poměrně rychle přizpůsobuje.
 **%(like\_count)d** ⊨ 1<br>
 **%(dislike\_count)d** ⊨ 0
 
+*# technické označení kodeku videa/zvuku*<br>
+**%(vcodec)s** ⊨ avc1.64001e<br>
+**%(acodec)s** ⊨ mp4a.40.2
+
 ### Výběr formátu videa (-f)
 
 *# stáhnout **nejlepší** dostupný formát*<br>
 **\-f "bestvideo+bestaudio/best"**
+
+*# stáhnout nejlepší dostupný formát, ale nestahovat video s kodekem AV1, je-li dostupné jiné*<br>
+**\-f "bestvideo[vcodec!""^=av01]+bestaudio/bestvideo+bestaudio/best"**
 
 *# stáhnout nejlepší dostupný formát s výškou maximálně 480 pixelů*<br>
 *// Vhodné hodnoty výšky: 144, 240, 360, 480, 720, 1080, 1440, 2160.*<br>
@@ -115,6 +122,9 @@ se těmto změnám obvykle poměrně rychle přizpůsobuje.
 *# stáhnout jen co nejlepší **zvuk bez obrazu***<br>
 *// Audio-formát může být: best, aac, flac, mp3, m4a, opus, vorbis nebo wav.*<br>
 **\-f "bestaudio/best" -x** [**\-\-audio-format** {*audio-formát*}]
+
+*# stáhnout jedině nejlepší video s kodekem H264*<br>
+**\-f "bestvideo[vcodec^=avc1]"**
 
 *# stáhnout **konkrétní formát***<br>
 **\-f** {*číslo-formátu*}
@@ -142,11 +152,11 @@ se těmto změnám obvykle poměrně rychle přizpůsobuje.
 ### Zpracování playlistu či kanálu
 
 *# **rychle** vypsat playlist*<br>
-*// Při použití parametru \-\-flat-playlist budou ve formátovacím řetězci fungovat pouze parametry %(id)s a %(title)s! Žádné jiné pravděpodobně fungovat nebudou!*<br>
+*// Při použití parametru \-\-flat-playlist budou ve formátovacím řetězci fungovat pouze parametry %(id)s a %(title)s! Žádné jiné pravděpodobně fungovat nebudou! Také není jisté, zda bude fungovat vůbec.*<br>
 **youtube-dl \-\-flat-playlist \-\-get-filename -o "**{*formátovací řetězec*}**"** {*URL-playlistu-či-kanálu*}...
 
 *# vypsat **každé video z playlistu** ve vlastním formátu (1 video na řádek)*<br>
-**youtube-dl -i \-\-get-filename**[**\-\-flat-playlist**] **-o "**{*formátovací řetězec*}**"** [**-f** {*formát-videa*}] {*URL-playlistu*}...
+**youtube-dl -i \-\-get-filename -o "**{*formátovací řetězec*}**"** [**-f** {*formát-videa*}] {*URL-playlistu*}...
 
 *# pro každé video v playlistu YouTube vypsat jeho úplnou adresu*<br>
 **youtube-dl -i \-\-get-filename -o "https://www.youtube.com/watch?v=%(id)s"** {*URL-playlistu*}...

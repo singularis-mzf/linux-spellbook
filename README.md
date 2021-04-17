@@ -103,6 +103,7 @@ Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybra
 | [make](kapitoly/make.md) | Make | 1.0 | prémiová |
 | [manuálové-stránky](kapitoly/manuálové-stránky.md) | Manuálové stránky | 2.4 | prémiová |
 | [markdown](kapitoly/markdown.md) | Markdown | 1.0 | prémiová |
+| [metapříkazy](kapitoly/metapříkazy.md) | Metapříkazy | 2.7 | základní |
 | [nabídka-aplikací](kapitoly/nabídka-aplikací.md) | Nabídka aplikací | 2.4 | základní |
 | [odkazy](kapitoly/odkazy.md) | Pevné a symbolické odkazy | 2.2 | základní |
 | [perl-moduly](kapitoly/perl-moduly.md) | Perl: moduly a objekty | 2.3 | prémiová |

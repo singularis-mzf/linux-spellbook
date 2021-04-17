@@ -638,7 +638,7 @@ function main(    i, o, s, pozice, uroven, pokracuje, c_sekce, n_sekce, c_podsek
     # 1. Vypustit komentáře
     i = o = 1;
     while (i <= vstup_pocet) {
-        FNR = i;
+        FNR = i + 1;
         # komentář započatý na samostatném řádku kompletně ignorovat
         # (není to ideální řešení, ale dokonalejší řešení jsou problematická)
         if (vstup[i] == "<!--") {
@@ -783,9 +783,11 @@ function main(    i, o, s, pozice, uroven, pokracuje, c_sekce, n_sekce, c_podsek
     }
 
     # LADĚNÍ:
-    #for (i = 1; i <= ZR_POCET; ++i) {
-        #printf("[%3d] %s <%s> (%s/%s)=(%s//%s)%s\n", ZR_CISLO[i], ZR_TEXT[i], ZR_TYP[i], ZR_C_SEKCE[i], ZR_C_PODSEKCE[i],
+    #if (IDKAPITOLY == "základní-znalosti") {
+        #for (i = 1; i <= ZR_POCET; ++i) {
+            #printf("[%3d] %s <%s> (%s/%s)=(%s//%s)%s\n", ZR_CISLO[i], ZR_TEXT[i], ZR_TYP[i], ZR_C_SEKCE[i], ZR_C_PODSEKCE[i],
                #ZR_N_SEKCE[i], ZR_N_PODSEKCE[i], ZR_HES[i] != "" ? "(heš=" ZR_HES[i] ")" : "") > "/tmp/" NAZEV_PODKAPITOLY ".md";
+        #}
     #}
     #ShoditFatalniVyjimku("Test");
 
@@ -870,7 +872,10 @@ function main(    i, o, s, pozice, uroven, pokracuje, c_sekce, n_sekce, c_podsek
                 if (!pokracuje) {
                     if (i < 2 || (ZR_TYP[i - 2] != "NORMÁLNÍ" || ZR_TYP[i - 1] != "PRÁZDNÝ")) { # nebyl-li předěl
                         # + dodatečné pravidlo: v kapitole „Licence“ se všechny začátky odstavců uvažují jako po nadpisu (vypne odsazení).
-                        printf("%s", ZacatekOdstavcu(i == 1 || ZR_TYP[i - 1] == "NADPIS" || tolower(KAPITOLA) == "licence" || ZR_TEXT[i] ~ /^<neodsadit>/));
+
+                        predchoziTyp = ZR_TYP[i - 1];
+                        if (predchoziTyp == "PRÁZDNÝ") {predchoziTyp = ZR_TYP[i - 2]}
+                        printf("%s", ZacatekOdstavcu(predchoziTyp ~ /^(NADPIS|POLOŽKA_SEZNAMU|POKRAČOVÁNÍ_POLOŽKY_SEZNAMU|ŘÁDEK_ZAKLÍNADLA)?$/ || ZR_TEXT[i] ~ /^<neodsadit>/ || tolower(KAPITOLA) == "licence"));
                     }
                 }
                 s = gensub(/^<neodsadit>/, "", 1, ZR_TEXT[i]);
