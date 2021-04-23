@@ -1536,6 +1536,8 @@ z kapitol Linuxu: Knihy kouzel.
 **#!/bin/bash**<br>
 **exec perl -CSDAL -I/usr/share/lkk/perl -Mv5.26.0 -Mstrict -Mwarnings -Mutf8 -MEnglish -MLinuxKnihaKouzel "$@"**
 
+!ÚzkýRežim: zap
+
 ## Zákulisí kapitoly
 <!--
 - Doplňte, pokud víte. Udržujte aktuální.

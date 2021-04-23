@@ -14,7 +14,6 @@ https://creativecommons.org/licenses/by-sa/4.0/
 <!--
 Poznámky:
 
-
 ⊨
 -->
 
@@ -86,10 +85,10 @@ Pozor na tento rozdíl!
 **eval** {*"příkaz s parametry"*}
 
 *# interpretovat a vykonat interpretem „**sh**“*<br>
-[*sudo*] **sh -c** {*"příkaz a parametry"*}
+[*sudo*] **sh -c** {*"příkaz s parametry"*}
 
 *# interpretovat a vykonat interpretem „**bash**“*<br>
-[*sudo*] **bash -c** {*"příkaz a parametry"*}
+[*sudo*] **bash -c** {*"příkaz s parametry"*}
 
 *# interpretovat příkaz, ale **nevykonat ho***<br>
 *// Hlavní smysl tohoto metapříkazu spočívá v situacích, kdy má interpretace příkazu očekávané vedlejší účinky (např. nastavení zvláštní proměnné $\_ nebo uložení do historie příkazů v interaktivním režimu interpretu).*<br>
@@ -147,13 +146,16 @@ Pozor na tento rozdíl!
 
 **Pozor na pořadí**: Jsou-li pseudometapříkazy použity spolu s dalšími
 metapříkazy, musejí být jako první! Navíc je u nich nutno dodržet
-toto pořadí: „&blank;“, „time“, „!“ (může být i víckrát), „\\“.
+toto pořadí: „&blank;“, „time“, „!“ (může být i víckrát), „=“ (proměnné prostředí, může být i víckrát), „\\“.
 
-**Zvláštnosti:** Příkaz „&blank;“ (mezera) účinkuje na celou příkazovou řádku,
+**Zvláštnosti:** Příkaz „&blank;“ (mezera) účinkuje na celý příkazový řádek,
 i když obsahuje více příkazů. Příkazy „time“ a „!“ účinkují na celou
 posloupnost příkazů spojených rourami. Pseudometapříkaz „\\“ se *neodděluje*
 mezerou a účinkuje jen na samotné označení příkazu (tzn. nemá vliv
 na jeho parametry).
+
+*# spustit s nastavením proměnných prostředí*<br>
+[{*promenna\_k\_nastaveni*}**=**{*hodnota*}]... {*příkaz a parametry*}
 
 *# změřit **čas běhu** příkazu*<br>
 **time** [**-p**] {*příkaz a parametry*} [**\|** {*další příkaz a parametry*}]...
@@ -171,7 +173,7 @@ na jeho parametry).
 **\\printenv PATH**
 
 *# příklad kombinace všech pseudometapříkazů*<br>
-**&blank;time ! ! \\ls**
+**&blank;time ! ! LC\_ALL=C mojepromenna=0 \\ls**
 
 ### Sledování výstupu
 
@@ -185,6 +187,13 @@ Parametr -n přijímá i desetinná čísla (minimální dovolená hodnota je �
 
 *# mezi spuštěními příkazu dělat pauzu*<br>
 **watch -x**[**t**]<nic>[**d**] <nic>[**-n** {*pauza-v-sekundách*}] {*příkaz a parametry*}
+
+### Virtualizace vlastnictví a módu
+
+*# spustit příkaz v prostředí virtualizovaného vlastnictví a módu souborů*<br>
+*// Viz podsekci „Příkaz fakeroot“.*<br>
+**fakeroot** [**-u**] <nic>[**-i** {*perzistentní-soubor*}] <nic>[**-s** {*perzistentní-soubor*}] {*příkaz a parametry*}
+
 
 ### Ostatní metapříkazy
 
@@ -230,10 +239,10 @@ Parametr -n přijímá i desetinná čísla (minimální dovolená hodnota je �
 ## Instalace na Ubuntu
 
 Všechny použité příkazy jsou základními součástmi Ubuntu přítomnými i v minimální
-instalaci; výjimkou je příkaz eatmydata, který je nutno doinstalovat:
+instalaci; výjimkou jsou příkazy eatmydata a fakeroot, které je nutno doinstalovat:
 
 *# *<br>
-**sudo apt-get install eatmydata**
+**sudo apt-get install eatmydata fakeroot**
 
 <!--
 ## Ukázka
@@ -279,6 +288,37 @@ Naopak z hostujícího operačního systému používá vše ostatní, zejména
 * meziprocesovou komunikaci
 * systémové démony apod.
 
+### Příkaz fakeroot
+
+Hlavním účelem prostředí „fakeroot“ je zdánlivě nastavit vlastnictví,
+skupinu a mód souborů při jejich ukládání do archivu, a to i v případech,
+kdy k jejich nastavení nemáte právo (popř. jsou na souborovém systému
+jen pro čtení, např. na DVD). Příkaz „fakeroot“ vytvoří v paměti tabulku,
+která k adresářovým položkám mapuje vlastnictví, skupinu a mód
+(ACL není v tomto prostředí dostupné, uživatelské datové položky jsem
+nezkoušel/a).
+
+Následně „fakeroot“ pro spouštěný příkaz (a jeho potomky) přesměruje
+účinky operací „chmod“, „chgrp“ a „chown“; každá operace je nejprve
+provedena nad tabulkou v paměti a následně se ji program pokusí vykonat
+i ve skutečnosti (přičemž nevadí, když selže). Odpovídající operace čtení
+(např. příkazem „ls“, „stat“ či „getfacl“) budou uvnitř prostředí fakeroot
+vidět údaje z virtualizované tabulky namísto skutečných.
+
+Nepoužijete-li parametr „-u“, vlastnictví a skupina se v tabulce inicializují
+u všech položek na „root“:„root“; mód se vždy inicializuje
+na jeho skutečnou hodnotu.
+
+Spuštěnému příkazu se jeví, jako by měl práva superuživatele
+(např. „whoami“ vypíše „root“), ale ve skutečnosti je nemá (proto když
+např. vytvoří nový soubor, jeho vlastníkem bude přihlášený uživatel,
+nikoliv root), a namísto skutečného vlastnictví a módu vidí
+údaje z virtualizované tabulky.
+
+Uvnitř prostředí „fakeroot“ nelze použít příkazy „setfacl“
+a „fakeroot“; příkaz „getfacl“ zde nedokáže přečíst rozšířená přístupová práva
+(ale pravděpodobně to není záměr, takže se to v budoucích verzích může změnit).
+
 ## Další zdroje informací
 
 * [Wikipedie: sudo](https://cs.wikipedia.org/wiki/Sudo)
@@ -299,6 +339,7 @@ V této verzi kapitoly chybí:
 * pkexec
 * proot
 * ssh
+* pseudo (prý lepší náhrada za fakeroot)
 
 Tato kapitola záměrně nepokrývá:
 

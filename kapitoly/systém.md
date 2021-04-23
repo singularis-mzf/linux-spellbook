@@ -424,10 +424,10 @@ sudo systemctl restart keyboard-setup.service
 
 ## Instalace na Ubuntu
 
-Většina použitých příkazů je základní součástí Ubuntu, pouze příkazy numlockx, xdotool, inxi a neofetch si musíte doinstalovat, chcete-li je použít:
+Většina použitých příkazů je základní součástí Ubuntu, pouze příkazy numlockx, xdotool, inxi, neofetch a memtester si musíte doinstalovat, chcete-li je použít:
 
 *# *<br>
-**sudo apt-get install numlockx xdotool neofetch inxi**
+**sudo apt-get install numlockx xdotool neofetch inxi memtester**
 
 <!--
 ## Ukázka
