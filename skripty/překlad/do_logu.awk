@@ -1,5 +1,5 @@
 # Linux Kniha kouzel, skript do_logu.awk
-# Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
+# Copyright (c) 2019-2021 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 # podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -82,7 +82,7 @@ function Tabulator(delka) {
     return "Tabulator(" delka ")";
 }
 
-function ZacatekKapitoly(nazevKapitoly, cisloKapitoly, stitky, stitkyxhes, osnova, ikonaKapitoly, jeDodatek,   osnovadohromady, stitkytext) {
+function ZacatekKapitoly(cisloKapitoly, nazevKapitoly, stitky, stitkyxhes, osnova, ikonaKapitoly, jeDodatek,   osnovadohromady, stitkytext) {
     ZasobnikUrovniPush("kapitola");
 
     DO_LOGU_UROVEN_ODSTAVCE = 0;
@@ -98,7 +98,7 @@ function ZacatekKapitoly(nazevKapitoly, cisloKapitoly, stitky, stitkyxhes, osnov
     return "ZacatekKapitoly(\"" nazevKapitoly "\"" (stitkytext != "" ? ", štítky={" stitkytext "}" : "") ", ikona={" ikonaKapitoly "}, jedodatek=" (jeDodatek ? "ano" : "ne") ") {\n" osnovadohromady "};\n";
 }
 
-function KonecKapitoly(nazevKapitoly, cislaPoznamek, textyPoznamek,   i, vysledek) {
+function KonecKapitoly(cisloKapitoly, nazevKapitoly, cislaPoznamek, textyPoznamek,   i, vysledek) {
     ZasobnikUrovniPop("kapitola");
 
     if (!isarray(cislaPoznamek) || !isarray(textyPoznamek)) {
@@ -124,24 +124,24 @@ function KonecKapitoly(nazevKapitoly, cislaPoznamek, textyPoznamek,   i, vyslede
     return vysledek;
 }
 
-function ZacatekSekce(kapitola, sekce, cisloKapitoly, cisloSekce) {
+function ZacatekSekce(cisloKapitoly, nazevKapitoly, cisloSekce, nazevSekce) {
     ZasobnikUrovniPush("sekce");
-    return "ZacatekSekce(\"" kapitola "\", \"" sekce "\");\n";
+    return "ZacatekSekce(" cisloKapitoly "/\"" nazevKapitoly "\", " cisloSekce "/\"" nazevSekce "\");\n";
 }
 
-function KonecSekce(kapitola, sekce) {
+function KonecSekce(cisloKapitoly, nazevKapitoly, cisloSekce, nazevSekce) {
     ZasobnikUrovniPop("sekce");
-    return "KonecSekce(\"" kapitola "\", \"" sekce "\");\n";
+    return "KonecSekce(" cisloKapitoly "/\"" nazevKapitoly "\", " cisloSekce "/\"" nazevSekce "\");\n";
 }
 
-function ZacatekPodsekce(kapitola, sekce, podsekce, cisloKapitoly, cisloSekce, cisloPodsekce) {
+function ZacatekPodsekce(cisloKapitoly, nazevKapitoly, cisloSekce, nazevSekce, cisloPodsekce, nazevPodsekce) {
     ZasobnikUrovniPush("podsekce");
-    return "ZacatekPodsekce(\"" kapitola "\", \"" sekce "\", \"" podsekce "\");\n";
+    return "ZacatekPodsekce(" cisloKapitoly "/\"" nazevKapitoly "\", " cisloSekce "/\"" nazevSekce "\", " cisloPodsekce "/\"" nazevPodsekce "\");\n";
 }
 
-function KonecPodsekce(kapitola, sekce, podsekce) {
+function KonecPodsekce(cisloKapitoly, nazevKapitoly, cisloSekce, nazevSekce, cisloPodsekce, nazevPodsekce) {
     ZasobnikUrovniPop("podsekce");
-    return "KonecPodsekce(\"" kapitola "\", \"" sekce "\", \"" podsekce "\");\n";
+    return "KonecPodsekce(" cisloKapitoly "/\"" nazevKapitoly "\", " cisloSekce "/\"" nazevSekce "\", " cisloPodsekce "/\"" nazevPodsekce "\");\n";
 }
 
 function ZacatekOdstavcu(bylNadpis) {

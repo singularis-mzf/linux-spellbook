@@ -1,5 +1,5 @@
 # Linux Kniha kouzel, skript do_html.awk
-# Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
+# Copyright (c) 2019-2021 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 # podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -66,7 +66,7 @@ function Tabulator(delka,  i, vysledek) {
 
 # + OSNOVA, DELKA_OSNOVY
 
-function ZacatekKapitoly(nazevKapitoly, cisloKapitoly, stitky, stitkyxhes, osnova, ikonaKapitoly, jeDodatek,  vysledek, i) {
+function ZacatekKapitoly(cisloKapitoly, nazevKapitoly, stitky, stitkyxhes, osnova, ikonaKapitoly, jeDodatek,  vysledek, i) {
 # Generování prvku <h1> obstarává šablona kapitoly.
 #    return "<h1>" nazevKapitoly "</h1>\n";
     vysledek = "";
@@ -84,7 +84,7 @@ function ZacatekKapitoly(nazevKapitoly, cisloKapitoly, stitky, stitkyxhes, osnov
     return vysledek; # negenerovat osnovu (je v menu)
 }
 
-function KonecKapitoly(nazevKapitoly, cislaPoznamek, textyPoznamek,   i, vysledek, prikaz, htmlPoznamky) {
+function KonecKapitoly(cisloKapitoly, nazevKapitoly, cislaPoznamek, textyPoznamek,   i, vysledek, prikaz, htmlPoznamky) {
     vysledek = "";
     if (length(cislaPoznamek) > 0) {
         vysledek = "<div class=\"ppc\">";
@@ -98,21 +98,21 @@ function KonecKapitoly(nazevKapitoly, cislaPoznamek, textyPoznamek,   i, vyslede
     return vysledek;
 }
 
-function ZacatekSekce(kapitola, sekce, cisloKapitoly, cisloSekce) {
-    return "\n<h2 id=\"cast" cisloSekce "\"" (sekce ~ /^Zaklínadla/ ? " class=\"zaklinadla\"" : "") \
+function ZacatekSekce(cisloKapitoly, nazevKapitoly, cisloSekce, nazevSekce) {
+    return "\n<h2 id=\"cast" cisloSekce "\"" (nazevSekce ~ /^Zaklínadla/ ? " class=\"zaklinadla\"" : "") \
         "><a href=\"#cast" cisloSekce "\"><span class=\"cislo\">" cisloSekce ".</span> " \
-        sekce "</a></h2>\n";
+        nazevSekce "</a></h2>\n";
 }
 
-function KonecSekce(kapitola, sekce) {
+function KonecSekce(cisloKapitoly, nazevKapitoly, cisloSekce, nazevSekce) {
     return "";
 }
 
-function ZacatekPodsekce(kapitola, sekce, podsekce, cisloKapitoly, cisloSekce, cisloPodsekce) {
-    return "\n<h3 id=\"cast" cisloSekce "x" cisloPodsekce "\"><span><a href=\"#cast" cisloSekce "x" cisloPodsekce "\" title=\"" sprintf("kapitola %d (%s), sekce %d (%s), podsekce %d (%s)", cisloKapitoly, kapitola, cisloSekce, sekce, cisloPodsekce, podsekce) "\">" sprintf("<sup>%d/</sup>%d", cisloSekce, cisloPodsekce) " " podsekce "</a></span></h3>\n";
+function ZacatekPodsekce(cisloKapitoly, nazevKapitoly, cisloSekce, nazevSekce, cisloPodsekce, nazevPodsekce) {
+    return "\n<h3 id=\"cast" cisloSekce "x" cisloPodsekce "\"><span><a href=\"#cast" cisloSekce "x" cisloPodsekce "\" title=\"" sprintf("kapitola %d (%s), sekce %d (%s), podsekce %d (%s)", cisloKapitoly, nazevKapitoly, cisloSekce, nazevSekce, cisloPodsekce, nazevPodsekce) "\">" sprintf("<sup>%d/</sup>%d", cisloSekce, cisloPodsekce) " " nazevPodsekce "</a></span></h3>\n";
 }
 
-function KonecPodsekce(kapitola, sekce, podsekce) {
+function KonecPodsekce(cisloKapitoly, nazevKapitoly, cisloSekce, nazevSekce, cisloPodsekce, nazevPodsekce) {
     return "";
 }
 

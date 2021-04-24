@@ -1,5 +1,5 @@
 # Linux Kniha kouzel, skript překlad/hlavní.awk
-# Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
+# Copyright (c) 2019-2021 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 # podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -461,7 +461,7 @@ function VypsatZaklinadlo(iZacatek, jakoOblibene,    c, i, iKonec, iPPC, ikona, 
 function UzavritPodsekci()
 {
     if (C_PODSEKCE != 0) {
-        printf("%s", KonecPodsekce(NAZEV_PODKAPITOLY, C_SEKCE, C_PODSEKCE));
+        printf("%s", KonecPodsekce(C_KAPITOLY, KAPITOLA, C_SEKCE, SEKCE, C_PODSEKCE, PODSEKCE));
         C_PODSEKCE = 0;
         PODSEKCE = "";
     }
@@ -471,7 +471,7 @@ function UzavritSekci()
 {
     if (C_SEKCE != 0) {
         UzavritPodsekci();
-        printf("%s", KonecSekce(NAZEV_PODKAPITOLY, C_SEKCE));
+        printf("%s", KonecSekce(C_KAPITOLY, KAPITOLA, C_SEKCE, SEKCE));
         C_SEKCE = 0;
         SEKCE = "";
     }
@@ -480,21 +480,21 @@ function UzavritSekci()
 
 function OtevritSekci(cislo, nazev)
 {
+    if (nazev == "") {ShoditFatalniVyjimku("Nelze otevřít sekci s prázdným názvem!")}
     if (C_SEKCE != 0) {ShoditFatalniVyjimku("Nelze otevřít sekci (" cislo ":" nazev "), když je stále otevřena sekce (" C_SEKCE ": " SEKCE ")!")}
-    C_SEKCE = cislo;
-    SEKCE = nazev;
-    printf("%s", ZacatekSekce((NAZEV_NADKAPITOLY != "" ? NAZEV_NADKAPITOLY "/" : "") NAZEV_PODKAPITOLY, SEKCE, C_KAPITOLY, C_SEKCE));
+    printf("%s", ZacatekSekce(C_KAPITOLY, KAPITOLA, C_SEKCE = cislo, SEKCE = nazev));
     C_ZAKLINADLA = 0;
     return 0;
 }
 
 function OtevritPodsekci(cislo, nazev)
 {
+    if (nazev == "") {ShoditFatalniVyjimku("Nelze otevřít podsekci s prázdným názvem!")}
     if (C_PODSEKCE != 0) {ShoditFatalniVyjimku("Nelze otevřít podsekci (" cislo ":" nazev "), když je stále otevřena podsekce (" C_PODSEKCE ":" PODSEKCE ")!")}
     if (C_SEKCE == 0) {ShoditFatalniVyjimku("Nelze otevřít podsekci (" cislo ":" nazev "), když není otevřena žádná sekce!")}
     C_PODSEKCE = cislo;
     PODSEKCE = nazev;
-    printf("%s", ZacatekPodsekce((NAZEV_NADKAPITOLY != "" ? NAZEV_NADKAPITOLY "/" : "") NAZEV_PODKAPITOLY, SEKCE, PODSEKCE, C_KAPITOLY, C_SEKCE, C_PODSEKCE));
+    printf("%s", ZacatekPodsekce(C_KAPITOLY, KAPITOLA, C_SEKCE, SEKCE, C_PODSEKCE = cislo, PODSEKCE = nazev));
     C_ZAKLINADLA = 0;
     return 0;
 }
@@ -633,7 +633,7 @@ BEGIN {
     vstup[vstup_pocet = FNR] = $0;
 }
 # jako v jazyce C
-function main(    i, o, s, pozice, uroven, pokracuje, c_sekce, n_sekce, c_podsekce, n_podsekce)
+function main(    i, j, o, s, pozice, uroven, pokracuje, c_sekce, n_sekce, c_podsekce, n_podsekce)
 {
     # 1. Vypustit komentáře
     i = o = 1;
@@ -794,8 +794,8 @@ function main(    i, o, s, pozice, uroven, pokracuje, c_sekce, n_sekce, c_podsek
     # 3. Otevřít kapitolu
     delete ppcall;
     delete pptall;
-    printf("%s", ZacatekKapitoly((NAZEV_NADKAPITOLY != "" ? NAZEV_NADKAPITOLY "/" : "") NAZEV_PODKAPITOLY,
-        C_KAPITOLY, STITKY, STITKY_XHES, OSNOVA, IKONA_KAPITOLY, JE_DODATEK));
+    printf("%s", ZacatekKapitoly(C_KAPITOLY, KAPITOLA,
+        STITKY, STITKY_XHES, OSNOVA, IKONA_KAPITOLY, JE_DODATEK));
     if (tolower(NAZEV_PODKAPITOLY) == "licence") {
         printf("%s", ZapnoutRezimLicence());
     }
@@ -803,6 +803,7 @@ function main(    i, o, s, pozice, uroven, pokracuje, c_sekce, n_sekce, c_podsek
     # 4. Zpracovat zdrojový kód
     for (i = 1; i <= ZR_POCET; ++i) {
         FNR = ZR_CISLO[i];
+        #printf("LADĚNÍ: Zpracuji i = <%s> číslo=<%s> typ=<%s>\n", i, ZR_CISLO[i], ZR_TYP[i]) > "/dev/stderr";
 
         # Zvláštní situace: předěl odstavce
         if (i > 1 && ZR_TYP[i - 1] == "NORMÁLNÍ" && ZR_TYP[i] == "PRÁZDNÝ" && ZR_TYP[i + 1] == "NORMÁLNÍ") {
@@ -996,8 +997,8 @@ function main(    i, o, s, pozice, uroven, pokracuje, c_sekce, n_sekce, c_podsek
                     case "VZORNÍKIKON":
                         n = length(UCS_IKONY);
                         delete ikony;
-                        for (i = 1; i <= n; ++i) {
-                            ikony[i] = substr(UCS_IKONY, i, 1) "\t" substr(UCS_IKONY_PISMA, i, 1);
+                        for (j = 1; j <= n; ++j) {
+                            ikony[j] = substr(UCS_IKONY, j, 1) "\t" substr(UCS_IKONY_PISMA, j, 1);
                         }
                         printf("%s", VzornikIkon(n, ikony));
                         delete ikony;
@@ -1043,13 +1044,12 @@ function main(    i, o, s, pozice, uroven, pokracuje, c_sekce, n_sekce, c_podsek
     }
 
     # 5. Uzavřít všechny konstrukce a kapitolu
+    if (C_PODSEKCE != 0) {UzavritPodsekci()}
     if (C_SEKCE != 0) {UzavritSekci()}
-    else if (C_PODSEKCE != 0) {UzavritPodsekci()}
-
     if (tolower(NAZEV_PODKAPITOLY) == "licence") {
         printf("%s", VypnoutRezimLicence());
     }
-    printf("%s", KonecKapitoly(KAPITOLA, ppcall, pptall));
+    printf("%s", KonecKapitoly(C_KAPITOLY, KAPITOLA, ppcall, pptall));
     return 0;
 }
 

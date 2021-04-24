@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, README
-Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
+Copyright (c) 2019-2021 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -19,7 +19,7 @@ Má formu připomínající konverzační slovník cizího jazyka a je vydává
 pro profesionální i domácí tisk a ve formátu HTML pro snadné vykopírování zaklínadel,
 můžete ji tedy používat na papíře i v počítači, proto „multimediální“.
 
-Verze *vanilková příchuť 2.6 Nikita Nálepka* je cílena na *Ubuntu 20.04 Focal Fossa* a jeho deriváty.
+Verze *vanilková příchuť 2.7 Olga Osová* je cílena na *Ubuntu 20.04 Focal Fossa* a jeho deriváty.
 
 Obsah podléhá licenci [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 Podrobné údaje o autorství zdrojových souborů jsou uvedeny v komentářích v jejich záhlaví;
@@ -130,9 +130,10 @@ Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybra
 <!--
 Priority:
 1. [bash] (základní věci jako roury, správa úloh apod.)
-2. [pdf]
-3. [wine]
-4. [firefox]
+2. [šifrování]
+3. [pdf]
+4. [wine]
+5. [firefox]
 -->
 
 | ID | Název kapitoly | Růst | Stav |

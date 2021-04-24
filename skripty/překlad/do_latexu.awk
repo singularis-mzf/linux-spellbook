@@ -241,7 +241,7 @@ function Tabulator(delka,  i, vysledek) {
     return "\\textcolor{seda}{\\guillemotright}{" Zopakovat("~", max(0, delka - 1)) "}";
 }
 
-function ZacatekKapitoly(nazevKapitoly, cisloKapitoly, stitky, stitkyxhes, osnova, ikonaKapitoly, jeDodatek, \
+function ZacatekKapitoly(cisloKapitoly, nazevKapitoly, stitky, stitkyxhes, osnova, ikonaKapitoly, jeDodatek, \
     kapitolaVelkymi, zkratkaKapitoly,   n)
 {
     DO_LATEXU_ODSTAVEC_PRED_ZAKLINADLEM = 0;
@@ -256,28 +256,28 @@ function ZacatekKapitoly(nazevKapitoly, cisloKapitoly, stitky, stitkyxhes, osnov
     return nazevKapitoly;
 }
 
-function KonecKapitoly(nazevKapitoly, cislaPoznamek, textyPoznamek) {
+function KonecKapitoly(cisloKapitoly, nazevKapitoly, cislaPoznamek, textyPoznamek) {
     return "";
 }
 
-function ZacatekSekce(kapitola, sekce, cisloKapitoly, cisloSekce) {
+function ZacatekSekce(cisloKapitoly, nazevKapitoly, cisloSekce, nazevSekce) {
     DO_LATEXU_ODSTAVEC_PRED_ZAKLINADLEM = 0;
-    switch (sekce) {
+    switch (nazevSekce) {
         default:
-            return "\\sekce{" sekce "}%\n";
+            return "\\sekce{" nazevSekce "}%\n";
     }
 }
 
-function KonecSekce(kapitola, sekce) {
+function KonecSekce(cisloKapitoly, nazevKapitoly, cisloSekce, nazevSekce) {
     return "";
 }
 
-function ZacatekPodsekce(kapitola, sekce, podsekce, cisloKapitoly, cisloSekce, cisloPodsekce) {
+function ZacatekPodsekce(cisloKapitoly, nazevKapitoly, cisloSekce, nazevSekce, cisloPodsekce, nazevPodsekce) {
     DO_LATEXU_ODSTAVEC_PRED_ZAKLINADLEM = 0;
-    return "\\podsekce{" podsekce "}%\n";
+    return "\\podsekce{" nazevPodsekce "}%\n";
 }
 
-function KonecPodsekce(kapitola, sekce, podsekce) {
+function KonecPodsekce(cisloKapitoly, nazevKapitoly, cisloSekce, nazevSekce, cisloPodsekce, nazevPodsekce) {
     return "";
 }
 

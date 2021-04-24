@@ -128,7 +128,7 @@ Zaklínadla jsou tvořena posloupností neprázdných řádek následujících t
 * odsazené řádky
 * pokyny uživateli
 
-**Každý** řádek zaklínadla kromě posledního musí končit značkou „`<br>`“, poslední řádek zaklínadla touto značkou končit nesmí (podle toho se pozná, že je poslední). Za posledním řádkem zaklínadla musí následovat alespoň jedna prázdná řádka.
+**Každý** řádek zaklínadla kromě posledního musí končit značkou „`<br>`“, poslední řádek zaklínadla touto značkou končit nesmí (podle toho se pozná, že je poslední). Za posledním řádkem zaklínadla musí následovat alespoň jedna prázdná řádka. Nedodržení těchto pravidel způsobí **chybu syntaxe** při překladu.
 
 ### Titulek zaklínadla
 

@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, předmluva
-Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
+Copyright (c) 2019-2021 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -209,17 +209,15 @@ Uživatele, který Linux: Knihu kouzel neprostudoval, poznáte např. takto:
 * Myslí si, že příkaz „apt list gimp*“ vypíše seznam balíčků začínajících „gimp“ (v tomto případě se musí hlavně naučit pravidla odzvláštňování).
 -->
 
-## Aktuální poznámka k verzi „vanilková příchuť 2.6 Nikita Nálepka“
+## Aktuální poznámka k verzi „vanilková příchuť 2.7 Olga Osová“
 
-Verze vanilkové příchuti 2.6, jménem Nikita Nálepka přináší spíše méně novinek,
-protože na projektu pracuji v současnosti jen já a tento měsíc jsem byl/a
-vytížen/a jinými svými projekty.
+Verze vanilkové příchuti 2.7, jménem Olga Osová, přináší novou kapitolu
+„Metapříkazy“ a podporu pro „oblíbená zaklínadla“, která se vypíšou
+na začátku kapitoly (nebo na jiném místě, kam umístíte ve zdrojovém kódu
+příslušnou direktivu).
 
-Dodatek „Základní znalosti“ byl mírně doplněn.
-V kapitole „Diskové oddíly“ jsou nově zaklínadla pro tvorbu skriptů pro sfdisk.
-
-V PDF variantách je přehled kapitol tištěn menším písmem a je sázen do dvou
-sloupců i ve formátu B5. Čísla zaklínadel v podsekcích byla odstraněna.
+Do každé kapitoly přibyla sekce „Zákulisí kapitoly“, která nyní nahrazuje
+část úvodu specifikující, co v kapitole chybí.
 
 <!--
 - V HTML variantě...
@@ -228,7 +226,7 @@ sloupců i ve formátu B5. Čísla zaklínadel v podsekcích byla odstraněna.
 - V kapitole *XY* přibyly ...
 -->
 
-Vydání verze 2.7, jménem Olga Osová, očekávám koncem dubna 2021.
+Vydání verze 2.8, jménem Pavel Podzimní, očekávám začátkem června 2021.
 
 Verze řady „vanilková příchuť 1.x“ jsou ve stádiu dlouhodobé pasivní údržby do 1. března 2023.
 

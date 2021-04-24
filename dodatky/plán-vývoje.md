@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, dodatek Plán budoucího vývoje
-Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
+Copyright (c) 2019-2021 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -16,6 +16,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 ## Chystané kapitoly
 
+* „Bash“ (syntaxe, exec, přesměrování, roury a další)
+* „Šifrování a kryptografie“ (gpg, šifrování archivů, elektronické podpisy, HTTPS certifikáty)
 * „PDF“ (dělení, slučování, operace po stránkách, transformace, konverze apod.)
 * „Zpracování obrázků“ (ImageMagick, konverze RAW z fotoaparátů, zatím asi bez animovaných gifů)
 * „Stahování z webu“ (wget, curl, firefox, wkhtmltoimage, robots.txt, ...)
@@ -23,10 +25,8 @@ https://creativecommons.org/licenses/by-sa/4.0/
 * „X (správce oken)“ (práce s okny, se schránkou, oznámení a další)
 * „Komplexní textové formáty“ (JSON, XML apod.)
 * „Přehrávání videa, zvuku a obrázků“ (mplayer, feh, gpicview, ristretto)
-* „Šifrování a kryptografie“ (gpg, šifrování archivů, elektronické podpisy, HTTPS certifikáty)
 * „Firewall“ (asi hlavně iptables a ufw)
 * „Jádro a GRUB“ (konfigurace, dualboot, nastavení grafického pozadí)
-* „Bash“ (syntaxe, exec, přesměrování, roury a další)
 * „LaTeX“ (základní struktura dokumentu, standardní značky, překlad do PDF, důležité balíčky)
 * „SQL“ (SQLite, MySQL, MariaDB; všechno možné)
 * „ASCII art“ (banner, toilet a další)
@@ -36,7 +36,6 @@ https://creativecommons.org/licenses/by-sa/4.0/
 * „Záznam obrazovky“ (maim, ffmpeg a další)
 * „Správa balíčků 2“ (apt-src, aptly apod.)
 * „Kalkulace“ (bc, dc, expr apod.)
-* „Firefox“ (zejm. konfigurační volby a volání z terminálu)
 
 <!--
 * „HTTP, FTP, MySQL a spol. (klientská strana – ftp, wget, curl, ...)“
@@ -51,12 +50,13 @@ nebo komentářem na GitHubu. Váš zájem mě určitě potěší a povzbudí.
 
 ## Možný přechod na jazyk Perl
 
-Dříve nebo později do Perlu začnu přepisovat méně významné pomocné skripty.
-
-Připouštím možnost, že některé pomocné skripty v budoucnu přepíšu do Perlu,
-hlavní část mechanismu překladu ale zatím zůstane v GNU awk,
-protože je z velké části založena na příkazech „switch“,
-které Perl sám o sobě dobře neumí a náhražky v něm vypadají ošklivě
-nebo dobře nefungují. U hlavní části mechanismu překladu bude přechod
-možný v případě, že se podaří najít efektivní náhradu za příkazy switch
-(zatím vypadají nadějně asociativní pole); zatím ale není prioritou.
+Implementace mechanismu „oblíbených zaklínadel“ ve vanilkové příchuti 2.7
+si vyžádala poměrně zásadní přepsání mechanismu překladu.
+Ačkoliv je i jeho nová implementace v GNU awk, dospěl/a jsem k závěru,
+že AWK je pro takovýto projekt špatným jazykem, protože disponuje jen
+velmi omezeným sortimentem funkcí a je obtížné v něm spravovat složité
+datové struktury založené na polích, ukazatelích a datových strukturách.
+Navíc se zdá, že asociativní pole mohou ve většině potřebných případů
+elegantně nahradit příkazy „switch“, takže pokud by bylo potřeba
+mechanismus překladu kvůli nějaké nové vlastnosti znovu podstatně
+přepsat, přepíšu ho už rovnou do Perlu.

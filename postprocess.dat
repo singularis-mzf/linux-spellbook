@@ -1,5 +1,5 @@
 # Linux Kniha kouzel, postprocess.dat
-# Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
+# Copyright (c) 2019-2021 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 # podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -118,6 +118,18 @@ zpracování-textových-souborů
 {\footnotetext[1]{Užitečná kódování: ISO8859{-}2, WINDOWS{-}1250, UTF{-}16, UTF{-}16BE, UTF{-}16LE, UTF{-}8, CP852 (MS{-}DOS), MAC{-}CENTRALEUROPE.}}{%
 {\footnotetext[1]{\raggedright Užitečná kódování: ISO8859{-}2, WINDOWS{-}1250, UTF{-}16, UTF{-}16BE, UTF{-}16LE, UTF{-}8, CP852 (MS{-}DOS), MAC{-}CENTRALEUROPE.}}{%
 
+530
+pdf-a4.*
+zpracování-textových-souborů
+\zaklinadlo{3}{\pismolmmath{}♣}{\underline{\emph{Práce se záznamy}}\\\underline{\emph{Množinové operace (nad seřazenými záznamy)}}\\%
+\zaklinadlo{3}{\pismolmmath{}♣}{\underline{\emph{Práce se záznamy}}\\{\footnotesize\underline{\emph{Množinové operace (nad seřazenými záznamy)}}}\\%
+
+531
+pdf-b5.*
+zpracování-textových-souborů
+\zaklinadlo{3}{\pismolmmath{}♣}{\underline{\emph{Práce se záznamy}}\\\underline{\emph{Množinové operace (nad seřazenými záznamy)}}\\%
+\zaklinadlo{3}{\pismolmmath{}♣}{\underline{\emph{Práce se záznamy}}\\{\footnotesize\underline{\emph{Množinové operace (nad seřazenými záznamy)}}}\\%
+
 #
 # [mardown] 600..699
 # =========================================================================================
@@ -177,6 +189,18 @@ pdf-b5.*
 zpracování-videa-a-zvuku
 }\begin{odstavce}Dalším velmi dobrým zdrojem je oficiální dokumentace k~filtrům, ke které se dostanete tak, že si nainstalujete balíček \quotedblbase{}ffmpeg{-}doc\textquotedblleft{} a~v~prohlížeči otevřete soubor \quotedblbase{}/usr/share/doc/ffmpeg/manual/ffmpeg{-}filters.html\textquotedblleft{}.
 }\begin{odstavce}Dalším velmi dobrým zdrojem je oficiální dokumentace k~filtrům, ke které se dostanete tak, že si nainstalujete balíček \quotedblbase{}ffmpeg{-}doc\textquotedblleft{} a~v~prohlížeči otevřete soubor\\\quotedblbase{}/usr/share/doc/ffmpeg/manual/ffmpeg{-}filters.html\textquotedblleft{}.
+
+940
+pdf-a4.*
+zpracování-videa-a-zvuku
+\zaklinadlo{1}{\pismolmmath{}♣}{\underline{\emph{Filtry}}\\\underline{\emph{Překryv, skládání a~prolínání obrazových stop (blend)}}\\%
+\zaklinadlo{1}{\pismolmmath{}♣}{\underline{\emph{Filtry}}\\{\footnotesize\underline{\emph{Překryv, skládání a~prolínání obrazových stop (blend)}}}\\%
+
+941
+pdf-b5.*
+zpracování-videa-a-zvuku
+\zaklinadlo{1}{\pismolmmath{}♣}{\underline{\emph{Filtry}}\\\underline{\emph{Překryv, skládání a~prolínání obrazových stop (blend)}}\\%
+\zaklinadlo{1}{\pismolmmath{}♣}{\underline{\emph{Filtry}}\\{\scriptsize\underline{\emph{Překryv, skládání a~prolínání obrazových stop (blend)}}}\\%
 
 #
 # [sed] 1100..1199
@@ -340,6 +364,18 @@ pdf-b5.*
 nabídka-aplikací
 \char`\~{}/.local/share/applications/vycet.xterm.desktop}%
 \char`\~{}/.local/share/applications/\\vycet.xterm.desktop}%
+
+#
+# [odkazy] 2300..2399
+# =========================================================================================
+
+2300
+pdf-a4.*
+odkazy
+\sekce{Zákulisí kapitoly}%
+\clearpage\sekce{Zákulisí kapitoly}%
+
+# 2300 = dočasná úprava kvůli vadě sazby
 
 #
 # VYŘAZENÉ KAPITOLY
