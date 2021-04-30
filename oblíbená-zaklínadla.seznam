@@ -8,41 +8,8 @@
 #
 # https://creativecommons.org/licenses/by-sa/4.0/
 #
-x6a72481    metapříkazy/pokud příkaz poběží ještě po N sekundách, poslat mu signál
-x067c71e    metapříkazy/spouštět příkaz v pravidelném intervalu
-x1b960d4    awk/zapnout/vypnout režim sloupců pevné šířky
-xe1db832    diskové-oddíly/připojit adresář z již připojeného systému souborů na nový přípojný bod
-x7375005    diskové-oddíly/formátovat na ext4
-xa48dfd5    diskové-oddíly/formátovat na btrfs
-x566bef9    diskové-oddíly/formátovat na NTFS
-x11ea64b    diskové-oddíly/btrfs/vytvořit klon podstromu adresářů
-xb7df020    diskové-oddíly/btrfs/vytvořit klon souboru
-x92574d2    diskové-oddíly/lvm/deaktivovat skupinu
-xae4fdd3    diskové-oddíly/lvm/vytvořit logický oddíl
-x1cb53bb    diskové-oddíly/softwarový-raid/vytvořit prokládané pole
-x974a088    diskové-oddíly/softwarový-raid/vytvořit zrcadlené pole
-xbf3b6eb    diskové-oddíly/softwarový-raid/vytvořit pole s paritou
-xa242a6e    git/v logu zobrazovat datum YYYY-MM-DD HH:MM:SS +ZZZZ
-xe1197ce    git/vypisovat ne-ASCII znaky v názvech souborů tak, jak jsou
-x0cdd1fd    git/vypsat na standardní výstup soubor z určité revize
-x04b817e    git/změnit adresu vzdáleného repozitáře
-x48fa601    hledání-souborů/neplatné symbolické odkazy
-x071b53d    hledání-souborů/název položky/cesta položky/cesta položky bez výchozího bodu
-xa4ae4e4    nabídka-aplikací/otevřít spouštěč v GUI editoru
-xf278d3c    odkazy/hromadné vytvoření relativních odkazů
-x2f63d67    odkazy/okopírovat adresáře, ale na soubory místo kopírování vytvořit pevné odkazy
-x2541751    perl-základy/literál '\x{0}'
-x0ac9fc3    perl-základy/řazení podle kódové hodnoty znaků
-x1b325c8    práce-s-archivy/rozbalit archiv
-x6db48bb    regulární-výrazy/začátek testovaného řetězce
-x2c6508e    regulární-výrazy/vzorky bashe/kterýkoliv kromě uvedených znaků
-xddd4af4    správa-balíčků/nainstalovat-balíček
-xb9f9058    správa-balíčků/seznam souborů, které kontroluje balíček
-x95d7e55    správa-uživatelských-účtů/zapnout automatické přihlašování
-x78fe95c    správa-uživatelských-účtů/vypsat účty ve skupině (po řádcích)
-x2dbba6e    systém/vypsat log krále démonů
-xdba39d5    zpracování-textových-souborů/konvertovat soubor do/z UTF-8
-x762fc8a    zpracování-textových-souborů/náhodně přeskládat řádky
-x206a134    zpracování-textových-souborů/množinový rozdíl
-xa3b6155    zpracování-videa-a-zvuku/prolnout několik vstupů
-x8b7ba5a    zpracování-videa-a-zvuku/zapéci titulky
+
+# [diskové-oddíly]
+x7375005 Formátovat na ext4
+xa48dfd5 Formátovat na **NTFS**
+x566bef9 Formátovat na btrfs

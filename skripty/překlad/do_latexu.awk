@@ -381,15 +381,15 @@ function ZacatekZaklinadla(\
         ax = ax DoLatexuIkonaZaklinadla(ikona) "}{";
         # #4 = titulek zaklínadla + \footnotemark
         # Poznámka: kvůli mechanismu „postprocess“ je potřeba oddělit titulek zaklínadla na víceméně samostatný řádek.
-        if (samostatne) {
-            i = gensub(/^[Zz][Aa][Kk][Ll][íÍ][nN][Aa][Dd][Ll][Aa]:? ?/, "", 1, nazevSekce);
-            if (i != "") {
-                ax = ax "\\underline{\\emph{" i "}}\\\\";
-            }
-            if (nazevPodsekce != "") {
-                ax = ax "\\underline{\\emph{" nazevPodsekce "}}\\\\";
-            }
-        }
+        #if (samostatne) {
+            #i = gensub(/^[Zz][Aa][Kk][Ll][íÍ][nN][Aa][Dd][Ll][Aa]:? ?/, "", 1, nazevSekce);
+            #if (i != "") {
+                #ax = ax "\\underline{\\emph{" i "}}\\\\";
+            #}
+            #if (nazevPodsekce != "") {
+                #ax = ax "\\underline{\\emph{" nazevPodsekce "}}\\\\";
+            #}
+        #}
         ax = ax "%\n" textZaklinadla;
         if (length(cislaPoznamek) > 0) {
             base = AlokovatPoznamkuPodCarou();

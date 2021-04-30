@@ -361,19 +361,24 @@ function FormatovatRadek(text, stav,   VSTUP, VYSTUP, i, j, C, priznak) {
 }
 
 # Vrací počet řádek tvořících zaklínadlo (o kolik je třeba zvýšit „i“)
-function VypsatZaklinadlo(iZacatek, jakoOblibene,    c, i, iKonec, iPPC, ikona, pozice, ppc, ppt, s, tz)
+function VypsatZaklinadlo(iZacatek, jakoOblibene, titulekProOblibene,    c, i, iKonec, iPPC, ikona, pozice, ppc, ppt, s, tz)
 {
     if (ZR_TYP[iZacatek] != "ZAKLÍNADLO") {ShoditFatalniVyjimku("Chybný index pro výstup zaklínadla: " iZacatek)}
+
     if (iZacatek > 1 && ZR_TYP[i - 1] ~ /^(ZAKLÍNADLO|POZNÁMKA|ŘÁDEK_ZAKLÍNADLA)$/) {
         ShoditFatalniVyjimku("Zaklínadlo nesmí následovat bezprostředně po předchozím zaklínadle. Vložte před něj prázdný řádek.");
     }
     JE_UVNITR_ZAKLINADLA = 1;
+
     # tz = text zaklínadla (pro zaklínadla bez titulku "")
     tz = ZR_TEXT[iZacatek] == "*# *<br>" ? "" : gensub(/^\*# |\*<br>$/, "", "g", ZR_TEXT[iZacatek]);
     if (length(tz) != length(ZR_TEXT[iZacatek]) - 8) {
         ShoditFatalniVyjimku("Vnitřní chyba: chybná náhrada \"" ZR_TEXT[iZacatek] "\" -> \"" tz "\"");
     }
     #else {printf("LADĚNÍ: zaklínadlo \"%s\" -> \"%s\"\n", ZR_TEXT[iZacatek], tz) > "/dev/stderr"}
+
+    if (jakoOblibene && titulekProOblibene != "") {tz = titulekProOblibene}
+
     if (tz != "") {tz = FormatovatRadek(tz, FR_STAV_MIMO_ZAKLINADLO)}
     HES_ZAKLINADLA = ZR_HES[iZacatek];
     if (tz != "") {
@@ -622,18 +627,26 @@ BEGIN {
     # Načíst oblíbená zaklínadla:
     delete OBLIBENE_HESE;
     while (getline < "oblíbená-zaklínadla.seznam") {
-        if ($0 ~ /^[^#]/ && (s = gensub(/\s.*$/, "", 1)) != "") {
-            if (s !~ /^x[0123456789abcdef]+$/) {ShoditFatalniVyjimku("Chybný formát řádky v seznamu oblíbených zaklínadel: \"" $0 "\"!")}
-            OBLIBENE_HESE[s] = 1;
+        if ($0 ~ /^(#|$)/) {continue} # komentář
+        match($0, /^x[0123456789abcdef]+( ([[:alnum:]  .,;:/]|\*\*)+)?/); # omezení dovolených znaků v titulku pro oblíbené zaklínadlo
+        if (RLENGTH < length($0)) {
+            ShoditFatalniVyjimku("Chybný formát řádky v seznamu oblíbených zaklínadel: správná část = \"" \
+                substr($0, 1, RLENGTH) "\", zbytek = \"" substr($0, 1 + RLENGTH) "\"." );
         }
+        xhes = gensub(/\s.*$/, "", 1);
+        titulek = gensub(/^\S+ ?/, "", 1);
+        if (titulek ~ /\*\*\*/) {
+            ShoditFatalniVyjimku("Chybný titulek pro oblíbené zaklínadlo (nesmí obsahovat jednu ani víc než dvě \"*\" vedle sebe): \"" titulek "\"!");
+        }
+        OBLIBENE_HESE[xhes] = titulek;
     }
-    #for (s in OBLIBENE_HESE) {printf("LADĚNÍ: Oblíbená heš: %s\n", s) > "/dev/stderr"}
+    #for (s in OBLIBENE_HESE) {printf("LADĚNÍ: Oblíbená heš: <%s> (titulek=<%s>)\n", s, OBLIBENE_HESE[s]) > "/dev/stderr"}
 }
 {
     vstup[vstup_pocet = FNR] = $0;
 }
-# jako v jazyce C
-function main(    i, j, o, s, pozice, uroven, pokracuje, c_sekce, n_sekce, c_podsekce, n_podsekce)
+# main() - jako v jazyce C
+function main(    i, j, o, s, pozice, uroven, pokracuje, c_sekce, n_sekce, c_podsekce, n_podsekce, indexyOblZakl, titulkyOblZakl)
 {
     # 1. Vypustit komentáře
     i = o = 1;
@@ -1007,17 +1020,20 @@ function main(    i, j, o, s, pozice, uroven, pokracuje, c_sekce, n_sekce, c_pod
                     case "OBLÍBENÁZAKLÍNADLA":
                         if (JE_ZAPNUTY_UZKY_REZIM) {ShoditFatalniVyjimku("Direktiva !OblíbenáZaklínadla není dovolena v úzkém režimu!")}
                         delete indexyOblZakl;
+                        delete titulkyOblZakl;
                         pocetOblZakl = 0;
                         for (j = 1; j <= ZR_POCET; ++j) {
                             if (ZR_HES[j] in OBLIBENE_HESE) {
-                                indexyOblZakl[++pocetOblZakl] = j;
+                                ++pocetOblZakl;
+                                indexyOblZakl[pocetOblZakl] = j;
+                                titulkyOblZakl[pocetOblZakl] = OBLIBENE_HESE[ZR_HES[j]];
                             }
                         }
                         if (pocetOblZakl > 0) {
                             CISLO_OBLIBENEHO_ZAKLINADLA = 0;
                             printf("%s", ZacatekOblibenychZaklinadel(pocetOblZakl));
                             for (j = 1; j <= pocetOblZakl; ++j) {
-                                VypsatZaklinadlo(indexyOblZakl[j], 1);
+                                VypsatZaklinadlo(indexyOblZakl[j], 1, titulkyOblZakl[j]);
                             }
                             printf("%s", KonecOblibenychZaklinadel(pocetOblZakl));
                         }
