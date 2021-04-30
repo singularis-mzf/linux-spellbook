@@ -166,7 +166,7 @@
 {{MAKRO menu-stin-textu-tlacitka-kryti  = 0}}
 #
 #
-# Motiv „hlavní“
+# Motiv „hlavní“ (tmavý)
 ##############################################################################
 {{POKUD JE MOTIV hlavni}}
 {{MAKRO html-pozadi-barva   = rgb(18,26,39)}}
@@ -176,15 +176,15 @@
 {{MAKRO zb-titul-text                   = {{zb-text}}}}
 {{MAKRO zb-okno-ramecek={{zb-svetla}}}}
 {{MAKRO okno-stin-kryti=0.5}}
-{{MAKRO zb-text                         = 164,164,164}}
+{{MAKRO zb-text                         = 236,236,236}}
 {{MAKRO zb-tmava                        = 120,120,120}}
 {{MAKRO zb-svetla                       = 60,60,60}}
-{{MAKRO zb-pozadi                       = 40,40,40}}
+{{MAKRO zb-pozadi                       = 50,50,54}}
 {{MAKRO zb-odkaz                        = 86,155,200}}
 {{MAKRO zb-navstiveny                   = 183,136,183}}
 {{MAKRO zb-barevny-text                 = 63,162,94}}
 {{MAKRO obrazek-pozadi                  = 255,255,255}}
-{{MAKRO obrazek-pozadi-kryti            = 0.2}}
+{{MAKRO obrazek-pozadi-kryti            = 0.5}}
 {{MAKRO symboly-tab                 = {{sym-raquo-bila}}}}
 {{MAKRO symboly-tritecky            = {{sym-tritecky-svetle}}}}
 {{MAKRO symboly-viditelnamezera     = {{sym-blank-bila}}}}
@@ -457,13 +457,18 @@ ul.kompaktni {
     line-height:1.2;
     text-align:left;
 }
+.figureobal {
+        display:flex;
+        flex-flow:row nowrap;
+        margin:2rem auto;
+        justify-content:center;
+}
 figure {
-    margin:2rem 0;
+    background:rgba({{obrazek-pozadi}},{{obrazek-pozadi-kryti}});
     border-radius:3rem;
     padding:1rem;
-    background:rgba({{obrazek-pozadi}},{{obrazek-pozadi-kryti}});
-    text-align:center;
 }
+figure img {opacity:1}
 blockquote {
     border-left:0.5em solid rgb({{zb-tmava}});
     padding-left:1em;
