@@ -160,11 +160,13 @@ Přidat zaklínadlo mezi oblíbená můžete následovně:
 * Otevřete si příslušnou kapitolu ve formátu HTML.
 * Najděte příslušné zaklínadlo.
 * Ikona vlevo od zaklínadla slouží jako permanentní odkaz. Vezměte adresu tohoto odkazu a odstraňte z ní vše až po výskyt kombinace „#z“; zbude vám takzvaná „x-heš“ („x“ a hexadecimální číslo), která zaklínadlo identifikuje.
-* Přidejte získanou x-heš na novou řádku v souboru „oblíbená-zaklínadla.seznam“; volitelně za ni můžete vložit mezeru a jakékoliv znaky až do konce řádku pak budou sloužit jako komentář (to je vhodné např. jako identifikace, o jaké zaklínadlo se jedná).
+* Přidejte získanou x-heš na novou řádku v souboru „oblíbená-zaklínadla.seznam“. Pokud chcete použít vlastní titulek místo původního (což doporučuji), uveďte za x-heš mezeru a text vašeho titulku. V titulku můžete použít písmena, číslice, mezery (obyčejné nebo nezlomitelné) a omezený sortiment interpunkce; z formátování můžete použít pouze tučné písmo pomocí „\*\*“ jako v Markdownu.
 
 Poznámka: na pořadí x-heší v seznamu nezáleží; uvedení neexistující x-heše (za předpokladu, že má správný formát) není chyba a bude tiše ignorováno.
 
-Analogicky můžete vyřadit jednotlivá oblíbená zaklínadla tak, že vypustíte řádku s jejich x-heší.
+Poznámka 2: Řádky seznamu začínající znakem „#“ jsou komentáře a budou ignorovány.
+
+Analogicky můžete vyřadit jednotlivá oblíbená zaklínadla tak, že vypustíte nebo zakomentujete řádku s jejich x-heší.
 
 ## Ověření české lokalizace systému
 

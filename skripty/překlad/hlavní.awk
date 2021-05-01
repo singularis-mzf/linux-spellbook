@@ -628,7 +628,7 @@ BEGIN {
     delete OBLIBENE_HESE;
     while (getline < "oblíbená-zaklínadla.seznam") {
         if ($0 ~ /^(#|$)/) {continue} # komentář
-        match($0, /^x[0123456789abcdef]+( ([[:alnum:]  .,;:/]|\*\*)+)?/); # omezení dovolených znaků v titulku pro oblíbené zaklínadlo
+        match($0, /^x[0123456789abcdef]+( ([-[:alnum:]  .,;:/]|\*\*)+)?/); # omezení dovolených znaků v titulku pro oblíbené zaklínadlo
         if (RLENGTH < length($0)) {
             ShoditFatalniVyjimku("Chybný formát řádky v seznamu oblíbených zaklínadel: správná část = \"" \
                 substr($0, 1, RLENGTH) "\", zbytek = \"" substr($0, 1 + RLENGTH) "\"." );

@@ -1,5 +1,5 @@
 # Linux Kniha kouzel, skript lkk-spouštěč.pl
-# Copyright (c) 2020 Singularis <singularis@volny.cz>
+# Copyright (c) 2020, 2021 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 # podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -28,6 +28,9 @@
 # exec 9>&-
 # eval "$p"
 #
+use Getopt::Long(qw(GetOptionsFromArray :config require_order bundling no_auto_version no_auto_help prefix_pattern=--|- long_prefix_pattern=--));
+use List::Util;
+
 my $proměnnáHome = proměnnáProstředí("HOME", "");
 $proměnnáHome ne "" or die("Chybná hodnota proměnné \$HOME!");
 my $proměnnáEditor = proměnnáProstředí("EDITOR", "sensible-editor");
@@ -44,45 +47,36 @@ my $s = undef;
 my @argumenty = @ARGV;
 my $akce = "";
 
+my @písmenaAkcí = qw(e f h l p r t F P);
+my @akce = array(map {0} @písmenaAkcí);
+
 # 1. Zpracovat volby
-while (defined($s = shift(@argumenty)) && $s ne "--")
-{
-    if (která($s, "-e", "--editovat")) {
-        $akce = "e";
-    } elsif (která($s, "-f", "--najit", "--najít")) {
-        $akce = "f";
-    } elsif (která($s, "-h", "--help", "--napoveda", "--nápověda")) {
-        $akce = "h";
-    } elsif (která($s, "-l", "--seznam")) {
-        $akce = "l";
-    } elsif (která($s, "-p", "--vypsat")) {
-        $akce = "p";
-    } elsif (která($s, "-r", "--spustit")) {
-        $akce = "r";
-    } elsif (která($s, "-t", "--existuje")) {
-        $akce = "t";
-    } elsif (která($s, "-F", "--funkce")) {
-        $akce = "F";
-    } elsif (která($s, "-P", "--seznam-cest")) {
-        $akce = "P";
-    } elsif (která($s, "--bash")) {
-        ++$přepínačBash;
-    } elsif (která($s, "-s", "--system", "--systém")) {
-        ++$přepínačSystém; #;
-    } elsif (která($s, "-x", "--jen-spustitelne", "--jen-spustitelné")) {
-        ++$přepínačJenSpustitelné;
-    } elsif ($s =~ /^-/) {
-        die("lkk: Neznámá volba: ".$s);
-    } else {
-        unshift(@argumenty, $s);
-        last;
-    }
+GetOptionsFromArray(\@argumenty,
+# akce:
+    "editovat|e", \$akce[0],
+    "najít|najit|f", \$akce[1],
+    "nápověda|napoveda|help|h|?", \$akce[2],
+    "seznam|l", \$akce[3],
+    "vypsat|p", \$akce[4],
+    "spustit|r", \$akce[5],
+    "existuje|t", \$akce[6],
+    "funkce|F", \$akce[7],
+    "seznam-cest|P", \$akce[8],
+    "bash", \$přepínačBash,
+    "systém|system|s", \$přepínačSystém, # ,
+    "jen-spustitelné|jen-spustitelne|x", \$přepínačJenSpustitelné
+);
+
+$i = List::Util::sum0(@akce);
+
+if ($i > 1) {
+    die("Chyba: více akcí na příkazové řádce!");
+} elsif ($i < 1) {
+    $akce = alength(@ARGV) > 0 ? "r" : "h";
+} else {
+    $akce = $písmenaAkcí[(List::Util::first {$akce[$ARG] > 0} (0..alength(@akce) - 1))] // die("Vnitřní chyba");
 }
 
-if ($akce eq "") {
-    # výchozí akce (pokud není zadána)
-    $akce = alength(@argumenty) > 0 ? "r" : "h";
-}
 
 # 2. Skript musí být zadán, ledaže ho akce nevyžaduje
 if ($akce =~ /^[hlP]$/) {
@@ -113,8 +107,7 @@ if ($akce eq "h") {
         "\nDalší volby (nutno uvést před název skriptu či funkce!):\n".
         "\t--bash :: Je-li zadáno -e na neexistující skript, vytvoří skript s hlavičkou „#!/bin/bash“. Vhodné kombinovat s „-x“.\n".
         "\t-s :: Skripty hledat jen v /usr/share/lkk/skripty; ignorovat proměnnou LKKPATH a uživatelské úložiště ~/.local/share/lkk/skripty.\n".
-        "\t-x :: Ignorovat nespustitelné skripty (tzv. úryvky). Je-li zadáno -e na neexistující skript, nastaví nový skript jako spustitelný.\n".
-        "\nPoznámka: z technických důvodů nelze krátké volby kombinovat do jednoho parametru, musejí být uvedeny zvlášť.\n");
+        "\t-x :: Ignorovat nespustitelné skripty (tzv. úryvky). Je-li zadáno -e na neexistující skript, nastaví nový skript jako spustitelný.\n");
     exit();
 }
 
@@ -249,6 +242,9 @@ sub typy
 }
 
 # Konkrétní funkce
+
+# array()
+sub array {return @ARG}
 
 # doApostrofů(s) => nahradí v řetězci apostrofy za „'\''“ a celý řetězec umístí do apostrofů.
 sub doApostrofů {
