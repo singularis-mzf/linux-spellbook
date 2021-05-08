@@ -78,9 +78,9 @@ END {
     while (prikaz | getline) {
         Cil(zavislosti[++n] = SOUBORY_PREKLADU "/pdf-společné/_obrázky/" $0);
         Zavislost("obrázky/" $0);
-        Zavislost("konfig.ini");
+        Zavislost("konfigurace/konfig.ini");
         Prikaz("mkdir -pv $(dir $@)");
-        Prikaz(CONVERT " $< $$(skripty/přečíst-konfig.sh \"Filtry\" \"../obrázky/" $0 "\" \"-colorspace Gray\" < konfig.ini) $@");
+        Prikaz(CONVERT " $< $$(skripty/přečíst-konfig.sh \"Filtry\" \"../obrázky/" $0 "\" \"-colorspace Gray\" < konfigurace/konfig.ini) $@");
     }
     close(prikaz);
 
@@ -88,9 +88,9 @@ END {
     for (ikonaKapitoly in potrebne_ik) {
         Cil(zavislosti[++n] = SOUBORY_PREKLADU "/pdf-společné/_obrázky/" ikonaKapitoly);
         Zavislost("obrázky/" ikonaKapitoly);
-        Zavislost("konfig.ini");
+        Zavislost("konfigurace/konfig.ini");
         Prikaz("mkdir -pv $(dir $@)");
-        Prikaz(CONVERT " $< $$(skripty/přečíst-konfig.sh \"Filtry\" \"../obrázky/" $0 "\" \"-colorspace Gray\" < konfig.ini) $@");
+        Prikaz(CONVERT " $< $$(skripty/přečíst-konfig.sh \"Filtry\" \"../obrázky/" $0 "\" \"-colorspace Gray\" < konfigurace/konfig.ini) $@");
 
         if (ikonaKapitoly !~ /^ik\//) {
             ShoditFatalniVyjimku("Neočekávaná ikona kapitoly: \"" ikonaKapitoly "\" (asi nutno doimplementovat)");
@@ -109,7 +109,7 @@ END {
 
     # 3B. qr.eps
     Cil(zavislosti[++n] = SOUBORY_PREKLADU "/pdf-společné/qr.eps");
-    Zavislost("konfig.ini");
+    Zavislost("konfigurace/konfig.ini");
     Prikaz("mkdir -pv $(dir $@)");
     Prikaz("skripty/přečíst-konfig.sh Adresy do-qr <$< | qrencode -o $@ -t eps -s 8");
 

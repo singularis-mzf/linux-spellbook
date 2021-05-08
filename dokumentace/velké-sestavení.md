@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, dokumentace: Velké sestavení
-Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
+Copyright (c) 2019-2021 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -71,7 +71,7 @@ Prvním krokem je stáhnout si a nastavit repozitář:
 
 V druhém kroku si vyberte kapitoly, které mají být součástí sestavení:
 
-> ``cp pořadí-kapitol.výchozí.lst pořadí-kapitol.lst``
+> ``cp -ivT konfigurace/pořadí-kapitol.výchozí.seznam konfigurace/pořadí-kapitol.seznam``
 
 Otevřete nově vytvořený soubor „pořadí-kapitol.lst“ v obyčejném textovém
 editoru (např. vim, nano, Gedit, Kate, Mousepad, Leafpad apod.,
@@ -138,7 +138,7 @@ Překlad pravděpodobně bude fungovat i při nedodržení doporučené syntaxe
 
 ``make PREMIOVE_KAPITOLY=1 -j4 html pdf-a4``
 
-* Parametrem „REKLAMNI\_PATY=1“ můžete zapnout generování „reklamních“ pat kapitol ve formátu HTML. Texty pat se nastavují v souboru „konfig.ini“ v sekci [Reklamní-Paty].
+* Parametrem „REKLAMNI\_PATY=1“ můžete zapnout generování „reklamních“ pat kapitol ve formátu HTML. Texty pat se nastavují v souboru „[konfig.ini](../konfigurace/konfig.ini)“ v sekci [Reklamní-Paty].
 
 *Příklad:*
 
@@ -154,7 +154,7 @@ Překlad pravděpodobně bude fungovat i při nedodržení doporučené syntaxe
 
 Oblíbená zaklínadla se vypisují ve formátech HTML a PDF navíc na začátku každé
 kapitoly. Vypnout je můžete vyprázdněním souboru
-[oblíbená-zaklínadla.seznam](../oblíbená-zaklínadla.seznam).
+[oblíbená-zaklínadla.seznam](../konfigurace/oblíbená-zaklínadla.seznam).
 Přidat zaklínadlo mezi oblíbená můžete následovně:
 
 * Otevřete si příslušnou kapitolu ve formátu HTML.

@@ -1,5 +1,5 @@
 # Linux Kniha kouzel, skript utility.awk
-# Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
+# Copyright (c) 2019-2021 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 # podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -61,7 +61,7 @@ function PrecistKonfig(sekce, klic, vychoziHodnota,   prikaz, vysledek) {
     if (klic == "") {
         ShoditFatalniVyjimku("Nemohu číst prázdný klíč!");
     }
-    prikaz = "bash skripty/přečíst-konfig.sh \"" sekce "\" \"" klic "\" \"" vychoziHodnota "\" < konfig.ini";
+    prikaz = "bash skripty/přečíst-konfig.sh \"" sekce "\" \"" klic "\" \"" vychoziHodnota "\" < konfigurace/konfig.ini";
     vysledek = "";
     prikaz | getline vysledek;
     close(prikaz);

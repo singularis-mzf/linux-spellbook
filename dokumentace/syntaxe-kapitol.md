@@ -97,7 +97,7 @@ Obrázky je dovoleno vkládat pouze jako samostatné odstavce, např. takto:
 
 V současnosti jsou podporovány pouze obrázky typu png a svg
 (příslušné soubory je nutno před použitím uvést do Makefile
-a je vhodné doplnit jejich konfiguraci do „konfig.ini“).
+a je vhodné doplnit jejich konfiguraci do „[konfig.ini](../konfigurace/konfig.ini)“).
 Údržba obrázků je ale pracná a tisk nákladný, proto se obrázkům spíš vyhýbám.
 
 ### Nadpisy

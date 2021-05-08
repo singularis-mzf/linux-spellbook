@@ -285,14 +285,14 @@ Tyto soubory uvádějí seznamy používané při překladu:
 | obrázky-svg.seznam | Seznam SVG ikon v adresáří [obrázky](obrázky). |
 | vydané-fragmenty.seznam | Aktualizovaný seznam vydaných kapitol a dodatků. Všechny uvedené položky musí být uvedeny také v dodatky.seznam nebo kapitoly.seznam. |
 
-### pořadí-kapitol.seznam a pořadí-kapitol.výchozí.seznam
+### konfigurace/pořadí-kapitol.seznam a konfigurace/pořadí-kapitol.výchozí.seznam
 
 Tyto soubory určují výběr a pořadí kapitol a dodatků na výstupu.
 
 Poznámka: jako první by měla být v každém případě Předmluva („predmluva“);
 není to sice vyžadováno, ale překlad bez splnění tohoto předpokladu jsem nikdy netestoval/a.
 
-### konfig.ini
+### konfigurace/konfig.ini
 
 Soubor v klasickém formátu „ini“. Dělí se na tři sekce:
 

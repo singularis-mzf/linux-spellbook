@@ -1,5 +1,5 @@
 # Linux Kniha kouzel, Makefile
-# Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
+# Copyright (c) 2019-2021 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 # podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -182,7 +182,7 @@ $(DATUM_SESTAVENI_SOUBOR) $(DEB_VERZE_SOUBOR) $(JMENO_SESTAVENI_SOUBOR):
 # + soubory_překladu/prémiové-kapitoly.tsv
 # ----------------------------------------------------------------------------
 $(SOUBORY_PREKLADU)/fragmenty.tsv: # generování se spouští pokaždé
-# skripty/extrakce/fragmenty.pl $(VSECHNY_KAPITOLY_A_DODATKY_MD) $(SOUBORY_PREKLADU)/ucs_ikony.dat konfig.ini
+# skripty/extrakce/fragmenty.pl $(VSECHNY_KAPITOLY_A_DODATKY_MD) $(SOUBORY_PREKLADU)/ucs_ikony.dat konfigurace/konfig.ini
 	@skripty/h1 "Regeneruji $(SOUBORY_PREKLADU)/fragmenty.tsv a Makefily..."
 	@mkdir -pv $(dir $@)
 	@shopt -qu failglob; shopt -qs nullglob; $(TRANSAKCE) -on $@ $(SOUBORY_PREKLADU)/osnova/*.tsv

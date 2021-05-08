@@ -1,5 +1,5 @@
 # Linux Kniha kouzel, skript extrakce/fragmenty.pl
-# Copyright (c) 2020 Singularis <singularis@volny.cz>
+# Copyright (c) 2020, 2021 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 # podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -64,7 +64,7 @@ my %číslaKapitol; # ID => pořadové číslo na výstupu (1, 2, ...)
     ladění("Budu číst pořadí kapitol.");
 
     if ($nastavení eq "") {
-        $f = čístPrvníZ(qw(pořadí-kapitol.seznam pořadí-kapitol.výchozí.seznam)) // die("Nepodařilo se určit pořadí kapitol!");
+        $f = čístPrvníZ(qw(konfigurace/pořadí-kapitol.seznam konfigurace/pořadí-kapitol.výchozí.seznam)) // die("Nepodařilo se určit pořadí kapitol!");
     } elsif ($nastavení ne "__VŠE__") {
         $f = čístPrvníZ($nastavení) // die("Nepodařilo se určit pořadí kapitol! (Nastavení: ${nastavení})");
     }
