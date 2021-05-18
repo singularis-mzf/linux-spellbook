@@ -26,6 +26,7 @@
 # Volání:
 # li {text}...
 
+
 if test $# -gt 0
 then
     #reset="$(tput sgr0)"
