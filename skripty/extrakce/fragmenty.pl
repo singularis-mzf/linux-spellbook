@@ -190,7 +190,7 @@ for my $i (0..(alength(@všechnyFragmenty) - 1))
         if ($vZaklínadle == 0) {
             if ($s =~ /\A\*# .+\*(<br>)?\z/) {
                 $s =~ /<br>\z/
-                    or die("Chyba syntaxe ${id}:${čŘádky}: ${s}");
+                    or die("Chyba syntaxe ${id}:${čŘádky} (zkontrolujte umístění <br>!): ${s}");
                 my $textZaklínadla = $názevSekce . "/" . $názevPodsekce . "/" . mdTextNaČistýText(substr($s, 3, length($s) - 8));
                 while (exists($cestyZaklínadelNaXheše{$textZaklínadla})) {$textZaklínadla .= "x"}
                 my $xhešZaklínadla = xheš($textZaklínadla);

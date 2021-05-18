@@ -235,6 +235,10 @@ Poznámka: znění zaklínadel v této sekci je upraveno pro uvedení uvnitř d
 **\\\\w** ⊨ ~/Dokumenty<br>
 **\\\\W** ⊨ Dokumenty
 
+*# zkrácená cesta aktuálního adresáře*<br>
+^^**PROMPT\_DIRTRIM=**{*max-počet-adresářů*}<br>
+**\\\\w** ⊨ .../share/doc/lkk
+
 *# aktuální **čas** ve formátu HH:MM/HH:MM:SS*<br>
 **\\\\A** ⊨ 15:35<br>
 **\\\\t** ⊨ 15:35:38

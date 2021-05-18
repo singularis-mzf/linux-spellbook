@@ -146,13 +146,11 @@ Pozor na tento rozdíl!
 
 **Pozor na pořadí**: Jsou-li pseudometapříkazy použity spolu s dalšími
 metapříkazy, musejí být jako první! Navíc je u nich nutno dodržet
-toto pořadí: „&blank;“, „time“, „!“ (může být i víckrát), „=“ (proměnné prostředí, může být i víckrát), „\\“.
+toto pořadí: „&blank;“, „time“, „!“ (může být i víckrát), „=“ (proměnné prostředí, může být i víckrát).
 
 **Zvláštnosti:** Příkaz „&blank;“ (mezera) účinkuje na celý příkazový řádek,
 i když obsahuje více příkazů. Příkazy „time“ a „!“ účinkují na celou
-posloupnost příkazů spojených rourami. Pseudometapříkaz „\\“ se *neodděluje*
-mezerou a účinkuje jen na samotné označení příkazu (tzn. nemá vliv
-na jeho parametry).
+posloupnost příkazů spojených rourami.
 
 *# spustit s nastavením proměnných prostředí*<br>
 [{*promenna\_k\_nastaveni*}**=**{*hodnota*}]... {*příkaz a parametry*}
@@ -168,12 +166,8 @@ na jeho parametry).
 *// Do $? se uloží 1 pro nulový návratový kód a 0 pro nenulový. Tento příkaz nemá žádný vliv na pole PIPE\_STATUS (tam zůstanou původní hodnoty). Tento příkaz ovlivní zřetězení operátory „&amp;&amp;“ a „\|\|“, protože tyto operátory čtou proměnnou $?*<br>
 **!** {*příkaz a parametry*} [**\|** {*další příkaz a parametry*}]...
 
-*# při spouštění příkazu nerozvíjet aliasy (obecně/příklad)*<br>
-**\\**{*příkaz a parametry*}<br>
-**\\printenv PATH**
-
 *# příklad kombinace všech pseudometapříkazů*<br>
-**&blank;time ! ! LC\_ALL=C mojepromenna=0 \\ls**
+**&blank;time ! ! LC\_ALL=C mojepromenna=0 ls**
 
 ### Sledování výstupu
 

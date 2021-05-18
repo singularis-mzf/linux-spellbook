@@ -286,7 +286,31 @@ Viz také: příkaz „tlp“ z balíčku „tlp“.
 *// Priorita je číslo v rozsahu -20 (nejvyšší) až 19 (nejnižší); normální priorita je 0. Obyčejný uživatel (tzn. bez sudo) může pouze snižovat prioritu vlastních procesů.*<br>
 [**sudo**] **renice** {*priorita*} {*PID*}...
 
-### Úlohy bashe
+### Úlohy bashe (ve skriptu)
+
+Poznámka: každý interpret má svoji tabulku úloh, takže není možné v jednom interpretu čekat na úlohu spuštěnou jiným interpretem.
+
+*# spustit příkaz na pozadí (jako „úlohu“)(volitelně: do proměnné uložit jeho PID)*<br>
+{*příkaz*} [{*parametr-příkazu*}]... **&amp;**<br>
+[{*proměnná*}**=$!**]
+
+*# počkat na dokončení úlohy*<br>
+*// Návratovým kódem příkazu „wait“ bude návratový kód úlohy odpovídající poslednímu uvedenému PID. Tento příkaz bude fungovat i v případě, že dané úlohy již skončily, ale pouze jednou — nelze ho volat vícekrát pro tutéž úlohu.*<br>
+**wait** {*PID*}...
+
+*# počet úloh*<br>
+**jobs -pr \| wc -w**
+
+*# počkat, dokud nebude počet úloh ≤ N*<br>
+**lkk\_limit\_jobs** {*N*}
+
+*# poslat úloze signál*<br>
+**kill** [{*parametry*}] {*PID*}...
+
+*# vyřadit úlohu ze seznamu (ale nechat běžet jako obyčejný proces)*<br>
+**disown** {*PID*}...
+
+### Úlohy bashe (interaktivní režim)
 
 *# spustit příkaz na pozadí*<br>
 {*příkaz*} [{*parametr-příkazu*}]... **&amp;**
@@ -308,7 +332,8 @@ Viz také: příkaz „tlp“ z balíčku „tlp“.
 **bg** [**%**{*číslo-úlohy*}]
 
 *# požádat úlohu o ukončení/násilně ji ukončit*<br>
-**kill %**{*číslo-úlohy*}
+**kill %**{*číslo-úlohy*}<br>
+**kill -9 %**{*číslo-úlohy*}
 
 *# počkat na dokončení úlohy běžící v pozadí*<br>
 **wait %**{*číslo-úlohy*} [**%**{*číslo-další-úlohy*}]...

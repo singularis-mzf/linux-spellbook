@@ -463,7 +463,7 @@ Prázdný klíč způsobí chybu „chybný podskript pole“.
 *# interpretovat hodnotu jako by byla uvedena v konstrukci $'text' a výsledek dosadit*<br>
 **$\{**{*název\_proměnné*}**@E}**
 
-### Parametry skriptu
+### Poziční parametry
 
 *# dosadit N-tý **poziční parametr** (alternativy)*<br>
 *// První variantu lze použít pouze pro parametry $0 až $9. Druhou variantu (tu se složenými závorkami) lze použít i pro ostatní parametry (např. ${10}) a lze ji skombinovat s pokročilými formami dosazení.*<br>
@@ -474,6 +474,13 @@ Prázdný klíč způsobí chybu „chybný podskript pole“.
 *// Dvojité uvozovky zde znamenají, že pro správnou funkci musí být $@ (resp. $\*) uvedeny uvnitř dvojitých uvozovek.*<br>
 **"$@"**<br>
 **"$\*"**
+
+*# dosadit **počet** pozičních parametrů*<br>
+**$#** ⊨ 0
+
+*# smazat N pozičních parametrů počínaje od $1, zbytek přečíslovat*<br>
+*// Výchozí N je 1. Pokud je pozičních parametrů méně než N, příkaz selže s návratovým kódem 1 a poziční parametry zůstanou nezměněné.*<br>
+**shift** [{*N*}]
 
 *# **nastavit** poziční parametry*<br>
 *// Parametry lze nastavit pouze najednou, přičemž se všechny stávající parametry (kromě $0) ztratí.*<br>
