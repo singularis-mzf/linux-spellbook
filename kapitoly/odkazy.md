@@ -156,7 +156,7 @@ není dobrý nápad
 ### Rekurzivní operace
 
 *# **okopírovat** adresáře, ale na soubory místo kopírování vytvořit pevné odkazy*<br>
-[**sudo**] **cp -TRl**[**v**] <nic>[**\-\-**] {*původní/adresář*} {*nový/adresář*}
+[**sudo**] **cp -TRld**[**v**] <nic>[**\-\-**] {*původní/adresář*} {*nový/adresář*}
 
 *# kopírovat s následováním symbolických odkazů*<br>
 [**sudo**] **cp -TRL**[**v**] <nic>[**\-\-**] {*původní/adresář*} {*nový/adresář*}
@@ -289,7 +289,7 @@ Pokud se bude přesouvat cíl, vytvořte zvláštní symbolický odkaz na adres�
 
 *Pevné odkazy* se vyplácí spíš pro dočasné nebo technicky přesně vymezené účely, protože je u nich vždy riziko rozpojení a není snadné si toho všimnout. Většinou se rozpojí při kopírování, při ukládání do archivu nebo když nějaký program soubor smaže a ihned znovu vytvoří. Také se může stát, že původní soubor přejmenujete a místo něj vytvoříte pod původním názvem nový; v takovém případě zůstane pevný odkaz navázaný na původní soubor. K rozpojení také dojde, pokud soubor přesunete příkazem „mv“ přes hranici souborového systému a nazpět.
 
-Asi nejužitečnější způsob využití pevných odkazů je, když příkazem „cp -Rl“ vytvoříte kopii adresářové struktury, v ní pak budete soubory volně přesouvat, mazat apod. a později s ní nahradíte původní adresářovou strukturu. Podobný postup můžete s určitými omezeními použít k napodobnení klonů pododdílů btrfs.
+Asi nejužitečnější způsob využití pevných odkazů je, když příkazem „cp -Rld“ vytvoříte kopii adresářové struktury, v ní pak budete soubory volně přesouvat, mazat apod. a později s ní nahradíte původní adresářovou strukturu. Podobný postup můžete s určitými omezeními použít k napodobnení klonů pododdílů btrfs.
 
 Pevné odkazy se také vyplatí pro různé dočasné účely, kdy mohou být jejich technické vlastnosti výhodné. Vždy je ale třeba mít na paměti riziko rozpojení.
 

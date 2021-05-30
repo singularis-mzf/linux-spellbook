@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, kapitola [DOPLNIT NÁZEV]
-Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
+Copyright (c) 2019-2021 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -50,12 +50,14 @@ Odkomentujte a vyplňte štítky, zejména rozlišení na {program} a {tematic
 -->
 ![ve výstavbě](../obrázky/ve-výstavbě.png)
 
-## Parametry příkazů
 <!--
+## Parametry příkazů
+<!- -
 - Pokud zaklínadla nepředstavují kompletní příkazy, v této sekci musíte popsat, jak z nich kompletní příkazy sestavit.
 - Jinak by zde měl být přehled nejužitečnějších parametrů používaných nástrojů.
--->
+- ->
 ![ve výstavbě](../obrázky/ve-výstavbě.png)
+-->
 
 ## Instalace na Ubuntu
 <!--
@@ -64,19 +66,21 @@ Odkomentujte a vyplňte štítky, zejména rozlišení na {program} a {tematic
 -->
 ![ve výstavbě](../obrázky/ve-výstavbě.png)
 
-## Ukázka
 <!--
+## Ukázka
+<!- -
 - Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
 - Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti – ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
 - Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
--->
+- ->
 ![ve výstavbě](../obrázky/ve-výstavbě.png)
+-->
 
 !ÚzkýRežim: zap
 
 ## Tipy a zkušenosti
 <!--
-- Do odrážek uveďte konkrétní zkušenosti, které jste při práci s nástrojem získali; zejména případy, kdy vás chování programu překvapilo nebo očekáváte, že by mohlo překvapit začátečníky.
+- Do odrážek uveďte konkrétní zkušenosti, které jste při práci s nástrojem získal/a; zejména případy, kdy vás chování programu překvapilo nebo očekáváte, že by mohlo překvapit začátečníky.
 - Popište typické chyby nových uživatelů a jak se jim vyhnout.
 - Buďte co nejstručnější; neodbíhejte k popisování čehokoliv vedlejšího, co je dost možné, že už čtenář zná.
 -->

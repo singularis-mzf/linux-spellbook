@@ -301,7 +301,7 @@ Prázdný klíč způsobí chybu „chybný podskript pole“.
 
 *# **vytvořit**/přepsat funkci*<br>
 *// Pokud je uzavírací závorka „}“ na stejném řádku jako poslední příkaz těla funkce, musí být od příkazu oddělená středníkem.*<br>
-[**function**] {*název\_funkce*}**() \{**<br>
+**function** {*název\_funkce*} **\{**<br>
 [{*tělo-funkce*}]<br>
 **\}**
 
