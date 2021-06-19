@@ -37,17 +37,18 @@ Zvláštní návratové kódy ( https://tldp.org/LDP/abs/html/exitcodes.html ):
 - Obecně popište základní principy, na kterých fungují používané nástroje.
 - Uveďte, co kapitola nepokrývá, ačkoliv by to čtenář mohl očekávat.
 -->
-![ve výstavbě](../obrázky/ve-výstavbě.png)
-
-GNU Bash je výchozí interpret příkazového řádku v Ubuntu (a většině dalších
+Bash je výchozí interpret příkazového řádku v Ubuntu (a většině dalších
 linuxů). Tato kapitola se zabývá jeho funkcemi, které nejsou pokryty
 v jiných kapitolách, zejména přepínači nastavení, prací s návratovým kódem
-příkazů a některými užitečnými rozvoji na příkazovém řádku.
+příkazů a některými užitečnými rozvoji. Ostatní vlastnosti Bashe najdete
+v podkapitolách této kapitoly, popř. ve zcela samostatných kapitolách.
+
+Interpret Bash je vyvíjen v rámci projektu GNU.
 
 ## Definice
 
 * **Návratový kód** (exit status) je celočíselný kód (0 až 255) vracený každým příkazem (s výjimkou přiřazení do proměnné či definice funkce), který indikuje, zda příkaz ve své činnosti uspěl (0) nebo ne (1 až 255).
-* **Podprostředí** (subshell) je oddělené prostředí pro vykonávání příkazů. Příkazy v podprostředí získají kopii všech proměnných (tzn. nejen exportovaných), deskriptorů a nastavení interpretu, ale změny, které v nich provedou, nemají účinek mimo podprostředí. Podprostředí má jako celek svůj návratový kód a jako na celek na něj mohou být aplikována přesměrování. Bash pro vykonání podprostředí může, ale nemusí vytvořit nový proces.
+* **Podprostředí** (subshell) je částečně izolované prostředí pro vykonávání příkazů. Příkazy v podprostředí se chovají, jako by byly spuštěny v novém, odděleném procesu, až na to, že získají kopii všech proměnných (tzn. nejen exportovaných), deskriptorů a nastavení interpretu. Jakékoliv změny proměnných či nastavení interpretu, které provedou, však nemají účinek mimo podprostředí (na to je třeba si dát pozor zvlášť u příkazu „read“). Podprostředí má jako celek svůj návratový kód a jako na celek na něj mohou být aplikována přesměrování.
 
 !ÚzkýRežim: vyp
 
@@ -55,32 +56,37 @@ příkazů a některými užitečnými rozvoji na příkazovém řádku.
 
 ### Aktuální adresář
 
-*# přejít do daného adresáře/předchozího aktuálního adresáře*<br>
-**cd** [**\-\-**] {*cesta*}<br>
-**cd -**
+*# přejít do **uvedeného** adresáře*<br>
+**cd** [**\-\-**] {*cesta*}
 
-*# přejít o úroveň výš*<br>
+*# přejít o úroveň **výš***<br>
 **cd ..**
 
-*# přejít do domovského adresáře*<br>
+*# přejít do **domovského adresáře***<br>
 **cd**
 
-*# zjistit aktuální adresář*<br>
+*# **zjistit** aktuální adresář*<br>
 **pwd** ⊨ /home/aneta
+
+*# přejít do **předchozího** aktuálního adresáře*<br>
+**cd -** [**&gt;/dev/null**]
 
 ### Spouštění a řetězení příkazů
 
-*# spustit příkaz na pozadí*<br>
+*# spustit příkaz **na pozadí** (obecně/příklad)*<br>
 *// Spuštění příkazu na pozadí nezmění „$?“ PID spuštěného procesu můžete přečíst ze zvláštní proměnné „$!“. Bezprostředně za znakem „&amp;“ nesmí následovat další oddělovač příkazů jako „;“, „&amp;&amp;“ nebo „\|\|“.*<br>
-{*příkaz s parametry nebo sestava s rourou*} **&amp;** [{*promenna*}**=$!**]
+{*příkaz s parametry nebo sestava s rourou*} **&amp;** [{*promenna*}**=$!**]<br>
+**sleep 5 \| wc -c &amp; sleeppid=$!**
 
 *# spustit příkazy v **podprostředí***<br>
-**(** {*příkazy*}... **)** [{*přesměrování pro podprostředí*}] <nic>[**&amp;** [{*promenna*}**=$!**]]
+**(** {*příkazy*}... **)** [{*přesměrování pro podprostředí*}] <nic>[**&amp;** [{*promenna*}**=$!**]]<br>
+**(LC\_ALL=C; sort a.txt &gt;seřazené-a.txt; sort b.txt &gt;seřazené-b.txt)**
 
-*# spuštěným příkazem nahradit tuto instanci interpretu*<br>
+*# spuštěným příkazem **nahradit** tuto instanci interpretu*<br>
+*// Příkaz „exec“ nelze použít s vestavěnými příkazy Bashe či s rourami.*<br>
 **exec** {*příkaz a parametry*}
 
-### Rozvoje na příkazové řádce
+### Rozvoje (dosazení) na příkazové řádce
 
 *# **kartézský součin** alternativ (obecně/příklad)*<br>
 *// Viz podrobnější vysvětlení v podsekci „Kartézský součin“.*<br>
@@ -113,12 +119,8 @@ příkazů a některými užitečnými rozvoji na příkazovém řádku.
 ### Zvláštní proměnné užitečné i v interaktivním režimu
 
 *# **návratová hodnota** posledního vykonaného příkazu*<br>
-*// Tato hodnota může být negována metapříkazem „!“, viz kapitolu Metapříkazy.*<br>
+*// Metapříkaz „!“ umí negovat návratový kód při ukládání do $?, viz kapitolu Metapříkazy.*<br>
 **$?**
-
-*# pole návratových hodnot příkazů z poslední vykonané roury*<br>
-*// Poznámka: jednoduchý příkaz toto pole přepíše jednoprvkovým polem; obsah pole PIPESTATUS není nikdy ovlivněn metapříkazem „!“.*<br>
-**${PIPESTATUS[**{*index*}**]}**
 
 *# text **posledního parametru** posledního jednoduchého příkazu vykonaného na popředí*<br>
 **$\_**
@@ -126,13 +128,17 @@ příkazů a některými užitečnými rozvoji na příkazovém řádku.
 *# **PID** probíhajícího interpretu*<br>
 **\$\$**
 
+*# pole návratových hodnot příkazů z poslední vykonané roury*<br>
+*// Poznámka: jednoduchý příkaz toto pole přepíše jednoprvkovým polem; obsah pole PIPESTATUS není nikdy ovlivněn metapříkazem „!“.*<br>
+**${PIPESTATUS[**{*index*}**]}**
+
 ### true a false
 
-*# vyhodnotit celočíselný výraz (kvůli vedlejším efektům)(obecně/příklad)*<br>
+*# **vyhodnotit** celočíselný výraz (kvůli vedlejším efektům)(obecně/příklad)*<br>
 **true $((**{*celočíselný výraz*}**))**<br>
 **true $((++i))**
 
-*# ignorovat parametry a uspět*<br>
+*# ignorovat parametry a **uspět***<br>
 **true** [{*libovolné parametry*}]
 
 *# ignorovat parametry a selhat s kódem 1*<br>
@@ -142,33 +148,29 @@ příkazů a některými užitečnými rozvoji na příkazovém řádku.
 
 ### Vypisování příkazů (např. pro ladění)
 
-*# vypisovat příkazy před vykonáním tak, jak byly zadány (zapnout/vypnout)*<br>
+*# vypisovat příkazy před vykonáním tak, **jak byly zadány** (zapnout/vypnout)*<br>
 **set -v**<br>
 **set +v**
 
-*# vypisovat příkazy před vykonáním tak, jak budou vykonány (zapnout/vypnout)*<br>
+*# vypisovat příkazy před vykonáním tak, **jak budou vykonány** (zapnout/vypnout)*<br>
+*// Pozor, tato varianta vypisuje i jednotlivé příkazy vykonávané při dosazování operátorem $(), což může vyprodukovat velké množství rušivého výstupu.*<br>
 **set -x**<br>
 **set +x**
 
-### Zapnout/vypnout rozvoje
-
-*# provádět rozvoj historie (zapnout/vypnout)*<br>
-**set -H**<br>
-**set +H**
-
-*# provádět rozvoj složených závorek {} (zapnout/vypnout)*<br>
-**set -B**<br>
-**set +B**
-
-*# provádět rozvoj cest (zapnout/vypnout)*<br>
-**set +f**<br>
-**set -f**
-
-*# provádět rozvoje ve výzvě Bashe: zapnout (výchozí)/vypnout*<br>
-**shopt -s promptvars**<br>
-**shopt -u promptvars**
-
 ### Nastavení rozvoje cest a proměnných
+
+*# pokud vzorek při rozvoji cest neodpovídá žádné cestě: selhat s chybou (doporučuji)/předat vzorek tak, jak je (výchozí chování, nedoporučuji)/předat prázdný řetězec*<br>
+**shopt -s failglob**<br>
+**shopt -u failglob nullglob**<br>
+**shopt -s nullglob; shopt -u failglob**
+
+*# konstrukci „\*\*“ při rozvoji cest interpretovat jako libovolnou (i prázdnou) posloupnost adresářů (zapnout/vypnout)*<br>
+**shopt -s globstar**<br>
+**shopt -u globstar**
+
+*# rozsahy ve vzorcích při rozvoji cest (např. „[A-Z]“) intepretovat: podle locale „C“/podle aktuálního locale*<br>
+**shopt -s globasciiranges**<br>
+**shopt -u globasciiranges**
 
 *# zahrnout do rozvoje cest i skryté soubory a adresáře (zapnout/vypnout)*<br>
 *// Zvláštní položky „.“ a „..“ stále nebudou zahrnuty, pokud vzorek nezačíná tečkou.*<br>
@@ -179,23 +181,29 @@ příkazů a některými užitečnými rozvoji na příkazovém řádku.
 **shopt -s nocaseglob**<br>
 **shopt -u nocaseglob**
 
-*# konstrukci „\*\*“ při rozvoji cest interpretovat jako libovolnou (i prázdnou) posloupnost adresářů (zapnout/vypnout)*<br>
-**shopt -s globstar**<br>
-**shopt -u globstar**
-
-*# pokud vzorek při rozvoji cest neodpovídá žádné cestě: selhat s chybou/předat vzorek tak, jak je (výchozí chování)/předat prázdný řetězec*<br>
-**shopt -s failglob**<br>
-**shopt -u failglob nullglob**<br>
-**shopt -s nullglob; shopt -u failglob**
-
 *# rozvoj neexistující proměnné: považovat za kritickou chybu/tiše ignorovat*<br>
 *// Nedoporučuji používat nastavení „-u“ v interaktivním režimu, protože kód pro doplňování příkazové řádky obsahuje velké množství chyb v adresaci proměnných, a když na ně narazíte, příjdete o celou řádku, kterou jste se pokusil/a doplnit.*<br>
 **set -u**<br>
 **set +u**
 
-*# rozsahy ve vzorcích při rozvoji cest (např. „[A-Z]“) intepretovat: podle locale „C“/podle aktuálního locale*<br>
-**shopt -s globasciiranges**<br>
-**shopt -u globasciiranges**
+### Zapnout/vypnout rozvoje
+
+*# provádět rozvoj **historie** (zapnout/vypnout)*<br>
+**set -H**<br>
+**set +H**
+
+*# provádět rozvoj **složených závorek** {} (zapnout/vypnout)*<br>
+**set -B**<br>
+**set +B**
+
+*# provádět rozvoj **cest** (zapnout/vypnout)*<br>
+**set +f**<br>
+**set -f**
+
+*# provádět rozvoje $-konstrukcí ve výzvě Bashe: zapnout (výchozí)/vypnout*<br>
+*// Poznámka: vypnutí těchto rozvojů nevypne nativní rozvoje specifické pro výzvu interpretu (tzn. např. za „\\w“ se i nadále bude dosazovat aktuální adresář), ale nebudou se rozvíjet vnořené proměnné apod.*<br>
+**shopt -s promptvars**<br>
+**shopt -u promptvars**
 
 ### Zpracování návratových kódů
 
@@ -217,7 +225,7 @@ příkazů a některými užitečnými rozvoji na příkazovém řádku.
 
 ### Ostatní
 
-*# symbolické odkazy v cestě k aktuálnímu adresáři: jednorázově rozvinout/pamatovat si*<br>
+*# symbolické odkazy v cestě k aktuálnímu adresáři: jednorázově rozvinout/pamatovat si (výchozí)*<br>
 **set -P**<br>
 **set +P**
 
@@ -225,19 +233,7 @@ příkazů a některými užitečnými rozvoji na příkazovém řádku.
 **shopt -s checkwinsize**<br>
 **shopt -u checkwinsize**
 
-*# snažit se opravit překlepy v parametru příkazu „cd“ (zapnout/vypnout)*<br>
-**shopt -s cdspell**<br>
-**shopt -u cdspell**
-
-*# aliasy: používat/ignorovat*<br>
-**shopt -s expand\_aliases**<br>
-**shopt -u expand\_aliases**
-
-*# nerozlišovat velká a malá písmena ve většině kontextů (zapnout/vypnout)*<br>
-**shopt -s nocasematch**<br>
-**shopt -u nocasematch**
-
-*# příkazy „.“ a „source“ budou při hledání svého argumentu prohledávat také cesty v proměnné PATH (zapnout/vypnout)*<br>
+*# příkazy „.“ a „source“ budou při hledání svého argumentu prohledávat: cesty v PATH a nakonec aktuální adresář (výchozí chování)/jen aktuální adresář*<br>
 **shopt -s sourcepath**<br>
 **shopt -u sourcepath**
 
@@ -282,39 +278,6 @@ Popis proměnných PS0, PS1 a PS2 najdete v kapitole „Terminál“.
 
 *# pokud parametr příkazu „cd“ neobsahuje lomítko a neexistuje jako adresář v aktuálním adresáři, zkusit prohledat ještě tyto další adresáře*<br>
 **CDPATH="**{*/cesta*}[**:**{*/další/cesta*}]...**"**
-
-### Obsluha signálů a zvláštních situací
-
-*# nastavit obsluhu signálu (obecně/příklad)*<br>
-**trap** [**\-\-**] **'**{*příkazy*}...**'** {*signál*}...
-
-*# nastavit prázdnou/výchozí obsluhu signálu*<br>
-**trap ""** {*signál*}...<br>
-**trap -** {*signál*}...
-
-*# vypsat nastavené obsluhy všech signálů (přikazy trap)*<br>
-**trap**
-
-*# vypsat obsluhu určitého signálu (příkaz „trap“/text obsluhy)*<br>
-**trap -p** {*signál*}...<br>
-**(function f { test "$1" '!=' trap \|\| shift; test "$1" '!=' \-\- \|\| shift; printf %s\\\\n "$1"; }; eval "$(trap -p** {*signál*} **\| sed -E 's/trap/f/')")**
-
-*# nastavit/zrušit obsluhu ukončení interpretu*<br>
-**trap '**{*příkazy*}**' EXIT**<br>
-**trap - EXIT**
-
-<!--
-[ ] vyzkoušet
-*# nastavit/zrušit obsluhu chyby (účinkuje jen při nastavení „set -e“)*<br>
-**trap '**{*příkazy*}**' ERR**<br>
-**trap - ERR**
--->
-
-<!--
-DEBUG: před každým jednoduchým příkazem
-RETURN: při ukončení funkce nebo „source“ skriptu
-ERR: místo ukončení interpretu při -e
--->
 
 <!--
 // Oddělit do samostatné kapitoly
@@ -427,13 +390,15 @@ https://www.gnu.org/software/bash/manual/html_node/Programmable-Completion-Built
 GNU Bash a všechny příkazy použité v této kapitole jsou základními součástmi
 Ubuntu přítomnými i v minimální instalaci.
 
-## Ukázka
 <!--
+## Ukázka
+<!- -
 - Tuto sekci ponechávat jen v kapitolách, kde dává smysl.
 - Zdrojový kód, konfigurační soubor nebo interakce s programem, a to v úplnosti – ukázka musí být natolik úplná, aby ji v této podobě šlo spustit, ale současně natolik stručná, aby se vešla na jednu stranu A5.
 - Snažte se v ukázce ilustrovat co nejvíc zaklínadel z této kapitoly.
--->
+- ->
 ![ve výstavbě](../obrázky/ve-výstavbě.png)
+-->
 
 !ÚzkýRežim: zap
 
@@ -442,28 +407,27 @@ Ubuntu přítomnými i v minimální instalaci.
 - Do odrážek uveďte konkrétní zkušenosti, které jste při práci s nástrojem získali; zejména případy, kdy vás chování programu překvapilo nebo očekáváte, že by mohlo překvapit začátečníky.
 - Popište typické chyby nových uživatelů a jak se jim vyhnout.
 - Buďte co nejstručnější; neodbíhejte k popisování čehokoliv vedlejšího, co je dost možné, že už čtenář zná.
--->
-![ve výstavbě](../obrázky/ve-výstavbě.png)
 
 * Bash umí sám pracovat pouze s textovými daty; obecná binární data, pokud neobsahují nulový bajt, můžete poměrně úspěšně zpracovat po nastavení LC\_ALL=C, kdy bude Bash považovat každý bajt větší než 0 za jeden znak (ale vzdáte se tím lokalizace a podpory UTF-8); pro zpracování binárních dat jsou vhodnější jiné nástroje.
 * Normálně klávesová zkratka Ctrl+C přeruší probíhající program či skript. Některé programy se sice dobrovolně ukončí, ale přitom příslušný signál obslouží a nedají vědět skriptu, který je zavolal, takže ten pak pokračuje dalšími příkazy.
+-->
 
 ### Časté chyby
 
-Pozor na implicitní vznik podprostředí v některých situacích! Bash automaticky obklopí podprostředím každý příkaz dvou- či vícečlenné roury a také i jednoduchý příkaz spouštěný na pozadí. To znamená, že např. tento blok kódu vypíše „12“ a „19“, protože přiřazení z konstrukce „:=“ zůstalo izolované v podprostředí:
+Pozor na implicitní vznik podprostředí v některých situacích! Bash automaticky obklopí podprostředím každý příkaz dvou- či vícečlenné roury a také i jednoduchý příkaz spouštěný na pozadí. To znamená, že např. tento blok kódu vypíše „19“, protože přiřazení z konstrukce „:=“ zůstalo izolované v podprostředí:
 
 *# *<br>
 **unset a**<br>
 **true "${a:=12}" &amp;**<br>
 **wait $!**<br>
-**printf %s\\n "${a:=19}"**
+**printf %s\\\\n "${a:=19}"**
 
 Častěji se tato chyba vyskytuje ve formě pokusu o použití příkazu „read“ s rourou:
 
 *# *<br>
 **unset a**<br>
-**printf 99\\n \| IFS= read -r a**<br>
-**printf %s\\n "$a"**
+**printf 99\\\\n \| IFS= read -r a**<br>
+**printf %s\\\\n "$a"**
 
 V uvedeném příkladu zůstane hodnota „a“ nedefinovaná, protože ho Bash uzavře do
 samostatného podprostředí.
@@ -501,25 +465,12 @@ oddělovač parametrů celý operátor přerušil.
 **printf %s\\\\n {"Ahoj, ","{}/"}{světe,"2 světy!"}**
 
 ## Další zdroje informací
-<!--
-- Uveďte, které informační zdroje jsou pro začátečníka nejlepší k získání rychlé a obsáhlé nápovědy. Typicky jsou to manuálové stránky, vestavěná nápověda programu nebo webové zdroje. Můžete uvést i přímé odkazy.
-- V seznamu uveďte další webové zdroje, knihy apod.
-- Pokud je vestavěná dokumentace programů (typicky v adresáři /usr/share/doc) užitečná, zmiňte ji také.
-- Poznámka: Protože se tato sekce tiskne v úzkém režimu, zaklínadla smíte uvádět pouze bez titulku a bez poznámek pod čarou!
--->
-![ve výstavbě](../obrázky/ve-výstavbě.png)
 
-Co hledat:
-
-* [Článek na Wikipedii](https://cs.wikipedia.org/wiki/Hlavn%C3%AD_strana)
-* Oficiální stránku programu
-* Oficiální dokumentaci
-* [Manuálovou stránku](http://manpages.ubuntu.com/)
-* [Balíček](https://packages.ubuntu.com/)
-* Online referenční příručky
-* Různé další praktické stránky, recenze, videa, tutorialy, blogy, ...
-* Publikované knihy
-* [Stránky TL;DR](https://github.com/tldr-pages/tldr/tree/master/pages/common)
+* [Wikipedie: Bash](https://cs.wikipedia.org/wiki/Bash)
+* [Oficiální manuál](https://www.gnu.org/software/bash/manual/html\_node/index.html) (anglicky)
+* man 1 bash (anglicky)
+* [Oficiální stránka](https://www.gnu.org/software/bash/) (anglicky)
+* [Balíček: bash](https://packages.ubuntu.com/focal/bash) (anglicky)
 
 ## Zákulisí kapitoly
 <!--
@@ -533,6 +484,7 @@ V této verzi kapitoly chybí:
 <!-- https://www.gnu.org/software/bash/manual/html_node/Coprocesses.html#Coprocesses -->
 * ulimit
 * enable (zakazování vestavěných příkazů)
+* některé varianty příkazu „trap“
 
 Tato kapitola záměrně nepokrývá:
 

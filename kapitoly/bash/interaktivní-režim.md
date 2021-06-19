@@ -25,14 +25,15 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 ## Úvod
 
-Tato kapitola se věnuje využití vlastností interpretu GNU Bash
-specifických pro jeho interaktivní režim, tedy režimu, kdy interpret
-přijímá příkazy přímo od uživatele. Půjde tedy o vlastnosti,
-které pravděpodobně nevyužijete při psaní skriptů.
+Tato kapitola se věnuje využití vlastností interpretu Bash
+specifických pro jeho interaktivní režim, tedy režim, kdy interpret
+přijímá příkazy přímo od uživatele (na rozdíl od vykonávání skriptů).
+
+Interpret Bash je vyvíjen v rámci projektu GNU.
 
 ## Definice
 
-* **Alias** je pokyn intepretu, aby kdykoliv na místě názvu příkazu narazí na určitý název, nahradil tento název předem nastaveným textem (text náhrady obvykle obsahuje nějaký příkaz s nějakými parametry).
+* **Alias** je pokyn intepretu, aby kdykoliv na místě názvu příkazu narazí na určitý název, nahradil tento název předem nastaveným textem (text náhrady obvykle obsahuje příkaz s parametry, ale může to být jakýkoliv text).
 * **Historie** je číslovaný seznam textových řetězců, kam Bash ukládá příkazové řádky zadané v interaktivním režimu, aby je uživatel mohl později snadno opakovaně vyvolat nebo v nich vyhledávat.
 
 !ÚzkýRežim: vyp
@@ -48,28 +49,24 @@ které pravděpodobně nevyužijete při psaní skriptů.
 {_Ctrl_}**+**{_U_}<br>
 {_Ctrl_}**+**{_W_}
 
+*# **vložit** naposledy vyjmutý text*<br>
+{_Ctrl_}**+**{_Y_}
+
 *# vyjmout text od aktuálního znaku **do konce** řádky/slova*<br>
 {_Ctrl_}**+**{_K_}<br>
 {_Alt_}**+**{_K_}
-
-*# **vložit** naposledy vyjmutý text*<br>
-{_Ctrl_}**+**{_Y_}
 
 *# přejít na začátek/konec příkazové řádky*<br>
 {_Home_}<br>
 {_End_}
 
+*# otevřít zadávaný příkaz v editoru jako skript a po uzavření editoru vykonat*<br>
+*// Použitý editor je určený proměnnou prostředí EDITOR; ve výchozím nastavení je to na Ubuntu „nano“.*<br>
+{_Ctrl_}**+**{_X_}{_E_}
+
 *# vložit na příkazovou řádku **tabulátor***<br>
 {_Ctrl_}**+**{_V_}<br>
 {_Tab_}
-
-*# otevřít zadávaný příkaz v editoru jako skript a po uzavření editoru vykonat*<br>
-*// Použitý editor je určený proměnnou prostředí EDITOR; ve výchozím nastavení je to na Ubuntu „nano“.*<br>
-{_Ctrl_}**+**{_X_}<br>
-{_Ctrl_}**+**{_E_}
-
-*# vrátit řádek načtený z historie do původního stavu*<br>
-{_Alt_}**+**{_R_}
 
 ### Ovládání: práce s historií
 
@@ -87,6 +84,9 @@ které pravděpodobně nevyužijete při psaní skriptů.
 
 *# návrat na konec historie (zpravidla po nepovedeném vyhledávání)*<br>
 {_Shift_}**+**{_Alt_}**+**{_._}
+
+*# vrátit řádek načtený z historie do původního stavu*<br>
+{_Alt_}**+**{_R_}
 
 <!--
 Přemapovat Ctrl+S pro vyhledávání vpřed...
@@ -245,7 +245,8 @@ Ubuntu přítomnými i v minimální instalaci.
 * Častá začátečnická chyba je „alias ls=ls -l“; název a text aliasu je nutno předat v jednom parametru a všechny zvláštní znaky je třeba odzvláštnit, jinak se vyhodnotí okamžitě a ne až po rozvinutí aliasu.
 * Doporučuji všem uživatelům vypnout v souboru „.bashrc“ rozvoj historie příkazem „set +H“. Ovládání pomocí klávesových šipek, Ctrl+R, příkazu „fc“ apod. je pro přístup do historie mnohem praktičtější a vypnutí rozvoje historie vám umožní používat znaky „!“ a „^“ v interaktivním režimu bez nutnosti odzvláštnění (stejně jako ve skriptech).
 * Rozvoj aliasů se provádí ještě před jakýmkoliv dalším zpracováním příkazové řádky; dokonce můžete nastavit „alias x="echo '" a pak zadat „x Proměnná $PATH'“ a bude to fungovat — $PATH se nerozvine!
-* Klávesové zkratky Ctrl+C a Ctrl+Z někdy pracují špatně předvídatelným způsobem, pokud přerušujete složený příkaz nebo skript. Naštěstí se to nestává příliš často, jen si na to dejte pozor. Může se třeba stát, že přerušíte program spuštěný skriptem, ale samotný skript bude pokračovat dalšími příkazy.
+* Vyhledávání Ctrl+R má nevýhodnou vlastnost, že v případě překlepu můžete přesáhnout za hledanou pozici a zpět se nemůžete vrátit bez smazání již zadaných písmen. Bash sice nabízí i funkci pro vyhledávání bez této nepříjemné vlastnosti, ale nepodařilo se mi ho zprovoznit.
+* Klávesovou zkratku Ctrl+XE můžete využít pro zadání komplikovanějšího příkazu i v momentě, kdy je příkazová řádka ještě prázdná.
 
 ## Další zdroje informací
 
@@ -262,6 +263,7 @@ V této verzi kapitoly chybí:
 
 !KompaktníSeznam:
 * bind (mapování kláves)
+* fc (vykonání příkazu z historie)
 
 Tato kapitola záměrně nepokrývá:
 

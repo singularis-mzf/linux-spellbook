@@ -25,21 +25,23 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 ## Úvod
 
-Tato kapitola pokrývá nástroje interpretu GNU Bash k ovládání vstupu a výstupu
-spouštěných příkazů i samotného intepretu. Rovněž pokrývá nástroje ke čtení
-textových řetězců z terminálu, ze souboru či z výstupu spouštěného programu
-a nástroje k zápisu textových řetězců na terminál, do souboru nebo na vstup
-spouštěného programu.
+Tato kapitola pokrývá nástroje interpretu Bash k ovládání vstupů a výstupů
+spouštěných příkazů i vstupů a výstupů samotného interpretu.
+Rovněž pokrývá nástroje ke čtení textových řetězců ze souborů, terminálu či
+výstupu spoustěného programu a nástroje k zápisu textových řetězců
+do souboru, na terminál, do souboru nebo na vstup spouštěného programu.
+
+Interpret Bash je vyvíjen v rámci projektu GNU.
 
 ## Definice
 
-* **Deskriptor** je (nejen v Bashi, ale samostatně pro každý proces v systému) číslovaný vstup nebo výstup. Základní deskriptory jsou „**standardní vstup**“ (číslo 0, „stdin“, budu zkracovat jako „s.vstup“), „**standardní výstup**“ (číslo 1, „stdout“, budu zkracovat jako „s.výstup“) a „**standardní chybový výstup**“ (číslo 2, „stderr“, budu zkracovat jako „s.ch. výstup“). Deskriptory 3 až 9 jsou určeny pro libovolné přesměrování; deskriptory 10 až 255 pro vnitřní použití interpretem. (Některé deskriptory mohou být současně vstupní i výstupní, ale jejich použití je pak poměrně komplikované.)
+* **Deskriptor** je (nejen v Bashi, ale pro každý jednotlivý proces v systému) číslovaný vstup nebo výstup. Základní deskriptory jsou „**standardní vstup**“ (číslo 0, „stdin“, budu zkracovat jako „s.vstup“), „**standardní výstup**“ (číslo 1, „stdout“, budu zkracovat jako „s.výstup“) a „**standardní chybový výstup**“ (číslo 2, „stderr“, budu zkracovat jako „s.ch. výstup“). Deskriptory 3 až 9 jsou určeny pro libovolné použití, deskriptory 10 až 255 pro vnitřní použití interpretem.
 * **Vstup** je deskriptor, ze kterého může proces číst data.
 * **Výstup** je deskriptor, do kterého může proces zapisovat data.
-* **Roura** (v některých příručkách také nazývaná „kolona“) je spojení dvou nebo více jednoduchých příkazů operátorem „\|“. Bash pak tyto příkazy spustí paralelně a připojí standardní výstup příkazu nalevo od \| na standardní vstup příkazu napravo od \|. Díky tomu pak data „protékají“ přímo z jednoho procesu do druhého. Návratovým kódem roury je ve výchozím nastavení návratový kód posledního uvedeného jednoduchého příkazu.
+* **Roura** („pipeline“, v některých příručkách také nazývaná „kolona“) je spojení dvou nebo více jednoduchých příkazů operátorem „\|“. Bash pak tyto příkazy spustí paralelně a připojí standardní výstup příkazu nalevo od \| na standardní vstup příkazu napravo od \|. Díky tomu pak data „protékají“ přímo z jednoho procesu do druhého. Návratovým kódem roury je ve výchozím nastavení návratový kód posledního uvedeného jednoduchého příkazu.
 * **Přesměrování deskriptorů** (či jen **přesměrování**) je úkon, při kterém Bash něco provede s deskriptory vznikajícího procesu (nebo svými vlastními). Přesměrování se provádí jedno po druhém zleva doprava, jak jsou zadána na příkazové řádce.
 
-*Užitečná poznámka ke spouštění příkazů*: kdykoliv z Bashe spustíte jakýkoliv nový proces, ten nejprve zdědí *všechny* deskriptory od interpretu (ne jen ty tři základní), pak pro něj Bash provede přesměrování deskriptorů specifikovaná na příkazovém řádku (včetně propojení procesů rour) a pak se teprve pokusí program spustit. To znamená, že vedlejší účinky přesměrování (např. vytvoření souborů) se projeví i v případě, že se Bashi program spustit nepodaří.
+*Užitečná poznámka ke spouštění příkazů*: kdykoliv z Bashe spustíte jakýkoliv nový proces, ten nejprve zdědí *všechny* deskriptory od interpretu (ne jen ty tři základní), pak pro něj Bash provede přesměrování deskriptorů specifikovaná na příkazovém řádku (včetně propojení procesů rour) a pak se teprve pokusí program spustit. To znamená, že vedlejší účinky přesměrování (např. vytvoření souborů) se projeví i v případě, že se Bashi program spustit nepodaří (např. proto, že program takového názvu neexistuje).
 
 !ÚzkýRežim: vyp
 
@@ -100,7 +102,7 @@ spouštěného programu.
 
 ### Přesměrování výstupu (zápis někam)
 
-*# zápis do souboru; existuje-li: zkrátit na prázdný/připojit za konec*<br>
+*# zápis do **souboru**; existuje-li: zkrátit na prázdný/připojit za konec*<br>
 *// Varianta „&gt;\|“ dovolí přepsání existujícího souboru i v případě, že je nastavena volba „noclobber“.*<br>
 [{*deskriptor*}]**&gt;**[**\|**] {*cesta*}<br>
 [{*deskriptor*}]**&gt;&gt;** {*cesta*}
@@ -169,92 +171,90 @@ spouštěného programu.
 *// Složené závorky můžete umístit i na stejnou řádku jako příkazy uvnitř, ale v takovém případě je musíte oddělit mezerami a poslední příkaz musí být ukončen operátorem „;“ nebo „&amp;“! Proto doporučuji raději oddělovat složené závorky od příkazů koncem řádku.*<br>
 **\{**<br>
 <odsadit1>{*příkazy*}...<br>
-**\}** {*přesměrování*}
+**\}** {*přesměrování*}...
 
 *# aplikovat přesměrování permanentně (na všechny následující příkazy)*<br>
-**exec** {*přesměrování*}
+**exec** {*přesměrování*}...
 
 ## Zaklínadla: Čtení a zápis z Bashe
 
-### Čtení z terminálu
-
-*# načíst od uživatele **heslo***<br>
-*// Parametr „-s“ potlačí výstup psaných znaků na terminál.*<br>
-[**if**] **IFS= read -rs** [**-p** {*"Text výzvy:"*}] {*promenna*} **&amp;&amp; echo** [**then** {*...*} **fi**]
-
-### Zápis na terminál
-
-### Načíst jeden záznam do jedné proměnné
-
-Poznámka: vyskytnou-li se ve vstupu bajty \\0, příkaz „read“ je tiše ignoruje.
-
-*# oddělovač je \\n*<br>
-[**if**] **IFS= read -r**[**u** {*deskriptor*}] {*promenna*} [**then** {*...*} **fi**]
-
-*# načíst N znaků*<br>
-[**if**] **IFS= read -r**[**u** {*deskriptor*}] **-N** {*N*} {*promenna*} [**then** {*...*} **fi**]
-
-*# oddělovač je \\0*<br>
-?
-<!-- [{*zdroj*} **\|**] **readarray -td '' -n 1** [**-u** {*deskriptor*}] **&amp;&amp;** {*promenna*}**=${MAPFILE[0]} -->
-
-*# oddělovač je znak*<br>
-[**if**] **IFS= read -r**[**u** {*deskriptor*}] **-d** {*"oddělovač"*} [**then** {*...*} **fi**]
-
-### Načíst jeden záznam do jedné proměnné
-
-Poznámka: vyskytnou-li se ve vstupu bajty \\0, příkaz „read“ je tiše ignoruje.
-
-*# oddělovač je \\n*<br>
-[**if**] **IFS= read -r**[**u** {*deskriptor*}] {*promenna*} [**then** {*...*} **fi**]
-
-*# načíst N znaků*<br>
-[**if**] **IFS= read -r**[**u** {*deskriptor*}] **-N** {*N*} {*promenna*} [**then** {*...*} **fi**]
-
-*# oddělovač je \\0*<br>
-?
-<!-- [{*zdroj*} **\|**] **readarray -td '' -n 1** [**-u** {*deskriptor*}] **&amp;&amp;** {*promenna*}**=${MAPFILE[0]} -->
-
-*# oddělovač je znak*<br>
-[**if**] **IFS= read -r**[**u** {*deskriptor*}] **-d** {*"oddělovač"*} [**then** {*...*} **fi**]
-
-### Načíst vše do indexovaného pole
-
-*# oddělovač je \\n*<br>
-{*zdroj*} **\| readarray -t**[**u** {*deskriptor*}] <nic>[**-s** {*kolik-zázn-přeskočit*}] <nic>[**-n** {*kolik-zázn-max-přečíst*}] {*identifikator\_pro\_pole*}
-
-*# oddělovač je \\0*<br>
-{*zdroj*} **\| readarray -t**[**u** {*deskriptor*}] **-d ''** <nic>[**-s** {*kolik-zázn-přeskočit*}] <nic>[**-n** {*kolik-zázn-max-přečíst*}] {*identifikator\_pro\_pole*}
-
-*# oddělovač je ASCII znak*<br>
-{*zdroj*} **\| readarray -td** {*"znak"*} [**-u** {*deskriptor*}] <nic>[**-s** {*kolik-zázn-přeskočit*}] <nic>[**-n** {*kolik-zázn-max-přečíst*}] {*identifikator\_pro\_pole*}
-
-*# zapsat do existujícího pole (obecně/příklad)*<br>
-{*příkaz readarray s parametry*} **-O** {*počáteční-index*}<br>
-**readarray -t pole &lt; &lt;(echo A); readarray -t -O 1 pole &lt; &lt;(echo B)**
-
-### Vypsat text
+### Zápis (výstup)
 
 *# formátovaný výstup*<br>
 **printf** [**\-\-**] {*'formátovací řetězec'*} [{*parametry*}]... [{*přesměrování*}]
 
-*# výstup textu*<br>
-**printf %s**[**\\\\n**] {*"Text"*} [{*přesměrování*}]
+*# zapsat **text***<br>
+**printf %s**[**\\\\n**] {*"text"*} [{*přesměrování*}]
 
-### Testy
+*# zapsat **bajty***<br>
+*// AB a CD reprezentují dvoumístný hexadecimální zápis bajtů k zapsání*<br>
+**printf '\\x**{*AB*}[**\\x**{*CD*}]...**'** [{*přesměrování*}]
 
-*# vede na terminál (popř. z terminálu) std. výstup/std. ch. výstup/deskriptor N*<br>
+*# zapsat „\\0“ (nulový bajt)*<br>
+**printf \\\\0** [{*přesměrování*}]
+
+### Čtení (vstup)
+
+Před použitím zaklínadel z této podsekce si prosím přečtěte podsekci
+„Jak funguje příkaz read“!
+
+*# přečíst do proměnné **záznam** ukončený znakem „\\n“/„\\0“/zadaným ASCII znakem*<br>
+**IFS= read -r**[**u** {*deskriptor*}] {*promenna*}<br>
+**IFS= read -r**[**u** {*deskriptor*}] **-d ""** {*promenna*}<br>
+**IFS= read -r**[**u** {*deskriptor*}] **-d** {*"ASCII-znak"*} {*promenna*}
+
+*# přečíst do proměnné N znaků/1 znak*<br>
+**IFS= read -r**[**u** {*deskriptor*}] **-N** {*N*} {*promenna*}<br>
+**IFS= read -r**[**u** {*deskriptor*}] **-N 1** {*promenna*}
+
+*# načíst záznam a **rozložit** ho do pole*<br>
+**IFS=**{*"oddělovače"*} **read -r**[**u** {*deskriptor*}] <nic>[**-d** {*"ASCII-ukončovač-záznamu"*}] **-a** {*pole*}...<br>
+**IFS=":" read -r -a data &lt; /etc/passwd &amp;&amp; printf %s\\\\n "${data[4]}"**
+
+*# načíst záznam a **rozložit** ho do proměnných (obecně/příklad)*<br>
+**IFS=**{*"oddělovače"*} **read -r**[**u** {*deskriptor*}] <nic>[**-d** {*"ASCII-ukončovač-záznamu"*}] {*promenna*}...<br>
+**IFS=":" read -r a b c d e &lt; /etc/passwd**
+
+*# načíst všechny záznamy do **nového pole** (alternativy)*<br>
+**readarray -t** [**-d** {*"ukončovač"*}] <nic>[**-s** {*kolik-z-přeskočit*}] <nic>[**-n** {*kolik-max-načíst*}] <nic>[**-u** {*deskriptor*}] {*pole*}<br>
+**IFS=**{*"ukončovače"*} **read -r**[**u** {*deskriptor*}] **-d "" -a** {*pole*} **\|\| true**
+
+*# načíst všechny záznamy do existujícího pole*<br>
+*// „index“ je index v poli, kam má začít příkaz zapisovat. Pro zápis od začátku pole uveďte index „0“.*<br>
+**readarray -t -O** {*index*} [**-d** {*"ukončovač"*}] <nic>[**-s** {*kolik-z-přeskočit*}] <nic>[**-n** {*kolik-max-načíst*}] <nic>[**-u** {*deskriptor*}] {*pole*}
+
+*# načíst celý zbytek vstupu do proměnné*<br>
+**IFS= read -rd ""** {*promenna*} **&lt;&blank;&lt;(tr -d \\\\0)**
+
+### Interakce s uživatelem (jen při čtení z terminálu)
+
+*# načíst **heslo***<br>
+*// Parametr „-s“ potlačí výstup psaných znaků na terminál. Při načítání hesel si dejte velký pozor na to, aby použitá proměnná nebyla exportovaná, jinak se totiž heslo objeví v prostředí nově spuštěných procesů, odkud může být šikovnými hackery odposlechnuto.*<br>
+[**if**] **IFS= read -rs** [**-p** {*"Text výzvy:"*}] {*promenna*} **&amp;&amp; echo** [**then** {*...*} **fi**]
+
+*# nabídnout uživateli řádku k **úpravě** (obecně/příklad)*<br>
+*// Pozor! V případě selhání příkazu (např. vypršení časového limitu) zůstane v cílové proměnné prázdný řetězec, ať už uživatel mezitím nějaké úpravy provedl nebo ne.*<br>
+**IFS=** [**TMOUT=**[{*časový-limit-sek*}]] **read -r** [**-p** {*"Text výzvy"*}] **-ei** {*"Výchozí text řádky"*} {*promenna*}
+
+### Je deskriptor připojený na terminál?
+
+*# je s.vstup připojený na terminál?*<br>
+**test -t 0**
+
+*# je s.výstup/s.ch. výstup připojený na terminál?*<br>
 **test -t 1**<br>
-**test -t 2**<br>
+**test -t 2**
+
+*# je deskriptor N připojený na terminál?*<br>
 **test -t** {*N*}
 
-### Nastavení související s deskriptory a rourami
+### Nastavení Bashe související s deskriptory a rourami
 
-*# návratový kód vícenásobné roury se vezme: z prvního příkazu, který selhal/vždy z posledního příkazu roury*<br>
+*# návratový kód vícenásobné roury se vezme: z prvního příkazu, který selhal/vždy z posledního příkazu roury (výchozí nastavení)*<br>
 **set -o pipefail**<br>
 **set +o pipefail**
 
-*# přepsání existujícího souboru obyčejným přesměrováním výstupu (zakázat/povolit)*<br>
+*# zkrácení existujícího souboru obyčejným přesměrováním výstupu (zakázat/povolit)*<br>
 **set -C**<br>
 **set +C**
 
@@ -266,6 +266,8 @@ Poznámka: vyskytnou-li se ve vstupu bajty \\0, příkaz „read“ je tiše ign
 - ->
 ![ve výstavbě](../obrázky/ve-výstavbě.png)
 -->
+
+## Další poznámky
 
 ### Použití přesměrování deskriptorů
 
@@ -293,9 +295,51 @@ např. s rourou:
 **Abeceda**<br>
 **KONEC**
 
+### Jak funguje příkaz read
+
+*# *<br>
+**IFS=**{*"oddělovače"*} **read -r**[**u** {*deskriptor*}] <nic>[**-d** {*"ukončovač"*}] {*promenna*}...<br>
+**IFS=**{*"oddělovače"*} **read -r**[**u** {*deskriptor*}] <nic>[**-d** {*"ukončovač"*}] **-a** {*pole*}<br>
+**read -r**[**u** {*deskriptor*}] <nic>**-N** {*počet-znaků*} {*promenna*}<br>
+
+* Před zahájením čtení „read“ do všech uvedených proměnných přiřadí prázdný řetězec. (Jde-li o čtení do pole, pole se vyprázdní.)
+* Čte ze zadaného deskriptoru (výchozí je s.vstup, tedy 0) znak po znaku a přidává je na konec první zadané proměnné (resp. prvního prvku pole).
+* Když na vstupu narazí na *oddělovač* (kterýkoliv znak z hodnoty proměnné IFS), přeskočí na další proměnnou/další prvek pole, s výjimkou případu, kdy se oddělovač nachází bezprostředně před ukončovačem záznamu; v takovém případu je oddělovač ignorován. Do poslední zadané proměnné se pak načte celý zbytek záznamu (tam už je hodnota proměnné IFS ignorována).
+* Když „read“ na vstupu narazí na ukončovač záznamu (výchozí je „\\n“), *úspěšně* tím skončí čtení (tzn. návratový kód 0).
+* Když „read“ narazí na konec vstupu (nebo hardwarovou chybu), skončí čtení s návratovým kódem 1. Již načtené znaky budou v proměnných ponechány.
+
+<neodsadit>*Postřehy:*
+
+* Ne-ASCII znaky lze použít v proměnné IFS (tzn. jako oddělovače záznamů), ale ne v parametru „-d“ (tzn. nemohou sloužit jako ukončovače záznamů).
+* Nulový bajt lze použít jako ukončovač záznamu (tvar parametru je pak „-d ""“), ale ne jako oddělovač záznamů (nelze ho uložit do proměnné IFS).
+* V případě, že „read“ narazí na konec vstupu, skončí s návratovým kódem 1, ale již přečtené znaky ponechá v příslušných proměnných.
+* Nastavíte-li časový limit, v případě jeho vypršení skončí „read“ s kódem 142 a načítané proměnné budou vyprázdněny.
+
+### Jak funguje příkaz printf
+
+*# *<br>
+**printf** [**-v** {*promenna*}] <nic>[**\-\-**] {*'formátovací řetězec'*} [{*parametr*}]...
+
+Ve formátovacím řetězci jsou interpretovány formátovací značky (uvozené znakem „%“)
+a lomítkové sekvence (začínající zpětným lomítkem „\\“), oba případy lze odzvláštnit
+zdvojením (tzn. „%%“ se interpretuje jako obyčejný znak % a „\\\\“ jako obyčejné
+zpětné lomítko). Netriviální formátovací řetězce doporučuji uzavřít do apostrofů,
+aby nedocházelo ke konfliktům se zvláštním významem některých znaků
+na příkazové řádce.
+
+Algoritmus příkazu printf:
+
+* 1. Vzít formátovací řetězec a nahradit v něm všechny lomítkové sekvence odpovídajícími znaky či řetězci.
+* 2. Projít všechny formátovací značky ve formátovacím řetězci zleva doprava; pro každou načíst jeden parametr z parametrů za formátovacím řetězcem (pokud chybí, použít místo něj prázdný řetězec), zformátovat podle značky a dosadit místo ní.
+* 3. Výsledný řetězec vypsat na standardní výstup.
+* 4. Pokud zbyl alespoň jeden parametr, vzít řetězec, který byl výstupem kroku 1 a jít na krok 2 se zbylými parametry.
+
+V případě použití parametru „-v“ se řetězce místo vypsání ukládají do zadané proměnné
+a nesmí obsahovat nulový bajt (jinak může být chování nepředvídatelné).
+
 ## Instalace na Ubuntu
 
-GNU Bash a všechny příkazy použité v této kapitole jsou základními součástmi
+Bash a všechny příkazy použité v této kapitole jsou základními součástmi
 Ubuntu přítomnými i v minimální instalaci.
 
 <!--
@@ -316,26 +360,35 @@ Ubuntu přítomnými i v minimální instalaci.
 
 ### Časté chyby s rourou
 
-Pozor na implicitní vznik podprostředí v některých situacích! Bash automaticky obklopí podprostředím každý příkaz roury a také i jednoduchý příkaz spouštěný na pozadí nebo v operátoru „$()“. To znamená, že např. tento blok kódu vypíše „12“ a „19“, protože přiřazení z konstrukce „:=“ zůstalo izolované v podprostředí:
+Pozor na implicitní vznik podprostředí v některých situacích! Bash automaticky obklopí podprostředím každý jednoduchý příkaz roury a také i jednoduchý příkaz spouštěný na pozadí nebo v operátoru „$()“. To znamená, že např. tento blok kódu vypíše „19“, protože přiřazení z konstrukce „:=“ zůstalo izolované v podprostředí:
 
 *# *<br>
 **unset a**<br>
 **true "${a:=12}" &amp;**<br>
 **wait $!**<br>
-**printf %s\\n "${a:=19}"**
+**printf %s\\\\n "${a:=19}"**
 
 Nejčastěji se tato chyba vyskytuje ve formě pokusu o použití příkazu „read“ s rourou:
 
 *# *<br>
 **unset a**<br>
-**printf 99\\n \| IFS= read -r a**<br>
-**printf %s\\n "$a"**
+**printf 99\\\\n \| IFS= read -r a**<br>
+**printf %s\\\\n "$a"**
 
-V uvedeném příkladu zůstane hodnota „a“ nedefinovaná, protože ho Bash uzavře do
-samostatného podprostředí.
+V uvedeném příkladu zůstane hodnota „a“ nedefinovaná, protože Bash uzavře příkaz
+„read“ do samostatného podprostředí.
+
+### Problémy s nulovým bajtem
+
+Bash obecně neumí pracovat s nulovým bajtem „\\0“; umí ho však vygenerovat (příkazem printf) a přečíst jako ukončovač záznamu (příkazy read a readarray) a rovněž může být předáván rourou z příkazu do příkazu (což probíhá mimo Bash, ten rouru jen vytváří). Celkově je třeba při jakémkoliv pokusu o prácí
+s nulovým bajtem nástroji Bashe dát velký pozor, zejména ho
+*nelze uložit do proměnných* ani použít uvnitř textu parametru jakéhokoliv příkazu.
+
+<!-- (příkazy read a readarray ho v takovém případě při ukládání přeskočí, dosazovací operátor $() ho také přeskočí, ale vypíše přitom varování). ; samotné vstupy, výstupy a roury jsou ale binární, takže pokud data proudí mimo Bash, nulový bajt nepředstavuje problém. -->
 
 ## Další zdroje informací
 
+* [TL;DR: printf](https://github.com/tldr-pages/tldr/blob/master/pages/common/printf.md) (anglicky)
 * [TL;DR: read](https://github.com/tldr-pages/tldr/blob/master/pages/common/read.md) (anglicky)
 
 ## Zákulisí kapitoly
@@ -349,6 +402,7 @@ V této verzi kapitoly chybí:
 * koprocesy
 <!-- https://www.gnu.org/software/bash/manual/html_node/Coprocesses.html#Coprocesses -->
 * více „dalších zdrojů informací“
+* podrobnější výklad o „printf“
 
 Tato kapitola záměrně nepokrývá:
 

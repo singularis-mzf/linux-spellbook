@@ -30,8 +30,8 @@ pokrývá jejich vytváření a používání v Bashi a uvádí také nástro
 používané především ve skriptech a funkcích (ačkoliv většinu z nich lze použít
 i v interaktivním režimu).
 
-Funkce či skript je vždy tvořen posloupností příkazů, kterou může „zavolat“
-a přitom jí předat textové parametry.
+Funkce či skript je vždy tvořen uloženou posloupností příkazů, která může být „zavolána“
+a přitom jí mohou být předány textové parametry.
 Hlavní rozdíl mezi funkcí a skriptem je, že funkce se ukládají do paměti
 konkrétní instance interpretu (podobně jako proměnné), zatímco skript
 je uložen v souboru (popř. se načítá z roury).
@@ -43,7 +43,7 @@ Interpret Bash je vyvíjen v rámci projektu GNU.
 * **Funkce** je posloupnost příkazů k vykonání uložená v paměti interpretu (podobně jako proměnná). Spouští se zadáním jejího názvu jako příkazu a vykonává se v tomtéž interpretu (tzn. změny proměnných a nastavení provedené ve funkci zůstanou v platnosti i po návratu z ní).
 * **Skript** je posloupnost příkazů k vykonání uložená v souboru (popř. načítaná z roury). Skript lze spustit několika způsoby (budou probrány níže). Skript se obvykle spustí v nové instanci interpretu (ve stejné instanci ho lze spustit příkazem „source“).
 * **Poziční parametry** jsou zvláštní číslované proměnné dostupné jako „$1“, „$2“, ..., „$9“, „${10}“ atd. Při volání funkce či skriptu se tyto proměnné na dobu jejího/jeho běhu „překryjí“ textovými hodnotami parametrů, se kterými byla funkce či skript volán; ručně je lze nastavit příkazem „set“, ale pouze všechny najednou.
-* **Překryvná proměnná** je dočasná proměnná ve funkci, která existuje jen do ukončení jejího volání. Pokud v momentě vytvoření překryvné proměnné již existovala (globální nebo překryvná) proměnná stejného názvu, nová proměnná tu původní na dobu své existence překryje (a tím pádem dočasně znepřístupní). Překryvné proměnné nejsou lokální — po dobu své existence jsou bez jakékoliv kvalifikace dostupné z celého skriptu, a dokonce mohou být exportovány (jako proměnné prostředí), aniž by to narušilo jejich dočasnost. Pozor, překryvné proměnné nejsou dovoleny mimo funkce (ani ve skriptu).
+* **Překryvná proměnná** je dočasná proměnná ve funkci, která existuje jen do ukončení jejího volání. Pokud v momentě vytvoření překryvné proměnné již existovala (globální nebo překryvná) proměnná stejného názvu, nová proměnná tu původní na dobu své existence překryje (a tím pádem dočasně znepřístupní); čtení i přiřazení budou pracovat s překryvnou proměnnou a teprve po jejím zániku bude předchozí proměnná znovu zpřístupněna. Překryvné proměnné nejsou lokální — po dobu své existence jsou bez jakékoliv kvalifikace dostupné z celého skriptu, a dokonce mohou být exportovány (jako proměnné prostředí), aniž by to narušilo jejich dočasnost. Pozor, překryvné proměnné nejsou dovoleny mimo funkce (ani ve skriptu).
 
 !ÚzkýRežim: vyp
 
@@ -56,10 +56,10 @@ Poznámka: „příkazem“ se v těchto zaklínadlech rozumí příkaz včetn�
 *# vykonat příkaz A a **po něm** příkaz B*<br>
 {*příkaz A*}**;** {*příkaz B*}
 
-*# vykonat příkaz A, a pokud skončil **úspěšně** ($? = 0), vykonat příkaz B*<br>
+*# „**a**“: vykonat příkaz A, a pokud skončil úspěšně ($? = 0), vykonat příkaz B*<br>
 {*příkaz A*} **&amp;&amp;** {*příkaz B*}
 
-*# vykonat příkaz-A, a pokud skončil **neúspěšně** ($? ≠ 0), vykonat příkaz B*<br>
+*# „**nebo**“: vykonat příkaz-A, a pokud skončil neúspěšně ($? ≠ 0), vykonat příkaz B*<br>
 {*příkaz A*} **\|\|** {*příkaz B*}
 
 ### Řízení běhu
@@ -120,6 +120,7 @@ Poznámka: „příkazem“ se v těchto zaklínadlech rozumí příkaz včetn�
 **${PIPESTATUS[**{*index*}**]}**
 
 *# text **posledního parametru** posledního jednoduchého příkazu vykonaného na popředí*<br>
+*// Poznámka: roury se dvěma a více členy, příkazy spuštěné na pozadí operátorem „&amp;“ a příkazy dosazené operátorem $() ponechávají této zvláštní proměnné její hodnotu (tzn. nezmění ji).*<br>
 **$\_**
 
 *# **PID**/PPID probíhajícího interpretu*<br>
@@ -426,6 +427,11 @@ ERR: místo ukončení interpretu při -e
 
 ### Práva adresářových položek
 
+Poznámka: testy -r, -w a -x netestují nastavená přístupová práva, ale faktickou
+proveditelnost dané operace; proto „w“ vrátí „nepravdu“ u souboru s právem „w“,
+který se nachází na oddílu připojeném jen pro čtení, a test „r“ provedený
+superuživatelem vrátí „pravdu“ u souboru, který nesmí číst nikdo „chmod a-r“.
+
 *# můžeme ji/ho číst?*<br>
 **test -r "**{*cesta*}**"**
 
@@ -465,7 +471,7 @@ ERR: místo ukončení interpretu při -e
 
 ## Instalace na Ubuntu
 
-GNU Bash a všechny příkazy použité v této kapitole jsou základními součástmi
+Bash a všechny příkazy použité v této kapitole jsou základními součástmi
 Ubuntu přítomnými i v minimální instalaci.
 
 <!--
@@ -490,6 +496,7 @@ Ubuntu přítomnými i v minimální instalaci.
 ![ve výstavbě](../obrázky/ve-výstavbě.png)
 -->
 
+* Klávesové zkratky Ctrl+C a Ctrl+C se chovají nečekaným způsobem při provádění cyklu nebo volání funkce z interaktivního interpretu. Pokud se tomu chcete vyhnout, uzavřete při volání funkci či cyklus do podprostředí.
 * Funkce na rozdíl od aliasů nemají ochranu proti rekurzi, takže funkce může volat sama sebe. Pokud chcete funkcí nahradit nějaký externí příkaz a pak ho z ní volat, použijte vestavěný příkaz „command“.
 * Bash nabízí několik možných syntaxí k definici funkce. Definice s příkazem „function“ je dle mého názoru nejsnáze čitelná, ale není příliš běžná.
 
@@ -500,7 +507,6 @@ Ubuntu přítomnými i v minimální instalaci.
 - Pokud je vestavěná dokumentace programů (typicky v adresáři /usr/share/doc) užitečná, zmiňte ji také.
 - Poznámka: Protože se tato sekce tiskne v úzkém režimu, zaklínadla smíte uvádět pouze bez titulku a bez poznámek pod čarou!
 -->
-![ve výstavbě](../obrázky/ve-výstavbě.png)
 
 * [GNU Bash Shell Functions](https://www.gnu.org/software/bash/manual/html_node/Shell-Functions.html#Shell-Functions) (anglicky)
 

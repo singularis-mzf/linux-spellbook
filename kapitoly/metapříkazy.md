@@ -129,6 +129,10 @@ Pozor na tento rozdíl!
 **nice -n** {*číslo 0 až 19*} {*příkaz a parametry*}<br>
 **sudo nice -n** {*číslo -1 až -20*} {*příkaz a parametry*}
 
+*# s potlačením kešování*<br>
+*// Primárním účelem je bránit čtením z souborů na disku, aby se ukládala do keše; nevím jistě, nakolik se lze spolehnout, že toto čtení nebude přistupovat k datům již v keši uloženým.*<br>
+**nocache** {*příkaz a parametry*}
+
 *# jako **démona** (obecně/příklad)*<br>
 *// Při použití příkazu „nohup“ důrazně doporučuji ručně přesměrovat standardní vstup a oba standardní výstupy mimo terminál; pokud to neuděláte, příkaz „nohup“ to udělá za vás, ale vypíše přitom rušivou zprávu „nohup: vstup ignoruji a výstup připojuji k 'nohup.out'“. Ostatní deskriptory přesměrovávat nemusíte, ale pokud některý z nich povede na terminál, který mezitím zavřete, program pravděpodobně skončí s chybou, jakmile se z něj pokusí číst či do něj zapisovat.*<br>
 **nohup** {*příkaz a parametry*} **&lt;**{*vstup*} **&gt;**{*kam/směřovat/výstup*} **2gt;**{*kam/směřovat/chybový/výstup*}<br>
@@ -156,6 +160,7 @@ posloupnost příkazů spojených rourami.
 [{*promenna\_k\_nastaveni*}**=**{*hodnota*}]... {*příkaz a parametry*}
 
 *# změřit **čas běhu** příkazu*<br>
+*// Pozor! Příkaz musí být spuštěn na popředí; pokud jeho běh přerušíte zkratkou Ctrl+Z, příkaz „time“ vypíše naměřený údaj a dál už měřit nebude.*<br>
 **time** [**-p**] {*příkaz a parametry*} [**\|** {*další příkaz a parametry*}]...
 
 *# příkaz vykonat, ale neuložit do historie*<br>
@@ -233,10 +238,10 @@ Parametr -n přijímá i desetinná čísla (minimální dovolená hodnota je �
 ## Instalace na Ubuntu
 
 Všechny použité příkazy jsou základními součástmi Ubuntu přítomnými i v minimální
-instalaci; výjimkou jsou příkazy eatmydata a fakeroot, které je nutno doinstalovat:
+instalaci; výjimkou jsou příkazy eatmydata, fakeroot a nocache, které je nutno doinstalovat:
 
 *# *<br>
-**sudo apt-get install eatmydata fakeroot**
+**sudo apt-get install eatmydata fakeroot nocache**
 
 <!--
 ## Ukázka
