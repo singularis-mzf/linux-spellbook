@@ -249,7 +249,7 @@ Interpret Bash je vyvíjen v rámci projektu GNU.
 **set -m**<br>
 **set +m**
 
-*# už nenačítat další řádek příkazů; po vykonání příkazů z této řádky skončit (zapnout/vypnout)*<br>
+*# už nenačítat další řádek příkazů; po vykonání příkazů z tohoto řádku skončit (zapnout/vypnout)*<br>
 **set -t**<br>
 **set +t**
 

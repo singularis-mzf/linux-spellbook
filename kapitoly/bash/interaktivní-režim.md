@@ -64,7 +64,7 @@ Interpret Bash je vyvíjen v rámci projektu GNU.
 *// Použitý editor je určený proměnnou prostředí EDITOR; ve výchozím nastavení je to na Ubuntu „nano“.*<br>
 {_Ctrl_}**+**{_X_}{_E_}
 
-*# vložit na příkazovou řádku **tabulátor***<br>
+*# vložit na příkazový řádek **tabulátor***<br>
 {_Ctrl_}**+**{_V_}<br>
 {_Tab_}
 
@@ -193,7 +193,7 @@ Přemapovat Ctrl+S pro vyhledávání vpřed...
 **history -d -1**
 
 *# smazat z historie poslední záznam/konkrétní záznam/všechny záznamy*<br>
-*// Poznámka k příkazu „history -d -2“: tento příkaz ve skutečnosti maže předposlední záznam, ale když takový příkaz zadáte, vámi zadaná řádka se uloží do historie ještě před smazáním  předpokládá, že se vámi zadaný příkazový řádek do historie před provedením uloží. (Příkaz „history -d -1“ by totiž v takovém případě smazal právě ten nově uložený řádek, namísto řádky, která už v historii byla. )*<br>
+*// Poznámka k příkazu „history -d -2“: tento příkaz ve skutečnosti maže předposlední záznam, ale když takový příkaz zadáte, vámi zadaný řádek se uloží do historie ještě před smazáním  předpokládá, že se vámi zadaný příkazový řádek do historie před provedením uloží. (Příkaz „history -d -1“ by totiž v takovém případě smazal právě ten nově uložený řádek, namísto řádky, která už v historii byla. )*<br>
 **history -d -1**<br>
 **history -d** {*číslo-záznamu*}<br>
 **history -c**
@@ -244,7 +244,7 @@ Ubuntu přítomnými i v minimální instalaci.
 * Bash se o rozvoj aliasů snaží opakovaně, ale s ochranou proti nekonečné rekurzi — u každého názvu příkazu si pamatuje, z rozvoje jakých aliasů vznikl a ty už znovu nerozvine. Proto je bezpečné nastavit např. „alias ls='ls -R'“.
 * Častá začátečnická chyba je „alias ls=ls -l“; název a text aliasu je nutno předat v jednom parametru a všechny zvláštní znaky je třeba odzvláštnit, jinak se vyhodnotí okamžitě a ne až po rozvinutí aliasu.
 * Doporučuji všem uživatelům vypnout v souboru „.bashrc“ rozvoj historie příkazem „set +H“. Ovládání pomocí klávesových šipek, Ctrl+R, příkazu „fc“ apod. je pro přístup do historie mnohem praktičtější a vypnutí rozvoje historie vám umožní používat znaky „!“ a „^“ v interaktivním režimu bez nutnosti odzvláštnění (stejně jako ve skriptech).
-* Rozvoj aliasů se provádí ještě před jakýmkoliv dalším zpracováním příkazové řádky; dokonce můžete nastavit „alias x="echo '" a pak zadat „x Proměnná $PATH'“ a bude to fungovat — $PATH se nerozvine!
+* Rozvoj aliasů se provádí ještě před jakýmkoliv dalším zpracováním příkazového řádku; dokonce můžete nastavit „alias x="echo '" a pak zadat „x Proměnná $PATH'“ a bude to fungovat — $PATH se nerozvine!
 * Vyhledávání Ctrl+R má nevýhodnou vlastnost, že v případě překlepu můžete přesáhnout za hledanou pozici a zpět se nemůžete vrátit bez smazání již zadaných písmen. Bash sice nabízí i funkci pro vyhledávání bez této nepříjemné vlastnosti, ale nepodařilo se mi ho zprovoznit.
 * Klávesovou zkratku Ctrl+XE můžete využít pro zadání komplikovanějšího příkazu i v momentě, kdy je příkazová řádka ještě prázdná.
 

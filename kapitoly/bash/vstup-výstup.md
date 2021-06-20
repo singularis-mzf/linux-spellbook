@@ -85,8 +85,8 @@ Interpret Bash je vyvíjen v rámci projektu GNU.
 *# zduplikovat **pojmenovaný deskriptor** pro čtení*<br>
 {*příkaz a parametry*} [{*cílový-deskriptor*}]**&lt;&amp;$**{*identifikator-pojm-desk*}
 
-*# čtení z **bloku řádek***<br>
-*// Zadaný ukončovač musí být neprázdný řetězec. Bash na přesměrovávaný vstup zapíše všechny řádky počínaje první řádkou po aktuálním příkazu a konče poslední řádkou, která se přesně neshoduje s ukončovačem (není dovolena odlišnost ani v bílých znacích na začátku či konci řádky!).*<br>
+*# čtení z **bloku řádků***<br>
+*// Zadaný ukončovač musí být neprázdný řetězec. Bash na přesměrovávaný vstup zapíše všechny řádky počínaje prvním řádkem po aktuálním příkazu a konče poslední řádkou, která se přesně neshoduje s ukončovačem (není dovolena odlišnost ani v bílých znacích na začátku či konci řádky!).*<br>
 [{*deskriptor*}]**&lt;&lt; '**{*ukončovač*}**'**<br>
 {*řádky textu*}<br>
 {*ukončovač*}
@@ -94,8 +94,8 @@ Interpret Bash je vyvíjen v rámci projektu GNU.
 *# **zavřít** deskriptor*<br>
 {*deskriptor*}**&lt;&amp;-**
 
-*# čtení z bloku řádek po rozvoji*<br>
-*// Pozor! Při použití tohoto zaklínadla nesmí být žádný znak v identifikátoru odzvláštněn (tzn. používejte jen znaky dovolené v názvu proměnné). Bash na přesměrovávaný vstup zapíše všechny řádky počínaje první řádkou po aktuálním příkazu a konče poslední řádkou, která se přesně neshoduje se zadaným identifikátorem (shoda musí být přesná, není dovolena odlišnost ani v bílých znacích na začátku či konci). Před použitím Bash celý blok řádek intepretuje, přičemž za zvláštní považuje pouze znaky „$“, „\\“ a „\`“ (s výjimkou apostrofů s dolarem, ty tam přímo použít nelze), můžete tam tedy dosazovat hodnoty proměnných a výstupy příkazů.*<br>
+*# čtení z bloku řádků po rozvoji*<br>
+*// Pozor! Při použití tohoto zaklínadla nesmí být žádný znak v identifikátoru odzvláštněn (tzn. používejte jen znaky dovolené v názvu proměnné). Bash na přesměrovávaný vstup zapíše všechny řádky počínaje prvním řádkem po aktuálním příkazu a konče poslední řádkou, která se přesně neshoduje se zadaným identifikátorem (shoda musí být přesná, není dovolena odlišnost ani v bílých znacích na začátku či konci). Před použitím Bash celý blok řádek intepretuje, přičemž za zvláštní považuje pouze znaky „$“, „\\“ a „\`“ (s výjimkou apostrofů s dolarem, ty tam přímo použít nelze), můžete tam tedy dosazovat hodnoty proměnných a výstupy příkazů.*<br>
 [{*deskriptor*}]**&lt;&lt;-** {*identifikátor*}<br>
 {*řádky textu*}<br>
 {*identifikátor*}
@@ -168,7 +168,7 @@ Interpret Bash je vyvíjen v rámci projektu GNU.
 ### Ostatní aplikace přesměrování
 
 *# aplikovat přesměrování na skupinu příkazů*<br>
-*// Složené závorky můžete umístit i na stejnou řádku jako příkazy uvnitř, ale v takovém případě je musíte oddělit mezerami a poslední příkaz musí být ukončen operátorem „;“ nebo „&amp;“! Proto doporučuji raději oddělovat složené závorky od příkazů koncem řádku.*<br>
+*// Složené závorky můžete umístit i na stejný řádek jako příkazy uvnitř, ale v takovém případě je musíte oddělit mezerami a poslední příkaz musí být ukončen operátorem „;“ nebo „&amp;“! Proto doporučuji raději oddělovat složené závorky od příkazů koncem řádku.*<br>
 **\{**<br>
 <odsadit1>{*příkazy*}...<br>
 **\}** {*přesměrování*}...
@@ -325,7 +325,7 @@ a lomítkové sekvence (začínající zpětným lomítkem „\\“), oba pří
 zdvojením (tzn. „%%“ se interpretuje jako obyčejný znak % a „\\\\“ jako obyčejné
 zpětné lomítko). Netriviální formátovací řetězce doporučuji uzavřít do apostrofů,
 aby nedocházelo ke konfliktům se zvláštním významem některých znaků
-na příkazové řádce.
+na příkazovém řádku.
 
 Algoritmus příkazu printf:
 

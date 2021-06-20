@@ -146,8 +146,8 @@ Poznámka: „příkazem“ se v těchto zaklínadlech rozumí příkaz včetn�
 **$EPOCHSECONDS** ⊨ 1620459769<br>
 **$EPOCHREALTIME** ⊨ 1620459769,984485
 
-*# číslo řádky (jen ve skriptu)*<br>
-*// Jde o číslo řádky, na které se nachází první znak jednotlivého příkazu; pokud příkaz pokračuje přes několik řádek, hodnota proměnné LINENO je na všech těchto řádkách jednotná.*<br>
+*# číslo řádku (jen ve skriptu)*<br>
+*// Jde o číslo řádku, na které se nachází první znak jednotlivého příkazu; pokud příkaz pokračuje přes několik řádků, hodnota proměnné LINENO je na všech těchto řádcích jednotná.*<br>
 **$LINENO** ⊨ 137
 
 *# verze Bashe (hlavní/vedlejší číslo)*<br>
@@ -320,7 +320,7 @@ ERR: místo ukončení interpretu při -e
 
 ### Typ a existence adresářových položek
 
-*Poznámka:* V Bashi můžete všechny uvedené varianty příkazu „test“ nahradit konstrukcí \[\[ {*parametry*} \]\], opačně to však neplatí. V interpretu „sh“ ho můžete nahradit konstrukcí „[ {*parametry*} ]“.
+*Poznámka:* V Bashi můžete všechny uvedené varianty příkazu „test“ nahradit konstrukcí \[\[ {*parametry*} \]\], opačně to však neplatí. V interpretu „sh“ je můžete nahradit konstrukcí „[ {*parametry*} ]“.
 
 *Poznámka 2:* Příkaz „test“ s výjimkou volby „-L“ následuje symbolické odkazy; pro vyloučení symbolických odkazů přidejte negovanou volbu „-L“.
 
@@ -391,22 +391,22 @@ ERR: místo ukončení interpretu při -e
 ### Celá čísla (testy)
 
 *# =*<br>
-**((** {*číslo1*} **=** {*číslo2*}**))**
+**((**{*číslo1*} **=** {*číslo2*}**))**
 
 *# &lt;*<br>
-**((** {*číslo1*} **&lt;** {*číslo2*}**))**
+**((**{*číslo1*} **&lt;** {*číslo2*}**))**
 
 *# &gt;*<br>
-**((** {*číslo1*} **&gt;** {*číslo2*}**))**
+**((**{*číslo1*} **&gt;** {*číslo2*}**))**
 
 *# ≤*<br>
-**((** {*číslo1*} **&lt;=** {*číslo2*}**))**
+**((**{*číslo1*} **&lt;=** {*číslo2*}**))**
 
 *# ≥*<br>
-**((** {*číslo1*} **&gt;=** {*číslo2*}**))**
+**((**{*číslo1*} **&gt;=** {*číslo2*}**))**
 
 *# ≠*<br>
-**((** {*číslo1*} **!=** {*číslo2*}**))**
+**((**{*číslo1*} **!=** {*číslo2*}**))**
 
 ### Čas „změněno“ u souborů a adresářů
 

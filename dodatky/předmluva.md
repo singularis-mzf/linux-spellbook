@@ -209,15 +209,14 @@ Uživatele, který Linux: Knihu kouzel neprostudoval, poznáte např. takto:
 * Myslí si, že příkaz „apt list gimp*“ vypíše seznam balíčků začínajících „gimp“ (v tomto případě se musí hlavně naučit pravidla odzvláštňování).
 -->
 
-## Aktuální poznámka k verzi „vanilková příchuť 2.7 Olga Osová“
+## Aktuální poznámka k verzi „vanilková příchuť 2.8 Pavel Podzimní“
 
-Verze vanilkové příchuti 2.7, jménem Olga Osová, přináší novou kapitolu
-„Metapříkazy“ a podporu pro „oblíbená zaklínadla“, která se vypíšou
-na začátku kapitoly (nebo na jiném místě, kam umístíte ve zdrojovém kódu
-příslušnou direktivu).
+Verze vanilkové příchuti 2.8, jménem Pavel Podzimní, přináší
+novou základní kapitolu „BASH“ a její tři nové podkapitoly:
+základní „Funkce a skripty“ a „Interaktivní režim“
+a prémiovou „Vstup, výstup a přesměrování“.
 
-Do každé kapitoly přibyla sekce „Zákulisí kapitoly“, která nyní nahrazuje
-část úvodu specifikující, co v kapitole chybí.
+V HTML variantě došlo k zesvětlení písma v tmavém motivu ke zvýšení kontrastu.
 
 <!--
 - V HTML variantě...
@@ -226,7 +225,9 @@ Do každé kapitoly přibyla sekce „Zákulisí kapitoly“, která nyní nahra
 - V kapitole *XY* přibyly ...
 -->
 
-Vydání verze 2.8, jménem Pavel Podzimní, očekávám začátkem června 2021.
+Z hlediska překladu je důležitou změnou vyčlenění konfigurace do samostatného adresáře ve zdrojovém kódu. Spouštěč „lkk“ nově zpracovává volby standardním způsobem. Byla odstraněna předvolená oblíbená zaklínadla kromě těch v kapitole „Diskové oddíly“.
+
+Vydání verze 2.9, jménem René Rašínová, očekávám v průběhu srpna 2021. V plánu mám především vývoj zcela nového (přehlednějšího) formátu pro PDF varianty a upřesnění pravidel genderové vyváženosti názvů osob v koncepci projektu.
 
 Verze řady „vanilková příchuť 1.x“ jsou ve stádiu dlouhodobé pasivní údržby do 1. března 2023.
 

@@ -1,5 +1,5 @@
 # Linux Kniha kouzel, skript postprocess.awk
-# Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
+# Copyright (c) 2019-2021 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 # podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -116,7 +116,7 @@ NF < 5 {
 NF > 5 {print "VAROVÁNÍ: ", "NF = ", NF, "!" > "/dev/stderr"}
 $4 == $5 {ShoditFatalniVyjimku("Chybná náhrada id " $1 ": řádek se nemění!")}
 
-IDFORMATU ~ ("^(" $2 ")$") && $3 == IDKAPITOLY {
+IDFORMATU ~ ("^(" $2 ")$") && gensub(/\//, "-", "g", $3) == IDKAPITOLY {
     if ($4 in nahrady) {
         ShoditFatalniVyjimku("Víceznačná náhrada pro stejný text: id " nahrady[$4] " a " $1 "!");
     }
