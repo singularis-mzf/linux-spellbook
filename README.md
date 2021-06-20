@@ -19,7 +19,7 @@ Má formu připomínající konverzační slovník cizího jazyka a je vydává
 pro profesionální i domácí tisk a ve formátu HTML pro snadné vykopírování zaklínadel,
 můžete ji tedy používat na papíře i v počítači, proto „multimediální“.
 
-Verze *vanilková příchuť 2.7 Olga Osová* je cílena na *Ubuntu 20.04 Focal Fossa* a jeho deriváty.
+Verze *vanilková příchuť 2.8 Pavel Podzimní* je cílena na *Ubuntu 20.04 Focal Fossa* a jeho deriváty.
 
 Obsah podléhá licenci [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 Podrobné údaje o autorství zdrojových souborů jsou uvedeny v komentářích v jejich záhlaví;
@@ -93,6 +93,10 @@ Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybra
 | ID | Název kapitoly | Vydána od verze | Zařazení |
 | :--- | :--- | :--- | --- |
 | [awk](kapitoly/awk.md) | AWK | 1.2 | prémiová |
+| [bash](kapitoly/bash.md) | BASH | 2.8 | základní |
+| [bash/funkce-a-skripty.md](kapitoly/bash/funkce-a-skripty.md) | BASH/Funkce a skripty | 2.8 | základní |
+| [bash/interaktivní-režim.md](kapitoly/bash/interaktivní-režim.md) | BASH/Interaktivní režim | 2.8 | základní |
+| [bash/vstup-výstup.md](kapitoly/bash/vstup-výstup.md) | BASH/Vstup, výstup a přesměrování | 2.8 | prémiová |
 | [datum-čas-kalendář](kapitoly/datum-čas-kalendář.md) | Datum, čas a kalendář | 1.1 | prémiová |
 | [diskové-oddíly](kapitoly/diskové-oddíly.md) | Diskové oddíly | 1.6 | základní |
 | [diskové-oddíly/btrfs](kapitoly/diskové-oddíly/btrfs.md) | Diskové oddíly/Btrfs | 2.5 | základní? |
