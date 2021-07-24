@@ -166,6 +166,29 @@ sudo apt-get install espeak
 
 ![ve výstavbě](../obrázky/ve-výstavbě.png)
 
+*# odstranit veškerý cover art*<br>
+**covertag -r** [**\-\-**] {*soubor.mp3*}...
+
+*# vložit obrázek jako cover art*<br>
+*// Obrázek by měl být ve formátu JPEG a mít maximální rozlišení 1200×1200 (obvyklé rozlišení je 300×300). Formát PNG lze použít také, ale nemusí mít tak dobrou podporu u přehravačů.*<br>
+**covertag -r \-\-other-image** {*obrázek.jpg*} [**\-\-**] {*soubor.mp3*}...
+
+*# vybalit cover art do adresáře*<br>
+*// Cílový adresář nemusí existovat (neexistuje-li, bude vytvořen).*<br>
+**coverdump -d** {*nová/cesta*} [**-p** {*prefix-názvu*}] <nic>[**-V quiet**] <nic>[**\-\-**] {*soubor.mp3*}
+
+*# zobrazit cover art v GUI*<br>
+?
+<!--
+coverview, ale vyžaduje PyGTK
+-->
+
+<!--
+covertag, coverdump — balíček audiotools
+-->
+
+<!-- [ ] ID3 tagy -->
+
 ### URL encode
 
 *# zakódovat konkrétní text (např. cestu)(silné kódování/slabé kódování)*<br>

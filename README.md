@@ -148,7 +148,7 @@ Priority:
 | [stahování-z-webu](kapitoly/stahování-z-webu.md) | Stahování z webu | 40% | dítě |
 | [zpracování-obrázků](kapitoly/zpracování-obrázků.md) | Zpracování obrázků | 40% | dítě |
 | [metapříkazy](kapitoly/metapříkazy.md) | Metapříkazy | 20% | dítě |
-| [moderní-věci](kapitoly/moderní-věci.md) | Moderní věci | 10% | dítě |
+| [moderní-věci](kapitoly/moderní-věci.md) | Moderní věci | 20% | dítě |
 | [unicode](kapitoly/unicode.md) | Unicode a emotikony | 10% | dítě |
 | [uživatelská-rozhraní](kapitoly/uživatelská-rozhraní.md) | Uživatelská rozhraní skriptů | 5% | dítě |
 | [apache](kapitoly/apache.md) | Webový server Apache | 5% | dítě |
@@ -166,6 +166,7 @@ Priority:
 | [virtualbox](kapitoly/virtualbox.md) | VirtualBox | 0% | embryo |
 | [šifrování](kapitoly/šifrování.md) | Šifrování a kryptografie | 0% | embryo |
 | [soubory-a-adresáře/kopírování](kapitoly/soubory-a-adresáře/kopírování.md) | Soubory a adresáře/Kopírování | 0% | embryo |
+| [prohlížení-textových-souborů](kapitoly/prohlížení-textových-souborů.md) | Prohlížení textových souborů | 0% | embryo |
 | přehrávání-videa | Přehrávání videa, zvuku a obrázků | - | přál/a bych si |
 | firewall | Firewall | - | přál/a bych si |
 | sql | SQL | - | přál/a bych si |

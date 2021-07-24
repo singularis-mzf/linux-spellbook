@@ -185,19 +185,20 @@ s/[01]<nic>(.)/\\1/g            # odstranit nuly a jedničky před znaky
 ### Filtrace záznamů podle obsahu
 
 *# vzít/vynechat záznamy odpovídající **regulárnímu výrazu***<br>
-**egrep** [**-z**] <nic>[**-x**] <nic>[{*parametry*}] {*regulární-výraz*} [{*soubor*}]...<br>
-**egrep** [**-z**] **-v** [**-x**] <nic>[{*parametry*}] {*regulární-výraz*} [{*soubor*}]...
+**egrep** [**-z**] <nic>[**-x**] <nic>[{*parametry*}] <nic>[**\-\-**] {*regulární-výraz*} [{*soubor*}]...<br>
+**egrep** [**-z**] **-v** [**-x**] <nic>[{*parametry*}] <nic>[**\-\-**] {*regulární-výraz*} [{*soubor*}]...
 
 *# vzít/vynechat záznamy obsahující **podřetězec***<br>
 *// Poznámka: V hledaném podřetězci se nesmí vyskytovat znak \\n, a to ani u formátu txtz, protože fgrep tento znak používá k oddělení více různých hledaných podřetězců. Pokud váš podřetězec tento znak obsahuje, existuje několik řešení, nejjednodušším je pomocí příkazu „tr“ na vstupu i výstupu příkazu fgrep prohodit znak \\n s jiným ASCII znakem, který se v hledaném podřetězci nevyskytuje.*<br>
-**fgrep** [**-z**] **'**{*podřetězec*}**'** [{*soubor*}]...<br>
-**fgrep** [**-z**] **-v '**{*podřetězec*}**'** [{*soubor*}]...
+**fgrep** [**-z**] <nic>[**\-\-**] **'**{*podřetězec*}**'** [{*soubor*}]...<br>
+**fgrep** [**-z**] **-v** [**\-\-**] **'**{*podřetězec*}**'** [{*soubor*}]...
 
 *# vzít/vynechat záznamy shodné s **řetězcem***<br>
-**fgrep -**[**z**]**x '**{*řetězec*}**'** [{*soubor*}]...<br>
-**fgrep -**[**z**]**xv '**{*řetězec*}**'** [{*soubor*}]...
+**fgrep -**[**z**]**x** [**\-\-**] **'**{*řetězec*}**'** [{*soubor*}]...<br>
+**fgrep -**[**z**]**xv** [**\-\-**] **'**{*řetězec*}**'** [{*soubor*}]...
 
 *# vzít/vynechat záznamy od prvního vyhovění regulárnímu výrazu*<br>
+*// Znaky „/“ v regulárním výrazu je nutno odzvláštnit zpětným lomítkem (popř. GNU sed umožňuje použít jiný oddělovač regulárního výrazu).*<br>
 **sed -**[**z**]**En '/**{*regulární výraz*}**/,$p'** [{*soubor*}]...<br>
 **sed -**[**z**]**E '/**{*regulární výraz*}**/,$d'** [{*soubor*}]...
 
