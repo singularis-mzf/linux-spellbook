@@ -60,7 +60,7 @@ JMENO_SESTAVENI_SOUBOR := $(SOUBORY_PREKLADU)/symboly/jméno-sestavení/$(shell 
 
 #$(shell mkdir -pv $(SOUBORY_PREKLADU) >/dev/null; true > $(SOUBORY_PREKLADU)/dynamický-Makefile)
 
-.PHONY: all clean html log pdf-a4 pdf-a4-bez pdf-b5 pdf-b5-bez pdf-b5-na-a4 info $(SOUBORY_PREKLADU)/fragmenty.tsv
+.PHONY: all clean html log pdf-a4 pdf-a4-bez pdf-b5 pdf-b5-bez pdf-b5-na-a4 info kontrola $(SOUBORY_PREKLADU)/fragmenty.tsv
 .DELETE_ON_ERROR: # Přítomnost tohoto cíle nastaví „make“, aby v případě kteréhokoliv pravidla byl odstraněn jeho cíl.
 .SUFFIXES: # Vypíná implicitní obecná pravidla pro přípony
 
@@ -73,6 +73,9 @@ clean:
 
 info: $(DATUM_SESTAVENI_SOUBOR) $(DEB_VERZE_SOUBOR) $(JMENO_SESTAVENI_SOUBOR) $(SOUBORY_PREKLADU)/fragmenty.tsv
 	$(AWK) -f skripty/info.awk
+
+kontrola:
+	skripty/kontrola.sh
 
 # Podporované formáty:
 deb: $(SOUBORY_PREKLADU)/deb-Makefile $(DATUM_SESTAVENI_SOUBOR) $(DEB_VERZE_SOUBOR) $(JMENO_SESTAVENI_SOUBOR)
