@@ -223,75 +223,75 @@ then
         if ! xelatex -halt-on-error test.tex >/dev/null
         then
             x_xelatex=1
-            "[${cervena}xelatex${reset}]\\tXeLaTeX není funkční. Překlad do PDF nemusí fungovat.\\n"
+            printf "[${cervena}xelatex${reset}]\\tXeLaTeX není funkční. Překlad do PDF nemusí fungovat.\\n"
         elif sed -i -E "$predpona"'\\usepackage[czech,english]{babel}' test.tex && ! xelatex -halt-on-error test.tex >/dev/null
         then
             x_xelatex=1
-            "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {babel}. Překlad do PDF nemusí fungovat.\\n"
+            printf "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {babel}. Překlad do PDF nemusí fungovat.\\n"
         elif sed -i -E "$predpona"'\\usepackage[xetex,layout=a4paper,inner=1.5cm,outer=1cm,top=2cm,bottom=1.5cm,twoside,layouthoffset=8mm,layoutvoffset=8mm,papersize={22.6cm,31.3cm}]{geometry}' test.tex && ! xelatex -halt-on-error test.tex >/dev/null
         then
             x_xelatex=1
-            "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {geometry}. Překlad do PDF nemusí fungovat.\\n"
+            printf "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {geometry}. Překlad do PDF nemusí fungovat.\\n"
         elif sed -i -E "$predpona"'\\usepackage[xetex,table]{xcolor}' test.tex && ! xelatex -halt-on-error test.tex >/dev/null
         then
             x_xelatex=1
-            "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {xcolor}. Překlad do PDF nemusí fungovat.\\n"
+            printf "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {xcolor}. Překlad do PDF nemusí fungovat.\\n"
         elif sed -i -E "$predpona"'\\usepackage{changepage}' test.tex && ! xelatex -halt-on-error test.tex >/dev/null
         then
             x_xelatex=1
-            "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {changepage}. Překlad do PDF nemusí fungovat.\\n"
+            printf "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {changepage}. Překlad do PDF nemusí fungovat.\\n"
         elif sed -i -E "$predpona"'\\usepackage{dashbox}' test.tex && ! xelatex -halt-on-error test.tex >/dev/null
         then
             x_xelatex=1
-            "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {dashbox}. Překlad do PDF nemusí fungovat.\\n"
+            printf "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {dashbox}. Překlad do PDF nemusí fungovat.\\n"
         elif sed -i -E "$predpona"'\\usepackage{enumitem}' test.tex && ! xelatex -halt-on-error test.tex >/dev/null
         then
             x_xelatex=1
-            "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {enumitem}. Překlad do PDF nemusí fungovat.\\n"
+            printf "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {enumitem}. Překlad do PDF nemusí fungovat.\\n"
         elif sed -i -E "$predpona"'\\usepackage{etoolbox}' test.tex && ! xelatex -halt-on-error test.tex >/dev/null
         then
             x_xelatex=1
-            "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {etoolbox}. Překlad do PDF nemusí fungovat.\\n"
+            printf "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {etoolbox}. Překlad do PDF nemusí fungovat.\\n"
         elif sed -i -E "$predpona"'\\usepackage{fancyhdr}' test.tex && ! xelatex -halt-on-error test.tex >/dev/null
         then
             x_xelatex=1
-            "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {fancyhdr}. Překlad do PDF nemusí fungovat.\\n"
+            printf "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {fancyhdr}. Překlad do PDF nemusí fungovat.\\n"
         elif sed -i -E "$predpona"'\\usepackage{fontspec}' test.tex && ! xelatex -halt-on-error test.tex >/dev/null
         then
             x_xelatex=1
-            "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {fontspec}. Překlad do PDF nemusí fungovat.\\n"
+            printf "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {fontspec}. Překlad do PDF nemusí fungovat.\\n"
         elif sed -i -E "$predpona"'\\usepackage[bottom]{footmisc}' test.tex && ! xelatex -halt-on-error test.tex >/dev/null
         then
             x_xelatex=1
-            "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {footmisc}. Překlad do PDF nemusí fungovat.\\n"
+            printf "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {footmisc}. Překlad do PDF nemusí fungovat.\\n"
         elif sed -i -E "$predpona"'\\usepackage[xetex]{graphicx}' test.tex && ! xelatex -halt-on-error test.tex >/dev/null
         then
             x_xelatex=1
-            "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {graphicx}. Překlad do PDF nemusí fungovat.\\n"
+            printf "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {graphicx}. Překlad do PDF nemusí fungovat.\\n"
         elif sed -i -E "$predpona"'\\usepackage{multicol}' test.tex && ! xelatex -halt-on-error test.tex >/dev/null
         then
             x_xelatex=1
-            "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {multicol}. Překlad do PDF nemusí fungovat.\\n"
+            printf "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {multicol}. Překlad do PDF nemusí fungovat.\\n"
         elif sed -i -E "$predpona"'\\usepackage{tabu}' test.tex && ! xelatex -halt-on-error test.tex >/dev/null
         then
             x_xelatex=1
-            "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {tabu}. Překlad do PDF nemusí fungovat.\\n"
+            printf "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {tabu}. Překlad do PDF nemusí fungovat.\\n"
         elif sed -i -E "$predpona"'\\usepackage{tcolorbox}' test.tex && ! xelatex -halt-on-error test.tex >/dev/null
         then
             x_xelatex=1
-            "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {tcolorbox}. Překlad do PDF nemusí fungovat.\\n"
+            printf "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {tcolorbox}. Překlad do PDF nemusí fungovat.\\n"
         elif sed -i -E "$predpona"'\\usepackage{titlesec}' test.tex && ! xelatex -halt-on-error test.tex >/dev/null
         then
             x_xelatex=1
-            "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {titlesec}. Překlad do PDF nemusí fungovat.\\n"
+            printf "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {titlesec}. Překlad do PDF nemusí fungovat.\\n"
         elif sed -i -E "$predpona"'\\usepackage[titles]{tocloft}' test.tex && ! xelatex -halt-on-error test.tex >/dev/null
         then
             x_xelatex=1
-            "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {tocloft}. Překlad do PDF nemusí fungovat.\\n"
+            printf "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {tocloft}. Překlad do PDF nemusí fungovat.\\n"
         elif sed -i -E "$predpona"'\\usepackage{verbatim}' test.tex && ! xelatex -halt-on-error test.tex >/dev/null
         then
             x_xelatex=1
-            "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {verbatim}. Překlad do PDF nemusí fungovat.\\n"
+            printf "[${cervena}xelatex${reset}]\\tXeLaTeX selhal u balíčku {verbatim}. Překlad do PDF nemusí fungovat.\\n"
         else
             printf "[${zelena}xelatex${reset}]\\tV pořádku, XeLaTeX funguje a má potřebné balíčky.\\n"
         fi
