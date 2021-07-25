@@ -33,6 +33,10 @@ V Ubuntu 20.04 LTS a Linuxu Mint 20 můžete tyto nástroje nainstalovat př�
 
 > ``sudo apt-get install git make gawk imagemagick qrencode xxd locales language-pack-cs perl perl-modules``
 
+Ověřit dostupnost těchto nástrojů můžete příkazem „make kontrola“ ve staženém zdrojovém kódu
+(viz níže). Výpis vám řekne, které z požadovaných nástrojů máte na systému dostupné, které ne
+a k sestavení kterých výstupních formátů dostupné nástroje stačí.
+
 ## Postup sestavení
 
 Prvním krokem je stáhnout si a nastavit repozitář:
@@ -134,3 +138,4 @@ Bude-li pořadí odlišné, sestavení sice bude fungovat, ale pořadí kapitol 
 ## Další poznámky
 
 * Formát „log“ slouží k ladění mechanismu překladu. Jeho výstupní soubory obsahují přeložený zdrojový kód v podobě, která přesně odpovídá sekvenci volání ve skriptu „[skripty/překlad/hlavní.awk](../skripty/překlad/hlavní.awk)“.
+* Formát „html“ by mělo být možno sestavit i v prostředí Cygwin. Při překladu v Cygwinu si však dejte pozor, abyste se zdrojovým kódem nepracovali pomocí programů systému Windows; ty by totiž do nich mohly vnést windowsí konce řádek (CR+LF) a překlad by pak nefungoval.

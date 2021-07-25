@@ -48,7 +48,9 @@ Ověřil/a jsem, že v Ubuntu 20.04 LTS a Linuxu Mint 20 můžete všechny po
 
 > ``sudo apt-get install git make gawk xxd imagemagick librsvg2-bin qrencode locales language-pack-cs  perl perl-modules texlive-xetex texlive-lang-czechslovak t1-cyrillic lmodern``
 
-V budoucnu pravděpodobně sestavování přejde na Ubuntu 20.04, ale zatím je stále plně podporován i překlad na Ubuntu 18.04.
+Ověřit dostupnost těchto nástrojů můžete příkazem „make kontrola“ ve staženém zdrojovém kódu
+(viz níže). Výpis vám řekne, které z požadovaných nástrojů máte na systému dostupné, které ne
+a k sestavení kterých výstupních formátů dostupné nástroje stačí.
 
 Pokud plánujete nechat si výsledek vytisknout, před samotným sestavením vyhledejte ve vašem městě copy-centrum nebo profesionální tiskárnu a zjistěte o ní následující údaje:
 
@@ -172,11 +174,12 @@ Analogicky můžete vyřadit jednotlivá oblíbená zaklínadla tak, že vypust�
 
 Pokud používáte jinou než českou lokalizaci Vašeho systému (i slovenskou),
 ověřte prosím před sestavením, že Váš systém zvládne správně české řazení.
-Zadejte do terminálu příkaz:
+Toto ověření je součástí skriptu prováděného příkazem „make kontrola“;
+ručně ho můžete provést tak, že do terminálu zadáte příkaz:
 
 > `printf %s\\n žába čádor tábor chalupa | LC_ALL="cs_CZ.UTF-8" sort`
 
-a zkontrolujte, že vypsal řádky v tomto pořadí:
+a zkontrolujete, že vypsal řádky v tomto pořadí:
 
 > čádor<br>chalupa<br>tábor<br>žába
 
