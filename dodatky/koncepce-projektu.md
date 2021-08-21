@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, část Koncepce projektu Linux: Kniha kouzel
-Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
+Copyright (c) 2019-2021 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -48,8 +48,8 @@ ne však ve spojení s označením „vanilková příchuť“.
 
 * **okamžitě funkční kód** — Každé zaklínadlo musí být v ideálních podmínkách plně funkční okamžitě po doplnění vyžadovaných parametrů a jeho funkce musí odpovídat tomu, co může uživatel pravděpodobně očekávat podle titulku a zařazení zaklínadla. Tím je zejména míněno, že nesmějí např. chybět podstatné parametry, zmínka o nutných změnách nastavení či potřebných právech nebo specifické omezení vstupu jen na určité znaky („nesmí obsahovat dvojtečku“ apod.). Pokud má funkce zaklínadla omezení, které uživatel nemůže rozumně předpokládat na základě obecných znalostí, úvodu kapitoly, uvedených definic či titulku a zařazení zaklínadla, je třeba toto omezení uvést v poznámce pod čarou nebo jiným vhodným způsobem. Zaklínadlo však může od uživatele očekávat základní obecné znalosti, např. znalost pravidel odzvláštnění v bashi, a také nemusí být uvedeno, když zaklínadlo vyžaduje práva, která má výchozí uživatelský účet (vytvořený při instalaci) ve výchozím nastavení již přidělena.
 * **výstižná česká terminologie** — Vanilková příchuť Linuxu: Knihy kouzel usiluje o nalezení a používání výstižných českých termínů, a to i tehdy, kdy nejsou široce používány (např. „odzvláštnění“). Pokud však takový termín není znám, vanilková příchuť upřednostňuje výstižnější anglický termín před nevkusným překladem, čímž se snaží vytvářet poptávku po nalezení lepšího překladu.
-* **genderová spravedlnost** — V každé kapitole musí být přibližně vyrovnaný počet použití slov „řádka“ a „řádek“. Cílem tohoto opatření je napomoci gendrové spravedlnosti v jazyce. Naopak přechylování označení osob se doporučuje se vyhýbat, píšeme „uživatel“, ne „uživatelka“. Čtenáři vykáme a oslovujeme ji/ho v druhé osobě jednotného čísla, a kde je to možné, uvádíme obě rodové varianty oddělené lomítkem, ne však v podstatných jménech. (Výjimka platí pro předmluvu, kde uvádím u názvů osob přechýlenou i nepřechýlenou variantu, protože se příliš bojím nechápavých jedinců, které by mohlo urazit, kdyby v předmluvě nebyli osloveni „čtenářko“; nejsem si jistý/á jejich existencí, jen mám strach, že kvůli takové hlouposti na Linux: Knihu kouzel zanevřou.)
-* Pro odstranění nejednoznačnosti je zakázáno mínit plurálem generického maskulina pouze muže. To znamená, že např. slovem „homosexuálové“ musíme vždy mínit muže i ženy nebo jen ženy; nikdy ne jen muže. (Ačkoliv pochybuji, že se ve sbírce řešených příkladů pro linux slovo „homosexuálové“ vůbec objeví.)
+* **genderová spravedlnost** — V každé kapitole musí být přibližně vyrovnaný počet použití slov „řádka“ a „řádek“. Cílem tohoto opatření je napomoci gendrové spravedlnosti v jazyce. Naopak přechylování označení osob se doporučuje se vyhýbat, píšeme „uživatel“, ne „uživatelka“. Čtenářstvu vykáme a oslovujeme je v druhé osobě jednotného čísla, a kde je to možné, uvádíme obě rodové varianty oddělené lomítkem, ne však v názvech osob.
+* Příznakové maskulinum podle definice uvedené v této koncepci je ve vanilkové příchuti zakázáno. Každý název osob v rodě mužském životném, u něhož to nevylučuje slovníková definice a který v daném kontextu neznačí konkrétní osobu (resp. konkrétní osoby), musí být použit takovým způsobem, aby sám o sobě značil a předpokládal ženy alespoň tolik jako muže. To znamená, že např. slovem „homosexuálové“ musíme vždy mínit muže i ženy nebo jen ženy. (Ačkoliv pochybuji, že se ve sbírce řešených příkladů pro linux slovo „homosexuálové“ vůbec objeví.) Jen muže jím můžeme mínit jedině tehdy, míníme-li konkrétní muže a napíšeme které.
 * V sekci „Instalace na Ubuntu“ a případně v poznámkách pod čarou nebo v kódu zaklínadel musejí být zmíněny všechny balíčky, které může být nutné doinstalovat do čisté minimální instalace příslušné verze Ubuntu, a všechny změny nastavení, které je třeba provést, aby byla zaklínadla v kapitole použitelná. Pokud proces instalace vyžaduje interakci s uživatelem, musí být popsána „algoritmicky“ a nevyžadovat od uživatele žádné specifické znalosti, kromě těch, které jsou v dané kapitole vysvětleny.
 * Vanilková příchuť se dělí na vývojové řady, kde každá řada je vázana na určitou verzi Ubuntu. Řada 1.x je vázana na Ubuntu 18.04 Bionic Beaver; řada 2.x je vázana na Ubuntu 20.04 Focal Fossa.
 * Vydané verze vanilkové příchuti vydávané po dobu aktivního vývoje dané řady dostávají názvy složené z českého jména a příjmení, kde obě části začínají stejným písmenem. Jména vhodná pro ženu musejí být v průměru v rovnováze se jmény vhodnými pro muže, neutrální jména však mohou být počítána jak jako vhodná pro ženu tak jako vhodná pro muže.
@@ -82,5 +82,12 @@ vhodného spíše v anglických a ryze odborných textech, pak doporučuji v 
 kde je významně zastoupen nástroj z projektu GNU (např. Awk, Bash, Make apod.),
 jeho příslušnost ke GNU zmínit v úvodu kapitoly. Pomůže to projektu GNU víc
 než jeho povrchní spojování s linuxem.
+
+## Generické a příznakové maskulinum
+
+* Název osob je podstatné nebo zpodstatnělé přídavné jméno, které v textu značí jednotlivé osoby (bez ohledu na počet). Za název osob se nepovažuje označení hromadné, jako např. „lidstvo“ či „čtenářstvo“.
+* Maskulinum je v českém jazyce název osob v rodě mužském životném.
+* Generické maskulinum je masklinum v textu, jímž se značí všechny osoby v pojmenované skupině osob, bez ohledu na jejich gender (či jeho absenci jako v případě právnických osob) a bez genderového rozlišení, případně jedinec z takové skupiny.
+* Příznakové maskulinum je maskulinum v textu, jehož slovníkový význam nevylučuje přítomnost jiných osob než mužů v označované skupině, ale jímž se v daném místě textu značí buď jen podskupina mužů v pojmenované skupině osob, nebo sice všechny osoby ve skupině, ale s předpokladem, že v ní nějací muži jsou, předsudkem, že v ní převažují, nebo přesvědčením, že je podstatné, zda v ní nějací jsou.
 
 !ÚzkýRežim: vyp
