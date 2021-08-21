@@ -251,6 +251,7 @@ function NacistFragmentyTSV(soubor,   oldFS, oldRS, oldLN, i, vystupMax, nevystu
         FRAGMENTY[i "/štítky"] = $11;
         FRAGMENTY[i "/ikkap"] = $12;
         FRAGMENTY[i "/ploché-id-bez-diakr"] = $13;
+        FRAGMENTY[i "/symbol"] = $14;
     }
     close(soubor);
 
@@ -309,6 +310,7 @@ function FragInfo(a, b,   x) {
         case "štítky": x = FRAGMENTY[a "/štítky"]; break;
         case "ikona-kapitoly": x = FRAGMENTY[a "/ikkap"]; break;
         case "ploché-id-bez-diakr": x = FRAGMENTY[a "/ploché-id-bez-diakr"]; break;
+        case "symbol": x = FRAGMENTY[a "/symbol"]; break;
         default:
             ShoditFatalniVyjimku("FragInfo: vyžadována naznámá informace \"" b "\"!");
         }
@@ -372,7 +374,7 @@ function HtmlDivOdkaz(fragIndex, cislaPodkapitol,   i, priznaky, vysl, plneId, p
         "<span class=\"fragodkazy\">";
     priznaky = FragInfo(fragIndex, "příznaky");
     if (priznaky ~ /z/) {
-        vysl = vysl "<a href=\"" FragInfo(fragIndex, "ploché-id-bez-diakr") ".htm\" class=\"odkaz\"><span><span class=\"cislo\">" fragIndex "</span>";
+        vysl = vysl "<a href=\"" FragInfo(fragIndex, "ploché-id-bez-diakr") ".htm\" class=\"odkaz\"><span><span class=\"cislo\">" FragInfo(fragIndex, "symbol") "</span>";
     } else {
         vysl = vysl "<span class=\"odkaz\"><span class=\"cislo\"></span>";
     }
@@ -383,7 +385,7 @@ function HtmlDivOdkaz(fragIndex, cislaPodkapitol,   i, priznaky, vysl, plneId, p
             plneId = FragInfo(podkapitoly[i], "plné-id");
             priznaky = FragInfo(podkapitoly[i], "příznaky");
             if (priznaky ~ /z/) {
-                vysl = vysl "<a href=\"" FragInfo(podkapitoly[i], "ploché-id-bez-diakr") ".htm\" class=\"odkaz\"><span><span class=\"cislo\">" podkapitoly[i] "</span>";
+                vysl = vysl "<a href=\"" FragInfo(podkapitoly[i], "ploché-id-bez-diakr") ".htm\" class=\"odkaz\"><span><span class=\"cislo\">" FragInfo(podkapitoly[i], "symbol") "</span>";
             } else {
                 vysl = vysl "<span class=\"odkaz\"><span class=\"cislo\"></span>";
             }

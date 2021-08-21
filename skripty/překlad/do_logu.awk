@@ -82,7 +82,9 @@ function Tabulator(delka) {
     return "Tabulator(" delka ")";
 }
 
-function ZacatekKapitoly(cisloKapitoly, nazevKapitoly, stitky, stitkyxhes, osnova, ikonaKapitoly, jeDodatek,   osnovadohromady, stitkytext) {
+function ZacatekKapitoly(cisloKapitoly, nazevKapitoly, stitky, stitkyxhes, osnova, ikonaKapitoly, jeDodatek, symbolKapitoly, \
+    \
+    osnovadohromady, stitkytext) {
     ZasobnikUrovniPush("kapitola");
 
     DO_LOGU_UROVEN_ODSTAVCE = 0;
@@ -95,7 +97,7 @@ function ZacatekKapitoly(cisloKapitoly, nazevKapitoly, stitky, stitkyxhes, osnov
         stitkytext = stitkytext "|" stitky[i] "[" stitkyxhes[i] "]";
     }
     stitkytext = stitkytext != "" ? substr(stitkytext, 2) : "";
-    return "ZacatekKapitoly(\"" nazevKapitoly "\"" (stitkytext != "" ? ", štítky={" stitkytext "}" : "") ", ikona={" ikonaKapitoly "}, jedodatek=" (jeDodatek ? "ano" : "ne") ") {\n" osnovadohromady "};\n";
+    return "ZacatekKapitoly(\"" nazevKapitoly "\"" (stitkytext != "" ? ", štítky={" stitkytext "}" : "") ", ikona={" ikonaKapitoly "}, jedodatek=" (jeDodatek ? "ano" : "ne") ", symbol=\"" symbolKapitoly "\", číslo=(" cisloKapitoly ")" ") {\n" osnovadohromady "};\n";
 }
 
 function KonecKapitoly(cisloKapitoly, nazevKapitoly, cislaPoznamek, textyPoznamek,   i, vysledek) {

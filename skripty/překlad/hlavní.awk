@@ -585,6 +585,7 @@ BEGIN {
     # Inicializovat globální proměnné:
     NULL_STRING = "\x01\x02";
     KAPITOLA = NAZEV_NADKAPITOLY == "" ? NAZEV_PODKAPITOLY : NAZEV_NADKAPITOLY "/" NAZEV_PODKAPITOLY;
+    SYMBOL_KAPITOLY = "NULL";
     SEKCE = "";
     PODSEKCE = "";
     C_SEKCE = 0;
@@ -804,11 +805,18 @@ function main(    i, j, o, s, pozice, uroven, pokracuje, c_sekce, n_sekce, c_pod
     #}
     #ShoditFatalniVyjimku("Test");
 
+    # 2B. Určit z osnovy symbol kapitoly
+    for (i = 1; i in OSNOVA; ++i) {
+        if (OSNOVA[i] ~ /^KAPITOLA\t/) {
+            SYMBOL_KAPITOLY = gensub(/\t.*/, "", 1, substr(OSNOVA[i], 10));
+            break;
+        }
+    }
+
     # 3. Otevřít kapitolu
     delete ppcall;
     delete pptall;
-    printf("%s", ZacatekKapitoly(C_KAPITOLY, KAPITOLA,
-        STITKY, STITKY_XHES, OSNOVA, IKONA_KAPITOLY, JE_DODATEK));
+    printf("%s", ZacatekKapitoly(C_KAPITOLY, KAPITOLA, STITKY, STITKY_XHES, OSNOVA, IKONA_KAPITOLY, JE_DODATEK, SYMBOL_KAPITOLY));
     if (tolower(NAZEV_PODKAPITOLY) == "licence") {
         printf("%s", ZapnoutRezimLicence());
     }

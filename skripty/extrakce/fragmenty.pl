@@ -51,6 +51,7 @@ my @nadkapitola = @nedefy; # id nadkapitoly této kapitoly; "", pokud nadkapitol
 my @název = @nedefy;
 my @početŘádek = @nedefy;
 my @příznaky = ("") x alength(@nedefy);
+my @symboly = @nedefy; # jen u fragmentů na výstup; textové číselné označení (např. „3.1“)
 my @štítky = @nedefy; # => [štítky, ...]
 
 # přečíst pořadí kapitol na výstup
@@ -124,6 +125,51 @@ my %číslaKapitol; # ID => pořadové číslo na výstupu (1, 2, ...)
             nastavitPříznak($index, "v", 1);
         }
         close($f);
+    }
+}
+
+# zkontrolovat, zda podkapitoly následují po svých základních kapitolách
+# vyplnit symboly
+{
+    my @čísloNaIndex;
+    my $záklKap;
+    my $č;
+    my $čZáklKap = 0;
+    my $čPodkap = 0;
+
+    for my $i (0..(alength(@všechnyFragmenty) - 1))
+    {
+        $čísloNaIndex[$č] = $i if (defined($č = $čísloNaVýstupu[$i]) && $č > 0);
+    }
+    for my $i (1..(alength(@čísloNaIndex) - 1))
+    {
+        my $indexFragmentu = $čísloNaIndex[$i];
+        if (!defined($indexFragmentu))
+            {die("Vnitřní chyba: čísloNaIndex[" . $i . "] nedefinováno.")}
+
+        my $idFragmentu = $všechnyFragmenty[$indexFragmentu];
+        if (!defined($idFragmentu))
+            {die("Vnitřní chyba: idFragmentu[" . $indexFragmentu . "] nedefinováno.")}
+
+        my @části = split(/\//, $idFragmentu, 2);
+        if (alength(@části) == 1)
+        {
+            # základní kapitola
+            $záklKap = $idFragmentu; # základní kapitola pro případné následující
+            $čPodkap = 0;
+            $symboly[$indexFragmentu] = ++$čZáklKap;
+        }
+        elsif (!defined($záklKap) || $části[0] ne $záklKap)
+        {
+            die("Chyba v pořadí kapitol. Podkapitoly mohou být uvedeny pouze " .
+                "v souvislé řádě po jim příslušné základní kapitole. " .
+                "Toto pravidlo porušuje podkapitola <" . $idFragmentu . ">.");
+        }
+        else
+        {
+            # podkapitola
+            $symboly[$indexFragmentu] = $čZáklKap . "." . (++$čPodkap);
+        }
     }
 }
 
@@ -219,7 +265,7 @@ for my $i (0..(alength(@všechnyFragmenty) - 1))
                 }
                 $název[$i] = substr($s, 2);
                 $název[$i] !~ /\t/ or die("Název v souboru ${cesta} obsahuje tabulátor, což není dovoleno!");
-                vypsatPoložkuOsnovy($fOsnova, "KAPITOLA", $čísloNaVýstupu[$i] // 0, $čŘádky, $název[$i], ";");
+                vypsatPoložkuOsnovy($fOsnova, "KAPITOLA", $symboly[$i] // "NULL", $čŘádky, $název[$i], ";");
                 $čSekce = $čPodsekce = 0;
                 $názevSekce = $názevPodsekce = "";
             } elsif ($s =~ /\A#{2} /) {
@@ -323,7 +369,9 @@ ladění("Druhý průchod skončil.");
             # 12: Ikona kapitoly (ik-výchozí.png, nebo ik/{id}.png)
             $ikona,
             # 13: Ploché ID bez diakritiky,
-            bezDiakritiky($všechnyFragmenty[$i] =~ s/\//-/gr)
+            bezDiakritiky($všechnyFragmenty[$i] =~ s/\//-/gr),
+            # 14: Symbol, nebo NULL
+            $symboly[$i] // "NULL"
             );
     }
     close($f);
@@ -530,7 +578,7 @@ sub vypsatFragment {
     local $ORS = "\n";
     state $řádka = 0;
 
-    typy(@ARG) =~ /\AFs{13}\z/ or croak("Chybné typy parametrů!");
+    typy(@ARG) =~ /\AFs{14}\z/ or croak("Chybné typy parametrů!");
     ++$řádka;
     ladění("FRAG[${řádka}]/číslo-na-výstupu: " . $ARG[1]);
     ladění("FRAG[${řádka}]/úplné-ID: " . $ARG[2]);
@@ -545,6 +593,7 @@ sub vypsatFragment {
     ladění("FRAG[${řádka}]/štítky: " . $ARG[11]);
     ladění("FRAG[${řádka}]/ikona-kapitoly: " . $ARG[12]);
     ladění("FRAG[${řádka}]/ploché-ID-bezdiakr: " . $ARG[13]);
+    ladění("FRAG[${řádka}]/symbol: " . $ARG[14]);
     return fprint(@ARG);
 }
 

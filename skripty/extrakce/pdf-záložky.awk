@@ -1,5 +1,5 @@
 # Linux Kniha kouzel, skript extrakce/pdf-záložky.awk
-# Copyright (c) 2020 Singularis <singularis@volny.cz>
+# Copyright (c) 2020, 2021 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 # podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -97,7 +97,7 @@ BEGINFILE {
 
 
 !je_toc && $1 == "KAPITOLA" {
-    nazvy[cislo_kapitoly] = NacistNazev($5, cislo_kapitoly " ");
+    nazvy[cislo_kapitoly] = NacistNazev($5, $2 " "); # předpona = symbol + " "
     pocty[cislo_kapitoly] = 0;
     cislo_sekce = 0;
     cislo_podsekce = 0;

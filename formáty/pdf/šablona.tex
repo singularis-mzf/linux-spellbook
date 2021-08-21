@@ -468,17 +468,20 @@
     \end{itemize}%
 }
 
+%\newcommand*{\symbolkapitoly}{}
 \newcommand*{\nazevkapitoly}{}
-\newcommand*{\kapitola}[5][]{% \kapitola{index-umístění-úchytu}{[ZKR]}{Název}{ikona-kapitoly.png}
+\newcommand*{\kapitola}[6][]{% \kapitola{#2: index-umístění-úchytu}{#3: [ZKR]}{#4: SYMBOL}{#5: Název}{#6: ikona-kapitoly.png}
     \clearpage%
     \ifstrempty{#3}{%
         \renewcommand*{\generovatuchytkapitoly}{}%
     }{%
         \renewcommand*{\generovatuchytkapitoly}{\uchytkapitoly{#2}{#3}}%
     }%
-    \renewcommand*{\nazevkapitoly}{#4}%
-    \renewcommand*{\vlozitikonukapitoly}{\raisebox{-0.65em}{\includegraphics[width=2em,height=2em]{#5}}}%
-    \chapter{#4}%
+    \renewcommand*{\nazevkapitoly}{#5}%
+    %\renewcommand*{\symbolkapitoly}{#4}%
+    \renewcommand*{\vlozitikonukapitoly}{\raisebox{-0.65em}{\includegraphics[width=2em,height=2em]{#6}}}%
+    \renewcommand*{\thechapter}{#4}%
+    \chapter{#5}%
 }
 
 \newcommand*{\sekce}[2][]{{%

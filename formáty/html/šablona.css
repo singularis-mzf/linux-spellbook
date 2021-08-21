@@ -1208,11 +1208,12 @@ nav.menu div.polozky .podsekce {padding-left:3rem}
 }
 .fragodkaz .podkpodkazy {
     display:flex;
-    flex-flow:row wrap;
+    flex-flow:column nowrap;
     flex:4 1 auto;
     justify-content:center;
     font-size:90%;
     font-style:italic;
+    margin-left:2em;
 }
 .fragodkaz .podkpodkazy a {
     display:inline-block;

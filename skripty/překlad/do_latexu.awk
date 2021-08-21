@@ -1,5 +1,5 @@
 # Linux Kniha kouzel, skript do_latexu.awk
-# Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
+# Copyright (c) 2019-2021 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 # podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -241,13 +241,14 @@ function Tabulator(delka,  i, vysledek) {
     return "\\textcolor{seda}{\\guillemotright}{" Zopakovat("~", max(0, delka - 1)) "}";
 }
 
-function ZacatekKapitoly(cisloKapitoly, nazevKapitoly, stitky, stitkyxhes, osnova, ikonaKapitoly, jeDodatek, \
-    kapitolaVelkymi, zkratkaKapitoly,   n)
+function ZacatekKapitoly(cisloKapitoly, nazevKapitoly, stitky, stitkyxhes, osnova, ikonaKapitoly, jeDodatek, symbolKapitoly, \
+    \
+    kapitolaVelkymi, zkratkaKapitoly, n)
 {
     DO_LATEXU_ODSTAVEC_PRED_ZAKLINADLEM = 0;
     kapitolaVelkymi = toupper(nazevKapitoly);
     zkratkaKapitoly = jeDodatek ? "" : SubstrZleva(gensub(/[^[:alnum:]]/, "", "g", kapitolaVelkymi), 3);
-    nazevKapitoly = "\\kapitola{" ((cisloKapitoly - 1) % 21) "}{" zkratkaKapitoly "}{" kapitolaVelkymi "}{../pdf-společné/_obrázky/" ikonaKapitoly "}%\n\\label{kapx" XHES_KAPITOLY "}";
+    nazevKapitoly = "\\kapitola{" ((cisloKapitoly - 1) % 21) "}{" zkratkaKapitoly "}{" symbolKapitoly "}{" kapitolaVelkymi "}{../pdf-společné/_obrázky/" ikonaKapitoly "}%\n\\label{kapx" XHES_KAPITOLY "}";
     if (1 in stitky) {
         nazevKapitoly = nazevKapitoly "\\noindent\\stitek{" stitky[1];
         for (n = 2; n in stitky; ++n) {nazevKapitoly = nazevKapitoly "}\\stitek{" stitky[n]}
