@@ -57,9 +57,11 @@ budou zařazeny do sestavení.
 
 Prázdné řádky a řádky začínající znakem „#“ jsou ignorovány a lze je použít
 jako komentáře. Ostatní řádky jsou názvy souborů v podadresářích „dodatky“
-a „kapitoly“ bez přípony „.md“. Žádná kapitola či dodatek se nesmí opakovat
-a jako první by měla být „předmluva“ (při nesplnění tohoto požadavku nemusí
-sestavení fungovat).
+a „kapitoly“ bez přípony „.md“. Přitom musejí být splněna tato pravidla:
+
+* První by měla být „předmluva“ (při nesplnění tohoto požadavku nemusí sestavení fungovat).
+* Žádná kapitola či dodatek se nesmí opakovat.
+* Podkapitoly se mohou objevit jen v souvislé řadě po sobě příslušné hlavní kapitole (ale na pořadí podkapitol nezáleží).
 
 Pokud budete vaše sestavení šířit ostatním osobám, doporučuji ponechat
 dodatek „licence“.
@@ -102,6 +104,10 @@ Překlad pravděpodobně bude fungovat i při nedodržení doporučené syntaxe
 * Nastavením proměnné prostředí „PORADI\_KAPITOL“ na zvláštní hodnotu „\_\_VŠE\_\_“ můžete vynutit automatické přeložení všech kapitol a dodatků zapsaných v Makefile (tato funkce je používána při sestavování „výplachu repozitáře“):
 
 ``PORADI_KAPITOL='__VŠE__' make -j4 html``
+
+* Parametrem „JE_UKAZKA=1“ můžete zapnout vodoznak s textem „UKÁZKA“ v HTML formátu.
+
+``make JE_UKAZKA=1 -j4 html``
 
 ### Oblíbená zaklínadla
 

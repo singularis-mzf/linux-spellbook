@@ -37,12 +37,14 @@ export DATUM_SESTAVENI := $(shell date +%Y%m%d)
 
 # Další nastavení
 # ----------------------------------------------------------------------------
-export PDF_ZALOZKY := 1
 export SOUBORY_PREKLADU := soubory_překladu
 export VYSTUP_PREKLADU := výstup_překladu
+
+export JE_UKAZKA := 0
+export PDF_ZALOZKY := 1
 export PDF_ZALOZKY_MAX_DELKA := 32
-export REKLAMNI_PATY := 0
 export PREMIOVE_KAPITOLY := 0
+export REKLAMNI_PATY := 0
 
 # Jméno sestavení (doporučuji nastavovat z příkazového řádku)
 # ----------------------------------------------------------------------------

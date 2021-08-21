@@ -55,7 +55,7 @@ ale současná implementace to nepovažuje za kritickou chybu.
 Tato funkce se volá pro značky &lt;tab1&gt; až &lt;tab8&gt; a má vygenerovat
 tabulátor zadané délky.
 
-### ZacatekKapitoly(nazevKapitoly, cisloKapitoly, stitky, osnova, ikonaKapitoly, jeDodatek)
+### ZacatekKapitoly(nazevKapitoly, cisloKapitoly, stitky, osnova, ikonaKapitoly, jeDodatek, symbolKapitoly)
 
 Tato funkce se volá právě jednou, na začátku kapitoly. Je to první funkce,
 která je při překladu volána.

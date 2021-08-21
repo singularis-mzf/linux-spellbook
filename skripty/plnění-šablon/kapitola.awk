@@ -101,6 +101,10 @@ function Pokud(podminka,   i, pole) {
         case "MÁ PODKAPITOLY":
             i = FragInfo(IDKAPITOLY "?");
             return i != 0 && FragInfo(i, "příznaky") ~ /N/;
+        case "JE UKÁZKA":
+            return ENVIRON["JE_UKAZKA"] == "1";
+        case "NENÍ UKÁZKA":
+            return !(ENVIRON["JE_UKAZKA"] == "1");
     }
     ShoditFatalniVyjimku("Neznámá direktiva {{POKUD " podminka "}}!");
 }

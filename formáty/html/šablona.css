@@ -568,6 +568,14 @@ body {
     overflow:hidden;
 }
 
+body.jeukazka #okno {
+    background-image:url("obrazky/ukazka.png");
+    background-attachment:fixed;
+    background-position:center;
+    background-size:50vw 50vh;
+    background-repeat:no-repeat;
+}
+
 # titulek okna (+ ikony vlevo a vpravo)
 header {
 #    border-bottom:thin solid rgb({{zb-okno-ramecek}}); /* není potřeba, dokud je pod titulkem menu */

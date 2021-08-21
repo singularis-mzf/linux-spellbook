@@ -50,7 +50,12 @@ Varianty:
 <link rel="stylesheet" type="text/css" href="lkk-{{DATUMSESTAVENÍ}}.css">
 <link rel="icon" type="image/png" href="obrazky/favicon.png">
 </head>
+{{POKUD JE UKÁZKA}}
+<body class="jeukazka">
+{{KONEC POKUD}}
+{{POKUD NENÍ UKÁZKA}}
 <body>
+{{KONEC POKUD}}
 <div id="nahore"><div id="okno">
 <header>
 <span class="vlevo"><a href="index.htm"><img src="obrazky/favicon.png" width="16" height="16" alt=""></a> Linux: Kniha kouzel, {{OZNAČENÍ VERZE S INICIÁLAMI}} ({{DATUM SESTAVENÍ}})</span>
@@ -203,7 +208,15 @@ Známá také jako „konverzační slovník linuxštiny“.</div>
 z prostředí linuxového operačního systému, ve formě připomínající
 kon&shy;ver&shy;zační slovník cizího jazyka. Jejím cílem je shro&shy;maž&shy;ďo&shy;vat a sdílet
 co nej&shy;uži&shy;teč&shy;nější přehled možností, které nabízí uživatelům svobodný software
-v ope&shy;rač&shy;ních systémech založených na distribuci Debian a jádru Linux.</p>
+v ope&shy;rač&shy;ních systémech založených na distribuci Debian a jádru Linux.
+{{POKUD JE UKÁZKA}}
+<br><br>
+Toto je online ukázka obsahující pouze základní kapitoly. Měla by vám stačit
+k posouzení, zda by vám Linux: Kniha kouzel mohla být užitečná.
+Další kapitoly jsou dostupné ve formě zdrojového kódu, z něhož si můžete
+<a href="https://github.com/singularis-mzf/linux-spellbook/blob/stabiln%C3%AD/dokumentace/odm%C4%9Bna-za-sestaven%C3%AD.md">sestavit vlastní verzi</a>.
+{{KONEC POKUD}}
+</p>
 <div class="ikona"><img src="obrazky/kalendar.svg" alt="" height="64"></div>
 <p class="informaceoverzi">Verze:<br><em class="oznaceni">{{OZNAČENÍ VERZE}}</em>
 {{POKUD MÁ VERZE JMÉNO}}

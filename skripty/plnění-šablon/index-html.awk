@@ -47,11 +47,16 @@ function Zacatek() {
 }
 
 function Pokud(podminka) {
-    if (podminka == "ZNÁME PŘEDEVŠÍM PRO") {
+    switch (podminka) {
+    case "ZNÁME PŘEDEVŠÍM PRO":
         return predevsim_pro != "";
-    } else if (podminka == "MÁ VERZE JMÉNO") {
+    case "MÁ VERZE JMÉNO":
         return ZjistitJmenoVerze(JMENOVERZE) != "";
-    } else {
+    case "JE UKÁZKA":
+        return ENVIRON["JE_UKAZKA"] == "1";
+    case "NENÍ UKÁZKA":
+        return !(ENVIRON["JE_UKAZKA"] == "1");
+    default:
         ShoditFatalniVyjimku("Neznámá direktiva {{POKUD " podminka "}}!");
     }
 }

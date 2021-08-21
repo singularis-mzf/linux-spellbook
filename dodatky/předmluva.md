@@ -17,10 +17,10 @@ https://creativecommons.org/licenses/by-sa/4.0/
 > *„Prostě příkazový řádek v Linuxu je něco úchvatného, a kdo se neumí v tomto prostředí pohybovat, přichází*
 > *o hodně.“*<br>— KAMENÍK, Pavel. *Příkazový řádek v Linuxu: praktická řešení.* Brno: Computer Press, 2011. ISBN 978-80-251-2819-0.
 
-<neodsadit>Vážená/ý čtenáři/ko,
+<neodsadit>Vážné čtenářstvo,
 
-v České republice začíná v letech 2020 až 2024 pracovat s linuxem obrovské
-množství uživatelů/ek a tito lidé svůj nový systém poznávají převážně
+v České republice začíná v letech 2020 až 2024 pracovat s linuxem
+velmi početné uživatelstvo a tito lidé svůj nový systém poznávají převážně
 třemi nejběžnějšími způsoby:
 
 Většina z nich spoléhá na webové online zdroje v angličtině, a protože
@@ -40,17 +40,17 @@ jeho dokumentace, jakkoliv rozsáhlá, vám to nepoví a neporadí vám, kde ji
 
 O mnoho lépe na tom nejsou ani ti, kdo se s linuxem učí zacházet
 z nejnovějších knih na českém knižním trhu. Ty nejnovější, které se věnují
-linuxu, jsou totiž z let 2008 až 2012, a ačkoliv některé z nich naučí uživatele
+linuxu, jsou totiž z let 2008 až 2012, a ačkoliv některé z nich naučí člověka
 opravdu dobře zacházet s (GNU) Bashem (snad až na asociativní pole), do praxe si
-z nich uživatelé odnesou také mnohé zastaralé a překonané postupy,
+z nich odnese také mnohé zastaralé a překonané postupy,
 protože se o těch nových a vylepšených, které jsou díky pokračující obětavé
-práci programátorů svobodného software dostupné teprve několik let,
-prostě nedozvědí, což mě mrzí.
+práci programátorstva svobodného software dostupné teprve několik let,
+prostě nedozví, což mě mrzí.
 
-Třetí skupina uživatelů si se svým systémem hraje a experimentuje.
-Tito uživatelé se zpravidla o novějších postupech, příkazech a funkcích
+Třetí skupina uživatelstva si se svým systémem hraje a experimentuje.
+Tyto osoby se zpravidla o novějších postupech, příkazech a funkcích
 dozvědí jako první, ale stojí je to neúměrné množství času a úsilí
-a ne každého/ou takové experimentování baví.
+a ne každou/ého takové experimentování baví.
 
 Já sám/a jsem linux jako svůj hlavní operační systém začal/a používat
 koncem roku 2018 a patřím do té druhé skupiny — v začátcích mi nesmírně pomáhaly
@@ -65,7 +65,7 @@ co nejlepšího ve vybraných oblastech vám linux může nabídnout.
 
 Máte-li totiž na počítači nainstalovaný linux, můžete mít na disku gigabajty
 nesmírně mocných nástrojů jako (GNU) Bash, FFmpeg, Perl či TeX, které v sobě
-skrývají desítky let práce špičkových programátorů, a nemusíte nezbytně pochopit,
+skrývají desítky let práce špiček programátorstva, a nemusíte nezbytně pochopit,
 jak fungují, abyste s nimi dokázal/a velké věci. Pokud vás zajímá,
 co s nimi tedy můžete udělat, a konkrétní postup, jak toho dosáhnout,
 je toto kniha pro vás.
@@ -98,7 +98,7 @@ nečekané následky. Přesto se vám to vyplatí mnohem víc než omezit se
 jen na to málo příkazů, které bezpečně ovládáte. (Pokud znáte příběhy
 Harryho Pottera od J. K. Rowling, zamyslete se, jak by dopadl on,
 kdyby se omezil jen na kouzla odpovídající jeho školnímu ročníku.
-Moje odpověď – byl by mnohem víc závislý na Hermioně Grangerové.)
+Můj názor: byl by mnohem víc závislý na Hermioně Grangerové.)
 
 Zaklínadla v jednotlivých sekcích a podsekcích jsou vždy řazena
 od těch nejčastějších a nejdůležitějších k těm méně obvyklým.
@@ -127,9 +127,8 @@ menší část zaklínadel, ale přesto má smysl to zkusit.
 Také je třeba upozornit, že řada postupů vyžaduje nainstalovat nějaký
 balíček, který ve výchozí instalaci není přítomen, nebo změnit nějaké
 systémové nastavení. Proto postupy z této knihy nemusí být vhodné
-pro uživatele sdílených systémů (např. firemních či školních),
-protože ti zpravidla nemohou instalovat balíčky či měnit nastavení
-systému.
+pro uživatelstvo sdílených systémů (např. firemních či školních),
+protože to zpravidla nemůže instalovat balíčky či měnit nastavení systému.
 
 <!--
 Ačkoliv drtivá většina uvedených zaklínadel bude fungovat
@@ -140,7 +139,7 @@ každého programu přináší změny, které je potřeba reflektovat.
 
 Ačkoliv drtivá většina uvedených zaklínadel bude bez problémů fungovat i na mnoha
 jiných současných linuxových distribucích, především na Linuxu Mint
-(začátečníkům nedoporučuji pokoušet Debian, kde může být jejich zprovoznění obtížnější),
+(začátečnictvu nedoporučuji pokoušet Debian, kde může být jejich zprovoznění obtížnější),
 vztáhnout verzi knihy na konkrétní verzi konkrétní distribuce je nutné,
 protože linuxové programy se prudce vyvíjejí, a co v jedné jejich verzi funguje,
 v příští již může fungovat jinak.
@@ -209,14 +208,12 @@ Uživatele, který Linux: Knihu kouzel neprostudoval, poznáte např. takto:
 * Myslí si, že příkaz „apt list gimp*“ vypíše seznam balíčků začínajících „gimp“ (v tomto případě se musí hlavně naučit pravidla odzvláštňování).
 -->
 
-## Aktuální poznámka k verzi „vanilková příchuť 2.8 Pavel Podzimní“
+## Aktuální poznámka k verzi „vanilková příchuť 2.9 René Rašínová“
 
-Verze vanilkové příchuti 2.8, jménem Pavel Podzimní, přináší
-novou základní kapitolu „BASH“ a její tři nové podkapitoly:
-základní „Funkce a skripty“ a „Interaktivní režim“
-a prémiovou „Vstup, výstup a přesměrování“.
+Verze vanilkové příchuti 2.9, jménem René Rašínová, přináší
+především kosmetická vylepšení a opravy chyb. (...)
 
-V HTML variantě došlo k zesvětlení písma v tmavém motivu ke zvýšení kontrastu.
+V HTML variantě...
 
 <!--
 - V HTML variantě...
@@ -225,9 +222,10 @@ V HTML variantě došlo k zesvětlení písma v tmavém motivu ke zvýšení 
 - V kapitole *XY* přibyly ...
 -->
 
-Z hlediska překladu je důležitou změnou vyčlenění konfigurace do samostatného adresáře ve zdrojovém kódu. Spouštěč „lkk“ nově zpracovává volby standardním způsobem. Byla odstraněna předvolená oblíbená zaklínadla kromě těch v kapitole „Diskové oddíly“.
-
-Vydání verze 2.9, jménem René Rašínová, očekávám v průběhu srpna 2021. V plánu mám především vývoj zcela nového (přehlednějšího) formátu pro PDF varianty a upřesnění pravidel genderové vyváženosti názvů osob v koncepci projektu.
+Vydání verze 2.10, jménem S. S., očekávám začátkem října 2021.
+<!--
+V plánu mám především vývoj zcela nového (přehlednějšího) formátu pro PDF varianty a upřesnění pravidel genderové vyváženosti názvů osob v koncepci projektu.
+-->
 
 Verze řady „vanilková příchuť 1.x“ jsou ve stádiu dlouhodobé pasivní údržby do 1. března 2023.
 
