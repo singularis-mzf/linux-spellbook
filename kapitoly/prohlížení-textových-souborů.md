@@ -25,12 +25,17 @@ Poznámky:
 !ÚzkýRežim: zap
 
 ## Úvod
-<!--
-- Vymezte, co je předmětem této kapitoly.
-- Obecně popište základní principy, na kterých fungují používané nástroje.
-- Uveďte, co kapitola nepokrývá, ačkoliv by to čtenář mohl očekávat.
--->
-![ve výstavbě](../obrázky/ve-výstavbě.png)
+
+Tato kapitola se specializuje na prohlížení textových souborů
+(např. systémových záznamů), tedy zobrazování jejich obsahu uživateli
+bez možnosti tento obsah měnit, ale s možností ho prohledávat
+a filtrovat.
+
+Pokud máte na práci se soubory práci větší požadavky, než co vám nabízejí
+nástroje popsané v této kapitole, měli byste použít plnohodnotný editor,
+např. vim.
+
+Příkaz „less“ je vyvíjen v rámci projektu GNU, příkaz „more“ nikoliv.
 
 ## Definice
 <!--
@@ -38,13 +43,148 @@ Poznámky:
 -->
 ![ve výstavbě](../obrázky/ve-výstavbě.png)
 
+* **Řádek souboru** (resp. řádka souboru) je řádek, jak se nachází v prohlíženém souboru (tedy posloupnost znaků oddělená od ostatních řádků ukončovačem řádky).
+* **Řádka obrazovky** (resp. řádek obrazovky) je řádka, jak je prohlížecím programem zobrazena na terminálu. Jeden řádek souboru se může zalomit na více řádek obrazovky.
+
 !ÚzkýRežim: vyp
 
 ## Zaklínadla
+
+### Prohlížení souborů
+
+*# otevřít textový soubor v programu less/programu more*<br>
+**less** [{*volby*}]... [**\-\-**] {*cesta/k/souboru*}<br>
+**more** [**\-\-**] {*cesta/k/souboru*}
+
+*# otevřít textový soubor v režimu pro čtení editoru „vim“*<br>
+**view** [**\-\-**] {*cesta/k/souboru*}
 <!--
-- Rozdělte na podsekce a naplňte „zaklínadly“.
+[ ] Není požadován nějaký balíček?
 -->
-![ve výstavbě](../obrázky/ve-výstavbě.png)
+
+### Sledování měnících se souborů
+
+
+
+## Zaklínadla: less
+
+### Základní ovládání
+
+*# **ukončit** less*<br>
+**q**
+
+*# skok o stránku vpřed/vzad*<br>
+{_PageDown_}<br>
+{_PageUp_}
+
+*# skok o řádku obrazovky vpřed/vzad*<br>
+{_↓_}<br>
+{_↑_}
+
+*# skok o řádku souboru vpřed/vzad*<br>
+?<br>
+?
+
+*# skok na začátek/konec souboru*<br>
+{_Home_}<br>
+{_End_}
+
+*# zobrazit vestavěnou nápovědu*<br>
+**h**
+
+### Vyhledávání
+
+*# vyhledat vpřed řádku **obsahující** shodu s reg. výrazem*<br>
+*// Vykřičník jako první znak má v tomto případě zvláštní význam, takže pokud jím začíná váš regulární výraz, musíte ho odzvláštnit zpětným lomítkem.*<br>
+{_/_}<br>
+{*regulární výraz*}<br>
+{*Enter*}
+
+*# vyhledat vpřed řádku **neobsahující** shodu s reg. výrazem*<br>
+{_/_}<br>
+{_Ctrl_}**+**{_N_}<br>
+{*regulární výraz*}<br>
+{*Enter*}
+
+*# skákat po řádcích obrazovky se shodami s vyhledaným regulárním výrazem vpřed/zpět*<br>
+[{*kolikrát*}]**n**<br>
+[{*kolikrát*}]**N**
+
+*# zvýraznit podřetězce odpovídající regulárnímu výrazu*<br>
+{_/_}<br>
+{_Ctrl_}**+**{_K_}<br>
+{*regulární výraz*}<br>
+{*Enter*}
+
+*# přepnout (vypnout či zapnout) zvýraznění shod s r.v.*<br>
+{_Esc_}<br>
+{_U_}
+
+### Filtrování
+
+*# zobrazit jen řádky obsahující/neobsahující shodu s reg. výrazem*<br>
+**&amp;**{*regulární výraz*}{_Enter_}<br>
+**&amp;** {_Ctrl_}**+**{_N_} {*regulární výraz*}{_Enter_}
+
+*# vypnout filtrování*<br>
+**&amp;**{_Enter_}
+
+### Pojmenované pozice
+
+*# přepnout zobrazení sloupce s pojmenovanými pozicemi*<br>
+**\-J**{_Enter_}
+
+*# **pojmenovat** pozici*<br>
+**m**{*pismeno*}
+
+*# **skok** na pozici*<br>
+**'**{*pismeno*}
+
+### Ostatní příkazy
+
+*# přepnout (vyp:zap) sloupec s čísly řádek*<br>
+**\-N**{_Enter_}
+
+*# nezalamovat řádky a umožnit pohyb doprava a doleva pomocí klávesových šipek*<br>
+**\-\-shift**{_Enter_}**1**{_Enter_}**-S**
+
+*# skok na řádek č. N*<br>
+{*N*}**G**
+
+*# znovunačíst obsah souboru*<br>
+**R**
+
+*# zobrazit ve stavové řádce pozici v souboru (dočasně/do ukončení)*<br>
+{_Ctrl_}**+**{_G_}<br>
+**\-M**{_Enter_}
+
+*# spustit Bash*<br>
+**!bash**{_Enter_}
+
+## Ovládání „more“
+
+*# **ukončit** more*<br>
+**q**
+
+*# skok o stránku vpřed*<br>
+{_Space_}
+
+*# skok o řádku obrazovky vpřed*<br>
+{_Enter_}
+
+*# skok o řádku souboru vpřed*<br>
+?
+
+*# zobrazit vestavěnou nápovědu*<br>
+**h**
+
+*# zobrazit číslo aktuální řádky (souboru, nebo obrazovky?)*<br>
+**=**
+
+<!--
+[ ] tail -f
+-->
+
 
 <!--
 ## Parametry příkazů

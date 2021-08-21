@@ -276,6 +276,14 @@ Tento tvar je vhodný pouze u logických oddílů LVM či při jednorázovém p
 asi PHY-SEC/LOG-SEC u lsblk
 -->
 
+*# je zařízení otočný pevný disk (HDD)?*<br>
+?
+<!--
+Pro mě obvykle nefunguje, SSD i HDD disky (připojené přes USB) mi uvádějí „1“, dokonce i flash disky.
+*// Poznámka: id zařízení musí být např. „hda“ či „sdb“; nelze použít označení jednotlivého oddílu. U NVME disků dotaz nemá smysl, protože .*<br>
+**test "1" = "$(cat /sys/block/**{*id-zařízení*}**/queue/rotational)"**
+-->
+
 ### Formátování
 
 *# formátovat na **ext4** (obecně/příklad)*<br>
@@ -405,6 +413,11 @@ Viz: https://wiki.archlinux.org/index.php/Persistent_block_device_naming
 **sudo btrfs rescue chunk-recover -v** {*/dev/oddíl*}
 ?
 -->
+
+*# uvolnit bloky na zařízení či oddílu (TRIM ručně) (všechny/vybrané)*<br>
+*// Hodnoty „začátek“ a „délka“ se (s příponou „M“) udávají v celých mebibajtech. Pozor, tento příkaz zahodí všechna data v uvolňovaných blocích!*<br>
+**sudo blkdiscard** {*/dev/zař-nebo-oddíl*}<br>
+**sudo blkdiscard -o** {*začátek*}**M** [**-l** {*délka*}**M**] {*/dev/zař-nebo-oddíl*}
 
 *# vynulovat volné bloky (ext4/btrfs/FAT32/NTFS)*<br>
 *// Příkaz „zerofree“ lze použít jen s odpojeným souborovým systémem!*<br>
