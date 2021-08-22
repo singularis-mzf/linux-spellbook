@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, kapitola Stahování videí
-Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
+Copyright (c) 2019-2021 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -33,6 +33,10 @@ Je určena vždy pro jeho nejaktuálnější verzi z oficiálních stránek,
 protože každá změna ve webovém rozhraní online služeb může způsobit nefunkčnost
 existujících verzí programu a pouze nejnovější verze (je-li řádně aktualizována)
 se těmto změnám obvykle poměrně rychle přizpůsobuje.
+
+*Aktuální poznámka:* Zdá se, že od července 2021 je program „youtube-dl“
+neudržován a v době vydání této verze již přestává fungovat na některá videa.
+Zkoumám „yt-dlp“ jako možnou náhradu.
 
 <!--
 ## Definice

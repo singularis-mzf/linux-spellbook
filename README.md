@@ -145,6 +145,7 @@ Priority:
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
 | [firefox](kapitoly/firefox.md) | Firefox | 60% | dítě |
 | [kalkulace](kapitoly/kalkulace.md)| Kalkulace | 50% | dítě |
+| [prohlížení-textových-souborů](kapitoly/prohlížení-textových-souborů.md) | Prohlížení textových souborů | 50% | dítě |
 | [stahování-z-webu](kapitoly/stahování-z-webu.md) | Stahování z webu | 40% | dítě |
 | [zpracování-obrázků](kapitoly/zpracování-obrázků.md) | Zpracování obrázků | 40% | dítě |
 | [metapříkazy](kapitoly/metapříkazy.md) | Metapříkazy | 20% | dítě |
@@ -166,7 +167,6 @@ Priority:
 | [virtualbox](kapitoly/virtualbox.md) | VirtualBox | 0% | embryo |
 | [šifrování](kapitoly/šifrování.md) | Šifrování a kryptografie | 0% | embryo |
 | [soubory-a-adresáře/kopírování](kapitoly/soubory-a-adresáře/kopírování.md) | Soubory a adresáře/Kopírování | 0% | embryo |
-| [prohlížení-textových-souborů](kapitoly/prohlížení-textových-souborů.md) | Prohlížení textových souborů | 0% | embryo |
 | přehrávání-videa | Přehrávání videa, zvuku a obrázků | - | přál/a bych si |
 | firewall | Firewall | - | přál/a bych si |
 | sql | SQL | - | přál/a bych si |

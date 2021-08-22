@@ -211,9 +211,15 @@ Uživatele, který Linux: Knihu kouzel neprostudoval, poznáte např. takto:
 ## Aktuální poznámka k verzi „vanilková příchuť 2.9 René Rašínová“
 
 Verze vanilkové příchuti 2.9, jménem René Rašínová, přináší
-především kosmetická vylepšení a opravy chyb. (...)
+především kosmetická vylepšení a opravy chyb.
+Podkapitoly jsou nyní ve všech formátech značeny desetinným značením
+po své nadkapitole, což s sebou přináší omezení,
+že již nemohou být umístěny samostatně.
 
-V HTML variantě...
+V HTML variantě jsou na vícečetné podněty uživatelstva podkapitoly
+nově zobrazeny v seznamech pod sebou. Rovněž byla přidána funkce
+vodoznaku ukázky a metadata pro webové vyhledavače a prohlížeče
+na mobilních telefonech.
 
 <!--
 - V HTML variantě...
@@ -222,7 +228,15 @@ V HTML variantě...
 - V kapitole *XY* přibyly ...
 -->
 
-Vydání verze 2.10, jménem S. S., očekávám začátkem října 2021.
+Mechanismus překladu přináší nový příkaz „make kontrola“, který provede
+automatickou kontrolu přítomnosti nástrojů a písem potřebných
+pro úspěšný překlad.
+
+V koncepci projektu bylo upřesněno generické a příznakové maskulinum
+a v souvislosti s tím byla mírně přeformulována předmluva.
+
+Vydání verze 2.10, jménem Řehoř Řípský, očekávám v průběhu října 2021.
+V plánu zůstává vývoj přehlednějšího formátu pro PDF varianty.
 <!--
 V plánu mám především vývoj zcela nového (přehlednějšího) formátu pro PDF varianty a upřesnění pravidel genderové vyváženosti názvů osob v koncepci projektu.
 -->
