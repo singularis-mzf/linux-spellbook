@@ -627,13 +627,19 @@ BEGIN {
 
     # Načíst oblíbená zaklínadla:
     delete OBLIBENE_HESE;
+    brat_oblibene_hese = 0;
     while (getline < "konfigurace/oblíbená-zaklínadla.seznam") {
         if ($0 ~ /^(#|$)/) {continue} # komentář
+        if ($0 ~ /^\[\S+\]$/) {
+            if ($0 == "[" IDKAPITOLY "]") {brat_oblibene_hese = 1} else if (brat_oblibene_hese) {break}
+            continue;
+        }
         match($0, /^x[0123456789abcdef]+( ([-[:alnum:]  .,;:/]|\*\*)+)?/); # omezení dovolených znaků v titulku pro oblíbené zaklínadlo
         if (RLENGTH < length($0)) {
             ShoditFatalniVyjimku("Chybný formát řádky v seznamu oblíbených zaklínadel: správná část = \"" \
                 substr($0, 1, RLENGTH) "\", zbytek = \"" substr($0, 1 + RLENGTH) "\"." );
         }
+        if (!brat_oblibene_hese) {continue}
         xhes = gensub(/\s.*$/, "", 1);
         titulek = gensub(/^\S+ ?/, "", 1);
         if (titulek ~ /\*\*\*/) {

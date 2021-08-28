@@ -163,18 +163,39 @@ Překlad pravděpodobně bude fungovat i při nedodržení doporučené syntaxe
 Oblíbená zaklínadla se vypisují ve formátech HTML a PDF navíc na začátku každé
 kapitoly. Vypnout je můžete vyprázdněním souboru
 [oblíbená-zaklínadla.seznam](../konfigurace/oblíbená-zaklínadla.seznam).
-Přidat zaklínadlo mezi oblíbená můžete následovně:
 
-* Otevřete si příslušnou kapitolu ve formátu HTML.
-* Najděte příslušné zaklínadlo.
-* Ikona vlevo od zaklínadla slouží jako permanentní odkaz. Vezměte adresu tohoto odkazu a odstraňte z ní vše až po výskyt kombinace „#z“; zbude vám takzvaná „x-heš“ („x“ a hexadecimální číslo), která zaklínadlo identifikuje.
-* Přidejte získanou x-heš na novou řádku v souboru „oblíbená-zaklínadla.seznam“. Pokud chcete použít vlastní titulek místo původního (což doporučuji), uveďte za x-heš mezeru a text vašeho titulku. V titulku můžete použít písmena, číslice, mezery (obyčejné nebo nezlomitelné) a omezený sortiment interpunkce; z formátování můžete použít pouze tučné písmo pomocí „\*\*“ jako v Markdownu.
+Abyste mohli přidat zaklínadlo mezi oblíbené, musíte nejprve zjistit
+*ID kapitoly* a *x-heš zaklínadla*.
 
-Poznámka: na pořadí x-heší v seznamu nezáleží; uvedení neexistující x-heše (za předpokladu, že má správný formát) není chyba a bude tiše ignorováno.
+ID kapitoly je cesta ke zdrojovému
+souboru kapitoly z adresáře „kapitoly“, ale bez přípony „.md“;
+tedy např. „diskové-oddíly“ nebo „diskové-oddíly/btrfs“.
 
-Poznámka 2: Řádky seznamu začínající znakem „#“ jsou komentáře a budou ignorovány.
+X-heš zaklínadla je jeho vygenerované hexadecimální označení. To zjistíte
+nejlépe z formátu HTML: Najděte příslušné zaklínadlo.
+Ikona vlevo od něj slouží jako permanentní odkaz;
+vezměte adresu tohoto odkazu a odstraňte z ní vše až po výskyt kombinace „#z“.
+To, co zbude, je x-heš daného zaklínadla.
 
-Analogicky můžete vyřadit jednotlivá oblíbená zaklínadla tak, že vypustíte nebo zakomentujete řádku s jejich x-heší.
+V souboru „oblíbená-zaklínadla.seznam“ vyhledejte (nebo vytvořte) sekci
+pojmenovanou ID kapitoly (např. „*\[diskové-oddíly]*“).
+Do této sekce pak na novou řádku přidejte získanou x-heš.
+Chcete-li použít vlastní titulek místo původního (což doporučuji),
+uveďte za x-heš mezeru a text vašeho titulku.
+
+Ve vlastním titulku můžete použít písmena, číslice, mezery
+(obyčejné nebo nezlomitelné) a omezený sortiment interpunkce;
+z formátování můžete použít pouze tučné písmo pomocí „\*\*“ jako v Markdownu.
+
+Vyřadit jednotlivá oblíbená zaklínadla lze vypuštěním nebo zakomentováním řádku s jejich x-heší.
+
+Poznámky:
+
+* Na pořadí x-heší v seznamu nezáleží; uvedení neexistující x-heše (za předpokladu, že má správný formát) není chyba a bude tiše ignorováno.
+* Řádky seznamu začínající znakem „#“ jsou komentáře a budou ignorovány.
+* Každá kapitola (resp. podkapitola) by měla mít v seznamu oblíbených zaklínadel nejvýše jednu sekci. (Bude-li jich mít víc, současná implementace zpracuje pouze tu první, ale v budoucnu se to může změnit.)
+* Stejná x-heš se nesmí opakovat u jedné kapitoly, může však být uvedena u více různých kapitol (což má smysl, pokud víc kapitol obsahuje totéž zaklínadlo).
+* Je dovoleno uvést sekci pojmenovanou ID neexistující kapitoly. Taková se na výstupu neprojeví.
 
 ## Ověření české lokalizace systému
 

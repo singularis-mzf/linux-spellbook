@@ -9,7 +9,7 @@
 # https://creativecommons.org/licenses/by-sa/4.0/
 #
 
-# [diskové-oddíly]
+[diskové-oddíly]
 x7375005 Formátovat na ext4
-xa48dfd5 Formátovat na **NTFS**
-x566bef9 Formátovat na btrfs
+xa48dfd5 Formátovat na btrfs
+x566bef9 Formátovat na **NTFS**
