@@ -366,7 +366,18 @@ function ZacatekZaklinadla(\
     textyPoznamek,
     samostatne,
 
-    i, ax, base) {
+    i, ax, base, jePosledni) {
+
+    # určit, zda je zaklínadlo poslední ve skupině
+    jePosledni = 0;
+    if (!samostatne) {
+        ax = cisloSekce;
+        if (cisloPodsekce != 0) {ax = ax "x" cisloPodsekce}
+        if (ax in ZAKLINADEL_NA_PODSEKCI) {
+            jePosledni = (cisloZaklinadla == ZAKLINADEL_NA_PODSEKCI[ax]) ? 1 : 0;
+        }
+    }
+
     ax = "%\n";
     if (DO_LATEXU_ODSTAVEC_PRED_ZAKLINADLEM && cisloZaklinadla == 1 && textZaklinadla != "") {
         ax = ax "\\vspace{2ex}";
@@ -378,8 +389,8 @@ function ZacatekZaklinadla(\
         ax = ax "\\zaklinadlo{";
         # #2 = číslo zaklínadla
         ax = ax cisloZaklinadla "}{";
-        # #3 = ikona
-        ax = ax DoLatexuIkonaZaklinadla(ikona) "}{";
+        # #3 = pro poslední zaklínadlo „\hline“, jinak „“
+        ax = jePosledni ? ax "\\hline}{" : ax "}{";
         # #4 = titulek zaklínadla + \footnotemark
         # Poznámka: kvůli mechanismu „postprocess“ je potřeba oddělit titulek zaklínadla na víceméně samostatný řádek.
         #if (samostatne) {

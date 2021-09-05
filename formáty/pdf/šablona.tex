@@ -242,23 +242,23 @@
         %\includegraphics[width=2em,height=2em]{../../obrázky/ik/awk.png}
     \titlespacing*{\chapter}{0pt}{-1ex}{2ex plus2ex minus0.5ex}\relax
 
-    \titleformat{\section}[hang]{\normalfont\fontsz{12pt}\bfseries}%
+    \titleformat{\section}[hang]{\normalfont\pismosansserif\fontsz{14pt}\bfseries}%
         %{\settowidthwithminimum{\tmpsirkastitku}{\mbox{\thesection}}{20pt}\makebox[\tmpsirkastitku][l]{\thesection}}{0.33em}%
         {}% ---
-        {0pt}{}\relax
+        {0pt}{{\pismodejavusans{⚥}\mbox{~}}}\relax
     \titlespacing*{\section}{0pt}{3ex plus1ex minus1ex}{1ex}\relax
 
     \titleformat{\subsection}[hang]{\normalfont\fontsz{11pt}}%
         {}%
         {0pt}{%
             %$^{\mbox{{\small s\arabic{section}/}}}$
-            {\setlength{\unitlength}{1em}\begin{picture}(0,0)%
-                \put(0,1){\line(0,-1){1.25}}%
-                \put(0,1){\line(1,0){5}}%
-                \end{picture}}
+            %{\setlength{\unitlength}{1em}\begin{picture}(0,0)%
+                %\put(0,1){\line(0,-1){1.25}}%
+                %\put(0,1){\line(1,0){5}}%
+                %\end{picture}}
             \arabic{section}.\arabic{subsection}
         }\relax
-    \titlespacing*{\subsection}{0pt}{4ex plus1ex minus0ex}{1ex}\relax
+    \titlespacing*{\subsection}{0.5em}{4ex plus1ex minus0ex}{1ex}\relax
 
     \assignpagestyle{\chapter}{normalni}
 
@@ -319,7 +319,7 @@
 \setlength{\parindent}{0pt}                 % musí být 0 kvůli formátovacím kostrukcím (jiná hodnota se nastavuje jen lokálně)
 \setlength{\parskip}{0pt}                   % musí být 0 kvůli formátovacím kostrukcím (jiná hodnota se nastavuje jen lokálně)
 \setlength{\sirkacislazaklinadla}{17pt}
-\setlength{\sirkaikony}{10pt}
+\setlength{\sirkaikony}{8pt}
 \setlength{\zaklinadlotabcolsep}{3pt}
 
 
@@ -546,12 +546,6 @@
     \mbox{\tcbox[boxrule=0.5pt,size=fbox,arc=1mm,boxsep=2pt,left=1pt,right=1pt]{\makebox[\tmpsirkastitku][l]{\rule[-0.45ex]{0pt}{1em}#1}}}%
 }}
 
-% #1 = nastavení rodiny písma (např. \pismolmmath) + znak ikony
-%\newcommand*{\ikonazaklinadla}[1]{{%
-%    \raisebox{-0.08em}{{\pismodejavusans{•}}}\rule{0.2em}{0pt}%
-%}}
-\newcommand*{\ikonazaklinadla}[1]{}
-
 %
 % Přehled podle štítků (pps)
 % ============================================================================
@@ -582,7 +576,7 @@
     \end{adjustwidth}%
 }%
 %
-% \zaklinadlo[#1=(rezervováno)]{#2=číslo zaklínadla}{#3=ikona}{#4=titulek + \footnotemark}{#5=\footnotetext...}{#6=řádky a akce zaklínadla}
+% \zaklinadlo[#1=(rezervováno)]{#2=číslo zaklínadla}{#3=\hline?}{#4=titulek + \footnotemark}{#5=\footnotetext...}{#6=řádky a akce zaklínadla}
 % ====================================
 \newcommand{\zaklinadlo}[6][]{{%
     \setlength{\tabcolsep}{\zaklinadlotabcolsep}%
@@ -598,11 +592,11 @@
         }%
     \newcommand*{\zacatek}[1]{%
         \addtolength{\sirkaradkuzaklinadla}{3pt}% doladění...
-        \noindent\begin{tabular}{%
-            % ikona zaklínadla:
-            >{\centering##1}p{\sirkaikony}@{\hspace{2pt}}%
+        \noindent\hspace*{2pt}\hspace*{\sirkaikony}\begin{tabular}{%
             % titulek zaklínadla + mezera před řádky zaklínadla:
-            >{\raggedright##1\fontsize{10pt}{10pt}\selectfont\pismosansserif}p{\sirkatitulkuzaklinadla}%
+            %
+            |>{\raggedright##1\fontsize{9pt}{9pt}\selectfont\pismoserif}p{\sirkatitulkuzaklinadla}%
+            %
             @{\hspace{10pt}}%
             % řádky zaklínadla:
             |>{\raggedright\pismozaklinadlo\zaklinadlosize}p{\sirkaradkuzaklinadla}|@{}%
@@ -610,21 +604,20 @@
             %>{\raggedleft##1\fontsize{9pt}{0pt}\selectfont}p{\sirkacislazaklinadla}%
         }%
     }%
-    \newcommand*{\konec}{\tabularnewline\end{tabular}\hspace*{-2pt}}%
+    \newcommand*{\konec}{\tabularnewline#3\end{tabular}\hspace*{-2pt}}%
     \ifnumodd{#2}{%
         \zacatek{\columncolor{pozadizaklinadelA}}%
     }{%
         \zacatek{\columncolor{pozadizaklinadelB}}%
     }%
-    % (ikona zaklínadla - přesunuta do titulku):
-    \mbox{}%
+    {\setlength{\unitlength}{1pt}\begin{picture}(0,0)%
+        \put(-3.125,2.5){\line(1,0){1.5}}%
+    \end{picture}}%
     % titulek zaklínadla:
-    &\makebox[0pt][r]{\ikonazaklinadla{#3}}\relax{}{#4}%
+    {#4}%
     % řádky zaklínadla:
     &{\raggedright\budepoprve{}#6}%
-    % číslo zaklínadla:
-    %&\##2%
-    \konec{}#5\par\vspace{4pt plus5pt minus5pt}\mbox{}%
+    \konec{}#5\par\vspace{1pt plus5pt minus2pt}\mbox{}%
     }}
 
 % \ukazka{#1 = řádky a akce zaklínadla}

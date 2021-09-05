@@ -16,6 +16,7 @@ https://creativecommons.org/licenses/by-sa/4.0/
 
 ## Chystané kapitoly
 
+* „Prohlížení textových souborů“ (less, more, ...)
 * „Šifrování a kryptografie“ (gpg, šifrování archivů, elektronické podpisy, HTTPS certifikáty)
 * „PDF“ (dělení, slučování, operace po stránkách, transformace, konverze apod.)
 * „Zpracování obrázků“ (ImageMagick, konverze RAW z fotoaparátů, zatím asi bez animovaných gifů)

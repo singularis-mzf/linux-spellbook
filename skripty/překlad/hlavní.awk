@@ -648,6 +648,21 @@ BEGIN {
         OBLIBENE_HESE[xhes] = titulek;
     }
     #for (s in OBLIBENE_HESE) {printf("LADĚNÍ: Oblíbená heš: <%s> (titulek=<%s>)\n", s, OBLIBENE_HESE[s]) > "/dev/stderr"}
+
+    # Podle osnovy určit poslední zaklínadlo každé podsekce
+    kam = "";
+    i = 1;
+    delete ZAKLINADEL_NA_PODSEKCI;
+    while (i in OSNOVA) {
+        s = OSNOVA[i];
+        if (s ~ /^(POD)?SEKCE\t/) {
+            kam = gensub(/^[^\t]*\t([^\t]*)\t.*/, "\\1", 1, s);
+        } else if (s ~ /^ZAKLÍNADLO\t/ && kam != "") {
+            ++ZAKLINADEL_NA_PODSEKCI[kam];
+        }
+        ++i;
+    }
+    #for (i in ZAKLINADEL_NA_PODSEKCI) {printf("LADĚNÍ: ZNP[%s] = %s\n", i, ZAKLINADEL_NA_PODSEKCI[i]) > "/dev/stderr"}
 }
 {
     vstup[vstup_pocet = FNR] = $0;
