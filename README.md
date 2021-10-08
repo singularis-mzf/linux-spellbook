@@ -19,7 +19,7 @@ Má formu připomínající konverzační slovník cizího jazyka a je vydává
 pro profesionální i domácí tisk a ve formátu HTML pro snadné vykopírování zaklínadel,
 můžete ji tedy používat na papíře i v počítači, proto „multimediální“.
 
-Verze *vanilková příchuť 2.8 Pavel Podzimní* je cílena na *Ubuntu 20.04 Focal Fossa* a jeho deriváty.
+Verze *vanilková příchuť 2.10 Řehoř Řípský* je cílena na *Ubuntu 20.04 Focal Fossa* a jeho deriváty.
 
 Obsah podléhá licenci [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 Podrobné údaje o autorství zdrojových souborů jsou uvedeny v komentářích v jejich záhlaví;
@@ -113,6 +113,7 @@ Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybra
 | [perl-moduly](kapitoly/perl-moduly.md) | Perl: moduly a objekty | 2.3 | prémiová |
 | [perl-základy](kapitoly/perl-základy.md) | Perl: základy | 2.3 | základní |
 | [práce-s-archivy](kapitoly/práce-s-archivy.md) | Práce s archivy | 1.1 | základní |
+| [prohlížení-textových-souborů](kapitoly/prohlížení-textových-souborů.md) | Prohlížení textových souborů | 2.10 | základní |
 | [proměnné](kapitoly/proměnné.md) | Proměnné prostředí a interpretu | 1.9 | prémiová |
 | [regulární-výrazy](kapitoly/regulární-výrazy.md) | Regulární výrazy | 1.1 | základní |
 | [sed](kapitoly/sed.md) | Sed | 1.8 | prémiová |
@@ -145,7 +146,6 @@ Priority:
 | [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
 | [firefox](kapitoly/firefox.md) | Firefox | 60% | dítě |
 | [kalkulace](kapitoly/kalkulace.md)| Kalkulace | 50% | dítě |
-| [prohlížení-textových-souborů](kapitoly/prohlížení-textových-souborů.md) | Prohlížení textových souborů | 50% | dítě |
 | [stahování-z-webu](kapitoly/stahování-z-webu.md) | Stahování z webu | 40% | dítě |
 | [zpracování-obrázků](kapitoly/zpracování-obrázků.md) | Zpracování obrázků | 40% | dítě |
 | [metapříkazy](kapitoly/metapříkazy.md) | Metapříkazy | 20% | dítě |

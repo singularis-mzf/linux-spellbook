@@ -280,6 +280,12 @@ soubory-a-adresáře
 # [koncepce-projektu] 1700..1799
 # =========================================================================================
 
+1700
+pdf-a4.*
+koncepce-projektu
+\sekce{Označení \quotedblbase{}linux\textquotedblleft{}, \quotedblbase{}Linux\textquotedblleft{} a~\quotedblbase{}GNU/Linux\textquotedblleft{}}%
+\sekce{Označení \quotedblbase{}linux\textquotedblleft{}, \quotedblbase{}Linux\textquotedblleft{} a~\quotedblbase{}GNU/\-Linux\textquotedblleft{}}%
+
 #
 # [práce-s-archivy] 1800..1899
 # =========================================================================================
@@ -387,6 +393,17 @@ pdf-b5.*
 bash/funkce-a-skripty
 \bfseries{}náhodné\mdseries{} číslo v~rozsahu 0 až 255/32767/65535/2147483647/4294967295}%
 \bfseries{}náhodné\mdseries{} číslo v~rozsahu 0 až 255/32767/65535/2147483647/\\4294967295}%
+
+#
+# [správa-balíčků] 2500..2599
+# =========================================================================================
+
+2500
+pdf-a4.*
+správa-balíčků
+\begin{odstavce}Při určování priorit z~konfigurace v~adresáři /etc/apt/preferences.d postupuje APT následovně:
+\begin{odstavce}\raggedright Při určování priorit z~konfigurace v~adresáři /etc/apt/preferences.d postupuje APT následovně:
+
 
 #
 # VYŘAZENÉ KAPITOLY

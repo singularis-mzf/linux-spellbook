@@ -208,18 +208,10 @@ Uživatele, který Linux: Knihu kouzel neprostudoval, poznáte např. takto:
 * Myslí si, že příkaz „apt list gimp*“ vypíše seznam balíčků začínajících „gimp“ (v tomto případě se musí hlavně naučit pravidla odzvláštňování).
 -->
 
-## Aktuální poznámka k verzi „vanilková příchuť 2.9 René Rašínová“
+## Aktuální poznámka k verzi „vanilková příchuť 2.10 Řehoř Řípský“
 
-Verze vanilkové příchuti 2.9, jménem René Rašínová, přináší
-především kosmetická vylepšení a opravy chyb.
-Podkapitoly jsou nyní ve všech formátech značeny desetinným značením
-po své nadkapitole, což s sebou přináší omezení,
-že již nemohou být umístěny samostatně.
-
-V HTML variantě jsou na vícečetné podněty uživatelstva podkapitoly
-nově zobrazeny v seznamech pod sebou. Rovněž byla přidána funkce
-vodoznaku ukázky a metadata pro webové vyhledavače a prohlížeče
-na mobilních telefonech.
+Verze vanilkové příchuti 2.10, jménem Řehoř Řípský,
+přináší především novou základní kapitolu Prohlížení textových souborů.
 
 <!--
 - V HTML variantě...
@@ -228,17 +220,11 @@ na mobilních telefonech.
 - V kapitole *XY* přibyly ...
 -->
 
-Mechanismus překladu přináší nový příkaz „make kontrola“, který provede
-automatickou kontrolu přítomnosti nástrojů a písem potřebných
-pro úspěšný překlad.
+PDF varianty mají nový, přehlednější formát zaklínadel.
 
-V koncepci projektu bylo upřesněno generické a příznakové maskulinum
-a v souvislosti s tím byla mírně přeformulována předmluva.
-
-Vydání verze 2.10, jménem Řehoř Řípský, očekávám v průběhu října 2021.
-V plánu zůstává vývoj přehlednějšího formátu pro PDF varianty.
+Vydání verze 2.11, jménem Soňa Smetana, očekávám začátkem prosince 2021.
 <!--
-V plánu mám především vývoj zcela nového (přehlednějšího) formátu pro PDF varianty a upřesnění pravidel genderové vyváženosti názvů osob v koncepci projektu.
+V plánu mám upřesnění pravidel genderové vyváženosti názvů osob v koncepci projektu.
 -->
 
 Verze řady „vanilková příchuť 1.x“ jsou ve stádiu dlouhodobé pasivní údržby do 1. března 2023.

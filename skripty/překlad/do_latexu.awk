@@ -572,29 +572,9 @@ function VypnoutUzkyRezim() {
     return "\\end{uzkyrezim}";
 }
 
-function VzornikIkon(pocetIkon, ikony,   i, vysledek) {
-    vysledek = ZacatekOdstavcu(1) "\\raggedright\\renewcommand*{\\baselinestretch}{1.5}\\selectfont%\n";
-    for (i = 1; i <= pocetIkon; ++i) {
-        vysledek = vysledek sprintf("\\mbox{\\makebox[2em][r]{%d:}\\makebox[2em]{\\ikonazaklinadla{%s}}}\n", i - 1, DoLatexuIkonaZaklinadla(ikony[i]));
-    }
-    vysledek = vysledek KonecOdstavcu();
-    return vysledek;
-}
-
-function DoLatexuIkonaZaklinadla(specifikace,   font) {
-    switch (gensub(/.*\t/, "", 1, specifikace)) {
-        case "d":
-        case "D":
-            font = "\\pismodejavusans";
-            break;
-        case "l":
-        case "L":
-            font = "\\pismolmmath";
-            break;
-        default:
-            ShoditFatalniVyjimku("Nerozpoznaný typ ikony: \"" specifikace "\"!");
-    }
-    return font "{}" gensub(/\t.*$/, "", 1, specifikace);
+function VzornikIkon(pocetIkon, ikony) {
+    pocetIkon = ZacatekOdstavcu(1) "\\raggedright\\emph{(v PDF formátech již ikony zaklínadel nejsou podporovány)}%\n";
+    return pocetIkon KonecOdstavcu();
 }
 
 @include "skripty/překlad/hlavní.awk"

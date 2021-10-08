@@ -96,8 +96,10 @@ function UrcitRod(predchozi, slovo) {
             # mužský, ledaže „vidím tu řádku“ nebo „aktuální/předchozí řádku“
             if (predchozi ~ /[éí](ho|m)$|^(jednom|číslo|konec|konce|konci|koncem|zbytek|část|rámci|v|prefix|podřetězec|začátek|začátku)$/) {
                 return "mužský";
-            } else if (predchozi ~ /(číst|jednu|uživateli|ou|ní|zí|nčí)$/) {
+            } else if (predchozi ~ /(číst|jednu|uživateli|ou|ní|zí|nčí|zobrazit|vpřed)$/) {
                 return "ženský";
+            } else if (predchozi ~ /^(o)$/) {
+                return "0"; # může být „o řádku níž“ nebo „zmínka o řádku“
             } else {
                 return "?";
             }
@@ -110,9 +112,9 @@ function UrcitRod(predchozi, slovo) {
             # s těmi řádky = mužský; bez té řádky = ženský
             if (predchozi ~ /^(dvěma|nad)$|ými$/) {
                 return "mužský";
-            } else if (predchozi ~ /^(zadání|prefix|z|číslo|čísla|číslem|znak|příkazové|pozici|konce|dvě|tři|čtyři|konec|koncem|konci|zbytek|část|podřetězec|začátek|začátkem|ukončení|této|rámci|obsah|první|druhé|třetí|čtvrté|páté|řádky|začátku|ukončovač|identifikátor|text|namísto)$|(ím|ení)$/) {
+            } else if (predchozi ~ /^(zadání|prefix|z|číslo|čísla|číslem|znak|příkazové|pozici|konce|dvě|tři|čtyři|konec|koncem|konci|zbytek|část|podřetězec|začátek|začátkem|ukončení|této|rámci|obsah|první|druhé|třetí|čtvrté|páté|řádky|začátku|ukončovač|identifikátor|text|namísto)$|(ím|ení|čem)$/) {
                 return "ženský";
-            } else if (predchozi ~ /^(mít|všechny|má|tvoří|hledat|se|ostatní|znak|join|chomp|print|my|alength|prázdné|stejné|poslední|neukládat)$|ící$/) {
+            } else if (predchozi ~ /^(mít|všechny|má|tvoří|hledat|se|ostatní|znak|join|chomp|print|my|alength|prázdné|stejné|poslední|neukládat|nové|jen|aktuální|nezalamovat)$|ící$/) {
                 return "0";
             } else {
                 return "?";

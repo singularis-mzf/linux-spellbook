@@ -246,12 +246,12 @@ for my $i (0..(alength(@všechnyFragmenty) - 1))
             }
         } elsif ($vZaklínadle == 1) {
             $s ne ""
-                or die("Chyba syntaxe ${id}:${čŘádky}: ${s}");
+                or die("Chyba syntaxe ${id}:${čŘádky}: ${s} (zkontroluje umístění značek <br>!)");
             $s =~ /<br>\z/
                 or $vZaklínadle = 2;
         } elsif ($vZaklínadle == 2) {
             $s eq ""
-                or die("Chyba syntaxe ${id}:${čŘádky}: ${s}");
+                or die("Chyba syntaxe ${id}:${čŘádky}: ${s} (zkontroluje umístění značek <br>!)");
             $vZaklínadle = 0;
         }
 
