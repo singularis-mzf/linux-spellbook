@@ -399,4 +399,8 @@ function VzornikIkon(pocetIkon, ikony,   i, vysledek) {
     return vysledek;
 }
 
+function RejstrikPodleKlasickychPrikazu() {
+    return "RejstrikPodleKlasickychPrikazu();\n";
+}
+
 @include "skripty/překlad/hlavní.awk"

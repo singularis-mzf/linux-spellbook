@@ -576,9 +576,9 @@
     \end{adjustwidth}%
 }%
 %
-% \zaklinadlo[#1=(rezervováno)]{#2=číslo zaklínadla}{#3=\hline?}{#4=titulek + \footnotemark}{#5=\footnotetext...}{#6=řádky a akce zaklínadla}
+% \zaklinadlo[#1=(rezervováno)]{#2=číslo zaklínadla}{#3=\hline?}{#4=titulek + \footnotemark}{#5=\footnotetext...}{#6=[xheš]}{#7=řádky a akce zaklínadla}
 % ====================================
-\newcommand{\zaklinadlo}[6][]{{%
+\newcommand{\zaklinadlo}[7][]{{%
     \setlength{\tabcolsep}{\zaklinadlotabcolsep}%
     % \radekzaklinadla{symbol}{text}
     \newcommand{\radekzaklinadla}[2]{%
@@ -592,7 +592,9 @@
         }%
     \newcommand*{\zacatek}[1]{%
         \addtolength{\sirkaradkuzaklinadla}{3pt}% doladění...
-        \noindent\hspace*{2pt}\hspace*{\sirkaikony}\begin{tabular}{%
+        \noindent\hspace*{2pt}\hspace*{\sirkaikony}%
+        \ifstrempty{#6}{}{\label{#6}}% pro ladění lze použít: \typeout{#6}
+        \begin{tabular}{%
             % titulek zaklínadla + mezera před řádky zaklínadla:
             %
             |>{\raggedright##1\fontsize{9pt}{9pt}\selectfont\pismoserif}p{\sirkatitulkuzaklinadla}%
@@ -616,7 +618,7 @@
     % titulek zaklínadla:
     {#4}%
     % řádky zaklínadla:
-    &{\raggedright\budepoprve{}#6}%
+    &{\raggedright\budepoprve{}#7}%
     \konec{}#5\par\vspace{1pt plus5pt minus2pt}\mbox{}%
     }}
 

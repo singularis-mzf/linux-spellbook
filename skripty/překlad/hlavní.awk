@@ -1016,9 +1016,16 @@ function main(    i, j, o, s, pozice, uroven, pokracuje, c_sekce, n_sekce, c_pod
 
                     case "PARAMETRY":
                         if (HODNOTA_DIREKTIVY != "") {
-                            ShoditFatalniVyjimku("Direktiva !PARAMETRY nepřijímá žádný parametr!");
+                            ShoditFatalniVyjimku("Direktiva " DIREKTIVA " nepřijímá žádný parametr!");
                         }
                         # zpracování je jinde
+                        break;
+
+                    case "REJSTŘÍKPODLEKLASICKÝCHPŘÍKAZŮ":
+                        if (HODNOTA_DIREKTIVY != "") {
+                            ShoditFatalniVyjimku("Direktiva " DIREKTIVA " nepřijímá žádný parametr!");
+                        }
+                        printf("%s", RejstrikPodleKlasickychPrikazu());
                         break;
 
                     case "ŠTÍTKY":

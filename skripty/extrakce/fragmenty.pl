@@ -563,11 +563,18 @@ sub vypsatPoložkuOsnovy {
                 $název = mdTextNaČistýText($název))));
         if (alength(@x) > $pdfZáložkyMaxDélka - 1) {
             splice(@x, $pdfZáložkyMaxDélka - 4);
-            push(@x, 0x2e x 3); # "..."
+            push(@x, (0x002e) x 3); # "..."
         }
-        @x = array(map {sprintf("%04X", $ARG)} @x);
-        unshift(@x, "\\uFEFF");
-        $pdfZáložka = join("\\u", @x);
+        my @y = ("\\uFEFF");
+        foreach my $x (@x) {
+            #fprintf($stderr, "LADĚNÍ: x je 0x%x = %s\n", $x, $x);
+            $x < 0xffff or die("Příliš velký kód: " . $x . " (název je ${název})!" . join(";", array(grep {$ARG < 0xfeff} array(unpack("U*", $název)))));
+            push(@y, sprintf("%04X", $x));
+            #fprintf($stderr, "LADĚNÍ: ");
+        }
+        #@x = array(map {sprintf("%04X", $ARG)} @x);
+        #unshift(@x, "\\uFEFF");
+        $pdfZáložka = join("\\u", @y);
     }
     fprint($výstup, $typ, $id, $čŘádku, $název, $pdfZáložka, $zarážka);
     return 1;

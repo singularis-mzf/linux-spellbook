@@ -1,6 +1,6 @@
 /*
  * Linux Kniha kouzel, šablona CSS
- * Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
+ * Copyright (c) 2019-2021 Singularis <singularis@volny.cz>
  *
  * Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
  * podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -356,8 +356,21 @@ z-index:auto;font:inherit;}
 
 # nadpis kapitoly (může obsahovat ikonu kapitoly)
 h1 {
+    position:relative;top:auto;left:auto;z-index:1;
     font:bold 175%/1.2 "DejaVu Sans", sans-serif;
     margin:0;
+}
+h1::before {
+# slouží k vertikálnímu roztažení nadpisu:
+    content:url(data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEAAAEALAAAAAABAAEAAAICTAEAOw==); /* průhledný obrázek */
+    position:relative;
+    z-index:-100;
+    display:inline-block;
+    visibility:hidden;
+    vertical-align:middle;
+    margin:0 -1px 0 0;
+    width:1px;
+    height:6.4rem;
 }
 # h1.kapitola img
 h1 img {
@@ -505,6 +518,9 @@ kbd {
     background:rgb({{zb-svetla}});
     color:rgb({{zb-text}});
     font-family:"DejaVu Sans", sans-serif;
+}
+strong {
+    font-weight:bold;
 }
 .dopln {
     font: 100%/1.2 "DejaVu Sans Mono", monospace;
@@ -1353,6 +1369,37 @@ dl.copyrights pre {
     font-family:monospace;
     white-space:pre;
 }
+
+#
+# Formátování pro rejstřík podle klasických příkazů (x-rejstrik.htm)
+##############################################################################
+
+dl.klasickeprikazy {
+    margin:3em 0;
+}
+dl.klasickeprikazy dt {
+    margin:1em 0 0;
+}
+dl.klasickeprikazy dt strong {
+    margin-right:0.5em;
+}
+dl.klasickeprikazy dt span {
+    margin-left:0.5em;
+}
+dl.klasickeprikazy ul {
+    margin:0.5em 0 0.5em 5em;
+    line-height:1;
+}
+dl.klasickeprikazy li {
+    color:rgb({{zb-tmava}});
+}
+dl.klasickeprikazy li span.kapitola {
+    float:right;
+    font-style:oblique;
+    font-size:85%;
+    opacity:0.75;
+}
+
 
 #
 # Vzorník ikon (pro zvláštní kapitolu _ukazka.htm)

@@ -129,6 +129,10 @@ function RidiciRadek(text,   i, s) {
             }
             return 0;
 
+        case "VYPSAT SPECIÁLNÍ":
+            printf("%s", HtmlDivOdkazZvlastni("", "x-stitky", "Přehled štítků", "ik-rejstřík.png"));
+            return 0;
+
         default:
             return RidiciRadekSpolecnaObsluha(text);
     }
@@ -153,6 +157,19 @@ function Konec() {
 
 # Soukromé funkce a proměnné:
 # ============================================================================
+
+function HtmlDivOdkazZvlastni(symbol, plocheIdBezDiakr, celyNazev, ikona, vypnoutOdkaz,   vysl) {
+    if (ikona == "") {ikona = "ik-výchozí.png"}
+    vysl = "<div class=\"fragodkaz\">" \
+        "<span class=\"ikona\"><img src=\"obrazky/" OmezitNazev(ikona, 1) "\" alt=\"[]\"></span><span class=\"fragodkazy\">";
+    if (!vypnoutOdkaz) {
+        vysl = vysl "<a href=\"" plocheIdBezDiakr ".htm\" class=\"odkaz\"><span><span class=\"cislo\">" symbol "</span>";
+    } else {
+        vysl = vysl "<span class=\"odkaz\"><span class=\"cislo\"></span>";
+    }
+    return vysl celyNazev "</span>" (vypnoutOdkaz ? "" : "</a>") "</span></div>";
+}
+
 
 function VypsatOdkazNaKapitolu(i, vyclenit, iPodkapitoly, jenPokudNeniVypsano,   podkapitoly, podkapitolyPocet)
 {

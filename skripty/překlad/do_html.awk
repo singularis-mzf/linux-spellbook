@@ -184,7 +184,7 @@ function ZacatekZaklinadla( \
     nazevPodsekce, # název podsekce, není-li zaklínadlo mimo podsekci; jinak ""
     cisloZaklinadla, # číslo > 0
     textZaklinadla, # neprázdný text v cílovém formátu, pokud nejde o zaklínadlo bez titulku; jinak ""
-    hesZaklinadla, # heš zaklínadla (např. „“)
+    hesZaklinadla, # heš zaklínadla (např. „x75e4112“)
     ikona, # ikona zaklínadla (znak, tabulátor a znak symbolizující písmo)
     cislaPoznamek,
     textyPoznamek,
@@ -199,10 +199,13 @@ function ZacatekZaklinadla( \
     }
     vysledek = "<div class=\"zaklinadlo\">";
     if (textZaklinadla != "") {
-        if (ikona == "") {ikona = "&nbsp;\tD"}
-        vysledek = vysledek "<div class=\"zahlavi\">" \
-            gensub(/([^\t]*)\t([^\t]*)/, "<span class=\"ikona \\2" (samostatne ? "" : "\" id=\"z" hesZaklinadla) "\"><span><a href=\"#z" hesZaklinadla "\">\\1</a></span></span>", 1, ikona) \
-            textZaklinadla "<span class=\"cislo\">#" cisloZaklinadla " </span>";
+        vysledek = vysledek \
+            "<div class=\"zahlavi\">" \
+                "<span class=\"ikona D" (samostatne ? "" : "\" id=\"z" hesZaklinadla) "\">" \
+                    "<span><a href=\"#z" hesZaklinadla "\">@</a></span>" \
+                "</span>" \
+                textZaklinadla \
+                "<span class=\"cislo\">#" cisloZaklinadla " </span>";
         prvni = 1;
         if (length(cislaPoznamek) > 0) {
             vysledek = vysledek "<sup>";
@@ -323,6 +326,39 @@ function VzornikIkon(pocetIkon, ikony,   i, vysledek, pole) {
     }
     vysledek = vysledek "</div>";
     return vysledek;
+}
+
+function RejstrikPodleKlasickychPrikazu(    pocet, predchozi_typ, soubor, vysl) {
+    soubor = SOUBORY_PREKLADU "/klasické-příkazy.dat";
+    pocet = 0;
+    predchozi_typ = "";
+    vysl = "";
+    while (getline < soubor) {
+        typ = substr($1, 1, 1);
+        if (pocet == 0) {
+            vysl = vysl "<dl class=\"klasickeprikazy\">";
+        }
+        switch (typ) {
+            case "%": # %<klasický-příkaz>\t<počet-úkolů>\t<popis-klpříkazu>
+                vysl = vysl (pocet > 0 ? "</ul></dd>" : "") "<dt><strong>" substr($1, 2) "</strong> -- <span>" $3 "</span></dt><dd><ul>";
+                break;
+            case "-": # -<číslo-kapitoly>\t<ploché-id-bez-diakr>\t<xheš>\t<úkol>
+                odk_kapitola = $2 ".htm";
+                odk_xhes = $3;
+                odk_index_kapitoly = substr($1, 2);
+                odk_symbol_kapitoly = FragInfo(odk_index_kapitoly, "symbol");
+                odk_nazev_kapitoly = FragInfo(odk_index_kapitoly, "celý-název");
+                vysl = vysl "<li><a href=\"" odk_kapitola "#z" odk_xhes "\">" gensub(/ /, "\\&nbsp;", "g", $4) "</a> <span class=\"kapitola\">(<a href=\"" odk_kapitola "\">" odk_symbol_kapitoly "&nbsp;" odk_nazev_kapitoly "</a>)</span></li>";
+                break;
+            default:
+                ShoditFatalniVyjimku("Vnitřní chyba překladu: chybný typ záznamu \"" typ "\"!");
+        }
+        predchozi_typ = typ;
+        ++pocet;
+    }
+    vysl = vysl (pocet == 0 ? "<p>Rejstřík neobsahuje žádné klasické příkazy.</p>" : "</ul></dd></dl>");
+    close(soubor);
+    return vysl;
 }
 
 @include "skripty/překlad/hlavní.awk"

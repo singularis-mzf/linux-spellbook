@@ -63,6 +63,12 @@ BEGIN {
     kody["("] = "0028"; kody[")"] = "0029";
     kody["["] = "005B"; kody["]"] = "005D";
     kody["{"] = "007B"; kody["]"] = "007D";
+
+    for (c in kody) {
+        if (length(kody[c]) != 4) {
+            ShoditFatalniVyjimku("Chybný kód pro znak '" c "': \"" kody[c] "\"");
+        }
+    }
 }
 
 BEGINFILE {
@@ -97,6 +103,7 @@ BEGINFILE {
 
 
 !je_toc && $1 == "KAPITOLA" {
+    #printf("LADĚNÍ: $2 = <%s> $5 = <%s>\n", $2, $5) > "/dev/stderr";
     nazvy[cislo_kapitoly] = NacistNazev($5, $2 " "); # předpona = symbol + " "
     pocty[cislo_kapitoly] = 0;
     cislo_sekce = 0;
@@ -171,6 +178,7 @@ function ZakodovatRetezec(s,   i, t) {
     t = "";
     for (i = 1; i <= length(s); ++i) {
         if (substr(s, i, 1) in kody) {
+            # printf("LADĚNÍ: '%s' -> '%s'\n", substr(s, i, 1), kody[substr(s, i, 1)]) > "/dev/stderr";
             t = t kody[substr(s, i, 1)];
         } else {
             ShoditFatalniVyjimku("Neumím zakódovat znak: " substr(s, i, 1));

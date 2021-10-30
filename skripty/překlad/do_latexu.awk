@@ -360,7 +360,7 @@ function ZacatekZaklinadla(\
     nazevPodsekce,
     cisloZaklinadla,
     textZaklinadla,
-    hesZaklinadla,
+    hesZaklinadla, # např. „x75e4112“; má smysl jen při neprázdném textu zaklínadla
     ikona,
     cislaPoznamek,
     textyPoznamek,
@@ -414,6 +414,10 @@ function ZacatekZaklinadla(\
         # #5 = \footnotetext
         for (i = 0; i < length(cislaPoznamek); ++i) {
             ax = ax "\\footnotetext[" (base + i) "]{" textyPoznamek[cislaPoznamek[i]] "}";
+        }
+        ax = ax "}{";
+        if (!samostatne && hesZaklinadla != "") {
+            ax = ax "k" cisloKapitoly hesZaklinadla;
         }
         ax = ax "}{%\n";
     } else {
@@ -576,5 +580,42 @@ function VzornikIkon(pocetIkon, ikony) {
     pocetIkon = ZacatekOdstavcu(1) "\\raggedright\\emph{(v PDF formátech již ikony zaklínadel nejsou podporovány)}%\n";
     return pocetIkon KonecOdstavcu();
 }
+
+function RejstrikPodleKlasickychPrikazu(    pocet, predchozi_typ, soubor, vysl) {
+    #if (DO__UZKY_REZIM) {ShoditFatalniVyjimku("Rejstřík podle klasických příkazů není dovolen v úzkém režimu!");}
+    soubor = SOUBORY_PREKLADU "/klasické-příkazy.dat";
+    pocet = 0;
+    predchozi_typ = "";
+    vysl = "{\\raggedright\\medskip%\n";
+    while (getline < soubor) {
+        typ = substr($1, 1, 1);
+        #if (pocet == 0) {vysl = vysl "<dl class=\"klasickeprikazy\">";}
+        switch (typ) {
+            case "%": # %<klasický-příkaz>\t<počet-úkolů>\t<popis-klpříkazu>
+                if (pocet > 0) {
+                    vysl = vysl "\\end{itemize}\\end{samepage}\\mbox{}\\\\[-0.5ex]";
+                }
+                vysl = vysl "\\noindent\\begin{samepage}\\textbf{" substr($1, 2) "}~---~\\emph{" $3 "}%\n\\begin{itemize}[leftmargin=18pt,rightmargin=0pt,nosep,label=]\\renewcommand*{\\baselinestretch}{1.05}\\raggedright\\selectfont%\n";
+                break;
+            case "-": # -<číslo-kapitoly>\t<ploché-id-bez-diakr>\t<xheš>\t<úkol>
+                odk_kapitola = $2 ".htm";
+                odk_xhes = $3;
+                odk_index_kapitoly = substr($1, 2);
+                odk_symbol_kapitoly = FragInfo(odk_index_kapitoly, "symbol");
+                odk_nazev_kapitoly = FragInfo(odk_index_kapitoly, "celý-název");
+                vysl = vysl "\\item\\relax{}" gensub(/ /, "~", "g", $4) "\\dotfill\\pageref{k" odk_index_kapitoly odk_xhes "}%\n";
+                #"<li><a href=\"" odk_kapitola "#z" odk_xhes "\">"  "</a> <span class=\"kapitola\">(<a href=\"" odk_kapitola "\">" odk_symbol_kapitoly "&nbsp;" odk_nazev_kapitoly "</a>)</span></li>";
+                break;
+            default:
+                ShoditFatalniVyjimku("Vnitřní chyba překladu: chybný typ záznamu \"" typ "\"!");
+        }
+        predchozi_typ = typ;
+        ++pocet;
+    }
+    vysl = vysl (pocet == 0 ? "\\emph{Rejstřík neobsahuje žádné klasické příkazy.}\n\n" : "\\end{itemize}\\end{samepage}") "\\par}%\n";
+    close(soubor);
+    return vysl;
+}
+
 
 @include "skripty/překlad/hlavní.awk"

@@ -1,0 +1,209 @@
+# Linux Kniha kouzel, rejstřík podle klasických příkazů
+# Copyright (c) 2021 Singularis <singularis@volny.cz>
+#
+# Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
+# podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
+# vydané neziskovou organizací Creative Commons. Text licence je přiložený
+# k tomuto projektu nebo ho můžete najít na webové adrese:
+#
+# https://creativecommons.org/licenses/by-sa/4.0/
+#
+
+[příkazy]
+banner  vypsat na terminál ozdobný text
+#bc     aritmetika
+cal     vypsat kalendář
+chmod   nastavit vlastnosti souboru
+#cp      kopírovat soubory a adresáře # kopírování a synchronizace...
+date    vypsat datum a čas
+#dd      čtení a zápis bloků binárních dat
+df      zobrazit volné místo na disku
+diff    porovnat soubory
+echo    výpis řetězců na terminál
+exec    nahradit interpret jiným procesem
+fdisk   dělení disku na oddíly
+file    určit typ souboru
+find    prohledávání adresářové struktury
+free    zjistit využití a velikost paměti RAM
+grep    filtrování textového souboru po řádkách (záznamech)
+kill    ovládání a zabíjení procesů
+less    zobrazit a procházet obsah souboru
+ln      vytváření pevných a symbolických odkazů
+ls      vypsat údaje o souborech
+man     nápověda k příkazům
+make    provést sestavení programu podle Makefile
+md5sum  spočítat kontrolní součet
+mkdir   vytvořit adresář
+mkfs    formátování systému souborů
+mount   připojit oddíl nebo vypsat připojené oddíly
+nohup   spustit program, který neskončí zavřením terminálu
+passwd  změna hesla uživatelského účtu
+ps      výpis procesů a informací o nich
+pwd     vypsat aktuální adresář
+shutdown vypnout či restartovat počítač
+sleep   počkat zadanou dobu
+sort    seřadit řádky v textovém souboru
+split   rozdělit soubor
+sudo    spustit proces s právy jiného uživatelského účtu
+tee     zapisovat průchozí data do souboru
+tr      tabulkový překlad znaků či bajtů (záměna po znacích či bajtech)
+uname   vypsat informace o operačním systému
+uniq    filtrovat duplicity (různým způsobem)
+usermod vytváření a změny uživatelských účtů (kromě hesel)
+wc      počítat řádky/znaky/bajty
+zip     balení a vybalování archivů
+
+[banner]
+terminál                        x69dfb80    vypsat na terminál ozdobný nápis
+
+[cal]
+datum-čas-kalendář              x71799cc    zobrazit kalendář měsíce
+
+[chmod]
+soubory-a-adresáře              xe132a20    nastavit přístupová práva
+soubory-a-adresáře              x972e886    zapnout/vypnout zvláštní příznaky
+
+#[cp]
+
+
+[date]
+datum-čas-kalendář              x1251a3d    vypsat datum a čas
+datum-čas-kalendář              xcad558f    zjistit východ a západ slunce
+datum-čas-kalendář              xbf74fb8    konverze časových zón
+
+#[dd]
+
+[df]
+diskové-oddíly                  xda05467    zobrazit velikost volného místa na oddílu
+
+[diff]
+zpracování-binárních-souborů    xd48fa30    jsou dva soubory binárně shodné?
+# najít rozdíly mezi dvěma soubory
+
+[echo]
+# ? printf?
+
+[exec]
+metapříkazy                     x8eb3539    spustit proces místo interpretu
+bash/funkce-a-skripty           xecd250d    spustit skript v této instaci Bashe
+
+[fdisk]
+diskové-oddíly                  xe443bf6    rozdělit disk na oddíly
+
+[file]
+zpracování-binárních-souborů    x48c90ae    zjistit typ dat v souboru
+
+[find]
+hledání-souborů                 xfe8b8e5    hledat soubor či adresář (viz celou kapitolu)
+soubory-a-adresáře              xfd57032    vypsat seznam adresářových položek (jako ls)
+
+[free]
+systém                          x588139f    zjistit využití a velikost RAM
+
+[grep]
+zpracování-textových-souborů    x9847dfd    filtrovat podle regulárního výrazu
+zpracování-textových-souborů    x36cc1a4    filtrovat podle podřetězce
+
+[kill]
+správa-procesů                  xd198a1b    ukončit proces
+
+[less]
+prohlížení-textových-souborů    xde58369    prohlédnout obsah text. souboru
+prohlížení-textových-souborů    xfb0130a    vyhledávání v programu less
+prohlížení-textových-souborů    x68d871e    filtrování v programu less
+
+[ln]
+odkazy                          x61b2126    vytvořit pevný odkaz
+odkazy                          x0df7397    vytvořit symbolický odkaz
+
+[ls]
+# stat...
+
+[make]
+make                            x9e8f13d    příkaz make (viz celou kapitolu)
+
+[man]
+manuálové-stránky               x2c5d90e    zobrazit manuálovou stránku
+
+[md5sum]
+zpracování-binárních-souborů    x6babc08    spočítat heš souboru (různé algoritmy)
+
+[mkdir]
+soubory-a-adresáře              xfd1ebc0    vytvořit adresář
+
+[mkfs]
+diskové-oddíly                  x7375005    formátovat na ext4
+diskové-oddíly                  x1ab0162    naformátovat odkládací oddíl
+diskové-oddíly                  x9dfc676    změnit jmenovku oddílu
+
+[mount]
+diskové-oddíly                  xf24034c    připojit systém souborů
+diskové-oddíly                  xd66d521    odpojit systém souborů
+diskové-oddíly                  xc3768c2    vypsat připojené systémy souborů
+diskové-oddíly                  x37afb79    připojit odkládací oddíl
+
+[nohup]
+metapříkazy                     xc047628    spustit příkaz jako démona
+
+[passwd]
+správa-uživatelských-účtů       x3f1f469    změnit vlastní heslo
+správa-uživatelských-účtů       x45d1d45    nastavit cizí heslo
+správa-uživatelských-účtů       x3b99297    zamknout uživatelský účet
+správa-uživatelských-účtů       x699a083    vypnout zabezpečení heslem
+
+[ps]
+správa-procesů                  xd2a2713    procesy ve formě stromu
+# ps?
+
+[pwd]
+bash                            x8b6be6f    vypsat aktuální adresář
+
+[shutdown]
+systém                          xa169433    restartovat počítač
+systém                          x38c8f7a    vypnout počítač
+systém                          x401b681    zastavit systém bez vypnutí
+
+[sleep]
+
+[sort]
+zpracování-textových-souborů    xcb9af20    seřadit řádky
+
+[split]
+zpracování-binárních-souborů    xf83d8a9    rozdělit binární soubor
+zpracování-textových-souborů    xe2461f0    rozdělit textový soubor
+
+[sudo]
+metapříkazy                     xcdb5393    spustit proces jako superuživatel
+metapříkazy                     xe11bc1d    spustit proces jako uživatel (příkaz pro superuživatele)
+
+[tee]
+#?
+
+[tr]
+zpracování-textových-souborů    x0f220e0    konverze velikosti písmen
+zpracování-binárních-souborů    x0b23bf6    tabulkový překlad bajtů
+zpracování-textových-souborů    x59b6291    tabulkový překlad znaků
+
+[uname]
+systém                          xe49b1ca    obecné informace o systému
+systém                          x62b0645    kompletní informace o hardware
+
+[uniq]
+zpracování-textových-souborů    x1576e05    seřadit a vyloučit duplicity
+zpracování-textových-souborů    x391cd76    vypsat jen duplicity
+
+[usermod]
+správa-uživatelských-účtů       xef29508    vytvořit nový účet
+správa-uživatelských-účtů       x45e9964    přidat účet do skupiny
+správa-uživatelských-účtů       x80bbd57    změnit uživatelské jméno
+
+[wc]
+zpracování-textových-souborů    x3e6d093    počet řádků textového souboru
+zpracování-binárních-souborů    x220bf75    počet bajtů binárního souboru
+# počet znaků?
+
+[zip]
+práce-s-archivy                 x1b325c8    rozbalit archiv
+práce-s-archivy                 x7e3f62b    vytvořit archiv
+práce-s-archivy                 x8c987a8    použít GZIP
+práce-s-archivy                 xaeb0c00    použít TAR

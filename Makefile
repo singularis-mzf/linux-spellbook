@@ -187,13 +187,16 @@ $(DATUM_SESTAVENI_SOUBOR) $(DEB_VERZE_SOUBOR) $(JMENO_SESTAVENI_SOUBOR):
 # + soubory_překladu/prémiové-kapitoly.tsv
 # ----------------------------------------------------------------------------
 $(SOUBORY_PREKLADU)/fragmenty.tsv: # generování se spouští pokaždé
-# skripty/extrakce/fragmenty.pl $(VSECHNY_KAPITOLY_A_DODATKY_MD) $(SOUBORY_PREKLADU)/ucs_ikony.dat konfigurace/konfig.ini
+# skripty/extrakce/fragmenty.pl $(VSECHNY_KAPITOLY_A_DODATKY_MD) $(SOUBORY_PREKLADU)/ucs_ikony.dat konfigurace/konfig.ini skripty/extrakce/klasické-příkazy.awk konfigurace/klasické-příkazy.seznam
 	@skripty/h1 "Regeneruji $(SOUBORY_PREKLADU)/fragmenty.tsv a Makefily..."
 	@mkdir -pv $(dir $@)
 	@shopt -qu failglob; shopt -qs nullglob; $(TRANSAKCE) -on $@ $(SOUBORY_PREKLADU)/osnova/*.tsv
 	@$(PERL) skripty/extrakce/fragmenty.pl
 	@$(TRANSAKCE) -zn $@ $(SOUBORY_PREKLADU)/osnova/*.tsv
 	@$(RM) -v $(SOUBORY_PREKLADU)/osnova/*.transakce
+	@$(TRANSAKCE) -on $(SOUBORY_PREKLADU)/klasické-příkazy.dat
+	$(AWK) -f skripty/extrakce/klasické-příkazy.awk konfigurace/klasické-příkazy.seznam > $(SOUBORY_PREKLADU)/klasické-příkazy.dat
+	@$(TRANSAKCE) -zn $(SOUBORY_PREKLADU)/klasické-příkazy.dat
 
 $(SOUBORY_PREKLADU)/postprocess.dat: $(wildcard postprocess.dat)
 	@skripty/h2 'Obnovuji $@...'
