@@ -19,7 +19,7 @@ Má formu připomínající konverzační slovník cizího jazyka a je vydává
 pro profesionální i domácí tisk a ve formátu HTML pro snadné vykopírování zaklínadel,
 můžete ji tedy používat na papíře i v počítači, proto „multimediální“.
 
-Verze *vanilková příchuť 2.10 Řehoř Řípský* je cílena na *Ubuntu 20.04 Focal Fossa* a jeho deriváty.
+Verze *vanilková příchuť 2.11 Soňa Smetana* je cílena na *Ubuntu 20.04 Focal Fossa* a jeho deriváty.
 
 Obsah podléhá licenci [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 Podrobné údaje o autorství zdrojových souborů jsou uvedeny v komentářích v jejich záhlaví;

@@ -208,10 +208,13 @@ Uživatele, který Linux: Knihu kouzel neprostudoval, poznáte např. takto:
 * Myslí si, že příkaz „apt list gimp*“ vypíše seznam balíčků začínajících „gimp“ (v tomto případě se musí hlavně naučit pravidla odzvláštňování).
 -->
 
-## Aktuální poznámka k verzi „vanilková příchuť 2.10 Řehoř Řípský“
+## Poznámky k vydání verze „vanilková příchuť 2.11 Soňa Smetana“
 
-Verze vanilkové příchuti 2.10, jménem Řehoř Řípský,
-přináší především novou základní kapitolu Prohlížení textových souborů.
+Verze vanilkové příchuti 2.11, jménem Soňa Smetana,
+přináší především rejstřík podle klasických příkazů.
+
+V HTML variantě bylo opraveno formátování hlavních nadpisů stránek.
+V PDF variantách bylo opravováno chybné generování názvů PDF záložek.
 
 <!--
 - V HTML variantě...
@@ -220,9 +223,8 @@ přináší především novou základní kapitolu Prohlížení textových soub
 - V kapitole *XY* přibyly ...
 -->
 
-PDF varianty mají nový, přehlednější formát zaklínadel.
-
-Vydání verze 2.11, jménem Soňa Smetana, očekávám začátkem prosince 2021.
+Vydání verze 2.12, jménem Štěpán Šikula, očekávám koncem prosince 2021.
+V plánu je úplné odstranění podpory různých ikon zaklínadel.
 <!--
 V plánu mám upřesnění pravidel genderové vyváženosti názvů osob v koncepci projektu.
 -->
