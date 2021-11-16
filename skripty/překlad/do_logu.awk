@@ -252,7 +252,6 @@ function ZacatekZaklinadla( \
     cisloZaklinadla,
     textZaklinadla,
     hesZaklinadla,
-    ikona,
     cislaPoznamek,
     textyPoznamek,
     samostatne,
@@ -267,7 +266,7 @@ function ZacatekZaklinadla( \
 
     vysledek = "ZacatekZaklinadla(@(" cisloKapitoly "=" nazevNadkapitoly "/" nazevPodkapitoly ")/(" cisloSekce "=" nazevSekce ")/(" cisloPodsekce "=" nazevPodsekce "), " \
         (samostatne ? "(+samostatně)" : "") \
-        "ikona:<" gensub(/\t.*/, "", 1, ikona) ">(písmo:" gensub(/.*\t/, "", 1, ikona) ")|" cisloZaklinadla ", \"" textZaklinadla "\", \"" hesZaklinadla "\", {";
+        "|" cisloZaklinadla ", \"" textZaklinadla "\", \"" hesZaklinadla "\", {";
     for (i = 0; i < length(cislaPoznamek); ++i) {
         if (!(i in cislaPoznamek)) {
             ShoditFatalniVyjimku("Vnitřní chyba: v poli cislaPoznamek očekáván index [" i "]!");
@@ -377,26 +376,6 @@ function VypnoutUzkyRezim() {
     }
     DO__UZKY_REZIM = 0;
     return "VypnoutUzkyRezim();\n";
-}
-
-function VzornikIkon(pocetIkon, ikony,   i, vysledek) {
-    vysledek = "VzornikIkon {\n";
-    if (pocetIkon < 1) {
-        ShoditFatalniVyjimku("Chybný počet ikon: " pocetIkon);
-    }
-    for (i = 1; i <= pocetIkon; ++i) {
-        if (i in ikony) {
-            if (ikony[i] ~ /^\S\t[A-Z]$/) {
-                vysledek = vysledek sprintf("- (%4d) ikona (%s) třídy (%s)\n", i - 1, substr(ikony[i], 1, 1), substr(ikony[i], 3));
-            } else {
-                ShoditFatalniVyjimku("Neplatný formát ikony číslo " i ": <" ikony[i] ">");
-            }
-        } else {
-            ShoditFatalniVyjimku("Ikona číslo " i " chybí v zadaném poli!");
-        }
-    }
-    vysledek = vysledek "}\n";
-    return vysledek;
 }
 
 function RejstrikPodleKlasickychPrikazu() {

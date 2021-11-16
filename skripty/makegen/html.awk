@@ -50,7 +50,6 @@ BEGIN {
     # závislosti
     Zavislost(adresar "/" uplneId ".md");
     Zavislost(SOUBORY_PREKLADU "/osnova/" plocheId ".tsv");
-    Zavislost(SOUBORY_PREKLADU "/ucs_ikony.dat");
     Zavislost("skripty/překlad/do_html.awk");
     Zavislost("skripty/překlad/hlavní.awk");
     Zavislost("skripty/utility.awk");
@@ -94,13 +93,6 @@ BEGIN {
 
 END {
     if (FATALNI_VYJIMKA) {exit FATALNI_VYJIMKA}
-
-    # *. soubory_překladu/ucs_ikony.dat
-    Cil(SOUBORY_PREKLADU "/ucs_ikony.dat");
-    Zavislost("ucs_ikony/ikony.txt");
-    Zavislost("skripty/extrakce/ikony-zaklínadel.awk");
-    Prikaz("mkdir -pv $(dir $@)");
-    Prikaz(AWK " -f skripty/extrakce/ikony-zaklínadel.awk");
 
     # 3. formáty/html/šablona.css => vystup_překladu/html/lkk-*.css
     # cíl

@@ -187,7 +187,7 @@ $(DATUM_SESTAVENI_SOUBOR) $(DEB_VERZE_SOUBOR) $(JMENO_SESTAVENI_SOUBOR):
 # + soubory_překladu/prémiové-kapitoly.tsv
 # ----------------------------------------------------------------------------
 $(SOUBORY_PREKLADU)/fragmenty.tsv: # generování se spouští pokaždé
-# skripty/extrakce/fragmenty.pl $(VSECHNY_KAPITOLY_A_DODATKY_MD) $(SOUBORY_PREKLADU)/ucs_ikony.dat konfigurace/konfig.ini skripty/extrakce/klasické-příkazy.awk konfigurace/klasické-příkazy.seznam
+# skripty/extrakce/fragmenty.pl $(VSECHNY_KAPITOLY_A_DODATKY_MD) konfigurace/konfig.ini skripty/extrakce/klasické-příkazy.awk konfigurace/klasické-příkazy.seznam
 	@skripty/h1 "Regeneruji $(SOUBORY_PREKLADU)/fragmenty.tsv a Makefily..."
 	@mkdir -pv $(dir $@)
 	@shopt -qu failglob; shopt -qs nullglob; $(TRANSAKCE) -on $@ $(SOUBORY_PREKLADU)/osnova/*.tsv

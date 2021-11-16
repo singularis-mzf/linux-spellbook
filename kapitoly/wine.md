@@ -20,7 +20,6 @@ Poznámky:
 # Wine
 
 !Štítky: {program}
-!FixaceIkon: 1754
 !OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 

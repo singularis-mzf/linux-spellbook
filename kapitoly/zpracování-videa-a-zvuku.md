@@ -39,7 +39,6 @@ Poznámky:
 # Zpracování videa a zvuku
 
 !Štítky: {tematický okruh}{video}{zvuk}
-!FixaceIkon: 1754
 !OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 

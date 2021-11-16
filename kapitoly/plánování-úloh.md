@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, kapitola Plánování úloh
-Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
+Copyright (c) 2019-2021 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -15,7 +15,6 @@ https://creativecommons.org/licenses/by-sa/4.0/
 # Plánování úloh
 
 !Štítky: {tematický okruh}{čas}
-!FixaceIkon: 1754
 !OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 

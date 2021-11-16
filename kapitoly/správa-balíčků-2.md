@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, kapitola Správa balíčků 2
-Copyright (c) 2019 Singularis <singularis@volny.cz>
+Copyright (c) 2019, 2021 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -20,7 +20,6 @@ Poznámky:
 # Správa balíčků 2
 
 !Štítky: {tematický okruh}
-!FixaceIkon: 1754
 !OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 

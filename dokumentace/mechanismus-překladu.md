@@ -130,11 +130,6 @@ a všechny uvedené fragmenty musí být určeny na výstup (tzn. mít kladné
 pořadové číslo).
 Štítky, které by neměly žádnou příslušnou kapitolu na výstupu, se neuvádí.
 
-### ucs\_ikony.dat
-
-Textový soubor v kódování UTF-8, který vzniká skriptem [skripty/extrakce/ikony-zaklínadel.awk](../skripty/extrakce/ikony-zaklínadel.awk) ze souboru [ucs\_ikony/ikony.txt](../ucs\_ikony/ikony.txt) po přefiltrování podle [ucs\_ikony/povolene-ikony.tsv](../ucs\_ikony/povolene-ikony.tsv).
-Je tvořen dvěma dlouhými řádky. První řádka obsahuje znaky UTF-8 používané jako ikony zaklínadel, druhá udává jednopísmennými zkratkami na odpovídající pozici, jaké písmo se má použít k jejich vypsání (D znamená „DejaVu Sans“, L znamená „Latin Modern Math“).
-
 ### osnova/\{ploché-id\}.tsv
 
 Soubory v adresáři „osnova“, vznikající spolu s *fragmenty.tsv*,

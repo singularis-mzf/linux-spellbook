@@ -185,7 +185,6 @@ function ZacatekZaklinadla( \
     cisloZaklinadla, # číslo > 0
     textZaklinadla, # neprázdný text v cílovém formátu, pokud nejde o zaklínadlo bez titulku; jinak ""
     hesZaklinadla, # heš zaklínadla (např. „x75e4112“)
-    ikona, # ikona zaklínadla (znak, tabulátor a znak symbolizující písmo)
     cislaPoznamek,
     textyPoznamek,
     samostatne, # normálně 0; je-li pravdivý, zaklínadlo je sázeno mimo svoji obvyklou polohu a mělo by být označeno i názvem sekce a podsekce
@@ -316,16 +315,6 @@ function ZapnoutUzkyRezim() {
 
 function VypnoutUzkyRezim() {
     return "";
-}
-
-function VzornikIkon(pocetIkon, ikony,   i, vysledek, pole) {
-    vysledek = "<div class=\"vzornikikon\">\n";
-    for (i = 1; i <= pocetIkon; ++i) {
-        split(ikony[i], pole, "\t"); # pole[1] = znak ikony; pole[2] = třída
-        vysledek = vysledek "<span>" (i - 1) ":&nbsp;<span class=\"" pole[2] "\">" pole[1] "</span></span>\n";
-    }
-    vysledek = vysledek "</div>";
-    return vysledek;
 }
 
 function RejstrikPodleKlasickychPrikazu(    pocet, predchozi_typ, soubor, vysl) {

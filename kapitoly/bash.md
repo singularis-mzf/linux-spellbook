@@ -27,7 +27,6 @@ Zvláštní návratové kódy ( https://tldp.org/LDP/abs/html/exitcodes.html ):
 # Bash
 
 !Štítky: {program}{bash}
-!FixaceIkon: 1754
 !OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 

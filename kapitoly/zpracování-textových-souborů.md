@@ -26,7 +26,6 @@ Poznámky:
 # Zpracování textových souborů
 
 !Štítky: {tematický okruh}{zpracování textu}
-!FixaceIkon: 1754
 !OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 

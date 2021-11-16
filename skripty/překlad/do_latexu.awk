@@ -361,7 +361,6 @@ function ZacatekZaklinadla(\
     cisloZaklinadla,
     textZaklinadla,
     hesZaklinadla, # např. „x75e4112“; má smysl jen při neprázdném textu zaklínadla
-    ikona,
     cislaPoznamek,
     textyPoznamek,
     samostatne,
@@ -574,11 +573,6 @@ function VypnoutUzkyRezim() {
     if (!DO__UZKY_REZIM) {ShoditFatalniVyjimku("CHYBA: Vypnutí úzkého režimu bez zapnutí!")}
     DO__UZKY_REZIM = 0;
     return "\\end{uzkyrezim}";
-}
-
-function VzornikIkon(pocetIkon, ikony) {
-    pocetIkon = ZacatekOdstavcu(1) "\\raggedright\\emph{(v PDF formátech již ikony zaklínadel nejsou podporovány)}%\n";
-    return pocetIkon KonecOdstavcu();
 }
 
 function RejstrikPodleKlasickychPrikazu(    pocet, predchozi_typ, soubor, vysl) {

@@ -18,7 +18,6 @@ https://creativecommons.org/licenses/by-sa/4.0/
 # Funkce a skripty
 
 !Štítky: {program}{bash}{programování}{automatizace}
-!FixaceIkon: 1754
 !OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 

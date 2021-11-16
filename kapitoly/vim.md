@@ -36,7 +36,6 @@ Přechod na Focal Fossa:
 # Vim
 
 !Štítky: {program}{editor}{ovládání}
-!FixaceIkon: 1754
 !OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 

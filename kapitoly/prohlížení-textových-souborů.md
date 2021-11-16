@@ -20,7 +20,6 @@ Poznámky:
 # Prohlížení textových souborů
 
 !Štítky: {tematický okruh}{textové soubory}
-!FixaceIkon: 1754
 !OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 

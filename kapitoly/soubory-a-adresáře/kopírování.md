@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, podkapitola Soubory a adresáře / Kopírování
-Copyright (c) 2020 Singularis <singularis@volny.cz>
+Copyright (c) 2020-2021 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -20,7 +20,6 @@ Poznámky:
 # Kopírování
 
 !Štítky: {tematický okruh}{adresáře}{soubory}{synchronizace}{zálohování}
-!FixaceIkon: 1754
 !OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 

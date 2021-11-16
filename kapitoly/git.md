@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, kapitola Git
-Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
+Copyright (c) 2019-2021 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -28,7 +28,6 @@ git config --global init.defaultBranch {název} // od git 2.28 je možno změnit
 # Git
 
 !Štítky: {program}{správa verzí}
-!FixaceIkon: 1754
 !OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 

@@ -20,7 +20,6 @@ Poznámky:
 # Metapříkazy
 
 !Štítky: {tematický okruh}{bash}
-!FixaceIkon: 1754
 !OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 

@@ -361,7 +361,7 @@ function FormatovatRadek(text, stav,   VSTUP, VYSTUP, i, j, C, priznak) {
 }
 
 # Vrací počet řádek tvořících zaklínadlo (o kolik je třeba zvýšit „i“)
-function VypsatZaklinadlo(iZacatek, jakoOblibene, titulekProOblibene,    c, i, iKonec, iPPC, ikona, pozice, ppc, ppt, s, tz)
+function VypsatZaklinadlo(iZacatek, jakoOblibene, titulekProOblibene,    i, iKonec, iPPC, ikona, pozice, ppc, ppt, s, tz)
 {
     if (ZR_TYP[iZacatek] != "ZAKLÍNADLO") {ShoditFatalniVyjimku("Chybný index pro výstup zaklínadla: " iZacatek)}
 
@@ -402,23 +402,21 @@ function VypsatZaklinadlo(iZacatek, jakoOblibene, titulekProOblibene,    c, i, i
     if (ZR_TYP[i] != "ŘÁDEK_ZAKLÍNADLA") {ShoditFatalniVyjimku("Zaklínadlo musí obsahovat alespoň jeden řádek!")}
     if (tz != "") {
         # zaklínadlo s titulkem
-        c = strtonum("0" HES_ZAKLINADLA) % length(UCS_IKONY);
-        ikona = substr(UCS_IKONY, 1 + c, 1) "\t" substr(UCS_IKONY_PISMA, 1 + c, 1);
         if (!jakoOblibene) {
             s = ZacatekZaklinadla(\
                 C_KAPITOLY, NAZEV_NADKAPITOLY, NAZEV_PODKAPITOLY, ZR_C_SEKCE[iZacatek], ZR_N_SEKCE[iZacatek], ZR_C_PODSEKCE[iZacatek], ZR_N_PODSEKCE[iZacatek],
                 ++C_ZAKLINADLA, tz, HES_ZAKLINADLA,
-                ikona, ppc, ppt, 0);
+                ppc, ppt, 0);
         } else {
             s = ZacatekZaklinadla(\
                 C_KAPITOLY, NAZEV_NADKAPITOLY, NAZEV_PODKAPITOLY, ZR_C_SEKCE[iZacatek], ZR_N_SEKCE[iZacatek], ZR_C_PODSEKCE[iZacatek], ZR_N_PODSEKCE[iZacatek],
                 ++CISLO_OBLIBENEHO_ZAKLINADLA, tz, HES_ZAKLINADLA,
-                ikona, ppc, ppt, 1);
+                ppc, ppt, 1);
         }
     } else {
         # zaklínadlo bez titulku
         s = ZacatekZaklinadla(C_KAPITOLY, NAZEV_NADKAPITOLY, NAZEV_PODKAPITOLY, ZR_C_SEKCE[iZacatek], ZR_N_SEKCE[iZacatek], ZR_C_PODSEKCE[iZacatek], ZR_N_PODSEKCE[iZacatek],
-            0, "", "", "", ppc, ppt, 0);
+            0, "", "", ppc, ppt, 0);
     }
     printf("%s", s);
 
@@ -596,8 +594,6 @@ BEGIN {
     TEXT_ZAKLINADLA = NULL_STRING;
     JE_ZAPNUTY_UZKY_REZIM = 0;
 
-    UCS_IKONY = VYCHOZI_UCS_IKONA = "♣";
-    UCS_IKONY_PISMA = VYCHOZI_UCS_IKONA_PISMO = "L";
     HES_ZAKLINADLA = "";
     RADKY_OZ_POCET = 0;
     CISLO_OBLIBENEHO_ZAKLINADLA = 0;
@@ -979,36 +975,6 @@ function main(    i, j, o, s, pozice, uroven, pokracuje, c_sekce, n_sekce, c_pod
                 }
                 #print "LADĚNÍ: Direktiva !" DIREKTIVA "=" HODNOTA_DIREKTIVY "\\n" > "/dev/stderr";
                 switch (DIREKTIVA) {
-                    case "FIXACEIKON":
-                        if (HODNOTA_DIREKTIVY !~ /^([0123456789]+|\*)$/) {ShoditFatalniVyjimku("Neplatný parametr direktivy !FixaceIkon: \"" HODNOTA_DIREKTIVY "\"!")}
-                        UCS_IKONY = VYCHOZI_UCS_IKONA;
-                        UCS_IKONY_PISMA = VYCHOZI_UCS_IKONA_PISMO;
-                        if (HODNOTA_DIREKTIVY ~ /^0+$/) {break} # "!FixaceIkon: 0 vrací výchozí nastavení"
-                        if ((getline UCS_IKONY < (SOUBORY_PREKLADU "/ucs_ikony.dat")) && (getline UCS_IKONY_PISMA < (SOUBORY_PREKLADU "/ucs_ikony.dat"))) {
-                            close(SOUBORY_PREKLADU "/ucs_ikony.dat");
-                        } else {
-                            ShoditFatalniVyjimku("Nemohu správně načíst soubor " SOUBORY_PREKLADU "/ucs_ikony.dat!");
-                        }
-                        if (length(UCS_IKONY) < 1 || length(UCS_IKONY_PISMA) < 1) {
-                            UCS_IKONY = VYCHOZI_UCS_IKONA;
-                            UCS_IKONY_PISMA = VYCHOZI_UCS_IKONA_PISMO;
-                        }
-                        if (length(UCS_IKONY) == length(UCS_IKONY_PISMA)) {
-                            #print "LADĚNÍ: Načteno " length(UCS_IKONY) " ikon." > "/dev/stderr";
-                        } else {
-                            ShoditFatalniVyjimku("Interní chyba: počet ikon neodpovídá počtu informací o písmu! (" length(UCS_IKONY) " != " length(UCS_IKONY_PISMA) ")!");
-                        }
-                        if (HODNOTA_DIREKTIVY == "*") {break}
-                        while (HODNOTA_DIREKTIVY > length(UCS_IKONY)) {
-                            UCS_IKONY = UCS_IKONY UCS_IKONY;
-                            UCS_IKONY_PISMA = UCS_IKONY_PISMA UCS_IKONY_PISMA;
-                        }
-                        if (HODNOTA_DIREKTIVY < length(UCS_IKONY)) {
-                            UCS_IKONY = substr(UCS_IKONY, 1, HODNOTA_DIREKTIVY);
-                            UCS_IKONY_PISMA = substr(UCS_IKONY_PISMA, 1, HODNOTA_DIREKTIVY);
-                        }
-                        break;
-
                     case "KOMPAKTNÍSEZNAM":
                         #printf("LADĚNÍ: NASTAVIT: NR = (%s); K_S_NR = (%s)\n", NR, KOMPAKTNI_SEZNAM_NR) > "/dev/pts/5";
                         KOMPAKTNI_SEZNAM_NR = NR + 1;
@@ -1041,16 +1007,6 @@ function main(    i, j, o, s, pozice, uroven, pokracuje, c_sekce, n_sekce, c_pod
                         } else {
                             ShoditFatalniVyjimku("Neznámá hodnota direktivy ÚZKÝREŽIM: \"" HODNOTA_DIREKTIVY "\"");
                         }
-                        break;
-
-                    case "VZORNÍKIKON":
-                        n = length(UCS_IKONY);
-                        delete ikony;
-                        for (j = 1; j <= n; ++j) {
-                            ikony[j] = substr(UCS_IKONY, j, 1) "\t" substr(UCS_IKONY_PISMA, j, 1);
-                        }
-                        printf("%s", VzornikIkon(n, ikony));
-                        delete ikony;
                         break;
 
                     case "OBLÍBENÁZAKLÍNADLA":

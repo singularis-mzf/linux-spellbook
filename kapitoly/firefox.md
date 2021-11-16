@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, kapitola Firefox
-Copyright (c) 2019, 2020 Singularis <singularis@volny.cz>
+Copyright (c) 2019-2021 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -45,7 +45,6 @@ https://archive.mozilla.org/pub/firefox/releases/{*verze*}/source/firefox-{*verz
 # Firefox
 
 !Štítky: {program}{internet}
-!FixaceIkon: 1754
 !OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 

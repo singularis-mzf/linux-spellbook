@@ -120,10 +120,6 @@ Files: skripty/lkk/LinuxKnihaKouzel.pl
 Copyright: 2020, Singularis
 License: CC0
 
-Files: ucs_ikony/ikony.txt ucs_ikony/povolené-ikony.*
-Copyright: 2020, Singularis
-License: CC-BY-SA-4.0
-
 Files: zdroje_obrázků/ik.xcf
 Copyright: 2020, Singularis <singularis@volny.cz>
 License: CC0

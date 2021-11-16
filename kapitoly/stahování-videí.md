@@ -21,7 +21,6 @@ https://creativecommons.org/licenses/by-sa/4.0/
 # Stahování videí
 
 !Štítky: {program}{internet}{video}
-!FixaceIkon: 1754
 !OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
@@ -36,7 +35,7 @@ se těmto změnám obvykle poměrně rychle přizpůsobuje.
 
 *Aktuální poznámka:* Zdá se, že od července 2021 je program „youtube-dl“
 neudržován a v době vydání této verze již přestává fungovat na některá videa.
-Zkoumám „yt-dlp“ jako možnou náhradu.
+Doporučuji „yt-dlp“ jako možnou náhradu.
 
 <!--
 ## Definice

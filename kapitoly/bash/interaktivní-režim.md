@@ -19,7 +19,6 @@ https://creativecommons.org/licenses/by-sa/4.0/
 # Interaktivní režim
 
 !Štítky: {program}{bash}
-!FixaceIkon: 1754
 !OblíbenáZaklínadla:
 !ÚzkýRežim: zap
 
