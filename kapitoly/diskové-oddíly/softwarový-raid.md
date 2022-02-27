@@ -229,9 +229,10 @@ Podporu softwarového RAID je nutno doinstalovat:
 ## Tipy a zkušenosti
 
 <!-- * V /etc/fstab uvádějte UUID souborového systému (přidělené při formátování), ne UUID RAID-pole! -->
+* RAID5 nedoporučuji používat na otočných pevných discích s kapacitou nad 1 TB (což je dnes většina). Doba obnovy pole po selhání jednoho z disků je velmi dlouhá (u šestiterabajtových disků víc než 24 hodin, u dvanáctiterabajtových to může být několik dní), což se projevuje dvěma nevýhodami: pravděpodobnost selhání druhého disku během obnovy je relativně vysoká a je tím vyšší, čím víc disků je do pole zapojeno. Druhou nevýhodou je velké množství elektřiny spotřebované během obnovy pole.
 * Prokládaný RAID nemá redundanci, nemá záložní díly a počet jeho dílů *není možné měnit*. Pokud přijdete o data na kterémkoliv z jeho dílů, přijdete o data v celém poli.
 * Ve všech popsaných druzích RAIDu mají všechny díly pole stejnou velikost. Pokud se je pokusíte umístit na různě velké oddíly, RAID z nich použije jen části odpovídající velikosti nejmenšího z nich.
-* Máte-li v systému zrcadlené RAID pole, pravděpodobně jednou za měsíc se na něm automaticky spustí kontrola konzistence.
+* Máte-li v systému zrcadlené RAID pole, pravděpodobně jednou za měsíc se na něm automaticky spustí kontrola konzistence. Možná to dělá i pole typu RAID5, ale nevím jistě.
 
 ## Další zdroje informací
 

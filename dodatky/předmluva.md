@@ -1,7 +1,7 @@
 <!--
 
 Linux Kniha kouzel, předmluva
-Copyright (c) 2019-2021 Singularis <singularis@volny.cz>
+Copyright (c) 2019-2022 Singularis <singularis@volny.cz>
 
 Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -208,13 +208,12 @@ Uživatele, který Linux: Knihu kouzel neprostudoval, poznáte např. takto:
 * Myslí si, že příkaz „apt list gimp*“ vypíše seznam balíčků začínajících „gimp“ (v tomto případě se musí hlavně naučit pravidla odzvláštňování).
 -->
 
-## Poznámky k vydání verze „vanilková příchuť 2.11 Soňa Smetana“
+## Poznámky k vydání verze „vanilková příchuť 2.12 Štěpán Šikula“
 
-Verze vanilkové příchuti 2.11, jménem Soňa Smetana,
-přináší především rejstřík podle klasických příkazů.
-
-V HTML variantě bylo opraveno formátování hlavních nadpisů stránek.
-V PDF variantách bylo opravováno chybné generování názvů PDF záložek.
+Verze vanilkové příchuti 2.12, jménem Štěpán Šikula,
+přináší především přepracování kapitoly Stahování videí na program yt-dlp.
+Také byla provedena drobná doplnění v kapitole Diskové oddíly
+a ze zdrojového kódu kompletně odstraněna podpora různých ikon zaklínadel.
 
 <!--
 - V HTML variantě...
@@ -223,13 +222,14 @@ V PDF variantách bylo opravováno chybné generování názvů PDF záložek.
 - V kapitole *XY* přibyly ...
 -->
 
-Vydání verze 2.12, jménem Štěpán Šikula, očekávám koncem prosince 2021.
-V plánu je úplné odstranění podpory různých ikon zaklínadel.
+Vydání verze 2.13, jménem Tereza Tesla, očekávám v průběhu května 2022.
+Předpokládám, že to bude poslední verze řady 2.x a následně zahájím práce
+na vývoji řady 3.x určené především pro Ubuntu 22.04 Jammy Jellyfish.
 <!--
 V plánu mám upřesnění pravidel genderové vyváženosti názvů osob v koncepci projektu.
 -->
 
-Verze řady „vanilková příchuť 1.x“ jsou ve stádiu dlouhodobé pasivní údržby do 1. března 2023.
+Vývojová řada „vanilková příchuť 1.x“ je ve stádiu dlouhodobé pasivní údržby do 1. března 2023.
 
 &nbsp;
 

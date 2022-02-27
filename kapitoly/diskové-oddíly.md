@@ -573,6 +573,7 @@ Poznámka: funkčnost těchto voleb ve správcích souborů může být různá;
 !Parametry:
 
 * ○ errors=remount-ro ○ errors=panic ○ errors=continue :: V případě kritické chyby: připojí systém jen pro čtení/zhroutí se/pokračuje. (Nezkoušel/a jsem.)
+* ☐ init\_itable=0 :: Nastaví maximální prioritu inicializaci souborového systému. Výhodné při inicializaci souborových systémů na otočných pevných discích, kdy by normální pomalá inicializace delší dobu snižovala výkon disku. (Zkoušeno jen na ext4.)
 * ◉ user\_xattr ○ nouser\_xattr :: Povolí/zakáže uživatelské rozšířené atributy. (ext3/ext4) V případě nouser\_xattr budou uživatelské rozšířené atributy stávajících souborů a adresářů zachovány, ale nepůjdou číst ani zapisovat.
 * ◉ acl ○ noacl :: Povolí/zakáže rozšířená přístupová práva. (Zatím jsem nezkoušel/a.)
 * ○ discard ○ nodiscard :: Zapne/vypne automatické označování prázdného prostoru na SSD discích (operace TRIM).

@@ -36,7 +36,7 @@ ne však ve spojení s označením „vanilková příchuť“.
 
 ## Závazná pravidla pro celý repozitář
 
-* Koncepce není neměnná. Bude se mírně přizpůsobovat zjištěným potřebám obou cílových skupin; zájmy středně pokročilých uživatelů přitom musejí zůstat v rovnováze se zájmy pokročilých, aby byli pokročilí motivováni přispívat a většina jejich příspěvků byla užitečná i středně pokročilým.
+* Koncepce není neměnná. Bude se mírně přizpůsobovat zjištěným potřebám mírně a středně pokročilých uživatelů.
 * Zaklínadla jsou v každé úrovni řazena od užitečnějších k méně užitečným. Úzce související zaklínadla (např. na přidání a odebrání objektu) jsou však seskupena k sobě a jejich užitečnost je posuzována společně.
 * Při psaní kódu jednotlivých zaklínadel mějme na paměti, že náš kód budou používat i lidé, kteří mu nerozumí a nezvládnou opravit naše chyby. Proto pišme kód robustní, důkladně ho testujme a známá omezení dokumentujme (např. v poznámkách pod čarou).
 * Duplicita není zakázána. Stejné zaklínadlo se může objevit ve více podsekcích jedné kapitoly či ve více kapitolách, pokud to bude dávat smysl.

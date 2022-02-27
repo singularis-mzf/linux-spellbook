@@ -16,6 +16,9 @@ Poznámky:
 
 [ ] Vytváření podadresářů v nabídce aplikací.
 
+Zapracovat:
+https://forum.ubuntu.cz/index.php?topic=85819.msg578013#msg578013
+
 ⊨
 -->
 
@@ -129,6 +132,11 @@ dvojklikem nebo přetažením adresářových položek na něj.
 *# vytvořit nový spouštěč (GUI)*<br>
 *// Volitelné parametry jsem nezkoušel/a.*<br>
 **exo-desktop-item-edit \-\-create-new \-\-type Application** [**\-\-name** {*"Název"*}] <nic>[**\-\-command** {*"Příkaz"*}] <nic>[**\-\-icon** {*ikona*}] {*cesta/ke/spouštěči.desktop*}
+
+### Užitečné příkazy
+
+*# aktualizovat keš obsluh typů souborů po změně systémových spouštěčů*<br>
+**sudo update-desktop-database**
 
 ## Parametry příkazů
 
