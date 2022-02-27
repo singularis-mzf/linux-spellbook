@@ -103,8 +103,8 @@ Tato verze kapitoly pokrývá pouze základy Dockeru; nezmiňuje se o nástoji 
 **sudo docker rename** {*kontejner*} {*nové-jméno*}
 
 *# spustit nový interpret příkazové řádky v již běžícím kontejneru (obecně/konkrétně)*<br>
-**sudo exec -it** {*kontejner*} {*interpret*}<br>
-**sudo exec -it ef95f2 bash**
+**sudo docker exec -it** {*kontejner*} {*interpret*}<br>
+**sudo docker exec -it ef95f2 bash**
 
 *# kopírování souborů z kontejneru/do kontejneru*<br>
 **sudo docker cp** {*kontejner*}**:**{*/cesta/v/kontejneru*} {*cíl/mimo*}<br>
