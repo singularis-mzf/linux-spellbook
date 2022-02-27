@@ -1,5 +1,5 @@
 # Linux Kniha kouzel, postprocess.dat
-# Copyright (c) 2019-2021 Singularis <singularis@volny.cz>
+# Copyright (c) 2019-2022 Singularis <singularis@volny.cz>
 #
 # Toto dílo je dílem svobodné kultury; můžete ho šířit a modifikovat pod
 # podmínkami licence Creative Commons Attribution-ShareAlike 4.0 International
@@ -90,12 +90,6 @@ vim
 }\begin{parametryprikazu}\parametrprikazu{{\pismodejavusans{}○} {-}o {\pismodejavusans{}○} {-}O {\pismodejavusans{}○} {-}p}{Je{-}li zadáno více souborů, otevře je: v~pohledech nad sebou (shora)/v~pohledech vedle sebe (zleva)/v~panelech. Výchozí chování: Je{-}li zadáno více souborů, otevře se pouze první a~ostatní jsou otevřeny skrytě a~uživatel se na ně musí přepnout příkazem \quotedblbase{}:n\textquotedblleft{}.}%\n
 }\begin{parametryprikazu}\parametrprikazu{{\pismodejavusans{}○} {-}o {\pismodejavusans{}○} {-}O {\pismodejavusans{}○} {-}p}{Je{-}li zadáno více souborů, otevře je: v~pohledech nad sebou (shora)/v~pohledech vedle sebe (zleva)\newline{}/v~panelech. Výchozí chování: Je{-}li zadáno více souborů, otevře se pouze první a~ostatní jsou otevřeny skrytě a~uživatel se na ně musí přepnout příkazem \quotedblbase{}:n\textquotedblleft{}.}%\n
 
-411
-pdf-b5.*
-vim
-\begin{odstavce}\quotedblbase{}\itshape{}Programátorské slovo\upshape{}\textquotedblleft{} je sekvence jakýchkoliv nebílých znaků; \quotedblbase{}\itshape{}standardních slovo\upshape{}\textquotedblleft{} je sekvence nebílých znaků, které jsou buď alfanumerické, nebo tvoří interpunkci. To znamená, že např. \quotedblbase{}a1a;;;B2B\textquotedblleft{} je jedno programátorské slovo, ale tři standardní! (Podobně \quotedblbase{}Ahoj, světe!\textquotedblleft{} jsou dvě programátoská slova, ale čtyři standardní.)
-\begin{odstavce}\quotedblbase{}\itshape{}Programátorské slovo\upshape{}\textquotedblleft{} je sekvence jakýchkoliv nebílých znaků; \quotedblbase{}\itshape{}standardních slovo\upshape{}\textquotedblleft{} je sekvence nebílých znaků, které jsou buď alfanumerické, nebo tvoří interpunkci. To znamená, že např.\\\quotedblbase{}a1a;;;B2B\textquotedblleft{} je jedno programátorské slovo, ale tři standardní! (Podobně \quotedblbase{}Ahoj, světe!\textquotedblleft{} jsou dvě programátoská slova, ale čtyři standardní.)
-
 #
 # [zpracování-textových-souborů] 500..599
 # =========================================================================================
@@ -124,12 +118,6 @@ zpracování-textových-souborů
 \zaklinadlo{3}{\pismolmmath{}♣}{\underline{\emph{Práce se záznamy}}\\\underline{\emph{Množinové operace (nad seřazenými záznamy)}}\\%
 \zaklinadlo{3}{\pismolmmath{}♣}{\underline{\emph{Práce se záznamy}}\\{\footnotesize\underline{\emph{Množinové operace (nad seřazenými záznamy)}}}\\%
 
-531
-pdf-b5.*
-zpracování-textových-souborů
-\zaklinadlo{3}{\pismolmmath{}♣}{\underline{\emph{Práce se záznamy}}\\\underline{\emph{Množinové operace (nad seřazenými záznamy)}}\\%
-\zaklinadlo{3}{\pismolmmath{}♣}{\underline{\emph{Práce se záznamy}}\\{\footnotesize\underline{\emph{Množinové operace (nad seřazenými záznamy)}}}\\%
-
 540
 pdf-a4.*
 zpracování-textových-souborů
@@ -153,8 +141,8 @@ markdown
 701
 pdf-b5.*
 stahování-videí
-\radekzaklinadla{\pismolmmath{}∘\hspace*{0.1em}}{{-}f \textquotedbl{}bestvideo[height{\mensinez}{\rovno}?480]+bestaudio/best[height{\mensinez}{\rovno}?480]/best\textquotedbl{}}%
-\radekzaklinadla{\pismolmmath{}∘\hspace*{0.1em}}{{-}f \textquotedbl{}bestvideo[height{\mensinez}{\rovno}?480]+bestaudio/{\moznyzlom}best[height{\mensinez}{\rovno}?480]/best\textquotedbl{}}%
+\radekzaklinadla{\pismolmmath{}∘\hspace*{0.1em}}{{-}f \textquotesingle{}bestvideo[filesize{\mensinez}{\rovno}100M]+bestaudio[filesize{\mensinez}{\rovno}100M]/best[filesize{\mensinez}{\rovno}100M]\textquotesingle{}}%
+\radekzaklinadla{\pismolmmath{}∘\hspace*{0.1em}}{{-}f \textquotesingle{}bestvideo[filesize{\mensinez}{\rovno}100M]+bestaudio[filesize{\mensinez}{\rovno}100M]/{\moznyzlom}best[filesize{\mensinez}{\rovno}100M]\textquotesingle{}}%
 
 #
 # [systém] 800..899
@@ -202,12 +190,6 @@ zpracování-videa-a-zvuku
 \zaklinadlo{1}{\pismolmmath{}♣}{\underline{\emph{Filtry}}\\\underline{\emph{Překryv, skládání a~prolínání obrazových stop (blend)}}\\%
 \zaklinadlo{1}{\pismolmmath{}♣}{\underline{\emph{Filtry}}\\{\footnotesize\underline{\emph{Překryv, skládání a~prolínání obrazových stop (blend)}}}\\%
 
-941
-pdf-b5.*
-zpracování-videa-a-zvuku
-\zaklinadlo{1}{\pismolmmath{}♣}{\underline{\emph{Filtry}}\\\underline{\emph{Překryv, skládání a~prolínání obrazových stop (blend)}}\\%
-\zaklinadlo{1}{\pismolmmath{}♣}{\underline{\emph{Filtry}}\\{\scriptsize\underline{\emph{Překryv, skládání a~prolínání obrazových stop (blend)}}}\\%
-
 #
 # [sed] 1100..1199
 # =========================================================================================
@@ -249,21 +231,9 @@ Manuálové strán\-ky mají jednotnou strukturu, takže se v~nich uživatel brz
 # [proměnné] 1400..1499
 # =========================================================================================
 
-1401
-pdf-b5.*
-proměnné
-{\footnotetext[35]{Nápovědu k~proměnné LD\_DEBUG si můžete zobrazit příkazem \quotedblbase{}env LD\_DEBUG{\rovno}help cat\textquotedblleft{}. Bez proměnné LD\_DEBUG\_OUTPUT se ladicí údaje vypíšou na standardní výstup; s~ní se k~jejímu obsahu připojí tečka a~PID procesu a~výpis se provede do daného souboru.}}{%
-{\footnotetext[35]{\raggedright Nápovědu k~proměnné LD\_DEBUG si můžete zobrazit příkazem \quotedblbase{}env LD\_DEBUG{\rovno}help cat\textquotedblleft{}. Bez proměnné LD\_DEBUG\_OUTPUT se ladicí údaje vypíšou na standardní výstup; s~ní se k~jejímu obsahu připojí tečka a~PID procesu a~výpis se provede do daného souboru.}}{%
-
 #
 # [terminál] 1500..1599
 # =========================================================================================
-
-1501
-pdf-b5.*
-terminál
-kniha (zelená/modrá/oranžová/nedefinované barvy)}%
-kniha (zelená/modrá/oranžová/ nedefinované barvy)}%
 
 #
 # [soubory-a-adresáře] 1600..1699
@@ -414,16 +384,3 @@ správa-balíčků
 #
 # VYŘAZENÉ KAPITOLY
 # =========================================================================================
-
-#1010 # kapitola Docker vyřazena z vanilkové příchuti
-pdf-b5.*
-docker
-\item{}\bfseries{}Repozitář\mdseries{} je soubor obrazů se společným označením (např. \quotedblbase{}ubuntu\textquotedblleft{} či \quotedblbase{}mysql\textquotedblleft{}). Jednotlivé obrazy se pak identifikují pomocí \bfseries{}tagu\mdseries{} uvedeného za název repozitáře a dvojtečku (např. \quotedblbase{}ubuntu:18.04\textquotedblleft{}). Není{-}li tag uveden, Docker automaticky doplní \quotedblbase{}latest\textquotedblleft{}.
-\item{}\bfseries{}Repozitář\mdseries{} je soubor obrazů se společným označením (např. \quotedblbase{}ubuntu\textquotedblleft{} či \quotedblbase{}mysql\textquotedblleft{}). Jednotlivé obrazy se pak identifikují pomocí \bfseries{}tagu\mdseries{} uvedeného za název repozitáře a dvojtečku (např.\newline\quotedblbase{}ubuntu:18.04\textquotedblleft{}). Není{-}li tag uveden, Docker automaticky doplní \quotedblbase{}latest\textquotedblleft{}.
-
-#1210 # kapitola Plánování úloh vyřazena z vanilkové příchuti
-pdf-b5.*
-plánování-úloh
-\radekzaklinadla{\pismolmmath{}∘\hspace*{0.1em}}{eval \textquotedbl{}\$(egrep {-}z \textquotesingle{}\char`\^{}(DBUS\_SESSION\_BUS\_ADDRESS\textbar{}DISPLAY\textbar{}XDG\_[A{-}Z\_]+){\rovno}{\moznyzlom}\textquotesingle{} /proc/\$xpid/environ \textbar{} tr \textbackslash{}\textbackslash{}0 \textbackslash{}\textbackslash{}n \textbar{} sed {-}e s/{\rovno}/\textbackslash{}\textbackslash{}n/ {-}e s/\textbackslash{}\textquotesingle{}/\textbackslash{}\textquotesingle{}\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}\textquotesingle{}\textbackslash{}\textquotesingle{}/g \textbar{} xargs {-}rd \textbackslash{}\textbackslash{}n printf \textquotedbl{}export \%s{\rovno}\textquotesingle{}\%s\textquotesingle{}\textbackslash{}\textbackslash{}n\textquotedbl{})\textquotedbl{}}%
-\radekzaklinadla{\pismolmmath{}∘\hspace*{0.1em}}{eval \textquotedbl{}\$(egrep {-}z \textquotesingle{}\char`\^{}(DBUS\_SESSION\_BUS\_ADDRESS\textbar{}DISPLAY\textbar{}{\moznyzlom}XDG\_[A{-}Z\_]+){\rovno}{\moznyzlom}\textquotesingle{} /proc/\$xpid/environ \textbar{} tr \textbackslash{}\textbackslash{}0 \textbackslash{}\textbackslash{}n \textbar{} sed {-}e s/{\rovno}/\textbackslash{}\textbackslash{}n/ {-}e s/\textbackslash{}\textquotesingle{}/\textbackslash{}\textquotesingle{}\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}\textbackslash{}\textquotesingle{}\textbackslash{}\textquotesingle{}/g \textbar{} xargs {-}rd \textbackslash{}\textbackslash{}n printf \textquotedbl{}export \%s{\rovno}\textquotesingle{}\%s\textquotesingle{}\textbackslash{}\textbackslash{}n\textquotedbl{})\textquotedbl{}}%
-
