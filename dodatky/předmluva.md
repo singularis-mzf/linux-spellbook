@@ -208,12 +208,13 @@ Uživatele, který Linux: Knihu kouzel neprostudoval, poznáte např. takto:
 * Myslí si, že příkaz „apt list gimp*“ vypíše seznam balíčků začínajících „gimp“ (v tomto případě se musí hlavně naučit pravidla odzvláštňování).
 -->
 
-## Poznámky k vydání verze „vanilková příchuť 2.12 Štěpán Šikula“
+## Poznámky k vydání verze „vanilková příchuť 2.13 Tereza Tesla“
 
-Verze vanilkové příchuti 2.12, jménem Štěpán Šikula,
-přináší především přepracování kapitoly Stahování videí na program yt-dlp.
-Také byla provedena drobná doplnění v kapitole Diskové oddíly
-a ze zdrojového kódu kompletně odstraněna podpora různých ikon zaklínadel.
+Verze vanilkové příchuti 2.13, jménem Tereza Tesla,
+si svoje jméno nezaslouží. Oproti předchozí verzi nepřináší žádné novinky
+(kromě vypuštění špatně udržovaného Plánu budoucího vývoje),
+jde však o poslední pojmenovanou verzi řady 2.x a přináší vyhlídky
+na řadu 3.x.
 
 <!--
 - V HTML variantě...
@@ -222,9 +223,12 @@ a ze zdrojového kódu kompletně odstraněna podpora různých ikon zaklínade
 - V kapitole *XY* přibyly ...
 -->
 
-Vydání verze 2.13, jménem Tereza Tesla, očekávám v průběhu května 2022.
-Předpokládám, že to bude poslední verze řady 2.x a následně zahájím práce
-na vývoji řady 3.x určené především pro Ubuntu 22.04 Jammy Jellyfish.
+Vydání verze 3.0, jménem Udo Urx, očekávám v průběhu srpna 2022.
+Současně bude vydána bezejmenná verze 2.14, kterou řada 2.x přejde do stádia
+dlouhodobé pasivní údržby a v té zůstane do 1. března 2025.
+
+Ve verzi 3.0 mám v plánu přidat konečně funkční postup offline instalace
+balíčků Flatpaku a celou kapitolu o Minetestu.
 <!--
 V plánu mám upřesnění pravidel genderové vyváženosti názvů osob v koncepci projektu.
 -->

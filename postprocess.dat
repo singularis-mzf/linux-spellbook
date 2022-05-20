@@ -380,6 +380,15 @@ správa-balíčků
 \begin{odstavce}Při určování priorit z~konfigurace v~adresáři /etc/apt/preferences.d postupuje APT následovně:
 \begin{odstavce}\raggedright Při určování priorit z~konfigurace v~adresáři /etc/apt/preferences.d postupuje APT následovně:
 
+#
+# [licence] 2600..2699
+# =========================================================================================
+
+2600
+pdf-a4.*
+licence
+following conditions.
+following\newline\ conditions.
 
 #
 # VYŘAZENÉ KAPITOLY
