@@ -19,11 +19,13 @@ Má formu připomínající konverzační slovník cizího jazyka a je vydává
 pro profesionální i domácí tisk a ve formátu HTML pro snadné vykopírování zaklínadel,
 můžete ji tedy používat na papíře i v počítači, proto „multimediální“.
 
-Verze *vanilková příchuť 2.13 Tereza Tesla* je cílena na *Ubuntu 20.04 Focal Fossa* a jeho deriváty.
+Verze *vanilková příchuť 2.14* je cílena na *Ubuntu 20.04 Focal Fossa* a jeho deriváty.
 
 Obsah podléhá licenci [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 Podrobné údaje o autorství zdrojových souborů jsou uvedeny v komentářích v jejich záhlaví;
 údaje o autorství obrázkových souborů jsou uvedeny v souboru [COPYRIGHT](COPYRIGHT).
+
+**Aktivní vývoj z mé strany byl přerušen, protože se chci věnovat novému projektu. Nadále ovšem poskytuji pasivní údržbu větvím 1.x a 2.x do předem vyhlášených termínů.**
 
 ---
 
@@ -130,50 +132,6 @@ Zde je aktualizovaný přehled kapitol, které si při sestavení můžete vybra
 | [zpracování-textových-souborů](kapitoly/zpracování-textových-souborů.md) | Zpracování textových souborů | 1.2 | základní |
 | [zpracování-videa-a-zvuku](kapitoly/zpracování-videa-a-zvuku.md) | Zpracování videa a zvuku | 1.0 | základní |
 
-### Rozpracované kapitoly a podkapitoly
-
-<!--
-Priority:
-1. [bash] (základní věci jako roury, správa úloh apod.)
-2. [šifrování]
-3. [pdf]
-4. [wine]
-5. [firefox]
--->
-
-| ID | Název kapitoly | Růst | Stav |
-| :--- | :--- | ---: | :--- |
-| [x](kapitoly/x.md) | X (Správce oken) | 60% | dítě |
-| [firefox](kapitoly/firefox.md) | Firefox | 60% | dítě |
-| [kalkulace](kapitoly/kalkulace.md)| Kalkulace | 50% | dítě |
-| [stahování-z-webu](kapitoly/stahování-z-webu.md) | Stahování z webu | 40% | dítě |
-| [zpracování-obrázků](kapitoly/zpracování-obrázků.md) | Zpracování obrázků | 40% | dítě |
-| [metapříkazy](kapitoly/metapříkazy.md) | Metapříkazy | 20% | dítě |
-| [moderní-věci](kapitoly/moderní-věci.md) | Moderní věci | 20% | dítě |
-| [unicode](kapitoly/unicode.md) | Unicode a emotikony | 10% | dítě |
-| [uživatelská-rozhraní](kapitoly/uživatelská-rozhraní.md) | Uživatelská rozhraní skriptů | 5% | dítě |
-| [apache](kapitoly/apache.md) | Webový server Apache | 5% | dítě |
-| [latex](kapitoly/latex.md) | LaTeX | 5% | dítě |
-| [dosbox](kapitoly/dosbox.md) | DosBox | 5% | dítě |
-| [perl-standardní-knihovna](kapitoly/perl-standardní-knihovna.md) | Perl: standardní knihovna | 3% | dítě |
-| [bash](kapitoly/bash.md) | Bash | 2% | dítě |
-| [lkk](kapitoly/lkk.md) | Linux: Kniha kouzel | 2% | dítě |
-| [zpracování-psv](kapitoly/zpracování-psv.md) | Zpracování PSV | 2% | dítě |
-| [správa-balíčků-2](kapitoly/správa-balíčků-2.md) | Správa balíčků 2 | 1% | dítě |
-| [grub](kapitoly/grub.md) | GRUB a jádro | 1% | dítě |
-| [konverze-formatů](kapitoly/konverze-formatů.md) | Konverze formátů | 0% | embryo |
-| [wine](kapitoly/wine.md) | Wine | 0% | embryo |
-| [pdf](kapitoly/pdf.md) | PDF | 0% | embryo |
-| [virtualbox](kapitoly/virtualbox.md) | VirtualBox | 0% | embryo |
-| [šifrování](kapitoly/šifrování.md) | Šifrování a kryptografie | 0% | embryo |
-| [soubory-a-adresáře/kopírování](kapitoly/soubory-a-adresáře/kopírování.md) | Soubory a adresáře/Kopírování | 0% | embryo |
-| přehrávání-videa | Přehrávání videa, zvuku a obrázků | - | přál/a bych si |
-| firewall | Firewall | - | přál/a bych si |
-| sql | SQL | - | přál/a bych si |
-| ascii-art | ASCII art | - | přál/a bych si |
-| záznam-x | Záznam obrazovky | - | přál/a bych si |
-| css | Kaskádové styly CSS | - | přál/a bych si |
-
 ### Zvláštní a vyřazené kapitoly
 
 * [_šablona](kapitoly/_šablona.md) − Nepřekládá se. Slouží jako výchozí podoba pro nově založené kapitoly.
@@ -182,15 +140,12 @@ Priority:
 * [Docker](kapitoly/docker.md)
 * [Plánování úloh](kapitoly/plánování-úloh.md)
 
-## Jak pomoci nebo se zapojit do vývoje
-
-Viz soubor [JAK-SE-ZAPOJIT.md](JAK-SE-ZAPOJIT.md).
-
 ## Větve na GitHubu
 
-* *vývojová* – Aktivně vyvíjený zdrojový kód. Sem směřují nejčerstvější příspěvky.
+* *vývojová* – Hlavní větev, nyní opuštěná.
 * *stabilní* – Zdrojový kód poslední vydané verze. Pokud vám nepůjde přeložit kód z větve „vývojová“, použijte kód z větve „stabilní“.
 * *v1* — Větev 1.x; ve stádiu dlouhodobé pasivní údržby do 1. března 2023.
+* *v2* — Větev 2.x; ve stádiu dlouhodobé pasivní údržby do 1. března 2025.
 
 ## Podobné projekty
 

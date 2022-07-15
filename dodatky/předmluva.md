@@ -208,32 +208,14 @@ Uživatele, který Linux: Knihu kouzel neprostudoval, poznáte např. takto:
 * Myslí si, že příkaz „apt list gimp*“ vypíše seznam balíčků začínajících „gimp“ (v tomto případě se musí hlavně naučit pravidla odzvláštňování).
 -->
 
-## Poznámky k vydání verze „vanilková příchuť 2.13 Tereza Tesla“
+## Poznámky k vývojové větvi 2.x
 
-Verze vanilkové příchuti 2.13, jménem Tereza Tesla,
-si svoje jméno nezaslouží. Oproti předchozí verzi nepřináší žádné novinky
-(kromě vypuštění špatně udržovaného Plánu budoucího vývoje),
-jde však o poslední pojmenovanou verzi řady 2.x a přináší vyhlídky
-na řadu 3.x.
-
-<!--
-- V HTML variantě...
-- V PDF variantách...
-
-- V kapitole *XY* přibyly ...
--->
-
-Vydání verze 3.0, jménem Udo Urx, očekávám v průběhu srpna 2022.
-Současně bude vydána bezejmenná verze 2.14, kterou řada 2.x přejde do stádia
-dlouhodobé pasivní údržby a v té zůstane do 1. března 2025.
-
-Ve verzi 3.0 mám v plánu přidat konečně funkční postup offline instalace
-balíčků Flatpaku a celou kapitolu o Minetestu.
-<!--
-V plánu mám upřesnění pravidel genderové vyváženosti názvů osob v koncepci projektu.
--->
-
-Vývojová řada „vanilková příchuť 1.x“ je ve stádiu dlouhodobé pasivní údržby do 1. března 2023.
+Verzí 2.14 přešla vývojová řada „2.x“ vanilkové příchuti Linuxu: Knihy kouzel
+do stádia *dlouhodobé pasivní údržby*.
+V tomto stádiu bude docházet jen k minimálním změnám nutným
+k opravě nahlášených nebo jinak objevených chyb ve vydaných kapitolách.
+Vývojová řada „2.x“ zůstane v tomto stádiu do 1. března 2025,
+kdy bude její vývoj zcela ukončen.
 
 &nbsp;
 
