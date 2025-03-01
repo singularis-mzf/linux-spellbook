@@ -208,15 +208,6 @@ Uživatele, který Linux: Knihu kouzel neprostudoval, poznáte např. takto:
 * Myslí si, že příkaz „apt list gimp*“ vypíše seznam balíčků začínajících „gimp“ (v tomto případě se musí hlavně naučit pravidla odzvláštňování).
 -->
 
-## Poznámky k vývojové větvi 2.x
-
-Verzí 2.14 přešla vývojová řada „2.x“ vanilkové příchuti Linuxu: Knihy kouzel
-do stádia *dlouhodobé pasivní údržby*.
-V tomto stádiu bude docházet jen k minimálním změnám nutným
-k opravě nahlášených nebo jinak objevených chyb ve vydaných kapitolách.
-Vývojová řada „2.x“ zůstane v tomto stádiu do 1. března 2025,
-kdy bude její vývoj zcela ukončen.
-
 &nbsp;
 
 <neodsadit>– Singularis
