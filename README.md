@@ -13,19 +13,18 @@ https://creativecommons.org/licenses/by-sa/4.0/
 -->
 ![Linux: Kniha kouzel](obrázky/banner.png)
 
-„Linux: Kniha kouzel“ je česká multimediální sbírka krátkých řešených příkladů
+„Linux: Kniha kouzel“ byla česká multimediální sbírka krátkých řešených příkladů
 z prostředí svobodného software v linuxu<sup>**\***</sup>, především distribucích Ubuntu a Linux Mint.
-Má formu připomínající konverzační slovník cizího jazyka a je vydávána v PDF A4 a B5
-pro profesionální i domácí tisk a ve formátu HTML pro snadné vykopírování zaklínadel,
-můžete ji tedy používat na papíře i v počítači, proto „multimediální“.
+Měla formu připomínající konverzační slovník cizího jazyka a byla vydávána v PDF A4 a B5
+pro profesionální i domácí tisk a ve formátu HTML pro snadné vykopírování zaklínadel.
 
-Verze *vanilková příchuť 2.14* je cílena na *Ubuntu 20.04 Focal Fossa* a jeho deriváty.
+Verze *vanilková příchuť 2.15* je cílena na *Ubuntu 20.04 Focal Fossa* a jeho deriváty.
 
 Obsah podléhá licenci [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
 Podrobné údaje o autorství zdrojových souborů jsou uvedeny v komentářích v jejich záhlaví;
 údaje o autorství obrázkových souborů jsou uvedeny v souboru [COPYRIGHT](COPYRIGHT).
 
-**Aktivní vývoj z mé strany byl přerušen, protože se chci věnovat novému projektu. Nadále ovšem poskytuji pasivní údržbu větvím 1.x a 2.x do předem vyhlášených termínů.**
+**Vývoj projektu byl ukončen a repozitář archivován. Odnože pod stejnou (popř. kompatibilní) licencí jsou vítány.**
 
 ---
 
